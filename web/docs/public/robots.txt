@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abhisinghal.github.io/dsa-master-reference/sitemap.xml

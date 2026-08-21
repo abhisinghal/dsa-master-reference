@@ -1,11 +1,15 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   base: '/dsa-master-reference/',
   title: 'DSA Master Reference',
   description: 'Patterns, invariants, and problems for senior/staff DSA interviews (Java 17)',
   cleanUrls: true,
   ignoreDeadLinks: true,
+  sitemap: {
+    hostname: 'https://abhisinghal.github.io/dsa-master-reference/'
+  },
   head: [
     ['link', { rel: 'icon', href: '/dsa-master-reference/favicon.svg' }],
     ['meta', { name: 'theme-color', content: '#2563eb' }]
@@ -115,6 +119,6 @@ export default defineConfig({
     search: {
       provider: 'local'
     },
-    outline: [2, 3]
+    outline: 2
   }
-})
+}))

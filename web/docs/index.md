@@ -6,8 +6,8 @@ hero:
   text: Zero to Hero for Senior/Staff Interviews
   tagline: Patterns · Invariants · Problems — Java 17, Grokking-style depth, 300+ curated pages
   image:
-    src: /hero.svg
-    alt: DSA Master Reference
+    src: /dsa-master-reference/hero.svg
+    alt: Sliding Window on 9 cells with two overlapping windows
   actions:
     - theme: brand
       text: Get Started
@@ -15,6 +15,9 @@ hero:
     - theme: alt
       text: Browse Patterns
       link: /patterns/
+    - theme: alt
+      text: See it in action
+      link: /patterns/hashing#try-it-yourself
     - theme: alt
       text: View on GitHub
       link: https://github.com/abhisinghal/dsa-master-reference
@@ -52,6 +55,33 @@ features:
     linkText: Skim traps
 ---
 
+<div class="stats-strip">
+  <div class="stat">
+    <div class="stat-value">338</div>
+    <div class="stat-label">Pages (PDF)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">21</div>
+    <div class="stat-label">Core patterns</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">98</div>
+    <div class="stat-label">Canonical problems</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">109</div>
+    <div class="stat-label">Interview traps</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">7</div>
+    <div class="stat-label">Animated walkthroughs</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">▶</div>
+    <div class="stat-label">In-browser Java runner</div>
+  </div>
+</div>
+
 ## Why this book exists
 
 Most DSA references are one of two things: **a textbook** (dense theory, no interview signal) or **a LeetCode grind list** (500 problems, zero pattern recognition). This is neither.
@@ -71,3 +101,30 @@ Most DSA references are one of two things: **a textbook** (dense theory, no inte
 ## Also available as PDF
 
 The full 300+ page reference is also available as a PDF (light + dark themes) — [download from Releases](https://github.com/abhisinghal/dsa-master-reference/releases).
+
+<style scoped>
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  padding: 24px 0;
+  margin: 24px 0;
+  border-top: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+.stat {
+  text-align: center;
+}
+.stat-value {
+  font-size: 2em;
+  font-weight: 800;
+  color: var(--vp-c-brand-1);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.82em;
+  color: var(--vp-c-text-2);
+  margin-top: 6px;
+  font-weight: 500;
+}
+</style>
