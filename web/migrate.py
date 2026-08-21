@@ -6,8 +6,10 @@
 # Preserves fenced code blocks (no transformation inside them).
 import os, re, shutil, glob
 
-SRC = r"C:\Users\absinghal\DSA-Master-Reference\gen\src2"
-DST = r"C:\Users\absinghal\DSA-Master-Reference\web\docs"
+# Compute paths relative to this script
+_HERE = os.path.dirname(os.path.abspath(__file__))
+SRC = os.path.abspath(os.path.join(_HERE, "..", "gen", "src2"))
+DST = os.path.abspath(os.path.join(_HERE, "docs"))
 
 # File slug mapping (source -> destination path relative to DST)
 MAPPING = {
