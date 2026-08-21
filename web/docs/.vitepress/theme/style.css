@@ -1,5 +1,6 @@
 /* DSA Master Reference custom theme
-   2026-08 contrast/print audit: lightened dark text/link/code/badge colors to meet WCAG AA and expanded print rules for clean PDFs. */
+   2026-08 contrast/print audit: lightened dark text/link/code/badge colors to meet WCAG AA and expanded print rules for clean PDFs.
+   2026-08 Tier-1 visuals sprint: added DSA design tokens (--dsa-*) so every SVG figure shares one visual system. */
 
 :root {
   --vp-c-brand-1: #2563eb;
@@ -10,6 +11,60 @@
   --vp-c-tip-soft: rgba(37, 99, 235, 0.14);
   --vp-font-family-base: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --vp-font-family-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+
+  /* ==============================================
+     DSA VISUAL DESIGN TOKENS
+     Every SVG figure in the book references these.
+     Change here → cascade to every visual.
+     ============================================== */
+
+  /* Semantic colors — role, not hue */
+  --dsa-primary:      #2563eb;   /* current pointer, main highlight */
+  --dsa-primary-soft: #dbeafe;   /* fill under primary elements */
+  --dsa-primary-line: #93c5fd;   /* mid-tone stroke */
+
+  --dsa-success:      #16a34a;   /* enters / added / correct */
+  --dsa-success-soft: #dcfce7;
+  --dsa-success-line: #86efac;
+
+  --dsa-danger:       #dc2626;   /* leaves / removed / incorrect */
+  --dsa-danger-soft:  #fef2f2;
+  --dsa-danger-line:  #fca5a5;
+
+  --dsa-warning:      #b45309;   /* invariant / attention */
+  --dsa-warning-soft: #fef3c7;
+  --dsa-warning-line: #fbbf24;
+
+  --dsa-info:         #0e7490;   /* definition / neutral emphasis */
+  --dsa-info-soft:    #cffafe;
+  --dsa-info-line:    #67e8f9;
+
+  --dsa-neutral:      #64748b;   /* muted labels, axis lines */
+  --dsa-neutral-soft: #f1f5f9;   /* empty cell fill */
+  --dsa-neutral-line: #cbd5e1;   /* subtle borders */
+
+  --dsa-ink:          #0b1220;   /* text on cells */
+  --dsa-bg:           #fbfcfe;   /* figure background */
+
+  /* Cell geometry */
+  --dsa-cell-w: 44px;
+  --dsa-cell-h: 44px;
+  --dsa-cell-radius: 7px;
+  --dsa-cell-stroke: 1.6px;
+
+  /* Window / group outlines */
+  --dsa-outline-stroke: 2.4px;
+  --dsa-outline-radius: 10px;
+
+  /* Arrows */
+  --dsa-arrow-stroke: 2px;
+
+  /* Typography */
+  --dsa-font: "Segoe UI", "Inter", Arial, sans-serif;
+  --dsa-value-size: 17px;
+  --dsa-index-size: 11px;
+  --dsa-label-size: 12px;
+  --dsa-caption-size: 11.5px;
 }
 
 .dark {
@@ -28,6 +83,35 @@
   --vp-code-block-bg: #0a0c10;
   --vp-code-block-color: #f0f3f6;
   --vp-code-line-number-color: #9ea7b3;
+
+  /* Dark-mode DSA tokens */
+  --dsa-primary:      #93c5fd;
+  --dsa-primary-soft: rgba(37, 99, 235, 0.18);
+  --dsa-primary-line: #60a5fa;
+
+  --dsa-success:      #86efac;
+  --dsa-success-soft: rgba(22, 163, 74, 0.15);
+  --dsa-success-line: #4ade80;
+
+  --dsa-danger:       #fca5a5;
+  --dsa-danger-soft:  rgba(220, 38, 38, 0.14);
+  --dsa-danger-line:  #f87171;
+
+  --dsa-warning:      #fde68a;
+  --dsa-warning-soft: rgba(180, 83, 9, 0.16);
+  --dsa-warning-line: #fbbf24;
+
+  --dsa-info:         #67e8f9;
+  --dsa-info-soft:    rgba(14, 116, 144, 0.16);
+  --dsa-info-line:    #22d3ee;
+
+  --dsa-neutral:      #cbd5e1;
+  --dsa-neutral-soft: rgba(255, 255, 255, 0.04);
+  --dsa-neutral-line: #475569;
+
+  --dsa-ink:          #f1f5f9;
+  --dsa-bg:           #0f172a;
+}
 }
 
 /* Difficulty badges */

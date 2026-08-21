@@ -15,6 +15,7 @@ import Breadcrumbs from './Breadcrumbs.vue'
 import ReadingTime from './ReadingTime.vue'
 import RecentUpdates from './RecentUpdates.vue'
 import Quiz from './Quiz.vue'
+import StepStrip from './StepStrip.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -41,6 +42,7 @@ export default {
     app.component('ReadingTime', ReadingTime)
     app.component('RecentUpdates', RecentUpdates)
     app.component('Quiz', Quiz)
+    app.component('StepStrip', StepStrip)
     installSolvedCountBadges(router)
   }
 }
