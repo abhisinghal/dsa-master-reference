@@ -384,6 +384,13 @@ Space is O(1) because the algorithm stores a running sum, two pointers, and the 
 
 *[↗ LeetCode: Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)*
 
+### Try it yourself
+
+Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
+
+<JavaRunner problemSlug="longest-substring-without-repeating-characters" :tests='[{ input: "abcabcbb", expected: "3" }, { input: "bbbbb", expected: "1" }, { input: "pwwkew", expected: "3" }]' />
+
+
 <ProgressCheck id="longest-substring-without-repeating-characters" />
 
 ### Problem

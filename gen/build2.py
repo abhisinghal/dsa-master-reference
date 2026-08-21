@@ -7,7 +7,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Monkey-patch environment so build.py picks up src2/ and v8 output
 os.environ["DSA_SRC_DIR"] = "src2"
-os.environ["DSA_OUT_MD"] = r"C:\Users\absinghal\Downloads\Int\DSA_MASTER_REFERENCE8.md"
+os.environ["DSA_OUT_MD"] = r"C:\Users\absinghal\Downloads\Int\DSA_MASTER_REFERENCE9.md"
 os.environ["DSA_OUT_HTML_LIGHT"] = os.path.join(ROOT, "output8.html")
 os.environ["DSA_OUT_HTML_DARK"] = os.path.join(ROOT, "output8_dark.html")
 

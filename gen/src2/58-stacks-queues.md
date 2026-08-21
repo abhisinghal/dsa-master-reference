@@ -9,6 +9,13 @@ This chapter covers the plain stack/queue *containers* — their operations and 
 
 *[↗ LeetCode: Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)*
 
+### Try it yourself
+
+Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
+
+<JavaRunner problemSlug="valid-parentheses" :tests='[{ input: "()", expected: "true" }, { input: "()[]{}", expected: "true" }, { input: "(]", expected: "false" }]' />
+
+
 <ProgressCheck id="valid-parentheses" />
 
 ### Problem

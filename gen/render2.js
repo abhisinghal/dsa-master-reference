@@ -2,8 +2,8 @@
 // Runs the same render.js logic but with v8 output paths.
 process.env.DSA_HTML_LIGHT = "output8.html";
 process.env.DSA_HTML_DARK = "output8_dark.html";
-process.env.DSA_PDF_LIGHT = "C:\\Users\\absinghal\\Downloads\\Int\\DSA_MASTER_REFERENCE8.pdf";
-process.env.DSA_PDF_DARK = "C:\\Users\\absinghal\\Downloads\\Int\\DSA_MASTER_REFERENCE8_dark.pdf";
+process.env.DSA_PDF_LIGHT = "C:\\Users\\absinghal\\Downloads\\Int\\DSA_MASTER_REFERENCE9.pdf";
+process.env.DSA_PDF_DARK = "C:\\Users\\absinghal\\Downloads\\Int\\DSA_MASTER_REFERENCE9_dark.pdf";
 
 const fs = require("fs");
 const path = require("path");

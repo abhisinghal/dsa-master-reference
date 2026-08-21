@@ -9,6 +9,13 @@ Linked-list problems aren't really about clever algorithms — they're about **p
 
 *[↗ LeetCode: Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)*
 
+### Try it yourself
+
+Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
+
+<JavaRunner problemSlug="reverse-linked-list" :tests='[{ input: "5\n1 2 3 4 5", expected: "5 4 3 2 1" }, { input: "2\n1 2", expected: "2 1" }]' />
+
+
 <ProgressCheck id="reverse-a-linked-list" />
 
 ### Problem

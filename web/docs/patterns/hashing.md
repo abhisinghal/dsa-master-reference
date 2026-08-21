@@ -24,6 +24,13 @@ You need a *contiguous* result (subarray, substring) and the running quantity is
 
 *[↗ LeetCode: Two Sum](https://leetcode.com/problems/two-sum/)*
 
+### Try it yourself
+
+Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
+
+&lt;JavaRunner problemSlug="two-sum" :tests='[{ input: "4\n2 7 11 15\n9", expected: "0 1" }, { input: "2\n3 3\n6", expected: "0 1" }]' /&gt;
+
+
 <ProgressCheck id="two-sum" />
 
 ### Problem
