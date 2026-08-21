@@ -1,5 +1,11 @@
 # Union-Find (Disjoint Set Union)
 
+## Why union-find exists — the story
+
+Imagine edges arriving one at a time: city 0 connects to city 1, account A shares an email with account B, stone x shares a row with stone y. The brute-force instinct is to rebuild the connected components with DFS/BFS after every new edge. That works for one static graph, but it repeats old work when all you need is “are these two already in the same group?”
+
+Can we do better? Union-Find keeps one representative root per group. Each new edge either merges two roots or tells you the edge was redundant. Path compression and union by rank make those repeated membership checks nearly constant time.
+
 *Dynamic connectivity as edges arrive.* Maintain a parent pointer per node. `find(x)` walks to the root (with path compression flattening the trail); `union(a,b)` attaches the shorter tree under the taller (union by rank). Both amortize to near-**O(1)** — inverse Ackermann.
 
 > [key] **Key Insight** — Union-Find is not a *tree traversal* algorithm; it's a *set-membership* structure. When you need "are these two things in the same group?" or "how many groups?" as edges arrive, reach for it before BFS/DFS.
@@ -44,6 +50,8 @@
 ```
 <div class="readfig"><b>How to read it:</b> Before compression, <code>find(a)</code> has to climb every parent pointer until it reaches the representative root. On the return trip, path compression rewrites each visited node's parent to the root. The set membership is unchanged, but future <code>find</code> calls on <b>a</b>, <b>b</b>, <b>c</b>, or <b>d</b> are nearly instant.</div>
 
+## When to use it — dynamic connectivity
+
 ### Recognize by
 - *dynamic connectivity* — edges arrive over time; answer "same group?" as they do
 - "count connected components / groups / islands"
@@ -54,20 +62,37 @@ You need to *walk* the components (traversal, distances, colouring) — Union-Fi
 
 ---
 
-## Union-Find (Disjoint Set Union)
+## Union-Find (Disjoint Set Union) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Number of Provinces](https://leetcode.com/problems/number-of-provinces/)*
+
+<ProgressCheck id="union-find-disjoint-set-union" />
 
 ### Problem
 Given an `n×n` friendship matrix, count the number of **provinces** — connected groups of directly or indirectly connected people.
 
 **Constraints:** `1 ≤ n ≤ 200`; matrix symmetric with `1` on the diagonal.
 
-**Example:** `[[1,1,0],[1,1,0],[0,0,1]]` → `2`.
+**Example 1:** `[[1,1,0],[1,1,0],[0,0,1]]` → `2`.
 
-### Brute force
+**Example 2:** `[[1,0,0],[0,1,0],[0,0,1]]` → `3` because every city is isolated.
+
+### Solution — brute force
 Brute force for provinces is to run DFS/BFS over the friendship matrix, marking every connected city once. That solves this static problem in O(n²) time and O(n) space, which is fine for a single matrix but does not support many online connectivity checks elegantly. Union-Find turns each friendship into a merge and answers group membership through roots, with path compression and rank keeping operations effectively constant.
 
-### Pattern
+```text
+visited = set()
+provinces = 0
+for each city i:
+    if i is unvisited:
+        provinces++
+        DFS/BFS through every j where isConnected[i][j] == 1
+return provinces
+```
+
+Brute force complexity: O(n²) time to scan the matrix and O(n) space for visited/search state.
+
+### Solution — optimized
 Forest of parent pointers with **path compression** + **union by rank/size** → α(n) amortized per operation.
 
 > [inv] **Invariant** — Every element in a set points (eventually) to one canonical root; `find` returns and compresses toward it.
@@ -88,7 +113,7 @@ flowchart LR
 <div class="figcap">Union-Find — path compression flattens trees; union-by-rank keeps them shallow, giving ~O(1) ops.</div>
 <div class="readfig"><b>How to read it:</b> Each group is a little tree, and the node at the top (the root) is the group's name. `find(x)` walks up parent links to that root, and along the way it re-points nodes straight at the root — "path compression" — so next time is instant. `union(a,b)` finds both roots; if they're the same, a and b are already together, otherwise it hangs the shorter tree under the taller one so things stay flat. These two tricks make every operation effectively constant time.</div>
 
-### Java
+#### Java
 ```java
 class DSU {
     int[] parent, rank;
@@ -113,7 +138,22 @@ class DSU {
 
 > [note] **Trace it** — `isConnected=[[1,1,0],[1,1,0],[0,0,1]]`. Union cities 0 and 1 (they share an edge); city 2 stays alone → **2** provinces (2 disjoint sets).
 
-### Complexity
+### Time Complexity
+Time O(n² · α(n)) for scanning the matrix and unioning friendships; each DSU operation is effectively constant.
+
+### Space Complexity
+Space O(n) for the parent and rank arrays.
+
+### Learning notes
+- Why initialize `parent[i] = i`? — every city starts as its own representative.
+- Why path compression in `find`? — it flattens future root lookups.
+- Why union by rank? — attaching shorter trees under taller ones keeps finds shallow.
+- Why return `false` when roots match? — the two nodes were already in the same component.
+- Why count roots/components after unions? — provinces are connected components, not direct friendships.
+- Why DSU over traversal? — it shines when connectivity merges or repeated same-set checks arrive online.
+
+Additional notes:
+
 Near O(α(n)) per op ≈ O(1).
 
 > [note] **Interview script** — "I first confirm the matrix represents undirected connectivity and I only need the number of connected groups. I start with brute force DFS or BFS over the matrix, which is O(n²) time and O(n) space. I optimize for repeated connectivity work with DSU path compression and union by rank, giving near O(1) amortized operations after scanning the O(n²) matrix."
@@ -123,7 +163,7 @@ Near O(α(n)) per op ≈ O(1).
 
 > [pat] **Pattern Connection** — DSU is the engine for *Number of Provinces*, *Accounts Merge* (union by shared email), *Redundant Connection* (the edge that first connects an already-connected pair), and Kruskal's MST. A `union` that returns false in an undirected graph means you just closed a cycle.
 
-### Same pattern, new tweaks
+#### Same pattern, new tweaks
 
 "Merge things and ask 'are these two in the same group?' in near-O(1)":
 
@@ -136,25 +176,40 @@ Near O(α(n)) per op ≈ O(1).
 | [Most Stones Removed](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) | union stones sharing a row or column; removable = total − components | — |
 
 
-## Minimum Spanning Tree — Kruskal + Union-Find
+## Minimum Spanning Tree — Kruskal + Union-Find <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)*
+
+<ProgressCheck id="minimum-spanning-tree-kruskal-union-find" />
 
 ### Problem
 Given points on a plane, connect **all** of them with minimum total cost, where an edge's cost is the Manhattan distance — i.e. build a minimum spanning tree.
 
 **Constraints:** `1 ≤ n ≤ 1000`.
 
-**Example:** choosing the cheapest cycle-free edges (e.g. weights `2,3,4,5`) → their sum.
+**Example 1:** choosing the cheapest cycle-free edges (e.g. weights `2,3,4,5`) → their sum.
 
-### Brute force
+**Example 2:** `points = [[3,12],[-2,5],[-4,1]]` → `18` for the minimum Manhattan connection cost.
+
+### Solution — brute force
 Brute force would try combinations of edges until it finds a connected cycle-free set of `V-1` edges with minimum total weight. That is exponential in the number of edges and only useful as a correctness definition. Kruskal's optimization sorts edges by weight and uses Union-Find to accept exactly the cheapest edges that connect different components, relying on the cut property instead of enumerating trees.
 
-### Pattern
+```text
+best = infinity
+for each subset of edges with V - 1 edges:
+    if the subset connects all vertices and has no cycle:
+        best = min(best, total weight)
+return best
+```
+
+Brute force complexity: exponential in E because it enumerates candidate spanning trees.
+
+### Solution — optimized
 Sort edges ascending; add an edge iff it joins two different components (no cycle). Union-Find tests connectivity in near-O(1).
 
 > [inv] **Invariant** — The chosen edges always form a forest; adding the globally-cheapest cross-component edge is safe (cut property).
 
-### Java
+#### Java
 ```java
 int minCostMST(int n, int[][] edges) {                // edges: {u, v, w}
     Arrays.sort(edges, (a, b) -> a[2] - b[2]);
@@ -169,7 +224,22 @@ int minCostMST(int n, int[][] edges) {                // edges: {u, v, w}
 
 > [note] **Trace it** — points where the cheapest edges are `2, 3, 4, 5`. Kruskal adds them cheapest-first, skipping any edge whose two endpoints are already connected, until all points form one tree.
 
-### Complexity
+### Time Complexity
+Time O(E log E). Sorting edges dominates; DSU checks are near O(1) amortized.
+
+### Space Complexity
+Space O(V) for DSU state, assuming the edge list is already materialized.
+
+### Learning notes
+- Why sort edges by weight? — Kruskal must consider the cheapest safe edge first.
+- Why call `dsu.union` before adding cost? — a false return means the edge would create a cycle.
+- Why stop at `n - 1` edges? — any connected tree on n vertices has exactly n−1 edges.
+- Why return `-1` if not enough edges were used? — the graph was disconnected.
+- Why Union-Find here? — it answers “already connected?” fast while the forest grows.
+- Why the cut property matters? — the cheapest edge crossing any component cut is safe to add.
+
+Additional notes:
+
 Time O(E log E) · Space O(V).
 
 > [note] **Interview script** — "I first confirm the graph is undirected and I need the minimum-cost way to connect all vertices. I start with brute force by enumerating possible spanning trees, which is exponential in the edge count. I optimize with Kruskal: sort edges and use DSU to skip cycles, giving O(E log E) time and O(V) space."
@@ -179,7 +249,7 @@ Time O(E log E) · Space O(V).
 
 > [trap] **Common Trap** — Adding before union-check. *Example:* edges `[(A,B,1),(B,C,2),(A,C,3)]`. After adding the first two, A-B-C are connected. If you add `(A,C,3)` without `find(A) != find(C)`, you form a cycle and inflate the total. Trust `union`'s return.
 
-### Same pattern, new tweaks
+#### Same pattern, new tweaks
 
 "Add the cheapest edge that joins two components" (Kruskal) or "grow one tree by its cheapest border edge" (Prim):
 

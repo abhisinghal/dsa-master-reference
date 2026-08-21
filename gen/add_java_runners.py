@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Add <JavaRunner> embed to top problems in src2/.
+"""Add <JavaRunner> embed to top problems in src/.
 Each embed goes RIGHT AFTER the LC-link line for a problem."""
 import os, re, glob
 
-SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "gen", "src2")
+SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "gen", "src")
 
 # Test cases per problem — used by JavaRunner via Judge0.
 # Each test: input as stdin (n on line 1, array space-separated on line 2, target on line 3), expected output.

@@ -83,17 +83,35 @@ This is a common interview twist: topological sort is only half the solution. Th
 
 ---
 
-## Course Schedule (Topological Sort)
+## Course Schedule (Topological Sort) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)*
+
+<ProgressCheck id="course-schedule-topological-sort" />
 
 ### Problem
 Given `numCourses` and prerequisite pairs `[a,b]` (finish `b` before `a`), return a **valid order** to take all courses, or an empty array if impossible (a cycle exists).
 
 **Constraints:** `1 ≤ numCourses ≤ 2000`; up to `5000` prerequisite pairs.
 
-**Example:** 4 courses, prereqs `1→0, 2→0, 3→1, 3→2` → `[0,1,2,3]`.
+**Example 1:** 4 courses, prereqs `1→0, 2→0, 3→1, 3→2` → `[0,1,2,3]`.
 
-### Pattern
+**Example 2:** `numCourses = 2`, prerequisites `[[1,0],[0,1]]` → `[]` because the cycle makes an order impossible.
+
+### Solution — brute force
+A simple but slow approach repeatedly scans all courses looking for one whose prerequisites are already completed.
+
+```java
+// Pseudocode baseline:
+// while order has fewer than numCourses:
+//     find an uncompleted course whose every prerequisite is completed
+//     if none exists, return [] because a cycle blocks progress
+//     mark it completed and append it to order
+```
+
+This is conceptually Kahn's algorithm without the in-degree bookkeeping. Each round may scan every course and every prerequisite again, so it can degrade toward O(VE). Kahn optimizes the same idea by storing "remaining prerequisite count" and updating only neighbours of the course you just completed.
+
+### Solution — optimized
 Kahn's algorithm: repeatedly remove in-degree-0 nodes. If you can't emit all nodes, a cycle exists.
 
 > [inv] **Invariant** — A node enters the queue only when every prerequisite is already emitted; the emission order is a valid topological order.
@@ -112,27 +130,14 @@ flowchart TD
 <div class="figcap">Kahn's algorithm — repeatedly remove in-degree-0 nodes; incompleteness proves a cycle.</div>
 <div class="readfig"><b>How to read it:</b> "In-degree" is how many prerequisites a task still has. Start by queueing every task with zero prerequisites — those are safe to do now. Each time you finish one (pop it), you remove it as a prerequisite from its dependents, and any dependent that drops to zero becomes free, so it joins the queue. Follow the loop and you emit a valid order. If you get stuck before finishing everything, the leftover tasks depend on each other in a circle — a cycle — so no order exists.</div>
 
-### Brute force
-A simple but slow approach repeatedly scans all courses looking for one whose prerequisites are already completed.
-
-```java
-// Pseudocode baseline:
-// while order has fewer than numCourses:
-//     find an uncompleted course whose every prerequisite is completed
-//     if none exists, return [] because a cycle blocks progress
-//     mark it completed and append it to order
-```
-
-This is conceptually Kahn's algorithm without the in-degree bookkeeping. Each round may scan every course and every prerequisite again, so it can degrade toward O(VE). Kahn optimizes the same idea by storing "remaining prerequisite count" and updating only neighbours of the course you just completed.
-
-### Steps
+#### Steps
 1. Build the adjacency list `graph[prereq] → [course]` and an `inDegree[]` counter.
 2. Enqueue every node with `inDegree == 0` — they can start immediately.
 3. Repeatedly pop, add to the order, and decrement each neighbour's in-degree. Enqueue neighbours whose in-degree hits 0.
 4. After the loop, if `order.size() < V` — there was a cycle → return `[]` (or `false` for the boolean variant).
 5. Otherwise return the order. O(V + E) time.
 
-### Java
+#### Java
 ```java
 int[] findOrder(int numCourses, int[][] prereqs) {
     List<List<Integer>> adj = new ArrayList<>();
@@ -163,22 +168,37 @@ int[] findOrder(int numCourses, int[][] prereqs) {
 > All four courses were emitted, so no cycle exists.
 
 
-### Edge-building intuition
+#### Edge-building intuition
 The most common Course Schedule bug is direction. Pair `[a,b]` means "to take `a`, first take `b`." So the unlock direction is `b → a`: completing `b` reduces the remaining prerequisite count of `a`. If you reverse it, your graph still has the same nodes and the code still runs, which makes the bug feel sneaky, but the queue now represents courses unlocked by their dependents instead of by their prerequisites.
 
 Isolated courses matter too. If `numCourses = 4` and only course `3` appears in prerequisites, courses `0`, `1`, and `2` are still valid zero-in-degree courses. Initialize adjacency for every course from `0` to `numCourses-1`, not just for keys seen in the edge list. A topo order must include all vertices, including the boring ones.
 
-### What if multiple nodes are available?
+#### What if multiple nodes are available?
 When the queue contains `[1,2]`, either order is valid unless the problem asks for lexicographically smallest order. For standard Course Schedule II, returning `[0,1,2,3]` or `[0,2,1,3]` is fine. If a problem wants the smallest valid order, replace the FIFO queue with a min-heap. The pattern is unchanged: remove a zero-in-degree node, emit it, and unlock neighbours. Only the policy for choosing among currently-free nodes changes.
 
-### Complexity
+### Time Complexity
+Time O(V + E). Building adjacency touches each prerequisite once, and Kahn processes every node and edge once.
+
+### Space Complexity
+Space O(V + E) for the adjacency list, in-degree array, queue, and output order.
+
+### Learning notes
+- Why add edge `p[1] → p[0]`? — finishing the prerequisite unlocks the dependent course.
+- Why maintain `indeg[]`? — it is the remaining prerequisite count for each node.
+- Why enqueue only `indeg == 0`? — those courses are safe to take immediately.
+- Why `--indeg[v] == 0`? — a neighbour becomes available exactly when its last prerequisite is removed.
+- Why compare `k == numCourses`? — emitting fewer nodes means a cycle blocked the queue.
+- Why Kahn over DFS here? — the BFS queue makes cycle detection and “available now” reasoning visible.
+
+Additional notes:
+
 Time O(V+E) · Space O(V+E). Building the graph touches each edge once, and the queue loop removes each node and edge once.
 
 > [trap] **Common Trap** — Not detecting cycles. *Example:* prerequisites `0→1` and `1→0`. Kahn's queue starts empty (no in-degree-0 node); if `order.size() < V` at the end, report "impossible" rather than a partial order.
 
 > [note] **Interview script** — First, I'd restate the edge direction: pair `[a,b]` means `b` must come before `a`, so I add edge `b → a`. The brute force is to repeatedly scan for a course whose prerequisites are all done, but that repeats work. I optimize with Kahn's algorithm: maintain in-degrees, queue all zero-in-degree courses, and decrement neighbours as I emit courses. If I emit fewer than `numCourses`, I know a cycle prevented completion; otherwise the order is valid in O(V+E).
 
-### Common Mistakes
+#### Common Mistakes
 - **Edge direction reversed**: `prereq → course`, not `course → prereq`. Reverse it and cycle detection breaks.
 - **Not detecting the cycle**: if `order.size() < V` at the end, report impossible — don't return a partial order.
 - **Building the graph off `numCourses` instead of the max node index**: initialize adjacency for all `numCourses` even if some are isolated.
@@ -188,16 +208,16 @@ Time O(V+E) · Space O(V+E). Building the graph touches each edge once, and the 
 
 
 
-### Layered Kahn for semesters
+#### Layered Kahn for semesters
 Sometimes the question is not "what is one order?" but "how many rounds are needed if all currently-free tasks can run together?" Use the same queue, but process it level by level. At the start of a semester, the queue contains every course whose prerequisites were finished in earlier semesters. Pop exactly that many nodes, unlock neighbours, then increment the semester count. This is still Kahn's algorithm; the answer you record changes from a flat list to a number of waves.
 
-### Uniqueness check
+#### Uniqueness check
 If a problem asks whether a proposed sequence is the only possible reconstruction, watch the queue size. In Kahn's algorithm, a queue with two or more nodes means you have a choice, so multiple valid orders exist. A unique topo order requires exactly one available node at every step, and that node must match the proposed sequence. This is a small tweak, but it shows how much information the "available now" frontier gives you.
 
-### DFS variant in interview words
+#### DFS variant in interview words
 If I choose DFS instead, I would say: "I mark a node as visiting when it enters the recursion stack. If I ever reach a visiting node again, that is a directed cycle. After all neighbours are safely processed, I mark the node done and append it to post-order. At the end I reverse post-order to get prerequisites before dependents." This version uses the call stack instead of an explicit queue, but the output contract and O(V+E) complexity are the same.
 
-### Same pattern, new tweaks
+#### Same pattern, new tweaks
 
 "Repeatedly remove what has no remaining prerequisites" (Kahn) adapts by changing what the nodes/edges mean:
 

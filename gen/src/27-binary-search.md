@@ -1,5 +1,9 @@
 # Binary Search &amp; Search-on-Answer
 
+Start with the motivating problem: find one target in a sorted list. Brute force checks every element from left to right, which is O(n) even though the ordering is screaming useful information at you.
+
+Can we do better? Yes — one comparison at the middle tells you that half the search space is impossible. Repeat that discard-half move until the answer is forced.
+
 The whole idea is embarrassingly simple: if your data is **ordered**, you never look at half of it. Guess the middle. If the middle is too small, the answer must be in the right half, so throw the left half away. Too big? Throw the right half away. Each guess **halves** what's left, so even a billion elements are settled in about 30 steps (`log₂ 10⁹ ≈ 30`).
 
 ```svg
@@ -81,32 +85,50 @@ int firstTrue(int lo, int hi, IntPredicate P) {   // hi is exclusive; returns hi
 
 > [trap] **Common Trap** — Mixing conventions. Pick half-open `[lo,hi)` with `hi=mid`/`lo=mid+1` and never write `hi=mid-1` in the same template. Use `lo + (hi-lo)/2` to avoid overflow. For "last true", find first-false and step back.
 
-## Search in Rotated Sorted Array
+## Search in Rotated Sorted Array <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)*
+
+<ProgressCheck id="search-in-rotated-sorted-array" />
 
 ### Problem
 A sorted array was **rotated** at an unknown pivot. Find the index of `target` (or -1) in **O(log n)**.
 
 **Constraints:** `1 ≤ n ≤ 5000`; all values distinct; must be O(log n).
 
-**Example:** `[4,5,6,7,0,1,2], target = 0` → `4`.
+**Example 1:** `[4,5,6,7,0,1,2], target = 0` → `4`.
 
-### Brute force
+**Example 2:** `[4,5,6,7,0,1,2], target = 3` → `-1`.
+
+### Solution — brute force
 Brute force scans the array from left to right and returns the index whose value equals `target`. It is O(n) time and O(1) space, which is acceptable for tiny arrays but misses the required logarithmic guarantee. The optimized version keeps binary search alive by noticing that at least one half around `mid` is sorted, then discarding the half where the target cannot live.
 
-### Pattern
+```java
+int searchBrute(int[] a, int target) {
+    for (int i = 0; i < a.length; i++) {
+        if (a[i] == target) return i;
+    }
+    return -1;
+}
+```
+
+O(n) time, O(1) space — too slow when the prompt explicitly requires logarithmic search.
+
+### Solution — optimized
 One half of a rotated array is always sorted; decide which, then whether the target lies in it.
 
 > [key] **Key Insight** — Compare `a[mid]` to `a[lo]`. If `a[lo] ≤ a[mid]`, the left half is sorted; check if target is inside `[a[lo], a[mid])`. Otherwise the right half is sorted. Discard the half that provably cannot contain the target.
 
-### Steps
+The optimized version is still binary search, but each iteration first identifies the sorted half. Once you know which half is ordered, one range check tells you whether the target can be there; if not, safely discard that half.
+
+#### Steps
 1. Binary-search with a twist: at every `mid`, decide **which half is sorted**, then check if `target` falls in it.
 2. `mid = lo + (hi - lo) / 2`. If `a[mid] == target`, return `mid`.
 3. If `a[lo] <= a[mid]` — left half `[lo..mid]` is sorted. If `a[lo] <= target < a[mid]` → `hi = mid - 1`; else `lo = mid + 1`.
 4. Otherwise the right half `[mid..hi]` is sorted. If `a[mid] < target <= a[hi]` → `lo = mid + 1`; else `hi = mid - 1`.
 5. Loop while `lo <= hi`; return `-1` if not found.
 
-### Java
+The optimized Java implementation:
 ```java
 int search(int[] a, int target) {
     int lo = 0, hi = a.length - 1;
@@ -127,18 +149,25 @@ int search(int[] a, int target) {
 
 > [note] **Trace it** — `[4,5,6,7,0,1,2], target=0`. `mid=7`; the left half `[4..7]` is sorted but `0` isn't inside it, so search right → find `0` at index 4.
 
-Time O(log n) · Space O(1).
+### Time Complexity
+O(log n), because every iteration discards one half of the current range after proving the target cannot be there.
+
+### Space Complexity
+O(1), because the algorithm keeps only `lo`, `hi`, and `mid` plus a few comparisons.
 
 > [note] **Interview script** — "I first confirm values are distinct and the array is a sorted array rotated once. I start with brute force by scanning every index, which is O(n) time and O(1) space. I optimize by binary-searching the sorted half at each step, discarding half the array for O(log n) time and O(1) space."
 
 
 > [trap] **Common Trap** — Wrong inclusivity on the "sorted-half" test. *Example:* `nums=[3,1]`, `target=1`, `lo=0, hi=1, mid=0`. With strict `a[lo] < a[mid]`, a single-element left half `[3]` isn't marked sorted and the algorithm misroutes. Use `a[lo] <= a[mid]`.
 
-### Common Mistakes
+### Learning notes
 - **Strict vs inclusive** on the sorted-half test — use `a[lo] <= a[mid]` so a length-1 left half is treated as sorted.
 - **Comparing target inclusively on the wrong endpoint** — the target-in-range checks must match the sorted-half boundary.
 - **Overflow on `(lo+hi)/2`** for large indices — use `lo + (hi-lo)/2`.
 - **Assumes no duplicates**; with duplicates (LC 81), shrink both ends when `a[lo]==a[mid]==a[hi]`.
+- Why `while (lo <= hi)`? — this is a closed interval search, so `lo == hi` is still one valid candidate to check.
+- Why return immediately on `a[mid] == target`? — unlike lower-bound search, this problem asks for any exact index.
+- Why check the sorted half first? — rotation breaks global ordering, but at least one side around `mid` remains locally sorted.
 
 > [pat] **Pattern Connection** — *Find Minimum in Rotated Sorted Array* is the same "which half is sorted" logic reduced to locating the inflection point.
 

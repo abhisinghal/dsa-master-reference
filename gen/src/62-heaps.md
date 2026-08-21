@@ -99,25 +99,27 @@ Merging sorted streams is the purest heap use case: each stream already has loca
 
 ---
 
-## Find Median from Data Stream (Two Heaps)
+## Find Median from Data Stream (Two Heaps) <span class="diff diff-h">Hard</span>
+
+
 *[↗ LeetCode: Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)*
 
+<ProgressCheck id="find-median-from-data-stream-two-heaps" />
+
 ### Problem
+
 Support `addNum(x)` on a growing stream and `findMedian()` returning the current median — both efficiently.
 
 **Constraints:** up to `5·10⁴` calls; `addNum` O(log n), `findMedian` O(1).
 
 **Example:** add `1, 2` → median `1.5`; then add `3` → median `2`.
 
-### Pattern
-A **max-heap** for the lower half and a **min-heap** for the upper half, balanced in size. The median is a heap top (or the average of two).
+**Example 1:** add 1, add 2 -> median 1.5; add 3 -> median 2.
 
-> [inv] **Invariant** — Every element in `low` (max-heap) ≤ every element in `high` (min-heap); sizes differ by at most 1. The medians sit at the two roots.
+**Example 2:** add 5,15,1,3 -> medians 5,10,5,4.
 
-<div class="figcap">Two-heap median — funnel through <code>high</code>, rebalance by size; ordering across the two roots is preserved.</div>
-<div class="readfig"><b>How to read it:</b> Split the numbers into a smaller half and a larger half. The smaller half sits in a max-heap (so its biggest is on top) and the larger half in a min-heap (so its smallest is on top) — which means the two tops are exactly the middle values. Every new number is passed through <code>high</code> and then the halves are rebalanced so their sizes differ by at most one. The median is then just the top of the bigger half, or the average of the two tops when they're equal in size.</div>
+### Solution — brute force
 
-### Brute force baseline
 The simplest design stores every value in a list. On each `findMedian`, sort a copy and read the middle.
 
 ```java
@@ -138,7 +140,17 @@ That makes `addNum` O(1), but `findMedian` O(n log n). Keeping a sorted list imp
 
 There is also a `TreeMap<Integer, count>` approach: insert in O(log n), keep two counters or iterators around the middle, and answer median in O(1) or O(log n) depending on how much machinery you maintain. It is valid, but in Java interviews the two-heap version is shorter and easier to reason about.
 
-### Java
+### Solution — optimized
+
+**Pattern:**
+A **max-heap** for the lower half and a **min-heap** for the upper half, balanced in size. The median is a heap top (or the average of two).
+
+> [inv] **Invariant** — Every element in `low` (max-heap) ≤ every element in `high` (min-heap); sizes differ by at most 1. The medians sit at the two roots.
+
+<div class="figcap">Two-heap median — funnel through <code>high</code>, rebalance by size; ordering across the two roots is preserved.</div>
+<div class="readfig"><b>How to read it:</b> Split the numbers into a smaller half and a larger half. The smaller half sits in a max-heap (so its biggest is on top) and the larger half in a min-heap (so its smallest is on top) — which means the two tops are exactly the middle values. Every new number is passed through <code>high</code> and then the halves are rebalanced so their sizes differ by at most one. The median is then just the top of the bigger half, or the average of the two tops when they're equal in size.</div>
+
+**Java:**
 ```java
 class MedianFinder {
     private final PriorityQueue<Integer> low  = new PriorityQueue<>(Collections.reverseOrder()); // max-heap
@@ -157,8 +169,15 @@ class MedianFinder {
 
 > [note] **Trace it** — Stream `1,2,3,4`. Add `1`: `low=[1]`, `high=[]`, median `1`. Add `2`: push through `low` into `high`, then sizes are equal: `low=[1]`, `high=[2]`, median `(1+2)/2 = 1.5`. Add `3`: `3` moves to `high`, then `2` rebalances back to `low`, so roots are `2 | 3`, median `2`. Add `4`: halves become `low=[2,1]`, `high=[3,4]`, median `2.5`.
 
-### Complexity
-`addNum` O(log n) · `findMedian` O(1) · Space O(n).
+### Time Complexity
+
+O(log n) per addNum and O(1) per findMedian.
+
+Original summary: `addNum` O(log n) · `findMedian` O(1) · Space O(n).
+
+### Space Complexity
+
+O(n) across the two heaps.
 
 > [trap] **Common Trap** — Skipping the rebalance. *Example:* insert 1,2,3,4. Without rebalancing, all four might land in the low-heap → median unreadable. After every insert: push to `low`, move `low.top` to `high`; if `high.size() > low.size()` move one back. Two peeks give the median.
 
@@ -168,7 +187,15 @@ class MedianFinder {
 
 > [pat] **Pattern Connection** — Two balanced heaps also solve *Sliding Window Median* (add lazy deletion) and *IPO / maximize capital* (one heap to unlock projects, another to pick the most profitable). This complements the Top-K chapter: top-k keeps one boundary heap; median keeps two opposing boundary heaps.
 
-### Same pattern, new tweaks
+### Learning notes
+
+- Why two heaps? They hold lower and upper halves.
+- Why max-heap lower? The lower middle must be O(1).
+- Why rebalance? Median formula needs size difference <= 1.
+- Why double division? Avoids integer truncation.
+- Why PriorityQueue<Integer>? No extra metadata is needed.
+
+#### Same pattern, new tweaks
 
 "Keep the data split into two heaps whose tops meet in the middle" transfers to:
 
@@ -178,7 +205,6 @@ class MedianFinder {
 | [IPO / Maximize Capital](https://leetcode.com/problems/ipo/) | a min-heap unlocks projects you can afford, a max-heap picks the most profitable of those | O(n log n) |
 | [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) | the base case — balance the two heaps on every insert | O(log n) add |
 | [Meeting Rooms III](https://leetcode.com/problems/meeting-rooms-iii/) | one heap tracks free room ids, another tracks rooms by next end time | O(n log rooms) |
-
 
 ## Heap essentials &amp; gotchas
 <p class="secgoal"><b>What & why:</b> the practical rules and traps of `PriorityQueue`. Goal — avoid the classic mistakes (iteration isn't sorted, no decrease-key, O(n) arbitrary removal) and choose the right heap size and direction.</p>

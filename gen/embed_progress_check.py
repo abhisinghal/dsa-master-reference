@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Embed <ProgressCheck :id="slug"/> after each ## Problem H2 in src2/."""
+"""Embed <ProgressCheck :id="slug"/> after each ## Problem H2 in src/."""
 import os, re, glob
 
-SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "gen", "src2")
+SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "gen", "src")
 
 def slugify(title: str) -> str:
     """Convert a problem title to a stable slug."""

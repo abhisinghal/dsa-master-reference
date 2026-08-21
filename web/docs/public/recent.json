@@ -1,32 +1,32 @@
 [
   {
-    "title": "Sliding Window",
-    "url": "/patterns/sliding-window",
-    "updated": "2026-08-21T08:31:07.000Z"
+    "title": "How to Use This Book",
+    "url": "/foundations/how-to-use",
+    "updated": "2026-08-21T07:03:59.000Z"
   },
   {
-    "title": "Hashing",
-    "url": "/patterns/hashing",
-    "updated": "2026-08-21T08:31:07.000Z"
+    "title": "The Interview Playbook",
+    "url": "/foundations/playbook",
+    "updated": "2026-08-21T07:03:59.000Z"
   },
   {
-    "title": "Dynamic Programming",
-    "url": "/patterns/dp",
-    "updated": "2026-08-21T08:31:07.000Z"
+    "title": "Glossary — Words We Use Everywhere",
+    "url": "/foundations/glossary",
+    "updated": "2026-08-21T07:03:59.000Z"
   },
   {
-    "title": "Linked Lists",
-    "url": "/data-structures/linked-lists",
-    "updated": "2026-08-21T08:31:07.000Z"
+    "title": "Zero-to-Hero Roadmap",
+    "url": "/foundations/roadmap",
+    "updated": "2026-08-21T07:03:59.000Z"
   },
   {
-    "title": "Stacks & Queues",
-    "url": "/data-structures/stacks-queues",
-    "updated": "2026-08-21T08:31:07.000Z"
+    "title": "Java Data Structures — A Visual Toolkit",
+    "url": "/foundations/java-primer",
+    "updated": "2026-08-21T07:03:59.000Z"
   },
   {
-    "title": "Two Pointers",
-    "url": "/patterns/two-pointers",
-    "updated": "2026-08-21T08:22:21.000Z"
+    "title": "Java DSA Gotchas",
+    "url": "/foundations/java-gotchas",
+    "updated": "2026-08-21T07:03:59.000Z"
   }
 ]

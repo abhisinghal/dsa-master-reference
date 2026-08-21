@@ -6,6 +6,8 @@ Imagine you are watching a live scoreboard with millions of scores, but the prod
 
 Use a concrete example: find the 3 largest numbers in `[7, 1, 9, 3, 10, 2, 8]`. Keep a min-heap of size 3. Read `7,1,9` → heap has `{1,7,9}`. Read `3` → heap becomes `{1,3,7,9}`, too large, so remove the smallest `1`; room is `{3,7,9}`. Read `10` → remove `3`; room is `{7,9,10}`. Read `2` → remove `2` immediately. Read `8` → remove `7`; final room is `{8,9,10}`. Notice the heap root is not the answer to "largest"; it is the weakest of the winners, the one easiest to evict.
 
+The brute-force walk-through is full sorting: arrange everyone, then take the first `k`. Can we do better? Yes, because the exact order of the rejected `n-k` items does not matter. Keep only the current boundary set.
+
 That opposite-polarity idea is the whole trick. For k largest, use a min-heap. For k smallest, use a max-heap. For k most frequent, use a min-heap ordered by frequency. The heap is not there to sort everything; it is there to maintain a moving boundary between "still in the top k" and "not good enough."
 
 > [key] **Key Insight** — For k *largest*, use a **min**-heap (its root is the worst-of-the-best, cheap to evict). For k *smallest*, use a **max**-heap. Polarity is always the opposite of the goal.
@@ -48,17 +50,22 @@ Fill in `compareWorstFirst` based on what "worst among the winners" means. For k
 
 ---
 
-## Kth Largest / Top K Frequent
+## Kth Largest / Top K Frequent <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)*
+
+<ProgressCheck id="kth-largest-top-k-frequent" />
 
 ### Problem
 Return the **k most frequent** elements of an array (or, in the sibling, the kth largest). The order among the top-k doesn't matter.
 
 **Constraints:** `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ #distinct`; beat a full O(n log n) sort.
 
-**Example:** `nums = [1,1,1,2,2,3], k = 2` → `[1,2]`.
+**Example 1:** `nums = [1,1,1,2,2,3], k = 2` → `[1,2]`.
 
-### Brute force baseline
+**Example 2:** `nums = [1], k = 1` → `[1]`.
+
+### Solution — brute force
 First count frequencies. The brute-force way is then to sort all distinct values by decreasing frequency and take the first `k`.
 
 ```text
@@ -68,16 +75,31 @@ sort items by freq descending
 return first k items
 ```
 
+```java
+int[] topKFrequentBrute(int[] nums, int k) {
+    Map<Integer,Integer> freq = new HashMap<>();
+    for (int x : nums) freq.merge(x, 1, Integer::sum);
+    List<Integer> keys = new ArrayList<>(freq.keySet());
+    keys.sort((a, b) -> freq.get(b) - freq.get(a));
+    int[] res = new int[k];
+    for (int i = 0; i < k; i++) res[i] = keys.get(i);
+    return res;
+}
+```
+
 This is perfectly acceptable as a baseline: O(n) to count, O(m log m) to sort `m` distinct values, and O(m) space. It becomes wasteful when `m` is large and `k` is small, because sorting rank 5000 versus rank 5001 does not help you return the top 10. The heap version avoids fully ordering the losers.
 
-### Pattern
+O(n + m log m) time, O(m) space, where `m` is the number of distinct values — wasteful when k is tiny.
+
+### Solution — optimized
 Size-k min-heap; evict the smallest whenever the heap exceeds k.
 
 The heap stores distinct numbers, not array indices and not `(number, frequency)` pairs. The comparator looks up each number's count in the frequency map. Because this is a min-heap by frequency, `poll()` removes the least frequent number among the currently kept candidates. After all distinct values have been processed, only the k most frequent can survive.
 
 > [inv] **Invariant** — After each key from `freq.keySet()` is processed, `pq` contains the k highest-frequency keys seen so far. If more than k keys have been offered, the lowest-frequency survivor has already been evicted.
 
-### Java (Top K Frequent)
+The optimized Java counts once, then keeps a heap of only `k` surviving keys. The root is deliberately the weakest survivor, so overflow beyond size `k` evicts the least useful candidate immediately.
+
 ```java
 int[] topKFrequent(int[] nums, int k) {
     Map<Integer,Integer> freq = new HashMap<>();
@@ -106,8 +128,11 @@ int[] topKFrequent(int[] nums, int k) {
 >
 > The heap never grows beyond `k + 1`, so each distinct value costs only `log k` work after counting.
 
-### Complexity
-Time O(n log k) · Space O(n).
+### Time Complexity
+O(n + m log k), often written O(n log k) when `m ≤ n`. Counting scans all n values, and each of the `m` distinct keys costs O(log k) in the heap.
+
+### Space Complexity
+O(n), because the frequency map may store all n values when every value is distinct; the heap itself stores only O(k).
 
 More precisely, counting costs O(n), and heap operations cost O(m log k), where `m` is the number of distinct values. The frequency map can hold up to O(n) entries. The heap itself holds O(k) entries, but the total auxiliary space is still O(n) because of the map.
 
@@ -117,17 +142,26 @@ More precisely, counting costs O(n), and heap operations cost O(m log k), where 
 
 > [pat] **Pattern Connection** — *K Closest Points to Origin* is identical with a max-heap of size k keyed on distance; bucket sort by frequency gives O(n) when the key range is bounded.
 
-### Choosing between heap, sort, bucket, and quickselect
+### Learning notes
+- Why count first? — frequency is the ranking key, so the heap cannot compare numbers until counts exist.
+- Why store just the key in the heap? — the `freq` map already holds the count; duplicating pairs is unnecessary here.
+- Why a **min-heap** for "most frequent"? — the least frequent survivor is the next one to evict.
+- Why `if (pq.size() > k) pq.poll()`? — allowing one temporary extra item lets each candidate compete before eviction.
+- Why fill `res` from right to left? — repeated `poll()` returns lower-frequency survivors first.
+- Why not sort all keys? — sorting orders every loser too; the heap only maintains the top-k boundary.
+- Why mention `Integer.compare`? — subtraction comparators can overflow when values or counts are extreme.
+
+#### Choosing between heap, sort, bucket, and quickselect
 A useful interview move is to name the trade-off instead of pretending the heap is always best. Full sorting is shortest to code and good when `n` is small or when the final order matters. A size-k heap is best when k is small, the stream may not fit in memory, or you need to update answers incrementally. Bucket sort is excellent for frequencies because frequency is an integer from 1 to n; create buckets where bucket `f` stores all values with frequency `f`, then read from high frequency down until k values are collected. Quickselect is attractive for one-shot selection when you can mutate the array of candidates and do not need streaming behavior.
 
 For Top K Frequent specifically, the heap solution is a reliable general answer because it does not depend on a small value range and is easy to adapt to words, points, pairs, or custom objects. If the interviewer asks for strict O(n), discuss buckets after presenting the heap.
 
-### Comparator details in Java
+#### Comparator details in Java
 Java's `PriorityQueue` is a min-heap according to the comparator. That means the "smallest" item by comparator comes out first. For top-k largest, you intentionally define "smallest" as the item you are most willing to discard. In the existing code, `(a, b) -> freq.get(a) - freq.get(b)` puts lower-frequency numbers first.
 
 In production code, `Integer.compare(freq.get(a), freq.get(b))` avoids overflow. The chapter keeps the compile-tested solution unchanged, but in an interview you can mention `Integer.compare` if counts or values can be extreme. For tie-breaking, add a secondary comparison only if the problem requires deterministic ordering; otherwise, extra tie logic is unnecessary.
 
-### Heap polarity exercises
+#### Heap polarity exercises
 
 When you are under interview pressure, decide heap polarity with one sentence: **the root should be the next thing I would throw away.** If you want k largest numbers, the smallest kept number is the next thing to throw away, so the root must be small: min-heap. If you want k smallest numbers, the largest kept number is the next thing to throw away, so the root must be large: max-heap. If you want k closest points, the farthest kept point is the next thing to throw away, so use a max-heap by distance. If you want k most frequent words, the least frequent kept word is the next thing to throw away, so use a min-heap by frequency.
 
@@ -143,19 +177,19 @@ Try this quick table before coding:
 
 This table prevents the most common reversal bug. The heap is not a trophy case where the best item sits on top. It is a door guard; the root is the easiest item to remove when a better candidate arrives.
 
-### Streaming vs batch thinking
+#### Streaming vs batch thinking
 
 Top-K heap is the natural streaming answer because it never needs to see the future. After processing the first 100 numbers, the heap already contains the top k among those 100. After the 101st number, one `offer` and maybe one `poll` restores the same invariant. That is why *Kth Largest Element in a Stream* stores the heap as object state and returns `pq.peek()` after each `add`.
 
 Quickselect cannot do that. Quickselect needs a closed array to partition; when a new number arrives, the previous partition work may no longer line up with the new rank. If an interviewer asks, \"What if numbers arrive continuously?\" switch from Quickselect to heap immediately. If they ask, \"What if this is one offline query and k is large?\" Quickselect becomes attractive.
 
-### Tie handling and output order
+#### Tie handling and output order
 
 Many top-k problems say \"return the answer in any order.\" That permission matters. The heap output order is usually from worst survivor to best survivor because repeated `poll()` removes the comparator-minimum. The existing solution fills the result from right to left so higher-frequency values tend to appear earlier, but the LeetCode problem does not require a sorted top-k list.
 
 If a problem requires deterministic ties, bake the tie-breaker into the comparator. For words, you might sort by frequency ascending but reverse lexicographic order for the min-heap so that the lexicographically worse word is evicted first. For points, equal distances might not need tie-breaking at all. Never add tie rules that the prompt does not ask for; they make comparators harder to reason about and can accidentally evict the wrong item.
 
-### Testing checklist
+#### Testing checklist
 
 Run these small cases mentally before trusting the code:
 

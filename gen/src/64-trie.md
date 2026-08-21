@@ -104,30 +104,27 @@ Use this version when the alphabet is unknown or sparse. The algorithmic idea is
 
 ---
 
-## Implement Trie
+## Implement Trie <span class="diff diff-m">Medium</span>
+
+
 *[↗ LeetCode: Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/)*
 
+<ProgressCheck id="implement-trie" />
+
 ### Problem
+
 Implement a trie supporting `insert(word)`, `search(word)` (exact word), and `startsWith(prefix)`.
 
 **Constraints:** up to `3·10⁴` calls; lowercase `a–z`; each call O(word length).
 
 **Example:** insert `"apple"`; then `search("apple")` → true, `search("app")` → false, `startsWith("app")` → true.
 
-### Pattern
-Walk one character at a time from the root. Create missing nodes during insertion; reject immediately during lookup when an edge is missing. Exact search checks the terminal flag; prefix search only checks path existence.
+**Example 1:** insert("apple"), search("apple") -> true, search("app") -> false.
 
-### Operation behavior
+**Example 2:** startsWith("app") -> true after inserting "apple".
 
-| Operation | Missing edge means | Final node requirement |
-|---|---|---|
-| `insert(word)` | create the child and continue | set `word = true` |
-| `search(word)` | return false immediately | final node must have `word = true` |
-| `startsWith(prefix)` | return false immediately | path existence is enough |
+### Solution — brute force
 
-Keep this table in mind when coding. The loops are almost identical; only the missing-edge behavior and the final check differ. A common clean implementation is to put the shared walking logic in a private helper, as the solution below does.
-
-### Brute force baseline
 The simplest design stores every inserted word in a `HashSet<String>`. `insert` and `search` are easy, but `startsWith(prefix)` must scan all words unless you also store every possible prefix.
 
 ```java
@@ -146,7 +143,21 @@ This gives average O(L) exact search but O(numberOfWords · prefixLength) prefix
 
 You could precompute every prefix in a second hash set: insert `apple` and also store `a`, `ap`, `app`, `appl`, `apple`. Then `startsWith` becomes O(L), but memory becomes the total number of prefixes, and you still cannot easily enumerate completions under a prefix. A trie is the structured version of that prefix set: it shares prefix objects instead of storing each prefix string separately.
 
-### Java
+### Solution — optimized
+
+**Pattern:**
+Walk one character at a time from the root. Create missing nodes during insertion; reject immediately during lookup when an edge is missing. Exact search checks the terminal flag; prefix search only checks path existence.
+
+**Operation behavior:**
+| Operation | Missing edge means | Final node requirement |
+|---|---|---|
+| `insert(word)` | create the child and continue | set `word = true` |
+| `search(word)` | return false immediately | final node must have `word = true` |
+| `startsWith(prefix)` | return false immediately | path existence is enough |
+
+Keep this table in mind when coding. The loops are almost identical; only the missing-edge behavior and the final check differ. A common clean implementation is to put the shared walking logic in a private helper, as the solution below does.
+
+**Java:**
 ```java
 class Trie {
     private static class Node {
@@ -180,8 +191,15 @@ class Trie {
 
 > [note] **Trace it** — Insert `"app"` and `"apple"`. The second insertion reuses the nodes for `a`, first `p`, and second `p`, then creates `l` and `e`. `search("app")` walks three edges and returns true because that node's `word` flag is set. `search("ap")` walks two edges but returns false because the prefix node is not a word. `startsWith("appl")` walks four edges and returns true because the path exists.
 
-### Complexity
-Insert/search/prefix O(L) · Space O(total chars × alphabet).
+### Time Complexity
+
+O(L) per insert/search/startsWith.
+
+Original summary: Insert/search/prefix O(L) · Space O(total chars × alphabet).
+
+### Space Complexity
+
+O(total inserted characters * alphabet factor) in the worst case.
 
 > [trap] **Common Trap** — `isEnd` only on leaves. *Example:* insert `"car"` then `"cars"`. If you only mark `s` as end, `search("car")` returns false. `isEnd` marks a **word boundary**, independent of children — set it on `r` too.
 
@@ -191,7 +209,15 @@ Insert/search/prefix O(L) · Space O(total chars × alphabet).
 
 > [pat] **Pattern Connection** — Adding a `count` per node supports *count words with prefix*; a wildcard `.` in search (*Add and Search Word*) branches over all children at that position (DFS on the trie). The pattern chapter uses this same structure as a component inside larger algorithms.
 
-### Same pattern, new tweaks
+### Learning notes
+
+- Why array children? Lowercase-only alphabets make arrays 3-5x faster than maps.
+- Why isEnd? Prefixes and full words differ.
+- Why root has no char? It represents empty prefix.
+- Why c-'a'? Compact 0..25 index.
+- Why trie over HashSet? Prefix queries avoid scanning words.
+
+#### Same pattern, new tweaks
 
 | Variation | The one thing that changes | Time |
 |---|---|---|

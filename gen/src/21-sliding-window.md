@@ -166,28 +166,51 @@ Even when the problem is monotone, sliding window has hard limits worth naming o
 
 Now let's walk through the canonical shapes, from the simplest fixed-size warm-up up through the composed sliding-window + monotonic-deque problem.
 
-## Maximum Average Subarray I (fixed-size warm-up)
+## Maximum Average Subarray I (fixed-size warm-up) <span class="diff diff-e">Easy</span>
+
 *[↗ LeetCode: Maximum Average Subarray I](https://leetcode.com/problems/maximum-average-subarray-i/)*
+
+<ProgressCheck id="maximum-average-subarray-i-fixed-size-warm-up" />
 
 ### Problem
 Given an array and an integer `k`, find the contiguous subarray of length **exactly `k`** with the maximum average.
 
 **Constraints:** `1 ≤ k ≤ n ≤ 10⁵`; values fit in `int`; return the max average as a `double`.
 
-**Example:** `nums = [1,12,-5,-6,50,3], k = 4` → `12.75` (the window `[12,-5,-6,50]` has sum 51 → avg 51/4).
+**Example 1:** `nums = [1,12,-5,-6,50,3], k = 4` → `12.75` (the window `[12,-5,-6,50]` has sum 51 → avg 51/4).
 
-### Pattern
+**Example 2:** `nums = [-5,-1,-3], k = 2` → `-2.0` (best window `[-1,-3]`; all-negative inputs still need the least-bad sum).
+
+### Solution — brute force
+Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
+
+```java
+double findMaxAverageBrute(int[] nums, int k) {
+    long best = Long.MIN_VALUE;
+    for (int start = 0; start + k <= nums.length; start++) {
+        long sum = 0;
+        for (int i = start; i < start + k; i++) sum += nums[i];
+        best = Math.max(best, sum);
+    }
+    return best / (double) k;
+}
+```
+
+**Brute-force cost:** O(n·k) time (O(n²) when k grows with n), O(1) space — too slow for n ≥ 10⁴.
+
+### Solution — optimized
+Instead of re-adding the same k elements again and again, keep one running window sum. Har slide par right element add hota hai, left element nikalta hai, and the best sum updates only when the window is full.
+
+**Pattern.**
 The archetypal **fixed-size** window: compute the first window's sum, then each next window costs O(1) — add the entering element, subtract the leaving one. Divide by `k` at the end.
 
-> [inv] **Invariant** — after step `i`, `windowSum` equals the sum of the k elements ending at index `i`.
-
-### Steps
+**Steps.**
 1. Sum the first `k` elements into `windowSum`; seed `bestSum = windowSum`.
 2. For each `right` from `k` to `n-1`: `windowSum += a[right] - a[right - k]` (slide by one).
 3. Track `bestSum = max(bestSum, windowSum)`.
 4. Return `bestSum / (double) k`.
 
-### Java
+**Java.**
 ```java
 double findMaxAverage(int[] nums, int k) {
     int left = 0;
@@ -206,24 +229,42 @@ double findMaxAverage(int[] nums, int k) {
 
 Ek `if`, ek block. `right >= k - 1` ka matlab: 0-indexed loop mein `k`-va element aa chuka hai → window bhari hai. Uske baad hi compare + shrink hota hai.
 
-> [note] **Alternate two-phase style** — kuch developers "build first window, then slide" prefer karte hain; slide loop mein zero conditionals rehte hain:
-> ```java
-> long sum = 0;
-> for (int i = 0; i < k; i++) sum += a[i];
-> long best = sum;
-> for (int i = k; i < a.length; i++) {
->     sum += a[i] - a[i - k];
->     best = Math.max(best, sum);
-> }
-> ```
-> Style choice — dono O(n), same output. Single-loop with `right >= k-1` guard usually most compact.
+#### Alternate — two-phase style (build then slide)
+
+Kuch developers "build first window, then slide" prefer karte hain; slide loop mein zero conditionals rehte hain:
+
+```java
+long sum = 0;
+for (int i = 0; i < k; i++) sum += a[i];
+long best = sum;
+for (int i = k; i < a.length; i++) {
+    sum += a[i] - a[i - k];
+    best = Math.max(best, sum);
+}
+```
+
+Style choice — dono O(n), same output. Single-loop with `right >= k-1` guard usually most compact.
+
+### Time Complexity
+Existing summary: Time O(n) · Space O(1).
+
+The optimized scan is O(n) because every index is added to `val` once as `right` reaches it, and removed once when `left` advances. The alternate two-phase style does the same total work: one build pass over k items plus one slide pass over the remaining items.
+
+### Space Complexity
+The optimized method is O(1) space because it keeps only `left`, `val`, and `best`; the input array is not copied and no per-window storage is created.
+
+### Learning notes
+- Why `long val`? — a k-window sum can get large, and using `long` is defensive for bigger constraints.
+- Why `Long.MIN_VALUE` for `best`? — all numbers can be negative, so seeding with `0` would incorrectly prefer an empty window.
+- Why `right >= k - 1`? — with 0-indexing, the first complete k-sized window ends at index `k-1`.
+- Why update `best` before subtracting `nums[left]`? — the current full window must be scored before preparing the next window.
+- Why divide by `(double) k`? — it forces floating-point division instead of truncating.
+
+> [inv] **Invariant** — after step `i`, `windowSum` equals the sum of the k elements ending at index `i`.
 
 > [note] **Watch the accumulator width** — `int[]` values up to 10⁴, `k` up to 10⁵ → `sum` can hit ~10⁹, fits in `int`, but a long is defensive and free.
 
 > [note] **Trace it** — `[1,12,-5,-6,50,3], k=4`. First full window at `right=3`: `val = 1+12-5-6 = 2` → `best = 2`, shrink `-1`. Next at `right=4`: `1+50 = 51` → **max**, shrink `-12`. Next at `right=5`: `39+3 = 42`. Result 51 → avg `12.75`.
-
-### Complexity
-Time O(n) · Space O(1).
 
 > [trap] **Common Trap** — Integer overflow on `windowSum`. *Example:* `k = 10⁴`, values near `10⁴` → sum near `10⁸` — fine in `int`, but two of those or a larger `k` overflows. Use `long`.
 
@@ -238,24 +279,47 @@ Time O(n) · Space O(1).
 | [Permutation in String](https://leetcode.com/problems/permutation-in-string/) | same as above; return true on the first match | O(n) |
 | [Diet Plan Performance](https://leetcode.com/problems/diet-plan-performance/) | classify each window by sum thresholds; sum score | O(n) |
 
-## Smallest Subarray With Sum ≥ Target
+## Smallest Subarray With Sum ≥ Target <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)*
+
+<ProgressCheck id="smallest-subarray-with-sum-target" />
 
 ### Problem
 Find the length of the **shortest contiguous subarray** whose sum is `≥ target`; return 0 if none exists. Values are positive, which is what keeps the window monotone.
 
 **Constraints:** `1 ≤ n ≤ 10⁵`; values `≥ 1`; `target ≥ 1`.
 
-**Example:** `target = 7, [2,3,1,2,4,3]` → `2` (the subarray `[4,3]`).
+**Example 1:** `target = 7, [2,3,1,2,4,3]` → `2` (the subarray `[4,3]`).
 
-### Pattern
+**Example 2:** `target = 15, nums = [1,2,3]` → `0` (no window can reach the target).
+
+### Solution — brute force
+Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
+
+```java
+int minSubArrayLenBrute(int target, int[] a) {
+    int best = Integer.MAX_VALUE;
+    for (int start = 0; start < a.length; start++) {
+        long sum = 0;
+        for (int end = start; end < a.length; end++) {
+            sum += a[end];
+            if (sum >= target) { best = Math.min(best, end - start + 1); break; }
+        }
+    }
+    return best == Integer.MAX_VALUE ? 0 : best;
+}
+```
+
+**Brute-force cost:** O(n²) time, O(1) space — too slow for n ≥ 10⁴.
+
+### Solution — optimized
+Positive numbers give the monotonicity we need: growing right can only increase the sum, and moving left can only decrease it. So once a window becomes valid, greedily shrink it and record every shorter valid candidate ending at that `right`.
+
+**Pattern.**
 The **shortest-window** shape: grow `right` until the window is valid, then greedily shrink `left` while it stays valid, recording the minimum length. (Positive numbers only — that's what keeps the sum monotone.)
 
-> [key] **Key Insight** — Unlike the "longest" problems, here you shrink *aggressively the moment the window becomes valid*, because a shorter valid window is always better. Each index is still added once and removed once → O(n).
-
-> [inv] **Invariant** — `windowSum` always equals the sum of `[left, right]`; whenever it reaches `target`, `[left, right]` is the smallest valid window **ending at `right`**.
-
-### Java
+**Java.**
 ```java
 int minSubArrayLen(int target, int[] a) {
     int left = 0, best = Integer.MAX_VALUE;
@@ -271,6 +335,25 @@ int minSubArrayLen(int target, int[] a) {
 }
 ```
 
+### Time Complexity
+Existing summary: Time O(n) · Space O(1).
+
+The optimized loop is O(n) because `right` visits each element once and `left` also advances only forward. Even though there is a nested `while`, each element can be subtracted from `windowSum` at most one time.
+
+### Space Complexity
+Space is O(1) because the algorithm stores a running sum, two pointers, and the best length; it does not allocate arrays or maps.
+
+### Learning notes
+- Why `long windowSum`? — repeated positive values can push the sum beyond comfortable int assumptions.
+- Why shrink inside `while (windowSum >= target)`? — for shortest windows, every valid window should be minimized immediately.
+- Why record before subtracting `a[left]`? — the current window is valid right now; after subtracting it may become invalid.
+- Why `right - left + 1`? — both endpoints are included.
+- Why return `0` when best stays `Integer.MAX_VALUE`? — that sentinel means no valid window was found.
+
+> [key] **Key Insight** — Unlike the "longest" problems, here you shrink *aggressively the moment the window becomes valid*, because a shorter valid window is always better. Each index is still added once and removed once → O(n).
+
+> [inv] **Invariant** — `windowSum` always equals the sum of `[left, right]`; whenever it reaches `target`, `[left, right]` is the smallest valid window **ending at `right`**.
+
 > [note] **Trace it (step ledger)** — `target=7, a=[2,3,1,2,4,3]`:
 >
 > | right | a[right] | windowSum | left | action | best |
@@ -283,9 +366,6 @@ int minSubArrayLen(int target, int[] a) {
 > | 5 | 3 | 8 → **7** → 4 | 3 → 4 → 5 | grow, shrink twice | 3, then **2** |
 >
 > Answer: **2** (the window `[4, 3]`). Each index moves through `right` once and through `left` at most once → O(n).
-
-### Complexity
-Time O(n) · Space O(1).
 
 > [trap] **Common Trap** — Forgetting the "no window found" case. *Example:* `nums=[1,1,1]`, `target=100`. No window satisfies the sum; if you return `best` still at `Integer.MAX_VALUE`, the caller thinks a huge window exists. Return `0` when `best` was never updated.
 
@@ -300,29 +380,63 @@ Time O(n) · Space O(1).
 | [Replace the Substring for Balanced String](https://leetcode.com/problems/replace-the-substring-for-balanced-string/) | shrink while the outside-window counts are already balanced | — |
 | [Shortest Subarray with Sum ≥ K (negatives allowed)](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) | the window breaks with negatives → switch to prefix sums + a monotonic deque | — |
 
-## Longest Substring Without Repeating Characters
+## Longest Substring Without Repeating Characters <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)*
+
+### Try it yourself
+
+Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
+
+<JavaRunner problemSlug="longest-substring-without-repeating-characters" :tests='[{ input: "abcabcbb", expected: "3" }, { input: "bbbbb", expected: "1" }, { input: "pwwkew", expected: "3" }]' />
+
+
+<ProgressCheck id="longest-substring-without-repeating-characters" />
 
 ### Problem
 Find the length of the **longest substring** (contiguous) that has **all distinct** characters.
 
 **Constraints:** `0 ≤ n ≤ 5·10⁴`; any ASCII characters.
 
-**Example:** `"abcabcbb"` → `3` (the substring `"abc"`).
+**Example 1:** `"abcabcbb"` → `3` (the substring `"abc"`).
 
-### Pattern
+**Example 2:** `s = ""` → `0` (empty string has no substring).
+
+### Solution — brute force
+Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
+
+```java
+int lengthOfLongestSubstringBrute(String s) {
+    int best = 0;
+    for (int start = 0; start < s.length(); start++) {
+        boolean[] seen = new boolean[128];
+        for (int end = start; end < s.length(); end++) {
+            char c = s.charAt(end);
+            if (seen[c]) break;
+            seen[c] = true;
+            best = Math.max(best, end - start + 1);
+        }
+    }
+    return best;
+}
+```
+
+**Brute-force cost:** O(n²) time, O(1) space for fixed ASCII — too slow for n ≥ 10⁴.
+
+### Solution — optimized
+The optimized window never restarts from scratch. It remembers the last index of every character and jumps `left` past the duplicate only when that duplicate is still inside the current window.
+
+**Pattern.**
 Longest window with a "no duplicate" invariant; jump `left` past the last occurrence.
 
-> [inv] **Invariant** — `[left,right]` contains distinct characters; `last[c]` stores the most recent index of `c`.
-
-### Steps
+**Steps.**
 1. Maintain a `left` pointer and a map (or `int[128]`) from char → its last-seen index.
 2. Scan `right` left to right. If `s[right]` was seen and its last index >= `left`, clamp: `left = lastIndex[s[right]] + 1`.
 3. Update `lastIndex[s[right]] = right`.
 4. Update `best = max(best, right - left + 1)` each step.
 5. O(n) time, O(alphabet) space.
 
-### Java
+**Java.**
 ```java
 int lengthOfLongestSubstring(String s) {
     int[] last = new int[128];
@@ -338,20 +452,35 @@ int lengthOfLongestSubstring(String s) {
 }
 ```
 
-> [note] **Trace it** — `"abcabcbb"`. The window grows `a,b,c`; the next `a` collides, so `left` jumps past the old `a`. Longest clean window is `"abc"` → **3**.
+### Time Complexity
+Existing summary: Time O(n) · Space O(alphabet).
 
-### Complexity
-Time O(n) · Space O(alphabet).
+The scan is O(n) because `right` moves from left to right once, and `left` only jumps forward; no character can force a backward rescan.
+
+### Space Complexity
+The code uses O(1) space under the ASCII constraint because `last` has fixed size 128. If the character set were unbounded Unicode, the same idea with a map would be O(alphabet seen).
+
+### Learning notes
+- Why initialize `last` with `-1`? — index 0 is valid, so `0` cannot mean unseen.
+- Why `if (last[c] >= left)`? — only duplicates still inside the window should move `left`.
+- Why set `left = last[c] + 1`? — the new window starts just after the previous copy.
+- Why update `last[c] = right` after the check? — future duplicates need the newest occurrence.
+- Why `int[128]`? — ASCII is assumed; Unicode needs a map.
+
+> [inv] **Invariant** — `[left,right]` contains distinct characters; `last[c]` stores the most recent index of `c`.
+
+> [note] **Trace it** — `"abcabcbb"`. The window grows `a,b,c`; the next `a` collides, so `left` jumps past the old `a`. Longest clean window is `"abc"` → **3**.
 
 > [trap] **Common Trap** — Not clamping `left` to its previous position. *Example:* `s="abba"`. At index 3 (`'a'`), the previous `a` was at 0, but `left` has already moved past 2. Without `left = max(left, prev+1)`, `left` retreats and the window contains two `a`s.
 
+> [pat] **Pattern Connection** — "At most K distinct" and "longest with ≤ K replacements" are the same skeleton with a different validity test.
+
 ### Common Mistakes
+
 - **Not clamping `left`** on the previous-index bump — `left = max(left, prev + 1)` is required.
 - **Restarting `left` from prev+1 unconditionally** — you'll move `left` backwards on old-but-now-outside occurrences.
 - **Off-by-one on window size**: `right - left + 1`, not `right - left`.
 - **Alphabet assumption**: full unicode needs a `HashMap`, not `int[128]`.
-
-> [pat] **Pattern Connection** — "At most K distinct" and "longest with ≤ K replacements" are the same skeleton with a different validity test.
 
 ### Same pattern, new tweaks
 
@@ -365,28 +494,57 @@ Once you own this "grow, and shrink when a rule breaks" loop, a whole family ope
 | [Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/) | over a 0/1 array, shrink only when the number of zeros in the window exceeds `K` (you may flip `K` zeros) | — |
 | [Permutation in String / Find All Anagrams](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | a **fixed-size** window plus exact character counts — slide a window the length of the pattern and check the counts match | — |
 
-## Minimum Window Substring
+## Minimum Window Substring <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)*
+
+<ProgressCheck id="minimum-window-substring" />
 
 ### Problem
 Find the **shortest substring** of `S` that contains every character of `T`, including repeats. Return `""` if there is none.
 
 **Constraints:** `1 ≤ |S|, |T| ≤ 10⁵`; any characters; duplicate letters in `T` must all be covered.
 
-**Example:** `S = "ADOBECODEBANC", T = "ABC"` → `"BANC"`.
+**Example 1:** `S = "ADOBECODEBANC", T = "ABC"` → `"BANC"`.
 
-### Pattern
+**Example 2:** `S = "a", T = "aa"` → `""` (duplicates in `T` must all be covered).
+
+### Solution — brute force
+Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
+
+```java
+String minWindowBrute(String s, String t) {
+    int bestLen = Integer.MAX_VALUE, bestL = 0;
+    int[] target = new int[128];
+    for (char c : t.toCharArray()) target[c]++;
+    for (int left = 0; left < s.length(); left++) {
+        int[] have = new int[128];
+        for (int right = left; right < s.length(); right++) {
+            have[s.charAt(right)]++;
+            boolean ok = true;
+            for (int c = 0; c < 128; c++) if (have[c] < target[c]) { ok = false; break; }
+            if (ok && right - left + 1 < bestLen) { bestLen = right - left + 1; bestL = left; }
+        }
+    }
+    return bestLen == Integer.MAX_VALUE ? "" : s.substring(bestL, bestL + bestLen);
+}
+```
+
+**Brute-force cost:** O(|S|²·alphabet) time, O(alphabet) space — too slow for |S| ≥ 10⁴.
+
+### Solution — optimized
+The optimized version keeps a live deficit table instead of rebuilding counts for every candidate substring. When `required` reaches zero, the window covers `t`; then we shrink from the left until removing one more required char would break coverage.
+
+**Pattern.**
 Shortest window covering all required characters; a `have/need` counter tells when the window is valid.
 
-> [inv] **Invariant** — `formed` = number of distinct required chars currently met in full; window is valid iff `formed == required`.
-
-### Steps
+**Steps.**
 1. Build `need[c]` = required count of each char in `t`; set `required = t.length()` (total chars to cover, including duplicates).
 2. For each `right`: **before** decrementing `need[c]`, check if it was `> 0` — that means `c` was still needed, so decrement `required`.
 3. `while (required == 0)` — the window covers `t` — try to shrink: record if this is the smallest window seen; then advance `left`, **incrementing** `need[c]` back and, if it goes back **to 0** (surplus → needed), `required++` to signal validity is about to break.
 4. Return the substring `bestL..bestL+bestLen`, or `""` if `bestLen` was never updated.
 
-### Java (line-by-line commentary)
+**Java (line-by-line commentary).**
 ```java
 String minWindow(String s, String t) {
     if (s.length() < t.length()) return "";
@@ -413,10 +571,24 @@ String minWindow(String s, String t) {
 }
 ```
 
-> [note] **Trace it** — `S="ADOBECODEBANC", T="ABC"`. The first valid window is `"ADOBEC"`; shrinking as you scan lands on `"BANC"` — the shortest cover → answer `"BANC"`.
+### Time Complexity
+Existing summary: Time O(|S| + |T|) · Space O(1) (fixed alphabet).
 
-### Complexity
-Time O(|S| + |T|) · Space O(1) (fixed alphabet).
+The optimized method is O(|S| + |T|): building `need` scans `T` once, and each character of `S` enters and leaves the window at most once. Count updates are constant-time array operations.
+
+### Space Complexity
+Space is O(1) for the fixed ASCII array `need[128]`; it does not grow with the length of `S` or `T`. With a general character map, it would be O(distinct chars in T).
+
+### Learning notes
+- Why return early when `s.length() < t.length()`? — a shorter source can never cover all target chars.
+- Why decrement with `need[s.charAt(right)]-- > 0`? — the old positive value means this char was still missing.
+- Why can `need[c]` go negative? — negative counts represent surplus chars.
+- Why `while (required == 0)`? — shortest-window problems shrink greedily once valid.
+- Why `need[s.charAt(left)]++ == 0`? — removing an exactly-satisfied char creates a deficit.
+
+> [inv] **Invariant** — `formed` = number of distinct required chars currently met in full; window is valid iff `formed == required`.
+
+> [note] **Trace it** — `S="ADOBECODEBANC", T="ABC"`. The first valid window is `"ADOBEC"`; shrinking as you scan lands on `"BANC"` — the shortest cover → answer `"BANC"`.
 
 > [key] **Key Insight** — The counter trick: decrement on entry, increment on exit; `need[c]` goes negative for surplus chars, so `>0` and `==0` cleanly detect crossing the "exactly satisfied" boundary.
 
@@ -435,22 +607,22 @@ A `need`/`have` counter that tells you when the window "covers" a required set:
 | [Minimum Window Subsequence](https://leetcode.com/problems/minimum-window-subsequence/) | the target must appear in order (not just as a multiset), so track progress through the pattern instead of counts | — |
 | [Substring with Concatenation of All Words](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) | the "characters" are whole words of equal length | — |
 
-## Longest Repeating Character Replacement
+## Longest Repeating Character Replacement <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)*
+
+<ProgressCheck id="longest-repeating-character-replacement" />
 
 ### Problem
 You may replace **at most `k`** characters in the string. Find the length of the longest substring that can become **all one letter** after those replacements.
 
 **Constraints:** `1 ≤ n ≤ 10⁵`; uppercase `A–Z`; `0 ≤ k ≤ n`.
 
-**Example:** `"AABABBA", k = 1` → `4`.
+**Example 1:** `"AABABBA", k = 1` → `4`.
 
-### Pattern
-Longest window where `windowLen − maxFreq ≤ k` (replaceable minority).
+**Example 2:** `s = "ABAB", k = 2` → `4` (replace two chars to make the whole string one letter).
 
-> [key] **Key Insight** — A window is valid if the count of characters *other than the most frequent* is ≤ k. Track `maxFreq`; you never need to decrease it — the answer only grows when a longer valid window appears.
-
-### Java — Solution 0: Brute force (baseline for interview walk-through)
+### Solution — brute force
 Start here in an interview to show you understand the problem. Then optimize.
 
 ```java
@@ -477,7 +649,13 @@ Fix `left`, sweep `right`, maintain window counts incrementally. For each `[left
 
 *Why we optimize:* The outer loop resets the counter and re-does work each `left`. Sliding window shares state across all left values → O(n).
 
-### Java — Solution 1: Fast (stale-`maxFreq` optimization)
+### Solution — optimized
+The optimized window tracks the most frequent character count in the current candidate window. If `windowLen - maxFreq` exceeds `k`, too many characters would need replacement, so the left edge moves forward.
+
+**Pattern.**
+Longest window where `windowLen − maxFreq ≤ k` (replaceable minority).
+
+**Java — Solution 1: Fast (stale-`maxFreq` optimization).**
 ```java
 int characterReplacement(String s, int k) {
     int[] cnt = new int[26];
@@ -491,7 +669,7 @@ int characterReplacement(String s, int k) {
 }
 ```
 
-### Java — Solution 2: Safe (rescan current window max)
+**Java — Solution 2: Safe (rescan current window max).**
 ```java
 int characterReplacementSafe(String s, int k) {
     int[] cnt = new int[26];  // window ke ANDAR ke chars ka count (dynamic)
@@ -514,8 +692,8 @@ private int windowMax(int[] cnt) {
 }
 ```
 
-### Complexity
-| Variant | Per-iter cost | Time | Space | Interview use |
+### Time Complexity
+Existing summary: | Variant | Per-iter cost | Time | Space | Interview use |
 |---|---|---|---|---|
 | Brute force | O(1) inner, O(n) outer | O(n²) | O(26) | Baseline / warm-up |
 | Fast (stale `maxFreq`) | O(1) | O(n) | O(26) | Textbook optimal |
@@ -525,64 +703,78 @@ Fast and safe are same asymptotic; safe is easier to defend.
 
 ---
 
-> [note] **Deep Dive Note (interview prep) — the stale-`maxFreq` question**
+The fast optimized version is O(n) because each character is added once and removed at most once, with O(1) count updates. The safe version rescans a 26-cell array during shrink checks, so it is O(26·n), still linear with a small constant.
+
+### Space Complexity
+All variants use O(26) = O(1) space for uppercase letter counts; no data structure grows with the string length.
+
+### Learning notes
+- Why `int[] cnt = new int[26]`? — input is uppercase A–Z, so indexing is fixed-size.
+- Why `++cnt[...]` inside `Math.max`? — add the incoming char first, then compare its new frequency.
+- Why is stale `maxFreq` allowed? — it may overestimate validity, but never makes the recorded best smaller.
+- Why shrink when `windowLen - maxFreq > k`? — that difference is the number of chars needing replacement.
+- Why decrement `cnt` on the way out? — `cnt[]` must mirror the current window.
+
+> [key] **Key Insight** — A window is valid if the count of characters *other than the most frequent* is ≤ k. Track `maxFreq`; you never need to decrease it — the answer only grows when a longer valid window appears.
+
+> [pat] **Pattern Connection** — "Window with a boundedly-violated constraint" — same family as *Max Consecutive Ones III* (flip ≤ k zeros).
+
+### Deep Dive Note (interview prep) — the stale-`maxFreq` question
+
+*This is a longer discussion. Will be woven into the main narrative in a later revision.*
+
+**The concern.** In Solution 1, when we shrink from the left, we do `cnt[leaving]--` but we never touch `maxFreq`. So `maxFreq` can become stale (larger than the true max in the current window). Why is the algorithm still correct?
+
+**Why stale `maxFreq` doesn't break correctness — 3-line proof**
+
+1. `maxFreq` is monotone non-decreasing (only `Math.max` into it, never `--`).
+2. If we ever recorded a valid window of size `W` (i.e. `W − maxFreq_then ≤ k`), then forever after `maxFreq_now ≥ maxFreq_then`, so `W − maxFreq_now ≤ k` too — **any size-W window is always considered valid**.
+3. Per iteration, `right` moves +1 and `left` moves at most +1 (the `while` never crosses below W by step 2). Therefore the **window is monotone non-shrinking**, and the final size equals the largest truly-valid window we ever grew to.
+
+#### Alternate framing — the "candidate maximum window" pitch
+
+```java
+// Same idea, but the invariant is now visible in the code shape:
+int characterReplacement(String s, int k) {
+    int[] cnt = new int[26];
+    int left = 0, maxFreq = 0;
+    for (int right = 0; right < s.length(); right++) {
+        maxFreq = Math.max(maxFreq, ++cnt[s.charAt(right) - 'A']);
+        if (right - left + 1 - maxFreq > k) cnt[s.charAt(left++) - 'A']--;
+    }
+    return s.length() - left;   // window never shrinks → final size IS the answer
+}
+```
+
+**Trace: `s = "ABBABCD", k = 2` (Solution 2, live output)**
+
+| r | action | `cnt` (only non-zero) | window | size | `windowMax` | valid? | best |
+|---|--------|----------------------|--------|------|-------------|--------|------|
+| 0 | add A | A:1 | `A` | 1 | 1 | ✓ | 1 |
+| 1 | add B | A:1, B:1 | `AB` | 2 | 1 | ✓ | 2 |
+| 2 | add B | A:1, B:2 | `ABB` | 3 | 2 | ✓ | 3 |
+| 3 | add A | A:2, B:2 | `ABBA` | 4 | 2 | ✓ | 4 |
+| 4 | add B | A:2, B:3 | `ABBAB` | 5 | 3 | ✓ | **5** |
+| 5 | add C | A:2, B:3, C:1 | `ABBABC` | 6 | 3 | ✗ | – |
+|   | shrink A | A:1, B:3, C:1 | `BBABC` | 5 | 3 | ✓ | 5 |
+| 6 | add D | A:1, B:3, C:1, D:1 | `BBABCD` | 6 | 3 | ✗ | – |
+|   | shrink B | A:1, B:2, C:1, D:1 | `BABCD` | 5 | 2 | ✗ | – |
+|   | shrink B | A:1, B:1, C:1, D:1 | `ABCD` | 4 | 1 | ✗ | – |
+|   | shrink A | B:1, C:1, D:1 | `BCD` | 3 | 1 | ✓ | 5 |
+
+**Answer = 5** (from `"ABBAB"`; the later shrinks never grow past this ceiling). Notice how `cnt[]` always matches the current window — when `A` exits, `cnt[A]` drops to 0.
+
+**The "why doesn't `cnt[]` grow forever" answer** — because we decrement on the way out. `cnt[]` isn't a global counter of all chars ever seen; it's a **sliding counter** that mirrors `[left..right]`. So `windowMax(cnt)` is genuinely the current-window max.
+
+**Interview script (Hinglish)**
+
+> "Sir, main window ko shrink nahi kar raha — main ek **candidate-maximum window** slide kar raha hoon. Ye kabhi chhoti nahi hoti kyunki `maxFreq` monotone hai — ek baar size W valid mila, toh future mein bhi size W automatically valid rahega. Isliye final `right − left + 1` hi answer hai."
 >
-> *(This is currently kept as an inline note. Will be woven into the main narrative in a later revision.)*
->
-> **The concern.** In Solution 1, when we shrink from the left, we do `cnt[leaving]--` but we never touch `maxFreq`. So `maxFreq` can become stale (larger than the true max in the current window). Why is the algorithm still correct?
->
-> **Why stale `maxFreq` doesn't break correctness — 3-line proof**
->
-> 1. `maxFreq` is monotone non-decreasing (only `Math.max` into it, never `--`).
-> 2. If we ever recorded a valid window of size `W` (i.e. `W − maxFreq_then ≤ k`), then forever after `maxFreq_now ≥ maxFreq_then`, so `W − maxFreq_now ≤ k` too — **any size-W window is always considered valid**.
-> 3. Per iteration, `right` moves +1 and `left` moves at most +1 (the `while` never crosses below W by step 2). Therefore the **window is monotone non-shrinking**, and the final size equals the largest truly-valid window we ever grew to.
->
-> **Alternate framing — the "candidate maximum window" pitch**
->
-> ```java
-> // Same idea, but the invariant is now visible in the code shape:
-> int characterReplacement(String s, int k) {
->     int[] cnt = new int[26];
->     int left = 0, maxFreq = 0;
->     for (int right = 0; right < s.length(); right++) {
->         maxFreq = Math.max(maxFreq, ++cnt[s.charAt(right) - 'A']);
->         if (right - left + 1 - maxFreq > k) cnt[s.charAt(left++) - 'A']--;
->     }
->     return s.length() - left;   // window never shrinks → final size IS the answer
-> }
-> ```
->
-> **Trace: `s = "ABBABCD", k = 2` (Solution 2, live output)**
->
-> | r | action | `cnt` (only non-zero) | window | size | `windowMax` | valid? | best |
-> |---|--------|----------------------|--------|------|-------------|--------|------|
-> | 0 | add A | A:1 | `A` | 1 | 1 | ✓ | 1 |
-> | 1 | add B | A:1, B:1 | `AB` | 2 | 1 | ✓ | 2 |
-> | 2 | add B | A:1, B:2 | `ABB` | 3 | 2 | ✓ | 3 |
-> | 3 | add A | A:2, B:2 | `ABBA` | 4 | 2 | ✓ | 4 |
-> | 4 | add B | A:2, B:3 | `ABBAB` | 5 | 3 | ✓ | **5** |
-> | 5 | add C | A:2, B:3, C:1 | `ABBABC` | 6 | 3 | ✗ | – |
-> |   | shrink A | A:1, B:3, C:1 | `BBABC` | 5 | 3 | ✓ | 5 |
-> | 6 | add D | A:1, B:3, C:1, D:1 | `BBABCD` | 6 | 3 | ✗ | – |
-> |   | shrink B | A:1, B:2, C:1, D:1 | `BABCD` | 5 | 2 | ✗ | – |
-> |   | shrink B | A:1, B:1, C:1, D:1 | `ABCD` | 4 | 1 | ✗ | – |
-> |   | shrink A | B:1, C:1, D:1 | `BCD` | 3 | 1 | ✓ | 5 |
->
-> **Answer = 5** (from `"ABBAB"`; the later shrinks never grow past this ceiling). Notice how `cnt[]` always matches the current window — when `A` exits, `cnt[A]` drops to 0.
->
-> **The "why doesn't `cnt[]` grow forever" answer** — because we decrement on the way out. `cnt[]` isn't a global counter of all chars ever seen; it's a **sliding counter** that mirrors `[left..right]`. So `windowMax(cnt)` is genuinely the current-window max.
->
-> **Interview script (Hinglish)**
->
-> > "Sir, main window ko shrink nahi kar raha — main ek **candidate-maximum window** slide kar raha hoon. Ye kabhi chhoti nahi hoti kyunki `maxFreq` monotone hai — ek baar size W valid mila, toh future mein bhi size W automatically valid rahega. Isliye final `right − left + 1` hi answer hai."
-> >
-> > *If the interviewer isn't sold:* "Main safe version dikhaata hoon — har shrink pe `windowMax()` recompute karta hoon 26-array scan karke. Same O(n), koi stale variable nahi. Trade-off: 26× constant factor."
+> *If the interviewer isn't sold:* "Main safe version dikhaata hoon — har shrink pe `windowMax()` recompute karta hoon 26-array scan karke. Same O(n), koi stale variable nahi. Trade-off: 26× constant factor."
 >
 > **What to recognize** — this trick generalizes: whenever a window's "validity" depends on `size − someMonotoneQuantity ≤ budget`, you can often skip refreshing the quantity on shrinks, because the window will simply not shrink below the current best. See *Max Consecutive Ones III* for the same idea with `#zeros ≤ k`.
 
 ---
-
-> [pat] **Pattern Connection** — "Window with a boundedly-violated constraint" — same family as *Max Consecutive Ones III* (flip ≤ k zeros).
 
 ### Same pattern, new tweaks
 
@@ -595,24 +787,47 @@ Fast and safe are same asymptotic; safe is easier to defend.
 | [Get Equal Substrings Within Budget](https://leetcode.com/problems/get-equal-substrings-within-budget/) | shrink when the total change-cost inside the window exceeds the budget | — |
 | [Frequency of the Most Frequent Element](https://leetcode.com/problems/frequency-of-the-most-frequent-element/) | sort, then window where `windowLen·max − windowSum ≤ k` operations | — |
 
-## Subarray Product Less Than K (counting + at-most-K trick)
+## Subarray Product Less Than K (counting + at-most-K trick) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)*
+
+<ProgressCheck id="subarray-product-less-than-k-counting-at-most-k-trick" />
 
 ### Problem
 Given a positive-integer array and a `k`, count the number of **contiguous subarrays** whose product is **strictly less than `k`**.
 
 **Constraints:** `1 ≤ n ≤ 3·10⁴`; `1 ≤ nums[i] ≤ 1000`; `0 ≤ k ≤ 10⁶`.
 
-**Example:** `nums = [10,5,2,6], k = 100` → `8`. The 8 valid subarrays are `[10], [5], [2], [6], [10,5], [5,2], [2,6], [5,2,6]`.
+**Example 1:** `nums = [10,5,2,6], k = 100` → `8`. The 8 valid subarrays are `[10], [5], [2], [6], [10,5], [5,2], [2,6], [5,2,6]`.
 
-### Pattern
+**Example 2:** `nums = [1,2,3], k = 0` → `0` (positive products are never below 0).
+
+### Solution — brute force
+Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
+
+```java
+int numSubarrayProductLessThanKBrute(int[] a, int k) {
+    int count = 0;
+    for (int start = 0; start < a.length; start++) {
+        long product = 1;
+        for (int end = start; end < a.length; end++) {
+            product *= a[end];
+            if (product < k) count++;
+        }
+    }
+    return count;
+}
+```
+
+**Brute-force cost:** O(n²) time, O(1) space — too slow for n ≥ 10⁴.
+
+### Solution — optimized
+Because all values are positive, once the product is too large, dropping elements from the left is the only way to restore validity. After the window is valid, every start between `left` and `right` gives a valid subarray ending at `right`.
+
+**Pattern.**
 The **counting** flavor of sliding window: the number of *new* valid subarrays ending at each `right` is `right - left + 1`. Grow `right`; while the window's product hits `k`, shrink `left`. Add the count on each step.
 
-> [key] **Key Insight — counting-subarrays trick** — every step, all subarrays ending at `right` and starting from any index in `[left, right]` are valid → that's exactly `right - left + 1` new subarrays to add to the running total.
-
-> [inv] **Invariant** — `product` is the product of `a[left..right]`, always `< k` at the moment you record.
-
-### Steps
+**Steps.**
 1. Guard: if `k <= 1`, return 0 (all products of positive integers are ≥ 1).
 2. Maintain `product = 1`, `left = 0`, `count = 0`.
 3. For each `right`: `product *= a[right]`.
@@ -620,7 +835,7 @@ The **counting** flavor of sliding window: the number of *new* valid subarrays e
 5. Add `right - left + 1` to `count`.
 6. Return `count`.
 
-### Java
+**Java.**
 ```java
 int numSubarrayProductLessThanK(int[] a, int k) {
     if (k <= 1) return 0;
@@ -635,10 +850,26 @@ int numSubarrayProductLessThanK(int[] a, int k) {
 }
 ```
 
-> [note] **Trace it** — `nums=[10,5,2,6], k=100`. right=0 (`10`): product=10, add `1` → count=1. right=1 (`5`): product=50, add `2` → 3. right=2 (`2`): product=100, shrink until 100/10=10 (left=1), add `2` → 5. right=3 (`6`): product=60, add `3` → **8**. ✓
+### Time Complexity
+Existing summary: Time O(n) · Space O(1). Each index enters and leaves once.
 
-### Complexity
-Time O(n) · Space O(1). Each index enters and leaves once.
+The optimized loop is O(n) amortized: each element multiplies into `product` once, and each element is divided out at most once as `left` moves forward.
+
+### Space Complexity
+Space is O(1) because the method keeps only `left`, `count`, and `product`; it does not store the subarrays it counts.
+
+### Learning notes
+- Why `if (k <= 1) return 0`? — with positive integers, every product is at least 1.
+- Why `long product`? — temporary products can grow large before shrinking.
+- Why `while (product >= k)`? — equality is invalid because the condition is strictly less than k.
+- Why divide by `a[left++]`? — positive integers make division safely undo the outgoing element.
+- Why add `right - left + 1`? — all starts from `left` through `right` form valid subarrays ending at `right`.
+
+> [key] **Key Insight — counting-subarrays trick** — every step, all subarrays ending at `right` and starting from any index in `[left, right]` are valid → that's exactly `right - left + 1` new subarrays to add to the running total.
+
+> [inv] **Invariant** — `product` is the product of `a[left..right]`, always `< k` at the moment you record.
+
+> [note] **Trace it** — `nums=[10,5,2,6], k=100`. right=0 (`10`): product=10, add `1` → count=1. right=1 (`5`): product=50, add `2` → 3. right=2 (`2`): product=100, shrink until 100/10=10 (left=1), add `2` → 5. right=3 (`6`): product=60, add `3` → **8**. ✓
 
 > [trap] **Common Trap** — Values with `0`s or **negatives** break the shrinkable-product argument (`product = 0` never divides back up; negatives flip the inequality direction). This template assumes strictly-positive integers.
 
@@ -654,24 +885,45 @@ Time O(n) · Space O(1). Each index enters and leaves once.
 | [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/) | same trick, "sum = S" over a 0/1 array | O(n) |
 | [Number of Substrings Containing All Three Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/) | count from the *shrinking* side: `count += left` at each valid `right` | O(n) |
 
-## Sliding Window Maximum (Monotonic Deque)
+## Sliding Window Maximum (Monotonic Deque) <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)*
 
-> [pat] **Pattern composition — Sliding Window + Monotonic Deque.** This is the archetypal *two patterns composed*: a fixed-size sliding window over the array, and a monotonic (decreasing) deque that maintains the running maximum. When you see "extremum of every window of size k," reach for this pair.
+<ProgressCheck id="sliding-window-maximum-monotonic-deque" />
 
 ### Problem
 Given a fixed window of size `k` sliding left-to-right across the array, output the **maximum** of each window position.
 
 **Constraints:** `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`; target O(n).
 
-**Example:** `[1,3,-1,-3,5,3,6,7], k = 3` → `[3,3,5,5,6,7]`.
+**Example 1:** `[1,3,-1,-3,5,3,6,7], k = 3` → `[3,3,5,5,6,7]`.
 
-### Pattern
+**Example 2:** `nums = [1], k = 1` → `[1]` (single full window).
+
+### Solution — brute force
+Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
+
+```java
+int[] maxSlidingWindowBrute(int[] a, int k) {
+    int[] res = new int[a.length - k + 1];
+    for (int start = 0; start + k <= a.length; start++) {
+        int mx = Integer.MIN_VALUE;
+        for (int i = start; i < start + k; i++) mx = Math.max(mx, a[i]);
+        res[start] = mx;
+    }
+    return res;
+}
+```
+
+**Brute-force cost:** O(n·k) time (O(n²) when k grows with n), O(1) extra space beyond output — too slow for n ≥ 10⁴.
+
+### Solution — optimized
+The optimized solution keeps a deque of only useful max candidates. Smaller values behind a bigger incoming value are deleted because they can never become the maximum before the bigger value expires.
+
+**Pattern.**
 Fixed-size window maximum via a deque of **indices** in decreasing value order.
 
-> [inv] **Invariant** — The deque holds indices of the current window whose values are candidates for the max, front = current maximum; smaller trailing values are discarded (they can never be the max while a larger, more-recent value lives).
-
-### Steps
+**Steps.**
 1. Deque holds **indices**, front-to-back non-increasing in value.
 2. For each `i`: while the back's value `<= nums[i]`, pop it — it can't be the max of any future window.
 3. Push `i`.
@@ -679,7 +931,7 @@ Fixed-size window maximum via a deque of **indices** in decreasing value order.
 5. When `i >= k - 1`, record `nums[dq.peekFirst()]` as the current window max.
 6. O(n) amortized — each index enters and leaves the deque at most once.
 
-### Java
+**Java.**
 ```java
 int[] maxSlidingWindow(int[] a, int k) {
     Deque<Integer> dq = new ArrayDeque<>();     // indices, values decreasing
@@ -694,20 +946,37 @@ int[] maxSlidingWindow(int[] a, int k) {
 }
 ```
 
-> [note] **Trace it** — `[1,3,-1,-3,5,3,6,7], k=3`. As the window slides, the deque front always holds the current max → outputs `[3,3,5,5,6,7]`.
+### Time Complexity
+Existing summary: Time O(n) · Space O(k).
 
-### Complexity
-Time O(n) · Space O(k).
+The optimized method is O(n) amortized because each index is offered to the deque once, can be popped from the back once, and can expire from the front once.
+
+### Space Complexity
+Space is O(k) because the deque stores indices from the current window only; the result array is the required output.
+
+### Learning notes
+- Why store indices instead of values? — indices let us expire elements that slide out.
+- Why expire with `dq.peekFirst() <= i - k`? — any such index is outside `[i-k+1, i]`.
+- Why pop while `a[dq.peekLast()] <= a[i]`? — the new value dominates weaker older candidates.
+- Why record only when `i >= k - 1`? — before that, the first full window has not formed.
+- Why `res[i - k + 1]`? — that is the start index of the current window.
+
+> [pat] **Pattern composition — Sliding Window + Monotonic Deque.** This is the archetypal *two patterns composed*: a fixed-size sliding window over the array, and a monotonic (decreasing) deque that maintains the running maximum. When you see "extremum of every window of size k," reach for this pair.
+
+> [inv] **Invariant** — The deque holds indices of the current window whose values are candidates for the max, front = current maximum; smaller trailing values are discarded (they can never be the max while a larger, more-recent value lives).
+
+> [note] **Trace it** — `[1,3,-1,-3,5,3,6,7], k=3`. As the window slides, the deque front always holds the current max → outputs `[3,3,5,5,6,7]`.
 
 > [trap] **Common Trap** — Storing values, not indices. *Example:* `nums=[3,1,3]`, `k=2`. At `i=2`, the front `3` could be the old one that just exited the window — you can't tell without its index. Store indices; expire the front when `dq.peekFirst() <= i-k`.
 
+> [pat] **Pattern Connection** — Monotonic deque = sliding-window generalization of the monotonic stack; also underlies the O(nk) → O(n) speedups in some DP transitions (e.g., *Jump Game VI*, *Constrained Subsequence Sum*).
+
 ### Common Mistakes
+
 - **Storing values, not indices** — you can't detect front-of-window expiry.
 - **Wrong pop direction**: `<= nums[i]` (strictly weaker or equal) keeps the deque non-increasing.
 - **Recording the max too early** (before the first full window forms) — wait until `i >= k - 1`.
 - **Using `LinkedList` instead of `ArrayDeque`** — slower and higher memory.
-
-> [pat] **Pattern Connection** — Monotonic deque = sliding-window generalization of the monotonic stack; also underlies the O(nk) → O(n) speedups in some DP transitions (e.g., *Jump Game VI*, *Constrained Subsequence Sum*).
 
 ### Same pattern, new tweaks
 

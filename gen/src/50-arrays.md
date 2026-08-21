@@ -17,11 +17,28 @@ For the array-as-a-container Java mechanics (declaration, growth, sorting compar
 
 > [key] **Key Insight** — Almost every matrix trick is "map `(r,c)` to another cell by a formula." Write the formula down before you code: rotate-90°-clockwise sends `(r,c) → (c, n-1-r)`, which is exactly **transpose then reverse each row**.
 
-### Rotate Image (90° clockwise, in place)
+## Rotate Image (90° clockwise, in place) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Rotate Image](https://leetcode.com/problems/rotate-image/)* — **Medium**
 
-**Problem.** Rotate an `n×n` matrix 90° clockwise, **in place** (no second matrix). **Example:** `[[1,2],[3,4]] → [[3,1],[4,2]]`.
+<ProgressCheck id="rotate-image-90-clockwise-in-place" />
 
+### Problem
+Rotate an `n×n` matrix 90° clockwise, **in place** (no second matrix).
+
+**Example 1:** `matrix = [[1,2],[3,4]]` → `[[3,1],[4,2]]`.
+
+**Example 2:** `matrix = [[1,2,3],[4,5,6],[7,8,9]]` → `[[7,4,1],[8,5,2],[9,6,3]]`.
+
+### Solution — brute force
+Allocate a second `n×n` matrix and write each original cell `(r,c)` into its rotated home `(c,n-1-r)`, then copy the result back into the input matrix.
+
+**Brute-force cost:** O(n²) time, O(n²) extra space.
+
+### Solution — optimized
+Do the same coordinate transform in two in-place passes: first transpose across the main diagonal, then reverse every row. Transpose changes `(r,c)` into `(c,r)`; row reversal finishes the mapping to `(c,n-1-r)`.
+
+**Java:**
 ```java
 void rotate(int[][] m) {
     int n = m.length;
@@ -38,13 +55,40 @@ void rotate(int[][] m) {
 
 > [note] **Trace it** — `[[1,2],[3,4]]`. Transpose → `[[1,3],[2,4]]`; reverse each row → `[[3,1],[4,2]]`. Counter-clockwise is the mirror: reverse rows **first**, then transpose (or transpose then reverse each column).
 
-Time O(n²) · Space O(1).
+### Time Complexity
+O(n²). The transpose loop touches the upper triangle, and the row reversals touch every cell once more.
 
-### Spiral Matrix (layer-by-layer traversal)
+### Space Complexity
+O(1). The algorithm uses only a temporary variable for swaps and mutates the input matrix.
+
+### Learning notes
+- `for (int c = r + 1; c < n; c++)` skips the diagonal and avoids swapping each pair twice.
+- The temporary `t` is the whole in-place swap; no row copy is needed.
+- Reversing each row after transpose turns `(r,c) → (c,r)` into the clockwise target `(c,n-1-r)`.
+- The enhanced `for (int[] row : m)` is safe because each row array is mutated in place.
+
+## Spiral Matrix (layer-by-layer traversal) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)* — **Medium**
 
-**Problem.** Return all elements of an `m×n` matrix in spiral order. **Example:** `[[1,2,3],[4,5,6],[7,8,9]] → [1,2,3,6,9,8,7,4,5]`.
+<ProgressCheck id="spiral-matrix-layer-by-layer-traversal" />
 
+### Problem
+Return all elements of an `m×n` matrix in spiral order.
+
+**Example 1:** `matrix = [[1,2,3],[4,5,6],[7,8,9]]` → `[1,2,3,6,9,8,7,4,5]`.
+
+**Example 2:** `matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]` → `[1,2,3,4,8,12,11,10,9,5,6,7]`.
+
+### Solution — brute force
+Keep a `visited` boolean grid and walk right/down/left/up, turning whenever the next cell is outside bounds or already visited.
+
+**Brute-force cost:** O(m·n) time, O(m·n) extra space for `visited`.
+
+### Solution — optimized
+Track the four live boundaries of the remaining rectangle. Emit the top row, right column, bottom row, and left column, shrinking each boundary after its side is consumed.
+
+**Java:**
 ```java
 List<Integer> spiralOrder(int[][] a) {
     List<Integer> out = new ArrayList<>();
@@ -61,13 +105,40 @@ List<Integer> spiralOrder(int[][] a) {
 
 > [trap] **Common Trap** — Forgetting the two `if` guards before the bottom row and left column. On a single leftover row or column they run again and re-emit cells. The guards check the shrinking bounds haven't crossed.
 
-Time O(m·n) · Space O(1) extra.
+### Time Complexity
+O(m·n). Every matrix cell is appended exactly once.
 
-### Set Matrix Zeroes (use row 0 / col 0 as markers)
+### Space Complexity
+O(1) extra, excluding the output list that the problem requires.
+
+### Learning notes
+- `top`, `bot`, `left`, and `right` define the still-unvisited rectangle, not the whole matrix.
+- `top++` happens immediately after reading the top row so the right-column loop does not repeat the corner.
+- The `if (top <= bot)` guard handles a single remaining row after the top and right passes.
+- The `if (left <= right)` guard handles a single remaining column after the other sides shrink.
+
+## Set Matrix Zeroes (use row 0 / col 0 as markers) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/)* — **Medium**
 
-**Problem.** If a cell is `0`, set its entire row and column to `0` — **in place, O(1) extra space**. **Trap:** you must record *original* zeros before you start writing, or new zeros trigger more clearing.
+<ProgressCheck id="set-matrix-zeroes-use-row-0-col-0-as-markers" />
 
+### Problem
+If a cell is `0`, set its entire row and column to `0` — **in place, O(1) extra space**. You must record *original* zeros before writing, or new zeros trigger more clearing.
+
+**Example 1:** `matrix = [[1,1,1],[1,0,1],[1,1,1]]` → `[[1,0,1],[0,0,0],[1,0,1]]`.
+
+**Example 2:** `matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]` → `[[0,0,0,0],[0,4,5,0],[0,3,1,0]]`.
+
+### Solution — brute force
+First scan the matrix and store every row and column that originally contains a zero in two sets. Then scan again and zero any cell whose row or column is marked.
+
+**Brute-force cost:** O(R·C) time, O(R + C) extra space.
+
+### Solution — optimized
+Reuse the first row and first column as the marker sets. A separate `col0` flag is needed because `m[0][0]` cannot represent both "first row has zero" and "first column has zero" unambiguously.
+
+**Java:**
 ```java
 void setZeroes(int[][] m) {
     int R = m.length, C = m[0].length;
@@ -87,11 +158,21 @@ void setZeroes(int[][] m) {
 
 > [key] **Key Insight** — The naïve O(R·C) extra-space fix stores zero rows/cols in two sets. To reach **O(1)**, reuse the first row and first column *as* those sets — with one extra scalar (`col0`) because cell `(0,0)` would otherwise mean two things.
 
-Time O(R·C) · Space O(1).
+### Time Complexity
+O(R·C). The first pass marks original zeros, and the second pass writes each affected cell at most once.
+
+### Space Complexity
+O(1). The first row and first column carry marker state inside the input, plus one boolean flag.
+
+### Learning notes
+- `col0` separates the first-column marker from `m[0][0]`, which is already used for first-row state.
+- The inner marking loop starts at `c = 1` so column zero is never confused with normal column markers.
+- Writing bottom-up preserves the first-row markers until all lower rows have read them.
+- The final `if (col0)` applies the first-column decision after the row's other cells are processed.
 
 > [pat] **Pattern Connection** — "Reuse the input's own border as auxiliary storage" is the space-optimization mindset behind rolling-array DP and in-place linked-list surgery: when you're told **O(1) space**, look for structure you can safely overwrite.
 
-### Same pattern, new tweaks
+## Matrix mechanics — same pattern, new tweaks
 
 | Variation | The one move that changes | Time · Space |
 |---|---|---|
@@ -100,7 +181,6 @@ Time O(R·C) · Space O(1).
 | [Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/) | border-as-marker + `col0` flag | O(R·C) · O(1) |
 | [Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | treat the grid as one sorted array → binary search | O(log mn) · O(1) |
 | [Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/) | start top-right; go left on bigger, down on smaller | O(m+n) · O(1) |
-
 
 ## Cyclic Sort family (value = index + 1)
 
@@ -122,12 +202,32 @@ Here's a pattern that looks like magic the first time you see it. **When an arra
 > [inv] **Invariant** — After the pointer advances past index `i`, positions `0..i` hold exactly the values `1..i+1` in order. Each `swap` puts one more value into its final home, so across the whole scan there are ≤ n swaps.
 
 ## Cyclic Sort (the base template)
-<p class="secgoal"><b>What & why:</b> the in-place template that sorts values from a known range (1..n) by sending each value to its own index. Goal — recognize the "array holds 1..n, find the missing/duplicate" family and solve it in O(n) time, O(1) space.</p>
 
 ### Problem
+
 Sort an array that contains every number from `1..n` exactly once, in place, in O(n).
 
-### Java
+**Example 1:** [3,1,2] becomes [1,2,3].
+
+**Example 2:** [5,4,3,2,1] sorts by repeatedly sending each value to index value-1.
+
+### Solution — brute force
+
+Ignore the structural shortcut and scan/recompute from scratch for each decision.
+
+```text
+for each query or candidate:
+  scan the relevant array/list/tree/graph state
+  recompute the answer directly
+```
+
+Brute-force complexity: usually O(n) per operation or O(n^2)+ overall, with extra space when a copied structure is used.
+
+### Solution — optimized
+
+<p class="secgoal"><b>What & why:</b> the in-place template that sorts values from a known range (1..n) by sending each value to its own index. Goal — recognize the "array holds 1..n, find the missing/duplicate" family and solve it in O(n) time, O(1) space.</p>
+
+**Java:**
 ```java
 void cyclicSort(int[] nums) {
     int i = 0;
@@ -140,14 +240,28 @@ void cyclicSort(int[] nums) {
 void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 ```
 
-### Complexity
-Time O(n) · Space O(1).
+### Time Complexity
+
+O(n): each swap places at least one value into its final home.
+
+Original summary: Time O(n) · Space O(1).
+
+### Space Complexity
+
+O(1) auxiliary space.
 
 > [trap] **Common Trap** — Advancing `i` after every swap skips values you just placed. *Example:* `nums=[3,1,2]` at `i=0`. Swap `3` to index 2 → `[2,1,3]`. If you `i++`, the fresh `2` at index 0 never gets placed at index 1. Use `while` (not `if`) at each `i`.
 
 > [pat] **Pattern Connection** — Every problem below is this template with a different final step. The unifying idea — *"the value tells you its own index"* — also underlies counting sort and the in-place hashing trick (marking `nums[abs(v)-1]` negative) used in some array problems.
 
-### Same pattern, new tweaks
+### Learning notes
+
+- Why value-1 as home? Values are 1..n but indices are 0..n-1.
+- Why while, not if? The swapped-in value may also need placement.
+- Why nums[i] != nums[home]? It prevents duplicate-driven infinite swaps.
+- Why not Arrays.sort()? It wastes the value=position structure and costs O(n log n).
+
+#### Same pattern, new tweaks
 
 Cyclic sort's whole family is "place each value at its home, then read off the wrong slots":
 
@@ -158,16 +272,39 @@ Cyclic sort's whole family is "place each value at its home, then read off the w
 | [Set Mismatch](https://leetcode.com/problems/set-mismatch/) | the single wrong slot reveals both the duplicated and the missing number | — |
 | [First Missing Positive](https://leetcode.com/problems/first-missing-positive/) | ignore values outside `1..n`; the answer lies in `1..n+1` | — |
 
-## Find the Missing Number
+## Find the Missing Number <span class="diff diff-e">Easy</span>
+
+
 *[↗ LeetCode: Missing Number](https://leetcode.com/problems/missing-number/)*
 
+<ProgressCheck id="find-the-missing-number" />
+
 ### Problem
+
 An array holds `n` distinct numbers from the range `0..n` (so exactly one is missing). Return the missing one. *Example:* `[4,0,3,1]` → `2`.
 
-### How the pattern fits
+**Example 1:** [4,0,3,1] -> 2.
+
+**Example 2:** [0,1,2] -> 3.
+
+### Solution — brute force
+
+Ignore the structural shortcut and scan/recompute from scratch for each decision.
+
+```text
+for each query or candidate:
+  scan the relevant array/list/tree/graph state
+  recompute the answer directly
+```
+
+Brute-force complexity: usually O(n) per operation or O(n^2)+ overall, with extra space when a copied structure is used.
+
+### Solution — optimized
+
+**How the pattern fits:**
 Place each number at its index (`v` at index `v`, since the range starts at 0). Afterwards, the first index whose value isn't equal to its index reveals the missing number — that slot's rightful owner never showed up.
 
-### Java
+**Java:**
 ```java
 int missingNumber(int[] nums) {
     int i = 0, n = nums.length;
@@ -181,23 +318,57 @@ int missingNumber(int[] nums) {
 }
 ```
 
-### Complexity
-Time O(n) · Space O(1).
+### Time Complexity
+
+O(n): placement plus one scan.
+
+Original summary: Time O(n) · Space O(1).
+
+### Space Complexity
+
+O(1) auxiliary space.
 
 > [trap] **Common Trap** — The range is `0..n`, so a value can equal `n` (out of array bounds); guard `nums[i] < n` before swapping or you'll index out of range. (The classic XOR / Gauss-sum solutions also work, but cyclic sort generalizes to the "find *all* missing" variant below, which they don't.)
 
 > [pat] **Pattern Connection** — Sibling of *Missing Number* via XOR (`i ^ nums[i]` over all i) and via the sum formula `n(n+1)/2 − Σnums`. Prefer those for the single-missing case; reach for cyclic sort when you must report **every** missing/duplicate value.
 
+### Learning notes
+
+- Why home = nums[i]? The range starts at 0.
+- Why guard nums[i] < n? Value n is valid but has no slot.
+- Why final scan? The first wrong index is the missing value.
+- Why return n at the end? Slots 0..n-1 are all correct.
+
 ## Find All Missing / All Duplicate Numbers
+
 *[↗ LeetCode: Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)*
 
 ### Problem
+
 An array of `n` numbers where each is in `1..n`, but some appear twice and some are missing. Return **all** missing numbers (or all duplicates). *Example:* `[2,3,1,3,3]` → missing `[4,5]`, duplicates `[3]`.
 
-### How the pattern fits
+**Example 1:** [4,3,2,7,8,2,3,1] -> missing [5,6].
+
+**Example 2:** [2,3,1,3,3] -> missing [4,5], duplicate evidence [3].
+
+### Solution — brute force
+
+Ignore the structural shortcut and scan/recompute from scratch for each decision.
+
+```text
+for each query or candidate:
+  scan the relevant array/list/tree/graph state
+  recompute the answer directly
+```
+
+Brute-force complexity: usually O(n) per operation or O(n^2)+ overall, with extra space when a copied structure is used.
+
+### Solution — optimized
+
+**How the pattern fits:**
 Run cyclic sort. Any index `i` where `nums[i] != i+1` is a "wrong home": index `i` is missing value `i+1`, and the value sitting there (`nums[i]`) is a duplicate.
 
-### Java
+**Java:**
 ```java
 List<Integer> findDisappearedNumbers(int[] nums) {
     int i = 0, n = nums.length;
@@ -212,23 +383,60 @@ List<Integer> findDisappearedNumbers(int[] nums) {
 }
 ```
 
-### Complexity
-Time O(n) · Space O(1) (excluding the output list).
+### Time Complexity
+
+O(n): cyclic placement plus one final scan.
+
+Original summary: Time O(n) · Space O(1) (excluding the output list).
+
+### Space Complexity
+
+O(1) auxiliary space excluding the output list.
 
 > [trap] **Common Trap** — Using `if (nums[i] != nums[home])` is what makes duplicates safe: when the home slot already holds the same value, swapping would loop forever, so you skip and advance instead.
 
 > [pat] **Pattern Connection** — *Find the Duplicate Number* (exactly one duplicate, array **immutable**) can't cyclic-sort in place — that constraint forces the **Fast/Slow Pointers** (Floyd) reframe instead. Recognizing *which constraint you're given* (mutable vs read-only) picks cyclic sort vs Floyd.
 
-## First Missing Positive (Hard)
+### Learning notes
+
+- Why skip when home has same value? Otherwise duplicates swap forever.
+- Why scan all slots? The task asks for every missing value.
+- Why missing is i+1? Value v belongs at index v-1.
+- Why exclude output from space? The returned list is required.
+
+## First Missing Positive (Hard) <span class="diff diff-h">Hard</span>
+
+
 *[↗ LeetCode: First Missing Positive](https://leetcode.com/problems/first-missing-positive/)*
 
+<ProgressCheck id="first-missing-positive-hard" />
+
 ### Problem
+
 Given an unsorted array (any integers), find the smallest missing **positive** integer in O(n) time and O(1) space. *Example:* `[3,4,-1,1]` → `2`.
 
-### How the pattern fits
+**Example 1:** [3,4,-1,1] -> 2.
+
+**Example 2:** [1,2,0] -> 3.
+
+### Solution — brute force
+
+Ignore the structural shortcut and scan/recompute from scratch for each decision.
+
+```text
+for each query or candidate:
+  scan the relevant array/list/tree/graph state
+  recompute the answer directly
+```
+
+Brute-force complexity: usually O(n) per operation or O(n^2)+ overall, with extra space when a copied structure is used.
+
+### Solution — optimized
+
+**How the pattern fits:**
 The answer must lie in `1..n+1` (with `n` slots, the smallest missing positive can't exceed `n+1`). So ignore non-positives and values `> n`, cyclic-sort the rest into place, then the first slot `i` with `nums[i] != i+1` gives the answer.
 
-### Java
+**Java:**
 ```java
 int firstMissingPositive(int[] nums) {
     int i = 0, n = nums.length;
@@ -242,11 +450,25 @@ int firstMissingPositive(int[] nums) {
 }
 ```
 
-### Complexity
-Time O(n) · Space O(1).
+### Time Complexity
+
+O(n): valid values move toward home once, followed by one scan.
+
+Original summary: Time O(n) · Space O(1).
+
+### Space Complexity
+
+O(1) auxiliary space.
 
 > [key] **Key Insight** — The bound *"answer ∈ `1..n+1`"* is what lets you ignore everything outside that range and still guarantee correctness: with only `n` positions, values above `n` cannot change which small positive is first missing.
 
 > [trap] **Common Trap** — Trying to place out-of-range values. *Example:* `nums=[3,4,-1,1]`. `-1` and `4` can't fit in `[0..n-1]` (n=4). Guard `1 ≤ v ≤ n` before every swap or you'll IOOBE.
 
 > [pat] **Pattern Connection** — The same "use the array itself as a hash table over `1..n`" idea powers the sign-marking trick (negate `nums[abs(v)-1]`) — an alternative O(1)-space encoding when you may not reorder the array.
+
+### Learning notes
+
+- Why ignore <=0 and >n? They cannot affect the first missing positive in 1..n+1.
+- Why answer <= n+1? n slots can cover at most 1..n.
+- Why duplicate guard? It prevents infinite swaps.
+- Why mutate input? O(1) space uses the array as the hash table.

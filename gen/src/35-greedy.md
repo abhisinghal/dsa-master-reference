@@ -1,8 +1,14 @@
 # Greedy
 
+## Why greedy exists — the story
+
 Greedy is the "grab the best-looking option right now and never look back" strategy. When it works it's beautiful — usually just *sort, then sweep once*. The catch is that "best right now" isn't always "best overall," so a greedy algorithm is only correct when two properties hold: the **greedy-choice property** (a locally optimal pick is safe to commit to) and **optimal substructure** (what's left is a smaller version of the same problem). In an interview the code is the easy part; the points come from *proving* it — most often with an **exchange argument**, where you show that any optimal solution can be nudged, one swap at a time, into the greedy one without ever getting worse.
 
+A brute-force solution usually enumerates choices, schedules, subsets, or paths and then picks the best valid one. Can we do better? Only when a local choice can be proved safe. The rest of the chapter is about finding that proof: farthest reach, earliest finish, minimum prefix balance, or a frequency frame.
+
 > [key] **Key Insight** — Before coding greedy, find the sort key that makes the safe choice obvious (earliest finish, largest ratio, nearest deadline). If you can construct a counterexample to "always take the locally best," greedy is wrong → switch to DP.
+
+## When to use it — local choices with a proof
 
 ### Recognize by
 - "fewest / smallest / earliest" with a locally safe choice
@@ -14,25 +20,41 @@ A locally-best choice can be regretted later — construct a counterexample ("if
 
 ---
 
-## Jump Game II (Farthest-Reach Greedy)
+## Jump Game II (Farthest-Reach Greedy) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Jump Game II](https://leetcode.com/problems/jump-game-ii/)*
+
+<ProgressCheck id="jump-game-ii-farthest-reach-greedy" />
 
 ### Problem
 Each `nums[i]` is the **max jump length** from index `i`. Find the **fewest jumps** to reach the last index (reaching the end is always possible).
 
 **Constraints:** `1 ≤ n ≤ 10⁴`; `0 ≤ nums[i] ≤ 1000`.
 
-**Example:** `[2,3,1,1,4]` → `2` (jump `0→1→4`).
+**Example 1:** `[2,3,1,1,4]` → `2` (jump `0→1→4`).
 
-### Brute force
+**Example 2:** `[2,3,0,1,4]` → `2` (jump `0→1→4`).
+
+### Solution — brute force
 Brute force models each index as a node and explores every reachable next index to find the shortest path to the end. A plain recursive search can be exponential because it branches over all jump lengths; BFS is O(n²) in the worst case if every index reaches many later indices. The optimized greedy scan compresses BFS levels into two integers: the current frontier and the farthest next frontier.
 
-### Pattern
+```text
+queue = [0]
+steps = 0
+while queue is not empty:
+    pop every index in the current BFS layer
+    push every reachable next index not seen before
+    if the last index is reached, return steps + 1
+```
+
+Brute force complexity: naive BFS can examine O(n²) edges; recursive enumeration can be exponential.
+
+### Solution — optimized
 BFS-like level expansion: from the current reachable range, jump to the farthest reachable next.
 
 > [inv] **Invariant** — `curEnd` is the boundary of positions reachable in `jumps` steps; `farthest` is the boundary reachable in `jumps+1`. When `i` hits `curEnd`, one more jump is forced.
 
-### Java
+#### Java
 ```java
 int jump(int[] a) {
     int jumps = 0, curEnd = 0, farthest = 0;
@@ -46,7 +68,19 @@ int jump(int[] a) {
 
 > [note] **Trace it** — `[2,3,1,1,4]`. From index 0 (reach 2) the best next hop is index 1 (which reaches index 4). Two jumps `0→1→4` → answer **2**.
 
-Time O(n) · Space O(1).
+### Time Complexity
+Time O(n). Each index before the last is scanned once while updating the farthest reachable boundary.
+
+### Space Complexity
+Space O(1). The greedy scan keeps only `jumps`, `curEnd`, and `farthest`.
+
+### Learning notes
+- Why loop only to `a.length - 1`? — you do not need to jump after reaching the last index.
+- Why update `farthest` every index? — it records the best next frontier from the current BFS layer.
+- Why increment only at `i == curEnd`? — that is where the current jump range is exhausted.
+- Why set `curEnd = farthest`? — the next jump can cover exactly the farthest range discovered so far.
+- Why not choose a concrete next index? — only the frontier matters for the minimum jump count.
+- Why greedy works? — farther reach dominates shorter choices within the same layer.
 
 > [note] **Interview script** — "I first confirm the end is reachable and I need the minimum number of jumps. I start with brute force DFS or BFS over all jumps, which can be exponential for DFS or O(n²) for naive BFS. I optimize by tracking the current level boundary and farthest next reach in one pass, giving O(n) time and O(1) space."
 
@@ -57,7 +91,7 @@ Time O(n) · Space O(1).
 
 > [pat] **Pattern Connection** — This is BFS on an implicit graph collapsed to O(n). *Jump Game I* (reachability) is an even simpler farthest-reach scan.
 
-### Same pattern, new tweaks
+#### Same pattern, new tweaks
 
 "Track the farthest you can reach from the current level" is a greedy BFS in disguise:
 
@@ -68,27 +102,44 @@ Time O(n) · Space O(1).
 | [Video Stitching / Minimum Number of Taps](https://leetcode.com/problems/video-stitching/) | the same "cover the line in fewest intervals" farthest-reach greedy | — |
 | [Minimum Number of Arrows](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | the interval-cover cousin (sort by end) | — |
 
-## Gas Station (Prefix-Balance Greedy)
+## Gas Station (Prefix-Balance Greedy) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Gas Station](https://leetcode.com/problems/gas-station/)*
+
+<ProgressCheck id="gas-station-prefix-balance-greedy" />
 
 ### Problem
 Around a circular route, station `i` provides `gas[i]` and it costs `cost[i]` to drive to the next station. Return the **starting index** from which you can complete the whole loop (or -1). A unique answer exists whenever total gas ≥ total cost.
 
 **Constraints:** `1 ≤ n ≤ 10⁵`; values `≥ 0`.
 
-**Example:** `gas = [1,2,3,4,5], cost = [3,4,5,1,2]` → `3`.
+**Example 1:** `gas = [1,2,3,4,5], cost = [3,4,5,1,2]` → `3`.
 
-### Brute force
+**Example 2:** `gas = [2,3,4], cost = [3,4,3]` → `-1` because total gas is insufficient.
+
+### Solution — brute force
 Brute force tries every station as a start and simulates a full circuit while tracking tank balance. That is O(n²) time and O(1) space, and it repeats the same failing prefixes over and over. The optimized greedy scan uses the fact that if a candidate start fails at station `i`, every start inside that failed segment also fails, so the next candidate is `i + 1` after a global total check.
 
-### Pattern
+```text
+for each station start:
+    tank = 0
+    for n legs around the circle:
+        tank += gas[i] - cost[i]
+        if tank < 0: fail this start
+    if all legs succeed: return start
+return -1
+```
+
+Brute force complexity: O(n²) time and O(1) extra space.
+
+### Solution — optimized
 If total gas ≥ total cost, a unique start exists; it's just after the point of minimum running balance.
 
 > [key] **Key Insight** — If you run out of gas going from `start` to `i`, no station in `[start, i]` can be the answer (each had ≤ 0 surplus to offer) → restart at `i+1`. Total feasibility is a separate global check.
 
 > [inv] **Invariant** — `tank` is the surplus since the current candidate start; the moment it goes negative, every earlier candidate is eliminated.
 
-### Java
+#### Java
 ```java
 int canCompleteCircuit(int[] gas, int[] cost) {
     int total = 0, tank = 0, start = 0;
@@ -104,7 +155,19 @@ int canCompleteCircuit(int[] gas, int[] cost) {
 
 > [note] **Trace it** — `gas=[1,2,3,4,5], cost=[3,4,5,1,2]`. Running balance bottoms out entering index 3, so start at **3**: `4→5→1→2→3` never dips below zero.
 
-Time O(n) · Space O(1).
+### Time Complexity
+Time O(n). One pass computes total surplus and eliminates invalid start ranges.
+
+### Space Complexity
+Space O(1). Only `total`, `tank`, and `start` are stored.
+
+### Learning notes
+- Why keep `total`? — it proves whether any solution exists globally.
+- Why keep `tank` separately? — it measures surplus from the current candidate start only.
+- Why reset when `tank < 0`? — every station in that failed segment is impossible.
+- Why set `start = i + 1`? — the next station is the first candidate not disproved by the deficit.
+- Why reset `tank = 0`? — the new candidate starts with an empty local balance.
+- Why return `start` only if `total >= 0`? — local recovery cannot fix global shortage.
 
 > [note] **Interview script** — "I first confirm the route is circular and returning any valid start is enough when total gas can cover total cost. I start with brute force by simulating the full loop from every station, which is O(n²) time and O(1) space. I optimize by resetting the candidate after any negative tank and checking total surplus, giving O(n) time and O(1) space."
 
@@ -113,7 +176,7 @@ Time O(n) · Space O(1).
 
 > [pat] **Pattern Connection** — "Reset the start when the running sum dips" mirrors Kadane's max-subarray reset — both discard a prefix that can only hurt.
 
-### Same pattern, new tweaks
+#### Same pattern, new tweaks
 
 "A running tally you reset the moment a prefix can only hurt" recurs across greedy scans:
 
@@ -123,22 +186,52 @@ Time O(n) · Space O(1).
 | [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | track the min price so far and the best profit against it | — |
 | [Gas Station](https://leetcode.com/problems/gas-station/) | reset the start to `i+1` when the tank dips below 0, with a global feasibility gate | — |
 
-## Task Scheduler / Activity Selection (Sort-Driven Greedy)
+## Task Scheduler / Activity Selection (Sort-Driven Greedy) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Task Scheduler](https://leetcode.com/problems/task-scheduler/)*
+
+<ProgressCheck id="task-scheduler-activity-selection-sort-driven-greedy" />
 
 ### Problem
 Given task labels and a cooldown `n` (identical tasks must be at least `n` apart), find the **minimum number of intervals** (including idle slots) to run every task.
 
 **Constraints:** `1 ≤ tasks ≤ 10⁴`; labels `A–Z`; `0 ≤ n ≤ 100`.
 
-**Example:** `["A","A","A","B","B","B"], n = 2` → `8` (`AB_AB_AB`).
+**Example 1:** `["A","A","A","B","B","B"], n = 2` → `8` (`AB_AB_AB`).
 
-### Brute force
+**Example 2:** `tasks = ["A","A","A","B","B","B"], n = 0` → `6` because no cooldown gaps are needed.
+
+### Solution — brute force
 For task scheduling, brute force can simulate each time slot by repeatedly choosing an available task and trying schedules with idle slots when blocked. That search branches heavily and is effectively exponential if you enumerate orders; even a priority-queue simulation is more machinery than needed. The optimized formula observes that the most frequent task creates the idle-frame skeleton, then fills gaps with all other tasks in linear time over the task counts.
 
+```text
+try every ordering of the tasks:
+    insert idle slots whenever a repeated label is too close
+    keep the shortest valid timeline
+return the best length
+```
+
+Brute force complexity: exponential if schedules are enumerated; simulation alternatives are usually O(T log A).
+
+### Solution — optimized
 **Activity selection** — to fit the most non-overlapping intervals, sort by **earliest finish time** and greedily take any activity starting after the last taken finish. Exchange argument: swapping in the earliest-finishing compatible activity never reduces the count.
 
 **Task Scheduler** (cooldown n between equal tasks) — the most frequent task dictates the skeleton: `(maxFreq−1)·(n+1) + (#tasks with maxFreq)`, floored by total tasks.
+
+#### Java
+```java
+int leastInterval(char[] tasks, int n) {
+    int[] freq = new int[26];
+    for (char task : tasks) freq[task - 'A']++;
+    int maxFreq = 0, maxCount = 0;
+    for (int f : freq) {
+        if (f > maxFreq) { maxFreq = f; maxCount = 1; }
+        else if (f == maxFreq) maxCount++;
+    }
+    int frame = (maxFreq - 1) * (n + 1) + maxCount;
+    return Math.max(tasks.length, frame);
+}
+```
 
 > [key] **Key Insight** — Greedy interval problems almost always sort by *finish* time (maximize count) or *start* time (merge/coverage). Choosing the wrong key is the classic greedy failure.
 
@@ -148,6 +241,19 @@ For task scheduling, brute force can simulate each time slot by repeatedly choos
 
 > [note] **Interview script** — "I first confirm identical tasks need at least `n` intervals between runs and idle slots are allowed. I start with brute force by enumerating or simulating possible schedules, which is exponential if I search all valid orders. I optimize by counting frequencies and using the max-frequency frame formula, giving O(tasks + A) time and O(A) space for alphabet size `A`."
 
+### Time Complexity
+Time O(T + A), where T is the task count and A is the alphabet size. Counting dominates for fixed uppercase labels.
+
+### Space Complexity
+Space O(A) for the frequency table.
+
+### Learning notes
+- Why count frequencies? — only the most frequent labels determine unavoidable idle frames.
+- Why use `maxFreq - 1` blocks? — the last copy of the most frequent task does not need a following cooldown frame.
+- Why multiply by `n + 1`? — each internal block holds one anchor task plus n cooldown positions.
+- Why add `maxCount`? — all labels tied for maximum frequency occupy the final block.
+- Why `Math.max(tasks.length, frame)`? — other tasks can fill idles, but the answer can never be shorter than the task count.
+- Why earliest-finish for activity selection? — finishing sooner leaves the most room for future compatible intervals.
 
 ## When greedy fails → DP
 <p class="secgoal"><b>What & why:</b> the tell-tale signs that a locally optimal choice is <i>not</i> globally safe. Goal — decide fast between a greedy one-pass and a DP, and back the call with a counterexample or an exchange argument.</p>
@@ -157,25 +263,40 @@ For task scheduling, brute force can simulate each time slot by repeatedly choos
 > [inv] **Invariant test** — Greedy is safe iff you can prove the exchange argument. No proof, construct a small counterexample; if one exists, the problem is DP.
 
 
-## Non-overlapping Intervals (Interval Scheduling)
+## Non-overlapping Intervals (Interval Scheduling) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)*
+
+<ProgressCheck id="non-overlapping-intervals-interval-scheduling" />
 
 ### Problem
 Find the **minimum number of intervals to remove** so the remaining ones don't overlap.
 
 **Constraints:** `1 ≤ n ≤ 10⁵`; `start < end`.
 
-**Example:** `[[1,2],[2,3],[3,4],[1,3]]` → `1` (remove `[1,3]`).
+**Example 1:** `[[1,2],[2,3],[3,4],[1,3]]` → `1` (remove `[1,3]`).
 
-### Brute force
+**Example 2:** `[[1,2],[1,2],[1,2]]` → `2` (keep one interval, remove two).
+
+### Solution — brute force
 Brute force tries subsets of intervals, checks which subsets are pairwise non-overlapping, and keeps the largest valid subset; removals are `n - kept`. That is exponential time and O(n) recursion space, so it is a correctness baseline only. The greedy optimization sorts by end time and always keeps the compatible interval that finishes earliest, because that leaves maximum room for all future intervals.
 
-### Pattern
+```text
+bestKept = 0
+for each subset of intervals:
+    if every pair in the subset is non-overlapping:
+        bestKept = max(bestKept, subset size)
+return n - bestKept
+```
+
+Brute force complexity: O(2^n · n²) time to enumerate and validate subsets.
+
+### Solution — optimized
 Sort by **end**; greedily keep the earliest-finishing interval; count removals of those that overlap the last kept.
 
 > [inv] **Invariant** — Keeping the earliest-ending compatible interval leaves the most room for the rest (exchange argument).
 
-### Java
+#### Java
 ```java
 int eraseOverlapIntervals(int[][] intervals) {
     Arrays.sort(intervals, (a, b) -> Integer.compare(a[1], b[1]));   // by end
@@ -190,7 +311,19 @@ int eraseOverlapIntervals(int[][] intervals) {
 
 > [note] **Trace it** — `[[1,2],[2,3],[3,4],[1,3]]`. Keeping earliest-finishers `[1,2],[2,3],[3,4]` forces dropping `[1,3]` → **1** removal.
 
-Time O(n log n) · Space O(1).
+### Time Complexity
+Time O(n log n). Sorting by end dominates; the greedy keep/remove pass is O(n).
+
+### Space Complexity
+Space O(1) extra besides the input array, ignoring sorting implementation overhead.
+
+### Learning notes
+- Why sort by end? — earliest finish leaves maximum room for later intervals.
+- Why initialize `end` very small? — the first interval should always be eligible to keep.
+- Why `iv[0] >= end`? — touching endpoints are non-overlapping for this problem.
+- Why update `end = iv[1]` only when kept? — removed intervals should not constrain future choices.
+- Why count `removed++` on overlap? — sorting by end means the current interval is no better than the one already kept.
+- Why this greedy is safe? — an exchange argument swaps any later-ending kept interval for the earlier-ending one.
 
 > [note] **Interview script** — "I first confirm touching endpoints like `[1,2]` and `[2,3]` are non-overlapping under the problem definition. I start with brute force by testing subsets of intervals, which is exponential time and O(n) space. I optimize by sorting by end time and greedily keeping compatible intervals, giving O(n log n) time and O(1) extra space."
 
@@ -199,7 +332,7 @@ Time O(n log n) · Space O(1).
 
 > [pat] **Pattern Connection** — Max non-overlapping set = *Minimum Arrows to Burst Balloons* (min points to stab all). Sort-by-end greedy is the shared core.
 
-### Same pattern, new tweaks
+#### Same pattern, new tweaks
 
 Sort by **end time** and greedily keep the earliest-finishing compatible interval:
 

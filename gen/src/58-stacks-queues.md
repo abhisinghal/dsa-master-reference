@@ -4,22 +4,52 @@ A **stack** is your "most-recent-unresolved" memory — think matching brackets,
 
 This chapter covers the plain stack/queue *containers* — their operations and canonical uses. For the pattern of using a stack in *monotone order* to find nearest-greater/smaller elements, see the [Monotonic Stack pattern](#monotonic-stack) in Part II.
 
-## Valid Parentheses
+## Valid Parentheses <span class="diff diff-e">Easy</span>
+
+
 *[↗ LeetCode: Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)*
 
+### Try it yourself
+
+Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
+
+<JavaRunner problemSlug="valid-parentheses" :tests='[{ input: "()", expected: "true" }, { input: "()[]{}", expected: "true" }, { input: "(]", expected: "false" }]' />
+
+
+<ProgressCheck id="valid-parentheses" />
+
 ### Problem
+
 Given a string of brackets `()[]{}`, decide if they are **balanced** — every opener closed by the matching type, in the correct order.
 
 **Constraints:** `1 ≤ n ≤ 10⁴`; only bracket characters.
 
 **Example:** `"([])"` → `true`; `"([)]"` → `false`.
 
-### Pattern
+**Example 1:** "([])" -> true.
+
+**Example 2:** "([)]" -> false.
+
+### Solution — brute force
+
+Ignore the structural shortcut and scan/recompute from scratch for each decision.
+
+```text
+for each query or candidate:
+  scan the relevant array/list/tree/graph state
+  recompute the answer directly
+```
+
+Brute-force complexity: usually O(n) per operation or O(n^2)+ overall, with extra space when a copied structure is used.
+
+### Solution — optimized
+
+**Pattern:**
 Stack matching of nested delimiters.
 
 > [inv] **Invariant** — The stack holds unmatched opening brackets in nesting order; a closer must match the top.
 
-### Java
+**Java:**
 ```java
 boolean isValid(String s) {
     Deque<Character> st = new ArrayDeque<>();
@@ -34,13 +64,29 @@ boolean isValid(String s) {
 
 > [note] **Trace it** — `"([)]"`: push `(`, push `[`, then `)` needs the top to be `(` but it's `[` → mismatch → invalid. `"([])"` closes each in reverse order → valid.
 
-Time O(n) · Space O(n).
 
 > [trap] **Common Trap** — Returning `true` without checking `stack.isEmpty()`. *Example:* `s="(()"` — every closer matched, but one `(` was never closed. Return `stack.isEmpty()`, not just `true`.
 
 > [pat] **Pattern Connection** — Stack-based parsing generalizes to expression evaluation (*Basic Calculator*), where operators and signs are pushed and resolved.
 
-### Same pattern, new tweaks
+### Time Complexity
+
+O(n): each bracket is pushed or popped at most once.
+
+Original summary: Time O(n) · Space O(n).
+
+### Space Complexity
+
+O(n) worst case for all opening brackets.
+
+### Learning notes
+
+- Why stack? Closers must match the most recent opener.
+- Why closer->opener map? It gives the required top value immediately.
+- Why empty check before pop? Leading closers are invalid.
+- Why final isEmpty? Unclosed openers must fail.
+
+#### Same pattern, new tweaks
 
 A stack that remembers "unresolved context" handles all kinds of nesting:
 
@@ -51,23 +97,45 @@ A stack that remembers "unresolved context" handles all kinds of nesting:
 | [Decode String](https://leetcode.com/problems/decode-string/) | push `(repeatCount, prefix)` on `[`, pop and expand on `]` | — |
 | [Longest Valid Parentheses](https://leetcode.com/problems/longest-valid-parentheses/) | keep a stack of indices to measure the length of each valid span | — |
 
+## Min Stack (O(1) minimum) <span class="diff diff-m">Medium</span>
 
-## Min Stack (O(1) minimum)
+
 *[↗ LeetCode: Min Stack](https://leetcode.com/problems/min-stack/)*
 
+<ProgressCheck id="min-stack-o-1-minimum" />
+
 ### Problem
+
 Design a stack supporting `push`, `pop`, `top`, and **`getMin`** — all in **O(1)**.
 
 **Constraints:** up to `3·10⁴` operations; `getMin` must be O(1); `pop`/`top`/`getMin` are always called on a non-empty stack.
 
 **Example:** `push(5), push(3), getMin()→3, pop(), getMin()→5`.
 
-### Pattern
+**Example 1:** push(5), push(3), getMin() -> 3, pop(), getMin() -> 5.
+
+**Example 2:** push(2), push(2), pop(), getMin() -> 2.
+
+### Solution — brute force
+
+Ignore the structural shortcut and scan/recompute from scratch for each decision.
+
+```text
+for each query or candidate:
+  scan the relevant array/list/tree/graph state
+  recompute the answer directly
+```
+
+Brute-force complexity: usually O(n) per operation or O(n^2)+ overall, with extra space when a copied structure is used.
+
+### Solution — optimized
+
+**Pattern:**
 Augment each stack entry with the running minimum (or keep a parallel min-stack).
 
 > [inv] **Invariant** — `minStack.peek()` is the minimum of all elements currently in the main stack.
 
-### Java
+**Java:**
 ```java
 class MinStack {
     private final Deque<int[]> st = new ArrayDeque<>();   // {value, minSoFar}
@@ -83,20 +151,35 @@ class MinStack {
 
 > [note] **Trace it** — push `5,3,7`: the paired min-stack tracks `5,3,3`, so `getMin()` reads `3` in O(1). Pop `3` and the min instantly reverts to `5`.
 
-**Time** O(1) for every operation (`push/pop/top/getMin`) · **Space** O(n) for the paired minimum.
 
 > [trap] **Common Trap** — A single scalar `min` can't be restored after `pop`. *Example:* push 5, push 3 (min=3), pop 3 — should min go back to 5? Without a per-entry or parallel min, you've lost that history. Store the running min with each pushed value.
 
 > [pat] **Pattern Connection** — Carrying an auxiliary aggregate alongside the primary structure is the same idea as a monotonic deque tracking the window max, and as segment-tree nodes storing subrange summaries.
 
-### Same pattern, new tweaks
+### Time Complexity
+
+O(1) for push, pop, top, and getMin.
+
+Original summary: **Time** O(1) for every operation (`push/pop/top/getMin`) · **Space** O(n) for the paired minimum.
+
+### Space Complexity
+
+O(n) because each entry stores value and min-so-far.
+
+### Learning notes
+
+- Why minSoFar per entry? Pop restores the previous minimum instantly.
+- Why int[] pair? It carries value and min together cheaply.
+- Why not one scalar min? It loses history after popping the minimum.
+- Why ArrayDeque? It is the modern Java stack/deque choice.
+
+#### Same pattern, new tweaks
 
 | Variation | The one thing that changes | Time |
 |---|---|---|
 | [Max Stack](https://leetcode.com/problems/max-stack/) | track a running max per entry (or a second stack) for O(1) `peekMax` | O(1) |
 | [Sliding Window Minimum/Maximum](https://leetcode.com/problems/sliding-window-maximum/) | the queue version — a monotonic deque holding candidate extremes | — |
 | [Stock Span / Online Stock Span](https://leetcode.com/problems/online-stock-span/) | each entry carries the span it dominates, collapsed as smaller values arrive | — |
-
 
 ## Queue &amp; Deque essentials
 <p class="secgoal"><b>What & why:</b> the core queue/deque operations and the monotonic-deque trick. Goal — know exactly which method does what (offer / poll / peek / offerFirst) and when a double-ended queue beats a plain one.</p>

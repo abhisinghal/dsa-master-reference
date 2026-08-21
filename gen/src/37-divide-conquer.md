@@ -1,5 +1,7 @@
 # Divide &amp; Conquer
 
+**Grokking arc:** The motivating problem is counting cross-boundary relationships that brute force checks pair by pair. Brute force compares every pair. **Can we do better?** Split the input, solve organized halves, then let the combine step count many relationships at once.
+
 ## Why divide and conquer exists — the story
 
 Divide and conquer is what you reach for when solving the whole input directly feels messy, but solving smaller pieces feels natural. You split the input, solve the left half, solve the right half, and then combine the two answers. The split is usually the easy part. The combine step is where the cleverness lives.
@@ -93,7 +95,6 @@ The recursive calls should solve independent halves. The `combine` function is t
 
 A useful interview sentence is: "I need each recursive call to return not only the answer inside its half, but also enough structure to combine with the other half." For merge-sort counting, that structure is sorted order. Without sorted order, you would still be stuck comparing every left item to every right item.
 
-
 ## The recursion tree intuition
 
 For merge-sort-shaped divide and conquer, each level of recursion touches every element once in the combine step. At the bottom, there are many size-1 problems. One level up, you merge pairs into size-2 sorted runs. Then size 4, size 8, and so on. There are about `log n` levels, and each level does O(n) total merge work, so the total is O(n log n). This is the same reason merge sort is predictable even on already-sorted or reverse-sorted input.
@@ -103,7 +104,6 @@ The warning is that the combine step sets the cost. If you split in half but the
 ### What the combine step can carry
 For inversion count, combine carries sorted order and a count. For maximum subarray via divide and conquer, each node carries four values: total sum, best prefix sum, best suffix sum, and best subarray sum. For closest pair of points, each half carries its closest distance, and combine checks only points near the vertical split. The pattern is not "always merge arrays"; the pattern is "design a summary that makes cross-boundary work small."
 
-
 ## Designing the combine step — a checklist
 
 Before writing code, ask three questions. First, what does each half return? It might be a sorted range, a count, a best prefix/suffix summary, or a distance. Second, what relationships cross the middle and are not counted inside either half? Those are the only things combine must handle. Third, can the returned structure make those cross relationships cheaper than checking all pairs? If the answer to the third question is no, your divide-and-conquer idea is probably just brute force with recursion.
@@ -112,24 +112,22 @@ For inversion count, the answers are crisp: each half returns sorted order plus 
 
 ---
 
-## Merge Sort &amp; Count of Smaller Numbers After Self
+## Merge Sort &amp; Count of Smaller Numbers After Self <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)*
+
+<ProgressCheck id="merge-sort-amp-count-of-smaller-numbers-after-self" />
 
 ### Problem
 For each element, count how many elements **to its right are smaller** — the "count smaller after self" problem.
 
 **Constraints:** `1 ≤ n ≤ 10⁵`; values fit in `int`; needs O(n log n).
 
-**Example:** `[5,2,6,1]` → `[2,1,1,0]`.
+**Example 1:** `[5,2,6,1]` → `[2,1,1,0]`.
 
-### Pattern
-Stable merge sort whose merge step *counts* cross-pair relationships (inversions, smaller-to-the-right).
+**Example 2:** `[2,4,1,3,5]` has inversions `(2,1)`, `(4,1)`, `(4,3)` → total `3`.
 
-> [key] **Key Insight** — During merge, when you take an element from the right half before some remaining left-half elements, you've discovered order relationships between them for free. Piggyback the count on the sort.
-
-> [inv] **Invariant** — Each half is fully sorted before merge; the combine step sees a clean cross-boundary comparison.
-
-### Brute force
+### Solution — brute force
 The obvious baseline checks every pair `(i,j)` with `i < j` and counts when `a[i] > a[j]`.
 
 ```java
@@ -142,13 +140,24 @@ The obvious baseline checks every pair `(i,j)` with `i < j` and counts when `a[i
 
 For `[5,2,6,1]`, the inversion pairs are `(5,2)`, `(5,1)`, `(2,1)`, and `(6,1)`, so the total inversion count is `4`. This is O(n²), which is too slow for `n = 100000`. Divide and conquer improves it by counting many cross pairs at once during merge.
 
+**Baseline complexity:** O(n²) time and O(1) extra space for total inversion count.
 
-### Why sorting helps counting
+### Solution — optimized
+The optimized solution keeps the original Java intact and explains the pattern that removes the brute-force bottleneck.
+
+#### Pattern
+Stable merge sort whose merge step *counts* cross-pair relationships (inversions, smaller-to-the-right).
+
+> [key] **Key Insight** — During merge, when you take an element from the right half before some remaining left-half elements, you've discovered order relationships between them for free. Piggyback the count on the sort.
+
+> [inv] **Invariant** — Each half is fully sorted before merge; the combine step sees a clean cross-boundary comparison.
+
+#### Why sorting helps counting
 Before the merge, the left and right halves are individually sorted. That means comparisons become bulk statements. If the current left value is `2` and current right value is `1`, then not only is `2 > 1`, every later value in the sorted left half is also greater than `1`. One comparison just counted multiple original pairs. That is the exact reason the optimized solution beats brute force.
 
 Do not lose sight of original positions in variants. Sorting changes order, but questions like Count of Smaller After Self need answers attached to original indices. The usual trick is to sort small records like `(value, originalIndex)` rather than raw integers. The array becomes sorted by value for merge logic, while `originalIndex` tells you where to add the discovered count.
 
-### Java (inversion count)
+#### Java (inversion count)
 ```java
 long countInversions(int[] a) { return sort(a, 0, a.length - 1, new int[a.length]); }
 long sort(int[] a, int lo, int hi, int[] tmp) {
@@ -178,41 +187,30 @@ long sort(int[] a, int lo, int hi, int[] tmp) {
 >
 > The key line is `mid - i + 1`: because the left half is sorted, if `a[i] > a[j]`, then every left value from `i` through `mid` is also greater than `a[j]`.
 
-### Complexity
-Time O(n log n) · Space O(n). The recursion has `log n` levels, and each level performs O(n) merge work.
-
-> [trap] **Common Trap** — Adding the inversion count `mid - i + 1` on the wrong branch (it belongs to the *right-element-taken* case, where all remaining left elements exceed it) or using `int` for a count that can reach ~n²/2 — use `long`.
-
-> [note] **Interview script** — First, I'd present the brute force: compare every pair `i < j`, which is O(n²). To optimize, I use merge sort because after each half is sorted, cross-half comparisons become bulk counts. During merge, when a right value is smaller than `a[i]` in the left half, it is smaller than all remaining left values, so I add `mid - i + 1`. This gives O(n log n) time and O(n) extra space.
-
-
-### How this differs from quicksort-style divide and conquer
+#### How this differs from quicksort-style divide and conquer
 Quicksort also divides and conquers, but its combine step is almost empty after partitioning; the clever work happens before the recursive calls. Merge-sort counting is the opposite: the split is mechanical, and the merge is where you count. In interviews, naming where the cleverness lives helps you choose the right invariant. For inversion counting, you want the postcondition "this range is sorted and its internal inversions are counted" after every recursive call.
 
-### Overflow and stability details
+#### Overflow and stability details
 The inversion total can be as large as `n * (n - 1) / 2`, which exceeds `int` when `n` is large, so the return type is `long`. Stability matters when equal values appear: equal numbers are not inversions, so the merge uses `<=` to take the left value first. If you accidentally use `<`, duplicates may be pulled from the right first and can corrupt per-index counting variants even when the total inversion count looks close.
 
 > [pat] **Pattern Connection** — The "count while sorting" trick answers *Count of Smaller After Self*, *Reverse Pairs*, and *Count Range Sum* (merge sort over prefix sums) — a recurring staff-level technique. A BIT/segment tree is the alternative.
 
-### Extending from inversion count to per-index counts
+#### Extending from inversion count to per-index counts
 The shown code counts total inversions. For LeetCode's per-index "count smaller after self," you keep pairs `(value, originalIndex)` instead of raw values, and when left elements move after right elements, you add the number of already-taken right elements to that original index's answer. The skeleton is identical: split, sort pairs by value, and do all cross-boundary accounting inside merge. This is why interviewers often ask the simpler inversion count first; it teaches the combine step without the original-index bookkeeping.
 
-
-### Mini trace: recursion shape
+#### Mini trace: recursion shape
 For `[5,2,6,1]`, the call tree splits into `[5,2]` and `[6,1]`, then into singletons. The first merge returns sorted `[2,5]` with one inversion. The second returns `[1,6]` with one inversion. The final merge counts two cross inversions caused by `1`, then returns `[1,2,5,6]`. The final answer is not computed at one magic line; it accumulates as `leftAnswer + rightAnswer + crossAnswer` at every parent.
 
-
-### Reverse pairs as the same combine idea
+#### Reverse pairs as the same combine idea
 Reverse Pairs asks for `i < j` and `a[i] > 2 * a[j]`. The merge itself still sorts normally, but many implementations do a separate two-pointer counting pass before merging. For each left index `i`, advance a right pointer while the condition holds; because both halves are sorted, the right pointer never moves backward. Then merge the halves. The lesson is important: the combine step does not have to count only inside the merge loop. It can perform any linear cross-boundary pass as long as the halves' sorted structure makes it safe.
 
-### Count Range Sum as prefix-sum divide and conquer
+#### Count Range Sum as prefix-sum divide and conquer
 Count Range Sum looks unrelated until you convert the array to prefix sums. A subarray sum from `i` to `j-1` is `prefix[j] - prefix[i]`. Now the question becomes: for each prefix on the left, how many prefixes on the right fall into `[prefix[i] + lower, prefix[i] + upper]`? Merge sort over prefix sums keeps each half sorted, so two moving pointers count the valid range in linear time per level. Same shape, different thing being counted.
 
-### Iterative alternative
+#### Iterative alternative
 If recursion makes you nervous in Java, merge sort can be written bottom-up: merge runs of length 1, then 2, then 4, then 8. The counting logic inside each merge range is the same. Interviewers usually prefer the recursive version because it shows the divide-and-conquer idea directly, but recognizing the bottom-up form helps when stack depth, allocation strategy, or performance tuning matters.
 
-### Same pattern, new tweaks
-
+#### Same pattern, new tweaks
 "Piggyback a count onto the merge step" answers a family of cross-pair questions:
 
 | Variation | The one thing that changes |
@@ -222,3 +220,24 @@ If recursion makes you nervous in Java, merge sort can be written bottom-up: mer
 | [Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/) | Run merge sort over prefix sums and count prefix differences in `[lower, upper]`. |
 | [Global and Local Inversions](https://leetcode.com/problems/global-and-local-inversions/) | Compare total inversions with local adjacent inversions; the count idea explains the distinction. |
 | [Sort List](https://leetcode.com/problems/sort-list/) | Same divide/merge shape, but the split is fast/slow pointers and the merge relinks nodes. |
+
+> [trap] **Common Trap** — Adding the inversion count `mid - i + 1` on the wrong branch (it belongs to the *right-element-taken* case, where all remaining left elements exceed it) or using `int` for a count that can reach ~n²/2 — use `long`.
+
+> [note] **Interview script** — First, I'd present the brute force: compare every pair `i < j`, which is O(n²). To optimize, I use merge sort because after each half is sorted, cross-half comparisons become bulk counts. During merge, when a right value is smaller than `a[i]` in the left half, it is smaller than all remaining left values, so I add `mid - i + 1`. This gives O(n log n) time and O(n) extra space.
+
+### Time Complexity
+Time O(n log n) · Space O(n). The recursion has `log n` levels, and each level performs O(n) merge work.
+
+O(n log n): `log n` merge-sort levels, each doing O(n) total merge/count work.
+
+
+### Space Complexity
+O(n) for the reusable temp array, plus O(log n) recursion stack.
+
+### Learning notes
+- Why `lo >= hi`? — a range of size 0 or 1 is already sorted and has no inversions.
+- Why allocate `tmp` once outside recursion? — one reusable buffer avoids per-frame array allocation.
+- Why `a[i] <= a[j]` takes from the left? — equal values are not inversions, and stable merging protects per-index variants.
+- Why add `mid - i + 1`? — if sorted-left `a[i] > a[j]`, every remaining left value is also greater than that right value.
+- Why `System.arraycopy` back? — parent calls rely on this range being sorted after the child returns.
+- Why `long inv`? — inversion counts can grow near n²/2 and overflow `int`.

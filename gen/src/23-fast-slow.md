@@ -50,17 +50,22 @@ The template has two phases. Phase one moves at different speeds and answers "do
 
 ---
 
-## Linked List Cycle II (Floyd)
+## Linked List Cycle II (Floyd) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)*
+
+<ProgressCheck id="linked-list-cycle-ii-floyd" />
 
 ### Problem
 Detect whether a singly linked list has a **cycle**, and if so return the node where the cycle **begins** — using O(1) space.
 
 **Constraints:** up to `10⁴` nodes; the cycle (if present) is reachable by following `next`.
 
-**Example:** `3→2→0→-4` with `-4` linking back to `2` → returns node `2`.
+**Example 1:** `3→2→0→-4` with `-4` linking back to `2` → returns node `2`.
 
-### Brute force baseline
+**Example 2:** `1→2→null` → `null` (no cycle, so no entry node).
+
+### Solution — brute force
 The first correct idea is to remember every node reference you have seen. Walk from `head`; before visiting a node, ask whether it is already in the set. If yes, that exact node is the cycle entry. If you reach `null`, there is no cycle.
 
 ```text
@@ -75,14 +80,28 @@ return null
 
 This is easy to explain and handles the entry node naturally. The cost is O(n) time and O(n) space, because in the no-cycle case you store every node. Floyd keeps the O(n) time but removes the set.
 
-### Pattern
+```java
+ListNode detectCycleBrute(ListNode head) {
+    Set<ListNode> seen = new HashSet<>();
+    ListNode cur = head;
+    while (cur != null) {
+        if (seen.contains(cur)) return cur;
+        seen.add(cur);
+        cur = cur.next;
+    }
+    return null;
+}
+```
+
+**Brute-force cost:** O(n) time, O(n) space — correct, but the extra visited set is what Floyd removes.
+
+### Solution — optimized
+Floyd turns "remember every node" into a speed difference. If a loop exists, fast eventually laps slow; then resetting one pointer to head makes both pointers walk equal remaining distances to the entry.
+
+**Pattern.**
 Detect a cycle and find its entry using two-speed pointers.
 
-> [key] **Key Insight** — Slow and fast meet inside the cycle. From the head and from the meeting point, advancing both one step at a time, they meet exactly at the cycle entry (distance algebra: `head→entry == meeting→entry` modulo cycle length).
-
-> [inv] **Invariant** — If a cycle of length `C` exists, after slow enters it, fast closes the gap by 1 per step, so they meet within `C` steps.
-
-### Java
+**Java.**
 ```java
 ListNode detectCycle(ListNode head) {
     ListNode slow = head, fast = head;
@@ -99,6 +118,27 @@ ListNode detectCycle(ListNode head) {
 }
 ```
 
+### Time Complexity
+Existing summary: Time O(n) · Space O(1).
+
+The time is linear because the first phase visits at most a constant number of laps after slow enters the cycle, and the second phase walks from head to the entry once. No node values are copied and no visited set is stored.
+
+The optimized method is O(n): before the meeting, fast/slow traverse at most the non-cycle prefix plus a bounded number of cycle steps; after the reset, both pointers walk only to the entry.
+
+### Space Complexity
+Space is O(1) because it keeps only pointer variables. Unlike the brute-force set, it never stores visited nodes.
+
+### Learning notes
+- Why guard `fast != null && fast.next != null`? — fast takes a two-hop step.
+- Why move slow by one and fast by two? — the speed difference guarantees a collision inside a cycle.
+- Why test `slow == fast` by reference? — equal node values do not prove the same node.
+- Why create `ListNode p = head`? — one pointer must restart to locate the entry.
+- Why move both one step after reset? — their distances to the cycle entry are equal modulo the loop length.
+
+> [key] **Key Insight** — Slow and fast meet inside the cycle. From the head and from the meeting point, advancing both one step at a time, they meet exactly at the cycle entry (distance algebra: `head→entry == meeting→entry` modulo cycle length).
+
+> [inv] **Invariant** — If a cycle of length `C` exists, after slow enters it, fast closes the gap by 1 per step, so they meet within `C` steps.
+
 > [note] **Trace it** — Use `3→2→0→-4`, with `-4.next = 2`.
 >
 > | Round | slow moves to | fast moves to | Meaning |
@@ -112,11 +152,6 @@ ListNode detectCycle(ListNode head) {
 >
 > The important part is that the first meeting point is not necessarily the entry. It is just a proof that a cycle exists. The reset-and-walk phase converts that proof into the exact node to return.
 
-### Complexity
-Time O(n) · Space O(1).
-
-The time is linear because the first phase visits at most a constant number of laps after slow enters the cycle, and the second phase walks from head to the entry once. No node values are copied and no visited set is stored.
-
 > [trap] **Common Trap** — Only checking `fast != null`. *Example:* even-length list `1→2`. After one step, `fast` is at `2` (non-null), so `fast.next.next` NPEs on the missing `next`. Check both `fast != null && fast.next != null` before the double hop.
 
 > [note] **Interview script** — First, I'd verify this is a singly linked list and I need the entry node, not just true/false. The brute force is a `HashSet<ListNode>`: return the first repeated node in O(n) time and O(n) space. To optimize space, I'll use Floyd's two pointers: slow moves one step, fast moves two, and a meeting proves a cycle. Then I reset one pointer to head and move both one step at a time; their next meeting is the entry, so the final complexity is O(n) time and O(1) space.
@@ -124,11 +159,13 @@ The time is linear because the first phase visits at most a constant number of l
 > [pat] **Pattern Connection** — *Find the Duplicate Number* maps an array to a functional graph (`next = nums[i]`) and applies the identical algorithm — a classic "array is secretly a linked list" reframe.
 
 ### Why the reset works without memorizing algebra
+
 Suppose the distance from head to the cycle entry is `A`, the cycle length is `C`, and the meeting point is `B` steps after the entry. Slow has walked `A + B`. Fast has walked twice that. The extra distance fast walked must be whole laps of the cycle, so `2(A+B) - (A+B) = A+B = mC`. Rearranged, `A = mC - B`. That means from the meeting point, walking `A` steps lands exactly at the entry because `C - B` steps complete the current lap, and the remaining laps do not change the final node. The code does not need to know `A`, `B`, or `C`; it just walks both pointers until equality.
 
 A simpler mental model: once the two runners collide, one runner is exactly "head-to-entry distance" away from the entry if it keeps running around the loop. So put the other runner at the head and let both move at the same speed.
 
 ### How this pattern changes in common variants
+
 For **Linked List Cycle I**, you stop at the first `slow == fast` and return `true`. There is no reset phase because the problem only asks whether a loop exists. For **Middle of the Linked List**, the same speeds are used but with no equality check; when `fast` reaches the end, `slow` is halfway. For **Happy Number**, a number is the node and `next(x)` is "sum of squared digits"; reaching 1 is success, while a fast/slow meeting away from 1 proves you are trapped in a cycle.
 
 For **Find the Duplicate Number**, the values are valid indices. If `nums = [1,3,4,2,2]`, index `0` points to `1`, `1` points to `3`, `3` points to `2`, and `2` points to `4`, then `4` points back to `2`. The duplicate value creates the cycle entry. That is the same algorithm wearing an array costume.

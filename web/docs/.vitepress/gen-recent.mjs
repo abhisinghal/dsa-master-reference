@@ -7,7 +7,7 @@ const here = path.dirname(fileURLToPath(import.meta.url))
 const docsDir = path.resolve(here, '..')
 const webDir = path.resolve(docsDir, '..')
 const repoRoot = path.resolve(webDir, '..')
-const sourceDir = path.join(repoRoot, 'gen', 'src2')
+const sourceDir = path.join(repoRoot, 'gen', 'src')
 const outputFile = path.join(docsDir, 'public', 'recent.json')
 
 const mapping = {
@@ -111,7 +111,7 @@ function urlFor(fileName) {
 
 function fileNameFromGitPath(gitPath) {
   const normalized = gitPath.trim().replace(/\\/g, '/')
-  if (!normalized.startsWith('gen/src2/') || !normalized.endsWith('.md')) return null
+  if (!normalized.startsWith('gen/src/') || !normalized.endsWith('.md')) return null
   return normalized.split('/').pop()
 }
 
@@ -122,7 +122,7 @@ export function generateRecentUpdates(limit = 6) {
   try {
     log = execFileSync(
       'git',
-      ['log', '--format=%H|%ct|%s', '--name-only', '--diff-filter=AM', '--', '..\\gen\\src2\\'],
+      ['log', '--format=%H|%ct|%s', '--name-only', '--diff-filter=AM', '--', '..\\gen\\src\\'],
       { cwd: webDir, encoding: 'utf8' }
     )
   } catch (error) {

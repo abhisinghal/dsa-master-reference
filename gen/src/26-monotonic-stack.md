@@ -1,5 +1,9 @@
 # Monotonic Stack
 
+Imagine a brute-force solution for "next warmer day": for each day, scan every day to its right until you find a warmer one. That is simple, but it re-checks the same unresolved days again and again — O(n²) in the worst case.
+
+Can we do better? Yes: keep only the days that are still waiting for an answer. When a warmer day arrives, it resolves all colder days sitting on top of that waiting pile. That pile is the pattern.
+
 The star technique of this family is the **monotonic stack**: a stack you deliberately keep in sorted order, so that every time you pop something you've just answered a *"nearest bigger/smaller element"* question for it — turning an O(n²) scan into a single O(n) pass.
 
 > [key] **Key Insight** — Whenever a problem asks for the *nearest* element that is greater/smaller (to the left or right), or for spans/rectangles bounded by such elements, a monotonic stack turns an O(n²) scan into O(n): each index is pushed and popped exactly once.
@@ -66,22 +70,48 @@ You need *farthest* rather than *nearest* — or the comparison isn't a simple o
 
 ---
 
-## Daily Temperatures (Next Greater Element)
+## Daily Temperatures (Next Greater Element) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)*
+
+<ProgressCheck id="daily-temperatures-next-greater-element" />
 
 ### Problem
 For each day, report **how many days you must wait for a warmer temperature** (0 if it never gets warmer).
 
 **Constraints:** `1 ≤ n ≤ 10⁵`; temperatures in `30–100`.
 
-**Example:** `[73,74,75,71,69,72,76,73]` → `[1,1,4,2,1,1,0,0]`.
+**Example 1:** `[73,74,75,71,69,72,76,73]` → `[1,1,4,2,1,1,0,0]`.
 
-### Pattern
+**Example 2:** `[30,40,50,60]` → `[1,1,1,0]`.
+
+### Solution — brute force
+For every day `i`, scan days `i+1..n-1` until you find the first warmer temperature. The first warmer day gives the wait length; if none appears, the default answer stays `0`.
+
+```java
+int[] dailyTemperaturesBrute(int[] t) {
+    int[] res = new int[t.length];
+    for (int i = 0; i < t.length; i++) {
+        for (int j = i + 1; j < t.length; j++) {
+            if (t[j] > t[i]) {
+                res[i] = j - i;
+                break;
+            }
+        }
+    }
+    return res;
+}
+```
+
+O(n²) time, O(1) extra space beyond the answer — too slow for n ≥ 10⁴.
+
+### Solution — optimized
 Monotonic decreasing stack of indices; resolve "days until warmer".
 
 > [inv] **Invariant** — The stack holds indices whose next-greater element is still unknown, in decreasing temperature order.
 
-### Java
+The optimized version keeps a stack of unresolved indices. When `t[i]` is warmer than the temperature at the top index, day `i` is the next warmer day for that popped index; once all colder waiting days are resolved, push `i` as a new unresolved day.
+
 ```java
 int[] dailyTemperatures(int[] t) {
     int[] res = new int[t.length];
@@ -99,11 +129,22 @@ int[] dailyTemperatures(int[] t) {
 
 > [note] **Trace it** — `[73,74,75,71,69,72,76,73]`. The stack holds indices still waiting for a warmer day; when `76` arrives it pops `72,69,71` and fills their waits → answer `[1,1,4,2,1,1,0,0]`.
 
-Time O(n) · Space O(n).
+### Time Complexity
+O(n), because each index is pushed onto the stack once and popped at most once. The nested-looking `while` loop is amortized, not O(n²).
+
+### Space Complexity
+O(n), because in a strictly decreasing temperature array, every index can remain unresolved on the stack until the end.
 
 > [trap] **Common Trap** — Storing values instead of indices. *Example:* `temps=[73,74,75]`. The answer at index 0 is 1 (`i=1` is warmer), which is `1-0`. If the stack held temperatures, you'd have to search back to recover the gap. Push **indices**, subtract on pop.
 
 > [pat] **Pattern Connection** — The template (`while top violates: pop and resolve; push i`) is identical for *Next Greater Element I/II* (circular → iterate `2n`), *Stock Span*, and *Online Stock Span*.
+
+### Learning notes
+- Why push **indices** instead of values? — the answer is a distance `i - j`, so you need the old index `j`.
+- Why a **decreasing** stack? — any warmer current day can resolve all colder unresolved days above it.
+- Why `while` and not `if`? — one hot day may answer many previous colder days.
+- Why default `res` values can stay `0`? — Java initializes int arrays to zero, matching "no warmer day".
+- Why push after popping? — the current day is unresolved until some future warmer day appears.
 
 ### Same pattern, new tweaks
 
@@ -116,24 +157,49 @@ A monotonic stack that "resolves" each element the moment a bigger/smaller one a
 | [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) | each element contributes `min × (countLeft × countRight)`; the monotonic stack gives those boundary counts | — |
 
 
-## Largest Rectangle in Histogram
+## Largest Rectangle in Histogram <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)*
+
+<ProgressCheck id="largest-rectangle-in-histogram" />
 
 ### Problem
 Given the bar heights of a histogram (each of width 1), find the area of the **largest rectangle** that fits entirely under the bars.
 
 **Constraints:** `1 ≤ n ≤ 10⁵`; heights `≥ 0`.
 
-**Example:** `[2,1,5,6,2,3]` → `10` (bars `5,6` give height 5 × width 2).
+**Example 1:** `[2,1,5,6,2,3]` → `10` (bars `5,6` give height 5 × width 2).
 
-### Pattern
+**Example 2:** `[2,4]` → `4` (either height 2 × width 2 or height 4 × width 1).
+
+### Solution — brute force
+Treat every pair `(left, right)` as a candidate rectangle span. The height of that rectangle is the minimum bar inside the span, so update that running minimum while expanding `right`.
+
+```java
+int largestRectangleAreaBrute(int[] h) {
+    int best = 0;
+    for (int left = 0; left < h.length; left++) {
+        int minHeight = Integer.MAX_VALUE;
+        for (int right = left; right < h.length; right++) {
+            minHeight = Math.min(minHeight, h[right]);
+            best = Math.max(best, minHeight * (right - left + 1));
+        }
+    }
+    return best;
+}
+```
+
+O(n²) time, O(1) space — too slow for n ≥ 10⁴.
+
+### Solution — optimized
 Monotonic increasing stack; when a shorter bar arrives, pop taller bars and compute their maximal rectangle.
 
 > [key] **Key Insight** — A bar's maximal rectangle extends left/right until a strictly shorter bar. The stack gives both boundaries: when bar `i` pops bar `top`, `i` is the right boundary and the new stack top is the left boundary.
 
 > [inv] **Invariant** — Stack heights are non-decreasing; each popped bar's width spans from the element below it (exclusive) to `i` (exclusive).
 
-### Java
+The optimized version waits until a bar sees its first strictly shorter bar on the right. At that moment, the popped bar's right boundary is known (`i`), and the new stack top gives the first shorter bar on the left.
+
 ```java
 int largestRectangleArea(int[] h) {
     Deque<Integer> st = new ArrayDeque<>();   // increasing heights (indices)
@@ -153,12 +219,23 @@ int largestRectangleArea(int[] h) {
 
 > [note] **Trace it** — heights `[2,1,5,6,2,3]`. When `2` follows `6`, pop `6` (area 6) and `5` (area 10); the widest rectangle overall is `5×2 = 10` under bars `[5,6]`.
 
-### Complexity
-Time O(n) · Space O(n).
+### Time Complexity
+O(n), because every bar index is pushed once and popped once. Each rectangle area is computed exactly when its limiting shorter bar is discovered.
+
+### Space Complexity
+O(n), because an increasing histogram can push all indices before the sentinel flushes them.
 
 > [trap] **Common Trap** — Forgetting the sentinel `0`. *Example:* `heights=[2,1,5,6,2,3]` — the tallest bar (`6`) never sees a shorter one to its right, so it never gets popped. Append a virtual `0` at the end so every remaining bar is resolved uniformly.
 
 > [pat] **Pattern Connection** — *Maximal Rectangle* (binary matrix) reduces each row to a histogram and applies this in O(RC). *Trapping Rain Water* is the "valley" dual of this "peak" problem.
+
+### Learning notes
+- Why an **increasing** stack? — a shorter incoming bar is the signal that taller bars can no longer extend right.
+- Why store indices? — width needs positions: `i - left - 1`, not just heights.
+- Why `cur = (i == n) ? 0 : h[i]`? — the virtual zero flushes every remaining bar at the end.
+- Why `left = st.isEmpty() ? -1 : st.peek()`? — empty stack means the popped bar can extend to index `0`.
+- Why width `i - left - 1`? — both boundaries are exclusive: shorter bar at `left`, shorter bar at `i`.
+- Why compare `cur < h[st.peek()]`? — equal heights can stay stacked without losing the maximal area.
 
 ### Same pattern, new tweaks
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Wave 1 bulk edits on src2/:
+"""Wave 1 bulk edits on src/:
   - Add difficulty badges (Easy/Medium/Hard) to problem H2s based on LC slug lookup.
   - Add <ProgressCheck :id="slug"/> after each ## Problem H2.
   - Prev/next frontmatter isn't set here — VitePress auto-detects from sidebar order.
 """
 import os, re, glob
 
-SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "gen", "src2")
+SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "gen", "src")
 
 # Curated LC difficulty lookup — from most common canonical problems.
 # Easy=e, Medium=m, Hard=h.

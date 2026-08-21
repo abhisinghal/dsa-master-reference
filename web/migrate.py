@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Migrate gen/src2/*.md into web/docs/ VitePress structure.
+# Migrate gen/src/*.md into web/docs/ VitePress structure.
 # Transforms:
 #   > [key] **Title** — body            ->  <Callout kind="key" title="Title">body</Callout>
 #   > [tag] body                        ->  <Callout kind="tag">body</Callout>
@@ -8,7 +8,7 @@ import os, re, shutil, glob
 
 # Compute paths relative to this script
 _HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.abspath(os.path.join(_HERE, "..", "gen", "src2"))
+SRC = os.path.abspath(os.path.join(_HERE, "..", "gen", "src"))
 DST = os.path.abspath(os.path.join(_HERE, "docs"))
 
 # File slug mapping (source -> destination path relative to DST)

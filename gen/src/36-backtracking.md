@@ -1,5 +1,7 @@
 # Recursion &amp; Backtracking
 
+**Grokking arc:** The motivating problem is generating all valid choices without state bleeding between siblings. Brute force tries every branch. **Can we do better?** We still explore an exponential tree, but we prune impossible branches early and use `choose → recurse → undo` so one shared path/board stays correct.
+
 Backtracking is how you say *"try everything — but be smart about it."* Picture a tree of decisions: at each step you pick an option, dive deeper, and when you come back up you **undo** that pick before trying the next one — leaving the world exactly as you found it. That undo is the whole trick; it's what lets a single piece of code walk every combination, permutation, or board layout without them bleeding into each other. Left unchecked this is exponential, so the real skill is **pruning**: the instant a partial choice can't possibly lead to a valid answer, you abandon that branch instead of exploring it all the way down.
 
 ```text
@@ -88,23 +90,42 @@ You want *one* answer, not all — a pruned DFS or DP is faster than enumerating
 
 ---
 
-## Subsets &amp; Combinations (the start-index template)
+## Subsets &amp; Combinations (the start-index template) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)*
+
+<ProgressCheck id="subsets-amp-combinations-the-start-index-template" />
 
 ### Problem
 Return **all subsets** (the power set) of a set of distinct integers, in any order.
 
 **Constraints:** `1 ≤ n ≤ 10`; values distinct; there are `2ⁿ` subsets.
 
-**Example:** `[1,2,3]` → `[[],[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]`.
+**Example 1:** `[1,2,3]` → `[[],[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]`.
 
-### Brute force
+**Example 2:** `[0]` → `[[],[0]]`.
+
+### Solution — brute force
 Brute force is the full include/exclude decision tree: for each element, choose to take it or skip it, then record the subset at the leaf. That is already O(n·2ⁿ) time and O(n) recursion space, which matches the output-size lower bound. The optimized template is not asymptotically faster; it organizes the search with a `start` index so combinations appear once and duplicate permutations never get generated.
 
-### Pattern
+**Brute-force sketch:**
+
+```text
+dfs(i, path):
+    if i == n: record copy(path); return
+    dfs(i + 1, path)          // skip
+    path.add(a[i]); dfs(i + 1, path); path.remove(last)  // take/undo
+```
+
+**Baseline complexity:** O(n·2ⁿ) time and O(n) recursion space, plus output.
+
+### Solution — optimized
+The optimized solution keeps the original Java intact and explains the pattern that removes the brute-force bottleneck.
+
+#### Pattern
 Use a `start` index so each element is considered once in order — this prevents permutations of the same set.
 
-### Java
+#### Java
 ```java
 List<List<Integer>> subsets(int[] a) {
     List<List<Integer>> res = new ArrayList<>();
@@ -123,18 +144,7 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> res) {
 
 > [note] **Trace it** — `[1,2,3]`. Advancing `start` builds `[]→[1]→[1,2]→[1,2,3]→[1,3]→[2]…` — all **8** subsets, each set once (never `[2,1]` as a duplicate of `[1,2]`).
 
-### Complexity
-Subsets: O(n·2ⁿ). Combinations C(n,k): O(k·C(n,k)).
-
-> [note] **Interview script** — "I first confirm the input values are distinct and output order does not matter. I start with brute force include/exclude recursion, which is O(n·2ⁿ) time because the output itself has 2ⁿ subsets. I optimize the presentation with a `start` index and backtracking, preserving O(n·2ⁿ) time while avoiding duplicate orderings."
-
-
-> [trap] **Common Trap** — Forgetting to un-choose. *Example:* generating subsets of `[1,2]`. If you `add(1)` and recurse but don't `remove(1)`, the sibling branch `[2]` starts with path `[1]` and you emit `[1,2]` twice. `remove(path.size()-1)` is the whole discipline.
-
-> [pat] **Pattern Connection** — `start` = "consider items left-to-right, no repeats" — the backbone of *Combination Sum*, *Palindrome Partitioning*, and subset-sum enumeration. **Dedup with duplicates:** sort, then `if (i > start && a[i]==a[i-1]) continue;`.
-
-### Same pattern, new tweaks
-
+#### Same pattern, new tweaks
 The choose → recurse → undo loop stays fixed; what changes is the choice set and the "done" test:
 
 | Variation | The one thing that changes | Time |
@@ -144,23 +154,65 @@ The choose → recurse → undo loop stays fixed; what changes is the choice set
 | [Permutations](https://leetcode.com/problems/permutations/) | order matters, so drop the `start` index and instead track a `used[]` array, scanning all positions each level | — |
 | [Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | a "choice" is a prefix that happens to be a palindrome; recurse on the rest | — |
 
-## Permutations (the used[] template)
+> [note] **Interview script** — "I first confirm the input values are distinct and output order does not matter. I start with brute force include/exclude recursion, which is O(n·2ⁿ) time because the output itself has 2ⁿ subsets. I optimize the presentation with a `start` index and backtracking, preserving O(n·2ⁿ) time while avoiding duplicate orderings."
+
+> [trap] **Common Trap** — Forgetting to un-choose. *Example:* generating subsets of `[1,2]`. If you `add(1)` and recurse but don't `remove(1)`, the sibling branch `[2]` starts with path `[1]` and you emit `[1,2]` twice. `remove(path.size()-1)` is the whole discipline.
+
+> [pat] **Pattern Connection** — `start` = "consider items left-to-right, no repeats" — the backbone of *Combination Sum*, *Palindrome Partitioning*, and subset-sum enumeration. **Dedup with duplicates:** sort, then `if (i > start && a[i]==a[i-1]) continue;`.
+
+### Time Complexity
+Subsets: O(n·2ⁿ). Combinations C(n,k): O(k·C(n,k)).
+
+
+O(n·2ⁿ): there are 2ⁿ subsets and copying each subset can cost O(n).
+
+
+### Space Complexity
+O(n) recursion/path space excluding output; O(n·2ⁿ) including the returned subsets.
+
+### Learning notes
+- Why `res.add(new ArrayList<>(path))`? — it snapshots the current subset; storing `path` itself would mutate every recorded answer later.
+- Why pass `start`? — it enforces left-to-right choices so `[1,2]` appears once and `[2,1]` is never generated as a duplicate.
+- Why recurse with `i + 1`? — subsets do not reuse the same element after choosing it.
+- Why `path.remove(path.size() - 1)`? — it undoes the last choice so the next sibling starts from the previous state.
+- Why record at every node? — every partial path is already a valid subset, not only the leaves.
+
+## Permutations (the used[] template) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Permutations](https://leetcode.com/problems/permutations/)*
+
+<ProgressCheck id="permutations-the-used-template" />
 
 ### Problem
 Return **all orderings** (permutations) of a list of distinct integers.
 
 **Constraints:** `1 ≤ n ≤ 6`; values distinct; there are `n!` permutations.
 
-**Example:** `[1,2,3]` → the 6 orderings `123, 132, 213, 231, 312, 321`.
+**Example 1:** `[1,2,3]` → the 6 orderings `123, 132, 213, 231, 312, 321`.
 
-### Brute force
+**Example 2:** `[1,2]` → `[[1,2],[2,1]]`.
+
+### Solution — brute force
 Brute force builds every ordering by placing each remaining number in the next slot. There are `n!` leaves and copying each permutation costs O(n), so the unavoidable output cost is O(n·n!) with O(n) recursion state. The optimized template is mainly about clean state management: `used[]` tells which values are already in the path, and the undo step restores the state for the next sibling.
 
-### Pattern
+**Brute-force sketch:**
+
+```text
+dfs(path):
+    if path.size() == n: record copy(path); return
+    for each index i:
+        if not used[i]: choose i, recurse, undo i
+```
+
+**Baseline complexity:** O(n·n!) time and O(n) recursion/used-array space, plus output.
+
+### Solution — optimized
+The optimized solution keeps the original Java intact and explains the pattern that removes the brute-force bottleneck.
+
+#### Pattern
 No `start` index — every unused element is a candidate at every position; track membership with `used[]`.
 
-### Java
+#### Java
 ```java
 List<List<Integer>> permute(int[] a) {
     List<List<Integer>> res = new ArrayList<>();
@@ -180,22 +232,7 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> res) {
 
 > [note] **Trace it** — `[1,2,3]`. Position 0 tries each of 1/2/3; with 1 fixed, position 1 tries 2 then 3 → `123,132,213,231,312,321` — all **6** orderings.
 
-### Complexity
-O(n·n!).
-
-> [note] **Interview script** — "I first confirm all numbers are distinct and every ordering must be returned. I start with brute force by trying every unused number at every position, which is O(n·n!) time and O(n) recursion space. I optimize the implementation with a `used[]` array and choose/recurse/unchoose discipline, which keeps the same output-bound complexity without corrupting sibling branches."
-
-
-> [key] **Key Insight** — **Combinations vs permutations = `start` vs `used[]`.** Order-insensitive → `start`. Order-sensitive → `used[]`. For unique permutations of a multiset: sort and skip `i>0 && a[i]==a[i-1] && !used[i-1]`.
-
-> [inv] **Invariant** — `path` is always a valid partial permutation and `used[]` marks exactly its members; on return both are restored, so siblings explore a clean slate.
-
-> [trap] **Common Trap** — Duplicates without sort-and-skip. *Example:* `nums=[1,1,2]` without `if (i>0 && a[i]==a[i-1] && !used[i-1]) continue;` — you emit `[1,1,2]` twice (once for each `1` picked first). Sort + the `used[i-1]` guard eliminates the twin.
-
-> [pat] **Pattern Connection** — `used[]` generalizes to N-Queens (column/diagonal occupancy) and Sudoku (row/col/box occupancy) — all "place items respecting constraints."
-
-### Same pattern, new tweaks
-
+#### Same pattern, new tweaks
 No `start` index — every unused element is a candidate at every position:
 
 | Variation | The one thing that changes | Time |
@@ -205,23 +242,69 @@ No `start` index — every unused element is a candidate at every position:
 | [Next Permutation](https://leetcode.com/problems/next-permutation/) | in-place — find the pivot, swap with its next-larger suffix element, reverse the suffix | — |
 | [Beautiful Arrangement](https://leetcode.com/problems/beautiful-arrangement/) | place numbers `1..n` where position `i` must divide (or be divided by) the value | — |
 
-## Combination Sum (reuse &amp; pruning)
+> [note] **Interview script** — "I first confirm all numbers are distinct and every ordering must be returned. I start with brute force by trying every unused number at every position, which is O(n·n!) time and O(n) recursion space. I optimize the implementation with a `used[]` array and choose/recurse/unchoose discipline, which keeps the same output-bound complexity without corrupting sibling branches."
+
+> [key] **Key Insight** — **Combinations vs permutations = `start` vs `used[]`.** Order-insensitive → `start`. Order-sensitive → `used[]`. For unique permutations of a multiset: sort and skip `i>0 && a[i]==a[i-1] && !used[i-1]`.
+
+> [inv] **Invariant** — `path` is always a valid partial permutation and `used[]` marks exactly its members; on return both are restored, so siblings explore a clean slate.
+
+> [trap] **Common Trap** — Duplicates without sort-and-skip. *Example:* `nums=[1,1,2]` without `if (i>0 && a[i]==a[i-1] && !used[i-1]) continue;` — you emit `[1,1,2]` twice (once for each `1` picked first). Sort + the `used[i-1]` guard eliminates the twin.
+
+> [pat] **Pattern Connection** — `used[]` generalizes to N-Queens (column/diagonal occupancy) and Sudoku (row/col/box occupancy) — all "place items respecting constraints."
+
+### Time Complexity
+O(n·n!).
+
+
+O(n·n!): n! permutations, O(n) to copy each completed ordering.
+
+
+### Space Complexity
+O(n) recursion/path/used-array space excluding output; O(n·n!) including output.
+
+### Learning notes
+- Why no `start` index? — order matters, so every unused element can be chosen at every position.
+- Why `if (used[i]) continue`? — it prevents the same array element from appearing twice in one permutation.
+- Why set `used[i] = true` before recursion? — the deeper level must see that this value is already in the path.
+- Why remove then set `used[i] = false`? — both shared structures must be restored for the next candidate.
+- Why copy `path` only when full length? — only complete orderings are valid permutations.
+
+## Combination Sum (reuse &amp; pruning) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Combination Sum](https://leetcode.com/problems/combination-sum/)*
+
+<ProgressCheck id="combination-sum-reuse-amp-pruning" />
 
 ### Problem
 Return all **combinations** of the candidates that sum to `target`; each candidate may be **reused unlimited** times. No duplicate combinations.
 
 **Constraints:** `1 ≤ candidates ≤ 30`, distinct, each `≥ 1`; `target ≤ 40`.
 
-**Example:** `candidates = [2,3,6,7], target = 7` → `[[2,2,3],[7]]`.
+**Example 1:** `candidates = [2,3,6,7], target = 7` → `[[2,2,3],[7]]`.
 
-### Brute force
+**Example 2:** `candidates=[2,3,5], target=8` → `[[2,2,2,2],[2,3,3],[3,5]]`.
+
+### Solution — brute force
 Brute force tries every candidate at every step, subtracting it from the remaining target until the sum hits zero or goes negative. Without ordering, it generates the same combination in many permutations and may explore a large exponential tree. The optimized backtracking sorts candidates, carries a `start` index to enforce nondecreasing combinations, recurses with the same index for reuse, and breaks as soon as a candidate exceeds the remaining target.
 
-### Pattern
+**Brute-force sketch:**
+
+```text
+dfs(remain):
+    if remain == 0: record
+    if remain < 0: stop
+    for each candidate: choose it and recurse on remain - candidate
+```
+
+**Baseline complexity:** Exponential in target/min-candidate; O(target/minCandidate) recursion depth.
+
+### Solution — optimized
+The optimized solution keeps the original Java intact and explains the pattern that removes the brute-force bottleneck.
+
+#### Pattern
 Unlimited reuse → recurse with the same `i`; prune when the remaining target goes negative.
 
-### Java
+#### Java
 ```java
 List<List<Integer>> combinationSum(int[] cand, int target) {
     Arrays.sort(cand);                        // enables the break-prune
@@ -242,18 +325,7 @@ void dfs(int[] c, int start, int remain, List<Integer> path, List<List<Integer>>
 
 > [note] **Trace it** — `candidates=[2,3,6,7], target=7`. Reusing 2 gives `2+2+3`; 7 alone also works → `[[2,2,3],[7]]`. Branches where the remainder drops below 0 are cut immediately.
 
-### Complexity
-Exponential in target/min-candidate; pruning dominates practical cost.
-
-> [note] **Interview script** — "I first confirm candidates are distinct and each candidate may be reused unlimited times. I start with brute force by trying all candidate sequences until the remaining target is zero or negative, which is exponential. I optimize by sorting, using `start` to avoid duplicate orders, and pruning when a candidate is too large, keeping exponential worst-case time but much less search."
-
-
-> [trap] **Common Trap** — Passing `i+1` when reuse is allowed. *Example:* `candidates=[2,3]`, `target=6`. You need `[2,2,2]` and `[3,3]`, which requires re-picking the same index. Recurse with `i` (not `i+1`) — otherwise you only get `[3,3]`.
-
-> [pat] **Pattern Connection** — Sorted-input + `break` when the choice overshoots is the universal backtracking prune; it converts many TLE solutions into passing ones.
-
-### Same pattern, new tweaks
-
+#### Same pattern, new tweaks
 | Variation | The one thing that changes | Time |
 |---|---|---|
 | [Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | each number used once → recurse with `i+1`, and skip equal siblings to avoid duplicate combos | — |
@@ -261,27 +333,67 @@ Exponential in target/min-candidate; pruning dominates practical cost.
 | [Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | a "choice" is a prefix that is a palindrome; recurse on the rest | — |
 | [Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/) | it *counts ordered* ways → drop backtracking for a 1-D DP (`dp[t] += dp[t-num]`) | — |
 
-## N-Queens (constraint occupancy)
+> [note] **Interview script** — "I first confirm candidates are distinct and each candidate may be reused unlimited times. I start with brute force by trying all candidate sequences until the remaining target is zero or negative, which is exponential. I optimize by sorting, using `start` to avoid duplicate orders, and pruning when a candidate is too large, keeping exponential worst-case time but much less search."
+
+> [trap] **Common Trap** — Passing `i+1` when reuse is allowed. *Example:* `candidates=[2,3]`, `target=6`. You need `[2,2,2]` and `[3,3]`, which requires re-picking the same index. Recurse with `i` (not `i+1`) — otherwise you only get `[3,3]`.
+
+> [pat] **Pattern Connection** — Sorted-input + `break` when the choice overshoots is the universal backtracking prune; it converts many TLE solutions into passing ones.
+
+### Time Complexity
+Exponential in target/min-candidate; pruning dominates practical cost.
+
+
+Exponential in the number of feasible candidate choices; sorting/pruning reduces practical branches but not worst-case exponential output/search.
+
+
+### Space Complexity
+O(target/minCandidate) recursion/path space excluding output.
+
+### Learning notes
+- Why `Arrays.sort(cand)`? — sorted order makes the later `break` prune valid; once one value is too large, all later values are too large.
+- Why `if (c[i] > remain) break`? — it stops an entire suffix of impossible choices instead of just skipping one.
+- Why recurse with `i`? — the same candidate may be reused unlimited times.
+- Why still use `start`? — it keeps combinations nondecreasing so `[2,3,2]` is not duplicated separately from `[2,2,3]`.
+- Why copy `path` at `remain == 0`? — the current list is exactly one valid combination and must be frozen before backtracking.
+
+## N-Queens (constraint occupancy) <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: N-Queens](https://leetcode.com/problems/n-queens/)*
+
+<ProgressCheck id="n-queens-constraint-occupancy" />
 
 ### Problem
 Place `n` queens on an `n×n` board so that **none attack** another (no shared row, column, or diagonal). Return all valid boards.
 
 **Constraints:** `1 ≤ n ≤ 9`.
 
-**Example:** `n = 4` → `2` distinct solutions.
+**Example 1:** `n = 4` → `2` distinct solutions.
 
-### Brute force
+**Example 2:** `n = 1` → one board: `["Q"]`.
+
+### Solution — brute force
 Brute force places queens on arbitrary cells and checks every completed board for row, column, and diagonal conflicts. Choosing `n` squares from `n²` and validating them is enormous, and even row-by-row placement is O(n!) before pruning. The optimized backtracking commits to one queen per row and uses column plus diagonal occupancy arrays so each proposed placement is checked in O(1) before descending.
 
-### Pattern
+**Brute-force sketch:**
+
+```text
+try placing queens row by row or over all cells
+when n queens are placed, scan the board for row/column/diagonal conflicts
+```
+
+**Baseline complexity:** At least O(n!) row-wise and much worse if choosing arbitrary cells; validation adds extra board scans.
+
+### Solution — optimized
+The optimized solution keeps the original Java intact and explains the pattern that removes the brute-force bottleneck.
+
+#### Pattern
 Place one queen per row; track occupied columns and both diagonals with sets/booleans for O(1) validity.
 
 > [key] **Key Insight** — Cells on the same ↘ diagonal share `row−col` (constant, offset to stay non-negative); same ↙ diagonal share `row+col`. Three boolean arrays make each placement check O(1).
 
 > [inv] **Invariant** — At row `r`, all rows `< r` hold exactly one non-attacking queen; the occupancy arrays reflect precisely those placements.
 
-### Steps
+#### Steps
 1. Represent the board as a `queens[N]` array where `queens[row] = col`.
 2. Maintain three bit-sets: `cols`, `antiDiag` (keyed by `row - col + N`), `mainDiag` (keyed by `row + col`).
 3. Recurse row by row. For each `col`, if all three bitsets say the cell is free, place and recurse.
@@ -289,7 +401,7 @@ Place one queen per row; track occupied columns and both diagonals with sets/boo
 5. When `row == N`, translate `queens[]` into the string board and record it.
 6. O(N!) time — the branching factor shrinks fast due to the three constraints.
 
-### Java
+#### Java
 ```java
 int totalNQueens(int n) {
     return dfs(0, n, new boolean[n], new boolean[2*n], new boolean[2*n]);
@@ -310,15 +422,7 @@ int dfs(int r, int n, boolean[] col, boolean[] diag, boolean[] anti) {
 
 > [note] **Trace it** — `n=4`. Row-by-row placement backtracks past dead ends and finds exactly **2** valid boards (e.g. queens at columns `1,3,0,2`).
 
-### Complexity
-O(n!) with heavy pruning.
-
-> [note] **Interview script** — "I first confirm one queen is needed per row and no two queens may share a column or diagonal. I start with brute force by trying board placements and checking conflicts, which is exponential and roughly O(n!) once row-by-row. I optimize with row-wise backtracking plus column and diagonal occupancy arrays, keeping exponential O(n!) search but O(1) conflict checks."
-
-
-> [trap] **Common Trap** — Wrong diagonal keys. *Example:* queens at `(0,0)` and `(1,1)` — same anti-diagonal (`row-col = 0`). Use **two** bitsets keyed by `row-col` (anti) and `row+col` (main). Swapping them rejects valid boards.
-
-### Common Mistakes
+#### Common Mistakes
 - **Wrong diagonal keys**: anti-diagonal `row - col` (offset by `N` for non-negative), main diagonal `row + col`. Swapping them rejects valid boards.
 - **Placing before checking**: check all three occupancy bits *first*, then place.
 - **Forgetting to undo** any of the three bits on return.
@@ -326,8 +430,7 @@ O(n!) with heavy pruning.
 
 > [pat] **Pattern Connection** — Constraint occupancy arrays reappear in Sudoku (9 rows/cols/boxes) and *Word Search* (a `visited` grid). The diagonal-index trick generalizes any "same-diagonal" 2D constraint.
 
-### Same pattern, new tweaks
-
+#### Same pattern, new tweaks
 "Place items one slot at a time, using O(1) occupancy sets to reject conflicts" scales up:
 
 | Variation | The one thing that changes | Time |
@@ -337,25 +440,64 @@ O(n!) with heavy pruning.
 | [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | no search at all — only check the occupancy sets for conflicts | — |
 | [Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | the "constraint" is just the digit→letters map; place one letter per position | — |
 
-## Word Search (grid backtracking)
+> [note] **Interview script** — "I first confirm one queen is needed per row and no two queens may share a column or diagonal. I start with brute force by trying board placements and checking conflicts, which is exponential and roughly O(n!) once row-by-row. I optimize with row-wise backtracking plus column and diagonal occupancy arrays, keeping exponential O(n!) search but O(1) conflict checks."
+
+> [trap] **Common Trap** — Wrong diagonal keys. *Example:* queens at `(0,0)` and `(1,1)` — same anti-diagonal (`row-col = 0`). Use **two** bitsets keyed by `row-col` (anti) and `row+col` (main). Swapping them rejects valid boards.
+
+### Time Complexity
+O(n!) with heavy pruning.
+
+
+O(n!) with heavy pruning from one queen per row and O(1) occupancy checks.
+
+
+### Space Complexity
+O(n) for columns and O(2n) for each diagonal array, plus O(n) recursion stack.
+
+### Learning notes
+- Why recurse by row `r`? — one queen per row is mandatory, so the search only chooses a column for each row.
+- Why `d = r - c + n`? — all cells on one diagonal share `row-col`; the `+ n` offset avoids negative indexes.
+- Why `a = r + c`? — the other diagonal is identified by the constant sum of row and column.
+- Why check `col[c] || diag[d] || anti[a]` before placing? — a queen attacks along exactly those three occupancy dimensions.
+- Why clear all three booleans after recursion? — leaving any one set falsely blocks sibling placements.
+
+## Word Search (grid backtracking) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Word Search](https://leetcode.com/problems/word-search/)*
+
+<ProgressCheck id="word-search-grid-backtracking" />
 
 ### Problem
 Given a grid of letters, decide whether a `word` can be spelled by walking through **adjacent** cells (up/down/left/right), never reusing a cell.
 
 **Constraints:** grid up to ~`6×6`, word length ≤ 15 (backtracking with pruning).
 
-**Example:** grid `[[A,B,C],[S,F,C],[A,D,E]]`, word `"ABCCED"` → `true`.
+**Example 1:** grid `[[A,B,C],[S,F,C],[A,D,E]]`, word `"ABCCED"` → `true`.
 
-### Brute force
+**Example 2:** Same grid, word `"SEE"` → `true` via adjacent `S→E→E`.
+
+### Solution — brute force
 Brute force starts a DFS from every cell and explores all four directions for each next character, tracking visited cells so no cell is reused. The worst case is O(R·C·4^L) time with O(L) path state, because many prefixes can match before failing. The optimized version is still backtracking, but it prunes immediately on character mismatch and marks the board in place to avoid an extra visited matrix.
 
-### Pattern
+**Brute-force sketch:**
+
+```text
+for every cell:
+    explore all 4-direction paths of length L
+    reject only when the built string differs or a cell repeats
+```
+
+**Baseline complexity:** O(R·C·4^L) time and O(L) path/visited space in the worst case.
+
+### Solution — optimized
+The optimized solution keeps the original Java intact and explains the pattern that removes the brute-force bottleneck.
+
+#### Pattern
 DFS from each cell, matching the word char by char; mark visited, recurse in 4 directions, unmark.
 
 > [key] **Key Insight** — Mutate the grid in place (`board[r][c] = '#'`) to mark visited, then restore on return — an O(1)-space visited set. Prune the moment the current char mismatches.
 
-### Java
+#### Java
 ```java
 boolean exist(char[][] b, String word) {
     for (int r = 0; r < b.length; r++)
@@ -377,21 +519,33 @@ boolean dfs(char[][] b, int r, int c, String w, int k) {
 
 > [note] **Trace it** — grid `[[A,B,C],[S,F,C],[A,D,E]]`, word `"ABCCED"`. DFS traces `A(0,0)→B→C→C(1,2)→E→D` through adjacent cells → **found**; the unmark step frees cells for other start points.
 
-### Complexity
-O(R·C·4^L), L = word length.
-
-> [note] **Interview script** — "I first confirm movement is four-directional and a cell cannot be reused within one path. I start with brute force DFS from each cell over all possible paths, which is O(R·C·4^L) time and O(L) space. I optimize by pruning mismatches immediately and marking visited cells in place, keeping the same worst-case time but using O(1) extra grid space besides recursion."
-
-
-> [trap] **Common Trap** — Not restoring the cell on the way back up. *Example:* board `[[A,B],[C,D]]` searching `"AB"`. If you mark `A` visited via `#` but forget to restore it after the recursive call, a sibling path can't reuse `A`. Overwrite → recurse → restore.
-
-> [pat] **Pattern Connection** — In-place visited marking is the memory-lean cousin of a `boolean[][] visited`; the Trie-backed variant is a canonical "combine two data structures" staff question.
-
-### Same pattern, new tweaks
-
+#### Same pattern, new tweaks
 | Variation | The one thing that changes | Time |
 |---|---|---|
 | [Word Search II](https://leetcode.com/problems/word-search-ii/) | many target words → back the grid DFS with a **Trie** so all words are pruned at once | — |
 | [Number of Islands](https://leetcode.com/problems/number-of-islands/) | no target string — just flood each land component and mark it visited | — |
 | [Unique Paths III](https://leetcode.com/problems/unique-paths-iii/) | backtrack across the grid, requiring you visit *every* empty cell exactly once | — |
 | [Robot Room Cleaner](https://leetcode.com/problems/robot-room-cleaner/) | same visited-set DFS, but you only know relative moves (turn/forward) | — |
+
+> [note] **Interview script** — "I first confirm movement is four-directional and a cell cannot be reused within one path. I start with brute force DFS from each cell over all possible paths, which is O(R·C·4^L) time and O(L) space. I optimize by pruning mismatches immediately and marking visited cells in place, keeping the same worst-case time but using O(1) extra grid space besides recursion."
+
+> [trap] **Common Trap** — Not restoring the cell on the way back up. *Example:* board `[[A,B],[C,D]]` searching `"AB"`. If you mark `A` visited via `#` but forget to restore it after the recursive call, a sibling path can't reuse `A`. Overwrite → recurse → restore.
+
+> [pat] **Pattern Connection** — In-place visited marking is the memory-lean cousin of a `boolean[][] visited`; the Trie-backed variant is a canonical "combine two data structures" staff question.
+
+### Time Complexity
+O(R·C·4^L), L = word length.
+
+
+O(R·C·4^L): each starting cell can branch up to four ways for L characters, with pruning on mismatches.
+
+
+### Space Complexity
+O(L) recursion stack; O(1) extra visited storage because the board is marked in place.
+
+### Learning notes
+- Why check `k == w.length()` first? — matching all characters means success before looking for another cell.
+- Why reject bounds and char mismatch together? — no deeper path can repair an invalid cell or wrong character.
+- Why store `tmp` before writing `#`? — the original letter is needed to restore the board after the recursive branch.
+- Why use `#`? — it marks the cell as visited without allocating a separate `visited` matrix.
+- Why restore `b[r][c] = tmp`? — other starting cells and sibling branches must see the untouched board.

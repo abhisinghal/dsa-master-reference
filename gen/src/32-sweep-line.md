@@ -109,24 +109,22 @@ At equal coordinates, you must know whether an end and a start overlap. For meet
 
 ---
 
-## Meeting Rooms II (Minimum Concurrent Intervals)
+## Meeting Rooms II (Minimum Concurrent Intervals) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/)*
+
+<ProgressCheck id="meeting-rooms-ii-minimum-concurrent-intervals" />
 
 ### Problem
 Given meeting time intervals, find the **minimum number of rooms** so that no two overlapping meetings share a room.
 
 **Constraints:** `1 ≤ n ≤ 10⁴`; `start < end`.
 
-**Example:** `[[0,30],[5,10],[15,20]]` → `2`.
+**Example 1:** `[[0,30],[5,10],[15,20]]` → `2`.
 
-### Pattern
-Either a **min-heap of end times** or a **sweep of +1/−1 events**. Both compute the peak number of simultaneously active intervals.
+**Example 2:** `[[7,10],[2,4]]` → `1` because the meetings do not overlap.
 
-> [key] **Key Insight** — You need a new room only when the earliest-ending active meeting hasn't finished before the next starts. The heap top is that earliest end; reuse the room if it's free.
-
-> [inv] **Invariant (sweep)** — After sorting all start(+1)/end(−1) events by time, the running sum equals the number of active meetings at that instant; the maximum is the room count.
-
-### Brute force
+### Solution — brute force
 A direct baseline checks every interesting time and counts how many intervals cover it.
 
 ```java
@@ -139,7 +137,27 @@ A direct baseline checks every interesting time and counts how many intervals co
 
 You only need to test meeting start times because the active count can increase only when a meeting starts. This still takes O(n²): for each of `n` starts, scan all `n` intervals. Sweep line compresses those repeated counts into one sorted event stream.
 
-### Java (heap)
+```text
+best = 0
+for each meeting start t:
+    active = 0
+    for each interval [s, e):
+        if s <= t < e:
+            active++
+    best = max(best, active)
+return best
+```
+
+Brute force complexity: O(n²) time and O(1) extra space.
+
+### Solution — optimized
+Either a **min-heap of end times** or a **sweep of +1/−1 events**. Both compute the peak number of simultaneously active intervals.
+
+> [key] **Key Insight** — You need a new room only when the earliest-ending active meeting hasn't finished before the next starts. The heap top is that earliest end; reuse the room if it's free.
+
+> [inv] **Invariant (sweep)** — After sorting all start(+1)/end(−1) events by time, the running sum equals the number of active meetings at that instant; the maximum is the room count.
+
+#### Java (heap)
 ```java
 int minMeetingRooms(int[][] meetings) {
     Arrays.sort(meetings, (a, b) -> a[0] - b[0]);          // by start
@@ -162,7 +180,7 @@ int minMeetingRooms(int[][] meetings) {
 >
 > The heap stores end times of active meetings; its size is the number of rooms currently occupied.
 
-### Java (sweep, tie-break end before start)
+#### Java (sweep, tie-break end before start)
 ```java
 int minMeetingRoomsSweep(int[][] meetings) {
     int n = meetings.length;
@@ -188,7 +206,22 @@ int minMeetingRoomsSweep(int[][] meetings) {
 > | `15 < 20` | start at 15 | 2 | 2 |
 > | loop done with starts | remaining ends only reduce rooms | — | 2 |
 
-### Complexity
+### Time Complexity
+Time O(n log n). Sorting starts/ends or meetings dominates; each event or heap operation is processed once.
+
+### Space Complexity
+Space O(n). The heap can hold active meeting ends, and the two-array sweep stores all starts and ends.
+
+### Learning notes
+- Why store starts and ends separately? — it turns overlap counting into two sorted event streams.
+- Why `starts[i] < ends[j]`? — equal time means a room frees before the next meeting starts.
+- Why increment `rooms` on a start? — a new active meeting needs capacity right now.
+- Why decrement on an end? — that meeting no longer occupies a room.
+- Why track `best` instead of returning current rooms? — the answer is the peak concurrency over the whole sweep.
+- Why a min-heap alternative? — the smallest end time tells whether the earliest room is reusable.
+
+Additional notes:
+
 Time O(n log n) · Space O(n). The sort dominates. The heap version stores active room end times; the sweep version stores starts and ends.
 
 > [trap] **Common Trap** — Tie at `start == end`. *Example:* meetings `[1,5]` and `[5,10]`. If end-events sort **before** start-events, one room suffices (release, then acquire). If start sorts first, you need 2. LeetCode's *Meeting Rooms II* treats them as one — sort ends first on ties.

@@ -7,22 +7,45 @@ Fenwick idea: index i is responsible for a range of length (i & -i).
 update/query walk O(log n) indices by adding/removing the lowest set bit.
 ```
 
-## Fenwick Tree (Binary Indexed Tree)
+## Fenwick Tree (Binary Indexed Tree) <span class="diff diff-m">Medium</span>
+
+
 *[↗ LeetCode: Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)*
 
+<ProgressCheck id="fenwick-tree-binary-indexed-tree" />
+
 ### Problem
+
 Support **point updates** and **prefix-sum (or range-sum) queries** on a mutable array, each in O(log n).
 
 **Constraints:** up to `3·10⁴` mixed update/query operations.
 
 **Example:** after `update(i, +v)`, `prefixSum(k)` returns the running total including the update.
 
-### Pattern
+**Example 1:** After add(3,5), prefix sums at indices >= 3 include +5.
+
+**Example 2:** rangeSum(l,r) = sum(r) - sum(l-1).
+
+### Solution — brute force
+
+Ignore the structural shortcut and scan/recompute from scratch for each decision.
+
+```text
+for each query or candidate:
+  scan the relevant array/list/tree/graph state
+  recompute the answer directly
+```
+
+Brute-force complexity: usually O(n) per operation or O(n^2)+ overall, with extra space when a copied structure is used.
+
+### Solution — optimized
+
+**Pattern:**
 Point update + prefix-sum query in O(log n) using the `i & -i` lowest-set-bit stride.
 
 > [key] **Key Insight** — Each Fenwick index `i` stores the sum of `a[i - (i&-i) + 1 .. i]`. To update, walk *up* adding `i += i & -i`; to query a prefix, walk *down* subtracting `i -= i & -i`. Range sum `[l,r] = query(r) − query(l-1)`.
 
-### Java (1-indexed)
+**Java (1-indexed):**
 ```java
 class Fenwick {
     private final long[] tree;
@@ -41,14 +64,28 @@ class Fenwick {
 
 > [note] **Trace it** — `prefixSum(6)` visits indices `6 → 4 → 0` (each step strips the lowest set bit via `i -= i & -i`), summing three stored partials instead of six elements.
 
-### Complexity
-Update/query O(log n) · Build O(n log n) (or O(n) with a linear build) · Space O(n).
+### Time Complexity
+
+O(log n) per point update and prefix/range query.
+
+Original summary: Update/query O(log n) · Build O(n log n) (or O(n) with a linear build) · Space O(n).
+
+### Space Complexity
+
+O(n) for the 1-indexed tree array.
 
 > [trap] **Common Trap** — 0-index vs 1-index confusion. *Example:* `update(i)` for `i=0` with 0-indexed `i` gives `i & -i == 0`, so the loop never advances. Fenwick trees are naturally 1-indexed; shift external indices by +1 or handle the 0 case explicitly.
 
 > [pat] **Pattern Connection** — BIT answers *Count of Smaller Numbers After Self* (compress values, sweep right-to-left, query prefix counts), *Range Sum Query — Mutable*, and inversion counting.
 
-### Same pattern, new tweaks
+### Learning notes
+
+- Why 1-indexing? lowbit loops need 0 as the stop state.
+- Why i & -i? It isolates the covered range size.
+- Why sum(r)-sum(l-1)? Ranges are prefix differences.
+- Why Fenwick over segment tree? Shorter/faster for point updates plus prefix sums.
+
+#### Same pattern, new tweaks
 
 Point-update + prefix-query in O(log n):
 
@@ -59,22 +96,45 @@ Point-update + prefix-query in O(log n):
 | [Reverse Pairs](https://leetcode.com/problems/reverse-pairs/) | a BIT over compressed values counting `a[i] > 2·a[j]` | — |
 | [Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/) | a BIT over prefix sums | — |
 
-## Segment Tree (range query + range update)
+## Segment Tree (range query + range update) <span class="diff diff-m">Medium</span>
+
+
 *[↗ LeetCode: Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)*
 
+<ProgressCheck id="segment-tree-range-query-range-update" />
+
 ### Problem
+
 Support **range queries** (sum/min/max) and **updates** on a mutable array, each in O(log n); with lazy propagation, whole-range updates too.
 
 **Constraints:** up to ~`10⁵` elements and operations.
 
 **Example:** over `[1,3,5,7,9,11]`, `sum(1..3) = 15`; after `update(1, +2)`, `sum(1..3) = 17`.
 
-### Pattern
+**Example 1:** Query [l,r] combines O(log n) canonical segments.
+
+**Example 2:** After updating index 2, every segment covering index 2 recomputes its sum.
+
+### Solution — brute force
+
+Ignore the structural shortcut and scan/recompute from scratch for each decision.
+
+```text
+for each query or candidate:
+  scan the relevant array/list/tree/graph state
+  recompute the answer directly
+```
+
+Brute-force complexity: usually O(n) per operation or O(n^2)+ overall, with extra space when a copied structure is used.
+
+### Solution — optimized
+
+**Pattern:**
 A binary tree over array segments; each node stores an aggregate of its range. Queries and updates split into O(log n) canonical nodes. **Lazy propagation** defers range updates until a child is actually needed.
 
 > [inv] **Invariant** — Each internal node's value is the aggregate (sum/min/max) of its two children; a pending lazy tag means "this node's value is current, but children haven't been informed yet."
 
-### Java (sum segment tree, point update)
+**Java (sum segment tree, point update):**
 ```java
 class SegTree {
     private final int n;
@@ -101,12 +161,7 @@ class SegTree {
 
 > [note] **Trace it** — over `[1,3,5,7,9,11]`, a query for `sum(1..3)` combines two canonical nodes (covering `[1,1]` and `[2,3]`) → `3 + (5+7) = 15`, touching O(log n) nodes instead of scanning the range.
 
-### Complexity
-Query/update O(log n) · Build O(n) · Space O(n).
-
-> [key] **Key Insight** — The iterative bottom-up segment tree above is compact and cache-friendly for point updates. For **range updates** (add v to `[l,r]`), add lazy tags and a recursive `push-down`: apply the tag to a node, mark its children pending, and only propagate when recursing into them.
-
-### Java (lazy propagation — range add + range sum)
+**Java (lazy propagation — range add + range sum):**
 ```java
 class LazySeg {
     private final int n;
@@ -147,7 +202,27 @@ class LazySeg {
 
 > [pat] **Pattern Connection** — Segment trees back *Range Sum/Min/Max Query — Mutable*, *Range Add + Range Sum* (lazy), *The Skyline Problem* (segment tree on heights), and *Count of Range Sum*. When only prefix sums with point updates are needed, prefer the simpler, faster Fenwick tree.
 
-### Same pattern, new tweaks
+### Time Complexity
+
+O(log n) per point update/range query; lazy range operations are also O(log n).
+
+Original summary: Query/update O(log n) · Build O(n) · Space O(n).
+
+### Space Complexity
+
+O(n) logically, commonly allocated as O(4n).
+
+> [key] **Key Insight** — The iterative bottom-up segment tree above is compact and cache-friendly for point updates. For **range updates** (add v to `[l,r]`), add lazy tags and a recursive `push-down`: apply the tag to a node, mark its children pending, and only propagate when recursing into them.
+
+### Learning notes
+
+- Why 4*n size? Safe upper bound for recursive layout.
+- Why split at mid? Nodes summarize contiguous halves.
+- Why no-overlap returns 0? Sum identity contributes nothing.
+- Why lazy propagation? Range updates defer child work.
+- Why segment tree over Fenwick? It handles richer range operations.
+
+#### Same pattern, new tweaks
 
 Any associative range aggregate, in O(log n):
 
