@@ -62,6 +62,11 @@ Let's make it concrete. Say we want the sum of every contiguous subarray of size
 </svg>
 </div>
 
+### ▶ Try it — interactive walkthrough
+
+<SlidingWindowAnim />
+
+
 
 
 

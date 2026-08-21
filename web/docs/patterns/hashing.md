@@ -32,6 +32,18 @@ Given an array `nums` and a `target`, return the **indices** of the two entries 
 
 **Example 2:** `nums = [3,3], target = 6` → `[0,1]` (two equal values must be different indices).
 
+### Try it yourself
+
+Complete the `Main` class below and click **▶ Run tests**. Your code compiles and runs against the two examples via the Judge0 API. Code auto-saves to your browser.
+
+<JavaRunner
+  problemSlug="two-sum"
+  :tests='[
+    { input: "4\n2 7 11 15\n9", expected: "0 1" },
+    { input: "2\n3 3\n6", expected: "0 1" }
+  ]'
+/>
+
 ### Solution — brute force
 Nested loop: for each `i`, scan `j > i` for `nums[i] + nums[j] == target`. This is O(n²) time and O(1) space, and it is correct but too slow once `n` reaches `10⁴`. The hash-map optimization avoids the inner scan by remembering values already seen and asking whether the current value's complement has appeared.
 

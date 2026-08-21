@@ -57,6 +57,11 @@ Union-Find is not a *tree traversal* algorithm; it's a *set-membership* structur
 </svg>
 </div>
 
+### ▶ Try it — interactive walkthrough
+
+<UnionFindAnim />
+
+
 
 
 

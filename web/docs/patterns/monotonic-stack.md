@@ -71,6 +71,11 @@ each pop's "next greater" is the current bar
 </svg>
 </div>
 
+### ▶ Try it — interactive walkthrough
+
+<MonoStackAnim />
+
+
 
 
 
