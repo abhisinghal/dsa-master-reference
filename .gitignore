@@ -1,0 +1,15 @@
+node_modules/
+web/node_modules/
+web/docs/.vitepress/dist/
+web/docs/.vitepress/cache/
+gen/output*.html
+gen/_extracted_solutions.json
+gen/_traps_extracted.json
+gen/.render8-tmp.js
+gen/__pycache__/
+snapshots/
+build/
+assets/
+*.log
+*.pyc
+.DS_Store

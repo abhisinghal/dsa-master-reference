@@ -1,0 +1,76 @@
+/* ===================== DARK THEME OVERRIDES ===================== */
+:root{
+  --ink:#e5e9f0;
+  --muted:#9aa4b2;
+  --line:#334155;
+  --accent:#60a5fa;
+  --accent2:#a78bfa;
+  --bg-soft:#1a2334;
+  --key-bg:#15243f;   --key-br:#60a5fa;
+  --inv-bg:#2d2410;   --inv-br:#e0a52b;
+  --trap-bg:#361a1a;  --trap-br:#f87171;
+  --pat-bg:#12281f;   --pat-br:#34d399;
+  --note-bg:#1c2637;  --note-br:#8595ab;
+  --def-bg:#0e2a30;   --def-br:#22d3ee;
+  --code-bg:#0b1220;
+  --code-ink:#cbd5e1; --code-inline-bg:#1e293b;
+  --link:#93c5fd;     --link-underline:#3b5b8f;
+  --diff-e-bg:#dcfce7; --diff-e-ink:#166534;
+  --diff-m-bg:#fef1cf; --diff-m-ink:#92500e;
+  --diff-h-bg:#fde2e2; --diff-h-ink:#b02121;
+}
+
+html, body{ background:#0f172a; }
+body{ color:var(--ink); padding:14mm 13mm 15mm; }
+
+h2{ color:#7db3fb; border-bottom-color:#334155; }
+h3{ color:#e8edf5; }
+h4{ color:#9aa4b2; }
+strong{ color:#f1f5f9; }
+a{ color:var(--link); text-decoration-color:var(--link-underline); }
+hr{ border-top-color:#334155; }
+
+/* inline code */
+code{ background:var(--code-inline-bg); color:var(--code-ink); }
+
+/* code blocks stay dark (already) — just border */
+pre{ border-color:#1e293b; }
+pre.diagram{ background:#111a2e; color:#dbe4f0; border-color:#334155; }
+
+/* tables */
+th{ background:#1d4ed8; }
+td{ border-color:#334155; }
+tr:nth-child(even) td{ background:#1b2536; }
+
+/* callouts already tinted via vars; ensure text readable */
+blockquote{ background:#1b2536; }
+blockquote p{ color:#dbe4f0; }
+
+/* figures & explanations */
+.mermaid{ background:#fbfcfe; border-color:#c9d4e6; }
+.svgfig{ background:#fbfcfe; border-color:#c9d4e6; }
+.figcap{ color:#9aa4b2; }
+.readfig{ background:#182338; color:#cbd5e1; border-left-color:#60a5fa; }
+.readfig b{ color:#7db3fb; }
+
+/* TOC */
+.toc li{ border-bottom-color:#334155; }
+.toc .part{ color:#7db3fb; }
+
+/* part dividers */
+.part-divider .pnum{ color:#a78bfa; }
+.part-divider .ptitle{ color:#e8edf5; }
+.part-divider .pdesc{ color:#9aa4b2; }
+
+/* headings banner (h1) gradient already reads well on dark; keep */
+
+/* self-check appendix */
+.pagebreak{ break-before:page; page-break-before:always; height:0; margin:0; }
+.teachback{ background:#182338; border:1px solid #334155; border-radius:8px; padding:4px 14px 4px 2px; margin:8px 0 12px; }
+.teachback ol{ margin:4px 0; }
+
+.soljump { background: rgba(59,130,246,.18); color: #7ab7f5; }
+
+.see-full { background: rgba(59,130,246,.15); border-left-color: #7ab7f5; color: #cde5ff; }
+.see-full a { color: #93c5fd; }
+

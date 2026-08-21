@@ -1,0 +1,309 @@
+/* ===================== DSA MASTER REFERENCE — STYLE ===================== */
+:root{
+  --ink:#1a1f29;
+  --muted:#5b6472;
+  --line:#dce1ea;
+  --accent:#2563eb;
+  --accent2:#7c3aed;
+  --bg-soft:#f5f7fa;
+  --key-bg:#eef4ff;   --key-br:#2563eb;
+  --inv-bg:#fbf3e3;   --inv-br:#b45309;
+  --trap-bg:#fdecec;  --trap-br:#dc2626;
+  --pat-bg:#eaf7ef;   --pat-br:#15803d;
+  --note-bg:#f1f4f8;  --note-br:#64748b;
+  --def-bg:#e7f5f7;   --def-br:#0e7490;
+  --code-bg:#0f172a;
+  --code-ink:#334155; --code-inline-bg:#eceff3;
+  --link:#1d4ed8;     --link-underline:#a8c1f0;
+  --diff-e-bg:#dcfce7; --diff-e-ink:#15803d;
+  --diff-m-bg:#fef1cf; --diff-m-ink:#b45309;
+  --diff-h-bg:#fde2e2; --diff-h-ink:#b91c1c;
+}
+
+*{ box-sizing:border-box; }
+
+/* ============ PRINT QUALITY ============
+   Explicit print-color-adjust so Chrome preserves backgrounds/gradients.
+   text-rendering:geometricPrecision + optimizeLegibility hand-off yields the
+   best glyph metrics for PDF export. */
+html{
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+  color-adjust:exact;
+  text-rendering:geometricPrecision;
+}
+
+body{
+  font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  color:var(--ink);
+  font-size:12.2px;
+  line-height:1.55;
+  margin:0;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  font-feature-settings:"kern","liga","calt";
+}
+
+/* Crisp SVGs at all zoom levels; images inherit optimized rasterization */
+svg, img{
+  image-rendering:-webkit-optimize-contrast;
+  shape-rendering:geometricPrecision;
+}
+svg text{ text-rendering:geometricPrecision; }
+
+/* Ensure every code element inherits the same clarity */
+pre, code, .highlight{
+  font-feature-settings:"liga" 0;
+  text-rendering:optimizeLegibility;
+}
+
+/* ---------- Headings ---------- */
+h1{
+  font-size:23px;
+  color:#fff;
+  background:linear-gradient(100deg,var(--accent),var(--accent2));
+  margin:0 0 14px;
+  padding:14px 16px;
+  border-radius:8px;
+  letter-spacing:.2px;
+  page-break-before:always;
+  page-break-after:avoid;
+}
+h1:first-of-type{ page-break-before:avoid; }
+h2{
+  font-size:16.5px;
+  color:var(--accent);
+  border-bottom:2px solid var(--line);
+  padding-bottom:3px;
+  margin:16px 0 8px;
+  page-break-after:avoid;
+}
+h3{
+  font-size:13px;
+  color:var(--ink);
+  margin:11px 0 4px;
+  page-break-after:avoid;
+}
+h4{ font-size:11.3px; color:var(--muted); margin:8px 0 3px; text-transform:uppercase; letter-spacing:.6px; }
+
+p{ margin:5px 0; }
+ul,ol{ margin:5px 0 5px 0; padding-left:20px; }
+li{ margin:2px 0; }
+strong{ color:#0b1220; }
+a{ color:var(--link); text-decoration:underline; text-underline-offset:2px; text-decoration-thickness:.6px; text-decoration-color:var(--link-underline); }
+hr{ border:none; border-top:1px solid var(--line); margin:12px 0; }
+
+/* difficulty badges */
+.diff{ display:inline-block; font-size:.8em; font-weight:700; padding:.5px 6px; border-radius:9px; letter-spacing:.2px; vertical-align:1px; }
+.diff-e{ background:var(--diff-e-bg); color:var(--diff-e-ink); }
+.diff-m{ background:var(--diff-m-bg); color:var(--diff-m-ink); }
+.diff-h{ background:var(--diff-h-bg); color:var(--diff-h-ink); }
+
+/* ---------- Inline code ---------- */
+code{
+  font-family:"Cascadia Code","Consolas","SF Mono",monospace;
+  font-variant-ligatures:none;
+  font-feature-settings:"liga" 0,"calt" 0;
+  background:var(--code-inline-bg);
+  color:var(--code-ink);
+  padding:1px 4px;
+  border-radius:4px;
+  font-size:10.8px;
+}
+
+/* ---------- Code blocks (Pygments) ---------- */
+pre{
+  background:var(--code-bg);
+  color:#e2e8f0;
+  padding:11px 13px;
+  border-radius:7px;
+  overflow:hidden;
+  font-size:10.6px;
+  line-height:1.5;
+  page-break-inside:avoid;
+  margin:8px 0;
+  border:1px solid #1e293b;
+  font-family:"Cascadia Code","Consolas","SF Mono",monospace;
+  font-variant-ligatures:none;
+  font-feature-settings:"liga" 0,"calt" 0;
+}
+pre code{ background:none; color:inherit; padding:0; font-size:10.6px; }
+.codehilite{ page-break-inside:avoid; margin:7px 0; }
+.codehilite pre{ margin:0; }
+
+/* ASCII diagram blocks: lighter theme, tagged with language 'text' */
+pre.diagram, .lang-text pre, .codehilite.diagram pre{
+  background:var(--bg-soft);
+  color:#0b1220;
+  border:1px solid var(--line);
+  font-size:9.5px;
+  line-height:1.4;
+}
+
+/* ---------- Tables ---------- */
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:8px 0;
+  font-size:9.9px;
+  page-break-inside:avoid;
+}
+th{
+  background:var(--accent);
+  color:#fff;
+  text-align:left;
+  padding:5px 7px;
+  font-weight:600;
+}
+td{ border:1px solid var(--line); padding:4px 7px; vertical-align:top; }
+tr:nth-child(even) td{ background:var(--bg-soft); }
+
+/* ---------- Callout boxes via blockquote convention ---------- */
+blockquote{
+  margin:7px 0;
+  padding:7px 11px;
+  border-left:4px solid var(--muted);
+  background:var(--bg-soft);
+  border-radius:0 6px 6px 0;
+  page-break-inside:avoid;
+}
+blockquote p{ margin:2px 0; }
+blockquote.key{  background:var(--key-bg);  border-left-color:var(--key-br); }
+blockquote.inv{  background:var(--inv-bg);  border-left-color:var(--inv-br); }
+blockquote.trap{ background:var(--trap-bg); border-left-color:var(--trap-br); }
+blockquote.pat{  background:var(--pat-bg);  border-left-color:var(--pat-br); }
+blockquote.note{ background:var(--note-bg); border-left-color:var(--note-br); }
+blockquote.def{  background:var(--def-bg);  border-left-color:var(--def-br); }
+
+/* callout icons — a semantic glyph opens each callout for quick scanning */
+blockquote.key > p:first-child::before, blockquote.inv > p:first-child::before,
+blockquote.trap > p:first-child::before, blockquote.pat > p:first-child::before,
+blockquote.note > p:first-child::before, blockquote.def > p:first-child::before{
+  margin-right:4px; font-size:1.02em;
+}
+blockquote.key  > p:first-child::before{ content:"🔑 "; }
+blockquote.inv  > p:first-child::before{ content:"📐 "; }
+blockquote.trap > p:first-child::before{ content:"⚠️ "; }
+blockquote.pat  > p:first-child::before{ content:"🔗 "; }
+blockquote.note > p:first-child::before{ content:"📝 "; }
+blockquote.def  > p:first-child::before{ content:"📖 "; }
+
+/* section goal / standfirst under a heading */
+.secgoal{
+  margin:-2px 0 10px;
+  font-size:10px;
+  line-height:1.5;
+  color:var(--muted);
+  font-style:italic;
+  border-left:2px solid var(--def-br);
+  padding-left:9px;
+}
+.secgoal b{ font-style:normal; color:var(--ink); }
+
+/* ---------- Complexity tag ---------- */
+.cx{ font-family:"Cascadia Code",Consolas,monospace; font-size:9px; }
+
+/* ---------- Cover ---------- */
+.cover{
+  page-break-after:always;
+  height:960px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:linear-gradient(150deg,#0f172a 0%,#1e3a8a 55%,#7c3aed 100%);
+  color:#fff;
+  border-radius:0;
+  margin:-4px;
+}
+.cover h1{ background:none; font-size:46px; padding:0; margin:0 0 8px; page-break-before:avoid; }
+.cover .sub{ font-size:16px; color:#c7d2fe; letter-spacing:3px; text-transform:uppercase; }
+.cover .rule{ width:120px; height:3px; background:#8b5cf6; margin:22px 0; border-radius:3px; }
+.cover .meta{ font-size:12px; color:#e0e7ff; margin-top:6px; line-height:1.9; }
+.cover .badge{ margin-top:34px; font-size:11px; color:#a5b4fc; border:1px solid #6366f1; padding:6px 16px; border-radius:20px; }
+
+/* ---------- TOC ---------- */
+.toc{ page-break-after:always; }
+.toc h1{ page-break-before:avoid; }
+.toc ol{ list-style:none; padding-left:0; columns:2; column-gap:34px; }
+.toc li{ margin:3px 0; font-size:9.6px; border-bottom:1px dotted var(--line); padding-bottom:2px; }
+.toc li a{ color:var(--ink); text-decoration:none; }
+.toc li a:hover{ color:var(--accent); }
+.toc .part{ font-weight:700; color:var(--accent); margin-top:8px; break-after:avoid; }
+
+/* ---------- Part divider ---------- */
+.part-divider{
+  page-break-before:always;
+  height:900px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+.part-divider .pnum{ font-size:15px; letter-spacing:6px; color:var(--accent2); text-transform:uppercase; }
+.part-divider .ptitle{ font-size:34px; color:var(--ink); margin-top:10px; font-weight:700; }
+.part-divider .pdesc{ font-size:12px; color:var(--muted); margin-top:14px; max-width:520px; }
+.part-divider .rule{ width:90px; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent2)); margin:18px 0; border-radius:3px; }
+
+/* keep problem block tight */
+h2 + h3{ margin-top:6px; }
+
+/* ---------- Mermaid flow diagrams ---------- */
+.mermaid{
+  page-break-inside:avoid;
+  text-align:center;
+  margin:10px auto;
+  padding:10px 8px;
+  background:#fbfcfe;
+  border:1px solid var(--line);
+  border-radius:8px;
+}
+.mermaid svg{ max-width:100%; height:auto; }
+.figcap{
+  text-align:center;
+  font-size:9.2px;
+  color:var(--muted);
+  margin:-4px 0 8px;
+  font-style:italic;
+}
+
+/* ---------- Inline SVG figures (Grokking-style illustrations) ---------- */
+.svgfig{
+  page-break-inside:avoid;
+  text-align:center;
+  margin:10px auto 4px;
+  padding:8px;
+  background:#fbfcfe;
+  border:1px solid var(--line);
+  border-radius:8px;
+}
+.svgfig svg{ max-width:100%; height:auto; }
+/* "How to read it" explanation under a diagram */
+.readfig{
+  background:#f3f6fb;
+  border-left:3px solid var(--accent);
+  border-radius:0 6px 6px 0;
+  padding:6px 10px;
+  margin:2px 0 10px;
+  font-size:9.8px;
+  color:#334155;
+  page-break-inside:avoid;
+}
+.readfig b{ color:var(--accent); }
+
+/* self-check appendix */
+.pagebreak{ break-before:page; page-break-before:always; height:0; margin:0; }
+.teachback{ background:#f3f6fb; border:1px solid #dce4f2; border-radius:8px; padding:4px 14px 4px 2px; margin:8px 0 12px; }
+.teachback ol{ margin:4px 0; }
+
+/* In-PDF solution jump link — appended after external LC links */
+.soljump { font-size: 0.72em; text-decoration: none; padding: 0 2px; border-radius: 3px; background: #eef5ff; color: #2563eb; margin-left: 2px; vertical-align: super; }
+.soljump:hover { background: #dbeafe; }
+
+/* Cross-link box from pattern card back to Part III chapter */
+.see-full { border-left: 3px solid #2563eb; background: #eef5ff; padding: 8px 12px; border-radius: 6px; font-size: 0.92em; margin: 8px 0; color: #1e3a8a; }
+.see-full a { color: #2563eb; font-weight: 700; }
+

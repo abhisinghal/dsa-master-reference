@@ -1,0 +1,67 @@
+/* DSA Master Reference custom theme */
+
+:root {
+  --vp-c-brand-1: #2563eb;
+  --vp-c-brand-2: #1d4ed8;
+  --vp-c-brand-3: #1e40af;
+  --vp-c-brand-soft: rgba(37, 99, 235, 0.14);
+  --vp-c-tip-1: #2563eb;
+  --vp-c-tip-soft: rgba(37, 99, 235, 0.14);
+  --vp-font-family-base: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --vp-font-family-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+}
+
+/* Difficulty badges */
+.diff {
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 9px;
+  letter-spacing: 0.2px;
+  vertical-align: 1px;
+}
+.diff-e { background: #dcfce7; color: #15803d; }
+.diff-m { background: #fef1cf; color: #b45309; }
+.diff-h { background: #fde2e2; color: #b91c1c; }
+
+/* Section headings */
+h2 {
+  border-bottom: 1px solid var(--vp-c-divider);
+  padding-bottom: 0.35em;
+  margin-top: 2em;
+}
+h3 {
+  color: var(--vp-c-brand-1);
+  margin-top: 1.6em;
+}
+
+/* Enhanced code blocks */
+.vp-doc div[class*='language-'] {
+  border-radius: 8px;
+  border: 1px solid var(--vp-c-divider);
+}
+
+/* Tables — cleaner */
+.vp-doc table {
+  border-collapse: collapse;
+  font-size: 0.92em;
+}
+.vp-doc th, .vp-doc td {
+  border: 1px solid var(--vp-c-divider);
+  padding: 6px 10px;
+}
+.vp-doc th {
+  background: var(--vp-c-bg-soft);
+  font-weight: 700;
+}
+
+/* Print CSS — reader can print any page to PDF cleanly */
+@media print {
+  .VPNav, .VPSidebar, .VPFooter, .VPDocFooter, .aside, .content-container .aside { display: none !important; }
+  .content-container { max-width: 100% !important; }
+  a { color: #000 !important; text-decoration: underline; }
+  .callout { break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; }
+  pre { break-inside: avoid; }
+}

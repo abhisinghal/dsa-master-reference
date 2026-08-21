@@ -1,0 +1,68 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<style>
+  body{margin:0;background:#fff;font-family:"Segoe UI",Arial,sans-serif;}
+  .wrap{padding:18px;}
+  .cap{font-size:13px;color:#5b6472;font-style:italic;margin-top:6px;text-align:center;}
+  .title{font-size:15px;font-weight:700;color:#2563eb;margin:2px 0 10px;}
+</style></head><body>
+<div class="wrap" id="cap-target">
+
+<div class="title">Sliding Window — longest substring with ≤ 2 distinct characters</div>
+
+<!-- ============ Grokking-style array + window SVG ============ -->
+<svg width="720" height="200" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="win" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#bfdbfe"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/>
+    </marker>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.4" flood-color="#94a3b8" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- window highlight band (covers indices 1..3) -->
+  <rect x="66" y="44" width="192" height="64" rx="10" fill="url(#win)" stroke="#2563eb" stroke-width="2"/>
+  <text x="162" y="34" text-anchor="middle" font-size="12" fill="#2563eb" font-weight="700">window [L..R]</text>
+
+  <!-- cells: values a a b c a  (indices 0..4) -->
+  <g filter="url(#sh)">
+    <rect x="8"   y="52" width="56" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect x="72"  y="52" width="56" height="48" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <rect x="136" y="52" width="56" height="48" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <rect x="200" y="52" width="56" height="48" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <rect x="264" y="52" width="56" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  </g>
+  <g font-size="22" font-weight="700" fill="#0b1220" text-anchor="middle">
+    <text x="36"  y="84">a</text><text x="100" y="84">a</text><text x="164" y="84">b</text>
+    <text x="228" y="84">c</text><text x="292" y="84">a</text>
+  </g>
+  <!-- indices -->
+  <g font-size="12" fill="#94a3b8" text-anchor="middle">
+    <text x="36" y="120">0</text><text x="100" y="120">1</text><text x="164" y="120">2</text>
+    <text x="228" y="120">3</text><text x="292" y="120">4</text>
+  </g>
+
+  <!-- L and R pointers -->
+  <g font-size="13" font-weight="700">
+    <line x1="100" y1="150" x2="100" y2="104" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="100" y="168" text-anchor="middle" fill="#16a34a">L</text>
+    <line x1="228" y1="150" x2="228" y2="104" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="228" y="168" text-anchor="middle" fill="#dc2626">R</text>
+  </g>
+
+  <!-- state annotation on the right -->
+  <g font-size="12">
+    <rect x="380" y="50" width="326" height="96" rx="10" fill="#f6f8fb" stroke="#d9dee7"/>
+    <text x="396" y="72" fill="#0b1220" font-weight="700">state</text>
+    <text x="396" y="92" fill="#334155">distinct = { a, b, c }  → 3 &gt; 2  ✗ invalid</text>
+    <text x="396" y="112" fill="#334155">action: shrink — advance L past the extra char</text>
+    <text x="396" y="132" fill="#334155">best length so far = 3   (window "a a b")</text>
+  </g>
+</svg>
+
+<div class="cap">Colored cells, a highlighted window band, and labeled L/R pointers — authored as inline SVG, rendered crisply into the PDF.</div>
+</div>
+</body></html>
