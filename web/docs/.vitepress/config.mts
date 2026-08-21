@@ -12,6 +12,22 @@ const sidebarData = generatedSidebar as {
   dataStructures: Record<string, SidebarChapter>
 }
 
+const rCombining = /[\u0300-\u036F]/g
+const rAsciiSeparators = /[—–→·]/g
+const rNonAsciiSlugChar = /[^a-z0-9]+/g
+
+function slugifyHeading(str: string) {
+  return str
+    .normalize('NFKD')
+    .replace(rCombining, '')
+    .toLowerCase()
+    .replace(rAsciiSeparators, '-')
+    .replace(rNonAsciiSlugChar, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/^(\d)/, '_$1')
+}
+
 function nestedPattern(text: string, slug: string) {
   const items = sidebarData.patterns[slug]?.items ?? []
   return items.length
@@ -37,10 +53,14 @@ export default withMermaid(defineConfig({
   },
   head: [
     ['link', { rel: 'icon', href: '/dsa-master-reference/favicon.svg' }],
-    ['meta', { name: 'theme-color', content: '#2563eb' }]
+    ['meta', { name: 'theme-color', content: '#2563eb' }],
+    ['script', { src: 'https://cjrtnc.leaningtech.com/3.0/cj3loader.js' }]
   ],
   markdown: {
     lineNumbers: true,
+    anchor: {
+      slugify: slugifyHeading
+    },
     theme: {
       light: 'github-light',
       dark: 'github-dark-high-contrast'
@@ -78,6 +98,7 @@ export default withMermaid(defineConfig({
             { text: 'Glossary', link: '/foundations/glossary' },
             { text: 'Java Data Structures Primer', link: '/foundations/java-primer' },
             { text: 'Java DSA Gotchas', link: '/foundations/java-gotchas' },
+            { text: 'How this compares', link: '/foundations/vs-competitors' },
             { text: 'Complexity Model', link: '/foundations/complexity' },
             { text: 'Debugging DSA Code', link: '/foundations/debugging' }
           ]
@@ -140,7 +161,8 @@ export default withMermaid(defineConfig({
             { text: 'Master Problem Index', link: '/appendix/problem-index' },
             { text: 'Practice Solutions', link: '/appendix/practice-solutions' },
             { text: 'Mock Interview Transcripts', link: '/appendix/mock-transcripts' },
-            { text: 'Traps Catalog', link: '/appendix/traps-catalog' }
+            { text: 'Traps Catalog', link: '/appendix/traps-catalog' },
+            { text: 'Changelog', link: '/appendix/changelog' }
           ]
         }
       ]

@@ -6,20 +6,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const docsDir = path.resolve(__dirname, '..')
 const outputFile = path.join(__dirname, 'sidebar.generated.json')
 
-const rControl = /[\u0000-\u001f]/g
-const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'“”‘’<>,.?/]+/g
 const rCombining = /[\u0300-\u036F]/g
+const rAsciiSeparators = /[—–→·]/g
+const rNonAsciiSlugChar = /[^a-z0-9]+/g
 
 function slugify(str) {
   return str
     .normalize('NFKD')
     .replace(rCombining, '')
-    .replace(rControl, '')
-    .replace(rSpecial, '-')
+    .toLowerCase()
+    .replace(rAsciiSeparators, '-')
+    .replace(rNonAsciiSlugChar, '-')
     .replace(/-{2,}/g, '-')
     .replace(/^-+|-+$/g, '')
     .replace(/^(\d)/, '_$1')
-    .toLowerCase()
 }
 
 function uniqueSlug(base, seen) {
@@ -70,6 +70,18 @@ function anchorHeading(raw) {
     .trim()
 }
 
+function nextNonBlankLine(lines, startIndex) {
+  for (let index = startIndex + 1; index < lines.length; index += 1) {
+    const line = lines[index].trim()
+    if (line) return line
+  }
+  return ''
+}
+
+function hasLeetCodeMarker(lines, headingIndex) {
+  return nextNonBlankLine(lines, headingIndex).startsWith('*[↗ LeetCode:')
+}
+
 function progressIdInBlock(lines, startIndex) {
   for (let index = startIndex + 1; index < lines.length; index += 1) {
     if (/^##\s+/.test(lines[index])) return undefined
@@ -90,6 +102,8 @@ function chapterFromFile(section, fileName) {
   lines.forEach((line, index) => {
     const match = line.match(/^##\s+(.+?)\s*#*\s*$/)
     if (!match) return
+
+    if (!hasLeetCodeMarker(lines, index)) return
 
     const text = cleanHeading(match[1])
     if (!text) return

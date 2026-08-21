@@ -1,10 +1,24 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 
+type TestCase = { input: string; expected: string }
+type TestResult = { pass: boolean; input: string; expected: string; actual: string }
+type CheerpJRunMain = (className: string, classPath: string, ...args: string[]) => Promise<number>
+
+declare global {
+  interface Window {
+    cheerpjInit?: (options?: { status?: 'splash' | 'none' | 'default'; version?: number }) => Promise<void>
+    cheerpjRunMain?: CheerpJRunMain
+    cheerpOSAddStringFile?: (path: string, data: string | Uint8Array) => void
+    cheerpjAddStringFile?: (path: string, data: string | Uint8Array) => void
+    cjFileBlob?: (path: string) => Promise<Blob>
+  }
+}
+
 const props = defineProps<{
   problemSlug: string
   starter?: string
-  tests?: Array<{ input: string; expected: string }>
+  tests?: TestCase[]
 }>()
 
 const defaultStarter = props.starter || `import java.util.*;
@@ -19,8 +33,12 @@ public class Main {
 
 const code = ref(defaultStarter)
 const isRunning = ref(false)
+const isRuntimeLoading = ref(false)
+const runtimeReady = ref(false)
+const runtimeError = ref('')
 const output = ref('')
-const testResults = ref<Array<{ pass: boolean; input: string; expected: string; actual: string }>>([])
+const testResults = ref<TestResult[]>([])
+let cheerpjInitPromise: Promise<void> | null = null
 
 const STORAGE_KEY = computed(() => `dsa-code:${props.problemSlug}`)
 
@@ -44,7 +62,131 @@ function reset() {
   code.value = defaultStarter
   try { localStorage.removeItem(STORAGE_KEY.value) } catch (e) {}
   output.value = 'Reset to starter code.'
+  runtimeError.value = ''
   testResults.value = []
+}
+
+async function initCheerpJ() {
+  if (runtimeReady.value) return
+  if (typeof window === 'undefined' || !window.cheerpjInit) {
+    throw new Error('CheerpJ runtime failed to load. Please refresh the page and try again.')
+  }
+
+  isRuntimeLoading.value = true
+  runtimeError.value = ''
+  output.value = 'Loading Java runtime...'
+  try {
+    cheerpjInitPromise ||= window.cheerpjInit({ status: 'none', version: 17 })
+    await cheerpjInitPromise
+    runtimeReady.value = true
+  } catch (e: any) {
+    runtimeError.value = `Runner temporarily unavailable: ${e?.message || 'CheerpJ initialization failed'}`
+    throw e
+  } finally {
+    isRuntimeLoading.value = false
+  }
+}
+
+function addStringFile(path: string, data: string) {
+  const addFile = window.cheerpOSAddStringFile || window.cheerpjAddStringFile
+  if (!addFile) throw new Error('CheerpJ file API is not available.')
+  addFile(path, data)
+}
+
+async function readCheerpJFile(path: string) {
+  if (!window.cjFileBlob) throw new Error('CheerpJ file read API is not available.')
+  return await (await window.cjFileBlob(path)).text()
+}
+
+function makeJavaIdentifier(prefix: string) {
+  return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`
+}
+
+function normalizeUserMain(source: string, userClassName: string) {
+  return source
+    .replace(/^\s*package\s+[^;]+;\s*/gm, '')
+    .replace(/\bMain\b/g, userClassName)
+    .replace(new RegExp(`public\\s+class\\s+${userClassName}\\b`), `class ${userClassName}`)
+}
+
+function extractImports(source: string) {
+  const imports = source.match(/^\s*import\s+[^;]+;\s*$/gm) || []
+  const body = source.replace(/^\s*import\s+[^;]+;\s*$/gm, '').trim()
+  return { imports: Array.from(new Set(imports.map(i => i.trim()))), body }
+}
+
+function buildRunnerSource(runnerClassName: string, userClassName: string) {
+  const normalized = normalizeUserMain(code.value, userClassName)
+  const { imports, body } = extractImports(normalized)
+  return `${imports.join('\n')}
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+
+public class ${runnerClassName} {
+    public static void main(String[] args) throws Exception {
+        String inputPath = args[0];
+        String outputPath = args[1];
+        byte[] inputBytes = Files.readAllBytes(Paths.get(inputPath));
+        InputStream previousIn = System.in;
+        PrintStream previousOut = System.out;
+        PrintStream previousErr = System.err;
+        ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+        ByteArrayOutputStream stderr = new ByteArrayOutputStream();
+        PrintStream captureOut = new PrintStream(stdout, true, "UTF-8");
+        PrintStream captureErr = new PrintStream(stderr, true, "UTF-8");
+        Throwable failure = null;
+
+        try {
+            System.setIn(new ByteArrayInputStream(inputBytes));
+            System.setOut(captureOut);
+            System.setErr(captureErr);
+            ${userClassName}.main(new String[0]);
+        } catch (Throwable t) {
+            failure = t;
+        } finally {
+            captureOut.flush();
+            captureErr.flush();
+            System.setIn(previousIn);
+            System.setOut(previousOut);
+            System.setErr(previousErr);
+        }
+
+        String result = stdout.toString("UTF-8");
+        String err = stderr.toString("UTF-8");
+        if (failure != null) {
+            StringWriter sw = new StringWriter();
+            failure.printStackTrace(new PrintWriter(sw));
+            result = (result + (err.isEmpty() ? "" : "\n[stderr]\n" + err) + "\n[error]\n" + sw.toString()).trim();
+        }
+        Files.write(Paths.get(outputPath), result.getBytes(StandardCharsets.UTF_8));
+    }
+}
+
+${body}
+`
+}
+
+async function compileRunner(sourcePath: string) {
+  if (!window.cheerpjRunMain) throw new Error('CheerpJ execution API is not available.')
+  const args = ['-encoding', 'UTF-8', '-d', '/files', sourcePath]
+  const attempts: Array<[string, string]> = [
+    ['com.sun.tools.javac.Main', ''],
+    ['com.sun.tools.javac.Main', '/app/tools.jar']
+  ]
+
+  let lastError = ''
+  for (const [className, classPath] of attempts) {
+    try {
+      const exitCode = await window.cheerpjRunMain(className, classPath, ...args)
+      if (exitCode === 0) return
+      lastError = `javac exited with code ${exitCode}`
+    } catch (e: any) {
+      lastError = e?.message || String(e)
+    }
+  }
+
+  throw new Error(`Compilation failed in the browser runtime. ${lastError}`)
 }
 
 async function runTests() {
@@ -53,38 +195,44 @@ async function runTests() {
     return
   }
   isRunning.value = true
-  output.value = 'Compiling and running via Judge0...'
   testResults.value = []
 
   try {
-    for (const test of props.tests) {
-      const response = await fetch('https://ce.judge0.com/submissions?base64_encoded=false&wait=true', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          language_id: 62,
-          source_code: code.value,
-          stdin: test.input,
-          expected_output: test.expected,
-          cpu_time_limit: 5
-        })
-      })
-      const result = await response.json()
-      const actual = (result.stdout || '').trim()
+    await initCheerpJ()
+    if (!window.cheerpjRunMain) throw new Error('CheerpJ execution API is not available.')
+
+    output.value = 'Compiling and running in your browser...'
+    const runnerClassName = makeJavaIdentifier('DsaRunner')
+    const userClassName = makeJavaIdentifier('DsaUserMain')
+    const sourcePath = `/str/${runnerClassName}.java`
+    addStringFile(sourcePath, buildRunnerSource(runnerClassName, userClassName))
+    await compileRunner(sourcePath)
+
+    for (const [index, test] of props.tests.entries()) {
+      const inputPath = `/str/${runnerClassName}_input_${index}.txt`
+      const outputPath = `/files/${runnerClassName}_output_${index}.txt`
+      addStringFile(inputPath, test.input)
+      const exitCode = await window.cheerpjRunMain(runnerClassName, '/files', inputPath, outputPath)
+      const actual = exitCode === 0
+        ? (await readCheerpJFile(outputPath)).trim()
+        : `Program exited with code ${exitCode}`
       const expected = test.expected.trim()
       testResults.value.push({
         pass: actual === expected,
         input: test.input,
         expected,
-        actual: actual || result.compile_output || result.stderr || 'no output'
+        actual: actual || 'no output'
       })
     }
+
     const passed = testResults.value.filter(r => r.pass).length
     output.value = `${passed} / ${testResults.value.length} tests passed`
   } catch (e: any) {
-    output.value = `Error: ${e.message}`
+    runtimeError.value = `Runner temporarily unavailable: ${e?.message || 'Java runtime error'}`
+    output.value = `${runtimeError.value}. Please try again later.`
   } finally {
     isRunning.value = false
+    isRuntimeLoading.value = false
   }
 }
 </script>
@@ -221,4 +369,23 @@ async function runTests() {
   background: var(--vp-c-bg-soft);
 }
 .runner-note a { color: var(--vp-c-brand-1); }
+
+@media (max-width: 640px) {
+  .runner-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .runner-controls {
+    justify-content: space-between;
+  }
+  .editor {
+    height: 240px;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+  .test-detail code {
+    word-break: break-all;
+  }
+}
 </style>

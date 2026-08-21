@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360" fill="none">
+  <defs><filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.14"/></filter></defs>
+  <rect width="560" height="360" fill="#f8fafc"/>
+  <g filter="url(#shadow)">
+    <rect x="34" y="30" width="492" height="300" rx="16" fill="#fff" stroke="#d9dee7"/>
+    <rect x="34" y="30" width="492" height="34" rx="16" fill="#f1f5f9"/>
+    <circle cx="56" cy="47" r="5" fill="#ef4444"/><circle cx="74" cy="47" r="5" fill="#f59e0b"/><circle cx="92" cy="47" r="5" fill="#22c55e"/>
+    <rect x="54" y="86" width="300" height="184" rx="10" fill="#1e293b"/>
+    <g font-family="Consolas, monospace" font-size="13">
+      <text x="74" y="116" fill="#93c5fd">public class Main &#123;</text>
+      <text x="92" y="142" fill="#e2e8f0">int maxSum(int[] a, int k) &#123;</text>
+      <text x="110" y="168" fill="#86efac">// sliding window</text>
+      <text x="110" y="194" fill="#e2e8f0">return best;</text>
+      <text x="92" y="220" fill="#e2e8f0">&#125;</text>
+      <text x="74" y="246" fill="#93c5fd">&#125;</text>
+    </g>
+    <rect x="378" y="86" width="116" height="38" rx="8" fill="#2563eb"/>
+    <text x="436" y="110" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#fff">Run tests</text>
+    <rect x="378" y="146" width="116" height="84" rx="10" fill="#f0fdf4" stroke="#16a34a"/>
+    <text x="436" y="178" text-anchor="middle" font-family="Segoe UI, Arial" font-size="22" font-weight="800" fill="#16a34a">PASS</text>
+    <text x="436" y="204" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#166534">3 / 3 tests</text>
+  </g>
+</svg>

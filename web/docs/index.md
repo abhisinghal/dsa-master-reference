@@ -4,7 +4,7 @@ layout: home
 hero:
   name: DSA Master Reference
   text: Zero to Hero for Senior/Staff Interviews
-  tagline: Patterns · Invariants · Problems — Java 17, Grokking-style depth, 300+ curated pages
+  tagline: Patterns · Invariants · Problems — Java 17, Grokking-style depth, Instant offline reference — 340 pages, searchable PDF
   image:
     src: /dsa-master-reference/hero.svg
     alt: Sliding Window on 9 cells with two overlapping windows
@@ -23,41 +23,62 @@ hero:
       link: https://github.com/abhisinghal/dsa-master-reference
 
 features:
-  - icon: 🎯
+  - icon: /dsa-master-reference/icons/patterns.svg
     title: 21 Core Patterns
     details: Every pattern with story intro, when-to-use, templates, canonical problems, and interview scripts. Sliding Window to Quickselect.
     link: /patterns/
     linkText: Explore patterns
-  - icon: 📚
+  - icon: /dsa-master-reference/icons/learning.svg
     title: Learning Notes on Every Line
     details: Why <code>Long.MIN_VALUE</code>? Why <code>right >= k-1</code>? Every non-obvious code decision explained bullet-by-bullet.
     link: /patterns/sliding-window
     linkText: See in action
-  - icon: 🗺️
+  - icon: /dsa-master-reference/icons/roadmap.svg
     title: 8-Week Roadmap
     details: Pre-flight quiz, weekly cadence (2 canonical + 2 variations + 1 mock), staff-level readiness signals.
     link: /foundations/roadmap
     linkText: See the plan
-  - icon: 💡
+  - icon: /dsa-master-reference/icons/gotchas.svg
     title: 20 Java Gotchas
     details: <code>Integer.MIN_VALUE</code> overflow, autoboxing cost, ArrayDeque vs Stack, TreeMap floor/ceiling — the pitfalls that cost interviews.
     link: /foundations/java-gotchas
     linkText: Read gotchas
-  - icon: 🎬
+  - icon: /dsa-master-reference/icons/mocks.svg
     title: Mock Interview Transcripts
     details: Easy (Two Sum), Medium (LRU Cache), Hard (Sliding Window Maximum) — verbatim what a senior candidate says.
     link: /appendix/mock-transcripts
     linkText: Read transcripts
-  - icon: ⚠️
+  - icon: /dsa-master-reference/icons/traps.svg
     title: 109 Traps Catalog
     details: Every trap callout consolidated in one place for interview-eve revision.
     link: /appendix/traps-catalog
     linkText: Skim traps
+  - icon: /dsa-master-reference/icons/comparison.svg
+    title: How this compares
+    details: Side-by-side vs Grokking, NeetCode, TakeUForward, LeetCode Premium. Where this book wins and where it doesn't.
+    link: /foundations/vs-competitors
+    linkText: See the comparison
 ---
+
+<div class="screenshot-strip">
+  <img src="/mock-screenshots/screenshot-runner.svg" alt="Interactive Java runner" class="screenshot" />
+  <img src="/mock-screenshots/screenshot-animation.svg" alt="Sliding window animation" class="screenshot" />
+  <img src="/mock-screenshots/screenshot-mobile.svg" alt="Mobile-responsive view" class="screenshot" />
+</div>
 
 ## Recently updated
 
 <RecentUpdates />
+
+## Built by
+
+<div class="author-bio">
+  <img src="https://github.com/abhisinghal.png?size=140" alt="Abhishek Singhal" class="author-avatar" />
+  <div class="author-text">
+    <h3>Abhishek Singhal</h3>
+    <p>Senior Software Engineer. Built this reference over months of solo work while preparing for senior/staff interviews. If you found this useful, connect with me on <a href="https://github.com/abhisinghal">GitHub</a>.</p>
+  </div>
+</div>
 
 <div class="stats-strip">
   <div class="stat">
@@ -102,9 +123,9 @@ Most DSA references are one of two things: **a textbook** (dense theory, no inte
 - **Part III — Data Structures in Depth**: Arrays, Strings, Linked Lists, Trees, Heaps, Trie, Graphs, Segment Tree
 - **Part IV — Cheat Sheets & Self-Check**: templates, drills, problem index, mock transcripts, traps catalog
 
-## Also available as PDF
+## Also available as a searchable offline PDF
 
-The full 300+ page reference is also available as a PDF (light + dark themes) — [download from Releases](https://github.com/abhisinghal/dsa-master-reference/releases).
+For flights, whiteboarding, or interview eve without WiFi. Same content as the website. [Download from Releases](https://github.com/abhisinghal/dsa-master-reference/releases).
 
 <style scoped>
 .stats-strip {
@@ -130,5 +151,39 @@ The full 300+ page reference is also available as a PDF (light + dark themes) �
   color: var(--vp-c-text-2);
   margin-top: 6px;
   font-weight: 500;
+}
+.screenshot-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 32px 0;
+}
+.screenshot {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  border: 1px solid var(--vp-c-divider);
+}
+.author-bio {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  margin: 24px 0;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+}
+.author-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--vp-c-brand-1);
+  flex-shrink: 0;
+}
+.author-text h3 { margin-top: 0; }
+.author-text p { margin-bottom: 0; color: var(--vp-c-text-2); }
+@media (max-width: 600px) {
+  .author-bio { flex-direction: column; text-align: center; }
 }
 </style>

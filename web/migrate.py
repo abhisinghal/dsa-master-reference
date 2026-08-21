@@ -4,7 +4,7 @@
 #   > [key] **Title** — body            ->  <Callout kind="key" title="Title">body</Callout>
 #   > [tag] body                        ->  <Callout kind="tag">body</Callout>
 # Preserves fenced code blocks (no transformation inside them).
-import os, re, shutil, glob
+import os, re, shutil, glob, unicodedata
 
 # Compute paths relative to this script
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -20,6 +20,7 @@ MAPPING = {
     "04-part1.md":              None,  # section divider, skip
     "06-java-ds.md":            "foundations/java-primer.md",
     "07-java-gotchas.md":       "foundations/java-gotchas.md",
+    "09-vs-competitors.md":     "foundations/vs-competitors.md",
     "10-complexity.md":         "foundations/complexity.md",
     "11-debugging.md":          "foundations/debugging.md",
     "20-patterns.md":           "patterns/index.md",
@@ -56,6 +57,7 @@ MAPPING = {
     "66-graphs.md":             "data-structures/graphs.md",
     "68-segment-fenwick.md":    "data-structures/segment-fenwick.md",
     "90-cheatsheets.md":        "appendix/cheatsheets.md",
+    "93-changelog.md":          "appendix/changelog.md",
     "95-self-check.md":         "appendix/self-check.md",
     "96-problem-index.md":      "appendix/problem-index.md",
     "97-practice-solutions.md": "appendix/practice-solutions.md",
@@ -65,6 +67,16 @@ MAPPING = {
 
 # In-book anchor rewrites — old fragment -> new URL
 # These need to be updated because chapters now live at different URL paths
+def slugify_anchor(value: str) -> str:
+    """Match the VitePress heading slug policy used by docs/.vitepress/config.mts."""
+    value = unicodedata.normalize("NFKD", value)
+    value = "".join(ch for ch in value if not unicodedata.combining(ch))
+    value = value.lower()
+    value = re.sub(r"[—–→·]", "-", value)
+    value = re.sub(r"[^a-z0-9]+", "-", value)
+    value = re.sub(r"-{2,}", "-", value).strip("-")
+    return re.sub(r"^(\d)", r"_\1", value)
+
 ANCHOR_MAP = {
     "sliding-window":               "/patterns/sliding-window",
     "two-pointers":                 "/patterns/two-pointers",
@@ -207,9 +219,12 @@ def transform_anchors(text: str) -> str:
     def sub(m):
         text_part = m.group(1)
         slug = m.group(2)
-        new_url = ANCHOR_MAP.get(slug)
+        normalized_slug = slugify_anchor(slug)
+        new_url = ANCHOR_MAP.get(slug) or ANCHOR_MAP.get(normalized_slug)
         if new_url:
             return f"[{text_part}]({new_url})"
+        if normalized_slug != slug:
+            return f"[{text_part}](#{normalized_slug})"
         return m.group(0)  # unchanged
     return re.sub(r"\[([^\]]+)\]\(#([^)]+)\)", sub, text)
 

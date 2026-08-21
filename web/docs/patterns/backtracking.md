@@ -98,6 +98,12 @@ flowchart TD
 <div class="figcap">Backtracking control flow — choose / recurse / undo, pruning invalid branches before descending.</div>
 <div class="readfig"><b>How to read it:</b> This is a depth-first walk through all the choices. At each node you ask "is this a complete answer?" — if so, record a copy and back out. Otherwise you try the next available choice: skip it if it's invalid (that's the pruning), otherwise apply it, recurse deeper, and — crucially — *undo* it when you return so the next sibling starts from a clean slate. The loop back to "more choices?" is you trying each option in turn; the deep chain is you committing to one and exploring it fully.</div>
 
+<Callout kind="note" title="🎬 Video walkthrough coming soon">
+
+a 5-10 minute Loom will be embedded here once recorded. If you'd like to be notified, [subscribe on GitHub](https://github.com/abhisinghal/dsa-master-reference/subscription).
+
+</Callout>
+
 <Callout kind="inv" title="Invariant">
 
 On entry and exit of each recursive call the shared state (`path`, board, `used[]`) is identical; every mutation is paired with its undo. Violating this is the #1 backtracking bug.

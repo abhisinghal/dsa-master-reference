@@ -1,32 +1,32 @@
 [
   {
-    "title": "How to Use This Book",
-    "url": "/foundations/how-to-use",
-    "updated": "2026-08-21T07:03:59.000Z"
+    "title": "Sliding Window",
+    "url": "/patterns/sliding-window",
+    "updated": "2026-08-21T09:30:13.000Z"
   },
   {
-    "title": "The Interview Playbook",
-    "url": "/foundations/playbook",
-    "updated": "2026-08-21T07:03:59.000Z"
+    "title": "Two Pointers",
+    "url": "/patterns/two-pointers",
+    "updated": "2026-08-21T09:30:13.000Z"
   },
   {
-    "title": "Glossary — Words We Use Everywhere",
-    "url": "/foundations/glossary",
-    "updated": "2026-08-21T07:03:59.000Z"
+    "title": "Fast / Slow Pointers (Floyd)",
+    "url": "/patterns/fast-slow",
+    "updated": "2026-08-21T09:30:13.000Z"
   },
   {
-    "title": "Zero-to-Hero Roadmap",
-    "url": "/foundations/roadmap",
-    "updated": "2026-08-21T07:03:59.000Z"
+    "title": "Prefix Sum & Difference Arrays",
+    "url": "/patterns/prefix-sum",
+    "updated": "2026-08-21T09:30:13.000Z"
   },
   {
-    "title": "Java Data Structures — A Visual Toolkit",
-    "url": "/foundations/java-primer",
-    "updated": "2026-08-21T07:03:59.000Z"
+    "title": "Hashing",
+    "url": "/patterns/hashing",
+    "updated": "2026-08-21T09:30:13.000Z"
   },
   {
-    "title": "Java DSA Gotchas",
-    "url": "/foundations/java-gotchas",
-    "updated": "2026-08-21T07:03:59.000Z"
+    "title": "Monotonic Stack",
+    "url": "/patterns/monotonic-stack",
+    "updated": "2026-08-21T09:30:13.000Z"
   }
 ]

@@ -61,6 +61,8 @@ Let's make it concrete. Say we want the sum of every contiguous subarray of size
 
 **Why it matters in interviews.** The brute-force "for each start, scan k elements" is the naive answer to a *huge* family of interview questions on strings and arrays. The moment you recognize a sliding-window shape, you drop an entire nesting level of complexity — often n=10⁵ inputs that would time out at O(n²) fit comfortably at O(n).
 
+> [note] **🎬 Video walkthrough coming soon** — a 5-10 minute Loom will be embedded here once recorded. If you'd like to be notified, [subscribe on GitHub](https://github.com/abhisinghal/dsa-master-reference/subscription).
+
 ## When to use it — the four flavors
 
 Every sliding-window problem falls into one of four flavors. Naming the flavor in the first 30 seconds tells you which template to write.

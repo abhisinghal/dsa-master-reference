@@ -47,9 +47,9 @@ attempt each problem from its pattern card first. If you stall, read only the Ap
 
 | Problem | Approach hint |
 |---|---|
-| <a id="3sum-closest"></a>[3Sum Closest](https://leetcode.com/problems/3sum-closest/) · [⇩ walkthrough](#3sum-closest) | instead of hunting for exactly 0, track the sum closest to `target` as the pointers move |
+| <a id="3sum-closest"></a>[3Sum Closest](https://leetcode.com/problems/3sum-closest/) · [⇩ walkthrough](#_3sum-closest) | instead of hunting for exactly 0, track the sum closest to `target` as the pointers move |
 | <a id="3sum-smaller"></a>[3Sum Smaller](https://leetcode.com/problems/3sum-smaller/) | count triplets with sum `< target`; when `a[lo]+a[hi] < target`, *all* `hi−lo` pairs qualify at once, so add them in one shot |
-| <a id="4sum"></a>[4Sum](https://leetcode.com/problems/4sum/) · [⇩ walkthrough](#4sum) | add one more outer loop, then two-pointer the inner pair (skip duplicates at every level) |
+| <a id="4sum"></a>[4Sum](https://leetcode.com/problems/4sum/) · [⇩ walkthrough](#_4sum) | add one more outer loop, then two-pointer the inner pair (skip duplicates at every level) |
 | <a id="boats-to-save-people"></a>[Boats to Save People](https://leetcode.com/problems/boats-to-save-people/) | sort, then pair the lightest with the heaviest that still fits — a converging-pointer greedy |
 | <a id="container-with-most-water"></a>[Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | maximize a single span instead of summing trapped water; move the shorter wall |
 | <a id="intersection-of-two-arrays-ii"></a>[Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | sort both, then two pointers advancing the smaller side |
