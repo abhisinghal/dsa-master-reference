@@ -278,3 +278,68 @@ Space is O(RC) for the padded prefix table `P`; the extra top row and left colum
 | [Matrix Block Sum](https://leetcode.com/problems/matrix-block-sum/) | answer each cell as the sum of a `k`-radius block using the same four-corner formula | — |
 | [Count Submatrices With Target Sum](https://leetcode.com/problems/count-submatrices-with-target-sum/) | fix a pair of rows, collapse columns to 1D prefix sums, then reuse the "subarray sum = k" hash-map count | — |
 | [Maximal Square / Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/) | combine per-row prefix counts with a histogram/DP to bound the largest all-ones region | — |
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="prefix-sum" :questions='[
+  {
+    "q": "You must count subarrays with sum k, and numbers may be negative. Which pattern applies?",
+    "choices": [
+      {
+        "text": "Plain sliding window",
+        "explanation": "Negatives destroy the monotone shrink rule."
+      },
+      {
+        "text": "Prefix sum plus hash map",
+        "correct": true,
+        "explanation": "Yes. A previous prefix of current minus k identifies each valid subarray."
+      },
+      {
+        "text": "Two sorted pointers"
+      },
+      {
+        "text": "Monotonic stack"
+      }
+    ]
+  },
+  {
+    "q": "Why seed the prefix-count map with sum 0 having count 1?",
+    "choices": [
+      {
+        "text": "To handle empty input only"
+      },
+      {
+        "text": "To count subarrays starting at index zero",
+        "correct": true,
+        "explanation": "Correct. If prefix itself equals k, the missing earlier prefix is the initial zero."
+      },
+      {
+        "text": "To avoid sorting prefixes"
+      },
+      {
+        "text": "To force positive sums"
+      }
+    ]
+  },
+  {
+    "q": "Many range increments are known before any final query. What is the efficient tool?",
+    "choices": [
+      {
+        "text": "Difference array",
+        "correct": true,
+        "explanation": "Right. Each update changes two boundaries, then one prefix pass reconstructs all values."
+      },
+      {
+        "text": "Nested loop updates"
+      },
+      {
+        "text": "Kahn topological sort"
+      },
+      {
+        "text": "Quickselect partition"
+      }
+    ]
+  }
+]' />

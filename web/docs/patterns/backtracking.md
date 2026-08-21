@@ -719,3 +719,67 @@ O(L) recursion stack; O(1) extra visited storage because the board is marked in 
 - Why store `tmp` before writing `#`? — the original letter is needed to restore the board after the recursive branch.
 - Why use `#`? — it marks the cell as visited without allocating a separate `visited` matrix.
 - Why restore `b[r][c] = tmp`? — other starting cells and sibling branches must see the untouched board.
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="backtracking" :questions='[
+  {
+    "q": "What invariant defines the standard backtracking template?",
+    "choices": [
+      {
+        "text": "Choose, recurse, then un-choose",
+        "correct": true,
+        "explanation": "Yes. Restoring state lets sibling branches start from a clean partial solution."
+      },
+      {
+        "text": "Sort, partition, then stop"
+      },
+      {
+        "text": "Push all nodes into a heap"
+      },
+      {
+        "text": "Move two pointers inward"
+      }
+    ]
+  },
+  {
+    "q": "Which signal separates combinations from permutations in the chapter template?",
+    "choices": [
+      {
+        "text": "start index versus used array",
+        "correct": true,
+        "explanation": "Correct. Order-insensitive choices advance start; order-sensitive choices track used elements."
+      },
+      {
+        "text": "min heap versus max heap"
+      },
+      {
+        "text": "prefix sum versus suffix sum"
+      },
+      {
+        "text": "lo pointer versus hi pointer"
+      }
+    ]
+  },
+  {
+    "q": "In Word Search, what happens if a marked cell is not restored on return?",
+    "choices": [
+      {
+        "text": "Sibling searches see a corrupted board",
+        "correct": true,
+        "explanation": "Right. In-place visited marks must be undone after each recursive branch."
+      },
+      {
+        "text": "The trie becomes balanced"
+      },
+      {
+        "text": "The word becomes shorter"
+      },
+      {
+        "text": "The grid sorts itself"
+      }
+    ]
+  }
+]' /&gt;

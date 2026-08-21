@@ -532,3 +532,68 @@ Same skeleton — *put everything in a set, then only start work from a canonica
 | [Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | 1-D runs of integers | a number `x` whose predecessor `x−1` is absent | O(n) |
 | [Number of Islands](https://leetcode.com/problems/number-of-islands/) | 2-D grid connectivity | any unvisited land cell (flood it once) | O(R·C) |
 | [Word Ladder](https://leetcode.com/problems/word-ladder/) | words linked by 1-letter edits | dedup words in a set so each transform is explored once | O(N·L²) |
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="hashing" :questions='[
+  {
+    "q": "In Two Sum, why check the complement before inserting the current value?",
+    "choices": [
+      {
+        "text": "To keep indices sorted"
+      },
+      {
+        "text": "To avoid matching the element with itself",
+        "correct": true,
+        "explanation": "Exactly. Insert-first can falsely pair one value with its own index."
+      },
+      {
+        "text": "To reduce memory to O(1)"
+      },
+      {
+        "text": "To support duplicate targets only"
+      }
+    ]
+  },
+  {
+    "q": "For grouping lowercase anagrams, which key avoids sorting every word?",
+    "choices": [
+      {
+        "text": "Raw word length only"
+      },
+      {
+        "text": "First and last character"
+      },
+      {
+        "text": "Delimited 26-count signature",
+        "correct": true,
+        "explanation": "Yes. Fixed alphabet counts give O(L) keys, and delimiters prevent collisions."
+      },
+      {
+        "text": "Random hash seed"
+      }
+    ]
+  },
+  {
+    "q": "What guard keeps Longest Consecutive Sequence linear?",
+    "choices": [
+      {
+        "text": "Start only when x minus one is absent",
+        "correct": true,
+        "explanation": "Correct. Only run starts walk forward, so each number is visited a constant number of times."
+      },
+      {
+        "text": "Walk forward from every number",
+        "explanation": "That repeats the same run and can become O(n squared)."
+      },
+      {
+        "text": "Sort the values first"
+      },
+      {
+        "text": "Use a max heap"
+      }
+    ]
+  }
+]' /&gt;

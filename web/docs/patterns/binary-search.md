@@ -237,3 +237,67 @@ The engine is "one half is always sorted — decide which, then which half to ke
 | [Search in Rotated Array II (with duplicates)](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | when `a[lo] == a[mid] == a[hi]` you can't tell which half is sorted, so shrink both ends by one (worst case degrades to O(n)) | O(n) |
 | [Find Peak Element](https://leetcode.com/problems/find-peak-element/) | no sorted array at all — just move toward the larger neighbour; you're guaranteed to climb to a peak | — |
 | [Order-Agnostic Binary Search](https://leetcode.com/problems/binary-search/) | first peek at the ends to detect ascending vs descending, then flip the comparison accordingly | — |
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="binary-search" :questions='[
+  {
+    "q": "What is the core shape behind most binary-search variants in the chapter?",
+    "choices": [
+      {
+        "text": "A false-to-true predicate boundary",
+        "correct": true,
+        "explanation": "Yes. Sorted arrays are just one way to expose a monotone boundary."
+      },
+      {
+        "text": "A random pivot position"
+      },
+      {
+        "text": "A graph with no cycles"
+      },
+      {
+        "text": "A window with fixed size"
+      }
+    ]
+  },
+  {
+    "q": "In a half-open binary search, which update pair stays consistent?",
+    "choices": [
+      {
+        "text": "hi equals mid, lo equals mid plus one",
+        "correct": true,
+        "explanation": "Correct. That is the standard half-open boundary template."
+      },
+      {
+        "text": "hi equals mid minus one always"
+      },
+      {
+        "text": "lo equals mid always"
+      },
+      {
+        "text": "Swap lo and hi each loop"
+      }
+    ]
+  },
+  {
+    "q": "Why can rotated-array search with many duplicates degrade to O(n)?",
+    "choices": [
+      {
+        "text": "The array is no longer finite"
+      },
+      {
+        "text": "Equal ends hide the sorted half",
+        "correct": true,
+        "explanation": "Exactly. When lo, mid, and hi tie, the algorithm may only shrink one step at a time."
+      },
+      {
+        "text": "midpoint overflow is guaranteed"
+      },
+      {
+        "text": "Duplicates require a heap"
+      }
+    ]
+  }
+]' /&gt;

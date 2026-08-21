@@ -252,3 +252,67 @@ Run these small cases mentally before trusting the code:
 | [Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) | treat each row as a sorted stream and use a min-heap for k-way merge | O(k log n) |
 | [Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | keep a size-k **min**-heap alive across `add` calls; root is always the running kth largest | O(log k) per add |
 | [Reorganize String](https://leetcode.com/problems/reorganize-string/) | use a max-heap because you repeatedly need the currently most frequent remaining character, not a bounded top-k set | O(n log alphabet) |
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="top-k-heap" :questions='[
+  {
+    "q": "For the k-th largest element in a stream, which heap should be maintained?",
+    "choices": [
+      {
+        "text": "Size-k min heap",
+        "correct": true,
+        "explanation": "Yes. The root is the worst of the best k values, so it is the running k-th largest."
+      },
+      {
+        "text": "Size-k max heap"
+      },
+      {
+        "text": "Heap containing all values"
+      },
+      {
+        "text": "No heap, only sorting"
+      }
+    ]
+  },
+  {
+    "q": "What is the usual time and space for scanning n values with a size-k heap?",
+    "choices": [
+      {
+        "text": "O(n log k) time, O(k) space",
+        "correct": true,
+        "explanation": "Correct. Each candidate costs a heap operation bounded by k."
+      },
+      {
+        "text": "O(n squared) time, O(1) space"
+      },
+      {
+        "text": "O(log n) time, O(n) space"
+      },
+      {
+        "text": "O(k log n) time, O(n) space"
+      }
+    ]
+  },
+  {
+    "q": "When is bounded top-k heap usually not the best final step?",
+    "choices": [
+      {
+        "text": "k is much smaller than n"
+      },
+      {
+        "text": "Only the threshold value matters"
+      },
+      {
+        "text": "You need the entire output globally sorted",
+        "correct": true,
+        "explanation": "Right. A bounded heap selects candidates; it does not directly produce a fully sorted list."
+      },
+      {
+        "text": "The stream arrives online"
+      }
+    ]
+  }
+]' /&gt;

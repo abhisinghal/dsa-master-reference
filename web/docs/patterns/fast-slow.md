@@ -249,3 +249,68 @@ Two pointers at different speeds detect loops and locate structure without extra
 | [Happy Number](https://leetcode.com/problems/happy-number/) | the "next" step is digit-square-sum; a cycle not containing 1 means unhappy | O(log n per step) |
 | [Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/) | treat `nums[i]` as a next pointer and return the cycle entry value | O(n) |
 | [Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/) | use fast/slow only to find the middle; then reverse the second half | O(n) |
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="fast-slow" :questions='[
+  {
+    "q": "A linked list may contain a cycle, and you need O(1) extra space. Which pattern fits?",
+    "choices": [
+      {
+        "text": "Prefix sum with hash map"
+      },
+      {
+        "text": "Fast and slow pointers",
+        "correct": true,
+        "explanation": "Yes. The two speeds guarantee a meeting inside a cycle without extra storage."
+      },
+      {
+        "text": "K-way merge heap"
+      },
+      {
+        "text": "Topological sort"
+      }
+    ]
+  },
+  {
+    "q": "What loop guard prevents a null-pointer bug in fast-slow linked-list code?",
+    "choices": [
+      {
+        "text": "fast is not null only",
+        "explanation": "Not enough. fast.next may be null before fast.next.next is read."
+      },
+      {
+        "text": "slow is not null only"
+      },
+      {
+        "text": "fast and fast.next are not null",
+        "correct": true,
+        "explanation": "Correct. The two-step move needs both fast and its next node to exist."
+      },
+      {
+        "text": "head equals tail"
+      }
+    ]
+  },
+  {
+    "q": "When is fast-slow the wrong tool for cycle detection?",
+    "choices": [
+      {
+        "text": "There is one deterministic next pointer"
+      },
+      {
+        "text": "The structure is a linked list"
+      },
+      {
+        "text": "The graph has arbitrary branching",
+        "correct": true,
+        "explanation": "Right. Branching graphs need visited sets, DFS, BFS, or Union-Find, not two runners on one path."
+      },
+      {
+        "text": "Extra space must be constant"
+      }
+    ]
+  }
+]' /&gt;

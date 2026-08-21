@@ -540,3 +540,68 @@ Space is O(1) because only two pointers, two running maxima, and the water total
 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | maximize a single span instead of summing trapped water; move the shorter wall | — |
 | [Trapping Rain Water II (2D)](https://leetcode.com/problems/trapping-rain-water-ii/) | the "walls" are a whole grid boundary, so process cells outward from the lowest border using a min-heap | — |
 | [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | the dual "peak" view — a monotonic stack finds how far each bar extends | — |
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="two-pointers" :questions='[
+  {
+    "q": "In sorted two-sum, the current sum is too large. Which pointer move is justified?",
+    "choices": [
+      {
+        "text": "Move lo right"
+      },
+      {
+        "text": "Move hi left",
+        "correct": true,
+        "explanation": "Yes. With a sorted array, lowering the larger endpoint discards an entire impossible column."
+      },
+      {
+        "text": "Move both pointers"
+      },
+      {
+        "text": "Restart from the middle"
+      }
+    ]
+  },
+  {
+    "q": "In Container With Most Water, which wall should move after evaluating an area?",
+    "choices": [
+      {
+        "text": "Always move the taller wall",
+        "explanation": "Moving the taller wall only shrinks width without improving the limiting height."
+      },
+      {
+        "text": "Always move both walls"
+      },
+      {
+        "text": "Move the shorter wall",
+        "correct": true,
+        "explanation": "Right. Only replacing the limiting shorter wall can possibly improve the area."
+      },
+      {
+        "text": "Move a random wall"
+      }
+    ]
+  },
+  {
+    "q": "In Dutch National Flag, after swapping a 2 with high, why should mid not advance immediately?",
+    "choices": [
+      {
+        "text": "The swapped-in value is unexamined",
+        "correct": true,
+        "explanation": "Exactly. The value from high could be 0, 1, or 2 and must be processed at mid."
+      },
+      {
+        "text": "high must move right"
+      },
+      {
+        "text": "The array becomes unsorted"
+      },
+      {
+        "text": "mid should reset to zero"
+      }
+    ]
+  }
+]' />

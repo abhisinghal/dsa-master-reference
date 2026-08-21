@@ -284,3 +284,67 @@ When a sweep solution is off by one room or one unit of coverage, check these in
 | [My Calendar II / III](https://leetcode.com/problems/my-calendar-ii/) | Use a `TreeMap` of deltas because bookings arrive one at a time. |
 | [The Skyline Problem](https://leetcode.com/problems/the-skyline-problem/) | Events add/remove building heights; the swept state is a max-heap or multiset, not a count. |
 | [Employee Free Time](https://leetcode.com/problems/employee-free-time/) | Sweep all busy intervals and record gaps where the active count is zero. |
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="sweep-line" :questions='[
+  {
+    "q": "A meeting problem asks for the maximum number active at once. Which lens fits best?",
+    "choices": [
+      {
+        "text": "Sweep line events",
+        "correct": true,
+        "explanation": "Yes. Starts add active meetings, ends remove them, and the maximum counter is the answer."
+      },
+      {
+        "text": "Quickselect rank"
+      },
+      {
+        "text": "Subsets backtracking"
+      },
+      {
+        "text": "Fast-slow cycle"
+      }
+    ]
+  },
+  {
+    "q": "For meetings [1,5] and [5,10], how should tied events be ordered when one room can be reused?",
+    "choices": [
+      {
+        "text": "Start before end"
+      },
+      {
+        "text": "End before start",
+        "correct": true,
+        "explanation": "Correct. Release the room at time 5 before taking the next meeting at time 5."
+      },
+      {
+        "text": "Ignore both events"
+      },
+      {
+        "text": "Sort ties randomly"
+      }
+    ]
+  },
+  {
+    "q": "Bookings arrive online and you need running overlap counts. Which structure matches the chapter?",
+    "choices": [
+      {
+        "text": "TreeMap of deltas",
+        "correct": true,
+        "explanation": "Right. Ordered deltas let each booking update the sweep state incrementally."
+      },
+      {
+        "text": "One offline sorted array only"
+      },
+      {
+        "text": "Fixed-size sliding window"
+      },
+      {
+        "text": "Plain recursion tree"
+      }
+    ]
+  }
+]' />

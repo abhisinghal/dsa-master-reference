@@ -989,3 +989,71 @@ A deque that keeps only "still-useful" candidates in monotone order, dropping ex
 | [Jump Game VI](https://leetcode.com/problems/jump-game-vi/) | the deque holds the best `dp` value reachable within the jump range; front = best score to jump from | — |
 | [Constrained Subsequence Sum](https://leetcode.com/problems/constrained-subsequence-sum/) | same windowed-max of a `dp` array, with the window being the allowed gap `k` | — |
 | [Shortest Subarray with Sum ≥ K (with negatives)](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) | a monotonic deque over **prefix sums** — the window version fails here because of negatives | — |
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="sliding-window" :questions='[
+  {
+    "q": "In Longest Repeating Character Replacement, why can maxFreq stay stale after the window shrinks?",
+    "choices": [
+      {
+        "text": "Because stale values are always exact",
+        "explanation": "No. maxFreq can be higher than the true current count."
+      },
+      {
+        "text": "Because best only grows from valid larger windows",
+        "correct": true,
+        "explanation": "Right. A stale high value may tolerate later windows, but it cannot push best beyond a size once made valid by a real frequency."
+      },
+      {
+        "text": "Because the alphabet has 26 letters",
+        "explanation": "That affects cost, not correctness."
+      },
+      {
+        "text": "Because shrinking never changes counts",
+        "explanation": "Shrinking does change counts; the trick is about not lowering maxFreq."
+      }
+    ]
+  },
+  {
+    "q": "For the shortest positive-sum window, what should happen as soon as the window sum reaches the target?",
+    "choices": [
+      {
+        "text": "Expand one more step first",
+        "explanation": "That can miss a shorter valid window."
+      },
+      {
+        "text": "Shrink aggressively while valid",
+        "correct": true,
+        "explanation": "Yes. For shortest windows, every valid window should be tightened immediately before moving on."
+      },
+      {
+        "text": "Reset both pointers to zero"
+      },
+      {
+        "text": "Sort the array before scanning"
+      }
+    ]
+  },
+  {
+    "q": "Which input breaks the standard product-less-than-k sliding window template?",
+    "choices": [
+      {
+        "text": "All numbers are positive"
+      },
+      {
+        "text": "k is larger than one"
+      },
+      {
+        "text": "The array contains zeros or negatives",
+        "correct": true,
+        "explanation": "Correct. Zero and negative values break the monotone shrink argument for products."
+      },
+      {
+        "text": "The answer counts subarrays"
+      }
+    ]
+  }
+]' />

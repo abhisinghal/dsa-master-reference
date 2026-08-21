@@ -272,3 +272,67 @@ If I choose DFS instead, I would say: "I mark a node as visiting when it enters 
 | [Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/) | Peel leaves layer by layer on an undirected tree; this is Kahn-shaped but not true directed topo sort. |
 | [Parallel Courses](https://leetcode.com/problems/parallel-courses/) | Count Kahn "waves"; each wave is one semester of courses that can run together. |
 | [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/) | Require the queue to have exactly one choice at every step to prove the order is unique. |
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="topological-sort" :questions='[
+  {
+    "q": "A course schedule problem gives prerequisite edges. What property must exist for a valid order?",
+    "choices": [
+      {
+        "text": "The graph is a DAG",
+        "correct": true,
+        "explanation": "Yes. Topological order exists exactly when the directed graph has no cycle."
+      },
+      {
+        "text": "Every node has degree two"
+      },
+      {
+        "text": "All edges are undirected"
+      },
+      {
+        "text": "Weights are nonnegative"
+      }
+    ]
+  },
+  {
+    "q": "In Kahn algorithm, how do you detect a cycle?",
+    "choices": [
+      {
+        "text": "The queue starts large"
+      },
+      {
+        "text": "Emitted nodes are fewer than V",
+        "correct": true,
+        "explanation": "Correct. Remaining nodes never reached in-degree zero because a cycle kept them locked."
+      },
+      {
+        "text": "All nodes have zero outdegree"
+      },
+      {
+        "text": "The graph has no edges"
+      }
+    ]
+  },
+  {
+    "q": "Which case is not a topological-sort problem?",
+    "choices": [
+      {
+        "text": "Alien alphabet precedence"
+      },
+      {
+        "text": "Prerequisite ordering"
+      },
+      {
+        "text": "Undirected connectivity groups",
+        "correct": true,
+        "explanation": "Right. Connectivity groups call for DFS, BFS, or Union-Find, not directed ordering."
+      },
+      {
+        "text": "Build tasks with dependencies"
+      }
+    ]
+  }
+]' /&gt;

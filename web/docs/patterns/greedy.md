@@ -466,3 +466,67 @@ Sort by **end time** and greedily keep the earliest-finishing compatible interva
 | [Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/) | the same earliest-finish chain, counting length | — |
 | [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | removals = total − (max non-overlapping kept) | — |
 | [Course Schedule III](https://leetcode.com/problems/course-schedule-iii/) | sort by deadline; greedily take courses, dropping the longest with a max-heap when you overrun | — |
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="greedy" :questions='[
+  {
+    "q": "For interval scheduling that maximizes how many intervals you keep, which sort key is usually safe?",
+    "choices": [
+      {
+        "text": "Earliest finish time",
+        "correct": true,
+        "explanation": "Yes. Finishing earliest leaves the most room for future intervals."
+      },
+      {
+        "text": "Largest start time"
+      },
+      {
+        "text": "Longest duration first"
+      },
+      {
+        "text": "Random interval order"
+      }
+    ]
+  },
+  {
+    "q": "In Jump Game II, when should the jump count increase?",
+    "choices": [
+      {
+        "text": "At every index"
+      },
+      {
+        "text": "When the current frontier ends",
+        "correct": true,
+        "explanation": "Correct. One jump covers a whole reachable level, not one array position."
+      },
+      {
+        "text": "Only at the final index"
+      },
+      {
+        "text": "Before reading nums[0]"
+      }
+    ]
+  },
+  {
+    "q": "What check must Gas Station do before trusting a greedy restart?",
+    "choices": [
+      {
+        "text": "Total gas covers total cost",
+        "correct": true,
+        "explanation": "Right. If total gas is smaller, no local start can complete the circuit."
+      },
+      {
+        "text": "Every station has surplus"
+      },
+      {
+        "text": "Costs are sorted ascending"
+      },
+      {
+        "text": "There are exactly two stations"
+      }
+    ]
+  }
+]' /&gt;

@@ -14,6 +14,7 @@ import BacktrackingAnim from './BacktrackingAnim.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import ReadingTime from './ReadingTime.vue'
 import RecentUpdates from './RecentUpdates.vue'
+import Quiz from './Quiz.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -39,6 +40,7 @@ export default {
     app.component('Breadcrumbs', Breadcrumbs)
     app.component('ReadingTime', ReadingTime)
     app.component('RecentUpdates', RecentUpdates)
+    app.component('Quiz', Quiz)
     installSolvedCountBadges(router)
   }
 }

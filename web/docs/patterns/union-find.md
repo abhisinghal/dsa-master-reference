@@ -331,3 +331,68 @@ Adding before union-check. *Example:* edges `[(A,B,1),(B,C,2),(A,C,3)]`. After a
 | [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/) | plain Kruskal on the given edge list; return −1 if it stays disconnected | — |
 | [Optimize Water Distribution in a Village](https://leetcode.com/problems/optimize-water-distribution-in-a-village/) | model each well as an edge from a virtual node 0, then run MST | — |
 | [Find Critical and Pseudo-Critical Edges](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | rerun MST forcing each edge in / leaving it out to classify it | — |
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="union-find" :questions='[
+  {
+    "q": "You repeatedly ask whether two items are already in the same group. Which structure fits?",
+    "choices": [
+      {
+        "text": "Union-Find",
+        "correct": true,
+        "explanation": "Yes. It maintains disjoint sets with fast find and union operations."
+      },
+      {
+        "text": "Monotonic stack"
+      },
+      {
+        "text": "K-way merge"
+      },
+      {
+        "text": "Digit DP"
+      }
+    ]
+  },
+  {
+    "q": "Which two optimizations make Union-Find nearly constant amortized time?",
+    "choices": [
+      {
+        "text": "Path compression and union by rank",
+        "correct": true,
+        "explanation": "Correct. Together they keep trees shallow across many operations."
+      },
+      {
+        "text": "Sorting and binary search"
+      },
+      {
+        "text": "Memoization and tabulation"
+      },
+      {
+        "text": "Pivoting and partitioning"
+      }
+    ]
+  },
+  {
+    "q": "In Kruskal MST, when should an edge be added to the answer?",
+    "choices": [
+      {
+        "text": "Whenever it is the largest edge"
+      },
+      {
+        "text": "Only if union succeeds",
+        "correct": true,
+        "explanation": "Right. A failed union means the endpoints were already connected, so the edge would create a cycle."
+      },
+      {
+        "text": "Before checking connectivity",
+        "explanation": "That is the common cycle bug."
+      },
+      {
+        "text": "Only after all edges are scanned"
+      }
+    ]
+  }
+]' /&gt;

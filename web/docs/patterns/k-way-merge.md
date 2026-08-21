@@ -370,3 +370,67 @@ The shared idea is a **min-heap holding one live "front" per sorted source**, so
 | [Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) | Treat each row as a sorted stream; pop `k-1` times, then read the heap top. |
 | [Smallest Range Covering Elements from K Lists](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/) | Keep a full frontier, and compare `heapMin..curMax` before advancing the minimum stream. |
 | [Ugly Number II / Super Ugly Number](https://leetcode.com/problems/ugly-number-ii/) | The streams are implicit multiples; duplicate values must be de-duped carefully. |
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="k-way-merge" :questions='[
+  {
+    "q": "You have k sorted linked lists and need one sorted output. What does the heap store?",
+    "choices": [
+      {
+        "text": "Every node from every list"
+      },
+      {
+        "text": "One current head per list",
+        "correct": true,
+        "explanation": "Correct. The heap is the frontier; its minimum is the next global value."
+      },
+      {
+        "text": "Only the longest list"
+      },
+      {
+        "text": "Only duplicate values"
+      }
+    ]
+  },
+  {
+    "q": "After popping a node from one sorted stream, what must happen next?",
+    "choices": [
+      {
+        "text": "Push that same stream next node",
+        "correct": true,
+        "explanation": "Yes. Re-feeding preserves one representative from that stream if more values remain."
+      },
+      {
+        "text": "Push a random stream head"
+      },
+      {
+        "text": "Clear the whole heap"
+      },
+      {
+        "text": "Sort all output again"
+      }
+    ]
+  },
+  {
+    "q": "For Smallest Range Covering K Lists, what invariant must hold before evaluating a range?",
+    "choices": [
+      {
+        "text": "The frontier includes every list",
+        "correct": true,
+        "explanation": "Right. heap minimum to current maximum is meaningful only when each list contributes one value."
+      },
+      {
+        "text": "All lists have equal length"
+      },
+      {
+        "text": "The heap is empty"
+      },
+      {
+        "text": "Only one list remains"
+      }
+    ]
+  }
+]' /&gt;

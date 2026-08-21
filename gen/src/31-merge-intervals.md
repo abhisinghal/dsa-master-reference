@@ -228,3 +228,67 @@ Meeting Rooms II looks like interval merging, but the answer is a count of simul
 | [Employee Free Time](https://leetcode.com/problems/employee-free-time/) | merge everyone's busy intervals; gaps between merged blocks are the free time | O(n log n) |
 | [Remove Covered Intervals](https://leetcode.com/problems/remove-covered-intervals/) | sort by start then end descending; count intervals not swallowed by the widest previous end | O(n log n) |
 | [Meeting Rooms](https://leetcode.com/problems/meeting-rooms/) | after sorting by start, any overlap between neighbours means one person cannot attend all meetings | O(n log n) |
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="merge-intervals" :questions='[
+  {
+    "q": "After sorting intervals by start, when does the next interval merge with the running one?",
+    "choices": [
+      {
+        "text": "next start is at most current end",
+        "correct": true,
+        "explanation": "Yes. Sorted starts reduce overlap checking to one comparison against the running end."
+      },
+      {
+        "text": "next end is smaller than current start"
+      },
+      {
+        "text": "the intervals have equal lengths"
+      },
+      {
+        "text": "the starts are both even"
+      }
+    ]
+  },
+  {
+    "q": "The intervals [1,2] and [2,3] appear. What decides whether they merge?",
+    "choices": [
+      {
+        "text": "The problem definition for touching endpoints",
+        "correct": true,
+        "explanation": "Correct. Some problems treat touching as overlap; others require a strict gap."
+      },
+      {
+        "text": "The array length only"
+      },
+      {
+        "text": "Whether input is unsorted"
+      },
+      {
+        "text": "Whether starts are unique"
+      }
+    ]
+  },
+  {
+    "q": "Which problem shape should push you from Merge Intervals to Sweep Line instead?",
+    "choices": [
+      {
+        "text": "Return the union of ranges"
+      },
+      {
+        "text": "Count active intervals over time",
+        "correct": true,
+        "explanation": "Right. Sweep line tracks active counts or state at ordered event times."
+      },
+      {
+        "text": "Sort by start first"
+      },
+      {
+        "text": "Merge overlapping meetings"
+      }
+    ]
+  }
+]' />

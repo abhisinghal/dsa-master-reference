@@ -352,3 +352,67 @@ O(n·32) trie nodes in the worst case.
 - Why set `cur |= (1 << b)` only when `want` exists? — that bit can be made 1 only if an opposite branch is available.
 - Why insert all numbers first? — each query can choose among every potential partner in the array.
 - Why pairing with itself is harmless here? — self-XOR is 0, which cannot beat a positive maximum pair.
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="trie-pattern" :questions='[
+  {
+    "q": "Many query words share prefixes, and repeated prefix checks dominate. Which structure helps?",
+    "choices": [
+      {
+        "text": "Trie",
+        "correct": true,
+        "explanation": "Yes. Shared prefixes become shared paths, reducing repeated work."
+      },
+      {
+        "text": "Union-Find"
+      },
+      {
+        "text": "Merge intervals"
+      },
+      {
+        "text": "Quickselect"
+      }
+    ]
+  },
+  {
+    "q": "In Word Search II, why clear the word stored at a trie leaf after finding it?",
+    "choices": [
+      {
+        "text": "To avoid duplicate results",
+        "correct": true,
+        "explanation": "Correct. Multiple board paths can reach the same leaf, but the word should be reported once."
+      },
+      {
+        "text": "To rebalance the trie"
+      },
+      {
+        "text": "To shorten every prefix"
+      },
+      {
+        "text": "To make DFS iterative"
+      }
+    ]
+  },
+  {
+    "q": "For maximum XOR in a binary trie, which bit branch do you prefer first?",
+    "choices": [
+      {
+        "text": "The same bit"
+      },
+      {
+        "text": "The opposite bit",
+        "correct": true,
+        "explanation": "Right. XOR gets a 1 where bits differ, so opposite bits maximize high-value positions."
+      },
+      {
+        "text": "The smaller subtree"
+      },
+      {
+        "text": "The leaf with zero depth"
+      }
+    ]
+  }
+]' /&gt;

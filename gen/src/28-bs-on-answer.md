@@ -310,3 +310,68 @@ O(1), because the algorithm stores boundary indices and values without building 
 | [Kth Element of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/) | the general form — binary-search a partition so `k` elements sit on the left | — |
 | [Median of a Row-wise Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) | binary-search the value and count how many are ≤ mid | — |
 | [Find K-th Smallest Pair Distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance/) | binary-search the distance; feasibility counts pairs within it via a sliding window | — |
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="bs-on-answer" :questions='[
+  {
+    "q": "A problem asks for the minimum speed that finishes within h hours. Which pattern fits?",
+    "choices": [
+      {
+        "text": "Binary search on answer",
+        "correct": true,
+        "explanation": "Yes. Feasible speed is monotone: once fast enough, any higher speed also works."
+      },
+      {
+        "text": "Merge intervals"
+      },
+      {
+        "text": "Fast and slow pointers"
+      },
+      {
+        "text": "Backtracking"
+      }
+    ]
+  },
+  {
+    "q": "For Koko-style speed search, what should feasible(speed) mean?",
+    "choices": [
+      {
+        "text": "True when speed is too slow",
+        "explanation": "That flips the boundary and moves the search the wrong way."
+      },
+      {
+        "text": "True when all piles finish in time",
+        "correct": true,
+        "explanation": "Correct. The search then finds the smallest speed on the true side."
+      },
+      {
+        "text": "True only at the exact answer"
+      },
+      {
+        "text": "True when piles are sorted"
+      }
+    ]
+  },
+  {
+    "q": "For Split Array Largest Sum, what are tight initial bounds for capacity?",
+    "choices": [
+      {
+        "text": "zero and array length"
+      },
+      {
+        "text": "minimum element and maximum element"
+      },
+      {
+        "text": "max element and total sum",
+        "correct": true,
+        "explanation": "Right. A part must hold the largest element; one part may hold everything."
+      },
+      {
+        "text": "target and target squared"
+      }
+    ]
+  }
+]' />

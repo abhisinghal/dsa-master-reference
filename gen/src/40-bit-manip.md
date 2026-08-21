@@ -272,3 +272,67 @@ O(n·2ⁿ) for output; O(n) temporary subset per mask.
 - Why `(mask & (1 << i)) != 0`? — the expression tests whether the subset includes index `i`.
 - Why create a new `sub` for each mask? — each output subset needs its own list object.
 - Why cap this around `n ≤ 20`? — 2ⁿ output size explodes beyond interview-feasible limits.
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="bit-manip" :questions='[
+  {
+    "q": "What does x AND (x minus 1) do to a positive integer?",
+    "choices": [
+      {
+        "text": "Removes the lowest set bit",
+        "correct": true,
+        "explanation": "Yes. This is the Brian Kernighan trick for popcount and power-of-two checks."
+      },
+      {
+        "text": "Sets every bit to one"
+      },
+      {
+        "text": "Isolates the highest set bit"
+      },
+      {
+        "text": "Always returns zero"
+      }
+    ]
+  },
+  {
+    "q": "For finding two unique numbers, why split by an isolated set bit instead of the whole XOR?",
+    "choices": [
+      {
+        "text": "The bit separates the two uniques",
+        "correct": true,
+        "explanation": "Correct. The isolated differing bit puts the two unique numbers in opposite groups."
+      },
+      {
+        "text": "Whole XOR is always zero"
+      },
+      {
+        "text": "It sorts duplicates automatically"
+      },
+      {
+        "text": "It avoids reading the array"
+      }
+    ]
+  },
+  {
+    "q": "Why does subset-by-mask generation cap out around n near 20?",
+    "choices": [
+      {
+        "text": "There are 2 to the n subsets",
+        "correct": true,
+        "explanation": "Right. The output size itself explodes, so larger n becomes infeasible."
+      },
+      {
+        "text": "Masks cannot store zero"
+      },
+      {
+        "text": "Bits require a heap"
+      },
+      {
+        "text": "Java forbids shifting"
+      }
+    ]
+  }
+]' />

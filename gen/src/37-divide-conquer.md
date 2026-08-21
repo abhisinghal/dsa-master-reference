@@ -241,3 +241,67 @@ O(n) for the reusable temp array, plus O(log n) recursion stack.
 - Why add `mid - i + 1`? — if sorted-left `a[i] > a[j]`, every remaining left value is also greater than that right value.
 - Why `System.arraycopy` back? — parent calls rely on this range being sorted after the child returns.
 - Why `long inv`? — inversion counts can grow near n²/2 and overflow `int`.
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="divide-conquer" :questions='[
+  {
+    "q": "Which problem shape best suggests divide and conquer?",
+    "choices": [
+      {
+        "text": "Split independent halves, then combine",
+        "correct": true,
+        "explanation": "Yes. The recursion tree solves smaller independent pieces and merges their answers."
+      },
+      {
+        "text": "A single online stream"
+      },
+      {
+        "text": "Only local greedy choices"
+      },
+      {
+        "text": "A mutable connectivity set"
+      }
+    ]
+  },
+  {
+    "q": "During inversion counting, when do you add mid minus i plus one?",
+    "choices": [
+      {
+        "text": "When taking a right-half value before left",
+        "correct": true,
+        "explanation": "Correct. All remaining sorted-left values exceed that right value."
+      },
+      {
+        "text": "When taking an equal left value"
+      },
+      {
+        "text": "At every merge comparison"
+      },
+      {
+        "text": "Only after recursion finishes"
+      }
+    ]
+  },
+  {
+    "q": "Why must merge-sort based routines copy the sorted range back?",
+    "choices": [
+      {
+        "text": "Parent calls require sorted child ranges",
+        "correct": true,
+        "explanation": "Right. The combine step above assumes each child segment is already sorted."
+      },
+      {
+        "text": "To randomize future pivots"
+      },
+      {
+        "text": "To shrink recursion depth"
+      },
+      {
+        "text": "To remove duplicate numbers"
+      }
+    ]
+  }
+]' />

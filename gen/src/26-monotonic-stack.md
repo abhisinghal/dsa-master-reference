@@ -246,3 +246,67 @@ O(n), because an increasing histogram can push all indices before the sentinel f
 | [Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/) | build a running histogram of consecutive 1s per column, and run this largest-rectangle routine on each row | — |
 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | the valley dual — a decreasing stack resolves each trapped basin between a left and right wall | — |
 | [Remove K Digits / Largest Rectangle variants](https://leetcode.com/problems/remove-k-digits/) | a monotonic stack that greedily pops to keep the sequence as small/large as possible | — |
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="monotonic-stack" :questions='[
+  {
+    "q": "A problem asks for the nearest greater element to the right. Which pattern is the first suspect?",
+    "choices": [
+      {
+        "text": "Monotonic stack",
+        "correct": true,
+        "explanation": "Yes. Nearest greater or smaller boundaries are the signature use case."
+      },
+      {
+        "text": "Binary search on answer"
+      },
+      {
+        "text": "Union-Find"
+      },
+      {
+        "text": "Digit DP"
+      }
+    ]
+  },
+  {
+    "q": "Why should Daily Temperatures store indices on the stack instead of values?",
+    "choices": [
+      {
+        "text": "Indices compute waiting distances",
+        "correct": true,
+        "explanation": "Right. The answer is current index minus previous index; values alone lose that distance."
+      },
+      {
+        "text": "Values cannot be compared"
+      },
+      {
+        "text": "Indices keep the stack sorted"
+      },
+      {
+        "text": "Values require extra memory"
+      }
+    ]
+  },
+  {
+    "q": "In Largest Rectangle in Histogram, why append a sentinel height 0?",
+    "choices": [
+      {
+        "text": "To sort the bars"
+      },
+      {
+        "text": "To flush remaining stack bars",
+        "correct": true,
+        "explanation": "Correct. Bars that never see a shorter right boundary still need their areas computed."
+      },
+      {
+        "text": "To remove duplicate heights"
+      },
+      {
+        "text": "To make width zero"
+      }
+    ]
+  }
+]' />

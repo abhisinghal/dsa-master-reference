@@ -245,3 +245,67 @@ O(1) extra because the selection loop partitions in place.
 - Why `store` advances only for `< pivot`? — it partitions smaller values to the left and leaves greater/equal values to the right.
 - Why discard one side after partition? — the pivot's final rank tells which side can still contain the target.
 - Why return `a[target]`? — once the loop narrows or hits the target, that index holds the selected rank.
+
+---
+
+## 🧠 Check your understanding
+
+<Quiz patternId="quickselect" :questions='[
+  {
+    "q": "You need the k-th largest value in an unsorted array, not the full order. Which pattern fits?",
+    "choices": [
+      {
+        "text": "Quickselect",
+        "correct": true,
+        "explanation": "Yes. It partitions around pivots and only continues on the side containing the target rank."
+      },
+      {
+        "text": "Topological sort"
+      },
+      {
+        "text": "Sweep line"
+      },
+      {
+        "text": "Prefix sum"
+      }
+    ]
+  },
+  {
+    "q": "After partitioning, why can Quickselect discard one side?",
+    "choices": [
+      {
+        "text": "The pivot final rank is known",
+        "correct": true,
+        "explanation": "Correct. If the target rank is left or right of the pivot, the other side cannot contain it."
+      },
+      {
+        "text": "Both sides are already fully sorted"
+      },
+      {
+        "text": "The array length becomes zero"
+      },
+      {
+        "text": "Duplicates disappear automatically"
+      }
+    ]
+  },
+  {
+    "q": "What makes fixed last-element pivots dangerous on already sorted input?",
+    "choices": [
+      {
+        "text": "They can shrink by only one each time",
+        "correct": true,
+        "explanation": "Right. That creates the O(n squared) worst case; random pivots reduce this risk."
+      },
+      {
+        "text": "They guarantee O(log n) time"
+      },
+      {
+        "text": "They require a trie"
+      },
+      {
+        "text": "They cannot compare integers"
+      }
+    ]
+  }
+]' />

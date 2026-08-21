@@ -1165,3 +1165,68 @@ O(2ⁿ·n): one value for every visited-set mask and ending node.
 If answers are wrong, verify in order: (1) does the state capture all future-relevant info? (2) are base cases seeded? (3) does the iteration order compute dependencies first? Most bugs are (1) or (3).
 
 </Callout>
+
+---
+
+## 🧠 Check your understanding
+
+&lt;Quiz patternId="dp" :questions='[
+  {
+    "q": "What should you design first in a dynamic programming solution?",
+    "choices": [
+      {
+        "text": "The state",
+        "correct": true,
+        "explanation": "Yes. The state must capture all information that can affect future decisions."
+      },
+      {
+        "text": "The final print statement"
+      },
+      {
+        "text": "The random seed"
+      },
+      {
+        "text": "The heap comparator"
+      }
+    ]
+  },
+  {
+    "q": "In 0/1 knapsack with one-dimensional DP, which capacity direction prevents reusing an item?",
+    "choices": [
+      {
+        "text": "Descending capacity",
+        "correct": true,
+        "explanation": "Correct. Going downward reads the previous item layer instead of the value just written."
+      },
+      {
+        "text": "Ascending capacity",
+        "explanation": "Ascending is for unbounded reuse, and would use the same item multiple times."
+      },
+      {
+        "text": "Random capacity order"
+      },
+      {
+        "text": "Only capacity zero"
+      }
+    ]
+  },
+  {
+    "q": "Why should Kadane initialize best from the first element instead of zero?",
+    "choices": [
+      {
+        "text": "To handle all-negative arrays",
+        "correct": true,
+        "explanation": "Right. An all-negative input should return the least negative element, not an empty sum of zero."
+      },
+      {
+        "text": "To sort the subarray"
+      },
+      {
+        "text": "To reduce memory below O(1)"
+      },
+      {
+        "text": "To force positive answers"
+      }
+    ]
+  }
+]' /&gt;
