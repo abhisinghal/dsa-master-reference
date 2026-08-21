@@ -1,4 +1,5 @@
-/* DSA Master Reference custom theme */
+/* DSA Master Reference custom theme
+   2026-08 contrast/print audit: lightened dark text/link/code/badge colors to meet WCAG AA and expanded print rules for clean PDFs. */
 
 :root {
   --vp-c-brand-1: #2563eb;
@@ -9,6 +10,24 @@
   --vp-c-tip-soft: rgba(37, 99, 235, 0.14);
   --vp-font-family-base: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --vp-font-family-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+}
+
+.dark {
+  --vp-c-brand-1: #93c5fd;
+  --vp-c-brand-2: #60a5fa;
+  --vp-c-brand-3: #1d4ed8;
+  --vp-c-brand-soft: rgba(147, 197, 253, 0.18);
+  --vp-c-tip-1: #93c5fd;
+  --vp-c-tip-soft: rgba(147, 197, 253, 0.18);
+  --vp-button-brand-bg: #1d4ed8;
+  --vp-button-brand-hover-bg: #1e40af;
+  --vp-button-brand-active-bg: #1e3a8a;
+  --vp-c-text-1: #f1f5f9;
+  --vp-c-text-2: #cbd5e1;
+  --vp-c-text-3: #94a3b8;
+  --vp-code-block-bg: #0a0c10;
+  --vp-code-block-color: #f0f3f6;
+  --vp-code-line-number-color: #9ea7b3;
 }
 
 /* Difficulty badges */
@@ -24,6 +43,19 @@
 .diff-e { background: #dcfce7; color: #15803d; }
 .diff-m { background: #fef1cf; color: #b45309; }
 .diff-h { background: #fde2e2; color: #b91c1c; }
+.dark .diff-e { background: #052e16; color: #86efac; border: 1px solid rgba(134, 239, 172, 0.35); }
+.dark .diff-m { background: #422006; color: #fde68a; border: 1px solid rgba(253, 230, 138, 0.35); }
+.dark .diff-h { background: #450a0a; color: #fca5a5; border: 1px solid rgba(252, 165, 165, 0.35); }
+
+.dark .code-runner .run-btn {
+  background: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+  color: #fff !important;
+}
+
+.dark .code-runner .run-btn:hover:not(:disabled) {
+  background: #1e40af !important;
+}
 
 /* Section headings */
 h2 {
@@ -58,10 +90,97 @@ h3 {
 
 /* Print CSS — reader can print any page to PDF cleanly */
 @media print {
-  .VPNav, .VPSidebar, .VPFooter, .VPDocFooter, .aside, .content-container .aside { display: none !important; }
-  .content-container { max-width: 100% !important; }
-  a { color: #000 !important; text-decoration: underline; }
-  .callout { break-inside: avoid; }
-  h1, h2, h3 { break-after: avoid; }
-  pre { break-inside: avoid; }
+  *, *::before, *::after {
+    color: #000 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  body,
+  .VPDoc,
+  .vp-doc {
+    background: #fff !important;
+  }
+
+  .VPNav,
+  .VPSidebar,
+  .VPFooter,
+  .VPDocFooter,
+  .aside,
+  .content-container .aside,
+  .breadcrumbs,
+  .code-runner {
+    display: none !important;
+  }
+
+  .content-container,
+  .VPDoc .container,
+  .VPDoc .content,
+  .VPDoc .content-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  .vp-doc a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    word-break: break-all;
+  }
+
+  .vp-doc a[href^="http://localhost"]::after,
+  .vp-doc a[href^="https://abhisinghal.github.io/dsa-master-reference/"]::after {
+    content: "";
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  pre,
+  table,
+  .callout,
+  .diff,
+  .code-tabs,
+  .vp-doc div[class*='language-'] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  pre,
+  code,
+  .vp-code,
+  .vp-code span,
+  .vp-doc div[class*='language-'] {
+    background: #fff !important;
+    color: #000 !important;
+    overflow: visible !important;
+    white-space: pre-wrap !important;
+    word-break: break-word;
+    --shiki-light: #000 !important;
+    --shiki-dark: #000 !important;
+  }
+
+  .callout {
+    background: rgba(0, 0, 0, 0.035) !important;
+    border-color: #777 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .diff {
+    background: #f2f2f2 !important;
+    border: 1px solid #999 !important;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
 }

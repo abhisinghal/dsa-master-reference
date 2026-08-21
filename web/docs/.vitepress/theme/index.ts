@@ -13,6 +13,8 @@ import QuickselectAnim from './QuickselectAnim.vue'
 import BacktrackingAnim from './BacktrackingAnim.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import ReadingTime from './ReadingTime.vue'
+import RecentUpdates from './RecentUpdates.vue'
+import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
 export default {
@@ -22,7 +24,7 @@ export default {
       'doc-before': () => h(Breadcrumbs)
     })
   },
-  enhanceApp({ app }) {
+  enhanceApp({ app, router }) {
     app.component('Callout', Callout)
     app.component('CodeTabs', CodeTabs)
     app.component('ProgressCheck', ProgressCheck)
@@ -36,5 +38,7 @@ export default {
     app.component('BacktrackingAnim', BacktrackingAnim)
     app.component('Breadcrumbs', Breadcrumbs)
     app.component('ReadingTime', ReadingTime)
+    app.component('RecentUpdates', RecentUpdates)
+    installSolvedCountBadges(router)
   }
 }

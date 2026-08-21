@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Sliding Window",
+    "url": "/patterns/sliding-window",
+    "updated": "2026-08-21T08:31:07.000Z"
+  },
+  {
+    "title": "Hashing",
+    "url": "/patterns/hashing",
+    "updated": "2026-08-21T08:31:07.000Z"
+  },
+  {
+    "title": "Dynamic Programming",
+    "url": "/patterns/dp",
+    "updated": "2026-08-21T08:31:07.000Z"
+  },
+  {
+    "title": "Linked Lists",
+    "url": "/data-structures/linked-lists",
+    "updated": "2026-08-21T08:31:07.000Z"
+  },
+  {
+    "title": "Stacks & Queues",
+    "url": "/data-structures/stacks-queues",
+    "updated": "2026-08-21T08:31:07.000Z"
+  },
+  {
+    "title": "Two Pointers",
+    "url": "/patterns/two-pointers",
+    "updated": "2026-08-21T08:22:21.000Z"
+  }
+]

@@ -1,5 +1,30 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
+import { generateRecentUpdates } from './gen-recent.mjs'
+import generatedSidebar from './sidebar.generated.json'
+
+type SidebarChapter = {
+  items?: { text: string; link: string }[]
+}
+
+const sidebarData = generatedSidebar as {
+  patterns: Record<string, SidebarChapter>
+  dataStructures: Record<string, SidebarChapter>
+}
+
+function nestedPattern(text: string, slug: string) {
+  const items = sidebarData.patterns[slug]?.items ?? []
+  return items.length
+    ? { text, link: `/patterns/${slug}`, collapsed: true, items }
+    : { text, link: `/patterns/${slug}` }
+}
+
+function nestedDataStructure(text: string, slug: string) {
+  const items = sidebarData.dataStructures[slug]?.items ?? []
+  return items.length
+    ? { text, link: `/data-structures/${slug}`, collapsed: true, items }
+    : { text, link: `/data-structures/${slug}` }
+}
 
 export default withMermaid(defineConfig({
   base: '/dsa-master-reference/',
@@ -18,8 +43,19 @@ export default withMermaid(defineConfig({
     lineNumbers: true,
     theme: {
       light: 'github-light',
-      dark: 'github-dark'
+      dark: 'github-dark-high-contrast'
     }
+  },
+  vite: {
+    plugins: [
+      {
+        name: 'generate-recent-updates',
+        apply: 'build',
+        buildStart() {
+          generateRecentUpdates()
+        }
+      }
+    ]
   },
   themeConfig: {
     logo: '/logo.svg',
@@ -52,29 +88,29 @@ export default withMermaid(defineConfig({
           text: 'The 21 Core Patterns',
           items: [
             { text: 'Overview', link: '/patterns/' },
-            { text: '1. Sliding Window', link: '/patterns/sliding-window' },
-            { text: '2. Two Pointers', link: '/patterns/two-pointers' },
-            { text: '3. Fast/Slow Pointers', link: '/patterns/fast-slow' },
-            { text: '4. Prefix Sum', link: '/patterns/prefix-sum' },
-            { text: '5. Hashing', link: '/patterns/hashing' },
-            { text: '6. Monotonic Stack', link: '/patterns/monotonic-stack' },
-            { text: '7. Binary Search', link: '/patterns/binary-search' },
-            { text: '8. Binary Search on Answer', link: '/patterns/bs-on-answer' },
-            { text: '9. Top-K / Heap', link: '/patterns/top-k-heap' },
-            { text: '10. K-way Merge', link: '/patterns/k-way-merge' },
-            { text: '11. Merge Intervals', link: '/patterns/merge-intervals' },
-            { text: '12. Sweep Line', link: '/patterns/sweep-line' },
-            { text: '13. Topological Sort', link: '/patterns/topological-sort' },
-            { text: '14. Union-Find', link: '/patterns/union-find' },
-            { text: '15. Greedy', link: '/patterns/greedy' },
-            { text: '16. Backtracking', link: '/patterns/backtracking' },
-            { text: '17. Divide & Conquer', link: '/patterns/divide-conquer' },
-            { text: '18. Dynamic Programming', link: '/patterns/dp' },
-            { text: '19. Trie Pattern', link: '/patterns/trie-pattern' },
-            { text: '20. Bit Manipulation', link: '/patterns/bit-manip' },
-            { text: '21. Quickselect', link: '/patterns/quickselect' },
-            { text: 'Bonus: Math & Number Theory', link: '/patterns/math' },
-            { text: 'Bonus: Design', link: '/patterns/design' }
+            nestedPattern('1. Sliding Window', 'sliding-window'),
+            nestedPattern('2. Two Pointers', 'two-pointers'),
+            nestedPattern('3. Fast/Slow Pointers', 'fast-slow'),
+            nestedPattern('4. Prefix Sum', 'prefix-sum'),
+            nestedPattern('5. Hashing', 'hashing'),
+            nestedPattern('6. Monotonic Stack', 'monotonic-stack'),
+            nestedPattern('7. Binary Search', 'binary-search'),
+            nestedPattern('8. Binary Search on Answer', 'bs-on-answer'),
+            nestedPattern('9. Top-K / Heap', 'top-k-heap'),
+            nestedPattern('10. K-way Merge', 'k-way-merge'),
+            nestedPattern('11. Merge Intervals', 'merge-intervals'),
+            nestedPattern('12. Sweep Line', 'sweep-line'),
+            nestedPattern('13. Topological Sort', 'topological-sort'),
+            nestedPattern('14. Union-Find', 'union-find'),
+            nestedPattern('15. Greedy', 'greedy'),
+            nestedPattern('16. Backtracking', 'backtracking'),
+            nestedPattern('17. Divide & Conquer', 'divide-conquer'),
+            nestedPattern('18. Dynamic Programming', 'dp'),
+            nestedPattern('19. Trie Pattern', 'trie-pattern'),
+            nestedPattern('20. Bit Manipulation', 'bit-manip'),
+            nestedPattern('21. Quickselect', 'quickselect'),
+            nestedPattern('Bonus: Math & Number Theory', 'math'),
+            nestedPattern('Bonus: Design', 'design')
           ]
         }
       ],
@@ -83,15 +119,15 @@ export default withMermaid(defineConfig({
           text: 'Part III — Data Structures in Depth',
           items: [
             { text: 'Overview', link: '/data-structures/' },
-            { text: 'Arrays', link: '/data-structures/arrays' },
-            { text: 'Strings', link: '/data-structures/strings' },
-            { text: 'Linked Lists', link: '/data-structures/linked-lists' },
-            { text: 'Stacks & Queues', link: '/data-structures/stacks-queues' },
-            { text: 'Trees', link: '/data-structures/trees' },
-            { text: 'Heaps', link: '/data-structures/heaps' },
-            { text: 'Trie', link: '/data-structures/trie' },
-            { text: 'Graphs', link: '/data-structures/graphs' },
-            { text: 'Segment / Fenwick Tree', link: '/data-structures/segment-fenwick' }
+            nestedDataStructure('Arrays', 'arrays'),
+            nestedDataStructure('Strings', 'strings'),
+            nestedDataStructure('Linked Lists', 'linked-lists'),
+            nestedDataStructure('Stacks & Queues', 'stacks-queues'),
+            nestedDataStructure('Trees', 'trees'),
+            nestedDataStructure('Heaps', 'heaps'),
+            nestedDataStructure('Trie', 'trie'),
+            nestedDataStructure('Graphs', 'graphs'),
+            nestedDataStructure('Segment / Fenwick Tree', 'segment-fenwick')
           ]
         }
       ],

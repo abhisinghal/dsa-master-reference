@@ -20,6 +20,7 @@ defineProps<{ kind: 'key' | 'inv' | 'trap' | 'pat' | 'note' | 'def', title?: str
 </template>
 
 <style scoped>
+/* 2026-08 dark contrast audit: dark callout borders/background tints now pair with the AA-safe theme link/text colors. */
 .callout {
   display: flex;
   gap: 12px;
@@ -53,10 +54,10 @@ defineProps<{ kind: 'key' | 'inv' | 'trap' | 'pat' | 'note' | 'def', title?: str
 .callout-def  { border-color: #0e7490; background: rgba(14, 116, 144, 0.08); }
 
 .dark .callout { background: rgba(255, 255, 255, 0.03); }
-.dark .callout-key  { background: rgba(37, 99, 235, 0.14); }
-.dark .callout-inv  { background: rgba(180, 83, 9, 0.14); }
-.dark .callout-trap { background: rgba(220, 38, 38, 0.14); }
-.dark .callout-pat  { background: rgba(21, 128, 61, 0.14); }
-.dark .callout-note { background: rgba(100, 116, 139, 0.16); }
-.dark .callout-def  { background: rgba(14, 116, 144, 0.16); }
+.dark .callout-key  { border-color: #93c5fd; background: rgba(59, 130, 246, 0.16); }
+.dark .callout-inv  { border-color: #fcd34d; background: rgba(245, 158, 11, 0.15); }
+.dark .callout-trap { border-color: #fca5a5; background: rgba(239, 68, 68, 0.15); }
+.dark .callout-pat  { border-color: #86efac; background: rgba(34, 197, 94, 0.15); }
+.dark .callout-note { border-color: #cbd5e1; background: rgba(148, 163, 184, 0.16); }
+.dark .callout-def  { border-color: #67e8f9; background: rgba(6, 182, 212, 0.15); }
 </style>

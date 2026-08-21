@@ -1,0 +1,1058 @@
+{
+  "patterns": {
+    "backtracking": {
+      "items": [
+        {
+          "text": "Subsets & Combinations (the start-index template)",
+          "link": "/patterns/backtracking#subsets-amp-combinations-the-start-index-template-medium",
+          "progressId": "subsets-amp-combinations-the-start-index-template"
+        },
+        {
+          "text": "Permutations (the used[] template)",
+          "link": "/patterns/backtracking#permutations-the-used-template-medium",
+          "progressId": "permutations-the-used-template"
+        },
+        {
+          "text": "Combination Sum (reuse & pruning)",
+          "link": "/patterns/backtracking#combination-sum-reuse-amp-pruning-medium",
+          "progressId": "combination-sum-reuse-amp-pruning"
+        },
+        {
+          "text": "N-Queens (constraint occupancy)",
+          "link": "/patterns/backtracking#n-queens-constraint-occupancy-hard",
+          "progressId": "n-queens-constraint-occupancy"
+        },
+        {
+          "text": "Word Search (grid backtracking)",
+          "link": "/patterns/backtracking#word-search-grid-backtracking-medium",
+          "progressId": "word-search-grid-backtracking"
+        }
+      ],
+      "problemIds": [
+        "subsets-amp-combinations-the-start-index-template",
+        "permutations-the-used-template",
+        "combination-sum-reuse-amp-pruning",
+        "n-queens-constraint-occupancy",
+        "word-search-grid-backtracking"
+      ],
+      "totalProblems": 5
+    },
+    "binary-search": {
+      "items": [
+        {
+          "text": "Canonical templates",
+          "link": "/patterns/binary-search#canonical-templates"
+        },
+        {
+          "text": "Search in Rotated Sorted Array",
+          "link": "/patterns/binary-search#search-in-rotated-sorted-array-medium",
+          "progressId": "search-in-rotated-sorted-array"
+        }
+      ],
+      "problemIds": [
+        "search-in-rotated-sorted-array"
+      ],
+      "totalProblems": 1
+    },
+    "bit-manip": {
+      "items": [
+        {
+          "text": "Core identities",
+          "link": "/patterns/bit-manip#core-identities"
+        },
+        {
+          "text": "Single Number I / II / III (XOR)",
+          "link": "/patterns/bit-manip#single-number-i-ii-iii-xor-easy",
+          "progressId": "single-number-i-ii-iii-xor"
+        },
+        {
+          "text": "Counting Bits (DP on bits)",
+          "link": "/patterns/bit-manip#counting-bits-dp-on-bits-easy",
+          "progressId": "counting-bits-dp-on-bits"
+        },
+        {
+          "text": "Subset generation via masks",
+          "link": "/patterns/bit-manip#subset-generation-via-masks-medium",
+          "progressId": "subset-generation-via-masks"
+        }
+      ],
+      "problemIds": [
+        "single-number-i-ii-iii-xor",
+        "counting-bits-dp-on-bits",
+        "subset-generation-via-masks"
+      ],
+      "totalProblems": 3
+    },
+    "bs-on-answer": {
+      "items": [
+        {
+          "text": "Koko Eating Bananas (Search on Answer — rate)",
+          "link": "/patterns/bs-on-answer#koko-eating-bananas-search-on-answer-—-rate-medium",
+          "progressId": "koko-eating-bananas-search-on-answer-rate"
+        },
+        {
+          "text": "Split Array Largest Sum / Book Allocation (Search on Answer — partition)",
+          "link": "/patterns/bs-on-answer#split-array-largest-sum-book-allocation-search-on-answer-—-partition-hard",
+          "progressId": "split-array-largest-sum-book-allocation-search-on-answer-partition"
+        },
+        {
+          "text": "Median of Two Sorted Arrays (Partition Binary Search)",
+          "link": "/patterns/bs-on-answer#median-of-two-sorted-arrays-partition-binary-search-hard",
+          "progressId": "median-of-two-sorted-arrays-partition-binary-search"
+        }
+      ],
+      "problemIds": [
+        "koko-eating-bananas-search-on-answer-rate",
+        "split-array-largest-sum-book-allocation-search-on-answer-partition",
+        "median-of-two-sorted-arrays-partition-binary-search"
+      ],
+      "totalProblems": 3
+    },
+    "design": {
+      "items": [
+        {
+          "text": "Why design patterns exist — the story",
+          "link": "/patterns/design#why-design-patterns-exist-—-the-story"
+        },
+        {
+          "text": "How to use it — LRU skeleton",
+          "link": "/patterns/design#how-to-use-it-—-lru-skeleton"
+        },
+        {
+          "text": "LRU Cache",
+          "link": "/patterns/design#lru-cache-medium",
+          "progressId": "lru-cache"
+        },
+        {
+          "text": "Insert Delete GetRandom O(1)",
+          "link": "/patterns/design#insert-delete-getrandom-o-1-medium",
+          "progressId": "insert-delete-getrandom-o-1"
+        },
+        {
+          "text": "Reservoir Sampling — uniform pick from a stream",
+          "link": "/patterns/design#reservoir-sampling-—-uniform-pick-from-a-stream-medium",
+          "progressId": "reservoir-sampling-uniform-pick-from-a-stream"
+        }
+      ],
+      "problemIds": [
+        "lru-cache",
+        "insert-delete-getrandom-o-1",
+        "reservoir-sampling-uniform-pick-from-a-stream"
+      ],
+      "totalProblems": 3
+    },
+    "divide-conquer": {
+      "items": [
+        {
+          "text": "Why divide and conquer exists — the story",
+          "link": "/patterns/divide-conquer#why-divide-and-conquer-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — and when not to",
+          "link": "/patterns/divide-conquer#when-to-use-it-—-and-when-not-to"
+        },
+        {
+          "text": "How to use it — template",
+          "link": "/patterns/divide-conquer#how-to-use-it-—-template"
+        },
+        {
+          "text": "The recursion tree intuition",
+          "link": "/patterns/divide-conquer#the-recursion-tree-intuition"
+        },
+        {
+          "text": "Designing the combine step — a checklist",
+          "link": "/patterns/divide-conquer#designing-the-combine-step-—-a-checklist"
+        },
+        {
+          "text": "Merge Sort & Count of Smaller Numbers After Self",
+          "link": "/patterns/divide-conquer#merge-sort-amp-count-of-smaller-numbers-after-self-hard",
+          "progressId": "merge-sort-amp-count-of-smaller-numbers-after-self"
+        }
+      ],
+      "problemIds": [
+        "merge-sort-amp-count-of-smaller-numbers-after-self"
+      ],
+      "totalProblems": 1
+    },
+    "dp": {
+      "items": [
+        {
+          "text": "1D DP — Climbing Stairs & House Robber",
+          "link": "/patterns/dp#_1d-dp-—-climbing-stairs-amp-house-robber-medium",
+          "progressId": "1d-dp-climbing-stairs-amp-house-robber"
+        },
+        {
+          "text": "Maximum Subarray (Kadane) — the running-optimum DP",
+          "link": "/patterns/dp#maximum-subarray-kadane-—-the-running-optimum-dp-medium",
+          "progressId": "maximum-subarray-kadane-the-running-optimum-dp"
+        },
+        {
+          "text": "0/1 Knapsack & Subset-Sum family",
+          "link": "/patterns/dp#_0-1-knapsack-amp-subset-sum-family-medium",
+          "progressId": "0-1-knapsack-amp-subset-sum-family"
+        },
+        {
+          "text": "Coin Change (unbounded, min count)",
+          "link": "/patterns/dp#coin-change-unbounded-min-count-medium",
+          "progressId": "coin-change-unbounded-min-count"
+        },
+        {
+          "text": "Grid DP — Unique Paths & Minimum Path Sum",
+          "link": "/patterns/dp#grid-dp-—-unique-paths-amp-minimum-path-sum-medium",
+          "progressId": "grid-dp-unique-paths-amp-minimum-path-sum"
+        },
+        {
+          "text": "Subsequence DP — LIS, LCS, Edit Distance",
+          "link": "/patterns/dp#subsequence-dp-—-lis-lcs-edit-distance-hard",
+          "progressId": "subsequence-dp-lis-lcs-edit-distance"
+        },
+        {
+          "text": "Interval DP — Matrix Chain / Burst Balloons",
+          "link": "/patterns/dp#interval-dp-—-matrix-chain-burst-balloons-hard",
+          "progressId": "interval-dp-matrix-chain-burst-balloons"
+        },
+        {
+          "text": "State-Machine DP — Stock trading with cooldown",
+          "link": "/patterns/dp#state-machine-dp-—-stock-trading-with-cooldown-medium",
+          "progressId": "state-machine-dp-stock-trading-with-cooldown"
+        },
+        {
+          "text": "Tree DP & Digit DP (pointers)",
+          "link": "/patterns/dp#tree-dp-amp-digit-dp-pointers"
+        },
+        {
+          "text": "Bitmask DP — Travelling Salesman / assignment",
+          "link": "/patterns/dp#bitmask-dp-—-travelling-salesman-assignment"
+        },
+        {
+          "text": "DP recognition summary",
+          "link": "/patterns/dp#dp-recognition-summary"
+        }
+      ],
+      "problemIds": [
+        "1d-dp-climbing-stairs-amp-house-robber",
+        "maximum-subarray-kadane-the-running-optimum-dp",
+        "0-1-knapsack-amp-subset-sum-family",
+        "coin-change-unbounded-min-count",
+        "grid-dp-unique-paths-amp-minimum-path-sum",
+        "subsequence-dp-lis-lcs-edit-distance",
+        "interval-dp-matrix-chain-burst-balloons",
+        "state-machine-dp-stock-trading-with-cooldown"
+      ],
+      "totalProblems": 8
+    },
+    "fast-slow": {
+      "items": [
+        {
+          "text": "Why fast / slow exists — the story",
+          "link": "/patterns/fast-slow#why-fast-slow-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — one-successor structures",
+          "link": "/patterns/fast-slow#when-to-use-it-—-one-successor-structures"
+        },
+        {
+          "text": "How to use it — template",
+          "link": "/patterns/fast-slow#how-to-use-it-—-template"
+        },
+        {
+          "text": "Linked List Cycle II (Floyd)",
+          "link": "/patterns/fast-slow#linked-list-cycle-ii-floyd-medium",
+          "progressId": "linked-list-cycle-ii-floyd"
+        }
+      ],
+      "problemIds": [
+        "linked-list-cycle-ii-floyd"
+      ],
+      "totalProblems": 1
+    },
+    "greedy": {
+      "items": [
+        {
+          "text": "Why greedy exists — the story",
+          "link": "/patterns/greedy#why-greedy-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — local choices with a proof",
+          "link": "/patterns/greedy#when-to-use-it-—-local-choices-with-a-proof"
+        },
+        {
+          "text": "Jump Game II (Farthest-Reach Greedy)",
+          "link": "/patterns/greedy#jump-game-ii-farthest-reach-greedy-medium",
+          "progressId": "jump-game-ii-farthest-reach-greedy"
+        },
+        {
+          "text": "Gas Station (Prefix-Balance Greedy)",
+          "link": "/patterns/greedy#gas-station-prefix-balance-greedy-medium",
+          "progressId": "gas-station-prefix-balance-greedy"
+        },
+        {
+          "text": "Task Scheduler / Activity Selection (Sort-Driven Greedy)",
+          "link": "/patterns/greedy#task-scheduler-activity-selection-sort-driven-greedy-medium",
+          "progressId": "task-scheduler-activity-selection-sort-driven-greedy"
+        },
+        {
+          "text": "When greedy fails → DP",
+          "link": "/patterns/greedy#when-greedy-fails-→-dp"
+        },
+        {
+          "text": "Non-overlapping Intervals (Interval Scheduling)",
+          "link": "/patterns/greedy#non-overlapping-intervals-interval-scheduling-medium",
+          "progressId": "non-overlapping-intervals-interval-scheduling"
+        }
+      ],
+      "problemIds": [
+        "jump-game-ii-farthest-reach-greedy",
+        "gas-station-prefix-balance-greedy",
+        "task-scheduler-activity-selection-sort-driven-greedy",
+        "non-overlapping-intervals-interval-scheduling"
+      ],
+      "totalProblems": 4
+    },
+    "hashing": {
+      "items": [
+        {
+          "text": "Two Sum",
+          "link": "/patterns/hashing#two-sum-easy",
+          "progressId": "two-sum"
+        },
+        {
+          "text": "Group Anagrams",
+          "link": "/patterns/hashing#group-anagrams-medium",
+          "progressId": "group-anagrams"
+        },
+        {
+          "text": "Product of Array Except Self",
+          "link": "/patterns/hashing#product-of-array-except-self-medium",
+          "progressId": "product-of-array-except-self"
+        },
+        {
+          "text": "Longest Consecutive Sequence",
+          "link": "/patterns/hashing#longest-consecutive-sequence-medium",
+          "progressId": "longest-consecutive-sequence"
+        }
+      ],
+      "problemIds": [
+        "two-sum",
+        "group-anagrams",
+        "product-of-array-except-self",
+        "longest-consecutive-sequence"
+      ],
+      "totalProblems": 4
+    },
+    "k-way-merge": {
+      "items": [
+        {
+          "text": "Why k-way merge exists — the story",
+          "link": "/patterns/k-way-merge#why-k-way-merge-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — and when not to",
+          "link": "/patterns/k-way-merge#when-to-use-it-—-and-when-not-to"
+        },
+        {
+          "text": "How to use it — template",
+          "link": "/patterns/k-way-merge#how-to-use-it-—-template"
+        },
+        {
+          "text": "Merge Two / K Sorted Lists",
+          "link": "/patterns/k-way-merge#merge-two-k-sorted-lists-hard",
+          "progressId": "merge-two-k-sorted-lists"
+        },
+        {
+          "text": "Merge K Sorted Lists / Smallest Range (K-way merge)",
+          "link": "/patterns/k-way-merge#merge-k-sorted-lists-smallest-range-k-way-merge-hard",
+          "progressId": "merge-k-sorted-lists-smallest-range-k-way-merge"
+        }
+      ],
+      "problemIds": [
+        "merge-two-k-sorted-lists",
+        "merge-k-sorted-lists-smallest-range-k-way-merge"
+      ],
+      "totalProblems": 2
+    },
+    "math": {
+      "items": [
+        {
+          "text": "Fast (Binary) Exponentiation — Pow(x, n)",
+          "link": "/patterns/math#fast-binary-exponentiation-—-pow-x-n-medium",
+          "progressId": "fast-binary-exponentiation-pow-x-n"
+        },
+        {
+          "text": "Euclid's Algorithm — GCD & LCM",
+          "link": "/patterns/math#euclid-s-algorithm-—-gcd-amp-lcm-easy",
+          "progressId": "euclid-s-algorithm-gcd-amp-lcm"
+        },
+        {
+          "text": "Sieve of Eratosthenes — Count Primes",
+          "link": "/patterns/math#sieve-of-eratosthenes-—-count-primes-medium",
+          "progressId": "sieve-of-eratosthenes-count-primes"
+        },
+        {
+          "text": "Modular Arithmetic & Combinatorics (toolkit)",
+          "link": "/patterns/math#modular-arithmetic-amp-combinatorics-toolkit"
+        }
+      ],
+      "problemIds": [
+        "fast-binary-exponentiation-pow-x-n",
+        "euclid-s-algorithm-gcd-amp-lcm",
+        "sieve-of-eratosthenes-count-primes"
+      ],
+      "totalProblems": 3
+    },
+    "merge-intervals": {
+      "items": [
+        {
+          "text": "Why merge intervals exists — the story",
+          "link": "/patterns/merge-intervals#why-merge-intervals-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — ordered ranges that may touch",
+          "link": "/patterns/merge-intervals#when-to-use-it-—-ordered-ranges-that-may-touch"
+        },
+        {
+          "text": "How to use it — template",
+          "link": "/patterns/merge-intervals#how-to-use-it-—-template"
+        },
+        {
+          "text": "Merge Intervals",
+          "link": "/patterns/merge-intervals#merge-intervals-medium",
+          "progressId": "merge-intervals"
+        }
+      ],
+      "problemIds": [
+        "merge-intervals"
+      ],
+      "totalProblems": 1
+    },
+    "monotonic-stack": {
+      "items": [
+        {
+          "text": "Daily Temperatures (Next Greater Element)",
+          "link": "/patterns/monotonic-stack#daily-temperatures-next-greater-element-medium",
+          "progressId": "daily-temperatures-next-greater-element"
+        },
+        {
+          "text": "Largest Rectangle in Histogram",
+          "link": "/patterns/monotonic-stack#largest-rectangle-in-histogram-hard",
+          "progressId": "largest-rectangle-in-histogram"
+        }
+      ],
+      "problemIds": [
+        "daily-temperatures-next-greater-element",
+        "largest-rectangle-in-histogram"
+      ],
+      "totalProblems": 2
+    },
+    "prefix-sum": {
+      "items": [
+        {
+          "text": "Subarray Sum Equals K",
+          "link": "/patterns/prefix-sum#subarray-sum-equals-k-medium",
+          "progressId": "subarray-sum-equals-k"
+        },
+        {
+          "text": "Difference Array (Range Update)",
+          "link": "/patterns/prefix-sum#difference-array-range-update-medium",
+          "progressId": "difference-array-range-update"
+        },
+        {
+          "text": "2D Prefix Sum (Range Sum Query 2D)",
+          "link": "/patterns/prefix-sum#_2d-prefix-sum-range-sum-query-2d"
+        }
+      ],
+      "problemIds": [
+        "subarray-sum-equals-k",
+        "difference-array-range-update"
+      ],
+      "totalProblems": 2
+    },
+    "quickselect": {
+      "items": [
+        {
+          "text": "Why Quickselect exists — the story",
+          "link": "/patterns/quickselect#why-quickselect-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — one-shot rank selection",
+          "link": "/patterns/quickselect#when-to-use-it-—-one-shot-rank-selection"
+        },
+        {
+          "text": "How to use it — template",
+          "link": "/patterns/quickselect#how-to-use-it-—-template"
+        },
+        {
+          "text": "Quickselect (Kth Largest Element)",
+          "link": "/patterns/quickselect#quickselect-kth-largest-element-medium",
+          "progressId": "quickselect-kth-largest-element"
+        }
+      ],
+      "problemIds": [
+        "quickselect-kth-largest-element"
+      ],
+      "totalProblems": 1
+    },
+    "sliding-window": {
+      "items": [
+        {
+          "text": "Why sliding window exists — the story",
+          "link": "/patterns/sliding-window#why-sliding-window-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — the four flavors",
+          "link": "/patterns/sliding-window#when-to-use-it-—-the-four-flavors"
+        },
+        {
+          "text": "How to use it — the two templates",
+          "link": "/patterns/sliding-window#how-to-use-it-—-the-two-templates"
+        },
+        {
+          "text": "When not to use it — the monotonicity test",
+          "link": "/patterns/sliding-window#when-not-to-use-it-—-the-monotonicity-test"
+        },
+        {
+          "text": "False friends — problems that look like sliding window but aren't",
+          "link": "/patterns/sliding-window#false-friends-—-problems-that-look-like-sliding-window-but-aren-t"
+        },
+        {
+          "text": "Limitations — what sliding window can never do",
+          "link": "/patterns/sliding-window#limitations-—-what-sliding-window-can-never-do"
+        },
+        {
+          "text": "Maximum Average Subarray I (fixed-size warm-up)",
+          "link": "/patterns/sliding-window#maximum-average-subarray-i-fixed-size-warm-up-easy",
+          "progressId": "maximum-average-subarray-i-fixed-size-warm-up"
+        },
+        {
+          "text": "Smallest Subarray With Sum ≥ Target",
+          "link": "/patterns/sliding-window#smallest-subarray-with-sum-≥-target-medium",
+          "progressId": "smallest-subarray-with-sum-target"
+        },
+        {
+          "text": "Longest Substring Without Repeating Characters",
+          "link": "/patterns/sliding-window#longest-substring-without-repeating-characters-medium",
+          "progressId": "longest-substring-without-repeating-characters"
+        },
+        {
+          "text": "Minimum Window Substring",
+          "link": "/patterns/sliding-window#minimum-window-substring-hard",
+          "progressId": "minimum-window-substring"
+        },
+        {
+          "text": "Longest Repeating Character Replacement",
+          "link": "/patterns/sliding-window#longest-repeating-character-replacement-medium",
+          "progressId": "longest-repeating-character-replacement"
+        },
+        {
+          "text": "Subarray Product Less Than K (counting + at-most-K trick)",
+          "link": "/patterns/sliding-window#subarray-product-less-than-k-counting-at-most-k-trick-medium",
+          "progressId": "subarray-product-less-than-k-counting-at-most-k-trick"
+        },
+        {
+          "text": "Sliding Window Maximum (Monotonic Deque)",
+          "link": "/patterns/sliding-window#sliding-window-maximum-monotonic-deque-hard",
+          "progressId": "sliding-window-maximum-monotonic-deque"
+        }
+      ],
+      "problemIds": [
+        "maximum-average-subarray-i-fixed-size-warm-up",
+        "smallest-subarray-with-sum-target",
+        "longest-substring-without-repeating-characters",
+        "minimum-window-substring",
+        "longest-repeating-character-replacement",
+        "subarray-product-less-than-k-counting-at-most-k-trick",
+        "sliding-window-maximum-monotonic-deque"
+      ],
+      "totalProblems": 7
+    },
+    "sweep-line": {
+      "items": [
+        {
+          "text": "Why sweep line exists — the story",
+          "link": "/patterns/sweep-line#why-sweep-line-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — and when not to",
+          "link": "/patterns/sweep-line#when-to-use-it-—-and-when-not-to"
+        },
+        {
+          "text": "How to use it — template",
+          "link": "/patterns/sweep-line#how-to-use-it-—-template"
+        },
+        {
+          "text": "Sweep-line flavors you should name out loud",
+          "link": "/patterns/sweep-line#sweep-line-flavors-you-should-name-out-loud"
+        },
+        {
+          "text": "Meeting Rooms II (Minimum Concurrent Intervals)",
+          "link": "/patterns/sweep-line#meeting-rooms-ii-minimum-concurrent-intervals-medium",
+          "progressId": "meeting-rooms-ii-minimum-concurrent-intervals"
+        },
+        {
+          "text": "Sweep Line — the general recipe",
+          "link": "/patterns/sweep-line#sweep-line-—-the-general-recipe"
+        }
+      ],
+      "problemIds": [
+        "meeting-rooms-ii-minimum-concurrent-intervals"
+      ],
+      "totalProblems": 1
+    },
+    "top-k-heap": {
+      "items": [
+        {
+          "text": "Why top-k heaps exist — the story",
+          "link": "/patterns/top-k-heap#why-top-k-heaps-exist-—-the-story"
+        },
+        {
+          "text": "When to use it — boundary items without sorting",
+          "link": "/patterns/top-k-heap#when-to-use-it-—-boundary-items-without-sorting"
+        },
+        {
+          "text": "How to use it — template",
+          "link": "/patterns/top-k-heap#how-to-use-it-—-template"
+        },
+        {
+          "text": "Kth Largest / Top K Frequent",
+          "link": "/patterns/top-k-heap#kth-largest-top-k-frequent-medium",
+          "progressId": "kth-largest-top-k-frequent"
+        }
+      ],
+      "problemIds": [
+        "kth-largest-top-k-frequent"
+      ],
+      "totalProblems": 1
+    },
+    "topological-sort": {
+      "items": [
+        {
+          "text": "Why topological sort exists — the story",
+          "link": "/patterns/topological-sort#why-topological-sort-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — and when not to",
+          "link": "/patterns/topological-sort#when-to-use-it-—-and-when-not-to"
+        },
+        {
+          "text": "How to use it — templates",
+          "link": "/patterns/topological-sort#how-to-use-it-—-templates"
+        },
+        {
+          "text": "Kahn vs DFS — same answer, different proof",
+          "link": "/patterns/topological-sort#kahn-vs-dfs-—-same-answer-different-proof"
+        },
+        {
+          "text": "Building the graph is often the real problem",
+          "link": "/patterns/topological-sort#building-the-graph-is-often-the-real-problem"
+        },
+        {
+          "text": "Course Schedule (Topological Sort)",
+          "link": "/patterns/topological-sort#course-schedule-topological-sort-medium",
+          "progressId": "course-schedule-topological-sort"
+        }
+      ],
+      "problemIds": [
+        "course-schedule-topological-sort"
+      ],
+      "totalProblems": 1
+    },
+    "trie-pattern": {
+      "items": [
+        {
+          "text": "Why trie patterns exist — the story",
+          "link": "/patterns/trie-pattern#why-trie-patterns-exist-—-the-story"
+        },
+        {
+          "text": "How to use it — binary-trie template for max-XOR",
+          "link": "/patterns/trie-pattern#how-to-use-it-—-binary-trie-template-for-max-xor"
+        },
+        {
+          "text": "When to use it — trie pattern flavors",
+          "link": "/patterns/trie-pattern#when-to-use-it-—-trie-pattern-flavors"
+        },
+        {
+          "text": "Word Search II (Trie + Backtracking)",
+          "link": "/patterns/trie-pattern#word-search-ii-trie-backtracking-hard",
+          "progressId": "word-search-ii-trie-backtracking"
+        },
+        {
+          "text": "Maximum XOR of Two Numbers (Binary Trie)",
+          "link": "/patterns/trie-pattern#maximum-xor-of-two-numbers-binary-trie-medium",
+          "progressId": "maximum-xor-of-two-numbers-binary-trie"
+        }
+      ],
+      "problemIds": [
+        "word-search-ii-trie-backtracking",
+        "maximum-xor-of-two-numbers-binary-trie"
+      ],
+      "totalProblems": 2
+    },
+    "two-pointers": {
+      "items": [
+        {
+          "text": "3Sum",
+          "link": "/patterns/two-pointers#_3sum-medium",
+          "progressId": "3sum"
+        },
+        {
+          "text": "Container With Most Water",
+          "link": "/patterns/two-pointers#container-with-most-water-medium",
+          "progressId": "container-with-most-water"
+        },
+        {
+          "text": "Squaring a Sorted Array",
+          "link": "/patterns/two-pointers#squaring-a-sorted-array-easy",
+          "progressId": "squaring-a-sorted-array"
+        },
+        {
+          "text": "Sort Colors (Dutch National Flag)",
+          "link": "/patterns/two-pointers#sort-colors-dutch-national-flag-medium",
+          "progressId": "sort-colors-dutch-national-flag"
+        },
+        {
+          "text": "Trapping Rain Water",
+          "link": "/patterns/two-pointers#trapping-rain-water-hard",
+          "progressId": "trapping-rain-water"
+        }
+      ],
+      "problemIds": [
+        "3sum",
+        "container-with-most-water",
+        "squaring-a-sorted-array",
+        "sort-colors-dutch-national-flag",
+        "trapping-rain-water"
+      ],
+      "totalProblems": 5
+    },
+    "union-find": {
+      "items": [
+        {
+          "text": "Why union-find exists — the story",
+          "link": "/patterns/union-find#why-union-find-exists-—-the-story"
+        },
+        {
+          "text": "When to use it — dynamic connectivity",
+          "link": "/patterns/union-find#when-to-use-it-—-dynamic-connectivity"
+        },
+        {
+          "text": "Union-Find (Disjoint Set Union)",
+          "link": "/patterns/union-find#union-find-disjoint-set-union-medium",
+          "progressId": "union-find-disjoint-set-union"
+        },
+        {
+          "text": "Minimum Spanning Tree — Kruskal + Union-Find",
+          "link": "/patterns/union-find#minimum-spanning-tree-—-kruskal-union-find-medium",
+          "progressId": "minimum-spanning-tree-kruskal-union-find"
+        }
+      ],
+      "problemIds": [
+        "union-find-disjoint-set-union",
+        "minimum-spanning-tree-kruskal-union-find"
+      ],
+      "totalProblems": 2
+    }
+  },
+  "dataStructures": {
+    "arrays": {
+      "items": [
+        {
+          "text": "Matrix Mechanics (in-place grid manipulation)",
+          "link": "/data-structures/arrays#matrix-mechanics-in-place-grid-manipulation"
+        },
+        {
+          "text": "Rotate Image (90° clockwise, in place)",
+          "link": "/data-structures/arrays#rotate-image-90°-clockwise-in-place-medium",
+          "progressId": "rotate-image-90-clockwise-in-place"
+        },
+        {
+          "text": "Spiral Matrix (layer-by-layer traversal)",
+          "link": "/data-structures/arrays#spiral-matrix-layer-by-layer-traversal-medium",
+          "progressId": "spiral-matrix-layer-by-layer-traversal"
+        },
+        {
+          "text": "Set Matrix Zeroes (use row 0 / col 0 as markers)",
+          "link": "/data-structures/arrays#set-matrix-zeroes-use-row-0-col-0-as-markers-medium",
+          "progressId": "set-matrix-zeroes-use-row-0-col-0-as-markers"
+        },
+        {
+          "text": "Matrix mechanics — same pattern, new tweaks",
+          "link": "/data-structures/arrays#matrix-mechanics-—-same-pattern-new-tweaks"
+        },
+        {
+          "text": "Cyclic Sort family (value = index + 1)",
+          "link": "/data-structures/arrays#cyclic-sort-family-value-index-1"
+        },
+        {
+          "text": "Cyclic Sort (the base template)",
+          "link": "/data-structures/arrays#cyclic-sort-the-base-template"
+        },
+        {
+          "text": "Find the Missing Number",
+          "link": "/data-structures/arrays#find-the-missing-number-easy",
+          "progressId": "find-the-missing-number"
+        },
+        {
+          "text": "Find All Missing / All Duplicate Numbers",
+          "link": "/data-structures/arrays#find-all-missing-all-duplicate-numbers"
+        },
+        {
+          "text": "First Missing Positive (Hard)",
+          "link": "/data-structures/arrays#first-missing-positive-hard-hard",
+          "progressId": "first-missing-positive-hard"
+        }
+      ],
+      "problemIds": [
+        "rotate-image-90-clockwise-in-place",
+        "spiral-matrix-layer-by-layer-traversal",
+        "set-matrix-zeroes-use-row-0-col-0-as-markers",
+        "find-the-missing-number",
+        "first-missing-positive-hard"
+      ],
+      "totalProblems": 5
+    },
+    "graphs": {
+      "items": [
+        {
+          "text": "Representation & the choice map",
+          "link": "/data-structures/graphs#representation-amp-the-choice-map"
+        },
+        {
+          "text": "Number of Islands (grid flood fill)",
+          "link": "/data-structures/graphs#number-of-islands-grid-flood-fill-medium",
+          "progressId": "number-of-islands-grid-flood-fill"
+        },
+        {
+          "text": "Rotting Oranges (multi-source BFS)",
+          "link": "/data-structures/graphs#rotting-oranges-multi-source-bfs-medium",
+          "progressId": "rotting-oranges-multi-source-bfs"
+        },
+        {
+          "text": "Dijkstra (weighted shortest path, non-negative)",
+          "link": "/data-structures/graphs#dijkstra-weighted-shortest-path-non-negative-medium",
+          "progressId": "dijkstra-weighted-shortest-path-non-negative"
+        },
+        {
+          "text": "Bellman–Ford (negative edges & negative-cycle detection)",
+          "link": "/data-structures/graphs#bellman–ford-negative-edges-amp-negative-cycle-detection-medium",
+          "progressId": "bellman-ford-negative-edges-amp-negative-cycle-detection"
+        },
+        {
+          "text": "Clone Graph & Bipartite (traversal bookkeeping)",
+          "link": "/data-structures/graphs#clone-graph-amp-bipartite-traversal-bookkeeping-medium",
+          "progressId": "clone-graph-amp-bipartite-traversal-bookkeeping"
+        },
+        {
+          "text": "Bridges & Articulation Points (Tarjan) — Critical Connections",
+          "link": "/data-structures/graphs#bridges-amp-articulation-points-tarjan-—-critical-connections-hard",
+          "progressId": "bridges-amp-articulation-points-tarjan-critical-connections"
+        },
+        {
+          "text": "Eulerian Path (Hierholzer) — Reconstruct Itinerary",
+          "link": "/data-structures/graphs#eulerian-path-hierholzer-—-reconstruct-itinerary-hard",
+          "progressId": "eulerian-path-hierholzer-reconstruct-itinerary"
+        }
+      ],
+      "problemIds": [
+        "number-of-islands-grid-flood-fill",
+        "rotting-oranges-multi-source-bfs",
+        "dijkstra-weighted-shortest-path-non-negative",
+        "bellman-ford-negative-edges-amp-negative-cycle-detection",
+        "clone-graph-amp-bipartite-traversal-bookkeeping",
+        "bridges-amp-articulation-points-tarjan-critical-connections",
+        "eulerian-path-hierholzer-reconstruct-itinerary"
+      ],
+      "totalProblems": 7
+    },
+    "heaps": {
+      "items": [
+        {
+          "text": "Why heaps exist — the story",
+          "link": "/data-structures/heaps#why-heaps-exist-—-the-story"
+        },
+        {
+          "text": "How to use it — two-heap streaming median template",
+          "link": "/data-structures/heaps#how-to-use-it-—-two-heap-streaming-median-template"
+        },
+        {
+          "text": "Heap internals in one page",
+          "link": "/data-structures/heaps#heap-internals-in-one-page"
+        },
+        {
+          "text": "Find Median from Data Stream (Two Heaps)",
+          "link": "/data-structures/heaps#find-median-from-data-stream-two-heaps-hard",
+          "progressId": "find-median-from-data-stream-two-heaps"
+        },
+        {
+          "text": "Heap essentials & gotchas",
+          "link": "/data-structures/heaps#heap-essentials-amp-gotchas"
+        }
+      ],
+      "problemIds": [
+        "find-median-from-data-stream-two-heaps"
+      ],
+      "totalProblems": 1
+    },
+    "linked-lists": {
+      "items": [
+        {
+          "text": "Reverse a Linked List",
+          "link": "/data-structures/linked-lists#reverse-a-linked-list-easy",
+          "progressId": "reverse-a-linked-list"
+        },
+        {
+          "text": "Reorder / Palindrome via Split-Reverse-Merge",
+          "link": "/data-structures/linked-lists#reorder-palindrome-via-split-reverse-merge-easy",
+          "progressId": "reorder-palindrome-via-split-reverse-merge"
+        },
+        {
+          "text": "LRU Cache (Design)",
+          "link": "/data-structures/linked-lists#lru-cache-design-medium",
+          "progressId": "lru-cache-design"
+        }
+      ],
+      "problemIds": [
+        "reverse-a-linked-list",
+        "reorder-palindrome-via-split-reverse-merge",
+        "lru-cache-design"
+      ],
+      "totalProblems": 3
+    },
+    "segment-fenwick": {
+      "items": [
+        {
+          "text": "Fenwick Tree (Binary Indexed Tree)",
+          "link": "/data-structures/segment-fenwick#fenwick-tree-binary-indexed-tree-medium",
+          "progressId": "fenwick-tree-binary-indexed-tree"
+        },
+        {
+          "text": "Segment Tree (range query + range update)",
+          "link": "/data-structures/segment-fenwick#segment-tree-range-query-range-update-medium",
+          "progressId": "segment-tree-range-query-range-update"
+        }
+      ],
+      "problemIds": [
+        "fenwick-tree-binary-indexed-tree",
+        "segment-tree-range-query-range-update"
+      ],
+      "totalProblems": 2
+    },
+    "stacks-queues": {
+      "items": [
+        {
+          "text": "Valid Parentheses",
+          "link": "/data-structures/stacks-queues#valid-parentheses-easy",
+          "progressId": "valid-parentheses"
+        },
+        {
+          "text": "Min Stack (O(1) minimum)",
+          "link": "/data-structures/stacks-queues#min-stack-o-1-minimum-medium",
+          "progressId": "min-stack-o-1-minimum"
+        },
+        {
+          "text": "Queue & Deque essentials",
+          "link": "/data-structures/stacks-queues#queue-amp-deque-essentials"
+        }
+      ],
+      "problemIds": [
+        "valid-parentheses",
+        "min-stack-o-1-minimum"
+      ],
+      "totalProblems": 2
+    },
+    "strings": {
+      "items": [
+        {
+          "text": "Longest Palindromic Substring (Expand Around Center)",
+          "link": "/data-structures/strings#longest-palindromic-substring-expand-around-center-medium",
+          "progressId": "longest-palindromic-substring-expand-around-center"
+        },
+        {
+          "text": "String Matching: Rabin–Karp & KMP (concept)",
+          "link": "/data-structures/strings#string-matching-rabin–karp-amp-kmp-concept"
+        },
+        {
+          "text": "Encode and Decode Strings (Length Prefixing)",
+          "link": "/data-structures/strings#encode-and-decode-strings-length-prefixing"
+        }
+      ],
+      "problemIds": [
+        "longest-palindromic-substring-expand-around-center"
+      ],
+      "totalProblems": 1
+    },
+    "trees": {
+      "items": [
+        {
+          "text": "Traversals (iterative & the recursion skeleton)",
+          "link": "/data-structures/trees#traversals-iterative-amp-the-recursion-skeleton"
+        },
+        {
+          "text": "Maximum Depth, Balanced, Diameter (post-order aggregation)",
+          "link": "/data-structures/trees#maximum-depth-balanced-diameter-post-order-aggregation-easy",
+          "progressId": "maximum-depth-balanced-diameter-post-order-aggregation"
+        },
+        {
+          "text": "Lowest Common Ancestor",
+          "link": "/data-structures/trees#lowest-common-ancestor-medium",
+          "progressId": "lowest-common-ancestor"
+        },
+        {
+          "text": "Validate BST & BST operations",
+          "link": "/data-structures/trees#validate-bst-amp-bst-operations-medium",
+          "progressId": "validate-bst-amp-bst-operations"
+        },
+        {
+          "text": "Serialize / Deserialize (structure encoding)",
+          "link": "/data-structures/trees#serialize-deserialize-structure-encoding-hard",
+          "progressId": "serialize-deserialize-structure-encoding"
+        },
+        {
+          "text": "Construct Tree from Traversals",
+          "link": "/data-structures/trees#construct-tree-from-traversals-medium",
+          "progressId": "construct-tree-from-traversals"
+        },
+        {
+          "text": "Tree DP (House Robber III)",
+          "link": "/data-structures/trees#tree-dp-house-robber-iii"
+        }
+      ],
+      "problemIds": [
+        "maximum-depth-balanced-diameter-post-order-aggregation",
+        "lowest-common-ancestor",
+        "validate-bst-amp-bst-operations",
+        "serialize-deserialize-structure-encoding",
+        "construct-tree-from-traversals"
+      ],
+      "totalProblems": 5
+    },
+    "trie": {
+      "items": [
+        {
+          "text": "Why tries exist — the story",
+          "link": "/data-structures/trie#why-tries-exist-—-the-story"
+        },
+        {
+          "text": "How to use it — standard node and skeleton",
+          "link": "/data-structures/trie#how-to-use-it-—-standard-node-and-skeleton"
+        },
+        {
+          "text": "Node layout choices",
+          "link": "/data-structures/trie#node-layout-choices"
+        },
+        {
+          "text": "Implement Trie",
+          "link": "/data-structures/trie#implement-trie-medium",
+          "progressId": "implement-trie"
+        },
+        {
+          "text": "Implementation upgrades you can mention",
+          "link": "/data-structures/trie#implementation-upgrades-you-can-mention"
+        }
+      ],
+      "problemIds": [
+        "implement-trie"
+      ],
+      "totalProblems": 1
+    }
+  }
+}
