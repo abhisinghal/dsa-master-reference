@@ -82,6 +82,58 @@ The template has three moving pieces. The `Entry` remembers not just the value, 
 
 <ProgressCheck id="merge-two-k-sorted-lists" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-kmerge-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="26" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">merge k sorted lists by comparing only heads</text>
+
+  <g text-anchor="middle">
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <rect x="24" y="46" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="46" y="74">1</text>
+      <rect x="72" y="46" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="94" y="74">4</text>
+      <rect x="120" y="46" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="142" y="74">5</text>
+      <rect x="24" y="98" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="46" y="126">1</text>
+      <rect x="72" y="98" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="94" y="126">3</text>
+      <rect x="120" y="98" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="142" y="126">4</text>
+      <rect x="24" y="150" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="46" y="178">2</text>
+      <rect x="72" y="150" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="94" y="178">6</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="12" y="73">L1</text><text x="12" y="125">L2</text><text x="12" y="177">L3</text>
+    </g>
+  </g>
+
+  <line x1="178" y1="121" x2="228" y2="121" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-kmerge-primary)"/>
+  <text x="203" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">heads</text>
+  <line x1="291" y1="96" x2="264" y2="135" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <line x1="291" y1="96" x2="318" y2="135" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <circle cx="291" cy="78" r="20" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <circle cx="259" cy="153" r="20" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <circle cx="323" cy="153" r="20" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <g text-anchor="middle" font-size="15" font-weight="700" fill="var(--dsa-ink)">
+    <text x="291" y="83">1</text><text x="259" y="158">1</text><text x="323" y="158">2</text>
+  </g>
+  <text x="291" y="39" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">min-heap of heads</text>
+  <path d="M291 178 C291 197, 244 203, 190 203" fill="none" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-kmerge-primary)"/>
+  <text x="259" y="218" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">poll → append → refill next</text>
+  <text x="200" y="237" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">min-heap of k heads; poll and refill</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> Only the current head of each sorted list can be the next output, so a min-heap chooses the smallest head and then replenishes from that same list.</div>
+
 ### Problem
 Merge `k` sorted linked lists into one sorted list. (The two-list merge is the building block.)
 

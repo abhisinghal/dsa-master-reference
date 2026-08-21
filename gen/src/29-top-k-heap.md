@@ -4,6 +4,8 @@
 
 Imagine you are watching a live scoreboard with millions of scores, but the product manager only cares about the top 10. Sorting every score every time would be silly: rank 11 through rank 1,000,000 do not matter. The Top-K heap pattern exists because you can keep a tiny "VIP room" of size `k` instead of arranging the whole crowd. Every new candidate enters the room briefly; if the room is too full, you kick out the worst person currently inside. At the end, the room contains exactly the best `k` candidates.
 
+<HeapAnim />
+
 Use a concrete example: find the 3 largest numbers in `[7, 1, 9, 3, 10, 2, 8]`. Keep a min-heap of size 3. Read `7,1,9` → heap has `{1,7,9}`. Read `3` → heap becomes `{1,3,7,9}`, too large, so remove the smallest `1`; room is `{3,7,9}`. Read `10` → remove `3`; room is `{7,9,10}`. Read `2` → remove `2` immediately. Read `8` → remove `7`; final room is `{8,9,10}`. Notice the heap root is not the answer to "largest"; it is the weakest of the winners, the one easiest to evict.
 
 The brute-force walk-through is full sorting: arrange everyone, then take the first `k`. Can we do better? Yes, because the exact order of the rejected `n-k` items does not matter. Keep only the current boundary set.
@@ -55,6 +57,42 @@ Fill in `compareWorstFirst` based on what "worst among the winners" means. For k
 *[↗ LeetCode: Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)*
 
 <ProgressCheck id="kth-largest-top-k-frequent" />
+
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-topk-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/>
+    </marker>
+    <marker id="ar-topk-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">keep only the current top k boundary</text>
+
+  <rect x="31" y="92" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <text x="53" y="120" text-anchor="middle" font-size="17" font-weight="700" fill="var(--dsa-ink)">12</text>
+  <text x="53" y="153" text-anchor="middle" font-size="11.5" fill="var(--dsa-success)">incoming</text>
+  <line x1="80" y1="114" x2="137" y2="114" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-topk-success)"/>
+  <text x="105" y="101" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">larger</text>
+
+  <line x1="200" y1="95" x2="164" y2="138" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <line x1="200" y1="95" x2="236" y2="138" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <circle cx="200" cy="76" r="22" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6"/>
+  <circle cx="158" cy="158" r="22" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <circle cx="242" cy="158" r="22" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <g text-anchor="middle" font-size="17" font-weight="700" fill="var(--dsa-ink)">
+    <text x="200" y="82">5</text><text x="158" y="164">8</text><text x="242" y="164">10</text>
+  </g>
+  <text x="200" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">root = smallest kept</text>
+  <path d="M200 104 C206 121, 220 124, 258 105" fill="none" stroke="var(--dsa-danger)" stroke-width="2" marker-end="url(#ar-topk-danger)"/>
+  <text x="294" y="108" font-size="11.5" font-weight="700" fill="var(--dsa-danger)">evict root</text>
+  <text x="200" y="210" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">size-k min-heap keeps k largest at O(n log k)</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> The heap stores only k candidates; its root is the weakest kept item, so a stronger incoming value replaces it and everything smaller can be ignored.</div>
 
 ### Problem
 Return the **k most frequent** elements of an array (or, in the sibling, the kth largest). The order among the top-k doesn't matter.

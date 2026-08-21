@@ -131,6 +131,44 @@ At equal coordinates, you must know whether an end and a start overlap. For meet
 
 <ProgressCheck id="meeting-rooms-ii-minimum-concurrent-intervals" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-sweep-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">sweep events and track active meetings</text>
+
+  <line x1="50" y1="57" x2="350" y2="57" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <g font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">
+    <text x="70" y="75">0</text><text x="120" y="75">5</text><text x="170" y="75">10</text><text x="230" y="75">15</text><text x="280" y="75">20</text><text x="330" y="75">30</text>
+  </g>
+  <rect x="70" y="91" width="260" height="16" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <rect x="120" y="119" width="50" height="16" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <rect x="230" y="147" width="50" height="16" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <g font-size="11" font-weight="700" fill="var(--dsa-ink)">
+    <text x="74" y="103">[0,30]</text><text x="123" y="131">[5,10]</text><text x="233" y="159">[15,20]</text>
+  </g>
+  <line x1="145" y1="43" x2="145" y2="176" stroke="var(--dsa-primary)" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ar-sweep-primary)"/>
+  <text x="151" y="42" font-size="11.5" font-weight="700" fill="var(--dsa-primary)">sweep</text>
+
+  <rect x="70" y="185" width="260" height="30" rx="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <text x="200" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">count: 0→1→2→1→0, peak = 2</text>
+  <text x="200" y="233" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">max concurrency = peak count on sweep</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> Convert every start to +1 and every end to -1, sweep from left to right, and the largest active count is the number of rooms needed.</div>
+
 ### Problem
 Given meeting time intervals, find the **minimum number of rooms** so that no two overlapping meetings share a room.
 

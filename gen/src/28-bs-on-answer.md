@@ -24,6 +24,40 @@ The feasibility predicate isn't monotone — you can find an x where `feasible(x
 
 <ProgressCheck id="koko-eating-bananas-search-on-answer-rate" />
 
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">binary search over the answer: eating rate k</text>
+
+  <line x1="48" y1="72" x2="352" y2="72" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <circle cx="58" cy="72" r="6" fill="var(--dsa-primary)"/>
+  <circle cx="342" cy="72" r="6" fill="var(--dsa-primary)"/>
+  <line x1="202" y1="49" x2="202" y2="153" stroke="var(--dsa-primary)" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="58" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">low=1</text>
+  <text x="342" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">high=max</text>
+  <text x="202" y="43" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">mid k=4</text>
+  <text x="200" y="92" text-anchor="middle" font-size="11.5" fill="var(--dsa-neutral)">rate k</text>
+
+  <g text-anchor="middle">
+    <rect x="82" y="114" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="134" y="114" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="186" y="114" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+    <rect x="238" y="114" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="104" y="142">3</text><text x="156" y="142">6</text><text x="208" y="142">7</text><text x="260" y="142">11</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="104" y="173">1h</text><text x="156" y="173">2h</text><text x="208" y="173">2h</text><text x="260" y="173">3h</text>
+    </g>
+  </g>
+  <rect x="100" y="186" width="200" height="28" rx="10" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <text x="200" y="205" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">hours = 1+2+2+3 = 8 ≤ h=8</text>
+  <text x="200" y="234" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">monotone predicate: feasible(k) is non-decreasing in k</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> Guess a rate, compute total hours with ceiling division, then use the yes/no result to keep the smallest feasible side of the search range.</div>
+
 ### Problem
 Koko eats `k` bananas/hour (one pile per hour; leftovers still cost a full hour). Find the **minimum `k`** that finishes all piles within `h` hours.
 

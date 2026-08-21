@@ -89,6 +89,44 @@ This is a common interview twist: topological sort is only half the solution. Th
 
 <ProgressCheck id="course-schedule-topological-sort" />
 
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-topo-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">Kahn's algorithm emits zero-in-degree courses</text>
+
+  <g stroke="var(--dsa-primary)" stroke-width="2" fill="none" marker-end="url(#ar-topo-primary)">
+    <line x1="116" y1="80" x2="178" y2="80"/>
+    <line x1="116" y1="96" x2="178" y2="150"/>
+    <line x1="222" y1="80" x2="284" y2="96"/>
+    <line x1="222" y1="150" x2="284" y2="112"/>
+  </g>
+  <g text-anchor="middle">
+    <circle cx="90" cy="88" r="22" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+    <circle cx="200" cy="80" r="22" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+    <circle cx="200" cy="158" r="22" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+    <circle cx="310" cy="104" r="22" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="90" y="94">A</text><text x="200" y="86">B</text><text x="200" y="164">C</text><text x="310" y="110">D</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="90" y="122">in=0</text><text x="200" y="114">in=1</text><text x="200" y="192">in=1</text><text x="310" y="138">in=2</text>
+    </g>
+  </g>
+
+  <text x="67" y="211" font-size="12" font-weight="700" fill="var(--dsa-success)">queue</text>
+  <rect x="116" y="193" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <text x="138" y="221" text-anchor="middle" font-size="17" font-weight="700" fill="var(--dsa-ink)">A</text>
+  <text x="246" y="212" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">DAG ⇔ can emit all n</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> Start with the zero-in-degree queue, emit those courses, remove their outgoing edges, and repeat; if every course is emitted, there is no cycle.</div>
+
 ### Problem
 Given `numCourses` and prerequisite pairs `[a,b]` (finish `b` before `a`), return a **valid order** to take all courses, or an empty array if impossible (a cycle exists).
 

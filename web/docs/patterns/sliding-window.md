@@ -214,6 +214,54 @@ Now let's walk through the canonical shapes, from the simplest fixed-size warm-u
 
 <ProgressCheck id="maximum-average-subarray-i-fixed-size-warm-up" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-mavg-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+    <marker id="ar-mavg-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Slide k=4: reuse the overlapping sum</text>
+
+  <rect x="38" y="76" width="216" height="60" rx="10" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-outline-stroke)"/>
+  <text x="146" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">window 0..3  sum = 2</text>
+  <rect x="90" y="84" width="216" height="60" rx="10" fill="none" stroke="var(--dsa-success)" stroke-width="var(--dsa-outline-stroke)" stroke-dasharray="7 5"/>
+  <text x="266" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">window 1..4  sum = 51</text>
+
+  <g text-anchor="middle">
+    <rect x="42" y="88" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="94" y="88" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="146" y="88" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="198" y="88" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="250" y="88" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="302" y="88" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="64" y="116">1</text><text x="116" y="116">12</text><text x="168" y="116">-5</text>
+      <text x="220" y="116">-6</text><text x="272" y="116">50</text><text x="324" y="116">3</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="64" y="147">0</text><text x="116" y="147">1</text><text x="168" y="147">2</text>
+      <text x="220" y="147">3</text><text x="272" y="147">4</text><text x="324" y="147">5</text>
+    </g>
+  </g>
+
+  <line x1="64" y1="184" x2="64" y2="135" stroke="var(--dsa-danger)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-mavg-danger)"/>
+  <text x="64" y="203" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">leaves: -1</text>
+  <line x1="272" y1="184" x2="272" y2="135" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-mavg-success)"/>
+  <text x="272" y="203" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">enters: +50</text>
+  <text x="200" y="231" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">newSum = oldSum - oldLeft + newRight = 2 - 1 + 50 = 51</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> The next fixed-size window keeps the overlap and updates in O(1): add the entering <b>50</b>, subtract the leaving <b>1</b>, then compare the new sum.</div>
+
 ### Problem
 Given an array and an integer `k`, find the contiguous subarray of length **exactly `k`** with the maximum average.
 
@@ -494,6 +542,55 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
 
 
 <ProgressCheck id="longest-substring-without-repeating-characters" />
+
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-ls-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <marker id="ar-ls-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Keep a distinct window; jump left on duplicate</text>
+
+  <rect x="6" y="76" width="148" height="60" rx="10" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-outline-stroke)"/>
+  <text x="80" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">best window: abc</text>
+
+  <g text-anchor="middle">
+    <rect x="10" y="84" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="58" y="84" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="106" y="84" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="154" y="84" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="202" y="84" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="250" y="84" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="298" y="84" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="346" y="84" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="32" y="112">a</text><text x="80" y="112">b</text><text x="128" y="112">c</text><text x="176" y="112">a</text>
+      <text x="224" y="112">b</text><text x="272" y="112">c</text><text x="320" y="112">b</text><text x="368" y="112">b</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="32" y="143">0</text><text x="80" y="143">1</text><text x="128" y="143">2</text><text x="176" y="143">3</text>
+      <text x="224" y="143">4</text><text x="272" y="143">5</text><text x="320" y="143">6</text><text x="368" y="143">7</text>
+    </g>
+  </g>
+
+  <text x="176" y="103" text-anchor="middle" font-size="28" font-weight="700" fill="var(--dsa-danger)">×</text>
+  <line x1="32" y1="178" x2="32" y2="132" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-ls-primary)"/>
+  <text x="32" y="197" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">left</text>
+  <line x1="176" y1="178" x2="176" y2="132" stroke="var(--dsa-danger)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-ls-danger)"/>
+  <text x="176" y="197" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">right: duplicate a</text>
+  <text x="200" y="229" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">duplicate inside window → advance left past the old a</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> The blue window is distinct until the next <b>a</b> repeats a character already inside it; jump <code>left</code> past the previous <b>a</b>, not back to zero.</div>
 
 ### Problem
 Find the length of the **longest substring** (contiguous) that has **all distinct** characters.

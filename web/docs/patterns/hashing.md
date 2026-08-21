@@ -33,6 +33,47 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
 
 <ProgressCheck id="two-sum" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-ts-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Complement lookup turns pair search into O(1)</text>
+  <text x="82" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-neutral)">target = 9</text>
+
+  <g text-anchor="middle">
+    <rect x="28" y="84" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="80" y="84" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="132" y="84" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="184" y="84" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="50" y="112">2</text><text x="102" y="112">7</text><text x="154" y="112">11</text><text x="206" y="112">15</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="50" y="143">0</text><text x="102" y="143">1</text><text x="154" y="143">2</text><text x="206" y="143">3</text>
+    </g>
+  </g>
+
+  <path d="M72 108 C118 62 222 62 268 96" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-ts-primary)"/>
+  <text x="169" y="61" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">complement 7 → seen?</text>
+  <rect x="260" y="84" width="112" height="72" rx="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <text x="316" y="106" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">hash map</text>
+  <text x="316" y="132" text-anchor="middle" font-size="15" font-weight="700" fill="var(--dsa-success)">{7→1}</text>
+  <rect x="132" y="190" width="136" height="28" rx="9" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-line)" stroke-width="1.6"/>
+  <text x="200" y="209" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-success)">return [0,1]</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> For each value, compute the exact partner needed and ask the map in O(1); this trades O(n) space for a one-pass O(n) search.</div>
+
 ### Problem
 Given an array `nums` and a `target`, return the **indices** of the two entries that add up to `target`. Exactly one pair works, and you can't reuse the same index.
 
@@ -164,6 +205,47 @@ all of these are *"find elements that combine to a target."* The decision tree i
 *[↗ LeetCode: Group Anagrams](https://leetcode.com/problems/group-anagrams/)*
 
 <ProgressCheck id="group-anagrams" />
+
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-ga-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Canonical keys make equivalent words collide</text>
+
+  <g font-size="13" font-weight="700" text-anchor="middle">
+    <rect x="24" y="54" width="58" height="30" rx="8" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="53" y="74" fill="var(--dsa-ink)">eat</text>
+    <rect x="24" y="104" width="58" height="30" rx="8" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="53" y="124" fill="var(--dsa-ink)">tea</text>
+    <rect x="24" y="154" width="58" height="30" rx="8" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="53" y="174" fill="var(--dsa-ink)">tan</text>
+
+    <rect x="138" y="54" width="58" height="30" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="167" y="74" fill="var(--dsa-success)">aet</text>
+    <rect x="138" y="104" width="58" height="30" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="167" y="124" fill="var(--dsa-success)">aet</text>
+    <rect x="138" y="154" width="58" height="30" rx="8" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="167" y="174" fill="var(--dsa-warning)">ant</text>
+  </g>
+  <g stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-ga-primary)" fill="none">
+    <path d="M84 69 L132 69"/><path d="M84 119 L132 119"/><path d="M84 169 L132 169"/>
+  </g>
+  <text x="110" y="48" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-neutral)">sort chars</text>
+
+  <rect x="236" y="62" width="134" height="112" rx="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <text x="303" y="85" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">hash map</text>
+  <text x="303" y="112" text-anchor="middle" font-size="12" fill="var(--dsa-success)">"aet" → [eat, tea]</text>
+  <text x="303" y="140" text-anchor="middle" font-size="12" fill="var(--dsa-warning)">"ant" → [tan]</text>
+  <path d="M198 69 C220 69 218 96 235 100" fill="none" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-ga-primary)"/>
+  <path d="M198 169 C220 169 218 144 235 140" fill="none" stroke="var(--dsa-warning)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-ga-primary)"/>
+  <text x="200" y="225" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">same sorted key → same bucket; different key → different group</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> Each word is transformed into a canonical sorted-character key, and the hash map groups all words with the same key together.</div>
 
 ### Problem
 Given a list of words, bucket together the ones that are **anagrams** of each other (same letters, any order). Return the groups in any order.

@@ -28,6 +28,46 @@ You need to *update* array values *and* query ranges in the same run — a plain
 
 <ProgressCheck id="subarray-sum-equals-k" />
 
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-ps-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Subarray sum = difference between two prefixes</text>
+
+  <text x="44" y="86" text-anchor="end" font-size="12" font-weight="700" fill="var(--dsa-neutral)">nums</text>
+  <text x="44" y="158" text-anchor="end" font-size="12" font-weight="700" fill="var(--dsa-neutral)">prefix</text>
+  <g text-anchor="middle">
+    <rect x="70" y="58" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="122" y="58" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="174" y="58" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="226" y="58" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="92" y="86">1</text><text x="144" y="86">2</text><text x="196" y="86">3</text><text x="248" y="86">4</text>
+    </g>
+    <rect x="118" y="50" width="104" height="60" rx="10" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-outline-stroke)"/>
+    <text x="170" y="45" font-size="12" font-weight="700" fill="var(--dsa-primary)">subarray [2,3]</text>
+
+    <rect x="70" y="130" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="122" y="130" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="174" y="130" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="226" y="130" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="92" y="158">1</text><text x="144" y="158">3</text><text x="196" y="158">6</text><text x="248" y="158">10</text>
+    </g>
+  </g>
+  <path d="M94 180 C110 210 180 210 196 180" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-ps-primary)"/>
+  <rect x="286" y="86" width="92" height="74" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <text x="332" y="109" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">k = 5</text>
+  <text x="332" y="130" text-anchor="middle" font-size="12" fill="var(--dsa-success)">6 - 1 = 5</text>
+  <text x="332" y="150" text-anchor="middle" font-size="11" fill="var(--dsa-neutral)">pre[3]-pre[0]</text>
+  <text x="200" y="228" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">at each prefix, ask how many earlier prefixes equal current - k</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> The subarray <b>[2,3]</b> is found by subtracting an earlier prefix from the current prefix; the hashmap version counts how often <code>prefix - k</code> has appeared.</div>
+
 ### Problem
 Count how many **contiguous subarrays** sum exactly to `k`. The array may contain **negative** numbers — which is what rules out a sliding window.
 

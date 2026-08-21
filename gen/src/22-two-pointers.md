@@ -2,6 +2,8 @@
 
 Instead of checking every pair with two nested loops (that's O(n²)), you keep **two indices** and move them cleverly so each step rules out a whole batch of pairs at once. The trick almost always leans on the array being **sorted** — that order is what tells you *which* pointer to move.
 
+<TwoPointersAnim />
+
 Say the array is sorted and you want two numbers that add up to a target. Put one pointer at each end and look at their sum:
 
 - too **big**? the large end is the culprit — move the right pointer **left** to a smaller value.
@@ -69,6 +71,47 @@ The array **isn't sorted** and you can't afford to sort it (O(n log n) prep) —
 *[↗ LeetCode: 3Sum](https://leetcode.com/problems/3sum/)*
 
 <ProgressCheck id="3sum" />
+
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-3sum-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <marker id="ar-3sum-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <marker id="ar-3sum-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Sort, fix one value, two-pointer the rest</text>
+
+  <g text-anchor="middle">
+    <rect x="44" y="82" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="96" y="82" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="148" y="82" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="200" y="82" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="252" y="82" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="304" y="82" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="var(--dsa-cell-stroke)"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="66" y="110">-4</text><text x="118" y="110">-1</text><text x="170" y="110">-1</text>
+      <text x="222" y="110">0</text><text x="274" y="110">1</text><text x="326" y="110">2</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="66" y="141">0</text><text x="118" y="141">1</text><text x="170" y="141">2</text>
+      <text x="222" y="141">3</text><text x="274" y="141">4</text><text x="326" y="141">5</text>
+    </g>
+  </g>
+
+  <line x1="118" y1="54" x2="118" y2="79" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-3sum-primary)"/>
+  <text x="118" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">i fixed</text>
+  <line x1="170" y1="174" x2="170" y2="130" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-3sum-success)"/>
+  <text x="170" y="193" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">left</text>
+  <line x1="326" y1="174" x2="326" y2="130" stroke="var(--dsa-danger)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-3sum-danger)"/>
+  <text x="326" y="193" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">right</text>
+
+  <rect x="62" y="210" width="276" height="24" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-line)" stroke-width="1.6"/>
+  <text x="200" y="227" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">sum = -1 + -1 + 2 = 0 → hit!</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> Once <code>i</code> is fixed, the sorted suffix is a two-sum problem; move <code>left</code>/<code>right</code> until the triple hits zero, then skip duplicates.</div>
 
 ### Problem
 Find **all unique triplets** `(a, b, c)` in the array with `a + b + c = 0`. The output must contain no duplicate triplets.
@@ -185,6 +228,42 @@ Sort once, then let two converging pointers do the work — the target and the c
 *[↗ LeetCode: Container With Most Water](https://leetcode.com/problems/container-with-most-water/)*
 
 <ProgressCheck id="container-with-most-water" />
+
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-cwm-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Start widest; move the shorter wall</text>
+
+  <rect x="46" y="151" width="304" height="11" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-info)" stroke-width="1.6" opacity="0.85"/>
+  <line x1="46" y1="162" x2="350" y2="162" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <g text-anchor="middle">
+    <rect x="35" y="151" width="22" height="11" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+    <rect x="73" y="74" width="22" height="88" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="111" y="96" width="22" height="66" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="149" y="140" width="22" height="22" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="187" y="107" width="22" height="55" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="225" y="118" width="22" height="44" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="263" y="74" width="22" height="88" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="301" y="129" width="22" height="33" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="339" y="85" width="22" height="77" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+    <g font-size="11" font-weight="700" fill="var(--dsa-ink)">
+      <text x="46" y="181">1</text><text x="84" y="181">8</text><text x="122" y="181">6</text><text x="160" y="181">2</text><text x="198" y="181">5</text>
+      <text x="236" y="181">4</text><text x="274" y="181">8</text><text x="312" y="181">3</text><text x="350" y="181">7</text>
+    </g>
+  </g>
+
+  <line x1="46" y1="212" x2="46" y2="166" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-cwm-primary)"/>
+  <text x="46" y="231" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">left</text>
+  <line x1="350" y1="212" x2="350" y2="166" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-cwm-primary)"/>
+  <text x="350" y="231" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">right</text>
+  <text x="200" y="207" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dsa-neutral)">area = min(1,7) × 8 = 8. Move shorter (left) to maximize.</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> The water level is capped by the shorter wall, so with width shrinking each step, only moving the shorter pointer can possibly improve the area.</div>
 
 ### Problem
 Each element is the height of a vertical wall. Pick the two walls that (with the x-axis) hold the **most water** — area `= min(h[i], h[j]) × (j − i)`.

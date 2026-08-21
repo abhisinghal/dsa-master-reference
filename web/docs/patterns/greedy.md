@@ -30,6 +30,47 @@ A locally-best choice can be regretted later — construct a counterexample ("if
 
 <ProgressCheck id="jump-game-ii-farthest-reach-greedy" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-jump-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">greedy BFS frontier: current range → farthest next</text>
+
+  <rect x="124" y="67" width="100" height="62" rx="10" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2.4"/>
+  <text x="174" y="59" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">current range</text>
+  <g text-anchor="middle">
+    <rect x="76" y="76" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="124" y="76" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+    <rect x="172" y="76" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.6"/>
+    <rect x="220" y="76" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="268" y="76" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="98" y="104">2</text><text x="146" y="104">3</text><text x="194" y="104">1</text><text x="242" y="104">1</text><text x="290" y="104">4</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="98" y="140">0</text><text x="146" y="140">1</text><text x="194" y="140">2</text><text x="242" y="140">3</text><text x="290" y="140">4</text>
+    </g>
+  </g>
+  <path d="M146 151 C171 182, 244 182, 290 124" fill="none" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-jump-success)"/>
+  <text x="223" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">farthest = max(i + nums[i]) = 4</text>
+  <rect x="40" y="196" width="320" height="31" rx="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <text x="200" y="216" text-anchor="middle" font-size="11.5" fill="var(--dsa-neutral)">when index passes end, jump++ and current-range = farthest so far</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> Treat each jump count as a BFS layer; scan all indices in the current range, remember the farthest next range, and take one jump only when the current range is exhausted.</div>
+
 ### Problem
 Each `nums[i]` is the **max jump length** from index `i`. Find the **fewest jumps** to reach the last index (reaching the end is always possible).
 
@@ -143,6 +184,52 @@ This is BFS on an implicit graph collapsed to O(n). *Jump Game I* (reachability)
 *[↗ LeetCode: Gas Station](https://leetcode.com/problems/gas-station/)*
 
 <ProgressCheck id="gas-station-prefix-balance-greedy" />
+
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-gas-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">prefix-balance greedy on a circular route</text>
+
+  <circle cx="200" cy="118" r="72" fill="none" stroke="var(--dsa-neutral-line)" stroke-width="2.4"/>
+  <path d="M254 72 C282 100, 283 136, 260 165" fill="none" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-gas-primary)"/>
+  <g text-anchor="middle">
+    <circle cx="200" cy="46" r="15" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6"/>
+    <circle cx="268" cy="96" r="15" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6"/>
+    <circle cx="242" cy="178" r="15" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6"/>
+    <circle cx="158" cy="178" r="17" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+    <circle cx="132" cy="96" r="15" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+    <g font-size="12" font-weight="700" fill="var(--dsa-ink)">
+      <text x="200" y="50">0</text><text x="268" y="100">1</text><text x="242" y="182">2</text><text x="158" y="182">3</text><text x="132" y="100">4</text>
+    </g>
+  </g>
+  <g font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">
+    <text x="200" y="31">1/3</text><text x="304" y="98">2/4</text><text x="274" y="203">3/5</text><text x="126" y="203">4/1</text><text x="96" y="98">5/2</text>
+  </g>
+  <g font-size="12" font-weight="700" text-anchor="middle">
+    <text x="217" y="67" fill="var(--dsa-danger)">tank -2 ✕</text>
+    <text x="302" y="125" fill="var(--dsa-danger)">tank -2 ✕</text>
+    <text x="244" y="223" fill="var(--dsa-danger)">tank -2 ✕</text>
+    <text x="128" y="156" fill="var(--dsa-success)">candidate start</text>
+    <text x="154" y="223" fill="var(--dsa-success)">tank +3</text>
+    <text x="87" y="125" fill="var(--dsa-primary)">tank +6</text>
+  </g>
+  <text x="200" y="235" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">if tank goes negative, restart from next; single pass</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> A negative tank proves every start inside that failed segment is impossible, so the next station becomes the only candidate worth trying.</div>
 
 ### Problem
 Around a circular route, station `i` provides `gas[i]` and it costs `cost[i]` to drive to the next station. Return the **starting index** from which you can complete the whole loop (or -1). A unique answer exists whenever total gas ≥ total cost.

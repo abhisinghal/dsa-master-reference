@@ -98,6 +98,45 @@ You want *one* answer, not all — a pruned DFS or DP is faster than enumerating
 
 <ProgressCheck id="subsets-amp-combinations-the-start-index-template" />
 
+```svg
+<svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="subsets-ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="720" height="260" rx="12" fill="var(--dsa-bg)"/>
+  <text x="360" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">start-index DFS records every node once</text>
+
+  <g stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" fill="none" marker-end="url(#subsets-ar)">
+    <line x1="360" y1="68" x2="192" y2="112"/><line x1="360" y1="68" x2="360" y2="112"/><line x1="360" y1="68" x2="528" y2="112"/>
+    <line x1="192" y1="156" x2="116" y2="190"/><line x1="192" y1="156" x2="260" y2="190"/>
+    <line x1="116" y1="234" x2="116" y2="236"/>
+    <line x1="116" y1="156" x2="116" y2="190"/>
+    <line x1="360" y1="156" x2="360" y2="190"/>
+  </g>
+  <g font-family="var(--dsa-font)" text-anchor="middle">
+    <g font-size="10.5" font-weight="700" fill="var(--dsa-neutral)">
+      <text x="278" y="86">choose 1</text><text x="374" y="98">choose 2</text><text x="462" y="86">choose 3</text>
+      <text x="146" y="176">choose 2</text><text x="234" y="176">choose 3</text><text x="374" y="176">choose 3</text>
+    </g>
+    <g font-size="10.5" font-weight="700" fill="var(--dsa-ink)">
+      <rect x="338" y="38" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="360" y="57">1</text><text x="360" y="73">∅</text>
+      <rect x="170" y="112" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="192" y="131">2</text><text x="192" y="147">{1}</text>
+      <rect x="338" y="112" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="360" y="131">6</text><text x="360" y="147">{2}</text>
+      <rect x="506" y="112" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="528" y="131">8</text><text x="528" y="147">{3}</text>
+      <rect x="94" y="190" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="116" y="209">3</text><text x="116" y="225">{1,2}</text>
+      <rect x="238" y="190" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="260" y="209">5</text><text x="260" y="225">{1,3}</text>
+      <rect x="338" y="190" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="360" y="209">7</text><text x="360" y="225">{2,3}</text>
+      <rect x="94" y="102" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6" opacity="0.9"/>
+      <text x="116" y="119">4</text><text x="116" y="135">{1,2,3}</text>
+    </g>
+  </g>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> start-index prevents duplicates; every path = one subset.</div>
+
 ### Problem
 Return **all subsets** (the power set) of a set of distinct integers, in any order.
 
@@ -363,6 +402,41 @@ O(target/minCandidate) recursion/path space excluding output.
 *[↗ LeetCode: N-Queens](https://leetcode.com/problems/n-queens/)*
 
 <ProgressCheck id="n-queens-constraint-occupancy" />
+
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">one queen blocks row, column, and diagonals</text>
+  <g font-family="var(--dsa-font)" text-anchor="middle" font-size="17" font-weight="700">
+    <rect x="42" y="48" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="64" y="76" fill="var(--dsa-ink)">×</text>
+    <rect x="86" y="48" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="108" y="76" fill="var(--dsa-primary)">♛</text>
+    <rect x="130" y="48" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="152" y="76" fill="var(--dsa-ink)">×</text>
+    <rect x="174" y="48" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="196" y="76" fill="var(--dsa-ink)">×</text>
+
+    <rect x="42" y="92" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6" stroke-dasharray="5 3"/><text x="64" y="120" fill="var(--dsa-ink)">×</text>
+    <rect x="86" y="92" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="108" y="120" fill="var(--dsa-ink)">×</text>
+    <rect x="130" y="92" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6" stroke-dasharray="5 3"/><text x="152" y="120" fill="var(--dsa-ink)">×</text>
+    <rect x="174" y="92" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+
+    <rect x="42" y="136" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="86" y="136" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="108" y="164" fill="var(--dsa-ink)">×</text>
+    <rect x="130" y="136" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="174" y="136" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6" stroke-dasharray="5 3"/><text x="196" y="164" fill="var(--dsa-ink)">×</text>
+
+    <rect x="42" y="180" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="86" y="180" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="108" y="208" fill="var(--dsa-ink)">×</text>
+    <rect x="130" y="180" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+    <rect x="174" y="180" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  </g>
+  <g font-family="var(--dsa-font)" font-size="12" font-weight="700">
+    <text x="248" y="76" fill="var(--dsa-warning)">row / column set</text>
+    <text x="248" y="104" fill="var(--dsa-danger)">diag sets: r-c, r+c</text>
+    <text x="248" y="144" fill="var(--dsa-neutral)">empty cells remain candidates</text>
+  </g>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> 3 hashsets track threatened col &amp; 2 diagonals for O(1) placement check.</div>
 
 ### Problem
 Place `n` queens on an `n×n` board so that **none attack** another (no shared row, column, or diagonal). Return all valid boards.

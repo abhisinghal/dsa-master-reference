@@ -68,6 +68,45 @@ Subproblems don't repeat — pure recursion is fine. Also skip when a **greedy**
 
 <ProgressCheck id="1d-dp-climbing-stairs-amp-house-robber" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">House Robber: choose take vs skip</text>
+  <g font-family="var(--dsa-font)" text-anchor="middle">
+    <text x="28" y="79" font-size="12" font-weight="700" fill="var(--dsa-neutral)">nums</text>
+    <text x="28" y="149" font-size="12" font-weight="700" fill="var(--dsa-neutral)">dp</text>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <rect x="52" y="52" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="74" y="80">2</text>
+      <rect x="104" y="52" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="126" y="80">7</text>
+      <rect x="156" y="52" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="178" y="80">9</text>
+      <rect x="208" y="52" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="230" y="80">3</text>
+      <rect x="260" y="52" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="282" y="80">1</text>
+      <rect x="52" y="122" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="74" y="150">2</text>
+      <rect x="104" y="122" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="126" y="150">7</text>
+      <rect x="156" y="122" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="178" y="150">11</text>
+      <rect x="208" y="122" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="230" y="150">11</text>
+      <rect x="260" y="122" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="282" y="150">12</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="74" y="110">0</text><text x="126" y="110">1</text><text x="178" y="110">2</text><text x="230" y="110">3</text><text x="282" y="110">4</text>
+    </g>
+  </g>
+  <path d="M178,98 C196,113 248,112 266,125" fill="none" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" stroke-dasharray="5 4"/>
+  <path d="M230,166 C246,184 272,184 282,168" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)"/>
+  <text x="200" y="205" text-anchor="middle" font-family="var(--dsa-font)" font-size="12" font-weight="700" fill="var(--dsa-primary)">dp[i] = max(dp[i-1], dp[i-2] + nums[i])</text>
+  <text x="200" y="225" text-anchor="middle" font-family="var(--dsa-font)" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">rob 2 + 9 + 1 ⇒ best = 12</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> take or skip; look 2 back.</div>
+
 ### Problem
 Rob houses in a line to maximize loot, but you **can't rob two adjacent** houses.
 
@@ -182,6 +221,62 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
  — **Medium**
 
 <ProgressCheck id="maximum-subarray-kadane-the-running-optimum-dp" />
+
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="720" height="260" rx="12" fill="var(--dsa-bg)"/>
+  <text x="360" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">Kadane keeps best ending here, then global best</text>
+  <g font-family="var(--dsa-font)" text-anchor="middle">
+    <text x="52" y="72" font-size="12" font-weight="700" fill="var(--dsa-neutral)">a[i]</text>
+    <text x="52" y="136" font-size="12" font-weight="700" fill="var(--dsa-neutral)">current</text>
+    <text x="52" y="200" font-size="12" font-weight="700" fill="var(--dsa-neutral)">best</text>
+    <g font-size="15" font-weight="700" fill="var(--dsa-ink)">
+      <rect x="86" y="44" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="108" y="72">-2</text>
+      <rect x="138" y="44" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="160" y="72">1</text>
+      <rect x="190" y="44" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="212" y="72">-3</text>
+      <rect x="242" y="44" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="264" y="72">4</text>
+      <rect x="294" y="44" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="316" y="72">-1</text>
+      <rect x="346" y="44" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="368" y="72">2</text>
+      <rect x="398" y="44" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="420" y="72">1</text>
+      <rect x="450" y="44" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="472" y="72">-5</text>
+      <rect x="502" y="44" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="524" y="72">4</text>
+
+      <rect x="86" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="108" y="136">-2</text>
+      <rect x="138" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="160" y="136">1</text>
+      <rect x="190" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="212" y="136">-2</text>
+      <rect x="242" y="108" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="264" y="136">4</text>
+      <rect x="294" y="108" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="316" y="136">3</text>
+      <rect x="346" y="108" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="368" y="136">5</text>
+      <rect x="398" y="108" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="420" y="136">6</text>
+      <rect x="450" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="472" y="136">1</text>
+      <rect x="502" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="524" y="136">5</text>
+
+      <rect x="86" y="172" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="108" y="200">-2</text>
+      <rect x="138" y="172" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="160" y="200">1</text>
+      <rect x="190" y="172" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="212" y="200">1</text>
+      <rect x="242" y="172" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="264" y="200">4</text>
+      <rect x="294" y="172" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="316" y="200">4</text>
+      <rect x="346" y="172" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="368" y="200">5</text>
+      <rect x="398" y="172" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="420" y="200">6</text>
+      <rect x="450" y="172" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="472" y="200">6</text>
+      <rect x="502" y="172" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="524" y="200">6</text>
+    </g>
+  </g>
+  <rect x="578" y="98" width="94" height="58" rx="10" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2.4"/>
+  <text x="625" y="122" text-anchor="middle" font-family="var(--dsa-font)" font-size="12" font-weight="700" fill="var(--dsa-primary)">peak badge</text>
+  <text x="625" y="144" text-anchor="middle" font-family="var(--dsa-font)" font-size="20" font-weight="700" fill="var(--dsa-ink)">6</text>
+  <text x="360" y="240" text-anchor="middle" font-family="var(--dsa-font)" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">current = max(a[i], current + a[i]); best tracks global peak.</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> current = max(a[i], current + a[i]); best tracks global peak.</div>
 
 ### Problem
 Find the contiguous subarray with the **largest sum** and return that sum (the array can contain negatives).

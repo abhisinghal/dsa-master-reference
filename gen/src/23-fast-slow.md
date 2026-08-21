@@ -4,6 +4,8 @@
 
 Imagine walking through a linked list where each node only tells you one thing: "go to my next node." There is no index, no length you can trust, and no way to jump backward. If the list is clean, eventually you hit `null`. If the list loops, you can walk forever and never know whether you are just on a long list or trapped in a cycle. The fast/slow pattern exists for exactly this kind of one-way maze. Instead of remembering every room you have visited, you send two walkers through the maze: one moves one step at a time, the other moves two. If there is a loop, the faster walker eventually laps the slower one like runners on a track.
 
+<FastSlowAnim />
+
 Take `3→2→0→-4`, where `-4.next` points back to `2`. Start both pointers at `3`. After one round, slow is at `2`, fast is at `0`. After two rounds, slow is at `0`, fast is back at `2`. After three rounds, slow is at `-4`, fast is at `-4`. They meet, so you know there is a cycle. The clever second half is not just "there is a loop" — it is "where does the loop begin?" Reset one pointer to the head and leave the other at the meeting point. Move both one step at a time: head pointer goes `3→2`; meeting pointer goes `-4→2`; they collide at `2`, the entry.
 
 Why should a junior engineer care? Because this pattern saves you from the default HashSet answer. A set of visited nodes is easy and correct, but it costs O(n) extra memory. Floyd's algorithm gives the same detection and entry location in O(1) space, which is exactly the kind of upgrade interviewers look for after you state the brute force.
@@ -55,6 +57,41 @@ The template has two phases. Phase one moves at different speeds and answers "do
 *[↗ LeetCode: Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)*
 
 <ProgressCheck id="linked-list-cycle-ii-floyd" />
+
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-floyd-neutral" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-neutral)"/></marker>
+    <marker id="ar-floyd-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <marker id="ar-floyd-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Floyd: two speeds reveal the cycle entry</text>
+
+  <path d="M69 92 L105 92" stroke="var(--dsa-neutral)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-floyd-neutral)" fill="none"/>
+  <path d="M135 92 L171 92" stroke="var(--dsa-neutral)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-floyd-neutral)" fill="none"/>
+  <path d="M201 92 L237 92" stroke="var(--dsa-neutral)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-floyd-neutral)" fill="none"/>
+  <path d="M267 92 L303 92" stroke="var(--dsa-neutral)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-floyd-neutral)" fill="none"/>
+  <path d="M330 107 C330 178 190 178 190 119" stroke="var(--dsa-warning)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-floyd-neutral)" fill="none" stroke-dasharray="7 5"/>
+
+  <g text-anchor="middle" font-size="17" font-weight="700">
+    <circle cx="48" cy="92" r="21" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="48" y="98" fill="var(--dsa-ink)">3</text>
+    <circle cx="114" cy="92" r="21" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="114" y="98" fill="var(--dsa-ink)">2</text>
+    <circle cx="180" cy="92" r="21" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="180" y="98" fill="var(--dsa-ink)">0</text>
+    <circle cx="246" cy="92" r="21" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="246" y="98" fill="var(--dsa-ink)">-4</text>
+    <circle cx="312" cy="92" r="21" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="312" y="98" fill="var(--dsa-ink)">5</text>
+  </g>
+  <text x="114" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-warning)">cycle start</text>
+
+  <line x1="180" y1="168" x2="180" y2="118" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-floyd-primary)"/>
+  <text x="180" y="188" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">slow</text>
+  <line x1="312" y1="168" x2="312" y2="118" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-floyd-success)"/>
+  <text x="312" y="188" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">fast 2×</text>
+  <text x="200" y="224" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">after meeting, reset one pointer to head; both walk one step to entry</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> Different speeds force a meeting inside the loop; then the distance from head to entry equals the distance from the meeting point back to the cycle start.</div>
 
 ### Problem
 Detect whether a singly linked list has a **cycle**, and if so return the node where the cycle **begins** — using O(1) space.

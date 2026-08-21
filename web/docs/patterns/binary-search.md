@@ -6,6 +6,8 @@ Can we do better? Yes — one comparison at the middle tells you that half the s
 
 The whole idea is embarrassingly simple: if your data is **ordered**, you never look at half of it. Guess the middle. If the middle is too small, the answer must be in the right half, so throw the left half away. Too big? Throw the right half away. Each guess **halves** what's left, so even a billion elements are settled in about 30 steps (`log₂ 10⁹ ≈ 30`).
 
+&lt;BinarySearchAnim /&gt;
+
 
 
 
@@ -118,6 +120,53 @@ Mixing conventions. Pick half-open `[lo,hi)` with `hi=mid`/`lo=mid+1` and never 
 *[↗ LeetCode: Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)*
 
 <ProgressCheck id="search-in-rotated-sorted-array" />
+
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-rot-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">rotated array: one half is still sorted</text>
+
+  <rect x="28" y="69" width="204" height="62" rx="10" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2.4" opacity="0.62"/>
+  <rect x="232" y="69" width="156" height="62" rx="10" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.4" opacity="0.62"/>
+  <text x="130" y="61" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">sorted 4..7</text>
+  <text x="310" y="61" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">target range</text>
+
+  <g text-anchor="middle">
+    <rect x="34" y="78" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.6"/>
+    <rect x="82" y="78" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.6"/>
+    <rect x="130" y="78" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.6"/>
+    <rect x="178" y="78" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+    <rect x="238" y="78" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+    <rect x="286" y="78" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-line)" stroke-width="1.6"/>
+    <rect x="334" y="78" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-line)" stroke-width="1.6"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="56" y="106">4</text><text x="104" y="106">5</text><text x="152" y="106">6</text><text x="200" y="106">7</text>
+      <text x="260" y="106">0</text><text x="308" y="106">1</text><text x="356" y="106">2</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="56" y="142">0</text><text x="104" y="142">1</text><text x="152" y="142">2</text><text x="200" y="142">3</text>
+      <text x="260" y="142">4</text><text x="308" y="142">5</text><text x="356" y="142">6</text>
+    </g>
+  </g>
+  <line x1="200" y1="166" x2="200" y2="124" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-rot-primary)"/>
+  <text x="200" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">mid = 3, value 7</text>
+  <text x="200" y="216" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">identify sorted half → binary-search there or the other</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> The left half is sorted, but the target value 0 cannot lie between 4 and 7, so binary search discards that half and continues on the green side.</div>
 
 ### Problem
 A sorted array was **rotated** at an unknown pivot. Find the index of `target` (or -1) in **O(log n)**.
