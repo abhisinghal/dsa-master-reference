@@ -103,7 +103,7 @@ features:
   </div>
   <div class="stat">
     <div class="stat-value">▶</div>
-    <div class="stat-label">In-browser Java runner</div>
+    <div class="stat-label">CheerpJ-powered Java runner (WASM, no rate limit)</div>
   </div>
 </div>
 
