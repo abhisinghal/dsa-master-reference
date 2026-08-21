@@ -166,7 +166,7 @@ Even when the problem is monotone, sliding window has hard limits worth naming o
 
 Now let's walk through the canonical shapes, from the simplest fixed-size warm-up up through the composed sliding-window + monotonic-deque problem.
 
-## Maximum Average Subarray I (fixed-size warm-up)
+## Maximum Average Subarray I (fixed-size warm-up) <span class="diff diff-e">Easy</span>
 *[↗ LeetCode: Maximum Average Subarray I](https://leetcode.com/problems/maximum-average-subarray-i/)*
 
 ### Problem
@@ -276,7 +276,7 @@ The optimized method is O(1) space because it keeps only `left`, `val`, and `bes
 | [Permutation in String](https://leetcode.com/problems/permutation-in-string/) | same as above; return true on the first match | O(n) |
 | [Diet Plan Performance](https://leetcode.com/problems/diet-plan-performance/) | classify each window by sum thresholds; sum score | O(n) |
 
-## Smallest Subarray With Sum ≥ Target
+## Smallest Subarray With Sum ≥ Target <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)*
 
 ### Problem
@@ -374,7 +374,7 @@ Space is O(1) because the algorithm stores a running sum, two pointers, and the 
 | [Replace the Substring for Balanced String](https://leetcode.com/problems/replace-the-substring-for-balanced-string/) | shrink while the outside-window counts are already balanced | — |
 | [Shortest Subarray with Sum ≥ K (negatives allowed)](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) | the window breaks with negatives → switch to prefix sums + a monotonic deque | — |
 
-## Longest Substring Without Repeating Characters
+## Longest Substring Without Repeating Characters <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)*
 
 ### Problem
@@ -478,7 +478,7 @@ Once you own this "grow, and shrink when a rule breaks" loop, a whole family ope
 | [Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/) | over a 0/1 array, shrink only when the number of zeros in the window exceeds `K` (you may flip `K` zeros) | — |
 | [Permutation in String / Find All Anagrams](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | a **fixed-size** window plus exact character counts — slide a window the length of the pattern and check the counts match | — |
 
-## Minimum Window Substring
+## Minimum Window Substring <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)*
 
 ### Problem
@@ -588,7 +588,7 @@ A `need`/`have` counter that tells you when the window "covers" a required set:
 | [Minimum Window Subsequence](https://leetcode.com/problems/minimum-window-subsequence/) | the target must appear in order (not just as a multiset), so track progress through the pattern instead of counts | — |
 | [Substring with Concatenation of All Words](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) | the "characters" are whole words of equal length | — |
 
-## Longest Repeating Character Replacement
+## Longest Repeating Character Replacement <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)*
 
 ### Problem
@@ -765,7 +765,7 @@ int characterReplacement(String s, int k) {
 | [Get Equal Substrings Within Budget](https://leetcode.com/problems/get-equal-substrings-within-budget/) | shrink when the total change-cost inside the window exceeds the budget | — |
 | [Frequency of the Most Frequent Element](https://leetcode.com/problems/frequency-of-the-most-frequent-element/) | sort, then window where `windowLen·max − windowSum ≤ k` operations | — |
 
-## Subarray Product Less Than K (counting + at-most-K trick)
+## Subarray Product Less Than K (counting + at-most-K trick) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)*
 
 ### Problem
@@ -860,7 +860,7 @@ Space is O(1) because the method keeps only `left`, `count`, and `product`; it d
 | [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/) | same trick, "sum = S" over a 0/1 array | O(n) |
 | [Number of Substrings Containing All Three Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/) | count from the *shrinking* side: `count += left` at each valid `right` | O(n) |
 
-## Sliding Window Maximum (Monotonic Deque)
+## Sliding Window Maximum (Monotonic Deque) <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)*
 
 ### Problem

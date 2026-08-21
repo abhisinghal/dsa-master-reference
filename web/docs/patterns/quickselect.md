@@ -21,7 +21,7 @@ After partitioning around a pivot, the pivot sits at its final sorted index p. I
 
 
 <div class="svg-figure">
-<svg width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="qs-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
     <marker id="qs-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
@@ -64,6 +64,10 @@ After partitioning around a pivot, the pivot sits at its final sorted index p. I
   <text x="556" y="114" text-anchor="middle" font-size="12" fill="#334155">else recurse only into k's side</text>
 </svg>
 </div>
+
+### ▶ Try it — interactive walkthrough
+
+<QuickselectAnim />
 
 
 
@@ -112,7 +116,7 @@ The template is a narrowing search over ranks, not values. `partition` gives you
 
 ---
 
-## Quickselect (Kth Largest Element)
+## Quickselect (Kth Largest Element) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)*
 
 ### Problem

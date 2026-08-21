@@ -56,7 +56,7 @@ Subproblems don't repeat — pure recursion is fine. Also skip when a **greedy**
 
 ---
 
-## 1D DP — Climbing Stairs &amp; House Robber
+## 1D DP — Climbing Stairs &amp; House Robber <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: House Robber](https://leetcode.com/problems/house-robber/)*
 
 ### Problem
@@ -161,7 +161,7 @@ O(1): only `prev2`, `prev1`, and `cur` are kept.
 - Why no full `dp[]` array? — the recurrence needs only the two previous states.
 - Why `return prev1`? — after the last update, it represents the best loot through all houses.
 
-## Maximum Subarray (Kadane) — the running-optimum DP
+## Maximum Subarray (Kadane) — the running-optimum DP <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)* — **Medium**
 
 ### Problem
@@ -275,7 +275,7 @@ O(1): only `cur` and `best` are stored.
 - Why update `best` after `cur`? — the best subarray may end at the current index.
 - Why no window shrink loop? — validity is not monotone; this is a DP choice to extend or restart.
 
-## 0/1 Knapsack &amp; Subset-Sum family
+## 0/1 Knapsack &amp; Subset-Sum family <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)*
 
 ### Problem
@@ -387,7 +387,7 @@ O(target): one boolean row of reachable sums.
 - Why iterate `w` downward? — each number may be used at most once; downward order prevents reusing it in the same item pass.
 - Why `dp[w] |= dp[w - x]`? — sum `w` is reachable if it was already reachable or if `w-x` was reachable before this item.
 
-## Coin Change (unbounded, min count)
+## Coin Change (unbounded, min count) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Coin Change](https://leetcode.com/problems/coin-change/)*
 
 ### Problem
@@ -496,7 +496,7 @@ O(amount): one array stores the best answer for each amount.
 - Why guard `if (c <= a)`? — negative indexes are invalid and a too-large coin cannot help this amount.
 - Why return `-1` when `dp[amount] > amount`? — the sentinel survived, so no combination reached the amount.
 
-## Grid DP — Unique Paths &amp; Minimum Path Sum
+## Grid DP — Unique Paths &amp; Minimum Path Sum <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Unique Paths](https://leetcode.com/problems/unique-paths/)*
 
 ### Problem
@@ -609,7 +609,7 @@ O(C): the rolling row stores one value per column.
 - Why is `dp[c]` the above value? — before overwriting it, it still holds the previous row's answer for this column.
 - Why is `dp[c-1]` the left value? — left-to-right iteration has already updated it for the current row.
 
-## Subsequence DP — LIS, LCS, Edit Distance
+## Subsequence DP — LIS, LCS, Edit Distance <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Edit Distance](https://leetcode.com/problems/edit-distance/)*
 
 ### Problem
@@ -751,7 +751,7 @@ LIS optimized: O(n) for `tails`. LCS/Edit: O(mn), reducible to O(min(m,n)) with 
 - Why `dp[i][0] = i` in edit distance? — converting a prefix to empty requires deleting every character.
 - Why use diagonal on matching characters? — equal last characters need no edit, so the answer is the smaller prefix pair.
 
-## Interval DP — Matrix Chain / Burst Balloons
+## Interval DP — Matrix Chain / Burst Balloons <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Burst Balloons](https://leetcode.com/problems/burst-balloons/)*
 
 ### Problem
@@ -865,7 +865,7 @@ O(n²): the table stores every interval answer.
 - Why use `dp[i][k-1] + ... + dp[k+1][j]`? — the last burst splits the interval into independent left and right subproblems.
 - Why `Math.max`? — this variant maximizes coins; matrix-chain variants often use `Math.min`.
 
-## State-Machine DP — Stock trading with cooldown
+## State-Machine DP — Stock trading with cooldown <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)*
 
 ### Problem

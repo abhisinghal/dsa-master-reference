@@ -95,7 +95,7 @@ This is a common interview twist: topological sort is only half the solution. Th
 
 ---
 
-## Course Schedule (Topological Sort)
+## Course Schedule (Topological Sort) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)*
 
 ### Problem

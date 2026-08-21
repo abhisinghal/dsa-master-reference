@@ -11,7 +11,7 @@ The whole idea is embarrassingly simple: if your data is **ordered**, you never 
 
 
 <div class="svg-figure">
-<svg width="720" height="176" viewBox="0 0 720 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <rect x="0" y="0" width="720" height="176" fill="#fbfcfe"/>
   <text x="20" y="26" font-size="13" font-weight="700" fill="#2563eb">search for a value — each guess throws away half</text>
 
@@ -113,7 +113,7 @@ Mixing conventions. Pick half-open `[lo,hi)` with `hi=mid`/`lo=mid+1` and never 
 
 </Callout>
 
-## Search in Rotated Sorted Array
+## Search in Rotated Sorted Array <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)*
 
 ### Problem

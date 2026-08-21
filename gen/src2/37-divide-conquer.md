@@ -112,7 +112,7 @@ For inversion count, the answers are crisp: each half returns sorted order plus 
 
 ---
 
-## Merge Sort &amp; Count of Smaller Numbers After Self
+## Merge Sort &amp; Count of Smaller Numbers After Self <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)*
 
 ### Problem

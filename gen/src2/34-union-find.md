@@ -62,7 +62,7 @@ You need to *walk* the components (traversal, distances, colouring) — Union-Fi
 
 ---
 
-## Union-Find (Disjoint Set Union)
+## Union-Find (Disjoint Set Union) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Number of Provinces](https://leetcode.com/problems/number-of-provinces/)*
 
 ### Problem
@@ -173,7 +173,7 @@ Near O(α(n)) per op ≈ O(1).
 | [Most Stones Removed](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) | union stones sharing a row or column; removable = total − components | — |
 
 
-## Minimum Spanning Tree — Kruskal + Union-Find
+## Minimum Spanning Tree — Kruskal + Union-Find <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)*
 
 ### Problem

@@ -57,7 +57,7 @@ void addFirst(Node n) {
 
 ---
 
-## LRU Cache
+## LRU Cache <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: LRU Cache](https://leetcode.com/problems/lru-cache/)* — **Medium**
 
@@ -180,7 +180,7 @@ O(capacity) for the map plus one linked-list node per cached key.
 | [All O(1) Data Structure](https://leetcode.com/problems/all-oone-data-structure/) | linked buckets ordered by count; keys move between buckets | O(1) |
 | [Design Browser History](https://leetcode.com/problems/design-browser-history/) | pointer movement in a list/array; no hash map needed unless URLs are queried | O(1) |
 
-## Insert Delete GetRandom O(1)
+## Insert Delete GetRandom O(1) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o1/)* — **Medium**
 
@@ -275,7 +275,7 @@ O(n) for the value array and value-to-index map.
 | [LRU Cache](https://leetcode.com/problems/lru-cache/) | map + doubly-linked list for recency | O(1) |
 | [Random Pick with Weight](https://leetcode.com/problems/random-pick-with-weight/) | prefix-sum array + binary search | O(log n) |
 
-## Reservoir Sampling — uniform pick from a stream
+## Reservoir Sampling — uniform pick from a stream <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Linked List Random Node](https://leetcode.com/problems/linked-list-random-node/)* — **Medium**
 

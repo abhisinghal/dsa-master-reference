@@ -30,7 +30,7 @@ You need to *update* array values *and* query ranges in the same run — a plain
 
 ---
 
-## Subarray Sum Equals K
+## Subarray Sum Equals K <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)*
 
 ### Problem
@@ -138,7 +138,7 @@ The shared idea is **charge a subarray-with-a-target-property to its prefix**: a
 | [Continuous Subarray Sum (multiple of k)](https://leetcode.com/problems/continuous-subarray-sum/) | same `mod k` bucketing, but store the earliest index to enforce a length ≥ 2 | — |
 | [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/) | count prefixes equal to `pre − goal` | — |
 
-## Difference Array (Range Update)
+## Difference Array (Range Update) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/)*
 
 ### Problem

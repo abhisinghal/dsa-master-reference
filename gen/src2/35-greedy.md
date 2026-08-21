@@ -20,7 +20,7 @@ A locally-best choice can be regretted later — construct a counterexample ("if
 
 ---
 
-## Jump Game II (Farthest-Reach Greedy)
+## Jump Game II (Farthest-Reach Greedy) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Jump Game II](https://leetcode.com/problems/jump-game-ii/)*
 
 ### Problem
@@ -99,7 +99,7 @@ Space O(1). The greedy scan keeps only `jumps`, `curEnd`, and `farthest`.
 | [Video Stitching / Minimum Number of Taps](https://leetcode.com/problems/video-stitching/) | the same "cover the line in fewest intervals" farthest-reach greedy | — |
 | [Minimum Number of Arrows](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | the interval-cover cousin (sort by end) | — |
 
-## Gas Station (Prefix-Balance Greedy)
+## Gas Station (Prefix-Balance Greedy) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Gas Station](https://leetcode.com/problems/gas-station/)*
 
 ### Problem
@@ -180,7 +180,7 @@ Space O(1). Only `total`, `tank`, and `start` are stored.
 | [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | track the min price so far and the best profit against it | — |
 | [Gas Station](https://leetcode.com/problems/gas-station/) | reset the start to `i+1` when the tank dips below 0, with a global feasibility gate | — |
 
-## Task Scheduler / Activity Selection (Sort-Driven Greedy)
+## Task Scheduler / Activity Selection (Sort-Driven Greedy) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Task Scheduler](https://leetcode.com/problems/task-scheduler/)*
 
 ### Problem
@@ -254,7 +254,7 @@ Space O(A) for the frequency table.
 > [inv] **Invariant test** — Greedy is safe iff you can prove the exchange argument. No proof, construct a small counterexample; if one exists, the problem is DP.
 
 
-## Non-overlapping Intervals (Interval Scheduling)
+## Non-overlapping Intervals (Interval Scheduling) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)*
 
 ### Problem

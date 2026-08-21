@@ -68,7 +68,7 @@ The template has three moving pieces. The `Entry` remembers not just the value, 
 
 ---
 
-## Merge Two / K Sorted Lists
+## Merge Two / K Sorted Lists <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)*
 
 ### Problem
@@ -189,7 +189,7 @@ Duplicates are fine: if two heap entries have the same value, either can come fi
 
 ---
 
-## Merge K Sorted Lists / Smallest Range (K-way merge)
+## Merge K Sorted Lists / Smallest Range (K-way merge) <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Smallest Range Covering Elements from K Lists](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/)*
 
 ### Problem

@@ -19,7 +19,7 @@ Union-Find is not a *tree traversal* algorithm; it's a *set-membership* structur
 
 
 <div class="svg-figure">
-<svg width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="uf-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
     <marker id="uf-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
@@ -57,11 +57,6 @@ Union-Find is not a *tree traversal* algorithm; it's a *set-membership* structur
 </svg>
 </div>
 
-### ▶ Try it — interactive walkthrough
-
-<UnionFindAnim />
-
-
 
 
 
@@ -79,7 +74,7 @@ You need to *walk* the components (traversal, distances, colouring) — Union-Fi
 
 ---
 
-## Union-Find (Disjoint Set Union)
+## Union-Find (Disjoint Set Union) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Number of Provinces](https://leetcode.com/problems/number-of-provinces/)*
 
 ### Problem
@@ -222,7 +217,7 @@ DSU is the engine for *Number of Provinces*, *Accounts Merge* (union by shared e
 | [Most Stones Removed](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) | union stones sharing a row or column; removable = total − components | — |
 
 
-## Minimum Spanning Tree — Kruskal + Union-Find
+## Minimum Spanning Tree — Kruskal + Union-Find <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)*
 
 ### Problem

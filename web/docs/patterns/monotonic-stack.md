@@ -27,7 +27,7 @@ each pop's "next greater" is the current bar
 
 
 <div class="svg-figure">
-<svg width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="ms-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
     <marker id="ms-ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
@@ -71,11 +71,6 @@ each pop's "next greater" is the current bar
 </svg>
 </div>
 
-### ▶ Try it — interactive walkthrough
-
-<MonoStackAnim />
-
-
 
 
 
@@ -91,7 +86,7 @@ You need *farthest* rather than *nearest* — or the comparison isn't a simple o
 
 ---
 
-## Daily Temperatures (Next Greater Element)
+## Daily Temperatures (Next Greater Element) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)*
 
 ### Problem
@@ -199,7 +194,7 @@ A monotonic stack that "resolves" each element the moment a bigger/smaller one a
 | [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) | each element contributes `min × (countLeft × countRight)`; the monotonic stack gives those boundary counts | — |
 
 
-## Largest Rectangle in Histogram
+## Largest Rectangle in Histogram <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)*
 
 ### Problem

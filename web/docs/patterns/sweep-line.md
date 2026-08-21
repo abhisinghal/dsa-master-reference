@@ -19,7 +19,7 @@ The pattern gets its name from geometry: imagine a vertical line sweeping across
 
 
 <div class="svg-figure">
-<svg width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="swp-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
     <filter id="swp-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
@@ -57,6 +57,10 @@ The pattern gets its name from geometry: imagine a vertical line sweeping across
   <text x="360" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="#5b6472">peak active count = 2 rooms</text>
 </svg>
 </div>
+
+### ▶ Try it — interactive walkthrough
+
+<SweepLineAnim />
 
 
 
@@ -125,7 +129,7 @@ At equal coordinates, you must know whether an end and a start overlap. For meet
 
 ---
 
-## Meeting Rooms II (Minimum Concurrent Intervals)
+## Meeting Rooms II (Minimum Concurrent Intervals) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/)*
 
 ### Problem

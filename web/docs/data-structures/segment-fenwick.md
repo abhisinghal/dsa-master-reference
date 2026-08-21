@@ -11,7 +11,7 @@ update/query walk O(log n) indices by adding/removing the lowest set bit.
 
 
 
-## Fenwick Tree (Binary Indexed Tree)
+## Fenwick Tree (Binary Indexed Tree) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)*
 
@@ -121,7 +121,7 @@ Point-update + prefix-query in O(log n):
 | [Reverse Pairs](https://leetcode.com/problems/reverse-pairs/) | a BIT over compressed values counting `a[i] > 2·a[j]` | — |
 | [Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/) | a BIT over prefix sums | — |
 
-## Segment Tree (range query + range update)
+## Segment Tree (range query + range update) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)*
 

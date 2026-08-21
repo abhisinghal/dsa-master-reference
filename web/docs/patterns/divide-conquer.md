@@ -21,7 +21,7 @@ That is the mental upgrade from "recursion" to "divide and conquer." Recursion i
 
 
 <div class="svg-figure">
-<svg width="720" height="260" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="dc-ar-blue" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
     <filter id="dc-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
@@ -64,6 +64,10 @@ That is the mental upgrade from "recursion" to "divide and conquer." Recursion i
   <text x="573" y="238" text-anchor="middle" font-size="12" font-weight="700" fill="#0b1220">O(n) × log n = O(n log n)</text>
 </svg>
 </div>
+
+### ▶ Try it — interactive walkthrough
+
+<DivideConquerAnim />
 
 
 
@@ -128,7 +132,7 @@ For inversion count, the answers are crisp: each half returns sorted order plus 
 
 ---
 
-## Merge Sort &amp; Count of Smaller Numbers After Self
+## Merge Sort &amp; Count of Smaller Numbers After Self <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)*
 
 ### Problem

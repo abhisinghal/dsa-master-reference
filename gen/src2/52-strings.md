@@ -4,7 +4,7 @@ A string is just an array of characters, so almost everything from the Arrays ch
 
 > [key] **Key Insight** — Fixed alphabet ⇒ an `int[26]`/`int[128]` frequency vector *is* your hash: O(1) comparison and update. Reach for it before `HashMap<Character,Integer>`.
 
-## Longest Palindromic Substring (Expand Around Center)
+## Longest Palindromic Substring (Expand Around Center) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)*
 

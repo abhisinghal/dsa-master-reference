@@ -36,7 +36,7 @@ Two workhorses: `x & (x-1)` **removes** the lowest set bit (Brian Kernighan's po
 
 </Callout>
 
-## Single Number I / II / III (XOR)
+## Single Number I / II / III (XOR) <span class="diff diff-e">Easy</span>
 *[↗ LeetCode: Single Number](https://leetcode.com/problems/single-number/)*
 
 ### Problem
@@ -143,7 +143,7 @@ O(1): one accumulator.
 - Why does the loner survive? — it is the only value with odd count in the base problem.
 - Why isolate one bit for Single Number III? — the two loners differ on that bit, so it separates them into different XOR groups.
 
-## Counting Bits (DP on bits)
+## Counting Bits (DP on bits) <span class="diff diff-e">Easy</span>
 *[↗ LeetCode: Counting Bits](https://leetcode.com/problems/counting-bits/)*
 
 ### Problem
@@ -247,7 +247,7 @@ O(n): the returned `dp` array is the output.
 - Why is this DP? — every `dp[i]` reuses the answer for `i/2` instead of recounting bits.
 - Why not call `Integer.bitCount` repeatedly in the teaching version? — the recurrence exposes the reusable subproblem and avoids per-number bit loops.
 
-## Subset generation via masks
+## Subset generation via masks <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)*
 
 ### Problem

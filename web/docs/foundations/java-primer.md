@@ -32,7 +32,7 @@ A one-line map from "what I need" to "what I use":
 
 
 <div class="svg-figure">
-<svg width="680" height="172" viewBox="0 0 680 172" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 172" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <filter id="ar-s" x="-8%" y="-8%" width="116%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
   </defs>
@@ -118,7 +118,7 @@ for (int v : b) { /* visit v */ }
 
 
 <div class="svg-figure">
-<svg width="680" height="212" viewBox="0 0 680 212" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 212" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs><marker id="al-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker></defs>
   <rect x="0" y="0" width="680" height="212" fill="#fbfcfe"/>
   <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">ArrayList doubles its backing array when full → appends are O(1) amortized</text>
@@ -234,7 +234,7 @@ never `l.remove(...)` (the list method) inside a for-each loop; it corrupts the 
 
 
 <div class="svg-figure">
-<svg width="680" height="232" viewBox="0 0 680 232" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 232" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="dq-b" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
     <marker id="dq-r" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
@@ -378,7 +378,7 @@ while (!dq.isEmpty()) { int x = dq.poll(); }        // DRAINS it (destructive)
 
 
 <div class="svg-figure">
-<svg width="680" height="176" viewBox="0 0 680 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="ll-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
     <filter id="ll-s" x="-8%" y="-8%" width="116%" height="150%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
@@ -463,7 +463,7 @@ head.next = new ListNode(2);          // builds 1 -> 2
 
 
 <div class="svg-figure">
-<svg width="680" height="212" viewBox="0 0 680 212" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 212" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs><marker id="hm-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker></defs>
   <rect x="0" y="0" width="680" height="212" fill="#fbfcfe"/>
   <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">HashMap — hash(key) picks a bucket; keys that collide chain together</text>
@@ -587,7 +587,7 @@ for (int x : set) { /* HashSet — any order */ }
 
 
 <div class="svg-figure">
-<svg width="680" height="196" viewBox="0 0 680 196" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 196" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="lh-a" markerWidth="8" markerHeight="8" refX="4.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7c3aed"/></marker>
   </defs>
@@ -680,7 +680,7 @@ for (var e : m.entrySet()) { /* visits b, a, c — the order you inserted */ }
 
 
 <div class="svg-figure">
-<svg width="680" height="238" viewBox="0 0 680 238" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 238" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <rect x="0" y="0" width="680" height="238" fill="#fbfcfe"/>
   <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">Balanced BST — smaller keys left, larger keys right; height ≈ log n</text>
   <!-- edges (search path 8→3→6 in green) -->
@@ -798,7 +798,7 @@ Iterator<Integer> back = ts.descendingIterator();        // descending
 
 
 <div class="svg-figure">
-<svg width="680" height="238" viewBox="0 0 680 238" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 238" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <rect x="0" y="0" width="680" height="238" fill="#fbfcfe"/>
   <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">Binary heap — a complete binary tree stored in a flat array</text>
   <!-- tree edges -->
@@ -932,7 +932,7 @@ a heap gives you *one* extreme cheaply, **not** a sorted view and **not** O(log 
 
 
 <div class="svg-figure">
-<svg width="680" height="196" viewBox="0 0 680 196" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 680 196" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <rect x="0" y="0" width="680" height="196" fill="#fbfcfe"/>
   <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">Trie — each edge is a character; a path spells a prefix</text>
   <!-- edges -->

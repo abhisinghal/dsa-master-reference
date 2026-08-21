@@ -8,7 +8,7 @@ Fixed alphabet ⇒ an `int[26]`/`int[128]` frequency vector *is* your hash: O(1)
 
 </Callout>
 
-## Longest Palindromic Substring (Expand Around Center)
+## Longest Palindromic Substring (Expand Around Center) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)*
 

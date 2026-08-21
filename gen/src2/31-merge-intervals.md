@@ -48,7 +48,7 @@ The sort is the setup. `cur` is the union of the current overlapping cluster. If
 
 ---
 
-## Merge Intervals
+## Merge Intervals <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Merge Intervals](https://leetcode.com/problems/merge-intervals/)*
 
 ### Problem

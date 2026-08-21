@@ -20,7 +20,7 @@ You need a *contiguous* result (subarray, substring) and the running quantity is
 
 ---
 
-## Two Sum
+## Two Sum <span class="diff diff-e">Easy</span>
 *[↗ LeetCode: Two Sum](https://leetcode.com/problems/two-sum/)*
 
 ### Problem
@@ -31,18 +31,6 @@ Given an array `nums` and a `target`, return the **indices** of the two entries 
 **Example 1:** `nums = [2,7,11,15], target = 9` → `[0,1]` (since `2 + 7 = 9`).
 
 **Example 2:** `nums = [3,3], target = 6` → `[0,1]` (two equal values must be different indices).
-
-### Try it yourself
-
-Complete the `Main` class below and click **▶ Run tests**. Your code compiles and runs against the two examples via the Judge0 API. Code auto-saves to your browser.
-
-<JavaRunner
-  problemSlug="two-sum"
-  :tests='[
-    { input: "4\n2 7 11 15\n9", expected: "0 1" },
-    { input: "2\n3 3\n6", expected: "0 1" }
-  ]'
-/>
 
 ### Solution — brute force
 Nested loop: for each `i`, scan `j > i` for `nums[i] + nums[j] == target`. This is O(n²) time and O(1) space, and it is correct but too slow once `n` reaches `10⁴`. The hash-map optimization avoids the inner scan by remembering values already seen and asking whether the current value's complement has appeared.
@@ -161,7 +149,7 @@ all of these are *"find elements that combine to a target."* The decision tree i
 
 </Callout>
 
-## Group Anagrams
+## Group Anagrams <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Group Anagrams](https://leetcode.com/problems/group-anagrams/)*
 
 ### Problem
@@ -286,7 +274,7 @@ Same move — *"map each item to a canonical key so equivalents collide"* — on
 | [Find Duplicate File in System](https://leetcode.com/problems/find-duplicate-file-in-system/) | same **content** | the file's content string |
 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/) | two strings, not a whole group | compare the two 26-count signatures directly |
 
-## Product of Array Except Self
+## Product of Array Except Self <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)*
 
 ### Problem
@@ -402,7 +390,7 @@ Same skeleton — *combine a running result from the left with one from the righ
 | [Candy](https://leetcode.com/problems/candy/) | each child must beat both neighbours | two passes (L→R then R→L), take the **max** requirement | O(n) · O(n) |
 | [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) | a negative flips sign | track running **max *and* min** so a sign-flip can become the new best | O(n) · O(1) |
 
-## Longest Consecutive Sequence
+## Longest Consecutive Sequence <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)*
 
 ### Problem

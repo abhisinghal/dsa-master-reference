@@ -7,12 +7,20 @@ import JavaRunner from './JavaRunner.vue'
 import SlidingWindowAnim from './SlidingWindowAnim.vue'
 import MonoStackAnim from './MonoStackAnim.vue'
 import UnionFindAnim from './UnionFindAnim.vue'
+import SweepLineAnim from './SweepLineAnim.vue'
+import DivideConquerAnim from './DivideConquerAnim.vue'
+import QuickselectAnim from './QuickselectAnim.vue'
+import BacktrackingAnim from './BacktrackingAnim.vue'
+import Breadcrumbs from './Breadcrumbs.vue'
+import ReadingTime from './ReadingTime.vue'
 import './style.css'
 
 export default {
   extends: DefaultTheme,
   Layout: () => {
-    return h(DefaultTheme.Layout, null, {})
+    return h(DefaultTheme.Layout, null, {
+      'doc-before': () => h(Breadcrumbs)
+    })
   },
   enhanceApp({ app }) {
     app.component('Callout', Callout)
@@ -22,5 +30,11 @@ export default {
     app.component('SlidingWindowAnim', SlidingWindowAnim)
     app.component('MonoStackAnim', MonoStackAnim)
     app.component('UnionFindAnim', UnionFindAnim)
+    app.component('SweepLineAnim', SweepLineAnim)
+    app.component('DivideConquerAnim', DivideConquerAnim)
+    app.component('QuickselectAnim', QuickselectAnim)
+    app.component('BacktrackingAnim', BacktrackingAnim)
+    app.component('Breadcrumbs', Breadcrumbs)
+    app.component('ReadingTime', ReadingTime)
   }
 }

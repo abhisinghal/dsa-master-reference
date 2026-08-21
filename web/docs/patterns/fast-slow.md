@@ -58,7 +58,7 @@ The template has two phases. Phase one moves at different speeds and answers "do
 
 ---
 
-## Linked List Cycle II (Floyd)
+## Linked List Cycle II (Floyd) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)*
 
 ### Problem

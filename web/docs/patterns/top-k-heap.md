@@ -58,7 +58,7 @@ Fill in `compareWorstFirst` based on what "worst among the winners" means. For k
 
 ---
 
-## Kth Largest / Top K Frequent
+## Kth Largest / Top K Frequent <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)*
 
 ### Problem

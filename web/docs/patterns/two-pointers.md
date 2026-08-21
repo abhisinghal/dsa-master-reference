@@ -15,7 +15,7 @@ Every move discards a number you've *proven* can't help, so you sweep the array 
 
 
 <div class="svg-figure">
-<svg width="720" height="200" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="tp-g" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
     <marker id="tp-r" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
@@ -76,7 +76,7 @@ The array **isn't sorted** and you can't afford to sort it (O(n log n) prep) —
 
 ---
 
-## 3Sum
+## 3Sum <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: 3Sum](https://leetcode.com/problems/3sum/)*
 
 ### Problem
@@ -217,7 +217,7 @@ Sort once, then let two converging pointers do the work — the target and the c
 | [4Sum](https://leetcode.com/problems/4sum/) | add one more outer loop, then two-pointer the inner pair (skip duplicates at every level) | — |
 | [Triplets with Smaller Sum](https://leetcode.com/problems/3sum-smaller/) | same batch-counting trick as 3Sum Smaller | — |
 
-## Container With Most Water
+## Container With Most Water <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Container With Most Water](https://leetcode.com/problems/container-with-most-water/)*
 
 ### Problem
@@ -325,7 +325,7 @@ Two pointers closing in from the ends, always moving the one that can't hurt you
 | [Valid Palindrome / Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/) | compare from both ends inward; II allows one mismatch (try skipping either side) | — |
 | [Boats to Save People](https://leetcode.com/problems/boats-to-save-people/) | sort, then pair the lightest with the heaviest that still fits — a converging-pointer greedy | — |
 
-## Squaring a Sorted Array
+## Squaring a Sorted Array <span class="diff diff-e">Easy</span>
 *[↗ LeetCode: Squares of a Sorted Array](https://leetcode.com/problems/squares-of-a-sorted-array/)*
 
 ### Problem
@@ -438,7 +438,7 @@ Squaring in place, then sorting. *Example:* `nums=[-4,-1,0,3,10]` → squared `[
 | [Merge Sorted Array (in place, from the back)](https://leetcode.com/problems/merge-sorted-array/) | fill from the largest end so you never overwrite unmerged values | — |
 | [Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | sort both, then two pointers advancing the smaller side | — |
 
-## Sort Colors (Dutch National Flag)
+## Sort Colors (Dutch National Flag) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Sort Colors](https://leetcode.com/problems/sort-colors/)*
 
 ### Problem
@@ -548,7 +548,7 @@ Partitioning is the core of Quickselect/quicksort; the same 3-way scheme handles
 | [Wiggle Sort](https://leetcode.com/problems/wiggle-sort-ii/) | partition around the median, then interleave the two halves | — |
 | [Partition (Quicksort step)](https://leetcode.com/problems/kth-largest-element-in-an-array/) | the same in-place split around a pivot that powers Quickselect | — |
 
-## Trapping Rain Water
+## Trapping Rain Water <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)*
 
 ### Problem

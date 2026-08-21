@@ -104,7 +104,7 @@ Use this version when the alphabet is unknown or sparse. The algorithmic idea is
 
 ---
 
-## Implement Trie
+## Implement Trie <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/)*
 

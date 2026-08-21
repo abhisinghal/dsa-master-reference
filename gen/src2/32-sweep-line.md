@@ -109,7 +109,7 @@ At equal coordinates, you must know whether an end and a start overlap. For meet
 
 ---
 
-## Meeting Rooms II (Minimum Concurrent Intervals)
+## Meeting Rooms II (Minimum Concurrent Intervals) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/)*
 
 ### Problem

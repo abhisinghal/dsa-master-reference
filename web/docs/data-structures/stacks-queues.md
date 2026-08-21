@@ -4,7 +4,7 @@ A **stack** is your "most-recent-unresolved" memory — think matching brackets,
 
 This chapter covers the plain stack/queue *containers* — their operations and canonical uses. For the pattern of using a stack in *monotone order* to find nearest-greater/smaller elements, see the [Monotonic Stack pattern](/patterns/monotonic-stack) in Part II.
 
-## Valid Parentheses
+## Valid Parentheses <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)*
 
@@ -111,7 +111,7 @@ A stack that remembers "unresolved context" handles all kinds of nesting:
 | [Decode String](https://leetcode.com/problems/decode-string/) | push `(repeatCount, prefix)` on `[`, pop and expand on `]` | — |
 | [Longest Valid Parentheses](https://leetcode.com/problems/longest-valid-parentheses/) | keep a stack of indices to measure the length of each valid span | — |
 
-## Min Stack (O(1) minimum)
+## Min Stack (O(1) minimum) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Min Stack](https://leetcode.com/problems/min-stack/)*
 

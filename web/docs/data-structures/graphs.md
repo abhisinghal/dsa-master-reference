@@ -48,7 +48,7 @@ flowchart TD
 <div class="figcap">BFS control flow — layer-by-layer expansion gives shortest distances in an unweighted graph.</div>
 <div class="readfig"><b>How to read it:</b> Picture ripples spreading from where you drop a stone. BFS visits everything one "hop" away, then everything two hops away, and so on — one full ring at a time. The loop says: while the queue isn't empty, take the whole current ring, mark each unvisited neighbour and queue it for the next ring, then bump the distance by one. Because you reach each node on the earliest possible ring, the first time you see a node is via a shortest path.</div>
 
-## Number of Islands (grid flood fill)
+## Number of Islands (grid flood fill) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Number of Islands](https://leetcode.com/problems/number-of-islands/)*
 
@@ -158,7 +158,7 @@ Flood fill also solves *Max Area of Island*, *Surrounded Regions* (flood from bo
 | [Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | flood **inward from each ocean's edge**, then take the intersection of the two reachable sets | — |
 | [Number of Closed Islands](https://leetcode.com/problems/number-of-closed-islands/) | same island count, but discard any component that touches the border | — |
 
-## Rotting Oranges (multi-source BFS)
+## Rotting Oranges (multi-source BFS) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Rotting Oranges](https://leetcode.com/problems/rotting-oranges/)*
 
@@ -278,7 +278,7 @@ Seed the queue with **every** source at distance 0, then expand once:
 | [As Far From Land as Possible](https://leetcode.com/problems/as-far-from-land-as-possible/) | sources are all land cells; the answer is the last water cell reached (max distance) | — |
 | [Shortest Bridge](https://leetcode.com/problems/shortest-bridge/) | flood one island first, then multi-source BFS outward until you hit the second | — |
 
-## Dijkstra (weighted shortest path, non-negative)
+## Dijkstra (weighted shortest path, non-negative) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Network Delay Time](https://leetcode.com/problems/network-delay-time/)*
 
@@ -426,7 +426,7 @@ Skipping the stale-pop guard. *Example:* edges push `{v,10}` then `{v,3}` for th
 | [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | add a stop-budget dimension, or run Bellman–Ford for exactly `K+1` rounds | — |
 | [Dijkstra with weights ∈ {0,1}](https://leetcode.com/problems/01-matrix/) | use a deque (0-1 BFS): push 0-edges to the front, 1-edges to the back | — |
 
-## Bellman–Ford (negative edges &amp; negative-cycle detection)
+## Bellman–Ford (negative edges &amp; negative-cycle detection) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/)* — **Medium**
 
@@ -539,7 +539,7 @@ Ignoring `∞ + w` overflow. *Example:* `dist[u] = Integer.MAX_VALUE`. Then `dis
 | [Negative-cycle detection](https://leetcode.com/problems/find-if-path-exists-in-graph/) | run the extra `V`-th pass; a relaxation ⇒ cycle | O(V·E) |
 | [All-pairs, small V](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | switch to **Floyd–Warshall** — `dp[i][j] = min(dp[i][j], dp[i][k]+dp[k][j])` | O(V³) |
 
-## Clone Graph &amp; Bipartite (traversal bookkeeping)
+## Clone Graph &amp; Bipartite (traversal bookkeeping) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Clone Graph](https://leetcode.com/problems/clone-graph/)*
 
@@ -631,7 +631,7 @@ O(V) for maps plus traversal stack/queue.
 | [Evaluate Division](https://leetcode.com/problems/evaluate-division/) | a weighted DFS where the map carries the running product along the path | — |
 | [Course Schedule (cycle detect)](https://leetcode.com/problems/course-schedule/) | the map stores a 3-colour state (unvisited / in-progress / done) to catch back-edges | — |
 
-## Bridges &amp; Articulation Points (Tarjan) — Critical Connections
+## Bridges &amp; Articulation Points (Tarjan) — Critical Connections <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Critical Connections in a Network](https://leetcode.com/problems/critical-connections-in-a-network/)* — **Hard**
 
@@ -739,7 +739,7 @@ The same `disc`/`low` DFS finds **articulation points** (`low[child] >= disc[u]`
 | [Articulation points](https://leetcode.com/problems/critical-connections-in-a-network/) | cut-vertex test `low[v] >= disc[u]` (+ root case) | O(V+E) |
 | [Strongly Connected Components](https://leetcode.com/problems/critical-connections-in-a-network/) | Tarjan/Kosaraju on a directed graph | O(V+E) |
 
-## Eulerian Path (Hierholzer) — Reconstruct Itinerary
+## Eulerian Path (Hierholzer) — Reconstruct Itinerary <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/)* — **Hard**
 

@@ -90,7 +90,7 @@ You want *one* answer, not all — a pruned DFS or DP is faster than enumerating
 
 ---
 
-## Subsets &amp; Combinations (the start-index template)
+## Subsets &amp; Combinations (the start-index template) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)*
 
 ### Problem
@@ -174,7 +174,7 @@ O(n) recursion/path space excluding output; O(n·2ⁿ) including the returned su
 - Why `path.remove(path.size() - 1)`? — it undoes the last choice so the next sibling starts from the previous state.
 - Why record at every node? — every partial path is already a valid subset, not only the leaves.
 
-## Permutations (the used[] template)
+## Permutations (the used[] template) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Permutations](https://leetcode.com/problems/permutations/)*
 
 ### Problem
@@ -263,7 +263,7 @@ O(n) recursion/path/used-array space excluding output; O(n·n!) including output
 - Why remove then set `used[i] = false`? — both shared structures must be restored for the next candidate.
 - Why copy `path` only when full length? — only complete orderings are valid permutations.
 
-## Combination Sum (reuse &amp; pruning)
+## Combination Sum (reuse &amp; pruning) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Combination Sum](https://leetcode.com/problems/combination-sum/)*
 
 ### Problem
@@ -347,7 +347,7 @@ O(target/minCandidate) recursion/path space excluding output.
 - Why still use `start`? — it keeps combinations nondecreasing so `[2,3,2]` is not duplicated separately from `[2,2,3]`.
 - Why copy `path` at `remain == 0`? — the current list is exactly one valid combination and must be frozen before backtracking.
 
-## N-Queens (constraint occupancy)
+## N-Queens (constraint occupancy) <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: N-Queens](https://leetcode.com/problems/n-queens/)*
 
 ### Problem
@@ -449,7 +449,7 @@ O(n) for columns and O(2n) for each diagonal array, plus O(n) recursion stack.
 - Why check `col[c] || diag[d] || anti[a]` before placing? — a queen attacks along exactly those three occupancy dimensions.
 - Why clear all three booleans after recursion? — leaving any one set falsely blocks sibling placements.
 
-## Word Search (grid backtracking)
+## Word Search (grid backtracking) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Word Search](https://leetcode.com/problems/word-search/)*
 
 ### Problem

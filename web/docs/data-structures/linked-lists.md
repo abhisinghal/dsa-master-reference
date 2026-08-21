@@ -8,7 +8,7 @@ Almost every list problem reduces to carefully rewiring `next` while never losin
 
 </Callout>
 
-## Reverse a Linked List
+## Reverse a Linked List <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)*
 
@@ -119,7 +119,7 @@ The three-pointer flip is a building block you reconnect in different ways:
 | [Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/) | the `k = 2` special case | — |
 | [Rotate List](https://leetcode.com/problems/rotate-list/) | find the new tail `k` from the end, then relink into a rotation | — |
 
-## Reorder / Palindrome via Split-Reverse-Merge
+## Reorder / Palindrome via Split-Reverse-Merge <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/)*
 
@@ -231,7 +231,7 @@ O(1) auxiliary space.
 | [Reorder List](https://leetcode.com/problems/reorder-list/) | reverse the second half, then interleave it with the first | — |
 | [Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/) | the same reverse primitive applied to fixed-size blocks | — |
 
-## LRU Cache (Design)
+## LRU Cache (Design) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: LRU Cache](https://leetcode.com/problems/lru-cache/)*
 

@@ -17,7 +17,7 @@ For the array-as-a-container Java mechanics (declaration, growth, sorting compar
 
 > [key] **Key Insight** — Almost every matrix trick is "map `(r,c)` to another cell by a formula." Write the formula down before you code: rotate-90°-clockwise sends `(r,c) → (c, n-1-r)`, which is exactly **transpose then reverse each row**.
 
-## Rotate Image (90° clockwise, in place)
+## Rotate Image (90° clockwise, in place) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Rotate Image](https://leetcode.com/problems/rotate-image/)* — **Medium**
 
 ### Problem
@@ -64,7 +64,7 @@ O(1). The algorithm uses only a temporary variable for swaps and mutates the inp
 - Reversing each row after transpose turns `(r,c) → (c,r)` into the clockwise target `(c,n-1-r)`.
 - The enhanced `for (int[] row : m)` is safe because each row array is mutated in place.
 
-## Spiral Matrix (layer-by-layer traversal)
+## Spiral Matrix (layer-by-layer traversal) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)* — **Medium**
 
 ### Problem
@@ -111,7 +111,7 @@ O(1) extra, excluding the output list that the problem requires.
 - The `if (top <= bot)` guard handles a single remaining row after the top and right passes.
 - The `if (left <= right)` guard handles a single remaining column after the other sides shrink.
 
-## Set Matrix Zeroes (use row 0 / col 0 as markers)
+## Set Matrix Zeroes (use row 0 / col 0 as markers) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/)* — **Medium**
 
 ### Problem
@@ -263,7 +263,7 @@ Cyclic sort's whole family is "place each value at its home, then read off the w
 | [Set Mismatch](https://leetcode.com/problems/set-mismatch/) | the single wrong slot reveals both the duplicated and the missing number | — |
 | [First Missing Positive](https://leetcode.com/problems/first-missing-positive/) | ignore values outside `1..n`; the answer lies in `1..n+1` | — |
 
-## Find the Missing Number
+## Find the Missing Number <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Missing Number](https://leetcode.com/problems/missing-number/)*
 
@@ -392,7 +392,7 @@ O(1) auxiliary space excluding the output list.
 - Why missing is i+1? Value v belongs at index v-1.
 - Why exclude output from space? The returned list is required.
 
-## First Missing Positive (Hard)
+## First Missing Positive (Hard) <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: First Missing Positive](https://leetcode.com/problems/first-missing-positive/)*
 

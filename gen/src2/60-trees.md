@@ -114,7 +114,7 @@ Process the tree one level at a time (snapshot `queue.size()`), then change *wha
 | [Average of Levels](https://leetcode.com/problems/average-of-levels-in-binary-tree/) | sum ÷ count for each level | — |
 | [Minimum Depth](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | return as soon as you hit the first leaf (BFS finds it earliest) | — |
 
-## Maximum Depth, Balanced, Diameter (post-order aggregation)
+## Maximum Depth, Balanced, Diameter (post-order aggregation) <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/)*
 
@@ -198,7 +198,7 @@ Post-order returns one value up; the *answer* is a richer combination you stash 
 | [Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | return height, but short-circuit with `-1` the moment a subtree is unbalanced | — |
 | [Diameter of an N-ary Tree](https://leetcode.com/problems/diameter-of-n-ary-tree/) | combine the two largest child depths instead of left/right | — |
 
-## Lowest Common Ancestor
+## Lowest Common Ancestor <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)*
 
@@ -279,7 +279,7 @@ O(h) recursion stack, O(n) worst case.
 | [Distance Between Two Nodes](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/) | `depth(p) + depth(q) − 2·depth(lca)` | — |
 | [LCA of Deepest Leaves](https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves/) | return `(depth, node)` upward and keep the node whose subtree holds the deepest leaves | — |
 
-## Validate BST &amp; BST operations
+## Validate BST &amp; BST operations <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)*
 
@@ -359,7 +359,7 @@ An in-order walk of a BST visits keys in sorted order — lean on that:
 | [Convert BST to Sorted Doubly Linked List](https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list/) | thread `prev`/`next` pointers as you visit in order | — |
 | [Range Sum of BST](https://leetcode.com/problems/range-sum-of-bst/) | prune whole subtrees that fall entirely outside `[low, high]` | — |
 
-## Serialize / Deserialize (structure encoding)
+## Serialize / Deserialize (structure encoding) <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)*
 
@@ -452,7 +452,7 @@ O(n) for encoded data/tokens plus O(h) recursion.
 | [Find Duplicate Subtrees](https://leetcode.com/problems/find-duplicate-subtrees/) | serialize every subtree to a string, hash them, and report repeats | — |
 | [Construct String from Binary Tree](https://leetcode.com/problems/construct-string-from-binary-tree/) | parenthesised encoding `1(2)(3)` that stays reversible | — |
 
-## Construct Tree from Traversals
+## Construct Tree from Traversals <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Construct Binary Tree from Preorder and Inorder](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)*
 

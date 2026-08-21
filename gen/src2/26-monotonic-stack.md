@@ -70,7 +70,7 @@ You need *farthest* rather than *nearest* — or the comparison isn't a simple o
 
 ---
 
-## Daily Temperatures (Next Greater Element)
+## Daily Temperatures (Next Greater Element) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)*
 
 ### Problem
@@ -154,7 +154,7 @@ A monotonic stack that "resolves" each element the moment a bigger/smaller one a
 | [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) | each element contributes `min × (countLeft × countRight)`; the monotonic stack gives those boundary counts | — |
 
 
-## Largest Rectangle in Histogram
+## Largest Rectangle in Histogram <span class="diff diff-h">Hard</span>
 *[↗ LeetCode: Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)*
 
 ### Problem

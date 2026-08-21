@@ -119,7 +119,7 @@ Merging sorted streams is the purest heap use case: each stream already has loca
 
 ---
 
-## Find Median from Data Stream (Two Heaps)
+## Find Median from Data Stream (Two Heaps) <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)*
 

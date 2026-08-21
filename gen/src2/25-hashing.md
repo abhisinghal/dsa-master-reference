@@ -16,7 +16,7 @@ You need a *contiguous* result (subarray, substring) and the running quantity is
 
 ---
 
-## Two Sum
+## Two Sum <span class="diff diff-e">Easy</span>
 *[↗ LeetCode: Two Sum](https://leetcode.com/problems/two-sum/)*
 
 ### Problem
@@ -109,7 +109,7 @@ Every variation below changes **exactly one** constraint — and that one change
 
 > [pat] **The thread that ties them together** — all of these are *"find elements that combine to a target."* The decision tree is short: **unsorted + exact pair** → hash the complement · **sorted** → two pointers (O(1) space) · **k numbers** → fix `k−2`, two-pointer the last two · **contiguous** → hash prefix sums · **maximize under a bound** → sort + two pointers. Same idea, five faces.
 
-## Group Anagrams
+## Group Anagrams <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Group Anagrams](https://leetcode.com/problems/group-anagrams/)*
 
 ### Problem
@@ -206,7 +206,7 @@ Same move — *"map each item to a canonical key so equivalents collide"* — on
 | [Find Duplicate File in System](https://leetcode.com/problems/find-duplicate-file-in-system/) | same **content** | the file's content string |
 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/) | two strings, not a whole group | compare the two 26-count signatures directly |
 
-## Product of Array Except Self
+## Product of Array Except Self <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)*
 
 ### Problem
@@ -290,7 +290,7 @@ Same skeleton — *combine a running result from the left with one from the righ
 | [Candy](https://leetcode.com/problems/candy/) | each child must beat both neighbours | two passes (L→R then R→L), take the **max** requirement | O(n) · O(n) |
 | [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) | a negative flips sign | track running **max *and* min** so a sign-flip can become the new best | O(n) · O(1) |
 
-## Longest Consecutive Sequence
+## Longest Consecutive Sequence <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)*
 
 ### Problem

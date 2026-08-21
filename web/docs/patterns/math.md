@@ -16,7 +16,7 @@ Overflow. `a * b` on two `int`s near 10⁹ wraps silently. Use `long` for produc
 
 </Callout>
 
-## Fast (Binary) Exponentiation — Pow(x, n)
+## Fast (Binary) Exponentiation — Pow(x, n) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Pow(x, n)](https://leetcode.com/problems/powx-n/)* — **Medium**
 
 ### Problem
@@ -116,7 +116,7 @@ O(1): only the base, exponent, and result variables are kept.
 - Why test `(n & 1) == 1`? — the current binary bit says whether this power of `x` participates in the answer.
 - Why `x *= x` and `n >>= 1`? — squaring advances to the next power of two while shifting drops the bit just processed.
 
-## Euclid's Algorithm — GCD &amp; LCM
+## Euclid's Algorithm — GCD &amp; LCM <span class="diff diff-e">Easy</span>
 *[↗ LeetCode: Greatest Common Divisor of Strings](https://leetcode.com/problems/greatest-common-divisor-of-strings/)* — **Easy**
 
 ### Problem
@@ -197,7 +197,7 @@ O(1) for the iterative version; recursive form uses O(log min(a,b)) stack.
 - Why compute `a / gcd(a,b) * b`? — dividing first reduces overflow risk before multiplication.
 - Why can this solve string GCD? — the candidate length is the numeric gcd of the two string lengths.
 
-## Sieve of Eratosthenes — Count Primes
+## Sieve of Eratosthenes — Count Primes <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Count Primes](https://leetcode.com/problems/count-primes/)* — **Medium**
 
 ### Problem
