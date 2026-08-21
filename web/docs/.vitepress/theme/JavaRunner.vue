@@ -243,14 +243,18 @@ async function runTests() {
       <div class="runner-header">
         <span class="runner-title">💻 Try it — Java editor</span>
         <div class="runner-controls">
-          <button @click="save" :disabled="isRunning">💾 Save</button>
-          <button @click="reset" :disabled="isRunning">⟳ Reset</button>
-          <button @click="runTests" :disabled="isRunning" class="run-btn">
-            {{ isRunning ? '⏳ Running...' : '▶ Run tests' }}
+          <button @click="save" :disabled="isRunning || isRuntimeLoading">💾 Save</button>
+          <button @click="reset" :disabled="isRunning || isRuntimeLoading">⟳ Reset</button>
+          <button @click="runTests" :disabled="isRunning || isRuntimeLoading" class="run-btn">
+            {{ isRuntimeLoading ? '⏳ Loading Java runtime...' : isRunning ? '⏳ Running...' : '▶ Run tests' }}
           </button>
         </div>
       </div>
       <textarea v-model="code" class="editor" spellcheck="false"></textarea>
+      <div v-if="isRuntimeLoading" class="runner-status">
+        <span class="spinner" aria-hidden="true"></span>
+        Loading Java runtime...
+      </div>
       <div v-if="output" class="runner-output">{{ output }}</div>
       <div v-if="testResults.length > 0" class="test-results">
         <div v-for="(r, i) in testResults" :key="i" :class="['test-row', r.pass ? 'pass' : 'fail']">
@@ -266,7 +270,7 @@ async function runTests() {
         </div>
       </div>
       <div class="runner-note">
-        Powered by <a href="https://ce.judge0.com" target="_blank" rel="noopener">Judge0</a> — free public Java compilation API.
+        Powered by <a href="https://cheerpj.com" target="_blank" rel="noopener">CheerpJ WASM</a> — Java runs locally in your browser after a one-time runtime download.
         Code auto-saves to your browser only.
       </div>
     </div>
@@ -329,6 +333,7 @@ async function runTests() {
   tab-size: 4;
 }
 .editor:focus { border-bottom-color: var(--vp-c-brand-1); }
+.runner-status,
 .runner-output {
   padding: 10px 14px;
   background: var(--vp-c-bg-soft);
@@ -336,6 +341,20 @@ async function runTests() {
   font-family: monospace;
   font-size: 0.85em;
 }
+.runner-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--vp-c-divider);
+  border-top-color: var(--vp-c-brand-1);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 .test-results { padding: 0; }
 .test-row {
   padding: 10px 14px;
