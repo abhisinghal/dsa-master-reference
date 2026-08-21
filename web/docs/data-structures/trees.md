@@ -710,7 +710,7 @@ O(n) for the index map plus O(h) recursion.
 | [Construct from Preorder + Postorder](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/) | works only for *full* trees; the second preorder value marks the left subtree's root | — |
 | [Convert Sorted Array/List to BST](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/) | the middle element is the root → balanced BST | — |
 
-## Tree DP (House Robber III)
+## Tree DP (House Robber III) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: House Robber III](https://leetcode.com/problems/house-robber-iii/)*
 

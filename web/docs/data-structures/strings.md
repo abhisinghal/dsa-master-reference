@@ -212,7 +212,7 @@ O(m) for KMP lps; O(1) or O(number of hashes) for rolling-hash variants.
 - Why rolling hash? Window hashes update in O(1).
 - Why separator in palindrome tricks? It prevents cross-boundary matches.
 
-## Encode and Decode Strings (Length Prefixing)
+## Encode and Decode Strings (Length Prefixing) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/)*
 

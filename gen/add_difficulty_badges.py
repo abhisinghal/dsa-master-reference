@@ -43,6 +43,7 @@ LC_DIFFICULTY = {
     "find-the-duplicate-number": "m",
     # Prefix Sum
     "range-sum-query-immutable": "e",
+    "range-sum-query-2d-immutable": "m",
     "subarray-sum-equals-k": "m",
     "contiguous-array": "m",
     "product-of-array-except-self": "m",
@@ -136,6 +137,7 @@ LC_DIFFICULTY = {
     "unique-paths-ii": "m",
     "minimum-path-sum": "m",
     "partition-equal-subset-sum": "m",
+    "partition-to-k-equal-sum-subsets": "m",
     "burst-balloons": "h",
     "best-time-to-buy-and-sell-stock": "e",
     "best-time-to-buy-and-sell-stock-with-cooldown": "m",
@@ -169,10 +171,12 @@ LC_DIFFICULTY = {
     "spiral-matrix": "m",
     "set-matrix-zeroes": "m",
     "first-missing-positive": "h",
+    "find-all-numbers-disappeared-in-an-array": "e",
     "next-permutation": "m",
     # Strings
     "reverse-string": "e",
     "reverse-words-in-a-string": "m",
+    "encode-and-decode-strings": "m",
     "valid-parentheses": "e",
     "palindromic-substrings": "m",
     "longest-palindromic-substring": "m",
@@ -201,6 +205,7 @@ LC_DIFFICULTY = {
     "serialize-and-deserialize-binary-tree": "h",
     "construct-binary-tree-from-preorder-and-inorder-traversal": "m",
     "binary-tree-right-side-view": "m",
+    "house-robber-iii": "m",
     # Graphs
     "clone-graph": "m",
     "rotting-oranges": "m",

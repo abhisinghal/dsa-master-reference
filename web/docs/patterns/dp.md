@@ -1025,7 +1025,7 @@ The `tight` flag is digit DP's crux: while tight, the current digit is capped by
 
 </Callout>
 
-## Bitmask DP — Travelling Salesman / assignment
+## Bitmask DP — Travelling Salesman / assignment <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)*
 
 ### Problem

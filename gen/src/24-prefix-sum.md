@@ -196,7 +196,7 @@ Space is O(n) for the difference array and output array. The extra `+1` slot is 
 | [Range Addition](https://leetcode.com/problems/range-addition/) | the canonical form — apply many `[l, r] += v` in O(1) each, reconstruct once | O(1) |
 | [2D — Range Addition II / stamping a grid](https://leetcode.com/problems/range-addition-ii/) | a 2D difference array marks the four corners of each rectangle | — |
 
-## 2D Prefix Sum (Range Sum Query 2D)
+## 2D Prefix Sum (Range Sum Query 2D) <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Range Sum Query 2D](https://leetcode.com/problems/range-sum-query-2d-immutable/)*
 
 ### Problem

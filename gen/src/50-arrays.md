@@ -339,7 +339,7 @@ O(1) auxiliary space.
 - Why final scan? The first wrong index is the missing value.
 - Why return n at the end? Slots 0..n-1 are all correct.
 
-## Find All Missing / All Duplicate Numbers
+## Find All Missing / All Duplicate Numbers <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)*
 
