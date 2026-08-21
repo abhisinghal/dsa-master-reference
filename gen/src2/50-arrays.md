@@ -17,11 +17,25 @@ For the array-as-a-container Java mechanics (declaration, growth, sorting compar
 
 > [key] **Key Insight** — Almost every matrix trick is "map `(r,c)` to another cell by a formula." Write the formula down before you code: rotate-90°-clockwise sends `(r,c) → (c, n-1-r)`, which is exactly **transpose then reverse each row**.
 
-### Rotate Image (90° clockwise, in place)
+## Rotate Image (90° clockwise, in place)
 *[↗ LeetCode: Rotate Image](https://leetcode.com/problems/rotate-image/)* — **Medium**
 
-**Problem.** Rotate an `n×n` matrix 90° clockwise, **in place** (no second matrix). **Example:** `[[1,2],[3,4]] → [[3,1],[4,2]]`.
+### Problem
+Rotate an `n×n` matrix 90° clockwise, **in place** (no second matrix).
 
+**Example 1:** `matrix = [[1,2],[3,4]]` → `[[3,1],[4,2]]`.
+
+**Example 2:** `matrix = [[1,2,3],[4,5,6],[7,8,9]]` → `[[7,4,1],[8,5,2],[9,6,3]]`.
+
+### Solution — brute force
+Allocate a second `n×n` matrix and write each original cell `(r,c)` into its rotated home `(c,n-1-r)`, then copy the result back into the input matrix.
+
+**Brute-force cost:** O(n²) time, O(n²) extra space.
+
+### Solution — optimized
+Do the same coordinate transform in two in-place passes: first transpose across the main diagonal, then reverse every row. Transpose changes `(r,c)` into `(c,r)`; row reversal finishes the mapping to `(c,n-1-r)`.
+
+**Java:**
 ```java
 void rotate(int[][] m) {
     int n = m.length;
@@ -38,13 +52,37 @@ void rotate(int[][] m) {
 
 > [note] **Trace it** — `[[1,2],[3,4]]`. Transpose → `[[1,3],[2,4]]`; reverse each row → `[[3,1],[4,2]]`. Counter-clockwise is the mirror: reverse rows **first**, then transpose (or transpose then reverse each column).
 
-Time O(n²) · Space O(1).
+### Time Complexity
+O(n²). The transpose loop touches the upper triangle, and the row reversals touch every cell once more.
 
-### Spiral Matrix (layer-by-layer traversal)
+### Space Complexity
+O(1). The algorithm uses only a temporary variable for swaps and mutates the input matrix.
+
+### Learning notes
+- `for (int c = r + 1; c < n; c++)` skips the diagonal and avoids swapping each pair twice.
+- The temporary `t` is the whole in-place swap; no row copy is needed.
+- Reversing each row after transpose turns `(r,c) → (c,r)` into the clockwise target `(c,n-1-r)`.
+- The enhanced `for (int[] row : m)` is safe because each row array is mutated in place.
+
+## Spiral Matrix (layer-by-layer traversal)
 *[↗ LeetCode: Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)* — **Medium**
 
-**Problem.** Return all elements of an `m×n` matrix in spiral order. **Example:** `[[1,2,3],[4,5,6],[7,8,9]] → [1,2,3,6,9,8,7,4,5]`.
+### Problem
+Return all elements of an `m×n` matrix in spiral order.
 
+**Example 1:** `matrix = [[1,2,3],[4,5,6],[7,8,9]]` → `[1,2,3,6,9,8,7,4,5]`.
+
+**Example 2:** `matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]` → `[1,2,3,4,8,12,11,10,9,5,6,7]`.
+
+### Solution — brute force
+Keep a `visited` boolean grid and walk right/down/left/up, turning whenever the next cell is outside bounds or already visited.
+
+**Brute-force cost:** O(m·n) time, O(m·n) extra space for `visited`.
+
+### Solution — optimized
+Track the four live boundaries of the remaining rectangle. Emit the top row, right column, bottom row, and left column, shrinking each boundary after its side is consumed.
+
+**Java:**
 ```java
 List<Integer> spiralOrder(int[][] a) {
     List<Integer> out = new ArrayList<>();
@@ -61,13 +99,37 @@ List<Integer> spiralOrder(int[][] a) {
 
 > [trap] **Common Trap** — Forgetting the two `if` guards before the bottom row and left column. On a single leftover row or column they run again and re-emit cells. The guards check the shrinking bounds haven't crossed.
 
-Time O(m·n) · Space O(1) extra.
+### Time Complexity
+O(m·n). Every matrix cell is appended exactly once.
 
-### Set Matrix Zeroes (use row 0 / col 0 as markers)
+### Space Complexity
+O(1) extra, excluding the output list that the problem requires.
+
+### Learning notes
+- `top`, `bot`, `left`, and `right` define the still-unvisited rectangle, not the whole matrix.
+- `top++` happens immediately after reading the top row so the right-column loop does not repeat the corner.
+- The `if (top <= bot)` guard handles a single remaining row after the top and right passes.
+- The `if (left <= right)` guard handles a single remaining column after the other sides shrink.
+
+## Set Matrix Zeroes (use row 0 / col 0 as markers)
 *[↗ LeetCode: Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/)* — **Medium**
 
-**Problem.** If a cell is `0`, set its entire row and column to `0` — **in place, O(1) extra space**. **Trap:** you must record *original* zeros before you start writing, or new zeros trigger more clearing.
+### Problem
+If a cell is `0`, set its entire row and column to `0` — **in place, O(1) extra space**. You must record *original* zeros before writing, or new zeros trigger more clearing.
 
+**Example 1:** `matrix = [[1,1,1],[1,0,1],[1,1,1]]` → `[[1,0,1],[0,0,0],[1,0,1]]`.
+
+**Example 2:** `matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]` → `[[0,0,0,0],[0,4,5,0],[0,3,1,0]]`.
+
+### Solution — brute force
+First scan the matrix and store every row and column that originally contains a zero in two sets. Then scan again and zero any cell whose row or column is marked.
+
+**Brute-force cost:** O(R·C) time, O(R + C) extra space.
+
+### Solution — optimized
+Reuse the first row and first column as the marker sets. A separate `col0` flag is needed because `m[0][0]` cannot represent both "first row has zero" and "first column has zero" unambiguously.
+
+**Java:**
 ```java
 void setZeroes(int[][] m) {
     int R = m.length, C = m[0].length;
@@ -87,11 +149,21 @@ void setZeroes(int[][] m) {
 
 > [key] **Key Insight** — The naïve O(R·C) extra-space fix stores zero rows/cols in two sets. To reach **O(1)**, reuse the first row and first column *as* those sets — with one extra scalar (`col0`) because cell `(0,0)` would otherwise mean two things.
 
-Time O(R·C) · Space O(1).
+### Time Complexity
+O(R·C). The first pass marks original zeros, and the second pass writes each affected cell at most once.
+
+### Space Complexity
+O(1). The first row and first column carry marker state inside the input, plus one boolean flag.
+
+### Learning notes
+- `col0` separates the first-column marker from `m[0][0]`, which is already used for first-row state.
+- The inner marking loop starts at `c = 1` so column zero is never confused with normal column markers.
+- Writing bottom-up preserves the first-row markers until all lower rows have read them.
+- The final `if (col0)` applies the first-column decision after the row's other cells are processed.
 
 > [pat] **Pattern Connection** — "Reuse the input's own border as auxiliary storage" is the space-optimization mindset behind rolling-array DP and in-place linked-list surgery: when you're told **O(1) space**, look for structure you can safely overwrite.
 
-### Same pattern, new tweaks
+## Matrix mechanics — same pattern, new tweaks
 
 | Variation | The one move that changes | Time · Space |
 |---|---|---|

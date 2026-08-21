@@ -234,10 +234,32 @@ def restore_code_blocks(text: str, blocks: list) -> str:
 
 def transform_svg_fences(text: str) -> str:
     """Convert ```svg ... ``` blocks into raw inline HTML div — VitePress markdown+shiki
-    doesn't handle svg language well; direct HTML wrapping renders correctly."""
+    doesn't handle svg language well; direct HTML wrapping renders correctly.
+    Also strips fixed width/height attrs from the outer <svg> to let CSS enforce max-width: 100%."""
     def sub(m):
         svg = m.group(1)
-        # Ensure blank lines around so markdown treats this as HTML block
+        # Strip fixed width/height on the outer <svg> so CSS can scale it responsively.
+        # Keep viewBox — that gives the browser aspect ratio.
+        svg = re.sub(
+            r"(<svg\b[^>]*)\s+width=\"[^\"]*\"",
+            r"\1",
+            svg,
+            count=1
+        )
+        svg = re.sub(
+            r"(<svg\b[^>]*)\s+height=\"[^\"]*\"",
+            r"\1",
+            svg,
+            count=1
+        )
+        # Ensure preserveAspectRatio is set for consistent scaling
+        if "preserveAspectRatio=" not in svg:
+            svg = re.sub(
+                r"(<svg\b)",
+                r'\1 preserveAspectRatio="xMidYMid meet"',
+                svg,
+                count=1
+            )
         return f"\n\n<div class=\"svg-figure\">\n{svg}\n</div>\n\n"
     return re.sub(r"^```svg\n(.*?)\n^```\s*$", sub, text, flags=re.MULTILINE | re.DOTALL)
 
