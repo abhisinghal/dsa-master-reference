@@ -6,7 +6,10 @@ Linked-list problems aren't really about clever algorithms — they're about **p
 
 ## Reverse a Linked List <span class="diff diff-e">Easy</span>
 
+
 *[↗ LeetCode: Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)*
+
+<ProgressCheck id="reverse-a-linked-list" />
 
 ### Problem
 
@@ -93,7 +96,10 @@ The three-pointer flip is a building block you reconnect in different ways:
 
 ## Reorder / Palindrome via Split-Reverse-Merge <span class="diff diff-e">Easy</span>
 
+
 *[↗ LeetCode: Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/)*
+
+<ProgressCheck id="reorder-palindrome-via-split-reverse-merge" />
 
 ### Problem
 
@@ -177,7 +183,10 @@ O(1) auxiliary space.
 
 ## LRU Cache (Design) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: LRU Cache](https://leetcode.com/problems/lru-cache/)*
+
+<ProgressCheck id="lru-cache-design" />
 
 ### Problem
 

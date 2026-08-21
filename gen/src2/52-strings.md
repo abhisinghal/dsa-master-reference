@@ -6,7 +6,10 @@ A string is just an array of characters, so almost everything from the Arrays ch
 
 ## Longest Palindromic Substring (Expand Around Center) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)*
+
+<ProgressCheck id="longest-palindromic-substring-expand-around-center" />
 
 ### Problem
 

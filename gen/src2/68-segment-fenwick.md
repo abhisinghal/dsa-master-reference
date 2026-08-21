@@ -9,7 +9,10 @@ update/query walk O(log n) indices by adding/removing the lowest set bit.
 
 ## Fenwick Tree (Binary Indexed Tree) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)*
+
+<ProgressCheck id="fenwick-tree-binary-indexed-tree" />
 
 ### Problem
 
@@ -95,7 +98,10 @@ Point-update + prefix-query in O(log n):
 
 ## Segment Tree (range query + range update) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)*
+
+<ProgressCheck id="segment-tree-range-query-range-update" />
 
 ### Problem
 

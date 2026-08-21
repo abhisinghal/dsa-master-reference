@@ -19,7 +19,10 @@ The feasibility predicate isn't monotone — you can find an x where `feasible(x
 ---
 
 ## Koko Eating Bananas (Search on Answer — rate) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)*
+
+<ProgressCheck id="koko-eating-bananas-search-on-answer-rate" />
 
 ### Problem
 Koko eats `k` bananas/hour (one pile per hour; leftovers still cost a full hour). Find the **minimum `k`** that finishes all piles within `h` hours.
@@ -105,7 +108,10 @@ O(1), because the search stores only bounds and the running `hours` counter.
 | [Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/) | guess a distance; feasibility counts how many stations you'd have to add (works on real numbers, so fix an iteration count or epsilon) | — |
 
 ## Split Array Largest Sum / Book Allocation (Search on Answer — partition) <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/)*
+
+<ProgressCheck id="split-array-largest-sum-book-allocation-search-on-answer-partition" />
 
 ### Problem
 Split the array into `m` **contiguous** subarrays so as to **minimize the largest** subarray sum.
@@ -200,7 +206,10 @@ O(1), because the optimized algorithm uses only bounds and the current segment s
 | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | binary-search the max allowed step height; feasibility is a BFS/DFS connectivity check | — |
 
 ## Median of Two Sorted Arrays (Partition Binary Search) <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)*
+
+<ProgressCheck id="median-of-two-sorted-arrays-partition-binary-search" />
 
 ### Problem
 Given two sorted arrays, find the **median** of their combined elements in **O(log(m+n))**.

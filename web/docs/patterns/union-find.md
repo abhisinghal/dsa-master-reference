@@ -75,7 +75,10 @@ You need to *walk* the components (traversal, distances, colouring) — Union-Fi
 ---
 
 ## Union-Find (Disjoint Set Union) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Number of Provinces](https://leetcode.com/problems/number-of-provinces/)*
+
+<ProgressCheck id="union-find-disjoint-set-union" />
 
 ### Problem
 Given an `n×n` friendship matrix, count the number of **provinces** — connected groups of directly or indirectly connected people.
@@ -218,7 +221,10 @@ DSU is the engine for *Number of Provinces*, *Accounts Merge* (union by shared e
 
 
 ## Minimum Spanning Tree — Kruskal + Union-Find <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)*
+
+<ProgressCheck id="minimum-spanning-tree-kruskal-union-find" />
 
 ### Problem
 Given points on a plane, connect **all** of them with minimum total cost, where an edge's cost is the Manhattan distance — i.e. build a minimum spanning tree.

@@ -58,10 +58,6 @@ The pattern gets its name from geometry: imagine a vertical line sweeping across
 </svg>
 </div>
 
-### ▶ Try it — interactive walkthrough
-
-<SweepLineAnim />
-
 
 
 
@@ -130,7 +126,10 @@ At equal coordinates, you must know whether an end and a start overlap. For meet
 ---
 
 ## Meeting Rooms II (Minimum Concurrent Intervals) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/)*
+
+<ProgressCheck id="meeting-rooms-ii-minimum-concurrent-intervals" />
 
 ### Problem
 Given meeting time intervals, find the **minimum number of rooms** so that no two overlapping meetings share a room.

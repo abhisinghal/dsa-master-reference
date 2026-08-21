@@ -37,7 +37,10 @@ Two workhorses: `x & (x-1)` **removes** the lowest set bit (Brian Kernighan's po
 </Callout>
 
 ## Single Number I / II / III (XOR) <span class="diff diff-e">Easy</span>
+
 *[↗ LeetCode: Single Number](https://leetcode.com/problems/single-number/)*
+
+<ProgressCheck id="single-number-i-ii-iii-xor" />
 
 ### Problem
 Every element appears **twice except one**; find the single one — in O(n) time, O(1) space. (Variants II/III: one element appears 3×, or there are two singles.)
@@ -144,7 +147,10 @@ O(1): one accumulator.
 - Why isolate one bit for Single Number III? — the two loners differ on that bit, so it separates them into different XOR groups.
 
 ## Counting Bits (DP on bits) <span class="diff diff-e">Easy</span>
+
 *[↗ LeetCode: Counting Bits](https://leetcode.com/problems/counting-bits/)*
+
+<ProgressCheck id="counting-bits-dp-on-bits" />
 
 ### Problem
 For every number `0 … n`, return how many **1-bits** it has (its popcount), in O(n).
@@ -248,7 +254,10 @@ O(n): the returned `dp` array is the output.
 - Why not call `Integer.bitCount` repeatedly in the teaching version? — the recurrence exposes the reusable subproblem and avoids per-number bit loops.
 
 ## Subset generation via masks <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)*
+
+<ProgressCheck id="subset-generation-via-masks" />
 
 ### Problem
 Generate **all subsets** of an `n`-element set by iterating bitmasks `0 … 2ⁿ−1` (bit `i` set = element `i` included).

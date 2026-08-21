@@ -23,7 +23,10 @@ You need to *update* array values *and* query ranges in the same run — a plain
 ---
 
 ## Subarray Sum Equals K <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)*
+
+<ProgressCheck id="subarray-sum-equals-k" />
 
 ### Problem
 Count how many **contiguous subarrays** sum exactly to `k`. The array may contain **negative** numbers — which is what rules out a sliding window.
@@ -107,7 +110,10 @@ Space is O(n) in the worst case because every prefix sum can be distinct and sto
 | [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/) | count prefixes equal to `pre − goal` | — |
 
 ## Difference Array (Range Update) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/)*
+
+<ProgressCheck id="difference-array-range-update" />
 
 ### Problem
 You're given many **range updates** — each adds `v` to every element in `[l, r]` — and you only need the final array *after* all updates. Do it in O(n + m), not O(n·m).

@@ -203,7 +203,10 @@ Even when the problem is monotone, sliding window has hard limits worth naming o
 Now let's walk through the canonical shapes, from the simplest fixed-size warm-up up through the composed sliding-window + monotonic-deque problem.
 
 ## Maximum Average Subarray I (fixed-size warm-up) <span class="diff diff-e">Easy</span>
+
 *[↗ LeetCode: Maximum Average Subarray I](https://leetcode.com/problems/maximum-average-subarray-i/)*
+
+<ProgressCheck id="maximum-average-subarray-i-fixed-size-warm-up" />
 
 ### Problem
 Given an array and an integer `k`, find the contiguous subarray of length **exactly `k`** with the maximum average.
@@ -345,7 +348,10 @@ Any fixed-size aggregate — sum, product (with careful zero handling), min/max 
 | [Diet Plan Performance](https://leetcode.com/problems/diet-plan-performance/) | classify each window by sum thresholds; sum score | O(n) |
 
 ## Smallest Subarray With Sum ≥ Target <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)*
+
+<ProgressCheck id="smallest-subarray-with-sum-target" />
 
 ### Problem
 Find the length of the **shortest contiguous subarray** whose sum is `≥ target`; return 0 if none exists. Values are positive, which is what keeps the window monotone.
@@ -471,7 +477,10 @@ The "shrink-to-minimize" twin of Minimum Window Substring (which minimizes over 
 | [Shortest Subarray with Sum ≥ K (negatives allowed)](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) | the window breaks with negatives → switch to prefix sums + a monotonic deque | — |
 
 ## Longest Substring Without Repeating Characters <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)*
+
+<ProgressCheck id="longest-substring-without-repeating-characters" />
 
 ### Problem
 Find the length of the **longest substring** (contiguous) that has **all distinct** characters.
@@ -599,7 +608,10 @@ Once you own this "grow, and shrink when a rule breaks" loop, a whole family ope
 | [Permutation in String / Find All Anagrams](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | a **fixed-size** window plus exact character counts — slide a window the length of the pattern and check the counts match | — |
 
 ## Minimum Window Substring <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)*
+
+<ProgressCheck id="minimum-window-substring" />
 
 ### Problem
 Find the **shortest substring** of `S` that contains every character of `T`, including repeats. Return `""` if there is none.
@@ -737,7 +749,10 @@ A `need`/`have` counter that tells you when the window "covers" a required set:
 | [Substring with Concatenation of All Words](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) | the "characters" are whole words of equal length | — |
 
 ## Longest Repeating Character Replacement <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)*
+
+<ProgressCheck id="longest-repeating-character-replacement" />
 
 ### Problem
 You may replace **at most `k`** characters in the string. Find the length of the longest substring that can become **all one letter** after those replacements.
@@ -938,7 +953,10 @@ int characterReplacement(String s, int k) {
 | [Frequency of the Most Frequent Element](https://leetcode.com/problems/frequency-of-the-most-frequent-element/) | sort, then window where `windowLen·max − windowSum ≤ k` operations | — |
 
 ## Subarray Product Less Than K (counting + at-most-K trick) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)*
+
+<ProgressCheck id="subarray-product-less-than-k-counting-at-most-k-trick" />
 
 ### Problem
 Given a positive-integer array and a `k`, count the number of **contiguous subarrays** whose product is **strictly less than `k`**.
@@ -1061,7 +1079,10 @@ for problems of the form "count subarrays with **exactly** K …", write `exactl
 | [Number of Substrings Containing All Three Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/) | count from the *shrinking* side: `count += left` at each valid `right` | O(n) |
 
 ## Sliding Window Maximum (Monotonic Deque) <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)*
+
+<ProgressCheck id="sliding-window-maximum-monotonic-deque" />
 
 ### Problem
 Given a fixed window of size `k` sliding left-to-right across the array, output the **maximum** of each window position.

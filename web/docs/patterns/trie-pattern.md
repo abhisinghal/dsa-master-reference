@@ -90,7 +90,10 @@ The important interview move is to name the alphabet. Letter tries branch over c
 ---
 
 ## Word Search II (Trie + Backtracking) <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Word Search II](https://leetcode.com/problems/word-search-ii/)*
+
+<ProgressCheck id="word-search-ii-trie-backtracking" />
 
 ### Problem
 Given a grid of letters and a dictionary, return **all dictionary words** that can be traced through **adjacent** cells (up/down/left/right), never reusing a cell within one word.
@@ -215,7 +218,10 @@ O(totalChars) for the trie plus O(L) recursion stack; result output extra.
 - Why mark `b[r][c] = '#'` and restore? — one path cannot reuse a cell, but sibling paths need the original board.
 
 ## Maximum XOR of Two Numbers (Binary Trie) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)*
+
+<ProgressCheck id="maximum-xor-of-two-numbers-binary-trie" />
 
 ### Problem
 Given an array, find the **maximum XOR** obtainable from any two elements.

@@ -51,7 +51,10 @@ The template has two phases. Phase one moves at different speeds and answers "do
 ---
 
 ## Linked List Cycle II (Floyd) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)*
+
+<ProgressCheck id="linked-list-cycle-ii-floyd" />
 
 ### Problem
 Detect whether a singly linked list has a **cycle**, and if so return the node where the cycle **begins** — using O(1) space.

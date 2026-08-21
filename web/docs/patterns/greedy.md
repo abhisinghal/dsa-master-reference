@@ -25,7 +25,10 @@ A locally-best choice can be regretted later — construct a counterexample ("if
 ---
 
 ## Jump Game II (Farthest-Reach Greedy) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Jump Game II](https://leetcode.com/problems/jump-game-ii/)*
+
+<ProgressCheck id="jump-game-ii-farthest-reach-greedy" />
 
 ### Problem
 Each `nums[i]` is the **max jump length** from index `i`. Find the **fewest jumps** to reach the last index (reaching the end is always possible).
@@ -136,7 +139,10 @@ This is BFS on an implicit graph collapsed to O(n). *Jump Game I* (reachability)
 | [Minimum Number of Arrows](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | the interval-cover cousin (sort by end) | — |
 
 ## Gas Station (Prefix-Balance Greedy) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Gas Station](https://leetcode.com/problems/gas-station/)*
+
+<ProgressCheck id="gas-station-prefix-balance-greedy" />
 
 ### Problem
 Around a circular route, station `i` provides `gas[i]` and it costs `cost[i]` to drive to the next station. Return the **starting index** from which you can complete the whole loop (or -1). A unique answer exists whenever total gas ≥ total cost.
@@ -249,7 +255,10 @@ Skipping the total check. *Example:* `gas=[1,2,3,4]`, `cost=[2,3,4,5]`. Total ga
 | [Gas Station](https://leetcode.com/problems/gas-station/) | reset the start to `i+1` when the tank dips below 0, with a global feasibility gate | — |
 
 ## Task Scheduler / Activity Selection (Sort-Driven Greedy) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Task Scheduler](https://leetcode.com/problems/task-scheduler/)*
+
+<ProgressCheck id="task-scheduler-activity-selection-sort-driven-greedy" />
 
 ### Problem
 Given task labels and a cooldown `n` (identical tasks must be at least `n` apart), find the **minimum number of intervals** (including idle slots) to run every task.
@@ -351,7 +360,10 @@ Greedy is safe iff you can prove the exchange argument. No proof, construct a sm
 
 
 ## Non-overlapping Intervals (Interval Scheduling) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)*
+
+<ProgressCheck id="non-overlapping-intervals-interval-scheduling" />
 
 ### Problem
 Find the **minimum number of intervals to remove** so the remaining ones don't overlap.

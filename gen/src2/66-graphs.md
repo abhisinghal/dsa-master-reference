@@ -38,7 +38,10 @@ flowchart TD
 
 ## Number of Islands (grid flood fill) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Number of Islands](https://leetcode.com/problems/number-of-islands/)*
+
+<ProgressCheck id="number-of-islands-grid-flood-fill" />
 
 ### Problem
 
@@ -124,7 +127,10 @@ O(R*C) worst-case recursion/queue space.
 
 ## Rotting Oranges (multi-source BFS) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Rotting Oranges](https://leetcode.com/problems/rotting-oranges/)*
+
+<ProgressCheck id="rotting-oranges-multi-source-bfs" />
 
 ### Problem
 
@@ -220,7 +226,10 @@ Seed the queue with **every** source at distance 0, then expand once:
 
 ## Dijkstra (weighted shortest path, non-negative) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Network Delay Time](https://leetcode.com/problems/network-delay-time/)*
+
+<ProgressCheck id="dijkstra-weighted-shortest-path-non-negative" />
 
 ### Problem
 
@@ -340,7 +349,10 @@ O(V + E) for adjacency, distances, and heap entries.
 
 ## Bellman–Ford (negative edges &amp; negative-cycle detection) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/)* — **Medium**
+
+<ProgressCheck id="bellman-ford-negative-edges-amp-negative-cycle-detection" />
 
 ### Problem
 
@@ -425,7 +437,10 @@ O(V) for the distance array, excluding the edge list.
 
 ## Clone Graph &amp; Bipartite (traversal bookkeeping) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Clone Graph](https://leetcode.com/problems/clone-graph/)*
+
+<ProgressCheck id="clone-graph-amp-bipartite-traversal-bookkeeping" />
 
 ### Problem
 
@@ -501,7 +516,10 @@ O(V) for maps plus traversal stack/queue.
 
 ## Bridges &amp; Articulation Points (Tarjan) — Critical Connections <span class="diff diff-h">Hard</span>
 
+
 *[↗ LeetCode: Critical Connections in a Network](https://leetcode.com/problems/critical-connections-in-a-network/)* — **Hard**
+
+<ProgressCheck id="bridges-amp-articulation-points-tarjan-critical-connections" />
 
 ### Problem
 
@@ -589,7 +607,10 @@ O(V + E) for adjacency plus O(V) arrays/recursion.
 
 ## Eulerian Path (Hierholzer) — Reconstruct Itinerary <span class="diff diff-h">Hard</span>
 
+
 *[↗ LeetCode: Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/)* — **Hard**
+
+<ProgressCheck id="eulerian-path-hierholzer-reconstruct-itinerary" />
 
 ### Problem
 

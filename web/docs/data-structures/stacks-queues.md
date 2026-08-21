@@ -6,7 +6,10 @@ This chapter covers the plain stack/queue *containers* — their operations and 
 
 ## Valid Parentheses <span class="diff diff-e">Easy</span>
 
+
 *[↗ LeetCode: Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)*
+
+<ProgressCheck id="valid-parentheses" />
 
 ### Problem
 
@@ -113,7 +116,10 @@ A stack that remembers "unresolved context" handles all kinds of nesting:
 
 ## Min Stack (O(1) minimum) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Min Stack](https://leetcode.com/problems/min-stack/)*
+
+<ProgressCheck id="min-stack-o-1-minimum" />
 
 ### Problem
 

@@ -86,7 +86,10 @@ int firstTrue(int lo, int hi, IntPredicate P) {   // hi is exclusive; returns hi
 > [trap] **Common Trap** — Mixing conventions. Pick half-open `[lo,hi)` with `hi=mid`/`lo=mid+1` and never write `hi=mid-1` in the same template. Use `lo + (hi-lo)/2` to avoid overflow. For "last true", find first-false and step back.
 
 ## Search in Rotated Sorted Array <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)*
+
+<ProgressCheck id="search-in-rotated-sorted-array" />
 
 ### Problem
 A sorted array was **rotated** at an unknown pivot. Find the index of `target` (or -1) in **O(log n)**.

@@ -77,7 +77,10 @@ The array **isn't sorted** and you can't afford to sort it (O(n log n) prep) —
 ---
 
 ## 3Sum <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: 3Sum](https://leetcode.com/problems/3sum/)*
+
+<ProgressCheck id="3sum" />
 
 ### Problem
 Find **all unique triplets** `(a, b, c)` in the array with `a + b + c = 0`. The output must contain no duplicate triplets.
@@ -218,7 +221,10 @@ Sort once, then let two converging pointers do the work — the target and the c
 | [Triplets with Smaller Sum](https://leetcode.com/problems/3sum-smaller/) | same batch-counting trick as 3Sum Smaller | — |
 
 ## Container With Most Water <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Container With Most Water](https://leetcode.com/problems/container-with-most-water/)*
+
+<ProgressCheck id="container-with-most-water" />
 
 ### Problem
 Each element is the height of a vertical wall. Pick the two walls that (with the x-axis) hold the **most water** — area `= min(h[i], h[j]) × (j − i)`.
@@ -326,7 +332,10 @@ Two pointers closing in from the ends, always moving the one that can't hurt you
 | [Boats to Save People](https://leetcode.com/problems/boats-to-save-people/) | sort, then pair the lightest with the heaviest that still fits — a converging-pointer greedy | — |
 
 ## Squaring a Sorted Array <span class="diff diff-e">Easy</span>
+
 *[↗ LeetCode: Squares of a Sorted Array](https://leetcode.com/problems/squares-of-a-sorted-array/)*
+
+<ProgressCheck id="squaring-a-sorted-array" />
 
 ### Problem
 Given a **sorted** array that may contain negatives, return the squares of every number, also in **sorted** order — in O(n).
@@ -439,7 +448,10 @@ Squaring in place, then sorting. *Example:* `nums=[-4,-1,0,3,10]` → squared `[
 | [Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | sort both, then two pointers advancing the smaller side | — |
 
 ## Sort Colors (Dutch National Flag) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Sort Colors](https://leetcode.com/problems/sort-colors/)*
+
+<ProgressCheck id="sort-colors-dutch-national-flag" />
 
 ### Problem
 Sort an array of `0`s, `1`s, and `2`s **in place** in a single pass (the Dutch-national-flag problem) — no library sort.
@@ -549,7 +561,10 @@ Partitioning is the core of Quickselect/quicksort; the same 3-way scheme handles
 | [Partition (Quicksort step)](https://leetcode.com/problems/kth-largest-element-in-an-array/) | the same in-place split around a pivot that powers Quickselect | — |
 
 ## Trapping Rain Water <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)*
+
+<ProgressCheck id="trapping-rain-water" />
 
 ### Problem
 Each bar has width 1; compute how much **rain water** is trapped between the bars after it rains.

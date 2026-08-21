@@ -59,7 +59,10 @@ void addFirst(Node n) {
 
 ## LRU Cache <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: LRU Cache](https://leetcode.com/problems/lru-cache/)* — **Medium**
+
+<ProgressCheck id="lru-cache" />
 
 ### Problem
 
@@ -182,7 +185,10 @@ O(capacity) for the map plus one linked-list node per cached key.
 
 ## Insert Delete GetRandom O(1) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o1/)* — **Medium**
+
+<ProgressCheck id="insert-delete-getrandom-o-1" />
 
 ### Problem
 
@@ -277,7 +283,10 @@ O(n) for the value array and value-to-index map.
 
 ## Reservoir Sampling — uniform pick from a stream <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Linked List Random Node](https://leetcode.com/problems/linked-list-random-node/)* — **Medium**
+
+<ProgressCheck id="reservoir-sampling-uniform-pick-from-a-stream" />
 
 ### Problem
 

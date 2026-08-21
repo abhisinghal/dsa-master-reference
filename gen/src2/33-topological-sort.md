@@ -84,7 +84,10 @@ This is a common interview twist: topological sort is only half the solution. Th
 ---
 
 ## Course Schedule (Topological Sort) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)*
+
+<ProgressCheck id="course-schedule-topological-sort" />
 
 ### Problem
 Given `numCourses` and prerequisite pairs `[a,b]` (finish `b` before `a`), return a **valid order** to take all courses, or an empty array if impossible (a cycle exists).

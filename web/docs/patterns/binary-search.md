@@ -114,7 +114,10 @@ Mixing conventions. Pick half-open `[lo,hi)` with `hi=mid`/`lo=mid+1` and never 
 </Callout>
 
 ## Search in Rotated Sorted Array <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)*
+
+<ProgressCheck id="search-in-rotated-sorted-array" />
 
 ### Problem
 A sorted array was **rotated** at an unknown pivot. Find the index of `target` (or -1) in **O(log n)**.

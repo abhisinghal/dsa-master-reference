@@ -49,7 +49,10 @@ The sort is the setup. `cur` is the union of the current overlapping cluster. If
 ---
 
 ## Merge Intervals <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Merge Intervals](https://leetcode.com/problems/merge-intervals/)*
+
+<ProgressCheck id="merge-intervals" />
 
 ### Problem
 Given a list of intervals, **merge all overlapping** ones and return the disjoint result.

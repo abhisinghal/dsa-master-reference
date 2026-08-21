@@ -71,7 +71,10 @@ the map and list describe the same keys. The list order is most-recent near `hea
 
 ## LRU Cache <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: LRU Cache](https://leetcode.com/problems/lru-cache/)* — **Medium**
+
+<ProgressCheck id="lru-cache" />
 
 ### Problem
 
@@ -218,7 +221,10 @@ LFU Cache adds frequency buckets; All O(1) Data Structure keeps buckets ordered 
 
 ## Insert Delete GetRandom O(1) <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o1/)* — **Medium**
+
+<ProgressCheck id="insert-delete-getrandom-o-1" />
 
 ### Problem
 
@@ -341,7 +347,10 @@ Same map+array skeleton solves *Insert Delete GetRandom — Duplicates allowed* 
 
 ## Reservoir Sampling — uniform pick from a stream <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Linked List Random Node](https://leetcode.com/problems/linked-list-random-node/)* — **Medium**
+
+<ProgressCheck id="reservoir-sampling-uniform-pick-from-a-stream" />
 
 ### Problem
 

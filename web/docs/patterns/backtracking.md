@@ -75,10 +75,6 @@ The template is invariant across problems: `choose → recurse → un-choose`. W
 </svg>
 </div>
 
-### ▶ Try it — interactive walkthrough
-
-<BacktrackingAnim />
-
 
 
 
@@ -119,7 +115,10 @@ You want *one* answer, not all — a pruned DFS or DP is faster than enumerating
 ---
 
 ## Subsets &amp; Combinations (the start-index template) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)*
+
+<ProgressCheck id="subsets-amp-combinations-the-start-index-template" />
 
 ### Problem
 Return **all subsets** (the power set) of a set of distinct integers, in any order.
@@ -227,7 +226,10 @@ O(n) recursion/path space excluding output; O(n·2ⁿ) including the returned su
 - Why record at every node? — every partial path is already a valid subset, not only the leaves.
 
 ## Permutations (the used[] template) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Permutations](https://leetcode.com/problems/permutations/)*
+
+<ProgressCheck id="permutations-the-used-template" />
 
 ### Problem
 Return **all orderings** (permutations) of a list of distinct integers.
@@ -348,7 +350,10 @@ O(n) recursion/path/used-array space excluding output; O(n·n!) including output
 - Why copy `path` only when full length? — only complete orderings are valid permutations.
 
 ## Combination Sum (reuse &amp; pruning) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Combination Sum](https://leetcode.com/problems/combination-sum/)*
+
+<ProgressCheck id="combination-sum-reuse-amp-pruning" />
 
 ### Problem
 Return all **combinations** of the candidates that sum to `target`; each candidate may be **reused unlimited** times. No duplicate combinations.
@@ -456,7 +461,10 @@ O(target/minCandidate) recursion/path space excluding output.
 - Why copy `path` at `remain == 0`? — the current list is exactly one valid combination and must be frozen before backtracking.
 
 ## N-Queens (constraint occupancy) <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: N-Queens](https://leetcode.com/problems/n-queens/)*
+
+<ProgressCheck id="n-queens-constraint-occupancy" />
 
 ### Problem
 Place `n` queens on an `n×n` board so that **none attack** another (no shared row, column, or diagonal). Return all valid boards.
@@ -590,7 +598,10 @@ O(n) for columns and O(2n) for each diagonal array, plus O(n) recursion stack.
 - Why clear all three booleans after recursion? — leaving any one set falsely blocks sibling placements.
 
 ## Word Search (grid backtracking) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Word Search](https://leetcode.com/problems/word-search/)*
+
+<ProgressCheck id="word-search-grid-backtracking" />
 
 ### Problem
 Given a grid of letters, decide whether a `word` can be spelled by walking through **adjacent** cells (up/down/left/right), never reusing a cell.

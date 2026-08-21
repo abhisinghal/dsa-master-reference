@@ -18,7 +18,10 @@ For the array-as-a-container Java mechanics (declaration, growth, sorting compar
 > [key] **Key Insight** — Almost every matrix trick is "map `(r,c)` to another cell by a formula." Write the formula down before you code: rotate-90°-clockwise sends `(r,c) → (c, n-1-r)`, which is exactly **transpose then reverse each row**.
 
 ## Rotate Image (90° clockwise, in place) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Rotate Image](https://leetcode.com/problems/rotate-image/)* — **Medium**
+
+<ProgressCheck id="rotate-image-90-clockwise-in-place" />
 
 ### Problem
 Rotate an `n×n` matrix 90° clockwise, **in place** (no second matrix).
@@ -65,7 +68,10 @@ O(1). The algorithm uses only a temporary variable for swaps and mutates the inp
 - The enhanced `for (int[] row : m)` is safe because each row array is mutated in place.
 
 ## Spiral Matrix (layer-by-layer traversal) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)* — **Medium**
+
+<ProgressCheck id="spiral-matrix-layer-by-layer-traversal" />
 
 ### Problem
 Return all elements of an `m×n` matrix in spiral order.
@@ -112,7 +118,10 @@ O(1) extra, excluding the output list that the problem requires.
 - The `if (left <= right)` guard handles a single remaining column after the other sides shrink.
 
 ## Set Matrix Zeroes (use row 0 / col 0 as markers) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/)* — **Medium**
+
+<ProgressCheck id="set-matrix-zeroes-use-row-0-col-0-as-markers" />
 
 ### Problem
 If a cell is `0`, set its entire row and column to `0` — **in place, O(1) extra space**. You must record *original* zeros before writing, or new zeros trigger more clearing.
@@ -265,7 +274,10 @@ Cyclic sort's whole family is "place each value at its home, then read off the w
 
 ## Find the Missing Number <span class="diff diff-e">Easy</span>
 
+
 *[↗ LeetCode: Missing Number](https://leetcode.com/problems/missing-number/)*
+
+<ProgressCheck id="find-the-missing-number" />
 
 ### Problem
 
@@ -394,7 +406,10 @@ O(1) auxiliary space excluding the output list.
 
 ## First Missing Positive (Hard) <span class="diff diff-h">Hard</span>
 
+
 *[↗ LeetCode: First Missing Positive](https://leetcode.com/problems/first-missing-positive/)*
+
+<ProgressCheck id="first-missing-positive-hard" />
 
 ### Problem
 

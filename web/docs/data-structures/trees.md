@@ -144,7 +144,10 @@ Process the tree one level at a time (snapshot `queue.size()`), then change *wha
 
 ## Maximum Depth, Balanced, Diameter (post-order aggregation) <span class="diff diff-e">Easy</span>
 
+
 *[↗ LeetCode: Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/)*
+
+<ProgressCheck id="maximum-depth-balanced-diameter-post-order-aggregation" />
 
 ### Problem
 
@@ -256,7 +259,10 @@ Post-order returns one value up; the *answer* is a richer combination you stash 
 
 ## Lowest Common Ancestor <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)*
+
+<ProgressCheck id="lowest-common-ancestor" />
 
 ### Problem
 
@@ -365,7 +371,10 @@ O(h) recursion stack, O(n) worst case.
 
 ## Validate BST &amp; BST operations <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)*
+
+<ProgressCheck id="validate-bst-amp-bst-operations" />
 
 ### Problem
 
@@ -469,7 +478,10 @@ An in-order walk of a BST visits keys in sorted order — lean on that:
 
 ## Serialize / Deserialize (structure encoding) <span class="diff diff-h">Hard</span>
 
+
 *[↗ LeetCode: Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)*
+
+<ProgressCheck id="serialize-deserialize-structure-encoding" />
 
 ### Problem
 
@@ -586,7 +598,10 @@ O(n) for encoded data/tokens plus O(h) recursion.
 
 ## Construct Tree from Traversals <span class="diff diff-m">Medium</span>
 
+
 *[↗ LeetCode: Construct Binary Tree from Preorder and Inorder](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)*
+
+<ProgressCheck id="construct-tree-from-traversals" />
 
 ### Problem
 

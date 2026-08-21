@@ -77,7 +77,10 @@ The template has three moving pieces. The `Entry` remembers not just the value, 
 ---
 
 ## Merge Two / K Sorted Lists <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)*
+
+<ProgressCheck id="merge-two-k-sorted-lists" />
 
 ### Problem
 Merge `k` sorted linked lists into one sorted list. (The two-list merge is the building block.)
@@ -230,7 +233,10 @@ Duplicates are fine: if two heap entries have the same value, either can come fi
 ---
 
 ## Merge K Sorted Lists / Smallest Range (K-way merge) <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Smallest Range Covering Elements from K Lists](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/)*
+
+<ProgressCheck id="merge-k-sorted-lists-smallest-range-k-way-merge" />
 
 ### Problem
 Merge `k` sorted sequences into one sorted stream (and, in the sibling problem, find the smallest range that covers at least one number from **each** list).

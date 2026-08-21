@@ -17,7 +17,10 @@ Overflow. `a * b` on two `int`s near 10⁹ wraps silently. Use `long` for produc
 </Callout>
 
 ## Fast (Binary) Exponentiation — Pow(x, n) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Pow(x, n)](https://leetcode.com/problems/powx-n/)* — **Medium**
+
+<ProgressCheck id="fast-binary-exponentiation-pow-x-n" />
 
 ### Problem
 Compute `xⁿ` (x a double, n a signed integer) in better than O(n). **Example 1:** `pow(2, 10) = 1024`; `pow(2, -2) = 0.25`.
@@ -117,7 +120,10 @@ O(1): only the base, exponent, and result variables are kept.
 - Why `x *= x` and `n >>= 1`? — squaring advances to the next power of two while shifting drops the bit just processed.
 
 ## Euclid's Algorithm — GCD &amp; LCM <span class="diff diff-e">Easy</span>
+
 *[↗ LeetCode: Greatest Common Divisor of Strings](https://leetcode.com/problems/greatest-common-divisor-of-strings/)* — **Easy**
+
+<ProgressCheck id="euclid-s-algorithm-gcd-amp-lcm" />
 
 ### Problem
 Compute `gcd(a, b)` (largest integer dividing both) and, from it, `lcm(a, b)`. **Example 1:** `gcd(12, 18) = 6`, `lcm(12, 18) = 36`.
@@ -198,7 +204,10 @@ O(1) for the iterative version; recursive form uses O(log min(a,b)) stack.
 - Why can this solve string GCD? — the candidate length is the numeric gcd of the two string lengths.
 
 ## Sieve of Eratosthenes — Count Primes <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Count Primes](https://leetcode.com/problems/count-primes/)* — **Medium**
+
+<ProgressCheck id="sieve-of-eratosthenes-count-primes" />
 
 ### Problem
 Count primes strictly below `n`. **Example 1:** `n = 10 → 4` (2, 3, 5, 7).

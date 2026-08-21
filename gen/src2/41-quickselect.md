@@ -97,7 +97,10 @@ The template is a narrowing search over ranks, not values. `partition` gives you
 ---
 
 ## Quickselect (Kth Largest Element) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)*
+
+<ProgressCheck id="quickselect-kth-largest-element" />
 
 ### Problem
 Find the **kth largest** element in an unsorted array (a one-shot query) — faster than fully sorting.

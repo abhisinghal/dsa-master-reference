@@ -71,7 +71,10 @@ You need *farthest* rather than *nearest* — or the comparison isn't a simple o
 ---
 
 ## Daily Temperatures (Next Greater Element) <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)*
+
+<ProgressCheck id="daily-temperatures-next-greater-element" />
 
 ### Problem
 For each day, report **how many days you must wait for a warmer temperature** (0 if it never gets warmer).
@@ -155,7 +158,10 @@ A monotonic stack that "resolves" each element the moment a bigger/smaller one a
 
 
 ## Largest Rectangle in Histogram <span class="diff diff-h">Hard</span>
+
 *[↗ LeetCode: Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)*
+
+<ProgressCheck id="largest-rectangle-in-histogram" />
 
 ### Problem
 Given the bar heights of a histogram (each of width 1), find the area of the **largest rectangle** that fits entirely under the bars.

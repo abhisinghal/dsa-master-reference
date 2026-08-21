@@ -17,7 +17,10 @@ You need a *contiguous* result (subarray, substring) and the running quantity is
 ---
 
 ## Two Sum <span class="diff diff-e">Easy</span>
+
 *[↗ LeetCode: Two Sum](https://leetcode.com/problems/two-sum/)*
+
+<ProgressCheck id="two-sum" />
 
 ### Problem
 Given an array `nums` and a `target`, return the **indices** of the two entries that add up to `target`. Exactly one pair works, and you can't reuse the same index.
@@ -110,7 +113,10 @@ Every variation below changes **exactly one** constraint — and that one change
 > [pat] **The thread that ties them together** — all of these are *"find elements that combine to a target."* The decision tree is short: **unsorted + exact pair** → hash the complement · **sorted** → two pointers (O(1) space) · **k numbers** → fix `k−2`, two-pointer the last two · **contiguous** → hash prefix sums · **maximize under a bound** → sort + two pointers. Same idea, five faces.
 
 ## Group Anagrams <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Group Anagrams](https://leetcode.com/problems/group-anagrams/)*
+
+<ProgressCheck id="group-anagrams" />
 
 ### Problem
 Given a list of words, bucket together the ones that are **anagrams** of each other (same letters, any order). Return the groups in any order.
@@ -207,7 +213,10 @@ Same move — *"map each item to a canonical key so equivalents collide"* — on
 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/) | two strings, not a whole group | compare the two 26-count signatures directly |
 
 ## Product of Array Except Self <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)*
+
+<ProgressCheck id="product-of-array-except-self" />
 
 ### Problem
 Return an array where `answer[i]` is the product of **every element except** `nums[i]` — **without using division**, in O(n) time.
@@ -291,7 +300,10 @@ Same skeleton — *combine a running result from the left with one from the righ
 | [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) | a negative flips sign | track running **max *and* min** so a sign-flip can become the new best | O(n) · O(1) |
 
 ## Longest Consecutive Sequence <span class="diff diff-m">Medium</span>
+
 *[↗ LeetCode: Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)*
+
+<ProgressCheck id="longest-consecutive-sequence" />
 
 ### Problem
 Given an **unsorted** array, find the length of the longest run of **consecutive integers** (like 1,2,3,4) — in O(n), so sorting (O(n log n)) is off the table.
