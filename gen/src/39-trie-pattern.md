@@ -213,6 +213,8 @@ void dfs(char[][] b, int r, int c, Node node, List<String> res) {
 
 > [trap] **Common Trap** — Re-adding a word for every path that reaches it. *Example:* board has multiple paths spelling `"cat"` from the same trie leaf. Without clearing `node.word` after the first find (or using a `Set<String>` result), you emit `"cat"` multiple times.
 
+<TrapTrace title="Re-adding a word for every path that reaches it" input="'cat'" bug="board has multiple paths spelling ''cat'' from the same trie leaf. Without clearing 'node.word' after the first find (or using a 'SetltStringgt' result), you emit ''cat'' multiple times." fix="See the guidance in the trap description and the code snippet." />
+
 > [note] **Interview script** — "I would not search each word independently because the dictionary has up to 30,000 words and many share prefixes. I build a trie once, then do board DFS while carrying the current trie node. If the next board letter is not a trie child, no dictionary word can continue, so I prune that branch. When I hit a terminal node, I record the word and clear it to avoid duplicates."
 
 > [pat] **Pattern Connection** — "Drive a backtracking search with a trie to prune multiple targets simultaneously" is a hallmark staff-level combination of two structures.
@@ -334,6 +336,8 @@ For a tiny 4-bit example, compare possible XORs for query `0101`. A partner begi
 | [Replace Words / IP routing](https://leetcode.com/problems/replace-words/) | the same longest-prefix idea, but over characters or address bits instead of XOR greed | — |
 
 > [trap] **Common Trap** — Comparing bits in the wrong direction. *Example:* numbers `[3,10,5,25]` — XOR-max hunt greedily wants the **opposite** bit at each level from the query. Insert MSB-first; at each level, walk the child whose bit differs from the current bit (fall back if that branch doesn't exist).
+
+<TrapTrace title="Comparing bits in the wrong direction" input="[3,10,5,25]" bug="numbers '[3,10,5,25]' — XOR-max hunt greedily wants the **opposite** bit at each level from the query" fix="Insert MSB-first; at each level, walk the child whose bit differs from the current bit (fall back if that branch doesn't exist)." />
 
 > [note] **Interview script** — "Brute force compares every pair, but XOR is decided from the highest bit downward. I insert every number into a binary trie and, for each query number, prefer the opposite bit at each level. If the opposite branch exists, that bit of the answer becomes 1; otherwise I take the same-bit branch. The width is constant at 32, so the total time is O(n)."
 

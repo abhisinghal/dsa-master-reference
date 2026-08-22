@@ -181,6 +181,8 @@ Counting jumps at every step instead of at the frontier. *Example:* `nums=[2,3,1
 
 </Callout>
 
+<TrapTrace title="Counting jumps at every step instead of at the frontier" input="nums=[2,3,1,1,4]" bug="'nums=[2,3,1,1,4]'. Incrementing 'jumps' at each index gives 5; incrementing only when 'i == currentEnd' (frontier boundary) gives 2" fix="Update 'currentEnd = farthest' and 'jumps++' together." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 This is BFS on an implicit graph collapsed to O(n). *Jump Game I* (reachability) is an even simpler farthest-reach scan.
@@ -356,6 +358,8 @@ Space O(1). Only `total`, `tank`, and `start` are stored.
 Skipping the total check. *Example:* `gas=[1,2,3,4]`, `cost=[2,3,4,5]`. Total gas 10 &lt; total cost 14, so **no** station works — but a local reset can look promising. Verify `sum(gas) >= sum(cost)`; if not, return `-1`.
 
 </Callout>
+
+<TrapTrace title="Skipping the total check" input="gas=[1,2,3,4]" bug="'gas=[1,2,3,4]', 'cost=[2,3,4,5]'. Total gas 10 lt total cost 14, so **no** station works — but a local reset can look promising. Verify 'sum(gas) gt= sum(cost)'; if not, return '-1'." fix="See the guidance in the trap description and the code snippet." />
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -588,6 +592,8 @@ Space O(1) extra besides the input array, ignoring sorting implementation overhe
 Sorting by start, not end. *Example:* `[[1,100],[2,3],[3,4]]`. Sorting by start keeps `[1,100]` first and drops the two short intervals. Sort by **end**: pick `[2,3]`, then `[3,4]` — remove `[1,100]`.
 
 </Callout>
+
+<TrapTrace title="Sorting by start, not end" input="[[1,100],[2,3],[3,4]]" bug="'[[1,100],[2,3],[3,4]]'. Sorting by start keeps '[1,100]' first and drops the two short intervals" fix="Sort by **end**: pick '[2,3]', then '[3,4]' — remove '[1,100]'." />
 
 <Callout kind="pat" title="Pattern Connection">
 

@@ -1,32 +1,32 @@
 [
   {
-    "title": "How to Use This Book",
-    "url": "/foundations/how-to-use",
-    "updated": "2026-08-22T13:29:47.000Z"
-  },
-  {
     "title": "Sliding Window",
     "url": "/patterns/sliding-window",
-    "updated": "2026-08-22T13:06:46.000Z"
+    "updated": "2026-08-22T13:47:58.000Z"
   },
   {
-    "title": "Prefix Sum & Difference Arrays",
-    "url": "/patterns/prefix-sum",
-    "updated": "2026-08-22T13:06:46.000Z"
+    "title": "Two Pointers",
+    "url": "/patterns/two-pointers",
+    "updated": "2026-08-22T13:47:58.000Z"
   },
   {
-    "title": "K-way Merge",
-    "url": "/patterns/k-way-merge",
-    "updated": "2026-08-22T13:06:46.000Z"
+    "title": "Fast / Slow Pointers (Floyd)",
+    "url": "/patterns/fast-slow",
+    "updated": "2026-08-22T13:47:58.000Z"
   },
   {
-    "title": "Dynamic Programming",
-    "url": "/patterns/dp",
-    "updated": "2026-08-22T13:06:46.000Z"
+    "title": "Hashing",
+    "url": "/patterns/hashing",
+    "updated": "2026-08-22T13:47:58.000Z"
   },
   {
-    "title": "Trie (pattern)",
-    "url": "/patterns/trie-pattern",
-    "updated": "2026-08-22T13:06:46.000Z"
+    "title": "Monotonic Stack",
+    "url": "/patterns/monotonic-stack",
+    "updated": "2026-08-22T13:47:58.000Z"
+  },
+  {
+    "title": "Binary Search & Search-on-Answer",
+    "url": "/patterns/binary-search",
+    "updated": "2026-08-22T13:47:58.000Z"
   }
 ]

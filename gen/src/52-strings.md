@@ -90,6 +90,8 @@ O(1) auxiliary space.
 
 > [trap] **Common Trap** — Only expanding **odd**-length centers. *Example:* `"abba"` has an even-length palindrome centered between indices 1 and 2. Skip the even-center expansion and you miss `"abba"` entirely. Expand twice per index — `(i,i)` and `(i,i+1)`.
 
+<TrapTrace title="Only expanding **odd**-length centers" input="'abba'" bug="''abba'' has an even-length palindrome centered between indices 1 and 2" fix="Skip the even-center expansion and you miss ''abba'' entirely. Expand twice per index — '(i,i)' and '(i,i+1)'." />
+
 > [pat] **Pattern Connection** — Expansion also counts palindromic substrings (*Palindromic Substrings*). The DP alternative (`dp[i][j]`) is the bridge to interval DP.
 
 ### Learning notes
@@ -251,6 +253,8 @@ List<String> decode(String s) {
 > [inv] **Invariant** — The decode cursor always sits at the start of a `length#payload` frame; reading the count fixes exactly how many following bytes belong to this string.
 
 > [trap] **Common Trap** — Fixed delimiter with unescaped payload. *Example:* strings `["a#b","c"]` with delimiter `#` → encode `"a#b#c"`, decode as `["a","b","c"]` (wrong). Length-prefixing `"3#a#b1#c"` bypasses escaping — read the count, then exactly that many chars.
+
+<TrapTrace title="Fixed delimiter with unescaped payload" input="['a#b','c']" bug="strings '['a#b','c']' with delimiter '#' → encode ''a#b#c'', decode as '['a','b','c']' (wrong). Length-prefixing ''3#a#b1#c'' bypasses escaping — read the count, then exactly that many chars." fix="See the guidance in the trap description and the code snippet." />
 
 > [pat] **Pattern Connection** — Length-prefix framing is exactly how binary protocols and tree serialization avoid ambiguity — see *Serialize/Deserialize Binary Tree*.
 

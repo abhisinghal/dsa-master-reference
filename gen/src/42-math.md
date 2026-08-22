@@ -85,6 +85,8 @@ double myPow(double x, int nRaw) {
 
 > [trap] **Common Trap** — Not widening `n` before negating. *Example:* `n = Integer.MIN_VALUE = -2³¹`. `-n` overflows back to itself, so `n < 0 ? -n : n` yields a negative `n` — the while-loop never terminates. Widen to `long` first.
 
+<TrapTrace title="Not widening 'n' before negating" input="n = Integer.MIN_VALUE = -2³¹" bug="'n = Integer.MIN_VALUE = -2³¹'. '-n' overflows back to itself, so 'n lt 0 ? -n : n' yields a negative 'n' — the while-loop never terminates" fix="Widen to 'long' first." />
+
 ### Time Complexity
 Time O(log n) · Space O(1).
 
@@ -158,6 +160,8 @@ long lcm(long a, long b) { return a / gcd(a, b) * b; }   // divide before multip
 | [Fraction to Recurring Decimal](https://leetcode.com/problems/fraction-to-recurring-decimal/) | track remainders to find the repeating cycle | O(len) |
 
 > [trap] **Common Trap** — `a * b` in LCM overflows even when the LCM fits. *Example:* `a = b = 10⁹`. `gcd = 10⁹`, but `a*b = 10¹⁸` overflows `long`. Always `a / gcd(a,b) * b` — divide before multiplying.
+
+<TrapTrace title="'a * b' in LCM overflows even when the LCM fits" input="a = b = 10⁹" bug="'a = b = 10⁹'. 'gcd = 10⁹', but 'a*b = 10¹⁸' overflows 'long'. Always 'a / gcd(a,b) * b' — divide before multiplying." fix="See the guidance in the trap description and the code snippet." />
 
 > [pat] **Pattern Connection** — GCD reasoning drives *GCD of Strings* (the answer exists iff `s+t == t+s`, and its length is `gcd(|s|,|t|)`), *Fraction to Recurring Decimal*, *Water and Jug Problem* (solvable iff `target % gcd(a,b) == 0`), and *Nim/game* parity arguments.
 
@@ -248,6 +252,8 @@ int countPrimes(int n) {
 | [Smallest-prime-factor sieve](https://leetcode.com/problems/count-primes/) | store `spf[x]` → factorize any x ≤ n in O(log x) | O(n) |
 
 > [trap] **Common Trap** — Starting the inner loop at `2*i` (redundant) or forgetting to widen. *Example:* i ≈ 46341, `i*i` overflows `int` to negative → index out of range. Use `(long)i*i`; start there because smaller multiples were marked by smaller primes.
+
+<TrapTrace title="Starting the inner loop at '2*i' (redundant) or forgetting to widen" input="i*i" bug="i ≈ 46341, 'i*i' overflows 'int' to negative → index out of range" fix="Use '(long)i*i'; start there because smaller multiples were marked by smaller primes." />
 
 > [pat] **Pattern Connection** — A **linear sieve** also records each number's smallest prime factor, giving O(1) factorization afterwards — powers *Closest Prime Numbers*, *Distinct Prime Factors*, and any problem needing fast factorization over a range.
 

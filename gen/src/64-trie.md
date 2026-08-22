@@ -255,6 +255,8 @@ O(total inserted characters * alphabet factor) in the worst case.
 
 > [trap] **Common Trap** — `isEnd` only on leaves. *Example:* insert `"car"` then `"cars"`. If you only mark `s` as end, `search("car")` returns false. `isEnd` marks a **word boundary**, independent of children — set it on `r` too.
 
+<TrapTrace title="'isEnd' only on leaves" input="'car'" bug="insert ''car'' then ''cars''. If you only mark 's' as end, 'search('car')' returns false. 'isEnd' marks a **word boundary**, independent of children — set it on 'r' too." fix="See the guidance in the trap description and the code snippet." />
+
 > [trap] **Alphabet Trap** — The `c - 'a'` index assumes lowercase English. If input can contain uppercase, digits, hyphens, or Unicode, normalize first or switch to a map-backed node.
 
 > [note] **Interview script** — "I will store a root node whose children represent the next character. Insert creates missing children and marks the final node as a complete word. Search walks the same path and also checks the final flag, while `startsWith` only needs the path to exist. Because each operation touches one node per character, the time is O(length of input)."

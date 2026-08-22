@@ -134,6 +134,8 @@ int singleNumber(int[] a) {            // every other element appears twice
 
 > [trap] **Common Trap** — Whole-XOR as split mask. *Example:* `nums=[1,2,3,4,1,2]`. `xy = 3^4 = 7 (0b111)`. Splitting by whole `xy` puts `1,2,3` in one group and `4` in the other — but `1^2^3 = 0`, losing the loner. Isolate a **single** distinguishing bit via `xy & -xy`.
 
+<TrapTrace title="Whole-XOR as split mask" input="nums=[1,2,3,4,1,2]" bug="'nums=[1,2,3,4,1,2]'. 'xy = 3^4 = 7 (0b111)'. Splitting by whole 'xy' puts '1,2,3' in one group and '4' in the other — but '1^2^3 = 0', losing the loner. Isolate a **single** distinguishing bit via 'xy & -xy'." fix="See the guidance in the trap description and the code snippet." />
+
 > [pat] **Pattern Connection** — XOR-cancellation also finds the *Missing Number* (`XOR of indices ^ XOR of values`) and the duplicated/missing pair in *Set Mismatch*.
 
 #### Same pattern, new tweaks
@@ -229,6 +231,8 @@ Time O(n) · Space O(n).
 > [pat] **Pattern Connection** — Alternative recurrence `dp[i] = dp[i & (i-1)] + 1`; both express popcount as a self-DP. Submask enumeration `(s-1) & m` powers *Sum of Subset XOR/AND* and bitmask-DP transitions.
 
 > [trap] **Common Trap** — Recomputing popcount per number. *Example:* naïve `Integer.bitCount(i)` for i=0..n is O(n log n). The DP recurrence `bits[i] = bits[i >> 1] + (i & 1)` reuses the answer for `i/2` → O(n).
+
+<TrapTrace title="Recomputing popcount per number" input="Integer.bitCount(i)" bug="naïve 'Integer.bitCount(i)' for i=0..n is O(n log n). The DP recurrence 'bits[i] = bits[i gtgt 1] + (i & 1)' reuses the answer for 'i/2' → O(n)." fix="See the guidance in the trap description and the code snippet." />
 
 #### Same pattern, new tweaks
 Small bit identities each unlock a classic:

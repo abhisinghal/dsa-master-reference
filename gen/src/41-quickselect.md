@@ -238,6 +238,8 @@ For the example `[3,2,1,5,6,4]`, if pivot `4` lands at index `3`, you can immedi
 
 > [trap] **Common Trap** — Bad pivots. *Example:* `nums=[1,2,3,4,5]`, k=1, picking the *last* element as pivot every time → each partition shrinks by only 1 → O(n²). Random pivot (or median-of-three) keeps average O(n).
 
+<TrapTrace title="Bad pivots" input="nums=[1,2,3,4,5]" bug="'nums=[1,2,3,4,5]', k=1, picking the *last* element as pivot every time → each partition shrinks by only 1 → O(n²). Random pivot (or median-of-three) keeps average O(n)." fix="See the guidance in the trap description and the code snippet." />
+
 > [note] **Interview script** — First, I'd translate kth largest into an ascending target index: `n-k`, so duplicates are handled naturally by rank. The brute force is sorting in O(n log n), and a heap gives O(n log k), especially for streams. Since this is a one-shot array query, I'll use Quickselect: partition around a randomized pivot and continue only on the side containing the target index. The expected time is O(n), worst-case O(n²) with unlucky pivots, and space is O(1) in-place.
 
 > [pat] **Pattern Connection** — For a *stream* or repeated queries, a size-k heap (O(n log k)) beats one-shot Quickselect. Quickselect also drives *Wiggle Sort II* and median-of-medians selection.

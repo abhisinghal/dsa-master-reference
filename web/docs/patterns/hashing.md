@@ -389,6 +389,8 @@ Building the count key without a delimiter collides distinct histograms. *Exampl
 
 </Callout>
 
+<TrapTrace title="Building the count key without a delimiter collides distinct histograms" input="[1,11]" bug="counts '[1,11]' and '[11,1]' both stringify to ''111'' and get grouped together. Separate fields — e.g. ''1#11'' vs ''11#1''." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 "Signature hashing" also powers Group Shifted Strings and isomorphic-string checks.
@@ -526,6 +528,8 @@ After the left sweep, `out[i]` holds the product of all elements strictly left o
 Reaching for division. *Example:* `nums=[1,2,0,4]` — dividing the total product by each element blows up at the zero. The prefix/suffix product is division-free and zero-safe.
 
 </Callout>
+
+<TrapTrace title="Reaching for division" input="nums=[1,2,0,4]" bug="'nums=[1,2,0,4]' — dividing the total product by each element blows up at the zero. The prefix/suffix product is division-free and zero-safe." fix="See the guidance in the trap description and the code snippet." />
 
 <Callout kind="pat" title="Pattern Connection">
 

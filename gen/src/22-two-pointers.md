@@ -371,6 +371,8 @@ Space is O(1) because the method stores two pointers and one best area, with no 
 
 > [trap] **Common Trap** — Moving the taller wall can never help. *Example:* `heights=[1,8,6,2,5,4,8,3,7]`, `lo=0(h=1), hi=8(h=7)`. Moving `hi` inward shrinks width and can't raise the min (already `1`). Move the shorter wall — the only move that can improve area.
 
+<TrapTrace title="Moving the taller wall can never help" input="heights=[1,8,6,2,5,4,8,3,7]" bug="'heights=[1,8,6,2,5,4,8,3,7]', 'lo=0(h=1), hi=8(h=7)'. Moving 'hi' inward shrinks width and can't raise the min (already '1'). Move the shorter wall — the only move that can improve area." fix="See the guidance in the trap description and the code snippet." />
+
 > [pat] **Pattern Connection** — Greedy converging pointers. Contrast with Trapping Rain Water, which *accumulates* water rather than maximizing a single span.
 
 ### Same pattern, new tweaks
@@ -472,6 +474,8 @@ Space is O(n) for the required output array. Apart from `res`, the algorithm use
 
 > [trap] **Common Trap** — Squaring in place, then sorting. *Example:* `nums=[-4,-1,0,3,10]` → squared `[16,1,0,9,100]` still needs a sort (O(n log n)). Two pointers from the ends fill an output array from the back in O(n).
 
+<TrapTrace title="Squaring in place, then sorting" input="nums=[-4,-1,0,3,10]" bug="'nums=[-4,-1,0,3,10]' → squared '[16,1,0,9,100]' still needs a sort (O(n log n)). Two pointers from the ends fill an output array from the back in O(n)." fix="See the guidance in the trap description and the code snippet." />
+
 > [pat] **Pattern Connection** — "Merge from both ends because the extreme is at an end" is the same converging-pointer idea as Container With Most Water, and mirrors the merge step of merge sort operating on a fold-point.
 
 ### Same pattern, new tweaks
@@ -569,6 +573,8 @@ Space is O(1) because sorting happens in-place with three pointers and a constan
 />
 
 > [trap] **Common Trap** — Advancing `mid` after swapping with `high` skips an unexamined value. *Example:* `[2,0,2]`, `mid=1`. Swap `a[mid]` with `a[high]` → `[2,0,2]` (a `2` moves in at `mid`). If you `mid++`, you miss re-evaluating that new value. Advance `mid` only when you swapped with `low` or saw a `1`.
+
+<TrapTrace title="Advancing 'mid' after swapping with 'high' skips an unexamined value" input="[2,0,2]" bug="'[2,0,2]', 'mid=1'. Swap 'a[mid]' with 'a[high]' → '[2,0,2]' (a '2' moves in at 'mid'). If you 'mid++', you miss re-evaluating that new value. Advance 'mid' only when you swapped with 'low' or saw a '1'." fix="See the guidance in the trap description and the code snippet." />
 
 > [pat] **Pattern Connection** — Partitioning is the core of Quickselect/quicksort; the same 3-way scheme handles duplicate-heavy pivots (3-way quicksort).
 
@@ -686,6 +692,8 @@ Space is O(1) because only two pointers, two running maxima, and the water total
 />
 
 > [trap] **Common Trap** — Local vs global boundaries. *Example:* `heights=[4,2,0,3,2,5]`. Water above index 3 (h=3) is bounded by the global `4` on the left and `5` on the right — not by 3. Track running max from each side (or the shorter side with two pointers).
+
+<TrapTrace title="Local vs global boundaries" input="heights=[4,2,0,3,2,5]" bug="'heights=[4,2,0,3,2,5]'. Water above index 3 (h=3) is bounded by the global '4' on the left and '5' on the right — not by 3" fix="Track running max from each side (or the shorter side with two pointers)." />
 
 > [pat] **Pattern Connection** — Also solvable with a monotonic (decreasing) stack that resolves trapped basins between bars — a good cross-check of the two viewpoints.
 

@@ -256,6 +256,8 @@ Re-adding a word for every path that reaches it. *Example:* board has multiple p
 
 </Callout>
 
+<TrapTrace title="Re-adding a word for every path that reaches it" input="'cat'" bug="board has multiple paths spelling ''cat'' from the same trie leaf. Without clearing 'node.word' after the first find (or using a 'SetltStringgt' result), you emit ''cat'' multiple times." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="note" title="Interview script">
 
 "I would not search each word independently because the dictionary has up to 30,000 words and many share prefixes. I build a trie once, then do board DFS while carrying the current trie node. If the next board letter is not a trie child, no dictionary word can continue, so I prune that branch. When I hit a terminal node, I record the word and clear it to avoid duplicates."
@@ -405,6 +407,8 @@ For a tiny 4-bit example, compare possible XORs for query `0101`. A partner begi
 Comparing bits in the wrong direction. *Example:* numbers `[3,10,5,25]` — XOR-max hunt greedily wants the **opposite** bit at each level from the query. Insert MSB-first; at each level, walk the child whose bit differs from the current bit (fall back if that branch doesn't exist).
 
 </Callout>
+
+<TrapTrace title="Comparing bits in the wrong direction" input="[3,10,5,25]" bug="numbers '[3,10,5,25]' — XOR-max hunt greedily wants the **opposite** bit at each level from the query" fix="Insert MSB-first; at each level, walk the child whose bit differs from the current bit (fall back if that branch doesn't exist)." />
 
 <Callout kind="note" title="Interview script">
 

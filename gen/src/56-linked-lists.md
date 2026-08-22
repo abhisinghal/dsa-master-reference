@@ -84,6 +84,8 @@ ListNode reverse(ListNode head) {
 
 > [trap] **Common Trap** — Losing `next` before rewiring. *Example:* nodes `1→2→3`. If you do `cur.next = prev;` before saving `cur.next` into a temp, the rest of the list is lost. Always: `next = cur.next; cur.next = prev; prev = cur; cur = next;`.
 
+<TrapTrace title="Losing 'next' before rewiring" input="1→2→3" bug="nodes '1→2→3'. If you do 'cur.next = prev;' before saving 'cur.next' into a temp, the rest of the list is lost. Always: 'next = cur.next; cur.next = prev; prev = cur; cur = next;'." fix="See the guidance in the trap description and the code snippet." />
+
 > [pat] **Pattern Connection** — Recursive reversal (O(n) stack) is the mental model for *Reverse Nodes in k-Group* and *Reverse Sublist II*, where you reverse bounded segments and reconnect.
 
 ### Time Complexity
@@ -186,6 +188,8 @@ boolean isPalindrome(ListNode head) {
 > [inv] **Invariant** — After the split, `slow` heads the second half; reversing it lets a forward walk of the first half and a forward walk of the reversed second half compare mirror positions.
 
 > [trap] **Common Trap** — Splitting on the wrong middle. *Example:* even-length list `1→2→3→4`. Fast/slow with `while (fast.next != null && fast.next.next != null)` gives the correct "first-half" middle at `2`, so the second half `3→4` reverses cleanly. Split at the geometric middle instead and the halves misalign.
+
+<TrapTrace title="Splitting on the wrong middle" input="1→2→3→4" bug="even-length list '1→2→3→4'. Fast/slow with 'while (fast.next != null && fast.next.next != null)' gives the correct 'first-half' middle at '2', so the second half '3→4' reverses cleanly" fix="Split at the geometric middle instead and the halves misalign." />
 
 > [pat] **Pattern Connection** — Decomposing a hard list task into the four primitives is the meta-skill; interviewers probe whether you restore the list afterward.
 
@@ -293,6 +297,8 @@ Original summary: O(1) per `get`/`put`.
 O(capacity) for map entries and internal linked ordering.
 
 > [trap] **Common Trap** — Not updating recency on `get`. *Example:* insert 1,2,3 (cap 3); `get(1)`; insert 4. Without moving 1 to the front on the read, 1 is still the LRU and gets evicted — but `1` was **just** used. `get` must be a mutation.
+
+<TrapTrace title="Not updating recency on 'get'" input="get(1)" bug="insert 1,2,3 (cap 3); 'get(1)'; insert 4. Without moving 1 to the front on the read, 1 is still the LRU and gets evicted — but '1' was **just** used. 'get' must be a mutation." fix="See the guidance in the trap description and the code snippet." />
 
 ### Learning notes
 

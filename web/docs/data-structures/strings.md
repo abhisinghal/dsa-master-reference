@@ -114,6 +114,8 @@ Only expanding **odd**-length centers. *Example:* `"abba"` has an even-length pa
 
 </Callout>
 
+<TrapTrace title="Only expanding **odd**-length centers" input="'abba'" bug="''abba'' has an even-length palindrome centered between indices 1 and 2" fix="Skip the even-center expansion and you miss ''abba'' entirely. Expand twice per index — '(i,i)' and '(i,i+1)'." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 Expansion also counts palindromic substrings (*Palindromic Substrings*). The DP alternative (`dp[i][j]`) is the bridge to interval DP.
@@ -319,6 +321,8 @@ The decode cursor always sits at the start of a `length#payload` frame; reading 
 Fixed delimiter with unescaped payload. *Example:* strings `["a#b","c"]` with delimiter `#` → encode `"a#b#c"`, decode as `["a","b","c"]` (wrong). Length-prefixing `"3#a#b1#c"` bypasses escaping — read the count, then exactly that many chars.
 
 </Callout>
+
+<TrapTrace title="Fixed delimiter with unescaped payload" input="['a#b','c']" bug="strings '['a#b','c']' with delimiter '#' → encode ''a#b#c'', decode as '['a','b','c']' (wrong). Length-prefixing ''3#a#b1#c'' bypasses escaping — read the count, then exactly that many chars." fix="See the guidance in the trap description and the code snippet." />
 
 <Callout kind="pat" title="Pattern Connection">
 

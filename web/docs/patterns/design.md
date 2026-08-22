@@ -203,6 +203,8 @@ Updating the map but not the list, or the list but not the map. *Example:* if `p
 
 </Callout>
 
+<TrapTrace title="Updating the map but not the list, or the list but not the map" input="put(3,3)" bug="if 'put(3,3)' evicts key 2 from the list but leaves 'map.get(2)' pointing at the old node, a later 'get(2)' returns a ghost value." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="note" title="Interview script">
 
 "I need one structure for lookup and one for recency. The hash map gives key-to-node in O(1), and the doubly linked list lets me remove or move that exact node in O(1). I keep most recent next to the head and evict from the tail. Every operation updates both structures so the invariants stay aligned."
@@ -342,6 +344,8 @@ Forgetting to update the moved element's index. *Example:* `insert 1,2,3` (`vals
 
 </Callout>
 
+<TrapTrace title="Forgetting to update the moved element's index" input="insert 1,2,3" bug="'insert 1,2,3' ('vals=[1,2,3]', 'idx={1:0,2:1,3:2}'). 'remove(1)': swap 'vals[0]' with last ('3') → 'vals=[3,2]'. Without 'idx.put(3, 0)', a later 'remove(3)' uses stale index '2' → wrong slot." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="note" title="Interview script">
 
 "Uniform random needs an array because I can choose a random index. Fast delete needs a map because I need the value's index immediately. To delete without shifting, I move the last value into the removed slot, update that moved value's index, then pop the tail. The invariant is that the list has no gaps and the map always points to the current index."
@@ -464,6 +468,8 @@ O(1) auxiliary space for one sample and a counter.
 Sampling with the wrong probability. *Example:* if you replace with `rnd.nextInt(count-1) == 0` instead of `nextInt(count) == 0`, the k-th element has probability `1/(k-1)` (or the loop mis-fires at k=1). Off-by-one on the reservoir wrecks uniformity.
 
 </Callout>
+
+<TrapTrace title="Sampling with the wrong probability" input="rnd.nextInt(count-1) == 0" bug="if you replace with 'rnd.nextInt(count-1) == 0' instead of 'nextInt(count) == 0', the k-th element has probability '1/(k-1)' (or the loop mis-fires at k=1). Off-by-one on the reservoir wrecks uniformity." fix="See the guidance in the trap description and the code snippet." />
 
 <Callout kind="note" title="Interview script">
 

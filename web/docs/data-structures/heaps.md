@@ -238,6 +238,8 @@ Skipping the rebalance. *Example:* insert 1,2,3,4. Without rebalancing, all four
 
 </Callout>
 
+<TrapTrace title="Skipping the rebalance" input="low" bug="insert 1,2,3,4. Without rebalancing, all four might land in the low-heap → median unreadable. After every insert: push to 'low', move 'low.top' to 'high'; if 'high.size() gt low.size()' move one back. Two peeks give the median." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="trap" title="Overflow Trap">
 
 `low.peek() + high.peek()` can overflow `int` before division. If constraints allow values near `Integer.MAX_VALUE`, cast first: `((long) low.peek() + high.peek()) / 2.0`.

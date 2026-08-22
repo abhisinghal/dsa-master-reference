@@ -126,6 +126,8 @@ List<List<Integer>> levelOrder(TreeNode root) {
 
 > [trap] **Common Trap** — Iterative in-order missing the "go-left first" phase. *Example:* tree `1←2→3`. Popping-and-printing before pushing all lefts prints in preorder, not in-order. Push lefts first, then pop-visit-descend-right.
 
+<TrapTrace title="Iterative in-order missing the 'go-left first' phase" input="1←2→3" bug="tree '1←2→3'. Popping-and-printing before pushing all lefts prints in preorder, not in-order" fix="Push lefts first, then pop-visit-descend-right." />
+
 ### Time Complexity
 
 O(n): each traversal visits every node once.
@@ -220,6 +222,8 @@ int height(TreeNode n) {
 
 
 > [trap] **Common Trap** — Edges vs nodes. *Example:* a 3-node linear tree `A-B-C`. Diameter measured in **edges** is 2 (`A→B→C`); in **nodes** is 3. LeetCode's *Diameter of Binary Tree* counts **edges** — return `max(leftDepth + rightDepth)`, not `+1`.
+
+<TrapTrace title="Edges vs nodes" input="A-B-C" bug="a 3-node linear tree 'A-B-C'. Diameter measured in **edges** is 2 ('A→B→C'); in **nodes** is 3. LeetCode's *Diameter of Binary Tree* counts **edges** — return 'max(leftDepth + rightDepth)', not '+1'." fix="See the guidance in the trap description and the code snippet." />
 
 > [pat] **Pattern Connection** — "Return one thing, update a global with a richer combination" is the template for *Binary Tree Maximum Path Sum* (return best single-branch sum, update global with the two-branch sum; clamp negatives to 0).
 
@@ -319,6 +323,8 @@ TreeNode lca(TreeNode root, TreeNode p, TreeNode q) {
 
 > [trap] **Common Trap** — BST logic on a general tree. *Example:* general-tree LCA(5,1) is 3 regardless of value order. Using BST comparisons (`p.val < root.val`) hunts one subtree and misses the split. For general trees, recurse both sides and combine.
 
+<TrapTrace title="BST logic on a general tree" input="p.val lt root.val" bug="general-tree LCA(5,1) is 3 regardless of value order. Using BST comparisons ('p.val lt root.val') hunts one subtree and misses the split. For general trees, recurse both sides and combine." fix="See the guidance in the trap description and the code snippet." />
+
 > [pat] **Pattern Connection** — LCA underpins distance-between-nodes and *Binary Tree Maximum Width*/ancestor queries; with preprocessing (binary lifting / Euler tour + sparse table) it answers many queries in O(log n)/O(1).
 
 ### Time Complexity
@@ -411,6 +417,8 @@ boolean valid(TreeNode n, long low, long high) {
 
 
 > [trap] **Common Trap** — Local-only comparison. *Example:* `root=10, left=5, left.right=12`. Locally `5<10` and `12>5` — both pass — but `12` violates BST because it's under `10`'s left subtree. Pass an inclusive `(min, max)` bound down.
+
+<TrapTrace title="Local-only comparison" input="root=10, left=5, left.right=12" bug="'root=10, left=5, left.right=12'. Locally '5lt10' and '12gt5' — both pass — but '12' violates BST because it's under '10''s left subtree. Pass an inclusive '(min, max)' bound down." fix="See the guidance in the trap description and the code snippet." />
 
 > [pat] **Pattern Connection** — In-order = sorted enables *Kth Smallest in BST* (in-order, stop at k), *Validate BST*, *Recover BST* (find the two swapped nodes), and *Convert BST to sorted DLL*.
 
@@ -526,6 +534,8 @@ TreeNode parse(Deque<String> q) {
 
 > [trap] **Common Trap** — Ambiguity from missing null markers. *Example:* trees `[1,2]` (left-child only) and `[1,null,2]` (right-child only) serialize identically if you skip nulls. Emit an explicit sentinel (e.g. `#`) for null children; the pre-order stream then uniquely decodes.
 
+<TrapTrace title="Ambiguity from missing null markers" input="[1,2]" bug="trees '[1,2]' (left-child only) and '[1,null,2]' (right-child only) serialize identically if you skip nulls" fix="Emit an explicit sentinel (e.g. '#') for null children; the pre-order stream then uniquely decodes." />
+
 ### Time Complexity
 
 O(n): each node/null marker is written and consumed once.
@@ -628,6 +638,8 @@ TreeNode build(int[] preorder, int inLo, int inHi) {
 
 > [trap] **Common Trap** — Repeated linear scans. *Example:* preorder `[3,9,20,15,7]`, inorder `[9,3,15,20,7]`. Locating `3` in inorder each call is O(n) → total O(n²). Precompute `Map<Integer,Integer>` from value → inorder index for O(1) lookup and O(n) total.
 
+<TrapTrace title="Repeated linear scans" input="[3,9,20,15,7]" bug="preorder '[3,9,20,15,7]', inorder '[9,3,15,20,7]'. Locating '3' in inorder each call is O(n) → total O(n²). Precompute 'MapltInteger,Integergt' from value → inorder index for O(1) lookup and O(n) total." fix="See the guidance in the trap description and the code snippet." />
+
 > [pat] **Pattern Connection** — Post-order + in-order works symmetrically (consume post-order from the back, right before left). Pre + post can build only *full* binary trees (ambiguous otherwise).
 
 ### Time Complexity
@@ -722,6 +734,8 @@ int[] dfs(TreeNode n) {                       // {robThis, skipThis}
 > [pat] **Pattern Connection** — "Return a per-node state tuple, combine at the parent" is the general tree-DP shape: *Binary Tree Cameras*, *Longest Univalue Path*, *Distribute Coins in Binary Tree* all follow it.
 
 > [trap] **Common Trap** — Returning a scalar instead of a state pair. *Example:* on subtree rooted at `v`, you need both "best with `v` robbed" and "best without" so the parent can combine — a single number forces recomputation. Return `int[]{robbed, notRobbed}`.
+
+<TrapTrace title="Returning a scalar instead of a state pair" input="v" bug="on subtree rooted at 'v', you need both 'best with 'v' robbed' and 'best without' so the parent can combine — a single number forces recomputation" fix="Return 'int[]{robbed, notRobbed}'." />
 
 ### Time Complexity
 

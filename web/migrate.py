@@ -199,7 +199,7 @@ def escape_lt_gt_in_prose(body: str) -> str:
         r"h[1-6]|ul|ol|li|table|thead|tbody|tr|th|td|blockquote|small|"
         r"details|summary|figure|figcaption|dl|dt|dd|"
         r"Callout|CodeTabs|ProgressCheck|JavaRunner|Breadcrumbs|ReadingTime|"
-        r"RecentUpdates|Quiz|StepStrip|TwoSumStepStrip|CodeTrace|Icon|"
+        r"RecentUpdates|Quiz|StepStrip|TwoSumStepStrip|CodeTrace|TrapTrace|Icon|"
         r"SlidingWindowAnim|MonoStackAnim|UnionFindAnim|SweepLineAnim|"
         r"DivideConquerAnim|QuickselectAnim|BacktrackingAnim|"
         r"TwoPointersAnim|FastSlowAnim|BinarySearchAnim|HeapAnim|"

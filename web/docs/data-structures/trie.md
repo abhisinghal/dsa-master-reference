@@ -298,6 +298,8 @@ O(total inserted characters * alphabet factor) in the worst case.
 
 </Callout>
 
+<TrapTrace title="'isEnd' only on leaves" input="'car'" bug="insert ''car'' then ''cars''. If you only mark 's' as end, 'search('car')' returns false. 'isEnd' marks a **word boundary**, independent of children — set it on 'r' too." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="trap" title="Alphabet Trap">
 
 The `c - 'a'` index assumes lowercase English. If input can contain uppercase, digits, hyphens, or Unicode, normalize first or switch to a map-backed node.

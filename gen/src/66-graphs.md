@@ -551,6 +551,8 @@ O(V) for the distance array, excluding the edge list.
 
 > [trap] **Common Trap** — Ignoring `∞ + w` overflow. *Example:* `dist[u] = Integer.MAX_VALUE`. Then `dist[u] + w` wraps negative and looks like an improvement — you relax the whole graph incorrectly. Skip any edge whose `dist[u]` is still `∞`.
 
+<TrapTrace title="Ignoring '∞ + w' overflow" input="dist[u] = Integer.MAX_VALUE" bug="'dist[u] = Integer.MAX_VALUE'. Then 'dist[u] + w' wraps negative and looks like an improvement — you relax the whole graph incorrectly" fix="Skip any edge whose 'dist[u]' is still '∞'." />
+
 > [pat] **Pattern Connection** — *Cheapest Flights Within K Stops* is Bellman–Ford with the loop bounded to `K+1` passes (shortest path using ≤ K+1 edges) — snapshot `dist` each pass so a single round can't chain multiple hops. **SPFA** is a queue-based speedup of the same relaxation.
 
 ### Learning notes
@@ -589,6 +591,8 @@ Return a **deep copy** of a connected undirected graph, where each node holds a 
 > [key] **Key Insight** — A `visited`/clone map that also stores derived state (color, copy reference, distance) is the recurring graph-traversal bookkeeping trick — one structure serves two purposes.
 
 > [trap] **Common Trap** — Using a set-based visited map for the clone. *Example:* graph `1-2-1`. A plain `Set<Node>` marks `1` visited but can't return its clone when you re-encounter it via `2`. Use `Map<original, clone>` — it answers both "seen?" and "which copy?".
+
+<TrapTrace title="Using a set-based visited map for the clone" input="1-2-1" bug="graph '1-2-1'. A plain 'SetltNodegt' marks '1' visited but can't return its clone when you re-encounter it via '2'" fix="Use 'Mapltoriginal, clonegt' — it answers both 'seen?' and 'which copy?'." />
 
 **Example 1:** A 4-cycle clones to an independent 4-cycle with new node objects.
 
@@ -721,6 +725,8 @@ O(V + E) for adjacency plus O(V) arrays/recursion.
 
 > [trap] **Common Trap** — Treating the parent edge as a back-edge. *Example:* tree edge `u→v`. When DFS from `v` looks at neighbours, `u` is in the list — if you count `u` as a back-edge, `low[v]` drops to `disc[u]` and you miss real bridges. Skip the single parent edge.
 
+<TrapTrace title="Treating the parent edge as a back-edge" input="u→v" bug="tree edge 'u→v'. When DFS from 'v' looks at neighbours, 'u' is in the list — if you count 'u' as a back-edge, 'low[v]' drops to 'disc[u]' and you miss real bridges" fix="Skip the single parent edge." />
+
 > [pat] **Pattern Connection** — The same `disc`/`low` DFS finds **articulation points** (`low[child] >= disc[u]`, plus a root-with-2-children special case) and, on a **directed** graph, **strongly connected components** (Tarjan's SCC: nodes with `low == disc` close an SCC off a stack). SCCs power *2-SAT* and condensing a graph into a DAG.
 
 ### Learning notes
@@ -802,6 +808,8 @@ Original summary: Time O(E log E) (heap for lexical order) · Space O(V + E).
 O(V + E) for adjacency heaps, stack, and route.
 
 > [trap] **Common Trap** — Emitting nodes in visit-order (appending). *Example:* tickets `[[JFK,SFO],[JFK,ATL],[ATL,JFK]]`. Appending gives `JFK,SFO,ATL,JFK` — wrong. Emit only when a node is stuck (no outgoing edges left), and **prepend** — the reversed exhaustion order is the Eulerian trail.
+
+<TrapTrace title="Emitting nodes in visit-order (appending)" input="[[JFK,SFO],[JFK,ATL],[ATL,JFK]]" bug="tickets '[[JFK,SFO],[JFK,ATL],[ATL,JFK]]'. Appending gives 'JFK,SFO,ATL,JFK' — wrong" fix="Emit only when a node is stuck (no outgoing edges left), and **prepend** — the reversed exhaustion order is the Eulerian trail." />
 
 > [pat] **Pattern Connection** — An Eulerian trail exists iff 0 or 2 vertices have odd degree (undirected), or in/out-degrees match except one source/one sink (directed). The sibling — a **Hamiltonian** path (every *vertex* once) — has no such shortcut and is NP-hard, solved by [Bitmask DP](#dynamic-programming) for small n.
 

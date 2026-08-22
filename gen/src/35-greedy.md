@@ -139,6 +139,8 @@ Space O(1). The greedy scan keeps only `jumps`, `curEnd`, and `farthest`.
 
 > [trap] **Common Trap** — Counting jumps at every step instead of at the frontier. *Example:* `nums=[2,3,1,1,4]`. Incrementing `jumps` at each index gives 5; incrementing only when `i == currentEnd` (frontier boundary) gives 2. Update `currentEnd = farthest` and `jumps++` together.
 
+<TrapTrace title="Counting jumps at every step instead of at the frontier" input="nums=[2,3,1,1,4]" bug="'nums=[2,3,1,1,4]'. Incrementing 'jumps' at each index gives 5; incrementing only when 'i == currentEnd' (frontier boundary) gives 2" fix="Update 'currentEnd = farthest' and 'jumps++' together." />
+
 > [pat] **Pattern Connection** — This is BFS on an implicit graph collapsed to O(n). *Jump Game I* (reachability) is an even simpler farthest-reach scan.
 
 #### Same pattern, new tweaks
@@ -276,6 +278,8 @@ Space O(1). Only `total`, `tank`, and `start` are stored.
 
 
 > [trap] **Common Trap** — Skipping the total check. *Example:* `gas=[1,2,3,4]`, `cost=[2,3,4,5]`. Total gas 10 < total cost 14, so **no** station works — but a local reset can look promising. Verify `sum(gas) >= sum(cost)`; if not, return `-1`.
+
+<TrapTrace title="Skipping the total check" input="gas=[1,2,3,4]" bug="'gas=[1,2,3,4]', 'cost=[2,3,4,5]'. Total gas 10 lt total cost 14, so **no** station works — but a local reset can look promising. Verify 'sum(gas) gt= sum(cost)'; if not, return '-1'." fix="See the guidance in the trap description and the code snippet." />
 
 > [pat] **Pattern Connection** — "Reset the start when the running sum dips" mirrors Kadane's max-subarray reset — both discard a prefix that can only hurt.
 
@@ -456,6 +460,8 @@ Space O(1) extra besides the input array, ignoring sorting implementation overhe
 
 
 > [trap] **Common Trap** — Sorting by start, not end. *Example:* `[[1,100],[2,3],[3,4]]`. Sorting by start keeps `[1,100]` first and drops the two short intervals. Sort by **end**: pick `[2,3]`, then `[3,4]` — remove `[1,100]`.
+
+<TrapTrace title="Sorting by start, not end" input="[[1,100],[2,3],[3,4]]" bug="'[[1,100],[2,3],[3,4]]'. Sorting by start keeps '[1,100]' first and drops the two short intervals" fix="Sort by **end**: pick '[2,3]', then '[3,4]' — remove '[1,100]'." />
 
 > [pat] **Pattern Connection** — Max non-overlapping set = *Minimum Arrows to Burst Balloons* (min points to stab all). Sort-by-end greedy is the shared core.
 

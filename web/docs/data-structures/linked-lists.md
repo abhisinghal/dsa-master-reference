@@ -108,6 +108,8 @@ Losing `next` before rewiring. *Example:* nodes `1→2→3`. If you do `cur.next
 
 </Callout>
 
+<TrapTrace title="Losing 'next' before rewiring" input="1→2→3" bug="nodes '1→2→3'. If you do 'cur.next = prev;' before saving 'cur.next' into a temp, the rest of the list is lost. Always: 'next = cur.next; cur.next = prev; prev = cur; cur = next;'." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 Recursive reversal (O(n) stack) is the mental model for *Reverse Nodes in k-Group* and *Reverse Sublist II*, where you reverse bounded segments and reconnect.
@@ -239,6 +241,8 @@ Splitting on the wrong middle. *Example:* even-length list `1→2→3→4`. Fast
 
 </Callout>
 
+<TrapTrace title="Splitting on the wrong middle" input="1→2→3→4" bug="even-length list '1→2→3→4'. Fast/slow with 'while (fast.next != null && fast.next.next != null)' gives the correct 'first-half' middle at '2', so the second half '3→4' reverses cleanly" fix="Split at the geometric middle instead and the halves misalign." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 Decomposing a hard list task into the four primitives is the meta-skill; interviewers probe whether you restore the list afterward.
@@ -369,6 +373,8 @@ O(capacity) for map entries and internal linked ordering.
 Not updating recency on `get`. *Example:* insert 1,2,3 (cap 3); `get(1)`; insert 4. Without moving 1 to the front on the read, 1 is still the LRU and gets evicted — but `1` was **just** used. `get` must be a mutation.
 
 </Callout>
+
+<TrapTrace title="Not updating recency on 'get'" input="get(1)" bug="insert 1,2,3 (cap 3); 'get(1)'; insert 4. Without moving 1 to the front on the read, 1 is still the LRU and gets evicted — but '1' was **just** used. 'get' must be a mutation." fix="See the guidance in the trap description and the code snippet." />
 
 ### Learning notes
 

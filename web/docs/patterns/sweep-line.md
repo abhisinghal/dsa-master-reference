@@ -327,6 +327,8 @@ Tie at `start == end`. *Example:* meetings `[1,5]` and `[5,10]`. If end-events s
 
 </Callout>
 
+<TrapTrace title="Tie at 'start == end'" input="[1,5]" bug="meetings '[1,5]' and '[5,10]'. If end-events sort **before** start-events, one room suffices (release, then acquire). If start sorts first, you need 2. LeetCode's *Meeting Rooms II* treats them as one — sort ends first on ties." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="note" title="Interview script">
 
 First, I'd clarify whether a meeting ending at time `t` frees a room for another starting at `t`; here it does. The brute force is to count active intervals at every start time, which is O(n²). To optimize, I can either sort starts and ends as events or keep a min-heap of active end times. Both are O(n log n); the sweep makes the peak-concurrency idea especially explicit.

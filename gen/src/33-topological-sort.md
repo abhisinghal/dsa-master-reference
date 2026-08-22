@@ -237,6 +237,8 @@ Time O(V+E) · Space O(V+E). Building the graph touches each edge once, and the 
 
 > [trap] **Common Trap** — Not detecting cycles. *Example:* prerequisites `0→1` and `1→0`. Kahn's queue starts empty (no in-degree-0 node); if `order.size() < V` at the end, report "impossible" rather than a partial order.
 
+<TrapTrace title="Not detecting cycles" input="0→1" bug="prerequisites '0→1' and '1→0'. Kahn's queue starts empty (no in-degree-0 node); if 'order.size() lt V' at the end, report 'impossible' rather than a partial order." fix="See the guidance in the trap description and the code snippet." />
+
 > [note] **Interview script** — First, I'd restate the edge direction: pair `[a,b]` means `b` must come before `a`, so I add edge `b → a`. The brute force is to repeatedly scan for a course whose prerequisites are all done, but that repeats work. I optimize with Kahn's algorithm: maintain in-degrees, queue all zero-in-degree courses, and decrement neighbours as I emit courses. If I emit fewer than `numCourses`, I know a cycle prevented completion; otherwise the order is valid in O(V+E).
 
 #### Common Mistakes

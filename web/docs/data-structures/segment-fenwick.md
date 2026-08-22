@@ -112,6 +112,8 @@ O(n) for the 1-indexed tree array.
 
 </Callout>
 
+<TrapTrace title="0-index vs 1-index confusion" input="update(i)" bug="'update(i)' for 'i=0' with 0-indexed 'i' gives 'i & -i == 0', so the loop never advances. Fenwick trees are naturally 1-indexed; shift external indices by +1 or handle the 0 case explicitly." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 BIT answers *Count of Smaller Numbers After Self* (compress values, sweep right-to-left, query prefix counts), *Range Sum Query — Mutable*, and inversion counting.
@@ -292,6 +294,8 @@ class LazySeg {
 Forgetting `push` before recursing into children. *Example:* range-add a `+5` tag on a node, then query one of its children without pushing. The child returns its stale sum (missing the +5) and the aggregate is wrong. Push lazy tags at the top of both `update` and `query` before recursing.
 
 </Callout>
+
+<TrapTrace title="Forgetting 'push' before recursing into children" input="+5" bug="range-add a '+5' tag on a node, then query one of its children without pushing. The child returns its stale sum (missing the +5) and the aggregate is wrong" fix="Push lazy tags at the top of both 'update' and 'query' before recursing." />
 
 <Callout kind="pat" title="Pattern Connection">
 

@@ -539,6 +539,8 @@ Forgetting the "no window found" case. *Example:* `nums=[1,1,1]`, `target=100`. 
 
 </Callout>
 
+<TrapTrace title="Forgetting the 'no window found' case" input="nums=[1,1,1]" bug="'nums=[1,1,1]', 'target=100'. No window satisfies the sum; if you return 'best' still at 'Integer.MAX_VALUE', the caller thinks a huge window exists" fix="Return '0' when 'best' was never updated." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 The "shrink-to-minimize" twin of Minimum Window Substring (which minimizes over a character-coverage condition instead of a sum). Recognizing *longest vs shortest* decides whether you shrink lazily (only when invalid) or greedily (whenever valid).
@@ -912,6 +914,8 @@ Exact multiset coverage. Compare with *Permutation in String* / *Find All Anagra
 Decrementing `formed` on every removal. *Example:* `s="AAAB"`, `t="AB"`. When you shrink past an extra `A`, `A`'s count stays ≥ needed, so `formed` shouldn't drop. Decrement only when the count falls **below** the required threshold.
 
 </Callout>
+
+<TrapTrace title="Decrementing 'formed' on every removal" input="s='AAAB'" bug="'s='AAAB'', 't='AB''. When you shrink past an extra 'A', 'A''s count stays ≥ needed, so 'formed' shouldn't drop. Decrement only when the count falls **below** the required threshold." fix="See the guidance in the trap description and the code snippet." />
 
 ### Same pattern, new tweaks
 

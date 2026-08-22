@@ -427,6 +427,8 @@ Duplicates without sort-and-skip. *Example:* `nums=[1,1,2]` without `if (i>0 && 
 
 </Callout>
 
+<TrapTrace title="Duplicates without sort-and-skip" input="nums=[1,1,2]" bug="'nums=[1,1,2]' without 'if (igt0 && a[i]==a[i-1] && !used[i-1]) continue;' — you emit '[1,1,2]' twice (once for each '1' picked first)" fix="Sort + the 'used[i-1]' guard eliminates the twin." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 `used[]` generalizes to N-Queens (column/diagonal occupancy) and Sudoku (row/col/box occupancy) — all "place items respecting constraints."
@@ -763,6 +765,8 @@ Constraint occupancy arrays reappear in Sudoku (9 rows/cols/boxes) and *Word Sea
 Wrong diagonal keys. *Example:* queens at `(0,0)` and `(1,1)` — same anti-diagonal (`row-col = 0`). Use **two** bitsets keyed by `row-col` (anti) and `row+col` (main). Swapping them rejects valid boards.
 
 </Callout>
+
+<TrapTrace title="Wrong diagonal keys" input="(0,0)" bug="queens at '(0,0)' and '(1,1)' — same anti-diagonal ('row-col = 0')" fix="Use **two** bitsets keyed by 'row-col' (anti) and 'row+col' (main). Swapping them rejects valid boards." />
 
 ### Time Complexity
 O(n!) with heavy pruning.

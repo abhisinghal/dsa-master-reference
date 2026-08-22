@@ -328,6 +328,8 @@ Wrong feasibility semantics. *Example:* `nums=[7,2,5,10,8]`, `m=2`. `feasible(ca
 
 </Callout>
 
+<TrapTrace title="Wrong feasibility semantics" input="nums=[7,2,5,10,8]" bug="'nums=[7,2,5,10,8]', 'm=2'. 'feasible(cap)' asks *'can we split into ≤ m subarrays, each with sum ≤ cap?'*. Confusing it with *'exactly m'* misclassifies boundaries and the search settles on the wrong split." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 "Minimize the maximum" (or "maximize the minimum") ⇒ almost always binary search on the answer with a greedy feasibility check. This is a top-5 staff-interview signal.
@@ -477,6 +479,8 @@ O(1), because the algorithm stores boundary indices and values without building 
 Off-by-one when the total length is odd. *Example:* `A=[1]`, `B=[2,3]`. Left partition should hold `(m+n+1)/2 = 2` elements — the median is the `max` of that left side. Using `(m+n)/2` puts the median on the wrong side.
 
 </Callout>
+
+<TrapTrace title="Off-by-one when the total length is odd" input="A=[1]" bug="'A=[1]', 'B=[2,3]'. Left partition should hold '(m+n+1)/2 = 2' elements — the median is the 'max' of that left side. Using '(m+n)/2' puts the median on the wrong side." fix="See the guidance in the trap description and the code snippet." />
 
 ### Learning notes
 - **Not shortening the shorter array first** — the binary search range should be the smaller of `m`, `n`.

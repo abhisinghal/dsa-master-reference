@@ -884,6 +884,8 @@ Rolling-row overwritten in wrong order. *Example:* grid `[[1,2],[3,4]]`. When co
 
 </Callout>
 
+<TrapTrace title="Rolling-row overwritten in wrong order" input="[[1,2],[3,4]]" bug="grid '[[1,2],[3,4]]'. When collapsing to one row, if you overwrite 'dp[j]' before reading it for 'dp[j+1]', you lose the top-neighbour value. For sum-min, update 'dp[j] = grid[i][j] + min(dp[j], dp[j-1])' left-to-right; for right-to-left transitions iterate the opposite way." fix="See the guidance in the trap description and the code snippet." />
+
 ### Time Complexity
 Time O(R·C) · Space O(C).
 
@@ -1039,6 +1041,8 @@ The two-string `dp[i][j]` grid (match → diagonal, else combine neighbours) cov
 Strict vs non-decreasing LIS. *Example:* `[1,3,3,5]`. Strict LIS = 3 (`1,3,5`); non-decreasing = 4. `Collections.binarySearch` returning the insertion point for `3` differs by one between strict (replace at first `≥`) and non-strict (replace at first `>`). Confirm the requirement.
 
 </Callout>
+
+<TrapTrace title="Strict vs non-decreasing LIS" input="[1,3,3,5]" bug="'[1,3,3,5]'. Strict LIS = 3 ('1,3,5'); non-decreasing = 4. 'Collections.binarySearch' returning the insertion point for '3' differs by one between strict (replace at first '≥') and non-strict (replace at first 'gt')" fix="Confirm the requirement." />
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -1315,6 +1319,8 @@ Not enumerating all states. *Example:* stock with cooldown. Two states (hold, no
 
 </Callout>
 
+<TrapTrace title="Not enumerating all states" input="" bug="stock with cooldown. Two states (hold, not-hold) miss the cooldown day — the not-hold state must split into 'just sold' and 'free.' Miss the split and cooldown gets ignored." fix="See the guidance in the trap description and the code snippet." />
+
 ### Time Complexity
 Time O(n) · Space O(1).
 
@@ -1454,6 +1460,8 @@ Bitmask DP covers *Partition to K Equal Sum Subsets*, *Shortest Path Visiting Al
 `n` too large. *Example:* `n=25` → `2²⁵ = 33M` masks × 25 = 800M ops, borderline. Bitmask DP scales as `O(n · 2ⁿ)`, so it caps at n≈20–22. Above that, name the alternative (branch-and-bound, DP with subset-sum precompute).
 
 </Callout>
+
+<TrapTrace title="'n' too large" input="n=25" bug="'n=25' → '2²⁵ = 33M' masks × 25 = 800M ops, borderline. Bitmask DP scales as 'O(n · 2ⁿ)', so it caps at n≈20–22. Above that, name the alternative (branch-and-bound, DP with subset-sum precompute)." fix="See the guidance in the trap description and the code snippet." />
 
 ### Time Complexity
 Time O(2ⁿ·n²) · Space O(2ⁿ·n).

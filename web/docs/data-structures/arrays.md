@@ -320,6 +320,8 @@ Advancing `i` after every swap skips values you just placed. *Example:* `nums=[3
 
 </Callout>
 
+<TrapTrace title="Advancing 'i' after every swap skips values you just placed" input="nums=[3,1,2]" bug="'nums=[3,1,2]' at 'i=0'. Swap '3' to index 2 → '[2,1,3]'. If you 'i++', the fresh '2' at index 0 never gets placed at index 1" fix="Use 'while' (not 'if') at each 'i'." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 Every problem below is this template with a different final step. The unifying idea — *"the value tells you its own index"* — also underlies counting sort and the in-place hashing trick (marking `nums[abs(v)-1]` negative) used in some array problems.
@@ -583,6 +585,8 @@ The bound *"answer ∈ `1..n+1`"* is what lets you ignore everything outside tha
 Trying to place out-of-range values. *Example:* `nums=[3,4,-1,1]`. `-1` and `4` can't fit in `[0..n-1]` (n=4). Guard `1 ≤ v ≤ n` before every swap or you'll IOOBE.
 
 </Callout>
+
+<TrapTrace title="Trying to place out-of-range values" input="nums=[3,4,-1,1]" bug="'nums=[3,4,-1,1]'. '-1' and '4' can't fit in '[0..n-1]' (n=4)" fix="Guard '1 ≤ v ≤ n' before every swap or you'll IOOBE." />
 
 <Callout kind="pat" title="Pattern Connection">
 

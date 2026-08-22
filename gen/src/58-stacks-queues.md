@@ -79,6 +79,8 @@ boolean isValid(String s) {
 
 > [trap] **Common Trap** — Returning `true` without checking `stack.isEmpty()`. *Example:* `s="(()"` — every closer matched, but one `(` was never closed. Return `stack.isEmpty()`, not just `true`.
 
+<TrapTrace title="Returning 'true' without checking 'stack.isEmpty()'" input="s='(()'" bug="'s='(()'' — every closer matched, but one '(' was never closed" fix="Return 'stack.isEmpty()', not just 'true'." />
+
 > [pat] **Pattern Connection** — Stack-based parsing generalizes to expression evaluation (*Basic Calculator*), where operators and signs are pushed and resolved.
 
 ### Time Complexity
@@ -179,6 +181,8 @@ class MinStack {
 
 
 > [trap] **Common Trap** — A single scalar `min` can't be restored after `pop`. *Example:* push 5, push 3 (min=3), pop 3 — should min go back to 5? Without a per-entry or parallel min, you've lost that history. Store the running min with each pushed value.
+
+<TrapTrace title="A single scalar 'min' can't be restored after 'pop'" input="" bug="push 5, push 3 (min=3), pop 3 — should min go back to 5? Without a per-entry or parallel min, you've lost that history" fix="Store the running min with each pushed value." />
 
 > [pat] **Pattern Connection** — Carrying an auxiliary aggregate alongside the primary structure is the same idea as a monotonic deque tracking the window max, and as segment-tree nodes storing subrange summaries.
 

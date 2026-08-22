@@ -117,6 +117,8 @@ Not widening `n` before negating. *Example:* `n = Integer.MIN_VALUE = -2³¹`. `
 
 </Callout>
 
+<TrapTrace title="Not widening 'n' before negating" input="n = Integer.MIN_VALUE = -2³¹" bug="'n = Integer.MIN_VALUE = -2³¹'. '-n' overflows back to itself, so 'n lt 0 ? -n : n' yields a negative 'n' — the while-loop never terminates" fix="Widen to 'long' first." />
+
 ### Time Complexity
 Time O(log n) · Space O(1).
 
@@ -206,6 +208,8 @@ long lcm(long a, long b) { return a / gcd(a, b) * b; }   // divide before multip
 `a * b` in LCM overflows even when the LCM fits. *Example:* `a = b = 10⁹`. `gcd = 10⁹`, but `a*b = 10¹⁸` overflows `long`. Always `a / gcd(a,b) * b` — divide before multiplying.
 
 </Callout>
+
+<TrapTrace title="'a * b' in LCM overflows even when the LCM fits" input="a = b = 10⁹" bug="'a = b = 10⁹'. 'gcd = 10⁹', but 'a*b = 10¹⁸' overflows 'long'. Always 'a / gcd(a,b) * b' — divide before multiplying." fix="See the guidance in the trap description and the code snippet." />
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -316,6 +320,8 @@ int countPrimes(int n) {
 Starting the inner loop at `2*i` (redundant) or forgetting to widen. *Example:* i ≈ 46341, `i*i` overflows `int` to negative → index out of range. Use `(long)i*i`; start there because smaller multiples were marked by smaller primes.
 
 </Callout>
+
+<TrapTrace title="Starting the inner loop at '2*i' (redundant) or forgetting to widen" input="i*i" bug="i ≈ 46341, 'i*i' overflows 'int' to negative → index out of range" fix="Use '(long)i*i'; start there because smaller multiples were marked by smaller primes." />
 
 <Callout kind="pat" title="Pattern Connection">
 

@@ -316,6 +316,8 @@ Space is O(n·L) for the grouped output plus hash keys/lists; each input string 
 
 > [trap] **Common Trap** — Building the count key without a delimiter collides distinct histograms. *Example:* counts `[1,11]` and `[11,1]` both stringify to `"111"` and get grouped together. Separate fields — e.g. `"1#11"` vs `"11#1"`.
 
+<TrapTrace title="Building the count key without a delimiter collides distinct histograms" input="[1,11]" bug="counts '[1,11]' and '[11,1]' both stringify to ''111'' and get grouped together. Separate fields — e.g. ''1#11'' vs ''11#1''." fix="See the guidance in the trap description and the code snippet." />
+
 > [pat] **Pattern Connection** — "Signature hashing" also powers Group Shifted Strings and isomorphic-string checks.
 
 ### Same pattern, new tweaks
@@ -421,6 +423,8 @@ Extra space is O(1) excluding the required output array: `out` stores the answer
 />
 
 > [trap] **Common Trap** — Reaching for division. *Example:* `nums=[1,2,0,4]` — dividing the total product by each element blows up at the zero. The prefix/suffix product is division-free and zero-safe.
+
+<TrapTrace title="Reaching for division" input="nums=[1,2,0,4]" bug="'nums=[1,2,0,4]' — dividing the total product by each element blows up at the zero. The prefix/suffix product is division-free and zero-safe." fix="See the guidance in the trap description and the code snippet." />
 
 > [pat] **Pattern Connection** — Prefix/suffix aggregation — the same skeleton as Trapping Rain Water (prefix/suffix max) and candy-distribution problems.
 

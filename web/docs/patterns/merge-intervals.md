@@ -228,6 +228,8 @@ Touching vs overlapping. *Example:* `[1,2]` and `[2,3]`. If touching counts as o
 
 </Callout>
 
+<TrapTrace title="Touching vs overlapping" input="[1,2]" bug="'[1,2]' and '[2,3]'. If touching counts as overlap → merge ('cur.start lt= last.end') → '[1,3]'. If not → keep separate ('cur.start lt last.end'). LeetCode's *Merge Intervals* treats touching as overlap; *Non-overlapping Intervals* does not." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="note" title="Interview script">
 
 First, I'd clarify whether intervals are closed and whether touching endpoints should merge. The brute force is to compare every pair and repeatedly merge overlaps, but that is at least O(n²). I can do better by sorting by start, keeping one running interval, and only comparing each next interval to that running interval. Sorting costs O(n log n), the sweep is O(n), and the output space is O(n).

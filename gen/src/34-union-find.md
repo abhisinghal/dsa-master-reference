@@ -217,6 +217,8 @@ Near O(α(n)) per op ≈ O(1).
 
 > [trap] **Common Trap** — Union without rank/size. *Example:* union(1,2), union(2,3), union(3,4)... chains linearly if you always attach the same way → `find(1)` walks all n nodes. Union **by rank** (attach shorter to taller) keeps the tree flat.
 
+<TrapTrace title="Union without rank/size" input="find(1)" bug="union(1,2), union(2,3), union(3,4)... chains linearly if you always attach the same way → 'find(1)' walks all n nodes. Union **by rank** (attach shorter to taller) keeps the tree flat." fix="See the guidance in the trap description and the code snippet." />
+
 > [pat] **Pattern Connection** — DSU is the engine for *Number of Provinces*, *Accounts Merge* (union by shared email), *Redundant Connection* (the edge that first connects an already-connected pair), and Kruskal's MST. A `union` that returns false in an undirected graph means you just closed a cycle.
 
 #### Same pattern, new tweaks
@@ -317,6 +319,8 @@ Time O(E log E) · Space O(V).
 > [pat] **Pattern Connection** — *Min Cost to Connect All Points* (build a complete graph of Manhattan distances, then Kruskal/Prim). Prim (grow one tree with a min-heap) is the alternative, better on dense graphs.
 
 > [trap] **Common Trap** — Adding before union-check. *Example:* edges `[(A,B,1),(B,C,2),(A,C,3)]`. After adding the first two, A-B-C are connected. If you add `(A,C,3)` without `find(A) != find(C)`, you form a cycle and inflate the total. Trust `union`'s return.
+
+<TrapTrace title="Adding before union-check" input="[(A,B,1),(B,C,2),(A,C,3)]" bug="edges '[(A,B,1),(B,C,2),(A,C,3)]'. After adding the first two, A-B-C are connected. If you add '(A,C,3)' without 'find(A) != find(C)', you form a cycle and inflate the total. Trust 'union''s return." fix="See the guidance in the trap description and the code snippet." />
 
 #### Same pattern, new tweaks
 

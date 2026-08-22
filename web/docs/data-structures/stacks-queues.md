@@ -99,6 +99,8 @@ Returning `true` without checking `stack.isEmpty()`. *Example:* `s="(()"` — ev
 
 </Callout>
 
+<TrapTrace title="Returning 'true' without checking 'stack.isEmpty()'" input="s='(()'" bug="'s='(()'' — every closer matched, but one '(' was never closed" fix="Return 'stack.isEmpty()', not just 'true'." />
+
 <Callout kind="pat" title="Pattern Connection">
 
 Stack-based parsing generalizes to expression evaluation (*Basic Calculator*), where operators and signs are pushed and resolved.
@@ -223,6 +225,8 @@ push `5,3,7`: the paired min-stack tracks `5,3,3`, so `getMin()` reads `3` in O(
 A single scalar `min` can't be restored after `pop`. *Example:* push 5, push 3 (min=3), pop 3 — should min go back to 5? Without a per-entry or parallel min, you've lost that history. Store the running min with each pushed value.
 
 </Callout>
+
+<TrapTrace title="A single scalar 'min' can't be restored after 'pop'" input="" bug="push 5, push 3 (min=3), pop 3 — should min go back to 5? Without a per-entry or parallel min, you've lost that history" fix="Store the running min with each pushed value." />
 
 <Callout kind="pat" title="Pattern Connection">
 

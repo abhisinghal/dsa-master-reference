@@ -269,6 +269,8 @@ Not re-feeding the heap. *Example:* three lists `[1,4],[1,3],[2,6]`. After poppi
 
 </Callout>
 
+<TrapTrace title="Not re-feeding the heap" input="[1,4],[1,3],[2,6]" bug="three lists '[1,4],[1,3],[2,6]'. After popping '1' from list A, you must 'offer(A.next)' (i.e. '4') — otherwise list A never appears again and its remaining nodes are silently dropped." fix="See the guidance in the trap description and the code snippet." />
+
 <Callout kind="note" title="Interview script">
 
 First, I'd verify that each input list is already sorted; otherwise this pattern does not apply. The brute force is to dump all `N` values, sort them, and rebuild the list in O(N log N) time. Since there are `k` sorted fronts, I can keep a min-heap of at most `k` nodes, repeatedly pop the smallest, and push that same node's successor. That gives O(N log k) time and O(k) extra space.
@@ -411,6 +413,8 @@ The smallest range that includes at least one element from every list must span 
 Popping without re-feeding the same list. *Example:* three lists — after popping `A.head`, if you push a random next instead of `A.next`, list A gets skipped ahead and its remaining values leak into another list's stream. Push `polled.list.next` from the same list you popped.
 
 </Callout>
+
+<TrapTrace title="Popping without re-feeding the same list" input="A.head" bug="three lists — after popping 'A.head', if you push a random next instead of 'A.next', list A gets skipped ahead and its remaining values leak into another list's stream" fix="Push 'polled.list.next' from the same list you popped." />
 
 <Callout kind="note" title="Interview script">
 
