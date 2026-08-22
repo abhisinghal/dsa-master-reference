@@ -2,22 +2,24 @@
 
 *[↗ LeetCode: Find the Shortest Superstring](https://leetcode.com/problems/find-the-shortest-superstring/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-Given words. Return the shortest string containing every word as a substring.
+Return shortest string containing every given word as substring.
+
+**Constraints** — `1 ≤ n ≤ 12`.
 
 ---
 
-## Approach 1 — Bitmask TSP-style DP + overlap precompute
+## Approach — Bitmask TSP-style DP + overlap precompute (canonical)
+
 **Insight.**
-1. Precompute `overlap[i][j]` = max suffix of `words[i]` that is prefix of `words[j]`.
-2. `dp[mask][i]` = shortest length ending at word `i` after using set `mask`. Transition: `dp[mask | (1<<j)][j] = min(…, dp[mask][i] + len[j] - overlap[i][j])`.
-3. Track predecessors to reconstruct the string.
+1. `overlap[i][j]` = max suffix of `words[i]` that is prefix of `words[j]`.
+2. `dp[mask][i]` = shortest length ending at word i after using set mask.
+3. Reconstruct path via predecessor tracking.
 
 ```java
 String shortestSuperstring(String[] words) {
     int n = words.length;
     int[][] ov = new int[n][n];
-    for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) if (i != j)
-        ov[i][j] = computeOverlap(words[i], words[j]);
+    for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) if (i != j) ov[i][j] = computeOverlap(words[i], words[j]);
     int full = 1 << n;
     int[][] dp = new int[full][n];
     int[][] par = new int[full][n];
@@ -33,23 +35,13 @@ String shortestSuperstring(String[] words) {
                 if (cand < dp[nMask][j]) { dp[nMask][j] = cand; par[nMask][j] = i; }
             }
         }
-    // find best end
     int last = 0;
-    for (int i = 1; i < n; i++) if (dp[full - 1][i] < dp[full - 1][last]) last = i;
-    // reconstruct order backwards
+    for (int i = 1; i < n; i++) if (dp[full-1][i] < dp[full-1][last]) last = i;
     int[] order = new int[n];
     int mask = full - 1;
-    for (int k = n - 1; k >= 0; k--) {
-        order[k] = last;
-        int prev = par[mask][last];
-        mask ^= 1 << last;
-        last = prev;
-    }
+    for (int k = n - 1; k >= 0; k--) { order[k] = last; int prev = par[mask][last]; mask ^= 1 << last; last = prev; }
     StringBuilder sb = new StringBuilder(words[order[0]]);
-    for (int k = 1; k < n; k++) {
-        int o = ov[order[k - 1]][order[k]];
-        sb.append(words[order[k]].substring(o));
-    }
+    for (int k = 1; k < n; k++) sb.append(words[order[k]].substring(ov[order[k-1]][order[k]]));
     return sb.toString();
 }
 int computeOverlap(String a, String b) {
@@ -65,15 +57,15 @@ int computeOverlap(String a, String b) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Bitmask TSP-style DP + overlap precompute | O(n² · 2ⁿ) | O(n · 2ⁿ) | primary |
+| Bitmask TSP DP | **O(n² · 2ⁿ)** | O(n · 2ⁿ) | canonical |
 
 ## When to use which
 
-- **Ship this** → Bitmask TSP-style DP + overlap precompute (O(n² · 2ⁿ), O(n · 2ⁿ)). The pattern's standard solution.
+- **Small n TSP-style** → bitmask DP.
+- **Approximation** → greedy longest-overlap merge.
 
 ## Related problems
 
-- [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes) — bitmask BFS
-- [Traveling Salesman] — same TSP DP
+- [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes)

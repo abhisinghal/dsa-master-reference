@@ -2,15 +2,17 @@
 
 *[↗ LeetCode: Maximal Square](https://leetcode.com/problems/maximal-square/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-Largest all-ones square in a binary matrix. Return area.
+Largest square of `1`s in binary matrix. Return area.
+
+**Example 1** — Standard binary matrix → `4`
+
+**Constraints** — `1 ≤ m, n ≤ 300`.
 
 ---
 
-## Approach 1 — DP `side[i][j]` = largest square ending at (i, j)
-**Insight.** If `mat[i][j] == '1'`:
-`side[i][j] = 1 + min(side[i-1][j], side[i][j-1], side[i-1][j-1])`.
+## Approach — DP `side[i][j]` = largest square ending at (i, j) (canonical)
 
-**Why min of three.** The square ending at (i,j) is limited by the shortest of the squares ending at the three neighbors — otherwise a zero would intrude.
+**Insight.** `mat[i][j] == '1'` → `side[i][j] = 1 + min(side[i-1][j], side[i][j-1], side[i-1][j-1])`.
 
 ```java
 int maximalSquare(char[][] mat) {
@@ -21,8 +23,8 @@ int maximalSquare(char[][] mat) {
         prev = 0;
         for (int j = 1; j <= n; j++) {
             int tmp = dp[j];
-            if (mat[i - 1][j - 1] == '1') {
-                dp[j] = 1 + Math.min(dp[j], Math.min(dp[j - 1], prev));
+            if (mat[i-1][j-1] == '1') {
+                dp[j] = 1 + Math.min(dp[j], Math.min(dp[j-1], prev));
                 best = Math.max(best, dp[j]);
             } else dp[j] = 0;
             prev = tmp;
@@ -38,15 +40,17 @@ int maximalSquare(char[][] mat) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| DP `side[i][j]` = largest square ending at… | O(mn) | O(n) | primary |
+| DP min-of-3 | **O(mn)** | O(n) | canonical |
 
 ## When to use which
 
-- **Ship this** → DP `side[i][j]` = largest square ending at (i, j) (O(mn), O(n)). The pattern's standard solution.
+- **Only squares** → this DP.
+- **Rectangles** → [Maximal Rectangle](/problems/maximal-rectangle) — row heights + stack.
+- **Count all squares** → sum of `side[i][j]`.
 
 ## Related problems
 
-- [Maximal Rectangle](/problems/maximal-rectangle) — non-square, stack per row
-- [Count Square Submatrices with All Ones](https://leetcode.com/problems/count-square-submatrices-with-all-ones/) — sum of side[i][j]
+- [Maximal Rectangle](/problems/maximal-rectangle)
+- [Count Square Submatrices](https://leetcode.com/problems/count-square-submatrices-with-all-ones/)

@@ -2,12 +2,18 @@
 
 *[↗ LeetCode: House Robber II](https://leetcode.com/problems/house-robber-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-Same as House Robber but houses are in a **circle** — first and last are adjacent.
+Houses in a **circle** — first and last adjacent. Max rob without adjacent.
+
+**Example 1** — `nums=[2,3,2]` → `3`
+**Example 2** — `nums=[1,2,3,1]` → `4`
+
+**Constraints** — `1 ≤ n ≤ 100`.
 
 ---
 
-## Approach 1 — Two linear runs
-**Insight.** Because rob(first) forbids rob(last), the optimum is either "consider houses[0..n-2]" or "houses[1..n-1]". Both are linear house robber → max of the two.
+## Approach — Two linear runs (canonical)
+
+**Insight.** rob(first) forbids rob(last). Optimum = max of two subarrays: `[0..n-2]` and `[1..n-1]`.
 
 ```java
 int rob(int[] nums) {
@@ -31,16 +37,17 @@ int linear(int[] nums, int lo, int hi) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Two linear runs | O(n) | O(1) | primary |
+| Two linear runs | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → Two linear runs (O(n), O(1)). The pattern's standard solution.
+- **Circular house robber** → this.
+- **Linear** → [House Robber](/problems/dp-house-robber).
+- **Tree** → [House Robber III](https://leetcode.com/problems/house-robber-iii/).
 
 ## Related problems
 
-- [House Robber](/problems/dp-house-robber) — flagship
-- [House Robber III](https://leetcode.com/problems/house-robber-iii/) — tree DP
-- [Delete and Earn](/problems/delete-and-earn) — reduction to House Robber
+- [House Robber](/problems/dp-house-robber)
+- [Delete and Earn](/problems/delete-and-earn)

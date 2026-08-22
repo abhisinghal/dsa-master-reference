@@ -2,14 +2,21 @@
 
 *[↗ LeetCode: Palindrome Partitioning II](https://leetcode.com/problems/palindrome-partitioning-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-Minimum cuts so every part of `s` is a palindrome.
+Min cuts so every part of `s` is palindrome.
+
+**Example 1** — `s="aab"` → `1`
+**Example 2** — `s="a"` → `0`
+**Example 3** — `s="ab"` → `1`
+
+**Constraints** — `1 ≤ n ≤ 2000`.
 
 ---
 
-## Approach 1 — Two DPs (pal[i][j] + cuts[i])
+## Approach — Two DPs (canonical)
+
 **Insight.**
-1. Precompute `pal[i][j]` = whether `s[i..j]` is palindrome — DP in O(n²).
-2. `cuts[i]` = min cuts to partition `s[0..i]`. If `s[0..i]` is palindrome, cuts[i] = 0. Else `cuts[i] = min(cuts[j] + 1)` over all `j` with `s[j+1..i]` palindrome.
+1. Precompute `pal[i][j]` = whether `s[i..j]` palindrome.
+2. `cuts[i]` = min cuts for `s[0..i]`. If `pal[0][i]`, 0; else `min(cuts[j] + 1)` for `j` with `pal[j+1][i]`.
 
 ```java
 int minCut(String s) {
@@ -17,16 +24,16 @@ int minCut(String s) {
     boolean[][] pal = new boolean[n][n];
     for (int i = n - 1; i >= 0; i--)
         for (int j = i; j < n; j++)
-            if (s.charAt(i) == s.charAt(j) && (j - i < 2 || pal[i + 1][j - 1]))
+            if (s.charAt(i) == s.charAt(j) && (j - i < 2 || pal[i+1][j-1]))
                 pal[i][j] = true;
     int[] cuts = new int[n];
     for (int i = 0; i < n; i++) {
         if (pal[0][i]) { cuts[i] = 0; continue; }
         cuts[i] = i;
         for (int j = 0; j < i; j++)
-            if (pal[j + 1][i]) cuts[i] = Math.min(cuts[i], cuts[j] + 1);
+            if (pal[j+1][i]) cuts[i] = Math.min(cuts[i], cuts[j] + 1);
     }
-    return cuts[n - 1];
+    return cuts[n-1];
 }
 ```
 
@@ -36,16 +43,17 @@ int minCut(String s) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Two DPs (pal[i][j] + cuts[i]) | O(n²) | O(n²) | primary |
+| Two-stage DP | **O(n²)** | O(n²) | canonical |
 
 ## When to use which
 
-- **Ship this** → Two DPs (pal[i][j] + cuts[i]) (O(n²), O(n²)). The pattern's standard solution.
+- **Min cuts** → this.
+- **Enumerate partitions** → [Palindrome Partitioning I](/problems/palindrome-partitioning).
+- **Longest palindrome** → LPS DP.
 
 ## Related problems
 
-- [Palindrome Partitioning](/problems/palindrome-partitioning) — enumerate all
+- [Palindrome Partitioning](/problems/palindrome-partitioning)
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence)
-- [Word Break](https://leetcode.com/problems/word-break/) — same "cut-DP" style

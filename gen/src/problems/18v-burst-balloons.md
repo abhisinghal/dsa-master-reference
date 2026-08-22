@@ -2,14 +2,19 @@
 
 *[↗ LeetCode: Burst Balloons](https://leetcode.com/problems/burst-balloons/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r are alive neighbors. Maximize coins.
+Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r are alive neighbors. Max coins.
+
+**Example 1** — `nums=[3,1,5,8]` → `167`
+
+**Constraints** — `1 ≤ n ≤ 300`.
 
 ---
 
-## Approach 1 — Interval DP with "last to burst" trick
-**Insight.** Directly modeling "first to burst" fails — the neighbors change unpredictably. Instead, think of `i` as the **last** balloon burst in the range `(l, r)` (open interval): its neighbors at that moment are `nums[l]` and `nums[r]` — fixed! Then subproblems `(l, i)` and `(i, r)` are independent.
+## Approach — Interval DP with "last to burst" trick (canonical)
 
-Padding: prepend and append `1` so the base "neighbors" are always defined.
+**Insight.** "First to burst" model fails — neighbors change unpredictably. Instead consider `i` as the **last** to burst in range `(l, r)`: its neighbors at that moment are fixed at `nums[l]` and `nums[r]`. Subproblems `(l, i)` and `(i, r)` are independent.
+
+**Padding.** Prepend and append `1` so base neighbors are always defined.
 
 ```java
 int maxCoins(int[] nums) {
@@ -34,16 +39,16 @@ int maxCoins(int[] nums) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Interval DP with "last to burst" trick | O(n³) | O(n²) | primary |
+| Interval DP | **O(n³)** | O(n²) | canonical |
 
 ## When to use which
 
-- **Ship this** → Interval DP with "last to burst" trick (O(n³), O(n²)). The pattern's standard solution.
+- **"Optimize over splits with fixed boundary contribution"** → interval DP.
+- **"Reverse (last first) trick"** → also works in Matrix Chain, Merge Stones.
 
 ## Related problems
 
-- [Minimum Cost to Merge Stones](/problems/minimum-cost-to-merge-stones) — interval DP with k-groupings
-- [Matrix Chain Multiplication] — canonical interval DP
+- [Minimum Cost to Merge Stones](/problems/minimum-cost-to-merge-stones)
 - [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)

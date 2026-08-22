@@ -2,18 +2,24 @@
 
 *[↗ LeetCode: Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/dp)
 
-Each step has cost. Can start at 0 or 1; step 1 or 2 at a time. Min cost to reach past-the-end.
+Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end.
+
+**Example 1** — `cost=[10,15,20]` → `15`
+**Example 2** — `cost=[1,100,1,1,1,100,1,1,100,1]` → `6`
+
+**Constraints** — `2 ≤ n ≤ 1000`.
 
 ---
 
-## Approach 1 — DP, O(1) space
-**Insight.** `dp[i]` = min cost to arrive at step i. `dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])`.
+## Approach — DP O(1) space (canonical)
+
+**Insight.** `dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])`.
 
 ```java
 int minCostClimbingStairs(int[] cost) {
     int a = 0, b = 0;
     for (int i = 2; i <= cost.length; i++) {
-        int c = Math.min(b + cost[i - 1], a + cost[i - 2]);
+        int c = Math.min(b + cost[i-1], a + cost[i-2]);
         a = b; b = c;
     }
     return b;
@@ -26,15 +32,17 @@ int minCostClimbingStairs(int[] cost) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| DP, O(1) space | O(n) | O(1) | primary |
+| Rolling DP | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → DP, O(1) space (O(n), O(1)). The pattern's standard solution.
+- **Standard** → rolling DP.
+- **Return steps taken** → track predecessors.
+- **k-step variants** → same skeleton with min over last k.
 
 ## Related problems
 
-- [Climbing Stairs](/problems/climbing-stairs) — counting version
+- [Climbing Stairs](/problems/climbing-stairs)
 - [House Robber](/problems/dp-house-robber)
