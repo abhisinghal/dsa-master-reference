@@ -63,6 +63,10 @@ Delivered across 7 batches: Prefix Sum + Trie + Bit Manip (25), Two Pointers + H
 
 ## Recent commits (all live)
 
+- `5a02edb` fix: strip `NNv-` prefix in migrate.py (resolves 90% Practice 404s)
+- `96be326` docs: mark all visualizer items shipped
+- `53be2ab` +84 auto-embedded Example Previews
+- `92cf495` interactive visualizers — complexity curve, 6-phase playbook, DS state machines
 - `3b50d5a` +28 DP full multi-approach pages — final batch
 - `16c11b1` slug fix: at-most-k-distinct-characters
 - `9b4d3af` +25 Sliding Window full multi-approach pages
