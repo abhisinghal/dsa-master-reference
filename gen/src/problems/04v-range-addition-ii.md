@@ -2,14 +2,23 @@
 
 *[↗ LeetCode: Range Addition II](https://leetcode.com/problems/range-addition-ii/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/prefix-sum)
 
-`m × n` matrix; each op is `[a, b]` = increment cells `[0..a-1] × [0..b-1]`. After all ops, return the count of the maximum value.
+Given matrix of zeros `m × n` and operations `[a, b]` that add 1 to every cell in `[0, a) × [0, b)`, return the count of maximum-valued cells.
 
-**Example** — `m=3, n=3, ops=[[2,2],[3,3]]` → `4`
+**Example 1** — `m=3, n=3, ops=[[2,2],[3,3]]` → `4` (top-left 2×2 has value 2)
+**Example 2** — `m=3, n=3, ops=[]` → `9`
+**Example 3** — `m=3, n=3, ops=[[1,1]]` → `1`
+
+**Constraints** — `1 ≤ m, n ≤ 4·10⁴`; `0 ≤ ops.length ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Intersection of all ops
-**Insight.** After all ops, the max cells are precisely the intersection: `[0..min(a_i)-1] × [0..min(b_i)-1]`. Count = product of min-dimensions.
+## Approach 1 — Actually apply operations
+
+O(#ops · m·n). Baseline.
+
+## Approach 2 — Intersection of all rectangles (canonical)
+
+**Insight.** Every op starts at (0,0). The max-valued cells are the intersection of all rectangles — i.e., `min(a) × min(b)`.
 
 ```java
 int maxCount(int m, int n, int[][] ops) {
@@ -18,35 +27,23 @@ int maxCount(int m, int n, int[][] ops) {
 }
 ```
 
-
-<CodeTrace
-  title="Intersection of all ops"
-  :values="['2', '2']"
-  :windowKeys="['i']"
-  :cellWidth="34"
-  :steps='[
-    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
-    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
-    { pointers: { i: 1 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
-  ]'
-/>
-
-
 **Complexity** — Time **O(#ops)**; Space **O(1)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Intersection of all ops | O(#ops) | O(1) | primary |
+| Simulate | O(#ops · m·n) | O(m·n) | baseline |
+| Intersect rectangles | **O(#ops)** | **O(1)** | optimum |
 
 ## When to use which
 
-- **Ship this** → Intersection of all ops (O(#ops), O(1)). The pattern's standard solution.
+- **All rectangles anchored at corner** → intersection min trick.
+- **Arbitrary rectangle positions** → 2D difference array.
 
 ## Related problems
 
-- [Range Addition](/problems/range-addition) — 1D
-- [Corporate Flight Bookings](/problems/corporate-flight-bookings)
+- [Range Addition](/problems/range-addition)
+- [Matrix Block Sum](/problems/matrix-block-sum)

@@ -2,58 +2,69 @@
 
 *[↗ LeetCode: Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
-Given a target `nums` and a list of `sequences` (subsequences of `nums`), return `true` iff there is exactly ONE topological order consistent with all sequences and it equals `nums`.
+Given a target permutation `nums` and a list of subsequences `sequences`, return `true` iff `nums` is the **unique** permutation reconstructible from the sequences.
 
-**Example** — `nums=[1,2,3], sequences=[[1,2],[1,3]]` → `false` (both [1,2,3] and [1,3,2] work)
+**Example 1** — `nums=[1,2,3], sequences=[[1,2],[1,3]]` → `false` (also [1,3,2])
+**Example 2** — `nums=[1,2,3], sequences=[[1,2],[1,3],[2,3]]` → `true`
+**Example 3** — `nums=[4,1,5,2,6,3], sequences=[[5,2,6,3],[4,1,5,2]]` → `true`
+
+**Constraints** — `1 ≤ n ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Kahn's with uniqueness check
+## Approach 1 — Try every topological order
 
-**Insight.** Build the DAG from `sequences`. Kahn's; at every layer, if the queue has ≥ 2 candidates, the order isn't unique → false. Compare with `nums` element by element.
+Explode to O(n!) — baseline only.
+
+## Approach 2 — Kahn's BFS with uniqueness check (canonical)
+
+**Insight.** Build a graph from consecutive pairs in each sequence. Toposort using Kahn's; **unique** iff at every step exactly one node has indeg 0. Also verify the produced order equals `nums`.
 
 ```java
 boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
     int n = nums.length;
-    Map<Integer, Set<Integer>> adj = new HashMap<>();
+    List<Set<Integer>> g = new ArrayList<>();
+    for (int i = 0; i <= n; i++) g.add(new HashSet<>());
     int[] indeg = new int[n + 1];
-    for (int i = 1; i <= n; i++) adj.put(i, new HashSet<>());
-    for (List<Integer> seq : sequences)
-        for (int i = 0; i < seq.size() - 1; i++)
-            if (adj.get(seq.get(i)).add(seq.get(i + 1))) indeg[seq.get(i + 1)]++;
-    Deque<Integer> q = new ArrayDeque<>();
+    Set<Integer> seen = new HashSet<>();
+    for (List<Integer> s : sequences) {
+        for (int x : s) seen.add(x);
+        for (int i = 1; i < s.size(); i++)
+            if (g.get(s.get(i - 1)).add(s.get(i))) indeg[s.get(i)]++;
+    }
+    if (seen.size() != n) return false;
+    Queue<Integer> q = new ArrayDeque<>();
     for (int i = 1; i <= n; i++) if (indeg[i] == 0) q.offer(i);
     int idx = 0;
     while (!q.isEmpty()) {
-        if (q.size() > 1) return false;                              // not unique
-        int u = q.poll();
-        if (u != nums[idx++]) return false;                          // doesn't match target
-        for (int v : adj.get(u)) if (--indeg[v] == 0) q.offer(v);
+        if (q.size() > 1) return false; // ambiguous
+        int c = q.poll();
+        if (c != nums[idx++]) return false;
+        for (int nxt : g.get(c)) if (--indeg[nxt] == 0) q.offer(nxt);
     }
     return idx == n;
 }
 ```
 
-<CodeTrace
-  title="Uniqueness check — nums=[1,2,3], sequences=[[1,2],[1,3]]"
-  :values="[1,2,3]"
-  :windowKeys="['step']"
-  :cellWidth="46"
-  :steps='[
-    { pointers: { step: 0 }, vars: { queue: "[1]", "size": 1 }, note: "start; unique" },
-    { pointers: { step: 1 }, vars: { queue: "[2,3]", "size": 2 }, note: "after popping 1: queue has 2 candidates → not unique → false", removed: [1,2] }
-  ]'
-/>
+**Complexity** — Time **O(n + m)**; Space **O(n + m)**.
 
-**Complexity** — Time **O(V + E)**; Space **O(V + E)**.
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Kahn's + uniqueness | **O(V + E)** | O(V + E) |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| Enumerate orders | O(n!) | O(n) | trivia |
+| Kahn's + uniqueness | **O(n + m)** | O(n + m) | canonical |
+
+## When to use which
+
+- **"Unique toposort?"** → check queue size ≤ 1 at every step.
+- **"Number of topological orders"** → DP on states (bitmask if n ≤ 20).
+- **"Restore from partial orderings"** → same graph build + Kahn's.
 
 ## Related problems
 
-- [Course Schedule II](/problems/topological-sort-course-schedule) — return any valid order
-- [Alien Dictionary](/problems/alien-dictionary) — derive DAG from adjacent pairs
+- [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
+- [Alien Dictionary](/problems/alien-dictionary)
+- [Parallel Courses](/problems/parallel-courses)

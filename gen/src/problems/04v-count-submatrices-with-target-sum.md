@@ -1,53 +1,66 @@
-# Prefix Sum — Count Submatrices With Target Sum
+# Prefix Sum — Count Submatrices with Target Sum
 
-*[↗ LeetCode: Count Submatrices With Target Sum](https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/prefix-sum)
+*[↗ LeetCode: Count Submatrices with Target Sum](https://leetcode.com/problems/count-submatrices-that-sum-to-target/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/prefix-sum)
 
-Count submatrices whose sum equals `target`.
+Given matrix and integer `target`, count submatrices whose sum equals `target`.
+
+**Example 1** — `mat=[[0,1,0],[1,1,1],[0,1,0]], target=0` → `4`
+**Example 2** — `mat=[[1,-1],[-1,1]], target=0` → `5`
+**Example 3** — `mat=[[904]], target=0` → `0`
+
+**Constraints** — `1 ≤ m, n ≤ 100`; `-1000 ≤ mat[i][j] ≤ 1000`.
 
 ---
 
-## Approach 1 — Row prefix + 1D subarray-sum-K
-**Insight.** Fix two rows `r1, r2`. Compress the column-sums between them into a 1D array; then count subarrays with sum = target using the hash-map prefix-sum trick.
+## Approach 1 — Enumerate every submatrix
+
+O(m²·n²·mn). TLE.
+
+## Approach 2 — Row-collapse + 1D subarray-sum trick (canonical)
+
+**Insight.** Fix a top row `r1` and bottom row `r2`. Collapse the strip into a 1D array `col[j] = Σ mat[r1..r2][j]`. Now count subarrays of `col` summing to `target` — [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) template. Iterate over all `(r1, r2)`.
 
 ```java
 int numSubmatrixSumTarget(int[][] mat, int target) {
-    int m = mat.length, n = mat[0].length;
-    // rowsum[r][c] = sum of mat[0..r][c] prefix-by-row
-    int[][] R = new int[m][n];
-    for (int c = 0; c < n; c++) { int s = 0; for (int r = 0; r < m; r++) { s += mat[r][c]; R[r][c] = s; } }
-    int count = 0;
-    for (int r1 = 0; r1 < m; r1++)
+    int m = mat.length, n = mat[0].length, count = 0;
+    for (int r1 = 0; r1 < m; r1++) {
+        int[] col = new int[n];
         for (int r2 = r1; r2 < m; r2++) {
-            Map<Integer, Integer> map = new HashMap<>();
-            map.put(0, 1);
-            int prefix = 0;
-            for (int c = 0; c < n; c++) {
-                int colSum = R[r2][c] - (r1 > 0 ? R[r1 - 1][c] : 0);
-                prefix += colSum;
-                count += map.getOrDefault(prefix - target, 0);
-                map.merge(prefix, 1, Integer::sum);
+            for (int j = 0; j < n; j++) col[j] += mat[r2][j];
+            // subarray sum = target in col
+            Map<Integer, Integer> cnt = new HashMap<>();
+            cnt.put(0, 1);
+            int pref = 0;
+            for (int j = 0; j < n; j++) {
+                pref += col[j];
+                count += cnt.getOrDefault(pref - target, 0);
+                cnt.merge(pref, 1, Integer::sum);
             }
         }
+    }
     return count;
 }
 ```
 
-**Complexity** — Time **O(m²·n)**; Space **O(n)** per pair.
+**Complexity** — Time **O(m²·n)**; Space **O(n)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Row prefix + 1D subarray-sum-K | O(m²·n) | O(n) | primary |
+| All submatrices | O(m³·n²) | O(1) | baseline |
+| Row-collapse + 1D SSEqK | **O(m²·n)** | O(n) | canonical |
 
 ## When to use which
 
-- **Ship this** → Row prefix + 1D subarray-sum-K (O(m²·n), O(n)). The pattern's standard solution.
+- **2D sum problems reducible to 1D fixed-row-strip** → row collapse.
+- **Faster on `m > n`** → transpose and collapse the smaller dimension outer.
+- **"Max sum submatrix ≤ K"** → similar collapse + Kadane variant with TreeSet.
 
 ## Related problems
 
-- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — 1D building block
-- [Matrix Block Sum](/problems/matrix-block-sum)
-- [Range Sum Query 2D — Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/)
+- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
+- [Max Sum of Rectangle No Larger Than K](https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/)
+- [Maximum Sum Rectangle](/problems/maximum-subarray) — 1D Kadane sibling

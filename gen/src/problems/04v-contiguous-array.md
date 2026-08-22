@@ -2,44 +2,50 @@
 
 *[↗ LeetCode: Contiguous Array](https://leetcode.com/problems/contiguous-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-Return the length of the longest contiguous subarray with equal 0s and 1s.
+Given binary array `nums`, return the length of the longest subarray with equal numbers of 0s and 1s.
 
-**Example** — `nums=[0,1,0]` → `2`
+**Example 1** — `nums = [0,1]` → `2`
+**Example 2** — `nums = [0,1,0]` → `2`
+**Example 3** — `nums = [0,0,1,1,0]` → `4`
+
+**Constraints** — `1 ≤ n ≤ 10⁵`; `nums[i] ∈ {0,1}`.
 
 ---
 
-## Approach 1 — Map 0→-1, then prefix sum
-**Insight.** Treating 0 as -1 makes "equal 0s and 1s" equivalent to "subarray sum = 0". First occurrence of each prefix value → longest subarray with the same prefix.
+## Approach 1 — Every subarray
+
+O(n²). Baseline.
+
+## Approach 2 — Map 0 → −1; prefix-sum with earliest-index map
+
+**Insight.** Replace 0 with −1. Equal counts of 0/1 iff running sum returns to a prior value. Store **first occurrence** of each prefix sum; on revisit, subarray length = `i - firstIndex`.
 
 ```java
 int findMaxLength(int[] nums) {
     Map<Integer, Integer> first = new HashMap<>();
     first.put(0, -1);
-    int prefix = 0, best = 0;
+    int sum = 0, best = 0;
     for (int i = 0; i < nums.length; i++) {
-        prefix += nums[i] == 0 ? -1 : 1;
-        if (first.containsKey(prefix))
-            best = Math.max(best, i - first.get(prefix));
-        else
-            first.put(prefix, i);
+        sum += (nums[i] == 0) ? -1 : 1;
+        if (first.containsKey(sum)) best = Math.max(best, i - first.get(sum));
+        else first.put(sum, i);
     }
     return best;
 }
 ```
 
-
 <CodeTrace
-  title="Map 0→-1, then prefix sum"
-  :values="['0', '1', '0']"
+  title="Prefix — nums=[0,0,1,1,0]"
+  :values="['0','0','1','1','0']"
   :windowKeys="['i']"
   :cellWidth="34"
   :steps='[
-    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
-    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
-    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+    { pointers: { i: 0 }, vars: { sum: -1, first: "{-1:0}" }, note: "first -1 at 0" },
+    { pointers: { i: 1 }, vars: { sum: -2, first: "{-2:1}" }, note: "new min sum" },
+    { pointers: { i: 3 }, vars: { sum: 0, best: 4 }, note: "sum=0 first at -1 → length 4" },
+    { pointers: { i: 4 }, vars: { sum: -1, best: 4 }, note: "sum=-1 first at 0 → length 4; unchanged" }
   ]'
 />
-
 
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
@@ -47,15 +53,19 @@ int findMaxLength(int[] nums) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Map 0→-1, then prefix sum | O(n) | O(n) | primary |
+| Brute | O(n²) | O(1) | baseline |
+| Prefix + first-index map | **O(n)** | O(n) | optimum |
 
 ## When to use which
 
-- **Ship this** → Map 0→-1, then prefix sum (O(n), O(n)). The pattern's standard solution.
+- **Equal count of two labels** → 0→−1 mapping + first-index.
+- **Longest subarray with sum S** → same skeleton, store first prefix by value.
+- **k different labels equal counts** → k-dimensional signature as hash key.
 
 ## Related problems
 
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
 - [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k)
+- [Continuous Subarray Sum](/problems/continuous-subarray-sum)

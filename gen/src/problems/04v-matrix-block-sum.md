@@ -2,47 +2,71 @@
 
 *[↗ LeetCode: Matrix Block Sum](https://leetcode.com/problems/matrix-block-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-For each `(i, j)`, return the sum of `mat[r][c]` over all `(r, c)` with `|r-i| ≤ k` and `|c-j| ≤ k`.
+Given matrix `mat[m][n]` and integer `k`, return `answer[i][j]` = sum of all elements `mat[r][c]` with `|r-i| ≤ k` and `|c-j| ≤ k`.
+
+**Example 1** — `mat=[[1,2,3],[4,5,6],[7,8,9]], k=1` → `[[12,21,16],[27,45,33],[24,39,28]]`
+**Example 2** — `mat=[[1,2,3],[4,5,6],[7,8,9]], k=2` → `[[45,45,45],[45,45,45],[45,45,45]]`
+
+**Constraints** — `1 ≤ m, n ≤ 100`; `1 ≤ k ≤ 100`.
 
 ---
 
-## Approach 1 — 2D prefix sums
-Precompute `P[i+1][j+1] = sum(mat[0..i][0..j])`. Any block sum via inclusion-exclusion: `P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1]`.
+## Approach 1 — For each cell, sum k-neighborhood
+
+O(m·n·k²). Baseline.
+
+## Approach 2 — 2D prefix sum
+
+**Insight.** Build `pref[i][j]` = sum of `mat[0..i-1][0..j-1]`. Then any rectangle sum = O(1) via inclusion-exclusion.
 
 ```java
 int[][] matrixBlockSum(int[][] mat, int k) {
     int m = mat.length, n = mat[0].length;
-    int[][] P = new int[m + 1][n + 1];
+    int[][] pref = new int[m + 1][n + 1];
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
-            P[i + 1][j + 1] = P[i][j + 1] + P[i + 1][j] - P[i][j] + mat[i][j];
-    int[][] out = new int[m][n];
+            pref[i+1][j+1] = mat[i][j] + pref[i][j+1] + pref[i+1][j] - pref[i][j];
+    int[][] ans = new int[m][n];
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++) {
             int r1 = Math.max(0, i - k), c1 = Math.max(0, j - k);
             int r2 = Math.min(m - 1, i + k), c2 = Math.min(n - 1, j + k);
-            out[i][j] = P[r2 + 1][c2 + 1] - P[r1][c2 + 1] - P[r2 + 1][c1] + P[r1][c1];
+            ans[i][j] = pref[r2+1][c2+1] - pref[r1][c2+1] - pref[r2+1][c1] + pref[r1][c1];
         }
-    return out;
+    return ans;
 }
 ```
 
-**Complexity** — Time **O(m·n)**; Space **O(m·n)** for the prefix table.
+<CodeTrace
+  title="2D pref — mat=[[1,2,3],[4,5,6],[7,8,9]], k=1"
+  :values="['1','2','3','4','5','6','7','8','9']"
+  :windowKeys="['i']"
+  :cellWidth="30"
+  :steps='[
+    { pointers: { i: 0 }, vars: { rect: "[0..1,0..1]", sum: 12 }, note: "cell (0,0) neighborhood sum" },
+    { pointers: { i: 4 }, vars: { rect: "[0..2,0..2]", sum: 45 }, note: "middle covers whole grid" }
+  ]'
+/>
+
+**Complexity** — Time **O(m·n)**; Space **O(m·n)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| 2D prefix sums | O(m·n) | O(m·n) | primary |
+| Neighborhood sum | O(m·n·k²) | O(1) | baseline |
+| 2D prefix sum | **O(m·n)** | O(m·n) | optimum |
 
 ## When to use which
 
-- **Ship this** → 2D prefix sums (O(m·n), O(m·n)). The pattern's standard solution.
+- **Many rectangle-sum queries on static matrix** → 2D prefix sum.
+- **Updates + queries** → 2D Fenwick / BIT.
+- **1D version** → same technique on a 1D prefix array.
 
 ## Related problems
 
-- [Range Sum Query 2D — Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/) — same prefix table
-- [Count Submatrices With Target Sum](/problems/count-submatrices-with-target-sum)
+- [Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/) — same technique
+- [Count Submatrices with Target Sum](/problems/count-submatrices-with-target-sum)
 - [Maximal Rectangle](/problems/maximal-rectangle)

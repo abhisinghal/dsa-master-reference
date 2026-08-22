@@ -2,54 +2,65 @@
 
 *[↗ LeetCode: Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-Given `points[][2]`, connect all with the minimum total Manhattan distance. Return the min total cost. (Classic **MST**.)
+Given 2D `points`, connect all with min total Manhattan distance.
 
-**Example** — `points=[[0,0],[2,2],[3,10],[5,2],[7,0]]` → `20`
+**Example 1** — `points=[[0,0],[2,2],[3,10],[5,2],[7,0]]` → `20`
+**Example 2** — `points=[[3,12],[-2,5],[-4,1]]` → `18`
+
+**Constraints** — `1 ≤ n ≤ 1000`.
 
 ---
 
-## Approach — Kruskal's algorithm (edges + Union-Find)
+## Approach 1 — Kruskal on all pairs
 
-**Insight.** Build all `C(n,2)` weighted edges; sort by weight; add cheapest-first that don't create a cycle (checked via Union-Find). Stop when `n-1` edges added.
+Build O(n²) edges; sort; UF. **O(n² log n)** time; works for n=1000.
 
 ```java
-int minCostConnectPoints(int[][] p) {
-    int n = p.length;
+int minCostConnectPoints(int[][] points) {
+    int n = points.length;
     List<int[]> edges = new ArrayList<>();
     for (int i = 0; i < n; i++)
-        for (int j = i + 1; j < n; j++) {
-            int w = Math.abs(p[i][0] - p[j][0]) + Math.abs(p[i][1] - p[j][1]);
-            edges.add(new int[]{w, i, j});
-        }
-    edges.sort((a, b) -> a[0] - b[0]);
+        for (int j = i + 1; j < n; j++)
+            edges.add(new int[]{i, j, Math.abs(points[i][0]-points[j][0]) + Math.abs(points[i][1]-points[j][1])});
+    edges.sort((a, b) -> a[2] - b[2]);
     int[] parent = new int[n];
     for (int i = 0; i < n; i++) parent[i] = i;
-    int cost = 0, added = 0;
+    int cost = 0, cnt = 0;
     for (int[] e : edges) {
-        if (added == n - 1) break;
-        int a = find(parent, e[1]), b = find(parent, e[2]);
-        if (a != b) { parent[a] = b; cost += e[0]; added++; }
+        int ra = find(parent, e[0]), rb = find(parent, e[1]);
+        if (ra == rb) continue;
+        parent[ra] = rb; cost += e[2];
+        if (++cnt == n - 1) break;
     }
     return cost;
 }
-int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }
+int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 ```
 
-**Complexity** — Time **O(n² log n)** (edge sort dominates); Space **O(n²)**.
+## Approach 2 — Prim with priority queue (canonical for dense)
 
-## Alternative — Prim's algorithm
+**Insight.** Start at any node; repeatedly add closest unvisited. O(n²) unvisited scans without heap, or O(E log V) with heap.
 
-Priority queue of edges from the growing tree; O(n² log n) too.
+**Complexity** — Time **O(n² log n)** heap-based; **O(n²)** without heap; Space **O(n²)** for edges.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Kruskal + Union-Find | **O(n² log n)** | O(n²) |
-| Prim + PQ | O(n² log n) | O(n²) |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| Kruskal all pairs | O(n² log n) | O(n²) | works |
+| Prim + heap | **O(n² log n)** | O(n²) | canonical |
+| Prim without heap | O(n²) | O(n) | best for dense |
+
+## When to use which
+
+- **Complete graph (dense)** → Prim without heap.
+- **Sparse edges** → Kruskal.
+- **"Second best MST"** → replace each edge with next-cheapest non-MST option.
 
 ## Related problems
 
-- [Number of Provinces](/problems/union-find-number-of-provinces)
-- [Connecting Cities with Minimum Cost](/problems/connecting-cities-with-minimum-cost)
-- [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village) — MST with virtual source
+- [Connecting Cities With Minimum Cost](/problems/connecting-cities-with-minimum-cost)
+- [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village)
+- [Find Critical/Pseudo-Critical MST Edges](/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree)

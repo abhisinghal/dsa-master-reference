@@ -2,38 +2,39 @@
 
 *[↗ LeetCode: Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
-Given an undirected tree with `n` nodes, return all roots that give minimum tree height (at most 2 such roots).
+Given an undirected tree of `n` nodes, return all nodes that when picked as root give minimum height tree. At most 2 exist.
 
-**Example** — `n=6, edges=[[3,0],[3,1],[3,2],[3,4],[5,4]]` → `[3,4]`
+**Example 1** — `n=4, edges=[[1,0],[1,2],[1,3]]` → `[1]`
+**Example 2** — `n=6, edges=[[3,0],[3,1],[3,2],[3,4],[5,4]]` → `[3,4]`
+
+**Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
 ---
 
-## Approach 1 — Try every node as root, BFS
+## Approach 1 — Try each node as root, BFS
 
-**Complexity** — O(V·(V+E)). O(V²) on a tree. TLE at V=10⁴.
+O(n²). TLE at n=2·10⁴.
 
-## Approach 2 — Peel leaves iteratively (BFS from the outside)
+## Approach 2 — Peel leaves inward (canonical topological peeling)
 
-**Insight.** The **center** of a tree is the last node(s) surviving when you repeatedly remove leaves. For trees on ≥ 3 nodes, always 1 or 2 centers.
-
-**Trap.** Special-case `n ≤ 2`: all nodes are roots.
+**Insight.** MHT roots are always at the **center(s)** of the tree — 1 or 2 nodes. Repeatedly remove leaves (degree-1 nodes) layer by layer. The last remaining 1 or 2 nodes are the answer.
 
 ```java
 List<Integer> findMinHeightTrees(int n, int[][] edges) {
-    if (n <= 2) { List<Integer> a = new ArrayList<>(); for (int i = 0; i < n; i++) a.add(i); return a; }
-    List<Set<Integer>> adj = new ArrayList<>();
-    for (int i = 0; i < n; i++) adj.add(new HashSet<>());
-    for (int[] e : edges) { adj.get(e[0]).add(e[1]); adj.get(e[1]).add(e[0]); }
+    if (n == 1) return List.of(0);
+    List<Set<Integer>> g = new ArrayList<>();
+    for (int i = 0; i < n; i++) g.add(new HashSet<>());
+    for (int[] e : edges) { g.get(e[0]).add(e[1]); g.get(e[1]).add(e[0]); }
     List<Integer> leaves = new ArrayList<>();
-    for (int i = 0; i < n; i++) if (adj.get(i).size() == 1) leaves.add(i);
+    for (int i = 0; i < n; i++) if (g.get(i).size() == 1) leaves.add(i);
     int remaining = n;
     while (remaining > 2) {
         remaining -= leaves.size();
         List<Integer> next = new ArrayList<>();
         for (int leaf : leaves) {
-            int neighbor = adj.get(leaf).iterator().next();
-            adj.get(neighbor).remove(leaf);
-            if (adj.get(neighbor).size() == 1) next.add(neighbor);
+            int parent = g.get(leaf).iterator().next();
+            g.get(parent).remove(leaf);
+            if (g.get(parent).size() == 1) next.add(parent);
         }
         leaves = next;
     }
@@ -42,28 +43,35 @@ List<Integer> findMinHeightTrees(int n, int[][] edges) {
 ```
 
 <CodeTrace
-  title="Peel leaves — n=6, tree of 6 nodes"
-  :values="[0,1,2,3,4,5]"
+  title="Peel — n=6, tree with center 3-4 edge"
+  :values="['0','1','2','3','4','5']"
   :windowKeys="['round']"
-  :cellWidth="42"
+  :cellWidth="30"
   :steps='[
-    { pointers: { round: 0 }, vars: { leaves: "[0,1,2,5]", remaining: 6 }, note: "initial leaves (deg 1)" },
-    { pointers: { round: 1 }, vars: { leaves: "[3,4]", remaining: 2 }, note: "peel 0,1,2,5. 3 and 4 now leaves", added: [3,4] },
-    { pointers: { round: 2 }, vars: { done: true }, note: "remaining ≤ 2 → done. answer [3,4]" }
+    { pointers: { round: 0 }, vars: { leaves: "[0,1,2,5]" }, note: "initial leaves" },
+    { pointers: { round: 1 }, vars: { remaining: 2, leaves: "[3,4]" }, note: "after peeling; 2 center nodes" }
   ]'
 />
 
-**Complexity** — Time **O(V + E)**; Space **O(V + E)**.
+**Complexity** — Time **O(n)**; Space **O(n)**.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Try every root | O(V·(V+E)) | O(V+E) |
-| Peel leaves | **O(V + E)** | O(V + E) |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| BFS from each root | O(n²) | O(n) | baseline |
+| Peel leaves | **O(n)** | O(n) | canonical |
+
+## When to use which
+
+- **Tree center problems** → leaf peeling.
+- **General graph center** → different — use eccentricity / all-pairs BFS.
+- **"Return the actual height"** → 2-BFS: BFS from any node to find farthest u; BFS from u to find diameter.
 
 ## Related problems
 
-- [Course Schedule II](/problems/topological-sort-course-schedule) — Kahn's on directed DAG
-- [Redundant Connection](/problems/redundant-connection) — cycle finding
-- [Tree Diameter](https://leetcode.com/problems/tree-diameter/) — 2 BFS or DP-on-tree
+- [Course Schedule](/problems/topological-sort-course-schedule) — general graph toposort
+- [Tree Diameter](https://leetcode.com/problems/tree-diameter/)
+- [Longest Path in Tree](https://leetcode.com/problems/longest-path-with-different-adjacent-characters/)

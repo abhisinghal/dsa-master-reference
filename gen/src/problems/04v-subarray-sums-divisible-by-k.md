@@ -2,55 +2,51 @@
 
 *[↗ LeetCode: Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-Count contiguous subarrays whose sum is divisible by `k`.
+Count subarrays whose sum is divisible by `k`.
 
-**Example** — `nums=[4,5,0,-2,-3,1], k=5` → `7`
+**Example 1** — `nums = [4,5,0,-2,-3,1], k = 5` → `7`
+**Example 2** — `nums = [5], k = 9` → `0`
+**Example 3** — `nums = [-1,2,9], k = 2` → `2`
+
+**Constraints** — `1 ≤ n ≤ 3·10⁴`; `2 ≤ k ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Prefix mod + hash map
-**Insight.** Subarray sum divisible by k iff `P[j] ≡ P[i] (mod k)`. Count prefix-remainders; matches with each other = valid subarrays.
+## Approach 1 — Every subarray
 
-**Trap.** For negatives, use `((prefix % k) + k) % k` for positive modulo.
+O(n²) sums. Baseline.
+
+## Approach 2 — Prefix sum modulo k with hash map
+
+**Insight.** Two prefix sums with the same remainder mod k → their difference is divisible by k. Count pairs of prefixes sharing each remainder.
+
+**Trap** — Java `%` can be negative. Use `((sum % k) + k) % k`.
 
 ```java
 int subarraysDivByK(int[] nums, int k) {
     Map<Integer, Integer> cnt = new HashMap<>();
     cnt.put(0, 1);
-    int prefix = 0, ans = 0;
+    int pref = 0, res = 0;
     for (int x : nums) {
-        prefix = ((prefix + x) % k + k) % k;
-        ans += cnt.getOrDefault(prefix, 0);
-        cnt.merge(prefix, 1, Integer::sum);
+        pref += x;
+        int m = ((pref % k) + k) % k;
+        res += cnt.getOrDefault(m, 0);
+        cnt.merge(m, 1, Integer::sum);
     }
-    return ans;
+    return res;
 }
 ```
 
-
 <CodeTrace
-  title="Prefix mod + hash map"
-  :values="['4', '5', '0', '-2', '-3', '1']"
+  title="Prefix mod k — nums=[4,5,0,-2,-3,1], k=5"
+  :values="['4','5','0','-2','-3','1']"
   :windowKeys="['i']"
   :cellWidth="34"
   :steps='[
-    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
-    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through the scan." },
-    { pointers: { i: 5 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
-  ]'
-/>
-
-
-<CodeTrace
-  title="Prefix mod — nums=[4,5,0,-2,-3,1], k=5"
-  :values="[4,5,0,-2,-3,1]"
-  :windowKeys="['i']"
-  :cellWidth="46"
-  :steps='[
-    { pointers: { i: 0 }, vars: { prefix: 4, ans: 0, cnt: "{0:1,4:1}" }, note: "prefix mod 5 = 4" },
-    { pointers: { i: 1 }, vars: { prefix: 4, ans: 1, cnt: "{0:1,4:2}" }, note: "seen 4 already → +1" },
-    { pointers: { i: 4 }, vars: { prefix: 4, ans: 4, cnt: "{...4:3}" }, note: "3 pairs so far", added: [1,3,4] },
-    { pointers: { i: 5 }, vars: { prefix: 0, ans: 7 }, note: "seen[0]=1+more → final 7" }
+    { pointers: { i: 0 }, vars: { pref: 4, m: 4, cnt: "{0:1,4:1}", res: 0 }, note: "first prefix" },
+    { pointers: { i: 1 }, vars: { pref: 9, m: 4, res: 1 }, note: "same m=4 → +1 pair" },
+    { pointers: { i: 4 }, vars: { pref: 4, m: 4, res: 5 }, note: "several matches accumulate" },
+    { pointers: { i: 5 }, vars: { pref: 5, m: 0, res: 7 }, note: "final 7" }
   ]'
 />
 
@@ -60,16 +56,19 @@ int subarraysDivByK(int[] nums, int k) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Prefix mod + hash map | O(n) | O(k) | primary |
+| Brute | O(n²) | O(1) | baseline |
+| Prefix mod + map | **O(n)** | O(k) | optimum |
 
 ## When to use which
 
-- **Ship this** → Prefix mod + hash map (O(n), O(k)). The pattern's standard solution.
+- **"Sum divisible by k"** → prefix mod + hash map (initialise with `{0:1}`).
+- **Negatives possible** → the `((% + k) % k)` normalization is required.
+- **"Longest / shortest such subarray"** → change map to store first-index; take max/min index difference.
 
 ## Related problems
 
-- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — sibling with exact match
-- [Continuous Subarray Sum](/problems/continuous-subarray-sum)
-- [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/)
+- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
+- [Continuous Subarray Sum](/problems/continuous-subarray-sum) — sum multiple of k with length ≥ 2
+- [Contiguous Array](/problems/contiguous-array) — same modulo trick with +1/−1
