@@ -1,65 +1,86 @@
-# Fast/Slow — Middle of the Linked List
+# Fast &amp; Slow — Middle of the Linked List
 
 *[↗ LeetCode: Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
-Return the middle node. If two middles (even length), return the second one.
+Given the head of a singly linked list, return the middle node. If there are two middles, return the second.
 
-**Example 1** — `[1,2,3,4,5]` → node `3`
-**Example 2** — `[1,2,3,4,5,6]` → node `4`
+**Example 1** — `1 → 2 → 3 → 4 → 5` → node with value `3`
+**Example 2** — `1 → 2 → 3 → 4 → 5 → 6` → node with value `4` (second middle)
+**Example 3** — `1` → `1`
+
+**Constraints** — `1 ≤ n ≤ 100`.
 
 ---
 
-## Approach 1 — Two-pass count
+## Approach 1 — Two passes: count then jump
+
+**Intuition.** Walk once to get length `n`; walk again `n/2` steps.
 
 ```java
-ListNode middleNodeCount(ListNode h) {
+ListNode middleNodeCount(ListNode head) {
     int n = 0;
-    for (ListNode c = h; c != null; c = c.next) n++;
-    ListNode cur = h;
-    for (int i = 0; i < n / 2; i++) cur = cur.next;
-    return cur;
+    for (ListNode c = head; c != null; c = c.next) n++;
+    ListNode m = head;
+    for (int i = 0; i < n / 2; i++) m = m.next;
+    return m;
 }
 ```
 
-**Complexity** — Time **O(n)**; Space **O(1)**. Works but takes two passes.
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-## Approach 2 — Fast/slow one-pass
+---
+
+## Approach 2 — Fast &amp; slow (canonical)
+
+**Insight from two-pass.** `fast` at 2× speed reaches the end when `slow` is at the middle — exactly. Odd length: `fast` ends at last node, `slow` at true middle. Even length: `fast` at null, `slow` at second middle.
 
 ```java
-ListNode middleNode(ListNode h) {
-    ListNode slow = h, fast = h;
+ListNode middleNode(ListNode head) {
+    ListNode slow = head, fast = head;
     while (fast != null && fast.next != null) {
         slow = slow.next;
         fast = fast.next.next;
     }
-    return slow;                                          // second middle for even
+    return slow;
 }
 ```
 
 <CodeTrace
-  title="Fast/slow — [1,2,3,4,5,6]"
-  :values="[1,2,3,4,5,6]"
+  title="Fast/slow — 1→2→3→4→5→6"
+  :values="['1','2','3','4','5','6']"
   :windowKeys="['slow','fast']"
-  :cellWidth="42"
+  :cellWidth="34"
   :steps='[
-    { pointers: { slow: 0, fast: 0 }, vars: { }, note: "start at head" },
-    { pointers: { slow: 1, fast: 2 }, vars: { }, note: "slow +1, fast +2" },
-    { pointers: { slow: 2, fast: 4 }, vars: { }, note: "slow +1, fast +2" },
-    { pointers: { slow: 3, fast: -1 }, vars: { }, note: "fast reaches null → slow is at 4 (second middle)", added: [3] }
+    { pointers: { slow: 0, fast: 0 }, vars: {}, note: "both at head" },
+    { pointers: { slow: 1, fast: 2 }, vars: {}, note: "slow=2, fast=3" },
+    { pointers: { slow: 2, fast: 4 }, vars: {}, note: "slow=3, fast=5" },
+    { pointers: { slow: 3, fast: 6 }, vars: { fast: "null" }, note: "fast is null → slow=4 (second middle)" }
   ]'
 />
 
-**Complexity** — Time **O(n)** single pass; Space **O(1)**.
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+**Trap.** If you use `while (fast.next != null && fast.next.next != null)` you get the *first* middle instead of the second. LC spec asks for second — the loop condition matters.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Two-pass count | O(n) | O(1) |
-| Fast/slow | **O(n)** single pass | **O(1)** |
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Two passes | O(n) | O(1) | acceptable |
+| Fast/slow | **O(n)** | **O(1)** | canonical — one pass |
+
+## When to use which
+
+- **Ship this** → fast/slow pointers.
+- **"Return first middle"** → switch loop condition to check `fast.next`.
+- **"Return both middles for even n"** → `slow` is second; `slow.prev` (if doubly-linked) is first.
+- **Splitting into halves** → fast/slow gives O(1) space split; use for [Sort List](/problems/sort-list).
 
 ## Related problems
 
-- [Linked List Cycle](/problems/linked-list-cycle) — Floyd
-- [Palindrome Linked List](/problems/palindrome-linked-list) — find middle, reverse second half, compare
-- [Reorder List](https://leetcode.com/problems/reorder-list/) — find middle, reverse, merge
+- [Linked List Cycle](/problems/linked-list-cycle) — same technique for detection
+- [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — find entry
+- [Palindrome Linked List](/problems/palindrome-linked-list) — split at middle, reverse half
+- [Sort List](/problems/sort-list) — merge sort using middle split
