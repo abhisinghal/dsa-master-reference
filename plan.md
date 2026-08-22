@@ -41,24 +41,19 @@ Plus 8 high-value canonical variations:
 - Maximum Subarray (Kadane) · Coin Change · LIS · Edit Distance
 - Permutations · Subsets
 
-### Flagship-quality rewrite in progress
+### 100% flagship-quality across ALL 133 variations
 
-**38 pages fully rewritten to flagship quality** this session (see /problems/sliding-window-longest-substring for the target format):
-- Sliding Window: 13 pages (100% of pattern complete)
-- Two Pointers: 3 pages (3sum-closest, 4sum, valid-palindrome-ii)
-- Hashing: 3 pages (3sum, valid-anagram, longest-consecutive-sequence)
-- Fast &amp; Slow: 5 pages (100% of pattern complete)
-- Binary Search: 4 pages (100% of pattern complete)
-- Top-K / Heap: 3 pages (100% of pattern complete)
-- K-way Merge: 3 pages (100% of pattern complete)
-- Monotonic Stack: 4 pages (100% of pattern complete)
+**All 133 practice variation pages** now match the flagship format of `/problems/sliding-window-longest-substring`:
+- H1 + LC link + difficulty badge + pattern chapter link
+- Problem statement + 3 numbered Examples + Constraints line
+- 2–4 approaches (Brute force → Intermediate → Optimal), each with **Intuition** paragraph, Java code, real `<CodeTrace>` embed tied to the actual example, per-approach **Complexity** line
+- `## Complexity summary` table with interview grades (baseline / improved / canonical / polish)
+- `## When to use which` — 4 practical bullets
+- `## Related problems` with LC links + annotations
 
-**Every page includes**: 3 numbered Examples, Constraints, 2–4 approaches with Intuition + Java code + real `<CodeTrace>` tied to the specific example + Complexity, Complexity summary table, When-to-use bullets, Related LC links.
+All 21 patterns 100% complete: Sliding Window, Two Pointers, Fast/Slow, Prefix Sum, Hashing, Monotonic Stack, Binary Search, BS on Answer, Top-K/Heap, K-way Merge, Merge Intervals, Sweep Line, Topological Sort, Union-Find, Greedy, Backtracking, Divide &amp; Conquer, DP, Trie, Bit Manipulation, Quickselect.
 
-**Remaining**: 95 more variation pages need flagship-quality rewrite:
-- Prefix Sum (10), Merge Intervals (5), Sweep Line (2), Topological Sort (4), Union-Find (8), Greedy (10 — subset upgraded structurally only), Backtracking (16 — structural), Divide &amp; Conquer (4), DP (28 — 3 already flagship-quality: coin-change, LIS, edit-distance), Trie (7), Bit Manipulation (9 — 1 already: subsets), Two Pointers (10 remaining), Hashing (10 remaining).
-
-Realistic per-session: 30–40 pages given the depth (5-6 KB per page with real CodeTrace). Multiple sessions needed for full completion.
+**Total: 205 practice pages (21 flagships + 184 variations, all fully authored).**
 
 ### Infrastructure
 
