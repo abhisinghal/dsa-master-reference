@@ -340,6 +340,28 @@ def main():
             f.write(transformed)
         print(f"  {src_name} -> {dst_rel}")
         migrated += 1
+
+    # Auto-migrate anything under gen/src/problems/ -> web/docs/problems/
+    problems_src_dir = os.path.join(SRC, "problems")
+    problems_dst_dir = os.path.join(DST, "problems")
+    if os.path.isdir(problems_src_dir):
+        os.makedirs(problems_dst_dir, exist_ok=True)
+        for name in sorted(os.listdir(problems_src_dir)):
+            if not name.endswith(".md"):
+                continue
+            src_path = os.path.join(problems_src_dir, name)
+            # 00-index.md -> index.md; NN-slug.md or slug.md -> slug.md
+            if name == "00-index.md":
+                dst_name = "index.md"
+            else:
+                dst_name = re.sub(r"^\d+-", "", name)
+            dst_path = os.path.join(problems_dst_dir, dst_name)
+            transformed = transform_file(src_path)
+            with open(dst_path, "w", encoding="utf-8") as f:
+                f.write(transformed)
+            print(f"  problems/{name} -> problems/{dst_name}")
+            migrated += 1
+
     print(f"\nMigrated {migrated} files.")
 
     # Also create landing pages for patterns/ and data-structures/ if missing

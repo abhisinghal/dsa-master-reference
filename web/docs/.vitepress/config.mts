@@ -87,6 +87,7 @@ export default withMermaid(defineConfig({
       { text: 'Roadmap', link: '/foundations/roadmap' },
       { text: 'Patterns', link: '/patterns/' },
       { text: 'Data Structures', link: '/data-structures/' },
+      { text: 'Practice', link: '/problems/' },
       { text: 'System Design', link: '/system-design/' },
       { text: 'Cheat sheets', link: '/appendix/cheatsheets' },
       { text: 'PDF', link: 'https://github.com/abhisinghal/dsa-master-reference/releases' }
@@ -161,6 +162,35 @@ export default withMermaid(defineConfig({
           text: 'Part IV — System Design',
           items: [
             { text: 'Fundamentals', link: '/system-design/' }
+          ]
+        }
+      ],
+      '/problems/': [
+        {
+          text: 'Practice — 21 Multi-Approach Deep Dives',
+          items: [
+            { text: 'Overview', link: '/problems/' },
+            { text: '1. Sliding Window — Longest Substring', link: '/problems/sliding-window-longest-substring' },
+            { text: '2. Two Pointers — Container With Most Water', link: '/problems/two-pointers-container-with-most-water' },
+            { text: '3. Fast/Slow — Linked List Cycle II', link: '/problems/fast-slow-linked-list-cycle-ii' },
+            { text: '4. Prefix Sum — Subarray Sum Equals K', link: '/problems/prefix-sum-subarray-sum-equals-k' },
+            { text: '5. Hashing — Two Sum', link: '/problems/hashing-two-sum' },
+            { text: '6. Monotonic Stack — Daily Temperatures', link: '/problems/monotonic-stack-daily-temperatures' },
+            { text: '7. Binary Search — Rotated Sorted', link: '/problems/binary-search-rotated-sorted' },
+            { text: '8. BS on Answer — Koko Bananas', link: '/problems/bs-on-answer-koko-bananas' },
+            { text: '9. Top-K / Heap — Top K Frequent', link: '/problems/top-k-frequent-elements' },
+            { text: '10. K-way Merge — Merge K Lists', link: '/problems/k-way-merge-k-sorted-lists' },
+            { text: '11. Merge Intervals', link: '/problems/merge-intervals-classic' },
+            { text: '12. Sweep Line — Meeting Rooms II', link: '/problems/sweep-line-meeting-rooms-ii' },
+            { text: '13. Topo Sort — Course Schedule II', link: '/problems/topological-sort-course-schedule' },
+            { text: '14. Union-Find — Number of Provinces', link: '/problems/union-find-number-of-provinces' },
+            { text: '15. Greedy — Jump Game II', link: '/problems/greedy-jump-game-ii' },
+            { text: '16. Backtracking — N-Queens', link: '/problems/backtracking-n-queens' },
+            { text: '17. Divide & Conquer — Inversions', link: '/problems/divide-conquer-inversions' },
+            { text: '18. DP — House Robber', link: '/problems/dp-house-robber' },
+            { text: '19. Trie — Word Search II', link: '/problems/trie-word-search-ii' },
+            { text: '20. Bit Manipulation — Single Number', link: '/problems/bit-manip-single-number' },
+            { text: '21. Quickselect — Kth Largest', link: '/problems/quickselect-kth-largest' }
           ]
         }
       ],
