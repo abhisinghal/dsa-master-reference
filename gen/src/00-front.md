@@ -46,7 +46,7 @@ Think in two layers: **data structures are your vocabulary; patterns are the gra
 
 > [def] **Definition / Key terms** (teal) — jargon explained; reference material.
 
-> [note] **Note / Trace it** (grey) — worked walkthroughs and secondary notes.
+> [note] **Note / Trace it** (grey) — worked walkthroughs and secondary notes. Every "Trace it" callout is paired with an **Execution Trace** — an interactive slider visualization (Play / Prev / Next / Reset + draggable scrubber) that steps through the algorithm frame-by-frame on the example, showing pointer positions, tracked variables, and per-step notes.
 
 Difficulty on practice links is badged too: <span class="diff diff-e">Easy</span> · <span class="diff diff-m">Medium</span> · <span class="diff diff-h">Hard</span>. A thin teal rule under a heading (*"What &amp; why…"*) states that section's purpose in one line.
 

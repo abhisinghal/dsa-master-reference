@@ -80,7 +80,7 @@ a few patterns stack on earlier ones. Learn them in this dependency order: **rec
 
 <Callout kind="note" title="Note / Trace it">
 
-(grey) — worked walkthroughs and secondary notes.
+(grey) — worked walkthroughs and secondary notes. Every "Trace it" callout is paired with an **Execution Trace** — an interactive slider visualization (Play / Prev / Next / Reset + draggable scrubber) that steps through the algorithm frame-by-frame on the example, showing pointer positions, tracked variables, and per-step notes.
 
 </Callout>
 

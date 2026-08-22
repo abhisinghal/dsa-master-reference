@@ -103,6 +103,7 @@ const varEntries = computed(() => Object.entries(currentStep.value.vars ?? {}))
 
 <template>
   <figure class="code-trace">
+    <div class="code-trace-badge">Execution Trace</div>
     <figcaption v-if="title" class="code-trace-title">{{ title }}</figcaption>
 
     <div class="code-trace-stage">
@@ -212,6 +213,19 @@ const varEntries = computed(() => Object.entries(currentStep.value.vars ?? {}))
   background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);
   border-radius: 10px;
+}
+.code-trace-badge {
+  display: inline-block;
+  font-size: 0.72em;
+  font-weight: 700;
+  color: var(--dsa-primary, #2563eb);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  background: var(--vp-c-bg);
+  border: 1px solid var(--dsa-primary, #2563eb);
+  border-radius: 12px;
+  margin-bottom: 8px;
 }
 .code-trace-title {
   font-weight: 700;
