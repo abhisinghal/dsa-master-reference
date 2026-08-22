@@ -87,6 +87,7 @@ export default withMermaid(defineConfig({
       { text: 'Roadmap', link: '/foundations/roadmap' },
       { text: 'Patterns', link: '/patterns/' },
       { text: 'Data Structures', link: '/data-structures/' },
+      { text: 'System Design', link: '/system-design/' },
       { text: 'Cheat sheets', link: '/appendix/cheatsheets' },
       { text: 'PDF', link: 'https://github.com/abhisinghal/dsa-master-reference/releases' }
     ],
@@ -152,6 +153,14 @@ export default withMermaid(defineConfig({
             nestedDataStructure('Trie', 'trie'),
             nestedDataStructure('Graphs', 'graphs'),
             nestedDataStructure('Segment / Fenwick Tree', 'segment-fenwick')
+          ]
+        }
+      ],
+      '/system-design/': [
+        {
+          text: 'Part IV — System Design',
+          items: [
+            { text: 'Fundamentals', link: '/system-design/' }
           ]
         }
       ],

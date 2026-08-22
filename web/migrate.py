@@ -47,6 +47,7 @@ MAPPING = {
     "41-quickselect.md":        "patterns/quickselect.md",
     "42-math.md":               "patterns/math.md",
     "44-design.md":             "patterns/design.md",
+    "45-system-design.md":      "system-design/index.md",
     "50-arrays.md":             "data-structures/arrays.md",
     "52-strings.md":            "data-structures/strings.md",
     "56-linked-lists.md":       "data-structures/linked-lists.md",
