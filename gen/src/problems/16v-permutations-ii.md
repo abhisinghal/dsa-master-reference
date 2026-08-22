@@ -4,10 +4,15 @@
 
 All **unique** permutations of nums (may contain duplicates).
 
+**Example 1** — `nums=[1,1,2]` → 3 unique perms
+
+**Constraints** — `1 ≤ n ≤ 8`.
+
 ---
 
-## Approach 1 — Sort + `used[]` + skip equal-and-unused
-**Insight.** Sort. When picking the next element, skip any `nums[i]` such that `nums[i] == nums[i-1]` AND `!used[i-1]` — this enforces a canonical order among duplicates.
+## Approach — Sort + used[] + skip equal-and-unused (canonical)
+
+**Insight.** Sort. Skip `nums[i]` iff `nums[i] == nums[i-1] AND !used[i-1]` — enforces canonical order among duplicates.
 
 ```java
 List<List<Integer>> permuteUnique(int[] nums) {
@@ -21,7 +26,7 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> out) {
     if (path.size() == a.length) { out.add(new ArrayList<>(path)); return; }
     for (int i = 0; i < a.length; i++) {
         if (used[i]) continue;
-        if (i > 0 && a[i] == a[i - 1] && !used[i - 1]) continue;
+        if (i > 0 && a[i] == a[i-1] && !used[i-1]) continue;
         used[i] = true;
         path.add(a[i]);
         dfs(a, used, path, out);
@@ -31,23 +36,24 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> out) {
 }
 ```
 
-**Why `!used[i-1]`.** Enforces that among duplicates, we pick "left-to-right" order — if the previous duplicate is unused, skipping now avoids a mirror choice already explored.
-
-**Complexity** — Time **O(n · n!)** worst case; Space **O(n)**.
+**Complexity** — Time **O(n · n!)** worst; Space **O(n)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + `used[]` + skip equal-and-unused | O(n · n!) | O(n) | primary |
+| Sort + used-mask dedup | **O(n · n!)** | O(n) | canonical |
 
 ## When to use which
 
-- **Ship this** → Sort + `used[]` + skip equal-and-unused (O(n · n!), O(n)). The pattern's standard solution.
+- **Duplicates** → sort + skip.
+- **Distinct** → simpler swap-in-place.
+- **Return count only** → multinomial `n! / Π(k_i!)`.
 
 ## Related problems
 
-- [Permutations](/problems/permutations) — no duplicates
-- [Subsets II](/problems/subsets-ii) — same dedup idea for subsets
+- [Permutations](/problems/permutations)
+- [Subsets II](/problems/subsets-ii)
+- [Combination Sum II](/problems/combination-sum-ii)

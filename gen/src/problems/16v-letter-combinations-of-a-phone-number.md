@@ -4,9 +4,15 @@
 
 Given digits 2-9, return all letter combinations.
 
+**Example 1** — `digits="23"` → `["ad","ae","af","bd","be","bf","cd","ce","cf"]`
+**Example 2** — `digits=""` → `[]`
+
+**Constraints** — `0 ≤ len ≤ 4`.
+
 ---
 
-## Approach 1 — DFS enumeration
+## Approach 1 — DFS enumeration (canonical)
+
 ```java
 List<String> letterCombinations(String digits) {
     List<String> out = new ArrayList<>();
@@ -25,28 +31,27 @@ void dfs(String d, int i, String[] map, StringBuilder sb, List<String> out) {
 }
 ```
 
-**Complexity** — Time **O(4ⁿ · n)** worst case (digits 7, 9); Space **O(n)** recursion.
-
----
-
 ## Approach 2 — Iterative BFS
-Repeatedly extend all combinations by the next digit's letters — same complexity, no recursion.
+Extend all combinations by next digit's letters; same complexity, no recursion.
+
+**Complexity** — Time **O(4ⁿ · n)** worst; Space **O(n)** recursion.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| DFS enumeration | O(4ⁿ · n) | O(n) | baseline |
-| Iterative BFS | — | — | optimum |
+| DFS | O(4ⁿ · n) | O(n) | canonical |
+| BFS | O(4ⁿ · n) | O(4ⁿ) | iterative |
 
 ## When to use which
 
-- **State it for signal** → DFS enumeration (O(4ⁿ · n)). Correct baseline; call it out then move on.
-- **Ship this** → Iterative BFS (—, —). Expected optimum in interview.
+- **Small n** → either.
+- **Very deep** → BFS to avoid stack.
+- **First combination only** → early return in DFS.
 
 ## Related problems
 
-- [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) — same recursion shape with constraint
+- [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)
 - [Palindrome Partitioning](/problems/palindrome-partitioning)

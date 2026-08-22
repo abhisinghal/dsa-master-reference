@@ -4,10 +4,15 @@
 
 All **unique** subsets when nums may contain duplicates.
 
+**Example 1** — `nums=[1,2,2]` → `[[],[1],[1,2],[1,2,2],[2],[2,2]]`
+
+**Constraints** — `1 ≤ n ≤ 10`.
+
 ---
 
-## Approach 1 — Sort + skip equal after including
-**Insight.** Sort. Standard subset backtracking, but skip duplicates in the outer loop: `if (i > start && nums[i] == nums[i-1]) continue;`. Ensures each duplicate group contributes once per "count of picks".
+## Approach — Sort + skip equal-at-same-depth (canonical)
+
+**Insight.** Sort. Standard subset backtracking, but skip duplicates in the outer loop: `if (i > start && nums[i] == nums[i-1]) continue`. Ensures each duplicate group contributes once per count.
 
 ```java
 List<List<Integer>> subsetsWithDup(int[] nums) {
@@ -19,7 +24,7 @@ List<List<Integer>> subsetsWithDup(int[] nums) {
 void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
     out.add(new ArrayList<>(path));
     for (int i = start; i < a.length; i++) {
-        if (i > start && a[i] == a[i - 1]) continue;
+        if (i > start && a[i] == a[i-1]) continue;
         path.add(a[i]);
         dfs(a, i + 1, path, out);
         path.remove(path.size() - 1);
@@ -33,13 +38,15 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + skip equal after including | O(n · 2ⁿ) | O(n) | primary |
+| Sort + skip | **O(n · 2ⁿ)** | O(n) | canonical |
 
 ## When to use which
 
-- **Ship this** → Sort + skip equal after including (O(n · 2ⁿ), O(n)). The pattern's standard solution.
+- **Duplicates** → sort + skip.
+- **Distinct** → simpler subsets bitmask.
+- **Fixed size k** → cut early when `path.size() == k`.
 
 ## Related problems
 

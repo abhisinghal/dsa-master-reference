@@ -2,12 +2,15 @@
 
 *[↗ LeetCode: Unique Paths III](https://leetcode.com/problems/unique-paths-iii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
-Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths from 1 → 2 visiting **every** empty cell exactly once.
+Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cell exactly once.
+
+**Constraints** — grid ≤ 20 cells (n·m ≤ 20).
 
 ---
 
-## Approach 1 — Hamiltonian-path DFS with backtracking
-**Insight.** Track remaining empty cells to visit; at end cell, count if remaining == 0. Mark visited by mutating in place (restore on return).
+## Approach — Hamiltonian-path DFS with in-place marking (canonical)
+
+**Insight.** Track remaining empty cells to visit. On end cell, count if remaining == 0. Mark visited by mutating (restore on return).
 
 ```java
 int uniquePathsIII(int[][] grid) {
@@ -18,33 +21,35 @@ int uniquePathsIII(int[][] grid) {
     }
     return dfs(grid, sr, sc, remaining);
 }
-int dfs(int[][] g, int r, int c, int remaining) {
+int dfs(int[][] g, int r, int c, int rem) {
     if (r < 0 || c < 0 || r >= g.length || c >= g[0].length || g[r][c] == -1) return 0;
-    if (g[r][c] == 2) return remaining == 0 ? 1 : 0;
+    if (g[r][c] == 2) return rem == 0 ? 1 : 0;
     int tmp = g[r][c];
     g[r][c] = -1;
-    int total = dfs(g, r+1, c, remaining - 1) + dfs(g, r-1, c, remaining - 1)
-              + dfs(g, r, c+1, remaining - 1) + dfs(g, r, c-1, remaining - 1);
+    int total = dfs(g, r+1, c, rem-1) + dfs(g, r-1, c, rem-1)
+              + dfs(g, r, c+1, rem-1) + dfs(g, r, c-1, rem-1);
     g[r][c] = tmp;
     return total;
 }
 ```
 
-**Complexity** — Time exponential (~4^cells); grid ≤ 20 cells makes it feasible.
+**Complexity** — Time exponential (~4^cells); n·m ≤ 20 makes it feasible.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Hamiltonian-path DFS with backtracking | — | — | primary |
+| DFS + in-place mark | **exponential** | O(m·n) | canonical |
 
 ## When to use which
 
-- **Ship this** → Hamiltonian-path DFS with backtracking (—, —). The pattern's standard solution.
+- **Hamiltonian path count** → DFS with marking.
+- **Larger grids** → bitmask DP if ≤ 20 cells.
+- **Shortest / longest** → BFS layers.
 
 ## Related problems
 
-- [Robot Room Cleaner](/problems/robot-room-cleaner) — DFS with in-place marking
-- [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes) — bitmask BFS
+- [Robot Room Cleaner](/problems/robot-room-cleaner)
+- [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes)

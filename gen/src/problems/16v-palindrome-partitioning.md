@@ -4,9 +4,15 @@
 
 All partitions of `s` where every part is a palindrome.
 
+**Example 1** — `s="aab"` → `[["a","a","b"],["aa","b"]]`
+**Example 2** — `s="a"` → `[["a"]]`
+
+**Constraints** — `1 ≤ n ≤ 16`.
+
 ---
 
-## Approach 1 — DFS + palindrome check on the fly
+## Approach 1 — DFS + palindrome check on the fly (canonical)
+
 ```java
 List<List<String>> partition(String s) {
     List<List<String>> out = new ArrayList<>();
@@ -29,29 +35,28 @@ boolean isPali(String s, int l, int r) {
 }
 ```
 
----
-
 ## Approach 2 — Precompute `pal[i][j]` DP
-`pal[i][j]` = whether `s[i..j]` is palindrome — DP in O(n²) time / space. Then O(1) checks during recursion.
+O(n²) precompute; O(1) checks during recursion.
 
-**Complexity** — Time exponential (~2ⁿ · n); Space **O(n²)** for DP + recursion depth.
+**Complexity** — Time exponential (~2ⁿ · n); Space **O(n²)** with DP.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| DFS + palindrome check on the fly | — | — | baseline |
-| Precompute `pal[i][j]` DP | — | O(n²) | optimum |
+| DFS + check | exponential | O(n) | canonical |
+| DFS + pal DP | exponential | O(n²) | faster |
 
 ## When to use which
 
-- **State it for signal** → DFS + palindrome check on the fly (—). Correct baseline; call it out then move on.
-- **Ship this** → Precompute `pal[i][j]` DP (—, O(n²)). Expected optimum in interview.
+- **Partition into palindromes** → DFS + check.
+- **Min cuts** → different problem (see [II](/problems/palindrome-partitioning-ii)).
+- **Count partitions** → same skeleton; replace add with count.
 
 ## Related problems
 
-- [Palindrome Partitioning II](/problems/palindrome-partitioning-ii) — min cuts, DP not backtracking
-- [Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses/) — same partition template
+- [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)
+- [Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses/)
 - [Word Break II](https://leetcode.com/problems/word-break-ii/)

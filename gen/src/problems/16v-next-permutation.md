@@ -2,17 +2,21 @@
 
 *[↗ LeetCode: Next Permutation](https://leetcode.com/problems/next-permutation/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-Rearrange nums to the next lexicographic permutation, in-place. If none, sort ascending.
+Rearrange nums to the next lexicographic permutation in-place. If none, sort ascending.
 
-> Filed near Backtracking because it's the "generate permutations in order" primitive. The algorithm itself is **not** backtracking — it's a two-step in-place swap.
+**Example 1** — `nums=[1,2,3]` → `[1,3,2]`
+**Example 2** — `nums=[3,2,1]` → `[1,2,3]`
+
+**Constraints** — `1 ≤ n ≤ 100`.
 
 ---
 
-## Approach 1 — Classic algorithm
+## Approach — Classic algorithm (canonical)
+
 **Steps.**
-1. Scan from right; find first `i` with `nums[i] < nums[i+1]` (the "pivot"). If none, reverse whole array.
+1. Scan from right; find first `i` with `nums[i] < nums[i+1]` (pivot). If none, reverse whole array.
 2. Scan from right; find first `j` with `nums[j] > nums[i]`. Swap.
-3. Reverse the suffix from `i+1` to end (it was decreasing → now increasing = smallest larger permutation).
+3. Reverse suffix from `i+1` to end (was decreasing → becomes increasing = smallest larger permutation).
 
 ```java
 void nextPermutation(int[] nums) {
@@ -35,15 +39,17 @@ void reverse(int[] a, int l, int r) { while (l < r) swap(a, l++, r--); }
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Classic algorithm | O(n) | O(1) | primary |
+| Classic 3-step | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → Classic algorithm (O(n), O(1)). The pattern's standard solution.
+- **Standard next-perm** → this algorithm.
+- **Previous permutation** → mirror the steps (scan for decreasing gap, etc).
+- **Kth permutation** → factorial-number system.
 
 ## Related problems
 
-- [Permutations](/problems/permutations) — enumerate all
-- [Permutation Sequence](https://leetcode.com/problems/permutation-sequence/) — kth permutation via factorial base
+- [Permutations](/problems/permutations)
+- [Permutation Sequence](https://leetcode.com/problems/permutation-sequence/)
