@@ -1,5 +1,20 @@
 [
   {
+    "title": "Trie (pattern)",
+    "url": "/patterns/trie-pattern",
+    "updated": "2026-08-22T09:41:28.000Z"
+  },
+  {
+    "title": "Trees",
+    "url": "/data-structures/trees",
+    "updated": "2026-08-22T09:41:28.000Z"
+  },
+  {
+    "title": "Graphs",
+    "url": "/data-structures/graphs",
+    "updated": "2026-08-22T09:41:28.000Z"
+  },
+  {
     "title": "Hashing",
     "url": "/patterns/hashing",
     "updated": "2026-08-22T04:00:21.000Z"
@@ -12,21 +27,6 @@
   {
     "title": "Dynamic Programming",
     "url": "/patterns/dp",
-    "updated": "2026-08-22T04:00:21.000Z"
-  },
-  {
-    "title": "Trie (pattern)",
-    "url": "/patterns/trie-pattern",
-    "updated": "2026-08-22T04:00:21.000Z"
-  },
-  {
-    "title": "Bit Manipulation",
-    "url": "/patterns/bit-manip",
-    "updated": "2026-08-22T04:00:21.000Z"
-  },
-  {
-    "title": "Tries (Prefix Trees)",
-    "url": "/data-structures/trie",
     "updated": "2026-08-22T04:00:21.000Z"
   }
 ]

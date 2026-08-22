@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import Icon from './Icon.vue'
 
 type TestCase = { input: string; expected: string }
 type TestResult = { pass: boolean; input: string; expected: string; actual: string }
@@ -52,7 +53,7 @@ onMounted(() => {
 function save() {
   try {
     localStorage.setItem(STORAGE_KEY.value, code.value)
-    output.value = '✓ Saved to browser storage.'
+    output.value = 'Saved to browser storage.'
   } catch (e) {
     output.value = 'Failed to save.'
   }
@@ -241,12 +242,14 @@ async function runTests() {
   <ClientOnly>
     <div class="code-runner">
       <div class="runner-header">
-        <span class="runner-title">💻 Try it — Java editor</span>
+        <span class="runner-title"><Icon name="code" :size="16" /> Try it — Java editor</span>
         <div class="runner-controls">
-          <button @click="save" :disabled="isRunning || isRuntimeLoading">💾 Save</button>
-          <button @click="reset" :disabled="isRunning || isRuntimeLoading">⟳ Reset</button>
+          <button @click="save" :disabled="isRunning || isRuntimeLoading"><Icon name="save" :size="14" /> Save</button>
+          <button @click="reset" :disabled="isRunning || isRuntimeLoading">↻ Reset</button>
           <button @click="runTests" :disabled="isRunning || isRuntimeLoading" class="run-btn">
-            {{ isRuntimeLoading ? '⏳ Loading Java runtime...' : isRunning ? '⏳ Running...' : '▶ Run tests' }}
+            <template v-if="isRuntimeLoading"><span class="spinner-inline" aria-hidden="true"></span> Loading Java runtime…</template>
+            <template v-else-if="isRunning"><span class="spinner-inline" aria-hidden="true"></span> Running…</template>
+            <template v-else><Icon name="play" :size="14" /> Run tests</template>
           </button>
         </div>
       </div>
@@ -259,7 +262,10 @@ async function runTests() {
       <div v-if="testResults.length > 0" class="test-results">
         <div v-for="(r, i) in testResults" :key="i" :class="['test-row', r.pass ? 'pass' : 'fail']">
           <div class="test-header">
-            <span>{{ r.pass ? '✅' : '❌' }} Test {{ i + 1 }}</span>
+            <span class="test-label">
+              <Icon :name="r.pass ? 'check' : 'x'" :size="15" />
+              Test {{ i + 1 }}
+            </span>
             <span v-if="!r.pass" class="fail-label">FAILED</span>
           </div>
           <div v-if="!r.pass" class="test-detail">
@@ -293,7 +299,7 @@ async function runTests() {
   background: var(--vp-c-bg-soft);
   border-bottom: 1px solid var(--vp-c-divider);
 }
-.runner-title { font-size: 0.9em; font-weight: 700; color: var(--vp-c-text-1); }
+.runner-title { display: inline-flex; align-items: center; gap: 6px; font-size: 0.9em; font-weight: 700; color: var(--vp-c-text-1); }
 .runner-controls { display: flex; gap: 6px; }
 .runner-controls button {
   padding: 5px 12px;
@@ -305,7 +311,22 @@ async function runTests() {
   font-weight: 500;
   color: var(--vp-c-text-1);
   transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
+.spinner-inline {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+.test-label { display: inline-flex; align-items: center; gap: 6px; }
+.test-row.pass .test-label { color: #15803d; }
+.test-row.fail .test-label { color: #dc2626; }
 .runner-controls button:hover:not(:disabled) {
   background: var(--vp-c-bg-mute);
   border-color: var(--vp-c-brand-1);

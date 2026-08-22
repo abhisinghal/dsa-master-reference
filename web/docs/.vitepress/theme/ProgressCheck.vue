@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref } from 'vue'
+import Icon from './Icon.vue'
 
 const props = defineProps<{ id: string }>()
 const solved = ref(false)
@@ -26,8 +27,9 @@ function toggle() {
   <label :class="['progress-check', { done: solved }]">
     <input type="checkbox" :checked="solved" @change="toggle" />
     <span class="check-label">
-      <span v-if="solved">✅ Solved</span>
-      <span v-else>⬜ Mark as solved</span>
+      <Icon v-if="solved" name="check" :size="16" />
+      <span v-else class="empty-box" aria-hidden="true"></span>
+      <span>{{ solved ? 'Solved' : 'Mark as solved' }}</span>
     </span>
   </label>
 </template>
@@ -47,6 +49,15 @@ function toggle() {
   color: var(--vp-c-text-2);
   transition: all 0.15s ease;
   user-select: none;
+}
+.check-label { display: inline-flex; align-items: center; gap: 6px; }
+.empty-box {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  opacity: 0.55;
 }
 .progress-check:hover {
   background: var(--vp-c-bg);

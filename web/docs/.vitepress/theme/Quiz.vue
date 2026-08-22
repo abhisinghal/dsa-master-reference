@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import Icon from './Icon.vue'
 
 interface Choice {
   text: string
@@ -87,10 +88,10 @@ const scorePct = computed(() =>
 )
 
 const verdict = computed(() => {
-  if (scorePct.value === 100) return { emoji: '🎯', label: 'Perfect', color: '#15803d' }
-  if (scorePct.value >= 67) return { emoji: '✅', label: 'Solid', color: '#2563eb' }
-  if (scorePct.value >= 33) return { emoji: '⚡', label: 'Half-way — re-read the story section', color: '#b45309' }
-  return { emoji: '📖', label: 'Come back after re-reading the chapter', color: '#dc2626' }
+  if (scorePct.value === 100) return { icon: 'target', label: 'Perfect', color: '#15803d' }
+  if (scorePct.value >= 67)   return { icon: 'check',  label: 'Solid', color: '#2563eb' }
+  if (scorePct.value >= 33)   return { icon: 'zap',    label: 'Half-way — re-read the story section', color: '#b45309' }
+  return { icon: 'book', label: 'Come back after re-reading the chapter', color: '#dc2626' }
 })
 </script>
 
@@ -98,7 +99,7 @@ const verdict = computed(() => {
   <ClientOnly>
     <div class="quiz">
       <div class="quiz-header">
-        <span class="quiz-title">🧠 Quick check — {{ patternId }} quiz</span>
+        <span class="quiz-title"><Icon name="bulb" :size="18" /> Quick check — {{ patternId }} quiz</span>
         <span class="quiz-progress" v-if="!finished">
           Q {{ currentIdx + 1 }} / {{ questions.length }}
         </span>
@@ -127,14 +128,15 @@ const verdict = computed(() => {
 
         <div v-if="selected !== null" class="quiz-explain">
           <template v-if="currentQuestion().choices[selected]?.explanation">
-            <strong>{{ selected === correctIndex() ? '✅ Right — ' : '❌ Not quite. ' }}</strong>
+            <strong v-if="selected === correctIndex()" class="verdict-right"><Icon name="check" :size="15" /> Right — </strong>
+            <strong v-else class="verdict-wrong"><Icon name="x" :size="15" /> Not quite. </strong>
             {{ currentQuestion().choices[selected].explanation }}
           </template>
           <template v-else-if="selected === correctIndex()">
-            <strong>✅ Correct.</strong>
+            <strong class="verdict-right"><Icon name="check" :size="15" /> Correct.</strong>
           </template>
           <template v-else>
-            <strong>❌ Not quite.</strong>
+            <strong class="verdict-wrong"><Icon name="x" :size="15" /> Not quite.</strong>
             The correct answer is <strong>{{ String.fromCharCode(65 + correctIndex()) }}</strong>.
             <template v-if="currentQuestion().choices[correctIndex()].explanation">
               — {{ currentQuestion().choices[correctIndex()].explanation }}
@@ -151,7 +153,7 @@ const verdict = computed(() => {
 
       <!-- Finished screen -->
       <div v-else class="quiz-result">
-        <div class="result-emoji">{{ verdict.emoji }}</div>
+        <div class="result-icon" :style="{ color: verdict.color }"><Icon :name="verdict.icon" :size="52" /></div>
         <div class="result-score" :style="{ color: verdict.color }">
           {{ correctCount }} / {{ questions.length }}
         </div>
@@ -181,7 +183,13 @@ const verdict = computed(() => {
 .quiz-title {
   font-weight: 700;
   color: var(--vp-c-text-1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
+.verdict-right { color: #15803d; display: inline-flex; align-items: center; gap: 3px; }
+.verdict-wrong { color: #dc2626; display: inline-flex; align-items: center; gap: 3px; }
+.result-icon { margin-bottom: 8px; display: flex; justify-content: center; }
 .quiz-progress {
   font-size: 0.85em;
   color: var(--vp-c-text-2);
@@ -285,7 +293,6 @@ const verdict = computed(() => {
   text-align: center;
   padding: 20px;
 }
-.result-emoji { font-size: 3em; margin-bottom: 8px; }
 .result-score {
   font-size: 2.2em;
   font-weight: 800;

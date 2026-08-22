@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useData } from 'vitepress'
 import { computed } from 'vue'
+import Icon from './Icon.vue'
 
 const { page } = useData()
 
@@ -15,7 +16,7 @@ const readingMinutes = computed(() => {
 
 <template>
   <span class="reading-time" v-if="readingMinutes > 0">
-    <span class="clock">🕐</span> ~{{ readingMinutes }} min read
+    <Icon name="clock" :size="14" /> ~{{ readingMinutes }} min read
   </span>
 </template>
 
@@ -33,5 +34,4 @@ const readingMinutes = computed(() => {
   margin-left: 8px;
   vertical-align: middle;
 }
-.clock { font-size: 0.9em; }
 </style>
