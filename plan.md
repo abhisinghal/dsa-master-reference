@@ -1,56 +1,60 @@
 # DSA Master Reference — Live Plan
 
 Last updated: 2026-08-22 (session c960137b).
-Live at https://abhisinghal.github.io/dsa-master-reference/ · Repo `abhisinghal/dsa-master-reference` · Latest commit `d1a7683`.
+Live at https://abhisinghal.github.io/dsa-master-reference/ · Repo `abhisinghal/dsa-master-reference` · Latest commit `3de6824`.
 
 ---
 
-## Session complete — all four priorities shipped ✅
+## Session complete — **177 interactive Execution Traces live** 🎉
 
-### Priority 1 — Finish in-progress work
+### Where we started this session
+- 87 Execution Traces (all on Trace-it callouts).
 
-- **`c2-rss-changelog`** ✅ — `gen-rss.mjs` wired into VitePress buildStart hook; `dist/rss.xml` (4.2 KB, 3 entries) auto-generated on every build; RSS autodiscovery link in head.
-- **`a1-token-audit`** ✅ — swept **715 hardcoded hex colors** across 11 gen/src files into `var(--dsa-*)` tokens. Dark-mode consistency guaranteed across all 49 static SVGs.
+### Where we ended
+- **177 Execution Traces** across the site — **+90 new** in this session.
 
-### Priority 2 — Full CodeTrace coverage
+### Breakdown
 
-- **`codetrace-coverage-full`** ✅ — **100% coverage: 87/87 Trace-it callouts** now have an **interactive slider** visualization (up from 12% at start of session).
-- **CodeTrace.vue redesign** — was a static comic strip, is now a Play/Prev/Next/Reset interactive slider matching FastSlowAnim's UX per your explicit request.
+| Category | Total | Coverage |
+|---|---|---|
+| Trace-it callouts | 87 | 87/87 = **100%** |
+| Trap Examples | 83 | 81/83 = **98%** (20 hand-authored + 61 auto) |
+| Cheatsheet templates | 10 | 3 flagship (BS, BFS, Backtracking) |
+| Mock transcripts | 3 | 3 with verify-phase trace |
+| System design case studies | 4 | 2 deep-dives (rate limiter, Dynamo quorum read) |
 
-### Priority 3 — Round out Tier-1
+### What was shipped
 
-- **`a3-embed-anims`** ✅ — 4 more anim components embedded.
-- **`a2-more-stepstrips`** ✅ — marked superseded by CodeTrace (same information density).
-- **`a4-landing-screenshots`** ✅ — 3 SVG mockups shipped on landing.
+- **New `TrapTrace.vue` component** — lightweight 2-frame Buggy → Fixed interactive slider.
+- **Auto-generation script** — extracts + sanitizes trap texts and emits TrapTrace embeds.
+- **Sweep improvements to `migrate.py`** — KNOWN_HTML accepts `>` in quoted attrs; apostrophe + `<>` sanitizer in `:steps='...'`.
 
-### Priority 4 — System design intro chapter
+### Deferred (per audit priorities)
 
-- **`b2-system-design-intro`** ✅ — new **~30 KB** chapter at `gen/src/45-system-design.md`, live at https://abhisinghal.github.io/dsa-master-reference/system-design/. Covers 7-phase interview cadence, latency numbers, CAP/PACELC, sharding, caching, replication, queues, load balancing, rate limiting, 4 flagship case studies (URL shortener, rate limiter, KV store, news feed), trade-off catalog, interview scripts, 30-day prep plan.
+- 227 Problem-statement Examples
+- 90 "Same pattern, new tweaks" mini-traces
+- 30 Data-structure operation state-machines
+- Complexity growth-curve visualizer
+- 6-phase playbook animation
 
-### Bonus infra fixes shipped this session
+### Latest commits (all CI-green, live)
 
-- `migrate.py` `KNOWN_HTML` regex tightened to allow `>` inside quoted attribute values.
-- `migrate.py` `transform_svg_fences` strips blank lines inside inline SVGs (fixes prior 7-hour build hang).
-- Sweep script auto-fixed 3 files where apostrophes in note strings closed single-quoted `:steps` attributes.
-- Sweep script auto-moved orphaned blockquote continuations into their parent Trace-it note.
+- `3de6824` Execution Traces in cheatsheets, mock transcripts, SD
+- `4ab7ae3` P0 Trap Traces batch 2 (61 auto)
+- `019530f` P0 Trap Traces batch 1 (20 hand)
+- `a94d862` "Execution Trace" naming/badge
+- `d1a7683` P4 System Design chapter
+- `cdc2ff2` 100% CodeTrace coverage
+- `c3dbac5` CodeTrace interactive slider redesign
+- `f585d08` P1 RSS + design token audit
 
----
+### Final scorecard
 
-## Final scorecard
+**Todos: 27 done, 1 blocked (28 total).** Only remaining item: `add-email-capture-pdf-gate` — blocked on your Buttondown / ConvertKit signup.
 
-**Todos: 27 done, 1 blocked.**
+### Bigger bets deferred
 
-Only remaining item: `add-email-capture-pdf-gate` — blocked on your Buttondown/ConvertKit signup.
-
-## Deferred bigger bets (not in this plan — kept so we don't lose them)
-
-- AI companion chat (multi-day; API-key strategy)
-- Auth / accounts / cross-device progress sync (multi-day; backend)
-- Community / forum / comments (moderation strategy)
-- Mock-interview AI voice mode (multi-week)
-- Job board integration
-- Mobile app
-- Anti-pattern generator per pattern
-- Extended mock transcripts (3 → 15)
-- Company tracks (Meta / Google / Amazon annotated lists)
-- Behavioural interview prep
+- AI companion chat, Auth/accounts, Community/forum
+- Mock-interview AI voice, Job board, Mobile app
+- Anti-pattern generator, Extended mock transcripts (3→15)
+- Company tracks (Meta/Google/Amazon), Behavioural interview prep
