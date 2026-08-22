@@ -13,40 +13,40 @@ The pattern gets its name from geometry: imagine a vertical line sweeping across
 ```svg
 <svg width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="swp-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
-    <filter id="swp-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <marker id="swp-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <filter id="swp-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="720" height="240" fill="#fbfcfe"/>
-  <text x="360" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#0b1220">turn intervals into sorted start/end events, then sweep left → right</text>
-  <g font-size="11" fill="#5b6472" text-anchor="end">
+  <rect x="0" y="0" width="720" height="240" fill="var(--dsa-bg)"/>
+  <text x="360" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-ink)">turn intervals into sorted start/end events, then sweep left → right</text>
+  <g font-size="11" fill="var(--dsa-neutral)" text-anchor="end">
     <text x="62" y="58">[0,30]</text><text x="62" y="85">[5,10]</text><text x="62" y="112">[15,20]</text>
   </g>
   <g filter="url(#swp-s1)">
-    <rect x="78" y="43" width="572" height="16" rx="7" fill="#eff6ff" stroke="#93c5fd"/>
-    <rect x="180" y="70" width="110" height="16" rx="7" fill="#f0fdf4" stroke="#16a34a"/>
-    <rect x="400" y="97" width="110" height="16" rx="7" fill="#fef2f2" stroke="#dc2626"/>
+    <rect x="78" y="43" width="572" height="16" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/>
+    <rect x="180" y="70" width="110" height="16" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+    <rect x="400" y="97" width="110" height="16" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)"/>
   </g>
-  <line x1="70" y1="130" x2="662" y2="130" stroke="#2563eb" stroke-width="2" marker-end="url(#swp-ar-blue)"/>
+  <line x1="70" y1="130" x2="662" y2="130" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#swp-ar-blue)"/>
   <g font-size="11" text-anchor="middle" font-weight="700">
-    <circle cx="78" cy="130" r="5" fill="#16a34a"/><text x="78" y="151" fill="#16a34a">0 +1</text>
-    <circle cx="180" cy="130" r="5" fill="#16a34a"/><text x="180" y="151" fill="#16a34a">5 +1</text>
-    <circle cx="290" cy="130" r="5" fill="#dc2626"/><text x="290" y="151" fill="#dc2626">10 −1</text>
-    <circle cx="400" cy="130" r="5" fill="#16a34a"/><text x="400" y="151" fill="#16a34a">15 +1</text>
-    <circle cx="510" cy="130" r="5" fill="#dc2626"/><text x="510" y="151" fill="#dc2626">20 −1</text>
-    <circle cx="650" cy="130" r="5" fill="#dc2626"/><text x="650" y="151" fill="#dc2626">30 −1</text>
+    <circle cx="78" cy="130" r="5" fill="var(--dsa-success)"/><text x="78" y="151" fill="var(--dsa-success)">0 +1</text>
+    <circle cx="180" cy="130" r="5" fill="var(--dsa-success)"/><text x="180" y="151" fill="var(--dsa-success)">5 +1</text>
+    <circle cx="290" cy="130" r="5" fill="var(--dsa-danger)"/><text x="290" y="151" fill="var(--dsa-danger)">10 −1</text>
+    <circle cx="400" cy="130" r="5" fill="var(--dsa-success)"/><text x="400" y="151" fill="var(--dsa-success)">15 +1</text>
+    <circle cx="510" cy="130" r="5" fill="var(--dsa-danger)"/><text x="510" y="151" fill="var(--dsa-danger)">20 −1</text>
+    <circle cx="650" cy="130" r="5" fill="var(--dsa-danger)"/><text x="650" y="151" fill="var(--dsa-danger)">30 −1</text>
   </g>
-  <line x1="180" y1="34" x2="180" y2="205" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="6 4"/>
-  <text x="194" y="42" font-size="11" font-weight="700" fill="#2563eb">sweep line at t=5</text>
-  <text x="60" y="190" text-anchor="end" font-size="11" font-weight="700" fill="#5b6472">active</text>
+  <line x1="180" y1="34" x2="180" y2="205" stroke="var(--dsa-primary)" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="194" y="42" font-size="11" font-weight="700" fill="var(--dsa-primary)">sweep line at t=5</text>
+  <text x="60" y="190" text-anchor="end" font-size="11" font-weight="700" fill="var(--dsa-neutral)">active</text>
   <g filter="url(#swp-s1)" font-size="14" font-weight="700" text-anchor="middle">
-    <rect x="61" y="172" width="34" height="28" rx="7" fill="#f6f8fb" stroke="#d9dee7"/><text x="78" y="191" fill="#0b1220">1</text>
-    <rect x="163" y="172" width="34" height="28" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="180" y="191" fill="#0b1220">2</text>
-    <rect x="273" y="172" width="34" height="28" rx="7" fill="#f6f8fb" stroke="#d9dee7"/><text x="290" y="191" fill="#0b1220">1</text>
-    <rect x="383" y="172" width="34" height="28" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="400" y="191" fill="#0b1220">2</text>
-    <rect x="493" y="172" width="34" height="28" rx="7" fill="#f6f8fb" stroke="#d9dee7"/><text x="510" y="191" fill="#0b1220">1</text>
-    <rect x="633" y="172" width="34" height="28" rx="7" fill="#f6f8fb" stroke="#d9dee7"/><text x="650" y="191" fill="#0b1220">0</text>
+    <rect x="61" y="172" width="34" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="78" y="191" fill="var(--dsa-ink)">1</text>
+    <rect x="163" y="172" width="34" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="180" y="191" fill="var(--dsa-ink)">2</text>
+    <rect x="273" y="172" width="34" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="290" y="191" fill="var(--dsa-ink)">1</text>
+    <rect x="383" y="172" width="34" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="400" y="191" fill="var(--dsa-ink)">2</text>
+    <rect x="493" y="172" width="34" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="510" y="191" fill="var(--dsa-ink)">1</text>
+    <rect x="633" y="172" width="34" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="650" y="191" fill="var(--dsa-ink)">0</text>
   </g>
-  <text x="360" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="#5b6472">peak active count = 2 rooms</text>
+  <text x="360" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-neutral)">peak active count = 2 rooms</text>
 </svg>
 ```
 <div class="readfig"><b>How to read it:</b> Each interval becomes two events: green starts add <b>+1</b>, red ends add <b>−1</b>. The blue sweep line processes events in sorted order and maintains the running <code>active</code> count. The maximum value in that row is <b>2</b>, so two meetings overlap at peak and two rooms are required.</div>

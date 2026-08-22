@@ -19,36 +19,36 @@ Every move discards a number you've *proven* can't help, so you sweep the array 
 <div class="svg-figure">
 <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="tp-g" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
-    <marker id="tp-r" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
-    <filter id="tp-s" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <marker id="tp-g" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <marker id="tp-r" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+    <filter id="tp-s" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="720" height="200" fill="#fbfcfe"/>
-  <text x="20" y="28" font-size="13" font-weight="700" fill="#2563eb">sorted array — find two numbers summing to 9</text>
+  <rect x="0" y="0" width="720" height="200" fill="var(--dsa-bg)"/>
+  <text x="20" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">sorted array — find two numbers summing to 9</text>
   <g filter="url(#tp-s)">
-    <rect x="18"  y="54" width="54" height="42" rx="7" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.6"/>
-    <rect x="82"  y="54" width="54" height="42" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-    <rect x="146" y="54" width="54" height="42" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-    <rect x="210" y="54" width="54" height="42" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-    <rect x="274" y="54" width="54" height="42" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-    <rect x="338" y="54" width="54" height="42" rx="7" fill="#fef2f2" stroke="#dc2626" stroke-width="1.6"/>
+    <rect x="18"  y="54" width="54" height="42" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+    <rect x="82"  y="54" width="54" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
+    <rect x="146" y="54" width="54" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
+    <rect x="210" y="54" width="54" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
+    <rect x="274" y="54" width="54" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
+    <rect x="338" y="54" width="54" height="42" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6"/>
   </g>
-  <g font-size="19" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="19" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="45"  y="82">1</text><text x="109" y="82">3</text><text x="173" y="82">5</text>
     <text x="237" y="82">6</text><text x="301" y="82">8</text><text x="365" y="82">11</text>
   </g>
-  <g font-size="11" fill="#94a3b8" text-anchor="middle">
+  <g font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">
     <text x="45" y="112">0</text><text x="109" y="112">1</text><text x="173" y="112">2</text>
     <text x="237" y="112">3</text><text x="301" y="112">4</text><text x="365" y="112">5</text>
   </g>
-  <line x1="45"  y1="150" x2="45"  y2="100" stroke="#16a34a" stroke-width="2" marker-end="url(#tp-g)"/>
-  <text x="45"  y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">lo</text>
-  <line x1="365" y1="150" x2="365" y2="100" stroke="#dc2626" stroke-width="2" marker-end="url(#tp-r)"/>
-  <text x="365" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">hi</text>
-  <rect x="440" y="52" width="264" height="92" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
-  <text x="456" y="76" font-size="13" font-weight="700" fill="#0b1220">a[lo] + a[hi] = 1 + 11 = 12</text>
-  <text x="456" y="100" font-size="13" fill="#dc2626">12 &gt; 9  →  too big, move hi ◀ left</text>
-  <text x="456" y="124" font-size="12" fill="#334155">(now 1 + 8 = 9  ✓  found it)</text>
+  <line x1="45"  y1="150" x2="45"  y2="100" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#tp-g)"/>
+  <text x="45"  y="168" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">lo</text>
+  <line x1="365" y1="150" x2="365" y2="100" stroke="var(--dsa-danger)" stroke-width="2" marker-end="url(#tp-r)"/>
+  <text x="365" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">hi</text>
+  <rect x="440" y="52" width="264" height="92" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="456" y="76" font-size="13" font-weight="700" fill="var(--dsa-ink)">a[lo] + a[hi] = 1 + 11 = 12</text>
+  <text x="456" y="100" font-size="13" fill="var(--dsa-danger)">12 &gt; 9  →  too big, move hi ◀ left</text>
+  <text x="456" y="124" font-size="12" fill="var(--dsa-neutral)">(now 1 + 8 = 9  ✓  found it)</text>
 </svg>
 </div>
 

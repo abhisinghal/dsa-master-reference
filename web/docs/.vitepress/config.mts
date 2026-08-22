@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import { generateRecentUpdates } from './gen-recent.mjs'
+import { generateChangelogRss } from './gen-rss.mjs'
 import generatedSidebar from './sidebar.generated.json'
 
 type SidebarChapter = {
@@ -53,6 +54,7 @@ export default withMermaid(defineConfig({
   },
   head: [
     ['link', { rel: 'icon', href: '/dsa-master-reference/favicon.svg' }],
+    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'DSA Master Reference changelog', href: '/dsa-master-reference/rss.xml' }],
     ['meta', { name: 'theme-color', content: '#2563eb' }],
     ['script', { src: 'https://cjrtnc.leaningtech.com/3.0/cj3loader.js' }]
   ],
@@ -73,6 +75,7 @@ export default withMermaid(defineConfig({
         apply: 'build',
         buildStart() {
           generateRecentUpdates()
+          generateChangelogRss()
         }
       }
     ]

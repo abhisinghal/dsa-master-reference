@@ -106,60 +106,60 @@ The cleanest way to see the total cost is to draw the **recursion tree** — one
 <div class="svg-figure">
 <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="rt-a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="rt-a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-neutral)"/></marker>
   </defs>
-  <rect x="0" y="0" width="720" height="360" fill="#fbfcfe"/>
+  <rect x="0" y="0" width="720" height="360" fill="var(--dsa-bg)"/>
   <!-- edges -->
-  <g stroke="#94a3b8" stroke-width="1.4" fill="none" marker-end="url(#rt-a)">
+  <g stroke="var(--dsa-neutral)" stroke-width="1.4" fill="none" marker-end="url(#rt-a)">
     <path d="M250,58 L166,96"/><path d="M250,58 L334,96"/>
     <path d="M160,122 L104,160"/><path d="M160,122 L212,160"/>
     <path d="M340,122 L288,160"/><path d="M340,122 L396,160"/>
   </g>
-  <g stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4 3">
+  <g stroke="var(--dsa-neutral-line)" stroke-width="1.2" stroke-dasharray="4 3">
     <path d="M100,186 L92,236"/><path d="M120,186 L150,236"/>
     <path d="M300,186 L300,236"/><path d="M400,186 L420,236"/>
   </g>
   <!-- level 0 -->
-  <rect x="220" y="32" width="60" height="26" rx="7" fill="#eff6ff" stroke="#2563eb" stroke-width="1.6"/>
-  <text x="250" y="49" text-anchor="middle" font-size="13" font-weight="700" fill="#0b1220">n</text>
+  <rect x="220" y="32" width="60" height="26" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <text x="250" y="49" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-ink)">n</text>
   <!-- level 1 -->
-  <rect x="130" y="96" width="60" height="26" rx="7" fill="#eff6ff" stroke="#2563eb" stroke-width="1.4"/>
-  <text x="160" y="113" text-anchor="middle" font-size="12" font-weight="700" fill="#0b1220">n/2</text>
-  <rect x="310" y="96" width="60" height="26" rx="7" fill="#eff6ff" stroke="#2563eb" stroke-width="1.4"/>
-  <text x="340" y="113" text-anchor="middle" font-size="12" font-weight="700" fill="#0b1220">n/2</text>
+  <rect x="130" y="96" width="60" height="26" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.4"/>
+  <text x="160" y="113" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">n/2</text>
+  <rect x="310" y="96" width="60" height="26" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.4"/>
+  <text x="340" y="113" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">n/2</text>
   <!-- level 2 -->
-  <g font-size="11" font-weight="700" fill="#0b1220" text-anchor="middle">
-    <rect x="78" y="160" width="46" height="24" rx="6" fill="#eff6ff" stroke="#93c5fd"/><text x="101" y="176">n/4</text>
-    <rect x="190" y="160" width="46" height="24" rx="6" fill="#eff6ff" stroke="#93c5fd"/><text x="213" y="176">n/4</text>
-    <rect x="278" y="160" width="46" height="24" rx="6" fill="#eff6ff" stroke="#93c5fd"/><text x="301" y="176">n/4</text>
-    <rect x="378" y="160" width="46" height="24" rx="6" fill="#eff6ff" stroke="#93c5fd"/><text x="401" y="176">n/4</text>
+  <g font-size="11" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
+    <rect x="78" y="160" width="46" height="24" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/><text x="101" y="176">n/4</text>
+    <rect x="190" y="160" width="46" height="24" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/><text x="213" y="176">n/4</text>
+    <rect x="278" y="160" width="46" height="24" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/><text x="301" y="176">n/4</text>
+    <rect x="378" y="160" width="46" height="24" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/><text x="401" y="176">n/4</text>
   </g>
-  <text x="250" y="222" text-anchor="middle" font-size="16" fill="#94a3b8">⋮</text>
+  <text x="250" y="222" text-anchor="middle" font-size="16" fill="var(--dsa-neutral)">⋮</text>
   <!-- leaves -->
-  <g font-size="10" font-weight="700" fill="#0b1220" text-anchor="middle">
-    <rect x="72"  y="236" width="20" height="20" rx="5" fill="#f0fdf4" stroke="#16a34a"/><text x="82"  y="250">1</text>
-    <rect x="120" y="236" width="20" height="20" rx="5" fill="#f0fdf4" stroke="#16a34a"/><text x="130" y="250">1</text>
-    <rect x="168" y="236" width="20" height="20" rx="5" fill="#f0fdf4" stroke="#16a34a"/><text x="178" y="250">1</text>
-    <text x="222" y="250" font-size="12" fill="#94a3b8">· · ·</text>
-    <rect x="288" y="236" width="20" height="20" rx="5" fill="#f0fdf4" stroke="#16a34a"/><text x="298" y="250">1</text>
-    <rect x="360" y="236" width="20" height="20" rx="5" fill="#f0fdf4" stroke="#16a34a"/><text x="370" y="250">1</text>
-    <rect x="412" y="236" width="20" height="20" rx="5" fill="#f0fdf4" stroke="#16a34a"/><text x="422" y="250">1</text>
+  <g font-size="10" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
+    <rect x="72"  y="236" width="20" height="20" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="82"  y="250">1</text>
+    <rect x="120" y="236" width="20" height="20" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="130" y="250">1</text>
+    <rect x="168" y="236" width="20" height="20" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="178" y="250">1</text>
+    <text x="222" y="250" font-size="12" fill="var(--dsa-neutral)">· · ·</text>
+    <rect x="288" y="236" width="20" height="20" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="298" y="250">1</text>
+    <rect x="360" y="236" width="20" height="20" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="370" y="250">1</text>
+    <rect x="412" y="236" width="20" height="20" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="422" y="250">1</text>
   </g>
   <!-- level brace (left) -->
   <path d="M22,32 q-8,0 -8,10 L14,238 q0,10 8,10" stroke="#a78bfa" stroke-width="1.4" fill="none"/>
-  <text x="8" y="150" transform="rotate(-90 8,150)" text-anchor="middle" font-size="11" fill="#7c3aed">log₂ n + 1 levels</text>
+  <text x="8" y="150" transform="rotate(-90 8,150)" text-anchor="middle" font-size="11" fill="var(--dsa-info)">log₂ n + 1 levels</text>
   <!-- work-per-level annotations (right) -->
-  <g font-size="12" fill="#334155">
-    <text x="470" y="49">1 piece × n</text>       <text x="592" y="49" font-weight="700" fill="#2563eb">= n</text>
-    <text x="470" y="113">2 pieces × n/2</text>    <text x="592" y="113" font-weight="700" fill="#2563eb">= n</text>
-    <text x="470" y="176">4 pieces × n/4</text>    <text x="592" y="176" font-weight="700" fill="#2563eb">= n</text>
-    <text x="470" y="250">n pieces × 1</text>       <text x="592" y="250" font-weight="700" fill="#2563eb">= n</text>
+  <g font-size="12" fill="var(--dsa-neutral)">
+    <text x="470" y="49">1 piece × n</text>       <text x="592" y="49" font-weight="700" fill="var(--dsa-primary)">= n</text>
+    <text x="470" y="113">2 pieces × n/2</text>    <text x="592" y="113" font-weight="700" fill="var(--dsa-primary)">= n</text>
+    <text x="470" y="176">4 pieces × n/4</text>    <text x="592" y="176" font-weight="700" fill="var(--dsa-primary)">= n</text>
+    <text x="470" y="250">n pieces × 1</text>       <text x="592" y="250" font-weight="700" fill="var(--dsa-primary)">= n</text>
   </g>
   <!-- summary bar -->
-  <rect x="40" y="300" width="640" height="42" rx="9" fill="#eef5ff" stroke="#2563eb"/>
-  <text x="360" y="326" text-anchor="middle" font-size="13" fill="#0b1220">
+  <rect x="40" y="300" width="640" height="42" rx="9" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+  <text x="360" y="326" text-anchor="middle" font-size="13" fill="var(--dsa-ink)">
     <tspan font-weight="700">(log₂ n + 1)</tspan> levels  ×  <tspan font-weight="700">n</tspan> per level
-    =  n·log₂ n + n  =  <tspan font-weight="700" fill="#2563eb">O(n log n)</tspan>
+    =  n·log₂ n + n  =  <tspan font-weight="700" fill="var(--dsa-primary)">O(n log n)</tspan>
   </text>
 </svg>
 </div>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DSA Master Reference</title>
+    <link>https://abhisinghal.github.io/dsa-master-reference</link>
+    <atom:link href="https://abhisinghal.github.io/dsa-master-reference/rss.xml" rel="self" type="application/rss+xml" />
+    <description>Java-native DSA interview reference — patterns, canonical problems, animations, and interview-realism content for senior/staff engineers.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Aug 2026 12:26:34 GMT</lastBuildDate>
+    <ttl>1440</ttl>
+    <item>
+      <title>Wave B1+B3 reader navigation additions</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-21-wave-b1-b3-reader-navigation-additions</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-21-Wave B1+B3 reader navigation additions</guid>
+      <pubDate>Fri, 21 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>New &quot;How this book compares&quot; page versus Grokking, NeetCode, TakeUForward, and LeetCode Premium.</li><li>New public changelog page so readers can see substantive project changes without reading git history.</li><li>Landing page now links directly to the comparison page.</li><li>Foundations sidebar now exposes the comparison page near the Java foundations chapters.</li><li>Appendix sidebar now exposes the changelog.</li></ul>]]></description>
+    </item>
+    <item>
+      <title>Content consolidation and Grokking-style expansion</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-21-content-consolidation-and-grokking-style-expansion</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-21-Content consolidation and Grokking-style</guid>
+      <pubDate>Fri, 21 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>Consolidated the repository to the latest `gen/src/` content source.</li><li>Expanded all 21 pattern chapters with a more consistent mentor-style rhythm.</li><li>Strengthened pattern chapters with recognition cues, when-not-to-use guidance, canonical problems, traps, and interview framing.</li><li>Large chapter updates landed across Sliding Window, Two Pointers, Dynamic Programming, Backtracking, Graphs, Trees, Arrays, Strings, and the remaining pattern/data-structure chapters.</li><li>Preserved the Java-native focus while making the problem explanations more self-contained.</li></ul>]]></description>
+    </item>
+    <item>
+      <title>Initial public site, PDF pipeline, and appendix set</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-21-initial-public-site-pdf-pipeline-and-appendix-set</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-21-Initial public site, PDF pipeline, and a</guid>
+      <pubDate>Fri, 21 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>Initial VitePress site and GitHub Actions deployment pipeline added.</li><li>PDF pipeline added for the offline reference format.</li><li>21 core pattern chapters introduced, from Sliding Window through Quickselect, plus bonus Math and Design chapters.</li><li>Java Data Structures Primer, Java DSA Gotchas, Complexity Model, Debugging DSA Code, and Zero-to-Hero Roadmap added as foundations.</li><li>Data-structure deep dives added for arrays, strings, linked lists, stacks/queues, trees, heaps, tries, graphs, and segment/Fenwick trees.</li><li>Appendix chapters added: cheat sheets, self-check drills, master problem index, practice solutions, mock interview transcripts, and traps catalog.</li><li>Java 17 is the default implementation language throughout the reference.</li><li>Core idea established: pattern-first DSA prep for senior/staff interviews.</li><li>Java-native explanations and templates chosen over language-agnostic pseudocode.</li><li>Problem chapters organized around brute force → optimized reasoning → trace → complexity → traps.</li><li>Callout vocabulary introduced for key ideas, invariants, traps, pattern connections, notes, and definitions.</li></ul>]]></description>
+    </item>
+  </channel>
+</rss>

@@ -31,47 +31,47 @@ The template is invariant across problems: `choose → recurse → un-choose`. W
 <div class="svg-figure">
 <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="bt-ar-grn" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
-    <marker id="bt-ar-red" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
-    <marker id="bt-ar-mute" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/></marker>
-    <filter id="bt-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <marker id="bt-ar-grn" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <marker id="bt-ar-red" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+    <marker id="bt-ar-mute" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-neutral)"/></marker>
+    <filter id="bt-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="720" height="260" fill="#fbfcfe"/>
-  <text x="360" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0b1220">subsets of [1,2,3]: include / exclude each element</text>
+  <rect x="0" y="0" width="720" height="260" fill="var(--dsa-bg)"/>
+  <text x="360" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-ink)">subsets of [1,2,3]: include / exclude each element</text>
   <g stroke-width="1.6" fill="none">
-    <line x1="360" y1="50" x2="220" y2="82" stroke="#16a34a" marker-end="url(#bt-ar-grn)"/><line x1="360" y1="50" x2="500" y2="82" stroke="#94a3b8" marker-end="url(#bt-ar-mute)"/>
-    <line x1="220" y1="104" x2="130" y2="132" stroke="#16a34a" marker-end="url(#bt-ar-grn)"/><line x1="220" y1="104" x2="288" y2="132" stroke="#94a3b8" marker-end="url(#bt-ar-mute)"/>
-    <line x1="500" y1="104" x2="432" y2="132" stroke="#16a34a" marker-end="url(#bt-ar-grn)"/><line x1="500" y1="104" x2="590" y2="132" stroke="#94a3b8" marker-end="url(#bt-ar-mute)"/>
-    <line x1="130" y1="154" x2="74" y2="188" stroke="#16a34a" marker-end="url(#bt-ar-grn)"/><line x1="130" y1="154" x2="130" y2="188" stroke="#94a3b8" marker-end="url(#bt-ar-mute)"/>
-    <line x1="288" y1="154" x2="250" y2="188" stroke="#16a34a" marker-end="url(#bt-ar-grn)"/><line x1="288" y1="154" x2="306" y2="188" stroke="#94a3b8" marker-end="url(#bt-ar-mute)"/>
-    <line x1="432" y1="154" x2="414" y2="188" stroke="#16a34a" marker-end="url(#bt-ar-grn)"/><line x1="432" y1="154" x2="470" y2="188" stroke="#94a3b8" marker-end="url(#bt-ar-mute)"/>
-    <line x1="590" y1="154" x2="590" y2="188" stroke="#16a34a" marker-end="url(#bt-ar-grn)"/><line x1="590" y1="154" x2="646" y2="188" stroke="#94a3b8" marker-end="url(#bt-ar-mute)"/>
+    <line x1="360" y1="50" x2="220" y2="82" stroke="var(--dsa-success)" marker-end="url(#bt-ar-grn)"/><line x1="360" y1="50" x2="500" y2="82" stroke="var(--dsa-neutral)" marker-end="url(#bt-ar-mute)"/>
+    <line x1="220" y1="104" x2="130" y2="132" stroke="var(--dsa-success)" marker-end="url(#bt-ar-grn)"/><line x1="220" y1="104" x2="288" y2="132" stroke="var(--dsa-neutral)" marker-end="url(#bt-ar-mute)"/>
+    <line x1="500" y1="104" x2="432" y2="132" stroke="var(--dsa-success)" marker-end="url(#bt-ar-grn)"/><line x1="500" y1="104" x2="590" y2="132" stroke="var(--dsa-neutral)" marker-end="url(#bt-ar-mute)"/>
+    <line x1="130" y1="154" x2="74" y2="188" stroke="var(--dsa-success)" marker-end="url(#bt-ar-grn)"/><line x1="130" y1="154" x2="130" y2="188" stroke="var(--dsa-neutral)" marker-end="url(#bt-ar-mute)"/>
+    <line x1="288" y1="154" x2="250" y2="188" stroke="var(--dsa-success)" marker-end="url(#bt-ar-grn)"/><line x1="288" y1="154" x2="306" y2="188" stroke="var(--dsa-neutral)" marker-end="url(#bt-ar-mute)"/>
+    <line x1="432" y1="154" x2="414" y2="188" stroke="var(--dsa-success)" marker-end="url(#bt-ar-grn)"/><line x1="432" y1="154" x2="470" y2="188" stroke="var(--dsa-neutral)" marker-end="url(#bt-ar-mute)"/>
+    <line x1="590" y1="154" x2="590" y2="188" stroke="var(--dsa-success)" marker-end="url(#bt-ar-grn)"/><line x1="590" y1="154" x2="646" y2="188" stroke="var(--dsa-neutral)" marker-end="url(#bt-ar-mute)"/>
   </g>
   <g font-size="10" font-weight="700" text-anchor="middle">
-    <text x="286" y="69" fill="#16a34a">include 1</text><text x="435" y="69" fill="#5b6472">exclude 1</text>
-    <text x="172" y="121" fill="#16a34a">include 2</text><text x="255" y="121" fill="#5b6472">exclude 2</text>
-    <text x="466" y="121" fill="#16a34a">include 2</text><text x="548" y="121" fill="#5b6472">exclude 2</text>
+    <text x="286" y="69" fill="var(--dsa-success)">include 1</text><text x="435" y="69" fill="var(--dsa-neutral)">exclude 1</text>
+    <text x="172" y="121" fill="var(--dsa-success)">include 2</text><text x="255" y="121" fill="var(--dsa-neutral)">exclude 2</text>
+    <text x="466" y="121" fill="var(--dsa-success)">include 2</text><text x="548" y="121" fill="var(--dsa-neutral)">exclude 2</text>
   </g>
-  <path d="M72,212 C85,230 124,224 130,206 C132,184 128,168 127,154 C152,151 206,130 219,104 C262,90 335,69 359,51" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#bt-ar-red)"/>
-  <text x="152" y="235" font-size="11" font-weight="700" fill="#dc2626">dashed = un-choose while backing up</text>
+  <path d="M72,212 C85,230 124,224 130,206 C132,184 128,168 127,154 C152,151 206,130 219,104 C262,90 335,69 359,51" fill="none" stroke="var(--dsa-danger)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#bt-ar-red)"/>
+  <text x="152" y="235" font-size="11" font-weight="700" fill="var(--dsa-danger)">dashed = un-choose while backing up</text>
   <g filter="url(#bt-s1)" text-anchor="middle" font-weight="700">
-    <rect x="334" y="30" width="52" height="28" rx="7" fill="#eff6ff" stroke="#2563eb"/><text x="360" y="49" font-size="12" fill="#0b1220">[]</text>
-    <rect x="194" y="82" width="52" height="28" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="220" y="101" font-size="12" fill="#0b1220">[1]</text>
-    <rect x="474" y="82" width="52" height="28" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="500" y="101" font-size="12" fill="#0b1220">[]</text>
-    <rect x="97" y="132" width="66" height="28" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="130" y="151" font-size="11" fill="#0b1220">[1,2]</text>
-    <rect x="262" y="132" width="52" height="28" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="288" y="151" font-size="11" fill="#0b1220">[1]</text>
-    <rect x="406" y="132" width="52" height="28" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="432" y="151" font-size="11" fill="#0b1220">[2]</text>
-    <rect x="564" y="132" width="52" height="28" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="590" y="151" font-size="11" fill="#0b1220">[]</text>
-    <rect x="35" y="188" width="78" height="28" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="74" y="207" font-size="10.5" fill="#0b1220">[1,2,3]</text>
-    <rect x="98" y="188" width="64" height="28" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="130" y="207" font-size="10.5" fill="#0b1220">[1,2]</text>
-    <rect x="216" y="188" width="68" height="28" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="250" y="207" font-size="10.5" fill="#0b1220">[1,3]</text>
-    <rect x="280" y="188" width="52" height="28" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="306" y="207" font-size="10.5" fill="#0b1220">[1]</text>
-    <rect x="377" y="188" width="74" height="28" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="414" y="207" font-size="10.5" fill="#0b1220">[2,3]</text>
-    <rect x="444" y="188" width="52" height="28" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="470" y="207" font-size="10.5" fill="#0b1220">[2]</text>
-    <rect x="564" y="188" width="52" height="28" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="590" y="207" font-size="10.5" fill="#0b1220">[3]</text>
-    <rect x="620" y="188" width="52" height="28" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="646" y="207" font-size="10.5" fill="#0b1220">[]</text>
+    <rect x="334" y="30" width="52" height="28" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/><text x="360" y="49" font-size="12" fill="var(--dsa-ink)">[]</text>
+    <rect x="194" y="82" width="52" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="220" y="101" font-size="12" fill="var(--dsa-ink)">[1]</text>
+    <rect x="474" y="82" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="500" y="101" font-size="12" fill="var(--dsa-ink)">[]</text>
+    <rect x="97" y="132" width="66" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="130" y="151" font-size="11" fill="var(--dsa-ink)">[1,2]</text>
+    <rect x="262" y="132" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="288" y="151" font-size="11" fill="var(--dsa-ink)">[1]</text>
+    <rect x="406" y="132" width="52" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="432" y="151" font-size="11" fill="var(--dsa-ink)">[2]</text>
+    <rect x="564" y="132" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="590" y="151" font-size="11" fill="var(--dsa-ink)">[]</text>
+    <rect x="35" y="188" width="78" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="74" y="207" font-size="10.5" fill="var(--dsa-ink)">[1,2,3]</text>
+    <rect x="98" y="188" width="64" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="130" y="207" font-size="10.5" fill="var(--dsa-ink)">[1,2]</text>
+    <rect x="216" y="188" width="68" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="250" y="207" font-size="10.5" fill="var(--dsa-ink)">[1,3]</text>
+    <rect x="280" y="188" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="306" y="207" font-size="10.5" fill="var(--dsa-ink)">[1]</text>
+    <rect x="377" y="188" width="74" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="414" y="207" font-size="10.5" fill="var(--dsa-ink)">[2,3]</text>
+    <rect x="444" y="188" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="470" y="207" font-size="10.5" fill="var(--dsa-ink)">[2]</text>
+    <rect x="564" y="188" width="52" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="590" y="207" font-size="10.5" fill="var(--dsa-ink)">[3]</text>
+    <rect x="620" y="188" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="646" y="207" font-size="10.5" fill="var(--dsa-ink)">[]</text>
   </g>
-  <text x="586" y="235" text-anchor="middle" font-size="11" font-weight="700" fill="#5b6472">8 leaves = 2³ subsets</text>
+  <text x="586" y="235" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-neutral)">8 leaves = 2³ subsets</text>
 </svg>
 </div>
 

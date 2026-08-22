@@ -23,45 +23,45 @@ After partitioning around a pivot, the pivot sits at its final sorted index p. I
 <div class="svg-figure">
 <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="qs-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
-    <marker id="qs-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
-    <marker id="qs-ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
-    <filter id="qs-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <marker id="qs-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <marker id="qs-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <marker id="qs-ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+    <filter id="qs-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="720" height="240" fill="#fbfcfe"/>
-  <text x="360" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#0b1220">one partition step decides which side can contain rank k</text>
-  <text x="48" y="70" text-anchor="end" font-size="12" font-weight="700" fill="#5b6472">before</text>
+  <rect x="0" y="0" width="720" height="240" fill="var(--dsa-bg)"/>
+  <text x="360" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-ink)">one partition step decides which side can contain rank k</text>
+  <text x="48" y="70" text-anchor="end" font-size="12" font-weight="700" fill="var(--dsa-neutral)">before</text>
   <g filter="url(#qs-s1)">
-    <rect x="70" y="48" width="46" height="38" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><rect x="122" y="48" width="46" height="38" rx="7" fill="#f8fafc" stroke="#cbd5e1"/>
-    <rect x="174" y="48" width="46" height="38" rx="7" fill="#eff6ff" stroke="#2563eb" stroke-width="1.7"/><rect x="226" y="48" width="46" height="38" rx="7" fill="#f8fafc" stroke="#cbd5e1"/>
-    <rect x="278" y="48" width="46" height="38" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><rect x="330" y="48" width="46" height="38" rx="7" fill="#f8fafc" stroke="#cbd5e1"/>
+    <rect x="70" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><rect x="122" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <rect x="174" y="48" width="46" height="38" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.7"/><rect x="226" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <rect x="278" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><rect x="330" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
   </g>
-  <g font-size="17" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="17" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="93" y="73">7</text><text x="145" y="73">1</text><text x="197" y="73">5</text><text x="249" y="73">3</text><text x="301" y="73">9</text><text x="353" y="73">2</text>
   </g>
-  <text x="197" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">pivot = 5</text>
-  <path d="M150,96 C126,122 112,132 102,146" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#qs-ar-grn)"/>
-  <path d="M250,96 C222,122 192,134 156,146" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#qs-ar-grn)"/>
-  <path d="M354,96 C294,122 246,134 210,146" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#qs-ar-grn)"/>
-  <path d="M92,96 C316,118 418,132 470,146" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#qs-ar-red)"/>
-  <path d="M300,96 C388,118 476,132 522,146" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#qs-ar-red)"/>
-  <line x1="218" y1="68" x2="315" y2="150" stroke="#2563eb" stroke-width="2" marker-end="url(#qs-ar-blue)"/>
-  <text x="48" y="170" text-anchor="end" font-size="12" font-weight="700" fill="#5b6472">after</text>
+  <text x="197" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">pivot = 5</text>
+  <path d="M150,96 C126,122 112,132 102,146" fill="none" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#qs-ar-grn)"/>
+  <path d="M250,96 C222,122 192,134 156,146" fill="none" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#qs-ar-grn)"/>
+  <path d="M354,96 C294,122 246,134 210,146" fill="none" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#qs-ar-grn)"/>
+  <path d="M92,96 C316,118 418,132 470,146" fill="none" stroke="var(--dsa-danger)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#qs-ar-red)"/>
+  <path d="M300,96 C388,118 476,132 522,146" fill="none" stroke="var(--dsa-danger)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#qs-ar-red)"/>
+  <line x1="218" y1="68" x2="315" y2="150" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#qs-ar-blue)"/>
+  <text x="48" y="170" text-anchor="end" font-size="12" font-weight="700" fill="var(--dsa-neutral)">after</text>
   <g filter="url(#qs-s1)">
-    <rect x="70" y="148" width="46" height="38" rx="7" fill="#f0fdf4" stroke="#16a34a"/><rect x="122" y="148" width="46" height="38" rx="7" fill="#f0fdf4" stroke="#16a34a"/>
-    <rect x="174" y="148" width="46" height="38" rx="7" fill="#f0fdf4" stroke="#16a34a"/><rect x="226" y="148" width="46" height="38" rx="7" fill="#eff6ff" stroke="#2563eb" stroke-width="1.7"/>
-    <rect x="278" y="148" width="46" height="38" rx="7" fill="#fef2f2" stroke="#dc2626"/><rect x="330" y="148" width="46" height="38" rx="7" fill="#fef2f2" stroke="#dc2626"/>
+    <rect x="70" y="148" width="46" height="38" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><rect x="122" y="148" width="46" height="38" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+    <rect x="174" y="148" width="46" height="38" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><rect x="226" y="148" width="46" height="38" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.7"/>
+    <rect x="278" y="148" width="46" height="38" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)"/><rect x="330" y="148" width="46" height="38" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)"/>
   </g>
-  <g font-size="17" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="17" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="93" y="173">1</text><text x="145" y="173">3</text><text x="197" y="173">2</text><text x="249" y="173">5</text><text x="301" y="173">9</text><text x="353" y="173">7</text>
   </g>
-  <text x="145" y="204" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">&lt; pivot</text>
-  <text x="249" y="204" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">final rank p = 3</text>
-  <text x="327" y="204" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">≥ pivot</text>
-  <rect x="432" y="48" width="248" height="78" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
-  <text x="556" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#0b1220">compare p with target rank k</text>
-  <text x="556" y="94" text-anchor="middle" font-size="12" fill="#334155">if p == k, done</text>
-  <text x="556" y="114" text-anchor="middle" font-size="12" fill="#334155">else recurse only into k's side</text>
+  <text x="145" y="204" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">&lt; pivot</text>
+  <text x="249" y="204" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">final rank p = 3</text>
+  <text x="327" y="204" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-danger)">≥ pivot</text>
+  <rect x="432" y="48" width="248" height="78" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="556" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">compare p with target rank k</text>
+  <text x="556" y="94" text-anchor="middle" font-size="12" fill="var(--dsa-neutral)">if p == k, done</text>
+  <text x="556" y="114" text-anchor="middle" font-size="12" fill="var(--dsa-neutral)">else recurse only into k's side</text>
 </svg>
 </div>
 

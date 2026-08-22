@@ -9,52 +9,52 @@ Let's make it concrete. Say we want the sum of every contiguous subarray of size
 ```svg
 <svg width="720" height="220" viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
-    <marker id="ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
-    <filter id="s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <marker id="ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+    <marker id="ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <filter id="s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="720" height="220" fill="#fbfcfe"/>
+  <rect x="0" y="0" width="720" height="220" fill="var(--dsa-bg)"/>
 
   <!-- window A outline (indices 0..4) -->
-  <rect x="6" y="70" width="278" height="52" rx="9" fill="none" stroke="#2563eb" stroke-width="2.5"/>
-  <text x="145" y="62" text-anchor="middle" font-size="12" fill="#2563eb" font-weight="700">window at 0..4  (sum = 11)</text>
+  <rect x="6" y="70" width="278" height="52" rx="9" fill="none" stroke="var(--dsa-primary)" stroke-width="2.5"/>
+  <text x="145" y="62" text-anchor="middle" font-size="12" fill="var(--dsa-primary)" font-weight="700">window at 0..4  (sum = 11)</text>
   <!-- window B outline (indices 1..5), dashed green -->
-  <rect x="62" y="78" width="278" height="52" rx="9" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="6 4"/>
-  <text x="360" y="150" text-anchor="middle" font-size="12" fill="#16a34a" font-weight="700">slides right → window at 1..5 (sum = 14)</text>
+  <rect x="62" y="78" width="278" height="52" rx="9" fill="none" stroke="var(--dsa-success)" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="360" y="150" text-anchor="middle" font-size="12" fill="var(--dsa-success)" font-weight="700">slides right → window at 1..5 (sum = 14)</text>
 
   <!-- cells -->
   <g filter="url(#s1)">
-    <rect x="10"  y="76" width="50" height="40" rx="7" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
-    <rect x="66"  y="76" width="50" height="40" rx="7" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
-    <rect x="122" y="76" width="50" height="40" rx="7" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
-    <rect x="178" y="76" width="50" height="40" rx="7" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
-    <rect x="234" y="76" width="50" height="40" rx="7" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
-    <rect x="290" y="76" width="50" height="40" rx="7" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
-    <rect x="346" y="76" width="50" height="40" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-    <rect x="402" y="76" width="50" height="40" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-    <rect x="458" y="76" width="50" height="40" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect x="10"  y="76" width="50" height="40" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.5"/>
+    <rect x="66"  y="76" width="50" height="40" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/>
+    <rect x="122" y="76" width="50" height="40" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/>
+    <rect x="178" y="76" width="50" height="40" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/>
+    <rect x="234" y="76" width="50" height="40" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/>
+    <rect x="290" y="76" width="50" height="40" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.5"/>
+    <rect x="346" y="76" width="50" height="40" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
+    <rect x="402" y="76" width="50" height="40" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
+    <rect x="458" y="76" width="50" height="40" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
   </g>
-  <g font-size="18" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="18" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="35"  y="102">1</text><text x="91"  y="102">3</text><text x="147" y="102">2</text>
     <text x="203" y="102">6</text><text x="259" y="102">-1</text><text x="315" y="102">4</text>
     <text x="371" y="102">1</text><text x="427" y="102">8</text><text x="483" y="102">2</text>
   </g>
-  <g font-size="11" fill="#94a3b8" text-anchor="middle">
+  <g font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">
     <text x="35" y="134">0</text><text x="91" y="134">1</text><text x="147" y="134">2</text>
     <text x="203" y="134">3</text><text x="259" y="134">4</text><text x="315" y="134">5</text>
     <text x="371" y="134">6</text><text x="427" y="134">7</text><text x="483" y="134">8</text>
   </g>
 
   <!-- leave / enter annotations -->
-  <line x1="35" y1="170" x2="35" y2="120" stroke="#dc2626" stroke-width="2" marker-end="url(#ar-red)"/>
-  <text x="35" y="188" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">− leaves</text>
-  <line x1="315" y1="170" x2="315" y2="120" stroke="#16a34a" stroke-width="2" marker-end="url(#ar-grn)"/>
-  <text x="315" y="188" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">+ enters</text>
+  <line x1="35" y1="170" x2="35" y2="120" stroke="var(--dsa-danger)" stroke-width="2" marker-end="url(#ar-red)"/>
+  <text x="35" y="188" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-danger)">− leaves</text>
+  <line x1="315" y1="170" x2="315" y2="120" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-grn)"/>
+  <text x="315" y="188" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">+ enters</text>
 
   <!-- formula -->
-  <rect x="524" y="74" width="188" height="60" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
-  <text x="618" y="98" text-anchor="middle" font-size="12" font-weight="700" fill="#0b1220">reuse, don't recompute</text>
-  <text x="618" y="118" text-anchor="middle" font-size="12" fill="#334155">newSum = 11 − 1 + 4 = 14</text>
+  <rect x="524" y="74" width="188" height="60" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="618" y="98" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">reuse, don't recompute</text>
+  <text x="618" y="118" text-anchor="middle" font-size="12" fill="var(--dsa-neutral)">newSum = 11 − 1 + 4 = 14</text>
 </svg>
 ```
 <div class="readfig"><b>How to read it:</b> The solid blue box is the first window (indices 0–4, sum 11). Sliding one step gives the dashed green window (indices 1–5). The red cell (value <b>1</b>) drops out on the left, the green cell (value <b>4</b>) joins on the right, so the new sum is <b>11 − 1 + 4 = 14</b> — computed in O(1) instead of re-adding five numbers. Doing this across the array is the whole O(n) sliding window.</div>

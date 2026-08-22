@@ -15,12 +15,12 @@ That is the mental upgrade from "recursion" to "divide and conquer." Recursion i
 ```svg
 <svg width="720" height="260" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="dc-ar-blue" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
-    <filter id="dc-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <marker id="dc-ar-blue" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <filter id="dc-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="720" height="260" fill="#fbfcfe"/>
-  <text x="360" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0b1220">merge sort recursion tree: split down, combine up</text>
-  <g stroke="#2563eb" stroke-width="1.6" marker-end="url(#dc-ar-blue)">
+  <rect x="0" y="0" width="720" height="260" fill="var(--dsa-bg)"/>
+  <text x="360" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-ink)">merge sort recursion tree: split down, combine up</text>
+  <g stroke="var(--dsa-primary)" stroke-width="1.6" marker-end="url(#dc-ar-blue)">
     <line x1="360" y1="52" x2="220" y2="82"/><line x1="360" y1="52" x2="500" y2="82"/>
     <line x1="220" y1="104" x2="130" y2="132"/><line x1="220" y1="104" x2="288" y2="132"/>
     <line x1="500" y1="104" x2="432" y2="132"/><line x1="500" y1="104" x2="590" y2="132"/>
@@ -30,30 +30,30 @@ That is the mental upgrade from "recursion" to "divide and conquer." Recursion i
     <line x1="590" y1="152" x2="590" y2="184"/><line x1="590" y1="152" x2="646" y2="184"/>
   </g>
   <g filter="url(#dc-s1)" text-anchor="middle" font-weight="700">
-    <rect x="244" y="32" width="232" height="30" rx="7" fill="#eff6ff" stroke="#93c5fd"/><text x="360" y="52" font-size="12" fill="#0b1220">[3,1,4,1,5,9,2,6]</text>
-    <rect x="152" y="82" width="136" height="28" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="220" y="101" font-size="12" fill="#0b1220">[3,1,4,1]</text>
-    <rect x="432" y="82" width="136" height="28" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="500" y="101" font-size="12" fill="#0b1220">[5,9,2,6]</text>
-    <rect x="96" y="132" width="68" height="26" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="130" y="150" font-size="11" fill="#0b1220">[3,1]</text>
-    <rect x="254" y="132" width="68" height="26" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="288" y="150" font-size="11" fill="#0b1220">[4,1]</text>
-    <rect x="398" y="132" width="68" height="26" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="432" y="150" font-size="11" fill="#0b1220">[5,9]</text>
-    <rect x="556" y="132" width="68" height="26" rx="7" fill="#f8fafc" stroke="#cbd5e1"/><text x="590" y="150" font-size="11" fill="#0b1220">[2,6]</text>
-    <rect x="55" y="184" width="38" height="26" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="74" y="202" font-size="11" fill="#0b1220">[3]</text>
-    <rect x="111" y="184" width="38" height="26" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="130" y="202" font-size="11" fill="#0b1220">[1]</text>
-    <rect x="231" y="184" width="38" height="26" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="250" y="202" font-size="11" fill="#0b1220">[4]</text>
-    <rect x="287" y="184" width="38" height="26" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="306" y="202" font-size="11" fill="#0b1220">[1]</text>
-    <rect x="395" y="184" width="38" height="26" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="414" y="202" font-size="11" fill="#0b1220">[5]</text>
-    <rect x="451" y="184" width="38" height="26" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="470" y="202" font-size="11" fill="#0b1220">[9]</text>
-    <rect x="571" y="184" width="38" height="26" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="590" y="202" font-size="11" fill="#0b1220">[2]</text>
-    <rect x="627" y="184" width="38" height="26" rx="7" fill="#f0fdf4" stroke="#16a34a"/><text x="646" y="202" font-size="11" fill="#0b1220">[6]</text>
+    <rect x="244" y="32" width="232" height="30" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/><text x="360" y="52" font-size="12" fill="var(--dsa-ink)">[3,1,4,1,5,9,2,6]</text>
+    <rect x="152" y="82" width="136" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="220" y="101" font-size="12" fill="var(--dsa-ink)">[3,1,4,1]</text>
+    <rect x="432" y="82" width="136" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="500" y="101" font-size="12" fill="var(--dsa-ink)">[5,9,2,6]</text>
+    <rect x="96" y="132" width="68" height="26" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="130" y="150" font-size="11" fill="var(--dsa-ink)">[3,1]</text>
+    <rect x="254" y="132" width="68" height="26" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="288" y="150" font-size="11" fill="var(--dsa-ink)">[4,1]</text>
+    <rect x="398" y="132" width="68" height="26" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="432" y="150" font-size="11" fill="var(--dsa-ink)">[5,9]</text>
+    <rect x="556" y="132" width="68" height="26" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="590" y="150" font-size="11" fill="var(--dsa-ink)">[2,6]</text>
+    <rect x="55" y="184" width="38" height="26" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="74" y="202" font-size="11" fill="var(--dsa-ink)">[3]</text>
+    <rect x="111" y="184" width="38" height="26" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="130" y="202" font-size="11" fill="var(--dsa-ink)">[1]</text>
+    <rect x="231" y="184" width="38" height="26" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="250" y="202" font-size="11" fill="var(--dsa-ink)">[4]</text>
+    <rect x="287" y="184" width="38" height="26" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="306" y="202" font-size="11" fill="var(--dsa-ink)">[1]</text>
+    <rect x="395" y="184" width="38" height="26" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="414" y="202" font-size="11" fill="var(--dsa-ink)">[5]</text>
+    <rect x="451" y="184" width="38" height="26" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="470" y="202" font-size="11" fill="var(--dsa-ink)">[9]</text>
+    <rect x="571" y="184" width="38" height="26" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="590" y="202" font-size="11" fill="var(--dsa-ink)">[2]</text>
+    <rect x="627" y="184" width="38" height="26" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="646" y="202" font-size="11" fill="var(--dsa-ink)">[6]</text>
   </g>
-  <g font-size="11" fill="#5b6472" font-weight="700">
+  <g font-size="11" fill="var(--dsa-neutral)" font-weight="700">
     <text x="586" y="51">combine level: O(n)</text>
     <text x="586" y="101">combine level: O(n)</text>
     <text x="586" y="150">combine level: O(n)</text>
-    <text x="54" y="232" fill="#2563eb">height = log n</text>
+    <text x="54" y="232" fill="var(--dsa-primary)">height = log n</text>
   </g>
-  <rect x="470" y="218" width="206" height="30" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
-  <text x="573" y="238" text-anchor="middle" font-size="12" font-weight="700" fill="#0b1220">O(n) × log n = O(n log n)</text>
+  <rect x="470" y="218" width="206" height="30" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="573" y="238" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">O(n) × log n = O(n log n)</text>
 </svg>
 ```
 <div class="readfig"><b>How to read it:</b> The input splits until every leaf is size 1. On the way back up, each merge level touches all <b>n</b> elements total, even though the work is spread across many small merges. There are <b>log n</b> levels, so merge-sort-shaped divide and conquer costs <b>O(n log n)</b> when combine is linear.</div>

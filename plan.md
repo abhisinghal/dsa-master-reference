@@ -1,114 +1,132 @@
 # DSA Master Reference — Live Plan
 
 Last updated: 2026-08-22 (session c960137b).
-Live at https://abhisinghal.github.io/dsa-master-reference/ · Repo `abhisinghal/dsa-master-reference` · Latest commit `73fa0ae`.
+Live at https://abhisinghal.github.io/dsa-master-reference/ · Repo `abhisinghal/dsa-master-reference` · Latest commit `80c2057`.
 
 ---
 
 ## Where we are — honest scorecard
 
-Tier-1 visuals sprint (originally 50–60 h) is **~85% shipped**:
+### Shipped this session ✅
 
-| Batch | Scope | Ship state |
+**Foundation (Tier-1 visuals sprint):**
+- Design token system (`--dsa-*`, light + dark) in `web/docs/.vitepress/theme/style.css`
+- `StepStrip.vue` + `TwoSumStepStrip.vue` (1 real usage on Two Sum)
+- 49 static SVGs across 26 files (all 30 canonical problems + concept diagrams)
+- 15 animation Vue components, 14 pattern chapters embed one
+- Icon system: `Icon.vue` with 15 lucide-style SVGs; emojis swapped in 5 Vue components + 23 markdown files
+
+**Grokking-style code-run-flow trace (new this turn):**
+- `CodeTrace.vue` — reusable component that renders a horizontal comic-strip of per-iteration SVG frames
+- 11 flagship problems have a visual trace (122 step-frames total)
+- Bonus fix: `migrate.py` `KNOWN_HTML` regex tightened to allow `>` in quoted Vue attribute values (prevents recurrence of the bare-`>` bug)
+
+**CEO-review Wave A/B (before this turn):**
+- CheerpJ browser Java runner (no rate limit)
+- Sidebar filter, URL slug normalization, 100% difficulty-badge coverage
+- Per-pattern quizzes (63 questions across 21 chapters)
+- How-this-compares + Changelog pages, author bio, video callout placeholders, PDF messaging
+
+**Critical infra fixes:**
+- `transform_svg_fences()` strips blank lines inside inline SVGs (fixes the 7-hour dp.md build hang)
+- `KNOWN_HTML` regex handles multi-line Vue tags with `>` in quoted attrs
+
+### Honest completion vs original 50-60h Tier-1 scope: **~90%**
+
+---
+
+## What's actually left
+
+### Currently pending in the todo list (5 items)
+
+| id | title | true state | est. effort |
+|---|---|---|---|
+| c2-rss-changelog | RSS feed on changelog | I wrote `gen-rss.mjs` but never wired it into `config.mts` or verified it produces `dist/rss.xml`. In-progress but stalled. | 30 min |
+| a1-token-audit | Design token audit | Not started. Need to grep for hardcoded `#hex` in older SVGs and replace with `var(--dsa-*)`. | 90 min |
+| a2-more-stepstrips | 4 more StepStrip wrappers | Not started. Need custom step content per problem (Sliding Window, House Robber, Subsets, Binary Search). | 2 h |
+| a3-embed-anims | Embed remaining anims | Not started. Reuse existing anims in prefix-sum, k-way-merge, greedy, trees, heaps, trie, segment-fenwick. | 1.5 h |
+| a4-landing-screenshots | Real landing screenshots | Not started. Requires a browser + puppeteer or manual screen-capture. | 30 min |
+| b2-system-design-intro | System design intro chapter | Not started. Biggest single content lift (25-35 pages: URL shortener, rate limiter, KV store). | 8-10 h |
+
+### Newly-visible gaps I owe you (not in the todo list yet)
+
+**CodeTrace coverage is 12%, not 100%.** I shipped 11 traces on flagship problems; there are 76 more `> [note] **Trace it**` callouts across the book that have text but no visual. Full audit:
+
+| Chapter | Text traces | Visual traces |
 |---|---|---|
-| 1. Design tokens | ~30 `--dsa-*` CSS custom properties, light + dark | ✅ 85% (spec-audit of hardcoded hex in older SVGs still open) |
-| 2. StepStrip layout | Component + real usage in chapters | ✅ 60% — component live, 1 real usage (Two Sum comic strip in hashing) |
-| 3. 30 problem SVGs | Static visual per canonical problem | ✅ 90% — 49 SVGs total across 26 files, covers 30 canonicals |
-| 4. Animation components | 8 animated Vue components | ✅ 85% — 15 components exist, 14 pattern chapters embed one |
-| 5. Icon system swap | Emojis → SVG icons across the app | ✅ 90% — Icon.vue with 15 lucide-style glyphs, 5 Vue components + 23 markdown files cleaned |
+| 21-sliding-window | 6 | 2 |
+| 22-two-pointers | 5 | 2 |
+| 23-fast-slow | 1 | 0 |
+| 24-prefix-sum | 3 | 1 |
+| 25-hashing | 4 | 1 |
+| 26-monotonic-stack | 2 | 1 |
+| 27-binary-search | 1 | 1 ✅ |
+| 28-bs-on-answer | 3 | 0 |
+| 29-top-k-heap | 1 | 0 |
+| 30-k-way-merge | 2 | 0 |
+| 31-merge-intervals | 1 | 0 |
+| 32-sweep-line | 2 | 0 |
+| 33-topological-sort | 1 | 0 |
+| 34-union-find | 2 | 0 |
+| 35-greedy | 4 | 0 |
+| 36-backtracking | 5 | 0 |
+| 37-divide-conquer | 1 | 0 |
+| 38-dp | 9 | 3 |
+| 39-trie-pattern | 2 | 0 |
+| 40-bit-manip | 3 | 0 |
+| 41-quickselect | 1 | 0 |
+| 42-math | 3 | 0 |
+| 44-design | 3 | 0 |
+| 50-arrays | 1 | 0 |
+| 52-strings | 2 | 0 |
+| 56-linked-lists | 2 | 0 |
+| 58-stacks-queues | 2 | 0 |
+| 60-trees | 6 | 0 |
+| 62-heaps | 1 | 0 |
+| 64-trie | 1 | 0 |
+| 66-graphs | 4 | 0 |
+| 68-segment-fenwick | 3 | 0 |
+| **Total** | **87** | **11 (12%)** |
 
-Ancillary CEO-review Wave A/B items (from earlier in this session):
-- ✅ CheerpJ browser Java runner (kills Judge0 rate-limit trust issue)
-- ✅ Sidebar filter (problems only, no section-heading noise)
-- ✅ URL slug normalization (no em-dashes)
-- ✅ 100% difficulty-badge coverage
-- ✅ Per-pattern quiz component (Quiz.vue, 63 questions across 21 chapters)
-- ✅ How-this-compares + Changelog pages
-- ✅ Author bio on landing
-- ✅ Video callout placeholders (5 patterns)
-- ✅ PDF messaging repositioned
+Each additional trace needs **~10-15 minutes of authoring** (extract from the existing text trace, structure as steps, verify), so full 100% coverage is **~15 hours** of focused work.
 
-Blocked (needs your action, not mine):
-- ⏸ Email capture / PDF gate — waiting on your Buttondown or ConvertKit signup + API key.
+### Blocked (needs your action, not mine) ⏸
 
-Critical fix landed this session:
-- `migrate.py` `transform_svg_fences()` now strips blank lines inside inline `\`\`\`svg` blocks (root cause of the 7-hour dp.md build hang). Prevents future recurrence for any author-supplied SVG.
-
----
-
-## The next plan — three tracks, you pick
-
-I've split remaining work into three tracks. Each is independently valuable; you can approve any subset.
-
-### Track A — Close the last 15% of Tier-1 (~4–6 h)
-
-Small, high-consistency work that finishes what we started, no new features:
-
-| # | Item | Effort | Delivers |
-|---|---|---|---|
-| A1 | Design-token audit of every existing SVG — replace any residual `#hex` with `var(--dsa-*)` | 90 min | Guaranteed dark-mode consistency; no more theme-mismatch cells |
-| A2 | 4 more StepStrip wrappers on flagship problems (SlidingWindowStepStrip, HouseRobberStepStrip, BacktrackingSubsetsStepStrip, BinarySearchStepStrip) | 2 h | Signature "Grokking comic-strip" moment on 5 chapters instead of 1 |
-| A3 | Embed remaining anims in 7 pattern chapters that would benefit (prefix-sum, k-way-merge, greedy, trees, heaps, trie, segment-fenwick) — reuse existing anim components with new step content, or defer if no fitting component exists | 1.5 h | Anim coverage 14 → 21 of 29 patterns |
-| A4 | Landing-page screenshots — take 3 real screenshots (JavaRunner mid-run, sliding-window animation, mobile view) and embed above features grid | 30 min | Landing feels like a product not a docs page |
-
-**Recommendation: yes, do A1 + A4 immediately. A2 + A3 if you want the "wow-per-chapter" density.**
-
-### Track B — Wave C from the CEO review (~15–25 h) — content, not visuals
-
-Content depth that separates a reference from a course:
-
-| # | Item | Effort | Delivers |
-|---|---|---|---|
-| B1 | Extend mock transcripts from 3 → 15 | 6–8 h | Interview-realism content moat |
-| B2 | System design intro chapter (25–35 pages: URL shortener, rate limiter, KV store fundamentals) | 8–10 h | Senior/staff interviews are 50% system design; you have 0 pages |
-| B3 | Company tracks (Meta / Google / Amazon annotated lists) | 3–4 h | Buyer motivation for many candidates |
-| B4 | Behavioural interview prep (STAR framework, 10 common prompts, sample answers) | 2 h | Rounds out the loop |
-| B5 | Anti-pattern generator ("here's how NOT to solve — find the bug") | 2 h per pattern | Unique interview-prep angle no one else does well |
-
-**Recommendation: B2 first (highest single-item lift for senior-target audience). Then B3 for buyer clarity. Defer B1/B4/B5 to a subsequent sprint.**
-
-### Track C — Distribution / audience (~4–8 h + ongoing user work)
-
-The ByteByteGo-CEO items — nothing about content, everything about who reads it:
-
-| # | Item | Effort | Delivers |
-|---|---|---|---|
-| C1 | Email capture on PDF download (BLOCKED — needs your Buttondown signup) | 1.5 h once you sign up | Newsletter list, retention channel |
-| C2 | RSS feed for the changelog page | 30 min | Return-visitor notification |
-| C3 | Shareable "money graphics" — square 1200×1200 export of top 5 pattern diagrams with title + logo watermark for LinkedIn/Twitter | 3 h | Social distribution flywheel |
-| C4 | 5–10 minute Loom video walkthrough for 1 flagship pattern (Sliding Window) — you record, I write the script and slides | 30 min script + 45 min your recording time | Video is table stakes for 2026 interview prep sites |
-| C5 | "Start here" 90-second landing intro video | 45 min | 3–5× conversion lift on cold traffic (documented industry benchmark) |
-
-**Recommendation: C2 today (30 min, no dependency). C1 as soon as you pick a provider. C3–C5 need your recording time.**
+| id | title | needs |
+|---|---|---|
+| add-email-capture-pdf-gate | Email capture on PDF download | You to sign up for Buttondown or ConvertKit and share the API endpoint/key |
 
 ---
 
-## What I recommend as your next single decision
+## What I recommend as the next single-session batch
 
-**Track A only** (~4–6 h agent time): pick the highest-density, no-dependency work. Finishes what we started. No design decisions required from you.
+**Priority 1 (do first, ~2 h):** Finish what I already started
+- `c2-rss-changelog` — wire up the generator (30 min)
+- `a1-token-audit` — sweep hardcoded hex (90 min)
 
-**Track A + B2** (~14 h agent time): also ships the system-design chapter, which is the single biggest content gap for a senior/staff audience.
+**Priority 2 (highest-impact user-visible work, ~15 h):** Full CodeTrace coverage
+- Author the remaining 76 CodeTrace embeds across all 32 chapters. This delivers the Grokking "every problem has a visual code-run-flow" promise everywhere, not just 12% of it.
+- Can be split across sessions.
 
-**Track A + Track B fully** (~30 h agent time): pushes the product into course-level completeness for the interview-prep niche.
+**Priority 3 (~11 h):** Round out Tier-1
+- `a3-embed-anims` (1.5 h)
+- `a2-more-stepstrips` (2 h)
+- `a4-landing-screenshots` (30 min, may need your screen-capture help)
+- `b2-system-design-intro` (8 h — biggest single content lift for senior/staff audience)
 
-**None of the above — different direction**: tell me what to prioritize and I re-plan.
+## Blockers still waiting on you
+
+1. **Newsletter provider** — Buttondown / ConvertKit / Substack. Pick one to unblock C1.
+2. **Screen recording** — for real landing screenshots (A4) and any pattern walkthrough Loom videos (deferred).
 
 ---
 
-## Blockers waiting on you
+## Bigger bets deferred (kept here so we don't lose them)
 
-1. **Newsletter provider choice** — Buttondown (dev-friendly, $9/mo after 100 subs, generous API), ConvertKit (marketer-friendly, free < 1K), Substack (built-in audience, less API flexibility). Pick one, share the API endpoint + key, and C1 unblocks in 1.5 h.
-2. **Video recording** — C4 and C5 need your voice + face. I write the script; you record. No AI can ship this for you.
-
----
-
-## Deferred bigger bets (not in this plan — mention them so we don't lose them)
-
-- AI companion chat (multi-day; needs API-key strategy)
-- Auth / accounts / cross-device progress sync (multi-day; needs backend)
-- Community / forum / comments (needs moderation strategy)
+- AI companion chat (multi-day; API-key strategy)
+- Auth / accounts / cross-device progress sync (multi-day; backend)
+- Community / forum / comments (moderation strategy)
 - Mock-interview AI voice mode (multi-week)
 - Job board integration
-- Mobile app (separate project)
+- Mobile app
 
-These matter — they're what separate a $19 reference from a $99 course from a $399 coaching product. But they're outside the "one sprint" horizon and shouldn't crowd out Track A/B/C decisions today.

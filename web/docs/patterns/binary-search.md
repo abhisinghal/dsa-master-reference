@@ -14,27 +14,27 @@ The whole idea is embarrassingly simple: if your data is **ordered**, you never 
 
 <div class="svg-figure">
 <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-  <rect x="0" y="0" width="720" height="176" fill="#fbfcfe"/>
-  <text x="20" y="26" font-size="13" font-weight="700" fill="#2563eb">search for a value — each guess throws away half</text>
+  <rect x="0" y="0" width="720" height="176" fill="var(--dsa-bg)"/>
+  <text x="20" y="26" font-size="13" font-weight="700" fill="var(--dsa-primary)">search for a value — each guess throws away half</text>
   <!-- step 1: whole range, mid in middle -->
-  <text x="20" y="58" font-size="11" fill="#64748b">step 1</text>
-  <rect x="70"  y="44" width="580" height="24" rx="5" fill="#eff6ff" stroke="#93c5fd"/>
-  <rect x="350" y="42" width="30" height="28" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="1.6"/>
-  <text x="365" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">mid</text>
-  <rect x="70" y="44" width="280" height="24" rx="5" fill="#fee2e2" fill-opacity="0.55" stroke="none"/>
-  <text x="210" y="61" text-anchor="middle" font-size="10" fill="#b91c1c">discard (target is bigger)</text>
+  <text x="20" y="58" font-size="11" fill="var(--dsa-neutral)">step 1</text>
+  <rect x="70"  y="44" width="580" height="24" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/>
+  <rect x="350" y="42" width="30" height="28" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <text x="365" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">mid</text>
+  <rect x="70" y="44" width="280" height="24" rx="5" fill="var(--dsa-danger-soft)" fill-opacity="0.55" stroke="none"/>
+  <text x="210" y="61" text-anchor="middle" font-size="10" fill="var(--dsa-danger)">discard (target is bigger)</text>
   <!-- step 2: right half, new mid -->
-  <text x="20" y="98" font-size="11" fill="#64748b">step 2</text>
-  <rect x="384" y="84" width="266" height="24" rx="5" fill="#eff6ff" stroke="#93c5fd"/>
-  <rect x="503" y="82" width="30" height="28" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="1.6"/>
-  <text x="518" y="101" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">mid</text>
-  <rect x="533" y="84" width="117" height="24" rx="5" fill="#fee2e2" fill-opacity="0.55" stroke="none"/>
-  <text x="591" y="101" text-anchor="middle" font-size="10" fill="#b91c1c">discard</text>
+  <text x="20" y="98" font-size="11" fill="var(--dsa-neutral)">step 2</text>
+  <rect x="384" y="84" width="266" height="24" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/>
+  <rect x="503" y="82" width="30" height="28" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <text x="518" y="101" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">mid</text>
+  <rect x="533" y="84" width="117" height="24" rx="5" fill="var(--dsa-danger-soft)" fill-opacity="0.55" stroke="none"/>
+  <text x="591" y="101" text-anchor="middle" font-size="10" fill="var(--dsa-danger)">discard</text>
   <!-- step 3: small range -->
-  <text x="20" y="138" font-size="11" fill="#64748b">step 3</text>
-  <rect x="384" y="124" width="119" height="24" rx="5" fill="#f0fdf4" stroke="#16a34a"/>
-  <text x="443" y="141" text-anchor="middle" font-size="10" fill="#16a34a">found — range is tiny</text>
-  <text x="20" y="170" font-size="11" fill="#5b6472" font-style="italic">3 steps have already shrunk the space to ~1/8 — that halving is why it's O(log n).</text>
+  <text x="20" y="138" font-size="11" fill="var(--dsa-neutral)">step 3</text>
+  <rect x="384" y="124" width="119" height="24" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+  <text x="443" y="141" text-anchor="middle" font-size="10" fill="var(--dsa-success)">found — range is tiny</text>
+  <text x="20" y="170" font-size="11" fill="var(--dsa-neutral)" font-style="italic">3 steps have already shrunk the space to ~1/8 — that halving is why it's O(log n).</text>
 </svg>
 </div>
 

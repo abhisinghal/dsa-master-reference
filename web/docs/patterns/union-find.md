@@ -21,39 +21,39 @@ Union-Find is not a *tree traversal* algorithm; it's a *set-membership* structur
 <div class="svg-figure">
 <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="uf-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
-    <marker id="uf-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
-    <filter id="uf-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <marker id="uf-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <marker id="uf-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <filter id="uf-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="720" height="240" fill="#fbfcfe"/>
-  <rect x="18" y="32" width="320" height="178" rx="9" fill="#f8fafc" stroke="#d9dee7"/>
-  <text x="178" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">before compression: a long parent chain</text>
-  <g stroke="#2563eb" stroke-width="2" marker-end="url(#uf-ar-blue)">
+  <rect x="0" y="0" width="720" height="240" fill="var(--dsa-bg)"/>
+  <rect x="18" y="32" width="320" height="178" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="178" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">before compression: a long parent chain</text>
+  <g stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#uf-ar-blue)">
     <line x1="78" y1="152" x2="122" y2="124"/><line x1="140" y1="116" x2="184" y2="94"/><line x1="203" y1="88" x2="246" y2="74"/><line x1="267" y1="72" x2="294" y2="72"/>
   </g>
   <g filter="url(#uf-s1)" text-anchor="middle" font-size="14" font-weight="700">
-    <circle cx="64" cy="160" r="21" fill="#fff" stroke="#93c5fd" stroke-width="1.5"/><text x="64" y="165" fill="#0b1220">a</text>
-    <circle cx="128" cy="120" r="21" fill="#fff" stroke="#93c5fd" stroke-width="1.5"/><text x="128" y="125" fill="#0b1220">b</text>
-    <circle cx="192" cy="90" r="21" fill="#fff" stroke="#93c5fd" stroke-width="1.5"/><text x="192" y="95" fill="#0b1220">c</text>
-    <circle cx="256" cy="72" r="21" fill="#fff" stroke="#93c5fd" stroke-width="1.5"/><text x="256" y="77" fill="#0b1220">d</text>
-    <rect x="292" y="51" width="36" height="42" rx="9" fill="#eff6ff" stroke="#2563eb" stroke-width="1.7"/><text x="310" y="77" fill="#0b1220">root</text>
+    <circle cx="64" cy="160" r="21" fill="var(--dsa-bg)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/><text x="64" y="165" fill="var(--dsa-ink)">a</text>
+    <circle cx="128" cy="120" r="21" fill="var(--dsa-bg)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/><text x="128" y="125" fill="var(--dsa-ink)">b</text>
+    <circle cx="192" cy="90" r="21" fill="var(--dsa-bg)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/><text x="192" y="95" fill="var(--dsa-ink)">c</text>
+    <circle cx="256" cy="72" r="21" fill="var(--dsa-bg)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/><text x="256" y="77" fill="var(--dsa-ink)">d</text>
+    <rect x="292" y="51" width="36" height="42" rx="9" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.7"/><text x="310" y="77" fill="var(--dsa-ink)">root</text>
   </g>
-  <text x="178" y="196" text-anchor="middle" font-size="11" fill="#5b6472">find(a) walks a → b → c → d → root</text>
-  <line x1="354" y1="118" x2="388" y2="118" stroke="#16a34a" stroke-width="2.4" marker-end="url(#uf-ar-grn)"/>
-  <text x="371" y="101" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">find(a)</text>
-  <rect x="404" y="32" width="298" height="178" rx="9" fill="#f8fafc" stroke="#d9dee7"/>
-  <text x="553" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">after compression: everyone points to root</text>
-  <g stroke="#16a34a" stroke-width="2" marker-end="url(#uf-ar-grn)">
+  <text x="178" y="196" text-anchor="middle" font-size="11" fill="var(--dsa-neutral)">find(a) walks a → b → c → d → root</text>
+  <line x1="354" y1="118" x2="388" y2="118" stroke="var(--dsa-success)" stroke-width="2.4" marker-end="url(#uf-ar-grn)"/>
+  <text x="371" y="101" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">find(a)</text>
+  <rect x="404" y="32" width="298" height="178" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="553" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">after compression: everyone points to root</text>
+  <g stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#uf-ar-grn)">
     <line x1="474" y1="156" x2="534" y2="86"/><line x1="520" y1="156" x2="546" y2="88"/><line x1="586" y1="156" x2="564" y2="88"/><line x1="632" y1="156" x2="574" y2="86"/>
   </g>
   <g filter="url(#uf-s1)" text-anchor="middle" font-size="14" font-weight="700">
-    <rect x="535" y="48" width="44" height="42" rx="9" fill="#eff6ff" stroke="#2563eb" stroke-width="1.7"/><text x="557" y="74" fill="#0b1220">root</text>
-    <circle cx="462" cy="170" r="20" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/><text x="462" y="175" fill="#0b1220">a</text>
-    <circle cx="514" cy="170" r="20" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/><text x="514" y="175" fill="#0b1220">b</text>
-    <circle cx="592" cy="170" r="20" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/><text x="592" y="175" fill="#0b1220">c</text>
-    <circle cx="644" cy="170" r="20" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/><text x="644" y="175" fill="#0b1220">d</text>
+    <rect x="535" y="48" width="44" height="42" rx="9" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.7"/><text x="557" y="74" fill="var(--dsa-ink)">root</text>
+    <circle cx="462" cy="170" r="20" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.5"/><text x="462" y="175" fill="var(--dsa-ink)">a</text>
+    <circle cx="514" cy="170" r="20" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.5"/><text x="514" y="175" fill="var(--dsa-ink)">b</text>
+    <circle cx="592" cy="170" r="20" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.5"/><text x="592" y="175" fill="var(--dsa-ink)">c</text>
+    <circle cx="644" cy="170" r="20" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.5"/><text x="644" y="175" fill="var(--dsa-ink)">d</text>
   </g>
-  <text x="553" y="196" text-anchor="middle" font-size="11" fill="#5b6472">future finds jump straight to the representative</text>
+  <text x="553" y="196" text-anchor="middle" font-size="11" fill="var(--dsa-neutral)">future finds jump straight to the representative</text>
 </svg>
 </div>
 

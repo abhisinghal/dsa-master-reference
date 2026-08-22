@@ -17,45 +17,45 @@ each pop's "next greater" is the current bar
 ```svg
 <svg width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="ms-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
-    <marker id="ms-ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
-    <marker id="ms-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/></marker>
-    <filter id="ms-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <marker id="ms-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <marker id="ms-ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+    <marker id="ms-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <filter id="ms-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="720" height="240" fill="#fbfcfe"/>
-  <rect x="16" y="32" width="318" height="166" rx="9" fill="#f8fafc" stroke="#d9dee7"/>
-  <text x="175" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#2563eb">before: decreasing stack of unresolved indices</text>
+  <rect x="0" y="0" width="720" height="240" fill="var(--dsa-bg)"/>
+  <rect x="16" y="32" width="318" height="166" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="175" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">before: decreasing stack of unresolved indices</text>
   <g filter="url(#ms-s1)">
-    <rect x="88" y="138" width="70" height="34" rx="7" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
-    <rect x="88" y="98" width="70" height="34" rx="7" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
-    <rect x="88" y="58" width="70" height="34" rx="7" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
-    <rect x="238" y="82" width="58" height="44" rx="7" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.7"/>
+    <rect x="88" y="138" width="70" height="34" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/>
+    <rect x="88" y="98" width="70" height="34" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.5"/>
+    <rect x="88" y="58" width="70" height="34" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.5"/>
+    <rect x="238" y="82" width="58" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.7"/>
   </g>
-  <g font-size="18" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="18" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="123" y="161">9</text><text x="123" y="121">7</text><text x="123" y="81">4</text><text x="267" y="109">8</text>
   </g>
-  <g font-size="11" fill="#5b6472" text-anchor="middle">
+  <g font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">
     <text x="123" y="186">bottom</text><text x="123" y="48">top</text><text x="267" y="140">new value</text>
   </g>
-  <line x1="236" y1="104" x2="166" y2="76" stroke="#16a34a" stroke-width="2" marker-end="url(#ms-ar-grn)"/>
-  <path d="M158,76 C196,42 250,44 287,71" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ms-ar-red)"/>
-  <path d="M158,116 C206,154 265,150 307,124" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ms-ar-red)"/>
-  <text x="232" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">4 and 7 pop: they found next greater = 8</text>
-  <line x1="348" y1="112" x2="390" y2="112" stroke="#2563eb" stroke-width="2.3" marker-end="url(#ms-ar-blue)"/>
-  <rect x="406" y="32" width="298" height="166" rx="9" fill="#f8fafc" stroke="#d9dee7"/>
-  <text x="555" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">after popping: push the new index</text>
+  <line x1="236" y1="104" x2="166" y2="76" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ms-ar-grn)"/>
+  <path d="M158,76 C196,42 250,44 287,71" fill="none" stroke="var(--dsa-danger)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ms-ar-red)"/>
+  <path d="M158,116 C206,154 265,150 307,124" fill="none" stroke="var(--dsa-danger)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ms-ar-red)"/>
+  <text x="232" y="34" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-danger)">4 and 7 pop: they found next greater = 8</text>
+  <line x1="348" y1="112" x2="390" y2="112" stroke="var(--dsa-primary)" stroke-width="2.3" marker-end="url(#ms-ar-blue)"/>
+  <rect x="406" y="32" width="298" height="166" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="555" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">after popping: push the new index</text>
   <g filter="url(#ms-s1)">
-    <rect x="452" y="138" width="70" height="34" rx="7" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
-    <rect x="452" y="98" width="70" height="34" rx="7" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.7"/>
-    <rect x="560" y="92" width="126" height="64" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
+    <rect x="452" y="138" width="70" height="34" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.5"/>
+    <rect x="452" y="98" width="70" height="34" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.7"/>
+    <rect x="560" y="92" width="126" height="64" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
   </g>
-  <g font-size="18" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="18" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="487" y="161">9</text><text x="487" y="121">8</text>
   </g>
-  <text x="487" y="84" text-anchor="middle" font-size="11" fill="#5b6472">new top</text>
-  <text x="623" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#0b1220">pop while top &lt; new</text>
-  <text x="623" y="136" text-anchor="middle" font-size="12" fill="#334155">answer[j] = i − j</text>
-  <text x="360" y="220" text-anchor="middle" font-size="12" font-weight="700" fill="#5b6472">each index is pushed once, popped once → O(n)</text>
+  <text x="487" y="84" text-anchor="middle" font-size="11" fill="var(--dsa-neutral)">new top</text>
+  <text x="623" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">pop while top &lt; new</text>
+  <text x="623" y="136" text-anchor="middle" font-size="12" fill="var(--dsa-neutral)">answer[j] = i − j</text>
+  <text x="360" y="220" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-neutral)">each index is pushed once, popped once → O(n)</text>
 </svg>
 ```
 <div class="readfig"><b>How to read it:</b> The stack is kept decreasing from bottom to top. When the new value <b>8</b> arrives, every smaller top value (<b>4</b>, then <b>7</b>) is popped and resolved: <code>answer[j] = i − j</code>. The first larger value (<b>9</b>) stops the popping, then <b>8</b> becomes the new top.</div>

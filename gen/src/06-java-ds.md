@@ -26,31 +26,31 @@ A one-line map from "what I need" to "what I use":
 ```svg
 <svg width="680" height="172" viewBox="0 0 680 172" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <filter id="ar-s" x="-8%" y="-8%" width="116%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <filter id="ar-s" x="-8%" y="-8%" width="116%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="680" height="172" fill="#fbfcfe"/>
-  <text x="22" y="30" font-size="13" font-weight="700" fill="#2563eb">int[] a — one contiguous block of memory; any a[i] is instant</text>
+  <rect x="0" y="0" width="680" height="172" fill="var(--dsa-bg)"/>
+  <text x="22" y="30" font-size="13" font-weight="700" fill="var(--dsa-primary)">int[] a — one contiguous block of memory; any a[i] is instant</text>
   <g filter="url(#ar-s)">
-    <rect x="40"  y="52" width="70" height="50" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-    <rect x="110" y="52" width="70" height="50" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-    <rect x="180" y="52" width="70" height="50" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-    <rect x="250" y="52" width="70" height="50" rx="7" fill="#eef5ff" stroke="#2563eb" stroke-width="2"/>
-    <rect x="320" y="52" width="70" height="50" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect x="40"  y="52" width="70" height="50" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
+    <rect x="110" y="52" width="70" height="50" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
+    <rect x="180" y="52" width="70" height="50" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
+    <rect x="250" y="52" width="70" height="50" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2"/>
+    <rect x="320" y="52" width="70" height="50" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
   </g>
-  <g font-size="19" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="19" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="75" y="84">11</text><text x="145" y="84">4</text><text x="215" y="84">9</text>
     <text x="285" y="84">2</text><text x="355" y="84">7</text>
   </g>
-  <g font-size="11" fill="#94a3b8" text-anchor="middle">
+  <g font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">
     <text x="75" y="120">0</text><text x="145" y="120">1</text><text x="215" y="120">2</text>
     <text x="285" y="120">3</text><text x="355" y="120">4</text>
   </g>
-  <text x="215" y="146" text-anchor="middle" font-size="11" fill="#64748b">index</text>
-  <line x1="40" y1="134" x2="390" y2="134" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
-  <text x="215" y="164" text-anchor="middle" font-size="10.5" fill="#64748b">← contiguous: neighbours are adjacent in RAM → cache-friendly, but size is fixed ─→</text>
-  <rect x="430" y="52" width="230" height="50" rx="8" fill="#eef5ff" stroke="#c7dbff"/>
-  <text x="446" y="74" font-size="12.5" font-weight="700" fill="#0b1220">a[3] = base + 3 × 4 bytes</text>
-  <text x="446" y="93" font-size="12" fill="#2563eb">one multiply-add → O(1), no scan</text>
+  <text x="215" y="146" text-anchor="middle" font-size="11" fill="var(--dsa-neutral)">index</text>
+  <line x1="40" y1="134" x2="390" y2="134" stroke="var(--dsa-neutral)" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="215" y="164" text-anchor="middle" font-size="10.5" fill="var(--dsa-neutral)">← contiguous: neighbours are adjacent in RAM → cache-friendly, but size is fixed ─→</text>
+  <rect x="430" y="52" width="230" height="50" rx="8" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-soft)"/>
+  <text x="446" y="74" font-size="12.5" font-weight="700" fill="var(--dsa-ink)">a[3] = base + 3 × 4 bytes</text>
+  <text x="446" y="93" font-size="12" fill="var(--dsa-primary)">one multiply-add → O(1), no scan</text>
 </svg>
 ```
 
@@ -92,39 +92,39 @@ for (int v : b) { /* visit v */ }
 
 ```svg
 <svg width="680" height="212" viewBox="0 0 680 212" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-  <defs><marker id="al-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker></defs>
-  <rect x="0" y="0" width="680" height="212" fill="#fbfcfe"/>
-  <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">ArrayList doubles its backing array when full → appends are O(1) amortized</text>
+  <defs><marker id="al-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker></defs>
+  <rect x="0" y="0" width="680" height="212" fill="var(--dsa-bg)"/>
+  <text x="22" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">ArrayList doubles its backing array when full → appends are O(1) amortized</text>
 
-  <text x="22" y="58" font-size="11.5" font-weight="700" fill="#334155">size=4, cap=4 (full)</text>
+  <text x="22" y="58" font-size="11.5" font-weight="700" fill="var(--dsa-neutral)">size=4, cap=4 (full)</text>
   <g>
-    <rect x="22"  y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
-    <rect x="62"  y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
-    <rect x="102" y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
-    <rect x="142" y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
+    <rect x="22"  y="66" width="40" height="38" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="62"  y="66" width="40" height="38" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="102" y="66" width="40" height="38" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="142" y="66" width="40" height="38" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
   </g>
-  <g font-size="15" font-weight="700" fill="#0b1220" text-anchor="middle"><text x="42" y="91">a</text><text x="82" y="91">b</text><text x="122" y="91">c</text><text x="162" y="91">d</text></g>
+  <g font-size="15" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle"><text x="42" y="91">a</text><text x="82" y="91">b</text><text x="122" y="91">c</text><text x="162" y="91">d</text></g>
 
-  <line x1="196" y1="85" x2="248" y2="85" stroke="#2563eb" stroke-width="2" marker-end="url(#al-a)"/>
-  <text x="222" y="76" font-size="10.5" fill="#dc2626" text-anchor="middle">add e → full!</text>
-  <text x="222" y="100" font-size="10" fill="#64748b" text-anchor="middle">alloc cap 8, copy 4</text>
+  <line x1="196" y1="85" x2="248" y2="85" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#al-a)"/>
+  <text x="222" y="76" font-size="10.5" fill="var(--dsa-danger)" text-anchor="middle">add e → full!</text>
+  <text x="222" y="100" font-size="10" fill="var(--dsa-neutral)" text-anchor="middle">alloc cap 8, copy 4</text>
 
-  <text x="262" y="58" font-size="11.5" font-weight="700" fill="#334155">cap=8 — next 3 adds are instant</text>
+  <text x="262" y="58" font-size="11.5" font-weight="700" fill="var(--dsa-neutral)">cap=8 — next 3 adds are instant</text>
   <g>
-    <rect x="262" y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
-    <rect x="302" y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
-    <rect x="342" y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
-    <rect x="382" y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
-    <rect x="422" y="66" width="40" height="38" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8"/>
-    <rect x="462" y="66" width="40" height="38" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="3 3"/>
-    <rect x="502" y="66" width="40" height="38" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="3 3"/>
-    <rect x="542" y="66" width="40" height="38" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="3 3"/>
+    <rect x="262" y="66" width="40" height="38" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="302" y="66" width="40" height="38" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="342" y="66" width="40" height="38" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="382" y="66" width="40" height="38" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="422" y="66" width="40" height="38" rx="6" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.8"/>
+    <rect x="462" y="66" width="40" height="38" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-dasharray="3 3"/>
+    <rect x="502" y="66" width="40" height="38" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-dasharray="3 3"/>
+    <rect x="542" y="66" width="40" height="38" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-dasharray="3 3"/>
   </g>
-  <g font-size="15" font-weight="700" fill="#0b1220" text-anchor="middle"><text x="282" y="91">a</text><text x="322" y="91">b</text><text x="362" y="91">c</text><text x="402" y="91">d</text><text x="442" y="91" fill="#16a34a">e</text></g>
+  <g font-size="15" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle"><text x="282" y="91">a</text><text x="322" y="91">b</text><text x="362" y="91">c</text><text x="402" y="91">d</text><text x="442" y="91" fill="var(--dsa-success)">e</text></g>
 
-  <rect x="22" y="132" width="620" height="60" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
-  <text x="40" y="156" font-size="12" fill="#0b1220">Because capacity <tspan font-weight="700">doubles</tspan> (1, 2, 4, 8, …), resizes get exponentially rarer.</text>
-  <text x="40" y="178" font-size="12" fill="#2563eb">Total copy work over n appends &lt; 2n → each add averages O(1) <tspan fill="#64748b">(that's "amortized")</tspan>.</text>
+  <rect x="22" y="132" width="620" height="60" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="40" y="156" font-size="12" fill="var(--dsa-ink)">Because capacity <tspan font-weight="700">doubles</tspan> (1, 2, 4, 8, …), resizes get exponentially rarer.</text>
+  <text x="40" y="178" font-size="12" fill="var(--dsa-primary)">Total copy work over n appends &lt; 2n → each add averages O(1) <tspan fill="var(--dsa-neutral)">(that's "amortized")</tspan>.</text>
 </svg>
 ```
 
@@ -182,44 +182,44 @@ while (back.hasPrevious()) { int x = back.previous(); }    // walk BACKWARD
 ```svg
 <svg width="680" height="232" viewBox="0 0 680 232" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="dq-b" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
-    <marker id="dq-r" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="dq-b" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <marker id="dq-r" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
   </defs>
-  <rect x="0" y="0" width="680" height="232" fill="#fbfcfe"/>
-  <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">ArrayDeque = a ring buffer — head/tail indices wrap around (mod 8)</text>
+  <rect x="0" y="0" width="680" height="232" fill="var(--dsa-bg)"/>
+  <text x="22" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">ArrayDeque = a ring buffer — head/tail indices wrap around (mod 8)</text>
 
   <!-- ring of 8 slots, center (150,124) r=66 -->
   <g stroke-width="1.6">
-    <circle cx="150" cy="58"  r="21" fill="#eef5ff" stroke="#2563eb"/>
-    <circle cx="197" cy="77"  r="21" fill="#eef5ff" stroke="#2563eb"/>
-    <circle cx="216" cy="124" r="21" fill="#f1f5f9" stroke="#cbd5e1"/>
-    <circle cx="197" cy="171" r="21" fill="#f1f5f9" stroke="#cbd5e1"/>
-    <circle cx="150" cy="190" r="21" fill="#f1f5f9" stroke="#cbd5e1"/>
-    <circle cx="103" cy="171" r="21" fill="#f1f5f9" stroke="#cbd5e1"/>
-    <circle cx="84"  cy="124" r="21" fill="#eef5ff" stroke="#2563eb"/>
-    <circle cx="103" cy="77"  r="21" fill="#eef5ff" stroke="#2563eb"/>
+    <circle cx="150" cy="58"  r="21" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <circle cx="197" cy="77"  r="21" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <circle cx="216" cy="124" r="21" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <circle cx="197" cy="171" r="21" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <circle cx="150" cy="190" r="21" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <circle cx="103" cy="171" r="21" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <circle cx="84"  cy="124" r="21" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <circle cx="103" cy="77"  r="21" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
   </g>
-  <g font-size="16" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="16" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="150" y="64">c</text><text x="197" y="83">d</text>
     <text x="84"  y="130">a</text><text x="103" y="83">b</text>
   </g>
-  <g font-size="10" fill="#94a3b8" text-anchor="middle">
+  <g font-size="10" fill="var(--dsa-neutral)" text-anchor="middle">
     <text x="150" y="34">0</text><text x="221" y="53">1</text><text x="245" y="128">2</text>
     <text x="221" y="196">3</text><text x="150" y="219">4</text><text x="79" y="196">5</text>
     <text x="52" y="128">6</text><text x="79" y="53">7</text>
   </g>
   <!-- head + tail pointers -->
-  <text x="34" y="118" font-size="12" font-weight="700" fill="#2563eb" text-anchor="end">head</text>
-  <line x1="36" y1="122" x2="61" y2="124" stroke="#2563eb" stroke-width="2" marker-end="url(#dq-b)"/>
-  <text x="266" y="120" font-size="12" font-weight="700" fill="#dc2626">tail</text>
-  <line x1="264" y1="124" x2="239" y2="124" stroke="#dc2626" stroke-width="2" marker-end="url(#dq-r)"/>
+  <text x="34" y="118" font-size="12" font-weight="700" fill="var(--dsa-primary)" text-anchor="end">head</text>
+  <line x1="36" y1="122" x2="61" y2="124" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#dq-b)"/>
+  <text x="266" y="120" font-size="12" font-weight="700" fill="var(--dsa-danger)">tail</text>
+  <line x1="264" y1="124" x2="239" y2="124" stroke="var(--dsa-danger)" stroke-width="2" marker-end="url(#dq-r)"/>
 
-  <rect x="330" y="52" width="330" height="140" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
-  <text x="348" y="78" font-size="12.5" font-weight="700" fill="#0b1220">Logical order: a → b → c → d</text>
-  <text x="348" y="102" font-size="12" fill="#16a34a">poll() / pop() — remove from <tspan font-weight="700">head</tspan></text>
-  <text x="348" y="124" font-size="12" fill="#dc2626">offer() / offerLast() — add at <tspan font-weight="700">tail</tspan></text>
-  <text x="348" y="146" font-size="12" fill="#334155">push() / offerFirst() — add at head (stack top)</text>
-  <text x="348" y="172" font-size="11.5" fill="#2563eb">every end operation just moves a pointer → O(1)</text>
+  <rect x="330" y="52" width="330" height="140" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="348" y="78" font-size="12.5" font-weight="700" fill="var(--dsa-ink)">Logical order: a → b → c → d</text>
+  <text x="348" y="102" font-size="12" fill="var(--dsa-success)">poll() / pop() — remove from <tspan font-weight="700">head</tspan></text>
+  <text x="348" y="124" font-size="12" fill="var(--dsa-danger)">offer() / offerLast() — add at <tspan font-weight="700">tail</tspan></text>
+  <text x="348" y="146" font-size="12" fill="var(--dsa-neutral)">push() / offerFirst() — add at head (stack top)</text>
+  <text x="348" y="172" font-size="11.5" fill="var(--dsa-primary)">every end operation just moves a pointer → O(1)</text>
 </svg>
 ```
 
@@ -295,31 +295,31 @@ while (!dq.isEmpty()) { int x = dq.poll(); }        // DRAINS it (destructive)
 ```svg
 <svg width="680" height="176" viewBox="0 0 680 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="ll-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
-    <filter id="ll-s" x="-8%" y="-8%" width="116%" height="150%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
+    <marker id="ll-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <filter id="ll-s" x="-8%" y="-8%" width="116%" height="150%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
-  <rect x="0" y="0" width="680" height="176" fill="#fbfcfe"/>
-  <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">Linked list — each node stores a value + a link to the next</text>
-  <text x="40" y="58" font-size="12" font-weight="700" fill="#16a34a">head</text>
-  <line x1="52" y1="64" x2="52" y2="86" stroke="#16a34a" stroke-width="2" marker-end="url(#ll-a)"/>
+  <rect x="0" y="0" width="680" height="176" fill="var(--dsa-bg)"/>
+  <text x="22" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">Linked list — each node stores a value + a link to the next</text>
+  <text x="40" y="58" font-size="12" font-weight="700" fill="var(--dsa-success)">head</text>
+  <line x1="52" y1="64" x2="52" y2="86" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ll-a)"/>
   <g filter="url(#ll-s)">
-    <g><rect x="40"  y="90" width="46" height="42" rx="7" fill="#eef5ff" stroke="#2563eb" stroke-width="1.6"/><rect x="86"  y="90" width="26" height="42" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.4"/></g>
-    <g><rect x="182" y="90" width="46" height="42" rx="7" fill="#eef5ff" stroke="#2563eb" stroke-width="1.6"/><rect x="228" y="90" width="26" height="42" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.4"/></g>
-    <g><rect x="324" y="90" width="46" height="42" rx="7" fill="#eef5ff" stroke="#2563eb" stroke-width="1.6"/><rect x="370" y="90" width="26" height="42" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.4"/></g>
-    <g><rect x="466" y="90" width="46" height="42" rx="7" fill="#eef5ff" stroke="#2563eb" stroke-width="1.6"/><rect x="512" y="90" width="26" height="42" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.4"/></g>
+    <g><rect x="40"  y="90" width="46" height="42" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><rect x="86"  y="90" width="26" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.4"/></g>
+    <g><rect x="182" y="90" width="46" height="42" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><rect x="228" y="90" width="26" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.4"/></g>
+    <g><rect x="324" y="90" width="46" height="42" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><rect x="370" y="90" width="26" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.4"/></g>
+    <g><rect x="466" y="90" width="46" height="42" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><rect x="512" y="90" width="26" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.4"/></g>
   </g>
-  <g font-size="18" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="18" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="63" y="118">11</text><text x="205" y="118">4</text><text x="347" y="118">9</text><text x="489" y="118">2</text>
   </g>
-  <g stroke="#2563eb" stroke-width="2">
+  <g stroke="var(--dsa-primary)" stroke-width="2">
     <line x1="99" y1="111" x2="176" y2="111" marker-end="url(#ll-a)"/>
     <line x1="241" y1="111" x2="318" y2="111" marker-end="url(#ll-a)"/>
     <line x1="383" y1="111" x2="460" y2="111" marker-end="url(#ll-a)"/>
   </g>
-  <text x="525" y="116" font-size="15" fill="#dc2626">⏚</text>
-  <text x="551" y="116" font-size="11" fill="#dc2626">null</text>
-  <text x="40"  y="158" font-size="11" fill="#64748b">reach index i → walk i links (O(n))</text>
-  <text x="360" y="158" font-size="11" fill="#16a34a">but given a node, splice = relink neighbours (O(1))</text>
+  <text x="525" y="116" font-size="15" fill="var(--dsa-danger)">⏚</text>
+  <text x="551" y="116" font-size="11" fill="var(--dsa-danger)">null</text>
+  <text x="40"  y="158" font-size="11" fill="var(--dsa-neutral)">reach index i → walk i links (O(n))</text>
+  <text x="360" y="158" font-size="11" fill="var(--dsa-success)">but given a node, splice = relink neighbours (O(1))</text>
 </svg>
 ```
 
@@ -360,34 +360,34 @@ head.next = new ListNode(2);          // builds 1 -> 2
 
 ```svg
 <svg width="680" height="212" viewBox="0 0 680 212" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-  <defs><marker id="hm-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker></defs>
-  <rect x="0" y="0" width="680" height="212" fill="#fbfcfe"/>
-  <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">HashMap — hash(key) picks a bucket; keys that collide chain together</text>
+  <defs><marker id="hm-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker></defs>
+  <rect x="0" y="0" width="680" height="212" fill="var(--dsa-bg)"/>
+  <text x="22" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">HashMap — hash(key) picks a bucket; keys that collide chain together</text>
 
-  <rect x="26" y="86" width="94" height="40" rx="8" fill="#eef5ff" stroke="#2563eb" stroke-width="1.6"/>
-  <text x="73" y="111" font-size="14" font-weight="700" fill="#0b1220" text-anchor="middle">key "cat"</text>
-  <line x1="122" y1="106" x2="184" y2="106" stroke="#2563eb" stroke-width="2" marker-end="url(#hm-a)"/>
-  <text x="153" y="98" font-size="10" fill="#64748b" text-anchor="middle">hash % cap</text>
+  <rect x="26" y="86" width="94" height="40" rx="8" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <text x="73" y="111" font-size="14" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">key "cat"</text>
+  <line x1="122" y1="106" x2="184" y2="106" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#hm-a)"/>
+  <text x="153" y="98" font-size="10" fill="var(--dsa-neutral)" text-anchor="middle">hash % cap</text>
 
   <!-- buckets -->
-  <g font-size="12.5" fill="#475569">
-    <rect x="190" y="56" width="150" height="30" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/><text x="204" y="76">0:  —</text>
-    <rect x="190" y="90" width="150" height="30" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/><text x="204" y="110">1:  (dog, 3)</text>
-    <rect x="190" y="124" width="150" height="30" rx="5" fill="#fef9ec" stroke="#e0a52b" stroke-width="1.6"/><text x="204" y="144" fill="#0b1220" font-weight="700">2:  ●</text>
-    <rect x="190" y="158" width="150" height="30" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/><text x="204" y="178">3:  —</text>
+  <g font-size="12.5" fill="var(--dsa-neutral)">
+    <rect x="190" y="56" width="150" height="30" rx="5" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="204" y="76">0:  —</text>
+    <rect x="190" y="90" width="150" height="30" rx="5" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="204" y="110">1:  (dog, 3)</text>
+    <rect x="190" y="124" width="150" height="30" rx="5" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="204" y="144" fill="var(--dsa-ink)" font-weight="700">2:  ●</text>
+    <rect x="190" y="158" width="150" height="30" rx="5" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="204" y="178">3:  —</text>
   </g>
-  <text x="240" y="48" font-size="10.5" fill="#64748b">buckets</text>
+  <text x="240" y="48" font-size="10.5" fill="var(--dsa-neutral)">buckets</text>
 
   <!-- chain in bucket 2 -->
-  <rect x="378" y="122" width="110" height="34" rx="7" fill="#fff" stroke="#e0a52b" stroke-width="1.6"/>
-  <text x="433" y="144" font-size="12.5" font-weight="700" fill="#0b1220" text-anchor="middle">(cat, 7)</text>
-  <rect x="520" y="122" width="110" height="34" rx="7" fill="#fff" stroke="#e0a52b" stroke-width="1.6"/>
-  <text x="575" y="144" font-size="12.5" font-weight="700" fill="#0b1220" text-anchor="middle">(car, 9)</text>
-  <line x1="340" y1="139" x2="374" y2="139" stroke="#e0a52b" stroke-width="2" marker-end="url(#hm-a)"/>
-  <line x1="488" y1="139" x2="516" y2="139" stroke="#e0a52b" stroke-width="2" marker-end="url(#hm-a)"/>
+  <rect x="378" y="122" width="110" height="34" rx="7" fill="var(--dsa-bg)" stroke="var(--dsa-warning)" stroke-width="1.6"/>
+  <text x="433" y="144" font-size="12.5" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">(cat, 7)</text>
+  <rect x="520" y="122" width="110" height="34" rx="7" fill="var(--dsa-bg)" stroke="var(--dsa-warning)" stroke-width="1.6"/>
+  <text x="575" y="144" font-size="12.5" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">(car, 9)</text>
+  <line x1="340" y1="139" x2="374" y2="139" stroke="var(--dsa-warning)" stroke-width="2" marker-end="url(#hm-a)"/>
+  <line x1="488" y1="139" x2="516" y2="139" stroke="var(--dsa-warning)" stroke-width="2" marker-end="url(#hm-a)"/>
   <text x="504" y="112" font-size="10.5" fill="#d97706" text-anchor="middle">collision → chain</text>
 
-  <text x="26" y="204" font-size="11" fill="#64748b">Even spread → O(1). Adversarial pile-up → O(n), which Java caps by <tspan fill="#2563eb" font-weight="700">treeifying</tspan> a long chain to O(log n).</text>
+  <text x="26" y="204" font-size="11" fill="var(--dsa-neutral)">Even spread → O(1). Adversarial pile-up → O(n), which Java caps by <tspan fill="var(--dsa-primary)" font-weight="700">treeifying</tspan> a long chain to O(log n).</text>
 </svg>
 ```
 
@@ -458,41 +458,41 @@ for (int x : set) { /* HashSet — any order */ }
 ```svg
 <svg width="680" height="196" viewBox="0 0 680 196" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="lh-a" markerWidth="8" markerHeight="8" refX="4.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7c3aed"/></marker>
+    <marker id="lh-a" markerWidth="8" markerHeight="8" refX="4.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-info)"/></marker>
   </defs>
-  <rect x="0" y="0" width="680" height="196" fill="#fbfcfe"/>
-  <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">LinkedHashMap = HashMap buckets + a doubly-linked order chain</text>
+  <rect x="0" y="0" width="680" height="196" fill="var(--dsa-bg)"/>
+  <text x="22" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">LinkedHashMap = HashMap buckets + a doubly-linked order chain</text>
 
-  <text x="40" y="60" font-size="11.5" font-weight="700" fill="#334155">buckets — O(1) lookup</text>
+  <text x="40" y="60" font-size="11.5" font-weight="700" fill="var(--dsa-neutral)">buckets — O(1) lookup</text>
   <g>
-    <rect x="40" y="72" width="150" height="26" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
-    <rect x="40" y="102" width="150" height="26" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
-    <rect x="40" y="132" width="150" height="26" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <rect x="40" y="72" width="150" height="26" rx="5" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <rect x="40" y="102" width="150" height="26" rx="5" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <rect x="40" y="132" width="150" height="26" rx="5" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
   </g>
-  <g font-size="12" fill="#475569">
+  <g font-size="12" fill="var(--dsa-neutral)">
     <text x="52" y="90">0: (a) </text><text x="52" y="120">1: (c)</text><text x="52" y="150">2: (b)</text>
   </g>
 
-  <text x="250" y="60" font-size="11.5" font-weight="700" fill="#334155">order chain — predictable iteration / recency</text>
+  <text x="250" y="60" font-size="11.5" font-weight="700" fill="var(--dsa-neutral)">order chain — predictable iteration / recency</text>
   <g font-weight="700">
-    <rect x="300" y="96" width="42" height="38" rx="8" fill="#f3f0fc" stroke="#7c3aed" stroke-width="1.6"/>
-    <rect x="392" y="96" width="42" height="38" rx="8" fill="#f3f0fc" stroke="#7c3aed" stroke-width="1.6"/>
-    <rect x="484" y="96" width="42" height="38" rx="8" fill="#f3f0fc" stroke="#7c3aed" stroke-width="1.6"/>
+    <rect x="300" y="96" width="42" height="38" rx="8" fill="var(--dsa-info-soft)" stroke="var(--dsa-info)" stroke-width="1.6"/>
+    <rect x="392" y="96" width="42" height="38" rx="8" fill="var(--dsa-info-soft)" stroke="var(--dsa-info)" stroke-width="1.6"/>
+    <rect x="484" y="96" width="42" height="38" rx="8" fill="var(--dsa-info-soft)" stroke="var(--dsa-info)" stroke-width="1.6"/>
   </g>
-  <g font-size="16" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="16" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="321" y="121">a</text><text x="413" y="121">b</text><text x="505" y="121">c</text>
   </g>
-  <g stroke="#7c3aed" stroke-width="1.8">
+  <g stroke="var(--dsa-info)" stroke-width="1.8">
     <line x1="344" y1="108" x2="388" y2="108" marker-end="url(#lh-a)"/>
     <line x1="390" y1="122" x2="346" y2="122" marker-end="url(#lh-a)"/>
     <line x1="436" y1="108" x2="480" y2="108" marker-end="url(#lh-a)"/>
     <line x1="482" y1="122" x2="438" y2="122" marker-end="url(#lh-a)"/>
   </g>
-  <text x="255" y="121" font-size="11" font-weight="700" fill="#7c3aed">head</text>
-  <text x="536" y="121" font-size="11" font-weight="700" fill="#7c3aed">tail</text>
-  <text x="300" y="156" font-size="10.5" fill="#dc2626">least-recently-used (evict here)</text>
-  <text x="470" y="156" font-size="10.5" fill="#16a34a">most-recently-used</text>
-  <text x="40" y="184" font-size="11" fill="#64748b">Access-order mode moves a touched key to the tail on every get/put → an LRU cache for free.</text>
+  <text x="255" y="121" font-size="11" font-weight="700" fill="var(--dsa-info)">head</text>
+  <text x="536" y="121" font-size="11" font-weight="700" fill="var(--dsa-info)">tail</text>
+  <text x="300" y="156" font-size="10.5" fill="var(--dsa-danger)">least-recently-used (evict here)</text>
+  <text x="470" y="156" font-size="10.5" fill="var(--dsa-success)">most-recently-used</text>
+  <text x="40" y="184" font-size="11" fill="var(--dsa-neutral)">Access-order mode moves a touched key to the tail on every get/put → an LRU cache for free.</text>
 </svg>
 ```
 
@@ -527,36 +527,36 @@ for (var e : m.entrySet()) { /* visits b, a, c — the order you inserted */ }
 
 ```svg
 <svg width="680" height="238" viewBox="0 0 680 238" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-  <rect x="0" y="0" width="680" height="238" fill="#fbfcfe"/>
-  <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">Balanced BST — smaller keys left, larger keys right; height ≈ log n</text>
+  <rect x="0" y="0" width="680" height="238" fill="var(--dsa-bg)"/>
+  <text x="22" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">Balanced BST — smaller keys left, larger keys right; height ≈ log n</text>
   <!-- edges (search path 8→3→6 in green) -->
-  <g stroke="#cbd5e1" stroke-width="2">
+  <g stroke="var(--dsa-neutral-line)" stroke-width="2">
     <line x1="200" y1="60" x2="290" y2="122"/>
     <line x1="110" y1="122" x2="66" y2="184"/>
     <line x1="290" y1="122" x2="246" y2="184"/>
     <line x1="290" y1="122" x2="334" y2="184"/>
   </g>
-  <g stroke="#16a34a" stroke-width="3">
+  <g stroke="var(--dsa-success)" stroke-width="3">
     <line x1="200" y1="60" x2="110" y2="122"/>
     <line x1="110" y1="122" x2="154" y2="184"/>
   </g>
   <!-- nodes -->
   <g stroke-width="1.8" font-size="16" font-weight="700" text-anchor="middle">
-    <circle cx="200" cy="58"  r="21" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.4"/><text x="200" y="64" fill="#0b1220">8</text>
-    <circle cx="110" cy="122" r="21" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.4"/><text x="110" y="128" fill="#0b1220">3</text>
-    <circle cx="290" cy="122" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="290" y="128" fill="#0b1220">12</text>
-    <circle cx="66"  cy="184" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="66"  y="190" fill="#0b1220">1</text>
-    <circle cx="154" cy="184" r="21" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.4"/><text x="154" y="190" fill="#0b1220">6</text>
-    <circle cx="246" cy="184" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="246" y="190" fill="#0b1220">10</text>
-    <circle cx="334" cy="184" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="334" y="190" fill="#0b1220">14</text>
+    <circle cx="200" cy="58"  r="21" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.4"/><text x="200" y="64" fill="var(--dsa-ink)">8</text>
+    <circle cx="110" cy="122" r="21" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.4"/><text x="110" y="128" fill="var(--dsa-ink)">3</text>
+    <circle cx="290" cy="122" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="290" y="128" fill="var(--dsa-ink)">12</text>
+    <circle cx="66"  cy="184" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="66"  y="190" fill="var(--dsa-ink)">1</text>
+    <circle cx="154" cy="184" r="21" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.4"/><text x="154" y="190" fill="var(--dsa-ink)">6</text>
+    <circle cx="246" cy="184" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="246" y="190" fill="var(--dsa-ink)">10</text>
+    <circle cx="334" cy="184" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="334" y="190" fill="var(--dsa-ink)">14</text>
   </g>
-  <rect x="400" y="60" width="258" height="120" rx="9" fill="#f0fdf4" stroke="#bbf7d0"/>
-  <text x="416" y="84" font-size="12.5" font-weight="700" fill="#16a34a">search for 6</text>
-  <text x="416" y="106" font-size="12" fill="#334155">6 &lt; 8  → go left</text>
-  <text x="416" y="126" font-size="12" fill="#334155">6 &gt; 3  → go right</text>
-  <text x="416" y="146" font-size="12" fill="#16a34a">found — one root-to-leaf path</text>
-  <text x="416" y="168" font-size="11.5" fill="#2563eb">balanced → that path is ≈ log n steps</text>
-  <text x="200" y="220" font-size="11" fill="#64748b" text-anchor="middle">in-order walk (left → node → right) prints keys sorted: 1 3 6 8 10 12 14</text>
+  <rect x="400" y="60" width="258" height="120" rx="9" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-soft)"/>
+  <text x="416" y="84" font-size="12.5" font-weight="700" fill="var(--dsa-success)">search for 6</text>
+  <text x="416" y="106" font-size="12" fill="var(--dsa-neutral)">6 &lt; 8  → go left</text>
+  <text x="416" y="126" font-size="12" fill="var(--dsa-neutral)">6 &gt; 3  → go right</text>
+  <text x="416" y="146" font-size="12" fill="var(--dsa-success)">found — one root-to-leaf path</text>
+  <text x="416" y="168" font-size="11.5" fill="var(--dsa-primary)">balanced → that path is ≈ log n steps</text>
+  <text x="200" y="220" font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">in-order walk (left → node → right) prints keys sorted: 1 3 6 8 10 12 14</text>
 </svg>
 ```
 
@@ -622,10 +622,10 @@ Iterator<Integer> back = ts.descendingIterator();        // descending
 
 ```svg
 <svg width="680" height="238" viewBox="0 0 680 238" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-  <rect x="0" y="0" width="680" height="238" fill="#fbfcfe"/>
-  <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">Binary heap — a complete binary tree stored in a flat array</text>
+  <rect x="0" y="0" width="680" height="238" fill="var(--dsa-bg)"/>
+  <text x="22" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">Binary heap — a complete binary tree stored in a flat array</text>
   <!-- tree edges -->
-  <g stroke="#94a3b8" stroke-width="2">
+  <g stroke="var(--dsa-neutral)" stroke-width="2">
     <line x1="160" y1="58" x2="100" y2="118"/>
     <line x1="160" y1="58" x2="220" y2="118"/>
     <line x1="100" y1="118" x2="68" y2="178"/>
@@ -634,37 +634,37 @@ Iterator<Integer> back = ts.descendingIterator();        // descending
   </g>
   <!-- tree nodes -->
   <g stroke-width="1.8" font-size="16" font-weight="700" text-anchor="middle">
-    <circle cx="160" cy="58"  r="20" fill="#eef5ff" stroke="#2563eb"/><text x="160" y="64" fill="#0b1220">2</text>
-    <circle cx="100" cy="118" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="100" y="124" fill="#0b1220">5</text>
-    <circle cx="220" cy="118" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="220" y="124" fill="#0b1220">3</text>
-    <circle cx="68"  cy="178" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="68"  y="184" fill="#0b1220">8</text>
-    <circle cx="132" cy="178" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="132" y="184" fill="#0b1220">6</text>
-    <circle cx="188" cy="178" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="188" y="184" fill="#0b1220">7</text>
+    <circle cx="160" cy="58"  r="20" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/><text x="160" y="64" fill="var(--dsa-ink)">2</text>
+    <circle cx="100" cy="118" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="100" y="124" fill="var(--dsa-ink)">5</text>
+    <circle cx="220" cy="118" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="220" y="124" fill="var(--dsa-ink)">3</text>
+    <circle cx="68"  cy="178" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="68"  y="184" fill="var(--dsa-ink)">8</text>
+    <circle cx="132" cy="178" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="132" y="184" fill="var(--dsa-ink)">6</text>
+    <circle cx="188" cy="178" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="188" y="184" fill="var(--dsa-ink)">7</text>
   </g>
-  <text x="160" y="44" font-size="10.5" fill="#16a34a" text-anchor="middle">root = min</text>
+  <text x="160" y="44" font-size="10.5" fill="var(--dsa-success)" text-anchor="middle">root = min</text>
 
   <!-- array mapping -->
-  <text x="380" y="70" font-size="11.5" font-weight="700" fill="#334155">same heap as an array</text>
+  <text x="380" y="70" font-size="11.5" font-weight="700" fill="var(--dsa-neutral)">same heap as an array</text>
   <g>
-    <rect x="380" y="80" width="46" height="40" rx="6" fill="#eef5ff" stroke="#2563eb" stroke-width="1.6"/>
-    <rect x="426" y="80" width="46" height="40" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
-    <rect x="472" y="80" width="46" height="40" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
-    <rect x="518" y="80" width="46" height="40" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
-    <rect x="564" y="80" width="46" height="40" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
-    <rect x="610" y="80" width="46" height="40" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+    <rect x="380" y="80" width="46" height="40" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+    <rect x="426" y="80" width="46" height="40" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <rect x="472" y="80" width="46" height="40" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <rect x="518" y="80" width="46" height="40" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <rect x="564" y="80" width="46" height="40" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <rect x="610" y="80" width="46" height="40" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
   </g>
-  <g font-size="16" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="16" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="403" y="106">2</text><text x="449" y="106">5</text><text x="495" y="106">3</text>
     <text x="541" y="106">8</text><text x="587" y="106">6</text><text x="633" y="106">7</text>
   </g>
-  <g font-size="10" fill="#94a3b8" text-anchor="middle">
+  <g font-size="10" fill="var(--dsa-neutral)" text-anchor="middle">
     <text x="403" y="136">0</text><text x="449" y="136">1</text><text x="495" y="136">2</text>
     <text x="541" y="136">3</text><text x="587" y="136">4</text><text x="633" y="136">5</text>
   </g>
-  <rect x="380" y="156" width="276" height="60" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
-  <text x="396" y="178" font-size="12" fill="#0b1220">children of i → <tspan font-weight="700" fill="#2563eb">2i+1</tspan> and <tspan font-weight="700" fill="#2563eb">2i+2</tspan></text>
-  <text x="396" y="198" font-size="12" fill="#0b1220">parent of i → <tspan font-weight="700" fill="#2563eb">(i−1)/2</tspan></text>
-  <text x="396" y="212" font-size="10.5" fill="#64748b">index math replaces pointers → no tree object needed</text>
+  <rect x="380" y="156" width="276" height="60" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+  <text x="396" y="178" font-size="12" fill="var(--dsa-ink)">children of i → <tspan font-weight="700" fill="var(--dsa-primary)">2i+1</tspan> and <tspan font-weight="700" fill="var(--dsa-primary)">2i+2</tspan></text>
+  <text x="396" y="198" font-size="12" fill="var(--dsa-ink)">parent of i → <tspan font-weight="700" fill="var(--dsa-primary)">(i−1)/2</tspan></text>
+  <text x="396" y="212" font-size="10.5" fill="var(--dsa-neutral)">index math replaces pointers → no tree object needed</text>
 </svg>
 ```
 
@@ -721,36 +721,36 @@ while (!pq.isEmpty()) { int x = pq.poll(); }             // ascending, but DRAIN
 
 ```svg
 <svg width="680" height="196" viewBox="0 0 680 196" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-  <rect x="0" y="0" width="680" height="196" fill="#fbfcfe"/>
-  <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">Trie — each edge is a character; a path spells a prefix</text>
+  <rect x="0" y="0" width="680" height="196" fill="var(--dsa-bg)"/>
+  <text x="22" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">Trie — each edge is a character; a path spells a prefix</text>
   <!-- edges -->
-  <g stroke="#94a3b8" stroke-width="2">
+  <g stroke="var(--dsa-neutral)" stroke-width="2">
     <line x1="86" y1="104" x2="146" y2="104"/>
     <line x1="176" y1="104" x2="236" y2="104"/>
     <line x1="266" y1="96" x2="320" y2="70"/>
     <line x1="266" y1="112" x2="320" y2="140"/>
   </g>
   <!-- edge labels -->
-  <g font-size="13" font-weight="700" fill="#2563eb" text-anchor="middle">
+  <g font-size="13" font-weight="700" fill="var(--dsa-primary)" text-anchor="middle">
     <text x="116" y="98">c</text><text x="206" y="98">a</text>
     <text x="290" y="74">t</text><text x="290" y="142">r</text>
   </g>
   <!-- nodes -->
   <g stroke-width="1.8">
-    <circle cx="66"  cy="104" r="20" fill="#e2e8f0" stroke="#64748b"/>
-    <circle cx="161" cy="104" r="20" fill="#f8fafc" stroke="#cbd5e1"/>
-    <circle cx="251" cy="104" r="20" fill="#f8fafc" stroke="#cbd5e1"/>
-    <circle cx="340" cy="62"  r="21" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.4"/>
-    <circle cx="340" cy="146" r="21" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.4"/>
+    <circle cx="66"  cy="104" r="20" fill="#e2e8f0" stroke="var(--dsa-neutral)"/>
+    <circle cx="161" cy="104" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <circle cx="251" cy="104" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
+    <circle cx="340" cy="62"  r="21" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.4"/>
+    <circle cx="340" cy="146" r="21" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.4"/>
   </g>
-  <g font-size="12" font-weight="700" fill="#0b1220" text-anchor="middle">
+  <g font-size="12" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
     <text x="66" y="108">root</text>
     <text x="340" y="66">cat★</text><text x="340" y="150">car★</text>
   </g>
-  <rect x="420" y="66" width="240" height="72" rx="9" fill="#f0fdf4" stroke="#bbf7d0"/>
-  <text x="436" y="90" font-size="12" fill="#16a34a">★ = end-of-word flag (a complete word)</text>
-  <text x="436" y="112" font-size="12" fill="#334155">"cat" and "car" <tspan font-weight="700">share</tspan> the "ca" path</text>
-  <text x="436" y="132" font-size="11.5" fill="#2563eb">search "car" → walk c→a→r → O(length)</text>
+  <rect x="420" y="66" width="240" height="72" rx="9" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-soft)"/>
+  <text x="436" y="90" font-size="12" fill="var(--dsa-success)">★ = end-of-word flag (a complete word)</text>
+  <text x="436" y="112" font-size="12" fill="var(--dsa-neutral)">"cat" and "car" <tspan font-weight="700">share</tspan> the "ca" path</text>
+  <text x="436" y="132" font-size="11.5" fill="var(--dsa-primary)">search "car" → walk c→a→r → O(length)</text>
 </svg>
 ```
 
