@@ -215,6 +215,23 @@ int[] dailyTemperatures(int[] t) {
 
 </Callout>
 
+<CodeTrace
+  title="Daily Temperatures — T=[73,74,75,71,69,72,76,73]"
+  :values="[73,74,75,71,69,72,76,73]"
+  :windowKeys="['i']"
+  :cellWidth="32"
+  :steps='[
+    { pointers: { i: 0 }, vars: { stack: "[0]", answer: "[0,0,0,0,0,0,0,0]" }, note: "push 0" },
+    { pointers: { i: 1 }, vars: { stack: "[1]", answer: "[1,0,0,0,0,0,0,0]" }, note: "74 pops 73 → ans[0]=1", added: [0] },
+    { pointers: { i: 2 }, vars: { stack: "[2]", answer: "[1,1,0,0,0,0,0,0]" }, note: "75 pops 74 → ans[1]=1", added: [1] },
+    { pointers: { i: 3 }, vars: { stack: "[2,3]", answer: "[1,1,0,0,0,0,0,0]" }, note: "71 pushes (cooler)" },
+    { pointers: { i: 4 }, vars: { stack: "[2,3,4]", answer: "[1,1,0,0,0,0,0,0]" }, note: "69 pushes (cooler)" },
+    { pointers: { i: 5 }, vars: { stack: "[2,5]", answer: "[1,1,0,2,1,0,0,0]" }, note: "72 pops 69,71 → ans[4]=1, ans[3]=2", added: [3,4] },
+    { pointers: { i: 6 }, vars: { stack: "[6]", answer: "[1,1,4,2,1,1,0,0]" }, note: "76 pops 72,75 → ans[5]=1, ans[2]=4", added: [2,5] },
+    { pointers: { i: 7 }, vars: { stack: "[6,7]", answer: "[1,1,4,2,1,1,0,0]" }, note: "73 pushes. leftovers stay 0. done" }
+  ]'
+/>
+
 ### Time Complexity
 O(n), because each index is pushed onto the stack once and popped at most once. The nested-looking `while` loop is amortized, not O(n²).
 

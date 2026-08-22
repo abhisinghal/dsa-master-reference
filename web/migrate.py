@@ -190,19 +190,22 @@ def escape_lt_gt_in_prose(body: str) -> str:
     body = re.sub(r"`[^`\n]*`", stash_code, body)
 
     # Now protect known-good HTML/Vue tags (which may span backticks; but we already stashed those)
+    # Attribute matcher allows > inside single- or double-quoted values, so multi-line Vue
+    # components with rich :prop='[...>...]' payloads survive the prose-escape pass intact.
+    ATTR = r"(?:\s+(?:'[^']*'|\"[^\"]*\"|[^\"'/>\s])+)*"
     KNOWN_HTML = re.compile(
         r"</?(a|b|i|u|em|strong|span|div|p|br|hr|img|code|pre|kbd|sub|sup|"
         r"h[1-6]|ul|ol|li|table|thead|tbody|tr|th|td|blockquote|small|"
         r"details|summary|figure|figcaption|dl|dt|dd|"
         r"Callout|CodeTabs|ProgressCheck|JavaRunner|Breadcrumbs|ReadingTime|"
-        r"RecentUpdates|Quiz|StepStrip|TwoSumStepStrip|Icon|"
+        r"RecentUpdates|Quiz|StepStrip|TwoSumStepStrip|CodeTrace|Icon|"
         r"SlidingWindowAnim|MonoStackAnim|UnionFindAnim|SweepLineAnim|"
         r"DivideConquerAnim|QuickselectAnim|BacktrackingAnim|"
         r"TwoPointersAnim|FastSlowAnim|BinarySearchAnim|HeapAnim|"
         r"BFSGridAnim|DFSGridAnim|DpFillAnim|TrieWalkAnim|"
         r"ClientOnly|slot|script|style|template)"
-        r"(\s[^>]*)?/?>",
-        re.IGNORECASE
+        rf"{ATTR}\s*/?>",
+        re.IGNORECASE | re.DOTALL
     )
     tag_slots = []
     def stash_tag(m):

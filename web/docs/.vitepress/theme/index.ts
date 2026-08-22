@@ -25,6 +25,7 @@ import RecentUpdates from './RecentUpdates.vue'
 import Quiz from './Quiz.vue'
 import StepStrip from './StepStrip.vue'
 import TwoSumStepStrip from './TwoSumStepStrip.vue'
+import CodeTrace from './CodeTrace.vue'
 import Icon from './Icon.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
@@ -62,6 +63,7 @@ export default {
     app.component('Quiz', Quiz)
     app.component('StepStrip', StepStrip)
     app.component('TwoSumStepStrip', TwoSumStepStrip)
+    app.component('CodeTrace', CodeTrace)
     app.component('Icon', Icon)
     installSolvedCountBadges(router)
   }

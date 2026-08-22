@@ -191,6 +191,18 @@ int search(int[] a, int target) {
 
 > [note] **Trace it** — `[4,5,6,7,0,1,2], target=0`. `mid=7`; the left half `[4..7]` is sorted but `0` isn't inside it, so search right → find `0` at index 4.
 
+<CodeTrace
+  title="Search in Rotated Sorted Array — nums=[4,5,6,7,0,1,2], target=0"
+  :values="[4,5,6,7,0,1,2]"
+  :windowKeys="['lo', 'hi']"
+  :cellWidth="38"
+  :steps='[
+    { pointers: { lo: 0, mid: 3, hi: 6 }, vars: { target: 0 }, note: "mid=7. left half [4..7] sorted, target not in it → lo=mid+1" },
+    { pointers: { lo: 4, mid: 5, hi: 6 }, vars: { target: 0 }, note: "mid=1. right half [1..2] sorted, target not in it → hi=mid-1" },
+    { pointers: { lo: 4, mid: 4, hi: 4 }, vars: { target: 0 }, note: "mid=0 == target → return 4", added: [4] }
+  ]'
+/>
+
 ### Time Complexity
 O(log n), because every iteration discards one half of the current range after proving the target cannot be there.
 

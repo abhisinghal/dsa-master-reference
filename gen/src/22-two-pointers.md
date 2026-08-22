@@ -326,6 +326,20 @@ Space is O(1) because the method stores two pointers and one best area, with no 
 
 > [note] **Trace it** — `[1,8,6,2,5,4,8,3,7]`. Widest pair `8@idx1` and `7@idx8` give `min(8,7)×7 = 49` — the max. Moving the taller side could only shrink width without raising the limiting height.
 
+<CodeTrace
+  title="Container With Most Water — heights=[1,8,6,2,5,4,8,3,7]"
+  :values="[1,8,6,2,5,4,8,3,7]"
+  :windowKeys="['lo', 'hi']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { lo: 0, hi: 8 }, vars: { area: 8, best: 8 }, note: "min(1,7)*8=8. lo shorter → lo++" },
+    { pointers: { lo: 1, hi: 8 }, vars: { area: 49, best: 49 }, note: "min(8,7)*7=49. best updates. hi shorter → hi--" },
+    { pointers: { lo: 1, hi: 7 }, vars: { area: 18, best: 49 }, note: "min(8,3)*6=18. hi shorter → hi--" },
+    { pointers: { lo: 1, hi: 6 }, vars: { area: 40, best: 49 }, note: "min(8,8)*5=40. tie → shrink either" },
+    { pointers: { lo: 1, hi: 5 }, vars: { area: 16, best: 49 }, note: "min(8,4)*4=16. hi shorter → hi--" }
+  ]'
+/>
+
 > [note] **Interview script** — "I first confirm we need the maximum area from two vertical lines and width is index distance. I start with brute force by testing every pair, which is O(n²) time and O(1) space. I optimize with two pointers at the ends, moving the shorter wall each step, for O(n) time and O(1) space."
 
 > [trap] **Common Trap** — Moving the taller wall can never help. *Example:* `heights=[1,8,6,2,5,4,8,3,7]`, `lo=0(h=1), hi=8(h=7)`. Moving `hi` inward shrinks width and can't raise the min (already `1`). Move the shorter wall — the only move that can improve area.
@@ -493,6 +507,21 @@ Space is O(1) because sorting happens in-place with three pointers and a constan
 > [inv] **Invariant** — `[0,low)`=0s, `[low,mid)`=1s, `(high,n)`=2s; `[mid,high]` unprocessed. The three regions only grow.
 
 > [note] **Trace it** — `[2,0,2,1,1,0]`. `mid` walks forward: 0s swap down to `low`, 2s swap up to `high`, 1s stay → `[0,0,1,1,2,2]` in a single sweep.
+
+<CodeTrace
+  title="Sort Colors (Dutch National Flag) — array evolves in place"
+  :values="[2,0,2,1,1,0]"
+  :windowKeys="['mid']"
+  :cellWidth="36"
+  :steps='[
+    { pointers: { low: 0, mid: 0, high: 5 }, vars: { a: "[2,0,2,1,1,0]" }, note: "start: mid=2 → swap mid,high; high--" },
+    { pointers: { low: 0, mid: 0, high: 4 }, vars: { a: "[0,0,2,1,1,2]" }, note: "mid=0 → swap low,mid; low++, mid++" },
+    { pointers: { low: 1, mid: 1, high: 4 }, vars: { a: "[0,0,2,1,1,2]" }, note: "mid=0 → swap low,mid; low++, mid++" },
+    { pointers: { low: 2, mid: 2, high: 4 }, vars: { a: "[0,0,2,1,1,2]" }, note: "mid=2 → swap mid,high; high--" },
+    { pointers: { low: 2, mid: 2, high: 3 }, vars: { a: "[0,0,1,1,2,2]" }, note: "mid=1 → mid++ (no swap)" },
+    { pointers: { low: 2, mid: 4, high: 3 }, vars: { a: "[0,0,1,1,2,2]" }, note: "mid past high → done" }
+  ]'
+/>
 
 > [note] **Interview script** — "I first confirm the only values are 0, 1, and 2 and the array must be sorted in place. I start with brute force as counting buckets or library sort, which is O(n) in two passes or O(n log n) with sort. I optimize with `low`, `mid`, and `high` regions so one scan partitions the array in O(n) time and O(1) space."
 

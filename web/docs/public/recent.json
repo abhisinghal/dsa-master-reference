@@ -1,5 +1,10 @@
 [
   {
+    "title": "Hashing",
+    "url": "/patterns/hashing",
+    "updated": "2026-08-22T10:09:34.000Z"
+  },
+  {
     "title": "Sliding Window",
     "url": "/patterns/sliding-window",
     "updated": "2026-08-22T10:06:54.000Z"
@@ -17,11 +22,6 @@
   {
     "title": "Prefix Sum & Difference Arrays",
     "url": "/patterns/prefix-sum",
-    "updated": "2026-08-22T10:06:54.000Z"
-  },
-  {
-    "title": "Hashing",
-    "url": "/patterns/hashing",
     "updated": "2026-08-22T10:06:54.000Z"
   },
   {

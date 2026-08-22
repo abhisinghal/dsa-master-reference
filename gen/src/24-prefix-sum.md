@@ -136,6 +136,20 @@ Space is O(n) in the worst case because every prefix sum can be distinct and sto
 
 > [note] **Trace it** — `a=[1,2,1,2,1], k=3`. Running prefixes `0,1,3,4,6,7`. Each time `pre−3` was seen before, you found a subarray: pairs give `[1,2],[2,1],[1,2],[2,1]` → **4**.
 
+<CodeTrace
+  title="Subarray Sum Equals K — a=[1,2,1,2,1], k=3"
+  :values="[1,2,1,2,1]"
+  :windowKeys="['i']"
+  :cellWidth="38"
+  :steps='[
+    { pointers: { i: 0 }, vars: { pre: 1, "need pre-k": -2, count: 0, "seen": "{0:1}" }, note: "map miss. seen[1]=1" },
+    { pointers: { i: 1 }, vars: { pre: 3, "need pre-k": 0, count: 1, "seen": "{0:1,1:1}" }, note: "seen[0]=1 → +1. seen[3]=1", added: [0,1] },
+    { pointers: { i: 2 }, vars: { pre: 4, "need pre-k": 1, count: 2, "seen": "{0:1,1:1,3:1}" }, note: "seen[1]=1 → +1. seen[4]=1", added: [1,2] },
+    { pointers: { i: 3 }, vars: { pre: 6, "need pre-k": 3, count: 3, "seen": "{0:1,1:1,3:1,4:1}" }, note: "seen[3]=1 → +1. seen[6]=1", added: [2,3] },
+    { pointers: { i: 4 }, vars: { pre: 7, "need pre-k": 4, count: 4, "seen": "{...,4:1,6:1}" }, note: "seen[4]=1 → +1. final count=4", added: [3,4] }
+  ]'
+/>
+
 > [trap] **Common Trap** — Forgetting the `count.put(0,1)` seed drops subarrays that start at index 0. Do **not** use a sliding window here — negatives destroy the monotonic shrink.
 
 > [pat] **Pattern Connection** — The shared idea is **charge a subarray-with-a-target-property to its prefix**: a subarray `(l,r]` has the property iff two prefixes differ by the target, so you store seen prefixes in a map. Recognize it in *Contiguous Array* (map a 0/1 array's ±1 running sum to the first index it appeared — a balanced subarray means equal prefixes) and *Subarray Sums Divisible by K* (bucket prefixes by `pre mod k`; two prefixes in the same bucket bound a divisible subarray). The transfer trick: rephrase "count subarrays where X" as "count prefix pairs that differ by X."

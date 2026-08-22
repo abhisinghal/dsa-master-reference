@@ -313,6 +313,17 @@ The optimized method is O(1) space because it keeps only `left`, `val`, and `bes
 
 > [note] **Trace it** — `[1,12,-5,-6,50,3], k=4`. First full window at `right=3`: `val = 1+12-5-6 = 2` → `best = 2`, shrink `-1`. Next at `right=4`: `1+50 = 51` → **max**, shrink `-12`. Next at `right=5`: `39+3 = 42`. Result 51 → avg `12.75`.
 
+<CodeTrace
+  title="Max Average Subarray I — nums=[1,12,-5,-6,50,3], k=4"
+  :values="[1, 12, -5, -6, 50, 3]"
+  :windowKeys="['left', 'right']"
+  :steps='[
+    { pointers: { left: 0, right: 3 }, vars: { sum: 2, best: 2 }, note: "first full window fills, best=2", added: [3] },
+    { pointers: { left: 1, right: 4 }, vars: { sum: 51, best: 51 }, note: "slide: +50 in, -1 out — new best", added: [4], removed: [0] },
+    { pointers: { left: 2, right: 5 }, vars: { sum: 42, best: 51 }, note: "slide: +3 in, -12 out — best holds", added: [5], removed: [1] }
+  ]'
+/>
+
 > [trap] **Common Trap** — Integer overflow on `windowSum`. *Example:* `k = 10⁴`, values near `10⁴` → sum near `10⁸` — fine in `int`, but two of those or a larger `k` overflows. Use `long`.
 
 > [pat] **Pattern Connection** — Any fixed-size aggregate — sum, product (with careful zero handling), min/max via monotonic deque, character-count vector — follows this same one-add-one-subtract slide.
@@ -559,6 +570,21 @@ The code uses O(1) space under the ASCII constraint because `last` has fixed siz
 > [inv] **Invariant** — `[left,right]` contains distinct characters; `last[c]` stores the most recent index of `c`.
 
 > [note] **Trace it** — `"abcabcbb"`. The window grows `a,b,c`; the next `a` collides, so `left` jumps past the old `a`. Longest clean window is `"abc"` → **3**.
+
+<CodeTrace
+  title="Longest Substring Without Repeating Chars — s=&quot;abcabcbb&quot;"
+  :values="['a','b','c','a','b','c','b','b']"
+  :windowKeys="['left', 'right']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { left: 0, right: 0 }, vars: { best: 1 }, note: "a — new, window \"a\"", added: [0] },
+    { pointers: { left: 0, right: 1 }, vars: { best: 2 }, note: "b — new, window \"ab\"", added: [1] },
+    { pointers: { left: 0, right: 2 }, vars: { best: 3 }, note: "c — new, best=3, window \"abc\"", added: [2] },
+    { pointers: { left: 1, right: 3 }, vars: { best: 3 }, note: "a collides at 0 — jump left past it", added: [3], removed: [0] },
+    { pointers: { left: 2, right: 4 }, vars: { best: 3 }, note: "b collides at 1 — jump left past it", added: [4], removed: [1] },
+    { pointers: { left: 5, right: 6 }, vars: { best: 3 }, note: "later: bb collision keeps window ≤ 3", added: [6], removed: [5] }
+  ]'
+/>
 
 > [trap] **Common Trap** — Not clamping `left` to its previous position. *Example:* `s="abba"`. At index 3 (`'a'`), the previous `a` was at 0, but `left` has already moved past 2. Without `left = max(left, prev+1)`, `left` retreats and the window contains two `a`s.
 

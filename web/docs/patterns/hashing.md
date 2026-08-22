@@ -626,6 +626,21 @@ Inner `while` extends only from true run-starts, so total inner steps ≤ n acro
 
 </Callout>
 
+<CodeTrace
+  title="Longest Consecutive Sequence — nums=[100,4,200,1,3,2]"
+  :values="[100,4,200,1,3,2]"
+  :windowKeys="['i']"
+  :cellWidth="38"
+  :steps='[
+    { pointers: { i: 0 }, vars: { val: 100, "99 in set": "no", start: "yes", run: 1, best: 1 }, note: "100 is a run-start, but 101 not present" },
+    { pointers: { i: 1 }, vars: { val: 4, "3 in set": "yes", start: "no" }, note: "4 not a run-start — skip" },
+    { pointers: { i: 2 }, vars: { val: 200, "199 in set": "no", start: "yes", run: 1, best: 1 }, note: "200 alone" },
+    { pointers: { i: 3 }, vars: { val: 1, "0 in set": "no", start: "yes", run: 4, best: 4 }, note: "walk 1→2→3→4 — best=4", added: [3,5,4,1] },
+    { pointers: { i: 4 }, vars: { val: 3, "2 in set": "yes", start: "no" }, note: "skip (mid-run)" },
+    { pointers: { i: 5 }, vars: { val: 2, "1 in set": "yes", start: "no" }, note: "skip. final best = 4" }
+  ]'
+/>
+
 <Callout kind="note" title="Interview script">
 
 "I first confirm the array is unsorted, duplicates may exist, and the target is the length of the longest consecutive run. I start with brute force by trying to extend a run from every value with repeated searches, which is O(n²) time. I optimize by putting values in a set and expanding only when `x - 1` is absent, giving O(n) time and O(n) space."
