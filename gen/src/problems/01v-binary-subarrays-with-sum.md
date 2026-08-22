@@ -1,24 +1,37 @@
 # Sliding Window — Binary Subarrays With Sum
 
-*[↗ LeetCode: Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-**The one thing that changes vs the flagship for this pattern:** same trick, "sum = S" over a 0/1 array
+Count binary subarrays with sum exactly `goal`.
 
-## The pattern this problem belongs to
+## Approach 1 — Prefix-sum hash (works for any integers)
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+`count[preSum - goal]` accumulated as we sweep. See [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k).
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+## Approach 2 — At-most-goal minus at-most-(goal-1)
 
-## Solution sketch
+**Insight.** With nonneg integers, `atMost(goal)` slides cleanly: extend r; shrink from l while sum > goal; add `r - l + 1`. Then subtract.
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int numSubarraysWithSum(int[] nums, int goal) {
+    return atMost(nums, goal) - atMost(nums, goal - 1);
+}
+int atMost(int[] nums, int goal) {
+    if (goal < 0) return 0;
+    int l = 0, sum = 0, res = 0;
+    for (int r = 0; r < nums.length; r++) {
+        sum += nums[r];
+        while (sum > goal) sum -= nums[l++];
+        res += r - l + 1;
+    }
+    return res;
+}
+```
 
-1. **Read the pattern chapter's `Binary Subarrays With Sum` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+- [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)
+- [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays)
+- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)

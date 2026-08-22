@@ -1,24 +1,48 @@
 # Sliding Window — Longest Palindromic Substring
 
-*[↗ LeetCode: Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** Adding a char at the right can turn a valid palindrome into an invalid one — but also into a *larger* valid one. Non-monotone.
+Longest palindromic substring of `s`.
 
-## The pattern this problem belongs to
+> Filed under Sliding Window in the curriculum, but the O(n²) solution is "expand around center" (two pointers), and the O(n) solution is Manacher's.
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach 1 — Try every substring O(n³)
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+## Approach 2 — DP `pal[i][j]`
 
-## Solution sketch
+O(n²) time and space.
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 3 — Expand around each center
 
-1. **Read the pattern chapter's `Longest Palindromic Substring` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** A palindrome has either an odd (single) center or an even (double) center — 2n-1 centers total.
 
-## Related problems in the same pattern
+```java
+String longestPalindrome(String s) {
+    int start = 0, end = 0;
+    for (int i = 0; i < s.length(); i++) {
+        int l1 = expand(s, i, i);
+        int l2 = expand(s, i, i + 1);
+        int len = Math.max(l1, l2);
+        if (len > end - start) {
+            start = i - (len - 1) / 2;
+            end = i + len / 2;
+        }
+    }
+    return s.substring(start, end + 1);
+}
+int expand(String s, int l, int r) {
+    while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) { l--; r++; }
+    return r - l - 1;
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O(n²)**; Space **O(1)**.
+
+## Approach 4 — Manacher's algorithm
+
+Insert sentinels; maintain palindrome-radius array with reuse across mirrored centers. **O(n)**. Beautiful but rarely required in interviews unless asked "can you go faster than n²".
+
+## Related problems
+
+- [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/) — count all
+- [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence) — DP

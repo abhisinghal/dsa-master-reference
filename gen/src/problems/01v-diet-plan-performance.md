@@ -1,24 +1,32 @@
 # Sliding Window — Diet Plan Performance
 
-*[↗ LeetCode: Diet Plan Performance](https://leetcode.com/problems/diet-plan-performance/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Diet Plan Performance](https://leetcode.com/problems/diet-plan-performance/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** classify each window by sum thresholds; sum score
+Fixed window of size `k` over calories. For each window: +1 if sum > upper; −1 if sum < lower; 0 otherwise. Return total.
 
-## The pattern this problem belongs to
+## Approach — Fixed-size window
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Standard fixed-size sum window: pre-sum first k, then slide adding right and subtracting left.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+```java
+int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
+    int sum = 0;
+    for (int i = 0; i < k; i++) sum += cal[i];
+    int score = 0;
+    if (sum > upper) score++;
+    else if (sum < lower) score--;
+    for (int i = k; i < cal.length; i++) {
+        sum += cal[i] - cal[i - k];
+        if (sum > upper) score++;
+        else if (sum < lower) score--;
+    }
+    return score;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Diet Plan Performance` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+- [Maximum Average Subarray I](/problems/maximum-average-subarray-i)
+- [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum) — variable window

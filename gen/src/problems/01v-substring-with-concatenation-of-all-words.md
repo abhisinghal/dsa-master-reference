@@ -1,24 +1,49 @@
-# Sliding Window — Substring with Concatenation of All Words
+# Sliding Window — Substring With Concatenation of All Words
 
-*[↗ LeetCode: Substring with Concatenation of All Words](https://leetcode.com/problems/substring-with-concatenation-of-all-words/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Substring with Concatenation of All Words](https://leetcode.com/problems/substring-with-concatenation-of-all-words/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** the "characters" are whole words of equal length
+Find start indices of substrings that are concatenations of every word in `words` (each used exactly once, any order). All words same length `L`.
 
-## The pattern this problem belongs to
+## Approach 1 — Try every start
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+O(n · k · L). Too slow for large.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+## Approach 2 — Sliding window on word-aligned offsets
 
-## Solution sketch
+**Insight.** Iterate `offset ∈ [0, L)`. For each offset, walk `s` in chunks of L. Maintain a `have` count; if a word not in `words`, reset window; if a word over-count, shrink from left until fine. Emit start when `have == k` words.
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+List<Integer> findSubstring(String s, String[] words) {
+    List<Integer> out = new ArrayList<>();
+    int L = words[0].length(), k = words.length;
+    int total = L * k;
+    if (s.length() < total) return out;
+    Map<String, Integer> need = new HashMap<>();
+    for (String w : words) need.merge(w, 1, Integer::sum);
+    for (int off = 0; off < L; off++) {
+        int l = off, have = 0;
+        Map<String, Integer> win = new HashMap<>();
+        for (int r = off; r + L <= s.length(); r += L) {
+            String w = s.substring(r, r + L);
+            if (!need.containsKey(w)) { win.clear(); have = 0; l = r + L; continue; }
+            win.merge(w, 1, Integer::sum);
+            have++;
+            while (win.get(w) > need.get(w)) {
+                String lw = s.substring(l, l + L);
+                win.merge(lw, -1, Integer::sum);
+                have--;
+                l += L;
+            }
+            if (have == k) out.add(l);
+        }
+    }
+    return out;
+}
+```
 
-1. **Read the pattern chapter's `Substring with Concatenation of All Words` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n · L)** total across offsets; Space **O(k · L)**.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+- [Minimum Window Substring](/problems/minimum-window-substring)
+- [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string)

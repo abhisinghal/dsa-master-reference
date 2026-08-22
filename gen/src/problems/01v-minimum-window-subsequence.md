@@ -1,24 +1,49 @@
 # Sliding Window — Minimum Window Subsequence
 
-*[↗ LeetCode: Minimum Window Subsequence](https://leetcode.com/problems/minimum-window-subsequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Minimum Window Subsequence](https://leetcode.com/problems/minimum-window-subsequence/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** the target must appear in order (not just as a multiset), so track progress through the pattern instead of counts
+Smallest window in `s` such that `t` is a **subsequence** (order matters).
 
-## The pattern this problem belongs to
+## Approach 1 — DP `dp[i][j] = latest start of match in s[..i] using t[..j]`
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+O(m·n) time and space.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+## Approach 2 — Two-pointer forward + backward
 
-## Solution sketch
+**Insight.** Advance `i` in `s` matching `t` chars in order; when full match found at end index `iEnd`, walk **backward** from `iEnd` to shrink to minimal window that still contains `t` as subsequence. Repeat starting after the previous match's start.
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+String minWindow(String s, String t) {
+    int m = s.length(), n = t.length();
+    int bestLen = Integer.MAX_VALUE, bestStart = -1;
+    int i = 0;
+    while (i < m) {
+        int j = 0;
+        while (i < m) {
+            if (s.charAt(i) == t.charAt(j)) {
+                j++;
+                if (j == n) break;
+            }
+            i++;
+        }
+        if (i == m) break;
+        int end = i;
+        j = n - 1;
+        while (j >= 0) {
+            if (s.charAt(i) == t.charAt(j)) j--;
+            i--;
+        }
+        i += 2; // start = i+1 after loop overshoot; adjust
+        int start = i - 1;
+        if (end - start + 1 < bestLen) { bestLen = end - start + 1; bestStart = start; }
+    }
+    return bestStart < 0 ? "" : s.substring(bestStart, bestStart + bestLen);
+}
+```
 
-1. **Read the pattern chapter's `Minimum Window Subsequence` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(m · n)** worst case; often much faster.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+- [Minimum Window Substring](/problems/minimum-window-substring) — set membership, not subsequence
+- [Is Subsequence](https://leetcode.com/problems/is-subsequence/) — the primitive

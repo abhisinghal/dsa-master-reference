@@ -2,23 +2,32 @@
 
 *[↗ LeetCode: Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** positive ints, shrink while product ≥ k
+Count contiguous subarrays whose product is strictly less than `k`. **Positive values only.**
 
-## The pattern this problem belongs to
+## Approach — Sliding window with product
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Fix `r`. Shrink `l` while product ≥ k. Every subarray ending at `r` with left ≥ current `l` is valid → contributes `r - l + 1` new subarrays.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+```java
+int numSubarrayProductLessThanK(int[] nums, int k) {
+    if (k <= 1) return 0;
+    long prod = 1;
+    int count = 0, l = 0;
+    for (int r = 0; r < nums.length; r++) {
+        prod *= nums[r];
+        while (prod >= k) prod /= nums[l++];
+        count += r - l + 1;
+    }
+    return count;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Trap.** `k <= 1` — no product of positives is < 1, return 0 early. Guard against integer overflow with `long prod`.
 
-1. **Read the pattern chapter's `Subarray Product Less Than K` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+- [Binary Subarrays With Sum](/problems/binary-subarrays-with-sum) — count = f(≤ goal) - f(≤ goal-1)
+- [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays)
+- [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers) — same "≤ K minus ≤ K-1" trick

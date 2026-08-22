@@ -2,23 +2,29 @@
 
 *[↗ LeetCode: Frequency of the Most Frequent Element](https://leetcode.com/problems/frequency-of-the-most-frequent-element/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** sort, then window where `windowLen·max − windowSum ≤ k` operations
+Given nums and budget `k` (increments), maximize the frequency of any single value.
 
-## The pattern this problem belongs to
+## Approach — Sort + sliding window with sum budget
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Sort. In a window `[l, r]` of sorted nums, raising every value to `nums[r]` costs `nums[r] * (r - l + 1) - windowSum`. Extend r; while cost > k, shrink l. Track max window size.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+```java
+int maxFrequency(int[] nums, int k) {
+    Arrays.sort(nums);
+    long sum = 0;
+    int l = 0, best = 0;
+    for (int r = 0; r < nums.length; r++) {
+        sum += nums[r];
+        while ((long) nums[r] * (r - l + 1) - sum > k) sum -= nums[l++];
+        best = Math.max(best, r - l + 1);
+    }
+    return best;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n log n)**; Space **O(1)**.
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Frequency of the Most Frequent Element` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+- [Minimum Operations to Reduce X to Zero](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) — complementary window
+- [Longest Repeating Character Replacement](/problems/longest-repeating-character-replacement)
