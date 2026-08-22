@@ -102,6 +102,22 @@ int jump(int[] a) {
 
 > [note] **Trace it** — `[2,3,1,1,4]`. From index 0 (reach 2) the best next hop is index 1 (which reaches index 4). Two jumps `0→1→4` → answer **2**.
 
+> [note] **Interview script** — "I first confirm identical tasks need at least `n` intervals between runs and idle slots are allowed. I start with brute force by enumerating or simulating possible schedules, which is exponential if I search all valid orders. I optimize by counting frequencies and using the max-frequency frame formula, giving O(tasks + A) time and O(A) space for alphabet size `A`."
+
+
+<CodeTrace
+  title="Jump Game II — nums=[2,3,1,1,4]"
+  :values="[2,3,1,1,4]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { end: 0, farthest: 2, jumps: 0 }, note: "from 0 can reach up to 2" },
+    { pointers: { i: 1 }, vars: { end: 2, farthest: 4, jumps: 1 }, note: "i==end → commit jump. best from window=[1,2] reaches 4", added: [1] },
+    { pointers: { i: 2 }, vars: { end: 2, farthest: 4, jumps: 1 }, note: "no better than 4" },
+    { pointers: { i: 3 }, vars: { end: 4, farthest: 4, jumps: 2 }, note: "i==end → jump. reaches idx 4 — done. answer 2", added: [4] }
+  ]'
+/>
+
 ### Time Complexity
 Time O(n). Each index before the last is scanned once while updating the farthest reachable boundary.
 
@@ -228,6 +244,20 @@ int canCompleteCircuit(int[] gas, int[] cost) {
 
 > [note] **Trace it** — `gas=[1,2,3,4,5], cost=[3,4,5,1,2]`. Running balance bottoms out entering index 3, so start at **3**: `4→5→1→2→3` never dips below zero.
 
+<CodeTrace
+  title="Gas Station — gas=[1,2,3,4,5], cost=[3,4,5,1,2]"
+  :values="[1,2,3,4,5]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { tank: -2, total: -2, start: 1 }, note: "1-3=-2 → tank<0 → try start=1" },
+    { pointers: { i: 1 }, vars: { tank: -2, total: -4, start: 2 }, note: "2-4=-2 → try start=2" },
+    { pointers: { i: 2 }, vars: { tank: -2, total: -6, start: 3 }, note: "3-5=-2 → try start=3" },
+    { pointers: { i: 3 }, vars: { tank: 3, total: -3, start: 3 }, note: "4-1=+3 → keep", added: [3] },
+    { pointers: { i: 4 }, vars: { tank: 6, total: 0, start: 3 }, note: "5-2=+3 → sum ≥ 0. answer 3", added: [4] }
+  ]'
+/>
+
 ### Time Complexity
 Time O(n). One pass computes total surplus and eliminates invalid start ranges.
 
@@ -312,7 +342,18 @@ int leastInterval(char[] tasks, int n) {
 
 > [note] **Trace it** — tasks `AAABBB, n=2`. The three `A`s frame the timeline `A??A??A`; `B`s and idles fill the gaps → `AB_AB_AB` = **8** intervals.
 
-> [note] **Interview script** — "I first confirm identical tasks need at least `n` intervals between runs and idle slots are allowed. I start with brute force by enumerating or simulating possible schedules, which is exponential if I search all valid orders. I optimize by counting frequencies and using the max-frequency frame formula, giving O(tasks + A) time and O(A) space for alphabet size `A`."
+<CodeTrace
+  title="Task Scheduler — tasks=[A,A,A,B,B,B], n=2 cooldown"
+  :values="['A','B','_','A','B','_','A','B']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { max_freq: 3, gap: "n+1=3", slots: "3 chunks" }, note: "3 A blocks → framework A??A??A", added: [0,3,6] },
+    { pointers: { i: 1 }, vars: { filled: "B in slot 1", idle: 0 }, note: "put B in gap after 1st A", added: [1] },
+    { pointers: { i: 2 }, vars: { filled: "B in slot 2", idle: 1 }, note: "B goes after 2nd A, need one idle slot", added: [2,4] },
+    { pointers: { i: 3 }, vars: { filled: "B in slot 3", idle: 2 }, note: "B after 3rd A. final length = 8", added: [7] }
+  ]'
+/>
 
 ### Time Complexity
 Time O(T + A), where T is the task count and A is the alphabet size. Counting dominates for fixed uppercase labels.
@@ -383,6 +424,19 @@ int eraseOverlapIntervals(int[][] intervals) {
 ```
 
 > [note] **Trace it** — `[[1,2],[2,3],[3,4],[1,3]]`. Keeping earliest-finishers `[1,2],[2,3],[3,4]` forces dropping `[1,3]` → **1** removal.
+
+<CodeTrace
+  title="Non-overlapping Intervals — sorted by end"
+  :values="['[1,2]','[2,3]','[1,3]','[3,4]']"
+  :windowKeys="['i']"
+  :cellWidth="60"
+  :steps='[
+    { pointers: { i: 0 }, vars: { end: 2, keep: "yes", removed: 0 }, note: "keep [1,2]" },
+    { pointers: { i: 1 }, vars: { end: 3, keep: "yes", removed: 0 }, note: "[2,3] start=2 ≥ end=2 → keep", added: [0,1] },
+    { pointers: { i: 2 }, vars: { end: 3, keep: "no", removed: 1 }, note: "[1,3] start=1 < 3 → drop", removed: [2] },
+    { pointers: { i: 3 }, vars: { end: 4, keep: "yes", removed: 1 }, note: "[3,4] start=3 ≥ 3 → keep. total=1", added: [3] }
+  ]'
+/>
 
 ### Time Complexity
 Time O(n log n). Sorting by end dominates; the greedy keep/remove pass is O(n).

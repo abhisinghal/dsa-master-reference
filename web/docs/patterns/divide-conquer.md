@@ -216,17 +216,21 @@ long sort(int[] a, int lo, int hi, int[] tmp) {
 
 inversion count for `[5,2,6,1]`.
 
-| merge | sorted left | sorted right | counting moment | inversions added |
-|---|---|---|---|---:|
-| `[5]` + `[2]` | `[5]` | `[2]` | take `2` before remaining `[5]` | 1 |
-| `[6]` + `[1]` | `[6]` | `[1]` | take `1` before remaining `[6]` | 1 |
-| `[2,5]` + `[1,6]` | `[2,5]` | `[1,6]` | take `1` before remaining `[2,5]` | 2 |
-| final | `[1,2,5,6]` | — | total | 4 |
-
-The key line is `mid - i + 1`: because the left half is sorted, if `a[i] > a[j]`, then every left value from `i` through `mid` is also greater than `a[j]`.
-
 </Callout>
 
+<CodeTrace
+  title="Count Inversions via merge sort — nums=[5,2,6,1]"
+  :values="[5,2,6,1]"
+  :windowKeys="['i','j']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0, j: 1 }, vars: { subarray: "[5,2]", split: 1 }, note: "merge halves [5]/[2]. 5 > 2 → 1 inversion", added: [0,1] },
+    { pointers: { i: 2, j: 3 }, vars: { subarray: "[6,1]", split: 1 }, note: "merge halves [6]/[1]. 6 > 1 → 1 inversion", added: [2,3] },
+    { pointers: { i: 0, j: 2 }, vars: { L: "[2,5]", R: "[1,6]", inv: 2 }, note: "merge: L[0]=2 vs R[0]=1 → R first (+2 inv from L)" },
+    { pointers: { i: 0, j: 3 }, vars: { L: "[2,5]", R: "[6]", inv: 2 }, note: "L[0]=2 < R[0]=6 → take 2" },
+    { pointers: { i: 1, j: 3 }, vars: { L: "[5]", R: "[6]", inv: 2 }, note: "5 < 6 → take 5, then 6. total = 1+1+2 = 4" }
+  ]'
+/>
 #### How this differs from quicksort-style divide and conquer
 Quicksort also divides and conquers, but its combine step is almost empty after partitioning; the clever work happens before the recursive calls. Merge-sort counting is the opposite: the split is mechanical, and the merge is where you count. In interviews, naming where the cleverness lives helps you choose the right invariant. For inversion counting, you want the postcondition "this range is sorted and its internal inversions are counted" after every recursive call.
 

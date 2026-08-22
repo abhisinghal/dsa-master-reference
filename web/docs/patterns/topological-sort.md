@@ -230,18 +230,21 @@ int[] findOrder(int numCourses, int[][] prereqs) {
 
 `numCourses=4`, prerequisites `[1,0], [2,0], [3,1], [3,2]`.
 
-| step | queue | emitted | in-degree changes | order |
-|---|---|---|---|---|
-| init | `[0]` | — | `indeg=[0,1,1,2]` | `[]` |
-| 1 | `[0]` | `0` | `1:1→0`, `2:1→0` | `[0]` |
-| 2 | `[1,2]` | `1` | `3:2→1` | `[0,1]` |
-| 3 | `[2]` | `2` | `3:1→0` | `[0,1,2]` |
-| 4 | `[3]` | `3` | none | `[0,1,2,3]` |
-
-All four courses were emitted, so no cycle exists.
-
 </Callout>
 
+<CodeTrace
+  title="Course Schedule II — 4 courses, edges 0→1, 0→2, 1→3, 2→3"
+  :values="[0,1,2,3]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { indeg: "[0,1,1,2]", queue: "[0]" }, note: "seed queue with indegree-0 nodes" },
+    { pointers: { i: 0 }, vars: { indeg: "[_,0,0,2]", queue: "[1,2]", out: "[0]" }, note: "pop 0, drop edges → 1 and 2 free", added: [0] },
+    { pointers: { i: 1 }, vars: { indeg: "[_,_,0,1]", queue: "[2]", out: "[0,1]" }, note: "pop 1, drop 1→3", added: [1] },
+    { pointers: { i: 2 }, vars: { indeg: "[_,_,_,0]", queue: "[3]", out: "[0,1,2]" }, note: "pop 2, drop 2→3 → 3 free", added: [2] },
+    { pointers: { i: 3 }, vars: { indeg: "[_,_,_,_]", queue: "[]", out: "[0,1,2,3]" }, note: "pop 3. all courses ordered", added: [3] }
+  ]'
+/>
 
 #### Edge-building intuition
 The most common Course Schedule bug is direction. Pair `[a,b]` means "to take `a`, first take `b`." So the unlock direction is `b → a`: completing `b` reduces the remaining prerequisite count of `a`. If you reverse it, your graph still has the same nodes and the code still runs, which makes the bug feel sneaky, but the queue now represents courses unlocked by their dependents instead of by their prerequisites.

@@ -165,6 +165,13 @@ Space is O(n) in the worst case because every prefix sum can be distinct and sto
 
 </Callout>
 
+<Callout kind="trap" title="Common Trap">
+
+Forgetting the `count.put(0,1)` seed drops subarrays that start at index 0. Do **not** use a sliding window here — negatives destroy the monotonic shrink.
+
+</Callout>
+
+
 <CodeTrace
   title="Subarray Sum Equals K — a=[1,2,1,2,1], k=3"
   :values="[1,2,1,2,1]"
@@ -178,12 +185,6 @@ Space is O(n) in the worst case because every prefix sum can be distinct and sto
     { pointers: { i: 4 }, vars: { pre: 7, "need pre-k": 4, count: 4, "seen": "{...,4:1,6:1}" }, note: "seen[4]=1 → +1. final count=4", added: [3,4] }
   ]'
 />
-
-<Callout kind="trap" title="Common Trap">
-
-Forgetting the `count.put(0,1)` seed drops subarrays that start at index 0. Do **not** use a sliding window here — negatives destroy the monotonic shrink.
-
-</Callout>
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -297,6 +298,24 @@ After processing, `prefix(diff)[i]` equals the net of all increments covering in
 Off-by-one at `r+1`; size the array `n+1` so the closing decrement never overflows the bounds.
 
 </Callout>
+
+
+<CodeTrace
+  title="Corporate Flight Bookings — n=5, three bookings"
+  :values="[0,0,0,0,0]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { diff: "[10,0,-10,0,0,0]" }, note: "booking [1,2,10] → diff[0]+=10, diff[2]-=10" },
+    { pointers: { i: 1 }, vars: { diff: "[10,20,-10,-20,0,0]" }, note: "[2,3,20] → diff[1]+=20, diff[3]-=20" },
+    { pointers: { i: 2 }, vars: { diff: "[10,45,-10,-20,0,-25]" }, note: "[2,5,25] → diff[1]+=25, diff[5]-=25" },
+    { pointers: { i: 0 }, vars: { seats: "[10,_,_,_,_]" }, note: "prefix pass: seats[0]=10", added: [0] },
+    { pointers: { i: 1 }, vars: { seats: "[10,55,_,_,_]" }, note: "seats[1]=10+45=55", added: [1] },
+    { pointers: { i: 2 }, vars: { seats: "[10,55,45,_,_]" }, note: "seats[2]=55−10=45", added: [2] },
+    { pointers: { i: 3 }, vars: { seats: "[10,55,45,25,_]" }, note: "seats[3]=45−20=25", added: [3] },
+    { pointers: { i: 4 }, vars: { seats: "[10,55,45,25,25]" }, note: "seats[4]=25+0=25 — final", added: [4] }
+  ]'
+/>
 
 <Callout kind="pat" title="Pattern Connection">
 

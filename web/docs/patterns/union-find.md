@@ -218,6 +218,18 @@ class DSU {
 
 </Callout>
 
+<CodeTrace
+  title="Number of Provinces — 3 cities, edge 0-1"
+  :values="[0,1,2]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { parent: "[0,1,2]", count: 3 }, note: "start: each city its own root" },
+    { pointers: { i: 1 }, vars: { parent: "[0,0,2]", count: 2 }, note: "union(0,1): merge → count=2", added: [0,1] },
+    { pointers: { i: 2 }, vars: { parent: "[0,0,2]", count: 2 }, note: "no edges from 2 → answer = 2 provinces" }
+  ]'
+/>
+
 ### Time Complexity
 Time O(n² · α(n)) for scanning the matrix and unioning friendships; each DSU operation is effectively constant.
 
@@ -331,6 +343,19 @@ int minCostMST(int n, int[][] edges) {                // edges: {u, v, w}
 points where the cheapest edges are `2, 3, 4, 5`. Kruskal adds them cheapest-first, skipping any edge whose two endpoints are already connected, until all points form one tree.
 
 </Callout>
+
+<CodeTrace
+  title="Kruskal MST — edges sorted by weight"
+  :values="[2,3,4,5]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { edge: "w=2", added: "yes", cost: 2 }, note: "add cheapest edge", added: [0] },
+    { pointers: { i: 1 }, vars: { edge: "w=3", added: "yes", cost: 5 }, note: "second edge, different component", added: [1] },
+    { pointers: { i: 2 }, vars: { edge: "w=4", added: "yes", cost: 9 }, note: "third edge, connects new node", added: [2] },
+    { pointers: { i: 3 }, vars: { edge: "w=5", added: "no (cycle)", cost: 9 }, note: "both endpoints same root → skip. MST cost = 9" }
+  ]'
+/>
 
 ### Time Complexity
 Time O(E log E). Sorting edges dominates; DSU checks are near O(1) amortized.

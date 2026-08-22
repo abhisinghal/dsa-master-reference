@@ -22,6 +22,10 @@ A trie separates two questions: "can I walk this prefix?" and "is this prefix a 
 - counting how many words share a prefix, requiring counters on nodes
 - lexicographic collection of words under a prefix
 
+
+<TrieWalkAnim />
+
+
 ### When NOT to use it
 - You only need exact membership; `HashSet<String>` is simpler and usually faster.
 - You need suffix or substring queries; reverse the strings or use a suffix-specific structure.

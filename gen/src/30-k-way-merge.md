@@ -30,6 +30,10 @@ This is also why k-way merge feels like a cousin of Dijkstra's algorithm. Dijkst
 - "find k pairs with smallest sums" — the candidate pairs form ordered frontiers.
 - "always choose the next smallest available item among k sources" — a min-heap of fronts is likely.
 
+
+<HeapAnim />
+
+
 ### When NOT to use it
 The k streams aren't sorted individually — a heap over the current fronts is meaningless if the fronts don't represent "smallest not-yet-emitted". Sort each stream first, or use a different approach.
 
@@ -206,6 +210,20 @@ ListNode mergeKLists(ListNode[] lists) {
 > | 7 | `5A, 6C` | `5A` | none | `1,1,2,3,4,4,5` |
 > | 8 | `6C` | `6C` | none | `1,1,2,3,4,4,5,6` |
 
+<CodeTrace
+  title="Merge K Sorted Lists — heap-based, k=3"
+  :values="[1,4,5]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { heap: "[1A, 1B, 2C]", output: "" }, note: "seed with each list head" },
+    { pointers: { i: 0 }, vars: { heap: "[1B, 2C, 4A]", output: "1" }, note: "pop 1A, push 4A" },
+    { pointers: { i: 0 }, vars: { heap: "[2C, 3B, 4A]", output: "1,1" }, note: "pop 1B, push 3B" },
+    { pointers: { i: 0 }, vars: { heap: "[3B, 4A, 6C]", output: "1,1,2" }, note: "pop 2C, push 6C" },
+    { pointers: { i: 0 }, vars: { heap: "[4A, 4B, 6C]", output: "1,1,2,3" }, note: "pop 3B, push 4B" },
+    { pointers: { i: 0 }, vars: { heap: "[]", output: "1,1,2,3,4,4,5,6" }, note: "drain — final output" }
+  ]'
+/>
 ### Time Complexity
 Two lists take O(n+m), because each pointer advances once. K lists take O(N log k), because each of the N total nodes is popped once and may push one successor into a heap of size at most k.
 
@@ -300,17 +318,21 @@ while (pq.size() == lists.size()) {                 // must cover every list
 ```
 
 > [note] **Trace it** — smallest range for lists `[4,10,15,24,26]`, `[0,9,12,20]`, `[5,18,22,30]`.
->
-> | step | heap min | `curMax` | candidate range | advance |
-> |---|---:|---:|---|---|
-> | init | `0` from list 1 | `5` | `[0,5]` | list 1 → `9` |
-> | 2 | `4` from list 0 | `9` | `[4,9]` | list 0 → `10` |
-> | 3 | `5` from list 2 | `10` | `[5,10]` | list 2 → `18` |
-> | 4 | `9` from list 1 | `18` | `[9,18]` | list 1 → `12` |
-> | ... | ... | ... | best eventually `[20,24]` | stop when a list ends |
->
-> The range always spans the current heap minimum and the largest visible front. You only advance the minimum list because moving any other list would not raise the left edge.
 
+<CodeTrace
+  title="Smallest Range Covering K Lists — 3 lists"
+  :values="[4,10,15,24,26]"
+  :windowKeys="['i']"
+  :cellWidth="38"
+  :steps='[
+    { pointers: { i: 0 }, vars: { heap: "min=[0,4,5]", max: 5, range: "[0,5]" }, note: "seed with each list's first. range width 5" },
+    { pointers: { i: 0 }, vars: { heap: "min=[4,5,9]", max: 9, range: "[4,9]" }, note: "advance list-1 (0→9). width 5" },
+    { pointers: { i: 0 }, vars: { heap: "min=[5,9,10]", max: 10, range: "[5,10]" }, note: "advance list-0 (4→10)" },
+    { pointers: { i: 0 }, vars: { heap: "min=[9,10,18]", max: 18, range: "[9,18]" }, note: "advance list-2 (5→18). too wide" },
+    { pointers: { i: 0 }, vars: { heap: "min=[10,12,18]", max: 18, range: "[10,18]" }, note: "advance list-1 (9→12). still wide" },
+    { pointers: { i: 0 }, vars: { heap: "min=[15,18,20]", max: 20, range: "[15,20]" }, note: "narrows to 5. final smallest [20,24]-width=5" }
+  ]'
+/>
 ### Time Complexity
 O(N log k), because each element can enter and leave the heap once, and the heap has at most k live fronts.
 

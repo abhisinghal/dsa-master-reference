@@ -22,6 +22,10 @@ A heap is a partially ordered array-backed tree. It gives O(1) access to one ext
 - graph algorithms that repeatedly pick the cheapest frontier state
 - memory limit hints where sorting the entire changing set is too expensive
 
+
+<HeapAnim />
+
+
 ### When to use it — practical flavors
 
 | Flavor | Typical wording | Heap shape |

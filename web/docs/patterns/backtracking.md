@@ -235,6 +235,23 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> res) {
 
 </Callout>
 
+<CodeTrace
+  title="Subsets — nums=[1,2,3], DFS with start index"
+  :values="[1,2,3]"
+  :windowKeys="['start']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { start: 0 }, vars: { current: "[]", found: 1 }, note: "record empty set" },
+    { pointers: { start: 1 }, vars: { current: "[1]", found: 2 }, note: "pick 1", added: [0] },
+    { pointers: { start: 2 }, vars: { current: "[1,2]", found: 3 }, note: "pick 2", added: [0,1] },
+    { pointers: { start: 3 }, vars: { current: "[1,2,3]", found: 4 }, note: "pick 3", added: [0,1,2] },
+    { pointers: { start: 3 }, vars: { current: "[1,3]", found: 5 }, note: "backtrack, skip 2, pick 3", added: [0,2] },
+    { pointers: { start: 2 }, vars: { current: "[2]", found: 6 }, note: "new branch from idx 1", added: [1] },
+    { pointers: { start: 3 }, vars: { current: "[2,3]", found: 7 }, note: "pick 3", added: [1,2] },
+    { pointers: { start: 3 }, vars: { current: "[3]", found: 8 }, note: "final: 3 alone. total 8", added: [2] }
+  ]'
+/>
+
 #### Same pattern, new tweaks
 The choose → recurse → undo loop stays fixed; what changes is the choice set and the "done" test:
 
@@ -346,6 +363,21 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> res) {
 `[1,2,3]`. Position 0 tries each of 1/2/3; with 1 fixed, position 1 tries 2 then 3 → `123,132,213,231,312,321` — all **6** orderings.
 
 </Callout>
+
+<CodeTrace
+  title="Permutations — nums=[1,2,3], swap-in-place"
+  :values="[1,2,3]"
+  :windowKeys="['pos']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { pos: 0 }, vars: { current: "[1,2,3]" }, note: "pos 0: try 1 in slot 0", added: [0] },
+    { pointers: { pos: 1 }, vars: { current: "[1,2,3]" }, note: "pos 1: swap 2 → emit 123", added: [0,1,2] },
+    { pointers: { pos: 1 }, vars: { current: "[1,3,2]" }, note: "swap 3 → emit 132", added: [0,1,2] },
+    { pointers: { pos: 0 }, vars: { current: "[2,1,3]" }, note: "pos 0: swap 2 → emit 213", added: [0,1,2] },
+    { pointers: { pos: 0 }, vars: { current: "[2,3,1]" }, note: "→ emit 231", added: [0,1,2] },
+    { pointers: { pos: 0 }, vars: { current: "[3,2,1]" }, note: "pos 0: swap 3 → emit 312, 321", added: [0,1,2] }
+  ]'
+/>
 
 #### Same pattern, new tweaks
 No `start` index — every unused element is a candidate at every position:
@@ -471,6 +503,20 @@ void dfs(int[] c, int start, int remain, List<Integer> path, List<List<Integer>>
 `candidates=[2,3,6,7], target=7`. Reusing 2 gives `2+2+3`; 7 alone also works → `[[2,2,3],[7]]`. Branches where the remainder drops below 0 are cut immediately.
 
 </Callout>
+
+<CodeTrace
+  title="Combination Sum — candidates=[2,3,6,7], target=7"
+  :values="[2,3,6,7]"
+  :windowKeys="['idx']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { idx: 0 }, vars: { path: "[2]", remain: 5 }, note: "pick 2 (reuse allowed)", added: [0] },
+    { pointers: { idx: 0 }, vars: { path: "[2,2]", remain: 3 }, note: "pick 2 again", added: [0] },
+    { pointers: { idx: 0 }, vars: { path: "[2,2,2]", remain: 1 }, note: "remain=1 → all further ≥ 2 fail" },
+    { pointers: { idx: 1 }, vars: { path: "[2,2,3]", remain: 0 }, note: "add 3 → SOLUTION [2,2,3]", added: [0,1] },
+    { pointers: { idx: 3 }, vars: { path: "[7]", remain: 0 }, note: "later: pick 7 alone → SOLUTION [7]", added: [3] }
+  ]'
+/>
 
 #### Same pattern, new tweaks
 | Variation | The one thing that changes | Time |
@@ -640,6 +686,22 @@ int dfs(int r, int n, boolean[] col, boolean[] diag, boolean[] anti) {
 
 </Callout>
 
+<CodeTrace
+  title="N-Queens (n=4) — columns of placed queens per row"
+  :values="[0,1,2,3]"
+  :windowKeys="['row']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { row: 0, col: 0 }, vars: { queens: "[0]", conflict: "no" }, note: "row 0 → col 0" },
+    { pointers: { row: 1, col: 2 }, vars: { queens: "[0,2]", conflict: "no" }, note: "row 1 → col 2" },
+    { pointers: { row: 2 }, vars: { queens: "[0,2,?]", conflict: "all cols attacked" }, note: "dead-end. backtrack" },
+    { pointers: { row: 1, col: 3 }, vars: { queens: "[0,3]", conflict: "no" }, note: "try col 3" },
+    { pointers: { row: 2, col: 1 }, vars: { queens: "[0,3,1]", conflict: "no" }, note: "row 2 → col 1" },
+    { pointers: { row: 3 }, vars: { queens: "[0,3,1,?]", conflict: "yes" }, note: "backtrack, restart from row 0 col 1" },
+    { pointers: { row: 3, col: 2 }, vars: { queens: "[1,3,0,2]", conflict: "no" }, note: "SOLUTION! second: [2,0,3,1]", added: [0,1,2,3] }
+  ]'
+/>
+
 #### Common Mistakes
 - **Wrong diagonal keys**: anti-diagonal `row - col` (offset by `N` for non-negative), main diagonal `row + col`. Swapping them rejects valid boards.
 - **Placing before checking**: check all three occupancy bits *first*, then place.
@@ -764,6 +826,21 @@ boolean dfs(char[][] b, int r, int c, String w, int k) {
 grid `[[A,B,C],[S,F,C],[A,D,E]]`, word `"ABCCED"`. DFS traces `A(0,0)→B→C→C(1,2)→E→D` through adjacent cells → **found**; the unmark step frees cells for other start points.
 
 </Callout>
+
+<CodeTrace
+  title="Word Search — grid 3x3, target ABCCED"
+  :values="['A','B','C','C','C','E','D']"
+  :windowKeys="['idx']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { idx: 0, "r,c": 0 }, vars: { char: "A", visited: "{0,0}" }, note: "start at (0,0)=A. mark visited", added: [0] },
+    { pointers: { idx: 1, "r,c": 0 }, vars: { char: "B", visited: "{(0,0),(0,1)}" }, note: "→ right to (0,1)=B", added: [1] },
+    { pointers: { idx: 2, "r,c": 0 }, vars: { char: "C", visited: "{(0,0),(0,1),(0,2)}" }, note: "→ right to (0,2)=C", added: [2] },
+    { pointers: { idx: 3, "r,c": 0 }, vars: { char: "C", visited: "{(0,2),(1,2)}" }, note: "→ down to (1,2)=C. word[3]=C ✓", added: [3] },
+    { pointers: { idx: 4, "r,c": 0 }, vars: { char: "E", visited: "+(2,2)" }, note: "→ down to (2,2)=E", added: [4] },
+    { pointers: { idx: 5, "r,c": 0 }, vars: { char: "D", visited: "+(2,1)" }, note: "→ left to (2,1)=D. word[5]=D ✓ — FOUND", added: [5] }
+  ]'
+/>
 
 #### Same pattern, new tweaks
 | Variation | The one thing that changes | Time |

@@ -221,10 +221,22 @@ Use `3→2→0→-4`, with `-4.next = 2`.
 | reset | p = 3 | slow = -4 | start entry-finding phase |
 | step 1 | p = 2 | slow = 2 | collision gives the cycle entry |
 
-The important part is that the first meeting point is not necessarily the entry. It is just a proof that a cycle exists. The reset-and-walk phase converts that proof into the exact node to return.
-
 </Callout>
 
+<CodeTrace
+  title="Floyd cycle detection — list 3→2→0→-4 with -4.next = 2 (cycle at 2)"
+  :values="[3,2,0,-4]"
+  :windowKeys="['slow','fast']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { slow: 0, fast: 0 }, vars: { phase: "meet" }, note: "start: both at head" },
+    { pointers: { slow: 1, fast: 2 }, vars: { phase: "meet" }, note: "slow +1, fast +2" },
+    { pointers: { slow: 2, fast: 1 }, vars: { phase: "meet" }, note: "fast wraps past -4 back to 2" },
+    { pointers: { slow: 3, fast: 3 }, vars: { phase: "meet" }, note: "collision at -4 — cycle proven", added: [3] },
+    { pointers: { slow: 3, fast: 0 }, vars: { phase: "reset", p: 0 }, note: "reset fast to head; both step 1 at a time" },
+    { pointers: { slow: 1, fast: 1 }, vars: { phase: "entry", p: 1 }, note: "collision at 2 — cycle entry", added: [1] }
+  ]'
+/>
 <Callout kind="trap" title="Common Trap">
 
 Only checking `fast != null`. *Example:* even-length list `1→2`. After one step, `fast` is at `2` (non-null), so `fast.next.next` NPEs on the missing `next`. Check both `fast != null && fast.next != null` before the double hop.

@@ -186,9 +186,21 @@ Space is O(1) because it keeps only pointer variables. Unlike the brute-force se
 > | 3 | -4 | -4 | pointers meet, so a cycle exists |
 > | reset | p = 3 | slow = -4 | start entry-finding phase |
 > | step 1 | p = 2 | slow = 2 | collision gives the cycle entry |
->
-> The important part is that the first meeting point is not necessarily the entry. It is just a proof that a cycle exists. The reset-and-walk phase converts that proof into the exact node to return.
 
+<CodeTrace
+  title="Floyd cycle detection — list 3→2→0→-4 with -4.next = 2 (cycle at 2)"
+  :values="[3,2,0,-4]"
+  :windowKeys="['slow','fast']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { slow: 0, fast: 0 }, vars: { phase: "meet" }, note: "start: both at head" },
+    { pointers: { slow: 1, fast: 2 }, vars: { phase: "meet" }, note: "slow +1, fast +2" },
+    { pointers: { slow: 2, fast: 1 }, vars: { phase: "meet" }, note: "fast wraps past -4 back to 2" },
+    { pointers: { slow: 3, fast: 3 }, vars: { phase: "meet" }, note: "collision at -4 — cycle proven", added: [3] },
+    { pointers: { slow: 3, fast: 0 }, vars: { phase: "reset", p: 0 }, note: "reset fast to head; both step 1 at a time" },
+    { pointers: { slow: 1, fast: 1 }, vars: { phase: "entry", p: 1 }, note: "collision at 2 — cycle entry", added: [1] }
+  ]'
+/>
 > [trap] **Common Trap** — Only checking `fast != null`. *Example:* even-length list `1→2`. After one step, `fast` is at `2` (non-null), so `fast.next.next` NPEs on the missing `next`. Check both `fast != null && fast.next != null` before the double hop.
 
 > [note] **Interview script** — First, I'd verify this is a singly linked list and I need the entry node, not just true/false. The brute force is a `HashSet<ListNode>`: return the first repeated node in O(n) time and O(n) space. To optimize space, I'll use Floyd's two pointers: slow moves one step, fast moves two, and a meeting proves a cycle. Then I reset one pointer to head and move both one step at a time; their next meeting is the entry, so the final complexity is O(n) time and O(1) space.

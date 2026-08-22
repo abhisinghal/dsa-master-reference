@@ -377,6 +377,13 @@ after step `i`, `windowSum` equals the sum of the k elements ending at index `i`
 
 </Callout>
 
+<Callout kind="trap" title="Common Trap">
+
+Integer overflow on `windowSum`. *Example:* `k = 10⁴`, values near `10⁴` → sum near `10⁸` — fine in `int`, but two of those or a larger `k` overflows. Use `long`.
+
+</Callout>
+
+
 <CodeTrace
   title="Max Average Subarray I — nums=[1,12,-5,-6,50,3], k=4"
   :values="[1, 12, -5, -6, 50, 3]"
@@ -387,12 +394,6 @@ after step `i`, `windowSum` equals the sum of the k elements ending at index `i`
     { pointers: { left: 2, right: 5 }, vars: { sum: 42, best: 51 }, note: "slide: +3 in, -12 out — best holds", added: [5], removed: [1] }
   ]'
 />
-
-<Callout kind="trap" title="Common Trap">
-
-Integer overflow on `windowSum`. *Example:* `k = 10⁴`, values near `10⁴` → sum near `10⁸` — fine in `int`, but two of those or a larger `k` overflows. Use `long`.
-
-</Callout>
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -691,6 +692,13 @@ The code uses O(1) space under the ASCII constraint because `last` has fixed siz
 
 </Callout>
 
+<Callout kind="trap" title="Common Trap">
+
+Not clamping `left` to its previous position. *Example:* `s="abba"`. At index 3 (`'a'`), the previous `a` was at 0, but `left` has already moved past 2. Without `left = max(left, prev+1)`, `left` retreats and the window contains two `a`s.
+
+</Callout>
+
+
 <CodeTrace
   title="Longest Substring Without Repeating Chars — s=&quot;abcabcbb&quot;"
   :values="['a','b','c','a','b','c','b','b']"
@@ -705,12 +713,6 @@ The code uses O(1) space under the ASCII constraint because `last` has fixed siz
     { pointers: { left: 5, right: 6 }, vars: { best: 3 }, note: "later: bb collision keeps window ≤ 3", added: [6], removed: [5] }
   ]'
 />
-
-<Callout kind="trap" title="Common Trap">
-
-Not clamping `left` to its previous position. *Example:* `s="abba"`. At index 3 (`'a'`), the previous `a` was at 0, but `left` has already moved past 2. Without `left = max(left, prev+1)`, `left` retreats and the window contains two `a`s.
-
-</Callout>
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -854,6 +856,21 @@ Space is O(1) for the fixed ASCII array `need[128]`; it does not grow with the l
 The counter trick: decrement on entry, increment on exit; `need[c]` goes negative for surplus chars, so `>0` and `==0` cleanly detect crossing the "exactly satisfied" boundary.
 
 </Callout>
+
+
+<CodeTrace
+  title="Minimum Window Substring — S=&quot;ADOBECODEBANC&quot;, T=&quot;ABC&quot;"
+  :values="['A','D','O','B','E','C','O','D','E','B','A','N','C']"
+  :windowKeys="['left','right']"
+  :cellWidth="30"
+  :steps='[
+    { pointers: { left: 0, right: 5 }, vars: { have: 3, need: 3, best: "ADOBEC (6)" }, note: "first cover: A,B,C all present", added: [0,3,5] },
+    { pointers: { left: 1, right: 5 }, vars: { have: 3, need: 3, best: "DOBEC? no A" }, note: "shrink drops A → invalid, expand right" },
+    { pointers: { left: 3, right: 10 }, vars: { have: 3, need: 3, best: "BECODEBA (8)" }, note: "next valid cover, but longer — keep prior best" },
+    { pointers: { left: 5, right: 10 }, vars: { have: 3, need: 3, best: "CODEBA (6)" }, note: "shrink kept, still 6" },
+    { pointers: { left: 9, right: 12 }, vars: { have: 3, need: 3, best: "BANC (4)" }, note: "final cover — new best BANC", added: [9,10,12] }
+  ]'
+/>
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -1192,6 +1209,20 @@ Values with `0`s or **negatives** break the shrinkable-product argument (`produc
 
 </Callout>
 
+
+<CodeTrace
+  title="Subarray Product Less Than K — nums=[10,5,2,6], k=100"
+  :values="[10,5,2,6]"
+  :windowKeys="['left','right']"
+  :cellWidth="40"
+  :steps='[
+    { pointers: { left: 0, right: 0 }, vars: { product: 10, count: 1 }, note: "add subarrays ending at 0: [10]" },
+    { pointers: { left: 0, right: 1 }, vars: { product: 50, count: 3 }, note: "ending at 1: [5],[10,5] → +2" },
+    { pointers: { left: 1, right: 2 }, vars: { product: 10, count: 5 }, note: "product 100 not <k → shrink, then +2 for [2],[5,2]", removed: [0] },
+    { pointers: { left: 1, right: 3 }, vars: { product: 60, count: 8 }, note: "ending at 3: [6],[2,6],[5,2,6] → +3. final=8" }
+  ]'
+/>
+
 <Callout kind="pat" title="Pattern Connection — the at-most-K identity">
 
 for problems of the form "count subarrays with **exactly** K …", write `exactly(K) = atMost(K) − atMost(K−1)`, where `atMost(K)` is a longest-variable sliding window that adds `right - left + 1` at each step. This unlocks *Subarrays with K Different Integers*, *Count Number of Nice Subarrays*, and *Binary Subarrays With Sum*.
@@ -1315,6 +1346,21 @@ The deque holds indices of the current window whose values are candidates for th
 Storing values, not indices. *Example:* `nums=[3,1,3]`, `k=2`. At `i=2`, the front `3` could be the old one that just exited the window — you can't tell without its index. Store indices; expire the front when `dq.peekFirst() <= i-k`.
 
 </Callout>
+
+
+<CodeTrace
+  title="Sliding Window Maximum — nums=[1,3,-1,-3,5,3,6,7], k=3"
+  :values="[1,3,-1,-3,5,3,6,7]"
+  :windowKeys="['left','right']"
+  :cellWidth="32"
+  :steps='[
+    { pointers: { left: 0, right: 2 }, vars: { deque: "[3(idx 1), -1(idx 2)]", output: "[3]" }, note: "first window fills. front=3" },
+    { pointers: { left: 1, right: 3 }, vars: { deque: "[3(idx 1),-1,-3]", output: "[3,3]" }, note: "add -3 to back. front still 3" },
+    { pointers: { left: 2, right: 4 }, vars: { deque: "[5(idx 4)]", output: "[3,3,5]" }, note: "5 pops all smaller. also expires 3" },
+    { pointers: { left: 3, right: 5 }, vars: { deque: "[5,3]", output: "[3,3,5,5]" }, note: "3 keeps below 5" },
+    { pointers: { left: 5, right: 7 }, vars: { deque: "[7]", output: "[3,3,5,5,6,7]" }, note: "final: 7 dominates" }
+  ]'
+/>
 
 <Callout kind="pat" title="Pattern Connection">
 

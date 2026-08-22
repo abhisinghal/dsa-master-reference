@@ -234,6 +234,20 @@ For fixed `i`, `[lo,hi]` brackets all unexplored pairs summing toward `-a[i]`; s
 
 </Callout>
 
+
+<CodeTrace
+  title="3Sum — sorted=[-4,-1,-1,0,1,2], target=0"
+  :values="[-4,-1,-1,0,1,2]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="38"
+  :steps='[
+    { pointers: { i: 0, lo: 1, hi: 5 }, vars: { need: 4 }, note: "fix -4. no valid pair sums to 4 within these" },
+    { pointers: { i: 1, lo: 2, hi: 5 }, vars: { need: 1, sum: 1 }, note: "-1+2=1 ✓ → [-1,-1,2]", added: [1,2,5] },
+    { pointers: { i: 1, lo: 3, hi: 4 }, vars: { need: 1, sum: 1 }, note: "0+1=1 ✓ → [-1,0,1]", added: [1,3,4] },
+    { pointers: { i: 2, lo: 3, hi: 5 }, vars: { need: 1 }, note: "skip i=2 (dup -1). no new triplets" }
+  ]'
+/>
+
 <Callout kind="trap" title="Common Trap">
 
 Missing any of the three duplicate-skips yields repeated triplets. *Example:* `nums=[-1,-1,-1,2]`. Without skipping duplicate pivots you emit `[-1,-1,2]` twice (once per `-1` as pivot); without skipping `lo`/`hi` after a hit, `[0,0,0,0]` emits `[0,0,0]` multiple times.
@@ -388,6 +402,13 @@ Area = `min(h[l],h[r]) × (r−l)`. Width shrinks each step, so only raising the
 
 </Callout>
 
+<Callout kind="note" title="Interview script">
+
+"I first confirm we need the maximum area from two vertical lines and width is index distance. I start with brute force by testing every pair, which is O(n²) time and O(1) space. I optimize with two pointers at the ends, moving the shorter wall each step, for O(n) time and O(1) space."
+
+</Callout>
+
+
 <CodeTrace
   title="Container With Most Water — heights=[1,8,6,2,5,4,8,3,7]"
   :values="[1,8,6,2,5,4,8,3,7]"
@@ -401,12 +422,6 @@ Area = `min(h[l],h[r]) × (r−l)`. Width shrinks each step, so only raising the
     { pointers: { lo: 1, hi: 5 }, vars: { area: 16, best: 49 }, note: "min(8,4)*4=16. hi shorter → hi--" }
   ]'
 />
-
-<Callout kind="note" title="Interview script">
-
-"I first confirm we need the maximum area from two vertical lines and width is index distance. I start with brute force by testing every pair, which is O(n²) time and O(1) space. I optimize with two pointers at the ends, moving the shorter wall each step, for O(n) time and O(1) space."
-
-</Callout>
 
 <Callout kind="trap" title="Common Trap">
 
@@ -526,6 +541,21 @@ After squaring, the array is no longer sorted (e.g. `[-4,-1,0,3]` → `[16,1,0,9
 
 </Callout>
 
+
+<CodeTrace
+  title="Squares of Sorted Array — nums=[-4,-1,0,3,10]"
+  :values="[-4,-1,0,3,10]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { lo: 0, hi: 4, pos: 4 }, vars: { pick: "10^2=100", output: "[_,_,_,_,100]" }, note: "|10| beats |-4|, place 100 at pos=4", added: [4] },
+    { pointers: { lo: 0, hi: 3, pos: 3 }, vars: { pick: "-4^2=16", output: "[_,_,_,16,100]" }, note: "|-4| beats |3|, place 16", added: [0] },
+    { pointers: { lo: 1, hi: 3, pos: 2 }, vars: { pick: "3^2=9", output: "[_,_,9,16,100]" }, note: "|3| beats |-1|, place 9", added: [3] },
+    { pointers: { lo: 1, hi: 2, pos: 1 }, vars: { pick: "-1^2=1", output: "[_,1,9,16,100]" }, note: "|-1| beats |0|, place 1", added: [1] },
+    { pointers: { lo: 2, hi: 2, pos: 0 }, vars: { pick: "0^2=0", output: "[0,1,9,16,100]" }, note: "final: place 0" }
+  ]'
+/>
+
 <Callout kind="trap" title="Common Trap">
 
 Squaring in place, then sorting. *Example:* `nums=[-4,-1,0,3,10]` → squared `[16,1,0,9,100]` still needs a sort (O(n log n)). Two pointers from the ends fill an output array from the back in O(n).
@@ -630,6 +660,13 @@ Space is O(1) because sorting happens in-place with three pointers and a constan
 
 </Callout>
 
+<Callout kind="note" title="Interview script">
+
+"I first confirm the only values are 0, 1, and 2 and the array must be sorted in place. I start with brute force as counting buckets or library sort, which is O(n) in two passes or O(n log n) with sort. I optimize with `low`, `mid`, and `high` regions so one scan partitions the array in O(n) time and O(1) space."
+
+</Callout>
+
+
 <CodeTrace
   title="Sort Colors (Dutch National Flag) — array evolves in place"
   :values="[2,0,2,1,1,0]"
@@ -644,12 +681,6 @@ Space is O(1) because sorting happens in-place with three pointers and a constan
     { pointers: { low: 2, mid: 4, high: 3 }, vars: { a: "[0,0,1,1,2,2]" }, note: "mid past high → done" }
   ]'
 />
-
-<Callout kind="note" title="Interview script">
-
-"I first confirm the only values are 0, 1, and 2 and the array must be sorted in place. I start with brute force as counting buckets or library sort, which is O(n) in two passes or O(n log n) with sort. I optimize with `low`, `mid`, and `high` regions so one scan partitions the array in O(n) time and O(1) space."
-
-</Callout>
 
 <Callout kind="trap" title="Common Trap">
 
@@ -785,6 +816,20 @@ If `leftMax ≤ rightMax`, the water at `left` depends only on `leftMax` (a tall
 "I first confirm each bar has width one and water over a bar depends on the smaller boundary wall. I start with brute force by scanning left and right from every index, which is O(n²) time and O(1) space. I optimize by carrying `leftMax` and `rightMax` with two pointers, so each bar is processed once in O(n) time and O(1) space."
 
 </Callout>
+
+
+<CodeTrace
+  title="Trapping Rain Water — heights=[0,1,0,2,1,0,1,3,2,1,2,1]"
+  :values="[0,1,0,2,1,0,1,3,2,1,2,1]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="26"
+  :steps='[
+    { pointers: { lo: 0, hi: 11, leftMax: 0, rightMax: 1 }, vars: { total: 0 }, note: "shorter side leads: lo (h=0)" },
+    { pointers: { lo: 2, hi: 11, leftMax: 1, rightMax: 1 }, vars: { total: 1 }, note: "trap 1 unit above idx 2 (leftMax−h)", added: [2] },
+    { pointers: { lo: 5, hi: 11, leftMax: 2, rightMax: 1 }, vars: { total: 4 }, note: "right side leads. traps at 8,9,10 = +3", added: [8,9,10] },
+    { pointers: { lo: 5, hi: 7, leftMax: 2, rightMax: 3 }, vars: { total: 6 }, note: "traps at 5,6 = +2. final = 6", added: [5,6] }
+  ]'
+/>
 
 <Callout kind="trap" title="Common Trap">
 

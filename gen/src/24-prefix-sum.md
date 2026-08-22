@@ -136,6 +136,9 @@ Space is O(n) in the worst case because every prefix sum can be distinct and sto
 
 > [note] **Trace it** — `a=[1,2,1,2,1], k=3`. Running prefixes `0,1,3,4,6,7`. Each time `pre−3` was seen before, you found a subarray: pairs give `[1,2],[2,1],[1,2],[2,1]` → **4**.
 
+> [trap] **Common Trap** — Forgetting the `count.put(0,1)` seed drops subarrays that start at index 0. Do **not** use a sliding window here — negatives destroy the monotonic shrink.
+
+
 <CodeTrace
   title="Subarray Sum Equals K — a=[1,2,1,2,1], k=3"
   :values="[1,2,1,2,1]"
@@ -149,8 +152,6 @@ Space is O(n) in the worst case because every prefix sum can be distinct and sto
     { pointers: { i: 4 }, vars: { pre: 7, "need pre-k": 4, count: 4, "seen": "{...,4:1,6:1}" }, note: "seen[4]=1 → +1. final count=4", added: [3,4] }
   ]'
 />
-
-> [trap] **Common Trap** — Forgetting the `count.put(0,1)` seed drops subarrays that start at index 0. Do **not** use a sliding window here — negatives destroy the monotonic shrink.
 
 > [pat] **Pattern Connection** — The shared idea is **charge a subarray-with-a-target-property to its prefix**: a subarray `(l,r]` has the property iff two prefixes differ by the target, so you store seen prefixes in a map. Recognize it in *Contiguous Array* (map a 0/1 array's ±1 running sum to the first index it appeared — a balanced subarray means equal prefixes) and *Subarray Sums Divisible by K* (bucket prefixes by `pre mod k`; two prefixes in the same bucket bound a divisible subarray). The transfer trick: rephrase "count subarrays where X" as "count prefix pairs that differ by X."
 
@@ -236,6 +237,24 @@ Space is O(n) for the difference array and output array. The extra `+1` slot is 
 > [note] **Trace it** — `n=5`, bookings `[1,2,10],[2,3,20],[2,5,25]`. Endpoint marks then one prefix pass → per-flight seats `[10,55,45,25,25]` — three range adds settled in one sweep.
 
 > [trap] **Common Trap** — Off-by-one at `r+1`; size the array `n+1` so the closing decrement never overflows the bounds.
+
+
+<CodeTrace
+  title="Corporate Flight Bookings — n=5, three bookings"
+  :values="[0,0,0,0,0]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { diff: "[10,0,-10,0,0,0]" }, note: "booking [1,2,10] → diff[0]+=10, diff[2]-=10" },
+    { pointers: { i: 1 }, vars: { diff: "[10,20,-10,-20,0,0]" }, note: "[2,3,20] → diff[1]+=20, diff[3]-=20" },
+    { pointers: { i: 2 }, vars: { diff: "[10,45,-10,-20,0,-25]" }, note: "[2,5,25] → diff[1]+=25, diff[5]-=25" },
+    { pointers: { i: 0 }, vars: { seats: "[10,_,_,_,_]" }, note: "prefix pass: seats[0]=10", added: [0] },
+    { pointers: { i: 1 }, vars: { seats: "[10,55,_,_,_]" }, note: "seats[1]=10+45=55", added: [1] },
+    { pointers: { i: 2 }, vars: { seats: "[10,55,45,_,_]" }, note: "seats[2]=55−10=45", added: [2] },
+    { pointers: { i: 3 }, vars: { seats: "[10,55,45,25,_]" }, note: "seats[3]=45−20=25", added: [3] },
+    { pointers: { i: 4 }, vars: { seats: "[10,55,45,25,25]" }, note: "seats[4]=25+0=25 — final", added: [4] }
+  ]'
+/>
 
 > [pat] **Pattern Connection** — 2D difference arrays handle sub-rectangle increments; combined with a 2D prefix sum they answer *Range Sum Query 2D* in O(1) per query.
 

@@ -206,15 +206,19 @@ int minMeetingRooms(int[][] meetings) {
 ```
 
 > [note] **Trace it** — heap version on `[[0,30],[5,10],[15,20]]`.
->
-> | meeting | heap before | action | heap after | rooms in use |
-> |---|---|---|---|---:|
-> | `[0,30]` | `[]` | allocate room ending 30 | `[30]` | 1 |
-> | `[5,10]` | `[30]` | earliest end 30 > 5, allocate new | `[10,30]` | 2 |
-> | `[15,20]` | `[10,30]` | 10 <= 15, reuse that room | `[20,30]` | 2 |
->
-> The heap stores end times of active meetings; its size is the number of rooms currently occupied.
 
+<CodeTrace
+  title="Meeting Rooms II (heap) — meetings=[[0,30],[5,10],[15,20]]"
+  :values="['[0,30]','[5,10]','[15,20]']"
+  :windowKeys="['i']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { i: 0 }, vars: { heap: "[30]", rooms: 1 }, note: "first meeting → room 1 ends at 30" },
+    { pointers: { i: 1 }, vars: { heap: "[10,30]", rooms: 2 }, note: "5 < 30 → need new room. peek=10" },
+    { pointers: { i: 2 }, vars: { heap: "[20,30]", rooms: 2 }, note: "15 ≥ 10 → reuse room, replace 10 with 20", added: [2] },
+    { pointers: { i: 3 }, vars: { heap: "[20,30]", rooms: 2 }, note: "done. answer = 2 rooms" }
+  ]'
+/>
 #### Java (sweep, tie-break end before start)
 ```java
 int minMeetingRoomsSweep(int[][] meetings) {
@@ -232,15 +236,20 @@ int minMeetingRoomsSweep(int[][] meetings) {
 ```
 
 > [note] **Trace it** — two-array sweep on starts `[0,5,15]` and ends `[10,20,30]`.
->
-> | pointer comparison | event processed | rooms | best |
-> |---|---|---:|---:|
-> | `0 < 10` | start at 0 | 1 | 1 |
-> | `5 < 10` | start at 5 | 2 | 2 |
-> | `15 < 10` false | end at 10 | 1 | 2 |
-> | `15 < 20` | start at 15 | 2 | 2 |
-> | loop done with starts | remaining ends only reduce rooms | — | 2 |
 
+<CodeTrace
+  title="Meeting Rooms II (two-array sweep) — starts / ends sorted"
+  :values="[0,5,10,15,20,30]"
+  :windowKeys="['si','ei']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { si: 0, ei: 0 }, vars: { rooms: 1, peak: 1 }, note: "0 < 10 → room+" },
+    { pointers: { si: 1, ei: 0 }, vars: { rooms: 2, peak: 2 }, note: "5 < 10 → room+ (2 concurrent)" },
+    { pointers: { si: 2, ei: 0 }, vars: { rooms: 1, peak: 2 }, note: "15 ≥ 10 → advance end (5-10 done)" },
+    { pointers: { si: 2, ei: 1 }, vars: { rooms: 2, peak: 2 }, note: "15 < 20 → room+" },
+    { pointers: { si: 3, ei: 2 }, vars: { rooms: 2, peak: 2 }, note: "starts exhausted. answer = 2 rooms" }
+  ]'
+/>
 ### Time Complexity
 Time O(n log n). Sorting starts/ends or meetings dominates; each event or heap operation is processed once.
 

@@ -350,6 +350,21 @@ heights `[2,1,5,6,2,3]`. When `2` follows `6`, pop `6` (area 6) and `5` (area 10
 
 </Callout>
 
+<CodeTrace
+  title="Largest Rectangle in Histogram — heights=[2,1,5,6,2,3]"
+  :values="[2,1,5,6,2,3]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { stack: "[0]", best: 0 }, note: "push idx 0 (h=2)" },
+    { pointers: { i: 1 }, vars: { stack: "[1]", best: 2 }, note: "1 pops 2 → area 2*1=2, then push", added: [0] },
+    { pointers: { i: 2 }, vars: { stack: "[1,2]", best: 2 }, note: "5 pushes" },
+    { pointers: { i: 3 }, vars: { stack: "[1,2,3]", best: 2 }, note: "6 pushes" },
+    { pointers: { i: 4 }, vars: { stack: "[1,4]", best: 10 }, note: "2 pops 6 (area 6), pops 5 (area 10) — NEW BEST", added: [2,3] },
+    { pointers: { i: 5 }, vars: { stack: "[1,4,5]", best: 10 }, note: "3 pushes. flush at end gives no bigger", added: [] }
+  ]'
+/>
+
 ### Time Complexity
 O(n), because every bar index is pushed once and popped once. Each rectangle area is computed exactly when its limiting shorter bar is discovered.
 

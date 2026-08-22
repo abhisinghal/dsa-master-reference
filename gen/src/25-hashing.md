@@ -136,6 +136,18 @@ Space is O(n) in the worst case because the map may store every prior value befo
 
 > [note] **Interview script** — "I first confirm there is exactly one answer and I should return indices, not values. I start with brute force by checking every pair, which is O(n²) time and O(1) space. I optimize by storing seen values in a hash map and checking `target - a[i]` during one scan, giving O(n) time and O(n) space."
 
+
+<CodeTrace
+  title="Two Sum (hash) — nums=[2,7,11,15], target=9"
+  :values="[2,7,11,15]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { need: 7, seen: "{}", hit: "no" }, note: "store seen[2]=0" },
+    { pointers: { i: 1 }, vars: { need: 2, seen: "{2:0}", hit: "YES" }, note: "seen[2]=0 → return [0,1]", added: [0,1] }
+  ]'
+/>
+
 > [trap] **Common Trap** — Inserting into the map **before** the check makes an element match itself. *Example:* `nums=[3,2,4]`, `target=6`. If you `put(3,0)` first, then check for `target-3=3`, you find yourself and emit `(0,0)`. Check first, insert after.
 
 > [pat] **Pattern Connection** — Hashing. In a *sorted* array the same task becomes **two pointers** in O(1) space; the sorted-vs-unsorted choice recurs throughout.
@@ -274,6 +286,22 @@ Space is O(n·L) for the grouped output plus hash keys/lists; each input string 
 
 > [note] **Interview script** — "I first confirm words are lowercase and group order does not matter. I start with brute force by comparing every pair of words for anagram equality, which is O(n²·L log L) time in the sorting version. I optimize by building one 26-count signature per word and hashing groups by that key, for O(n·L) time and O(n·L) space."
 
+
+<CodeTrace
+  title="Group Anagrams — words indexed 0..5"
+  :values="['eat','tea','tan','ate','nat','bat']"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { key: "aet", groups: "{aet:[eat]}" }, note: "start bucket aet" },
+    { pointers: { i: 1 }, vars: { key: "aet", groups: "{aet:[eat,tea]}" }, note: "tea joins aet", added: [0,1] },
+    { pointers: { i: 2 }, vars: { key: "ant", groups: "{aet,ant:[tan]}" }, note: "new bucket ant" },
+    { pointers: { i: 3 }, vars: { key: "aet", groups: "{aet:[eat,tea,ate],ant}" }, note: "ate joins aet", added: [0,1,3] },
+    { pointers: { i: 4 }, vars: { key: "ant", groups: "{aet,ant:[tan,nat]}" }, note: "nat joins ant", added: [2,4] },
+    { pointers: { i: 5 }, vars: { key: "abt", groups: "{aet,ant,abt:[bat]}" }, note: "bat alone. final 3 groups" }
+  ]'
+/>
+
 > [trap] **Common Trap** — Building the count key without a delimiter collides distinct histograms. *Example:* counts `[1,11]` and `[11,1]` both stringify to `"111"` and get grouped together. Separate fields — e.g. `"1#11"` vs `"11#1"`.
 
 > [pat] **Pattern Connection** — "Signature hashing" also powers Group Shifted Strings and isomorphic-string checks.
@@ -361,6 +389,24 @@ Extra space is O(1) excluding the required output array: `out` stores the answer
 > [note] **Trace it** — `[1,2,3,4]`. Left-products `[1,1,2,6]`, then multiply each by the running right-product → `[24,12,8,6]`. Position 0 = 2·3·4, position 3 = 1·2·3.
 
 > [note] **Interview script** — "I first confirm division is disallowed and zeros may appear, so total-product division is not safe. I start with brute force by multiplying all other entries for every index, which is O(n²) time and O(1) extra space. I optimize with prefix and suffix products in two sweeps, giving O(n) time and O(1) extra space besides the output."
+
+
+<CodeTrace
+  title="Product of Array Except Self — nums=[1,2,3,4]"
+  :values="[1,2,3,4]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { left: 1, res: "[1,_,_,_]" }, note: "res[0]=1 (product of nothing left of 0)", added: [0] },
+    { pointers: { i: 1 }, vars: { left: 1, res: "[1,1,_,_]" }, note: "res[1]=1 (nums[0]=1)", added: [1] },
+    { pointers: { i: 2 }, vars: { left: 2, res: "[1,1,2,_]" }, note: "res[2]=1*2=2", added: [2] },
+    { pointers: { i: 3 }, vars: { left: 6, res: "[1,1,2,6]" }, note: "res[3]=1*2*3=6 — left pass done", added: [3] },
+    { pointers: { i: 3 }, vars: { right: 1, res: "[1,1,2,6]" }, note: "right pass, i=3: no change (right=1)" },
+    { pointers: { i: 2 }, vars: { right: 4, res: "[1,1,8,6]" }, note: "res[2] *= 4 → 8", added: [2] },
+    { pointers: { i: 1 }, vars: { right: 12, res: "[1,12,8,6]" }, note: "res[1] *= 12 → 12", added: [1] },
+    { pointers: { i: 0 }, vars: { right: 24, res: "[24,12,8,6]" }, note: "res[0] *= 24 → final [24,12,8,6]", added: [0] }
+  ]'
+/>
 
 > [trap] **Common Trap** — Reaching for division. *Example:* `nums=[1,2,0,4]` — dividing the total product by each element blows up at the zero. The prefix/suffix product is division-free and zero-safe.
 
@@ -492,6 +538,9 @@ Space is O(n) because the hash set stores the distinct input values; duplicates 
 
 > [note] **Trace it** — `[100,4,200,1,3,2]`. Only `1` and `100` and `200` are run-starts (their predecessor is absent). From `1` walk `1,2,3,4` → length **4**; the others give length 1.
 
+> [note] **Interview script** — "I first confirm the array is unsorted, duplicates may exist, and the target is the length of the longest consecutive run. I start with brute force by trying to extend a run from every value with repeated searches, which is O(n²) time. I optimize by putting values in a set and expanding only when `x - 1` is absent, giving O(n) time and O(n) space."
+
+
 <CodeTrace
   title="Longest Consecutive Sequence — nums=[100,4,200,1,3,2]"
   :values="[100,4,200,1,3,2]"
@@ -506,8 +555,6 @@ Space is O(n) because the hash set stores the distinct input values; duplicates 
     { pointers: { i: 5 }, vars: { val: 2, "1 in set": "yes", start: "no" }, note: "skip. final best = 4" }
   ]'
 />
-
-> [note] **Interview script** — "I first confirm the array is unsorted, duplicates may exist, and the target is the length of the longest consecutive run. I start with brute force by trying to extend a run from every value with repeated searches, which is O(n²) time. I optimize by putting values in a set and expanding only when `x - 1` is absent, giving O(n) time and O(n) space."
 
 > [trap] **Common Trap** — Omitting the `x-1` guard makes it O(n²). *Example:* `nums=[1,2,3,4]` — without the guard you walk the run from 1, then from 2, then from 3, then from 4 → 4+3+2+1 steps. Only start from values whose predecessor is absent.
 

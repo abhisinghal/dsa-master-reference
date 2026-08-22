@@ -169,6 +169,18 @@ When at index `i`, the map holds every value at indices `< i` with its index.
 
 </Callout>
 
+
+<CodeTrace
+  title="Two Sum (hash) — nums=[2,7,11,15], target=9"
+  :values="[2,7,11,15]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { need: 7, seen: "{}", hit: "no" }, note: "store seen[2]=0" },
+    { pointers: { i: 1 }, vars: { need: 2, seen: "{2:0}", hit: "YES" }, note: "seen[2]=0 → return [0,1]", added: [0,1] }
+  ]'
+/>
+
 <Callout kind="trap" title="Common Trap">
 
 Inserting into the map **before** the check makes an element match itself. *Example:* `nums=[3,2,4]`, `target=6`. If you `put(3,0)` first, then check for `target-3=3`, you find yourself and emit `(0,0)`. Check first, insert after.
@@ -343,6 +355,22 @@ Anagrams share a canonical form. Use the 26-count signature (O(L)) rather than s
 
 </Callout>
 
+
+<CodeTrace
+  title="Group Anagrams — words indexed 0..5"
+  :values="['eat','tea','tan','ate','nat','bat']"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { key: "aet", groups: "{aet:[eat]}" }, note: "start bucket aet" },
+    { pointers: { i: 1 }, vars: { key: "aet", groups: "{aet:[eat,tea]}" }, note: "tea joins aet", added: [0,1] },
+    { pointers: { i: 2 }, vars: { key: "ant", groups: "{aet,ant:[tan]}" }, note: "new bucket ant" },
+    { pointers: { i: 3 }, vars: { key: "aet", groups: "{aet:[eat,tea,ate],ant}" }, note: "ate joins aet", added: [0,1,3] },
+    { pointers: { i: 4 }, vars: { key: "ant", groups: "{aet,ant:[tan,nat]}" }, note: "nat joins ant", added: [2,4] },
+    { pointers: { i: 5 }, vars: { key: "abt", groups: "{aet,ant,abt:[bat]}" }, note: "bat alone. final 3 groups" }
+  ]'
+/>
+
 <Callout kind="trap" title="Common Trap">
 
 Building the count key without a delimiter collides distinct histograms. *Example:* counts `[1,11]` and `[11,1]` both stringify to `"111"` and get grouped together. Separate fields — e.g. `"1#11"` vs `"11#1"`.
@@ -462,6 +490,24 @@ After the left sweep, `out[i]` holds the product of all elements strictly left o
 "I first confirm division is disallowed and zeros may appear, so total-product division is not safe. I start with brute force by multiplying all other entries for every index, which is O(n²) time and O(1) extra space. I optimize with prefix and suffix products in two sweeps, giving O(n) time and O(1) extra space besides the output."
 
 </Callout>
+
+
+<CodeTrace
+  title="Product of Array Except Self — nums=[1,2,3,4]"
+  :values="[1,2,3,4]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { left: 1, res: "[1,_,_,_]" }, note: "res[0]=1 (product of nothing left of 0)", added: [0] },
+    { pointers: { i: 1 }, vars: { left: 1, res: "[1,1,_,_]" }, note: "res[1]=1 (nums[0]=1)", added: [1] },
+    { pointers: { i: 2 }, vars: { left: 2, res: "[1,1,2,_]" }, note: "res[2]=1*2=2", added: [2] },
+    { pointers: { i: 3 }, vars: { left: 6, res: "[1,1,2,6]" }, note: "res[3]=1*2*3=6 — left pass done", added: [3] },
+    { pointers: { i: 3 }, vars: { right: 1, res: "[1,1,2,6]" }, note: "right pass, i=3: no change (right=1)" },
+    { pointers: { i: 2 }, vars: { right: 4, res: "[1,1,8,6]" }, note: "res[2] *= 4 → 8", added: [2] },
+    { pointers: { i: 1 }, vars: { right: 12, res: "[1,12,8,6]" }, note: "res[1] *= 12 → 12", added: [1] },
+    { pointers: { i: 0 }, vars: { right: 24, res: "[24,12,8,6]" }, note: "res[0] *= 24 → final [24,12,8,6]", added: [0] }
+  ]'
+/>
 
 <Callout kind="trap" title="Common Trap">
 
@@ -626,6 +672,13 @@ Inner `while` extends only from true run-starts, so total inner steps ≤ n acro
 
 </Callout>
 
+<Callout kind="note" title="Interview script">
+
+"I first confirm the array is unsorted, duplicates may exist, and the target is the length of the longest consecutive run. I start with brute force by trying to extend a run from every value with repeated searches, which is O(n²) time. I optimize by putting values in a set and expanding only when `x - 1` is absent, giving O(n) time and O(n) space."
+
+</Callout>
+
+
 <CodeTrace
   title="Longest Consecutive Sequence — nums=[100,4,200,1,3,2]"
   :values="[100,4,200,1,3,2]"
@@ -640,12 +693,6 @@ Inner `while` extends only from true run-starts, so total inner steps ≤ n acro
     { pointers: { i: 5 }, vars: { val: 2, "1 in set": "yes", start: "no" }, note: "skip. final best = 4" }
   ]'
 />
-
-<Callout kind="note" title="Interview script">
-
-"I first confirm the array is unsorted, duplicates may exist, and the target is the length of the longest consecutive run. I start with brute force by trying to extend a run from every value with repeated searches, which is O(n²) time. I optimize by putting values in a set and expanding only when `x - 1` is absent, giving O(n) time and O(n) space."
-
-</Callout>
 
 <Callout kind="trap" title="Common Trap">
 

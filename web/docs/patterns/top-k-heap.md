@@ -187,18 +187,20 @@ int[] topKFrequent(int[] nums, int k) {
 
 `nums=[1,1,1,2,2,3], k=2`.
 
-| Step | Action | Heap content by frequency | Why |
-|---|---|---|---|
-| count | `1→3, 2→2, 3→1` | empty | build ranking key first |
-| offer 1 | add `1` | `[1:3]` | fewer than k items, keep it |
-| offer 2 | add `2` | `[2:2, 1:3]` | root is least frequent kept |
-| offer 3 | add `3` then poll | `[2:2, 1:3]` | `3:1` is worse than both, so it leaves |
-| output | poll into result | `[1,2]` or `[2,1]` | order among top-k is not required |
-
-The heap never grows beyond `k + 1`, so each distinct value costs only `log k` work after counting.
-
 </Callout>
 
+<CodeTrace
+  title="Top K Frequent — nums=[1,1,1,2,2,3], k=2"
+  :values="[1,1,1,2,2,3]"
+  :windowKeys="['i']"
+  :cellWidth="38"
+  :steps='[
+    { pointers: { i: 5 }, vars: { freq: "{1:3, 2:2, 3:1}", heap: "[]" }, note: "count all frequencies" },
+    { pointers: { i: 0 }, vars: { heap: "[(3,1)]" }, note: "push 1 (freq 3)" },
+    { pointers: { i: 0 }, vars: { heap: "[(2,2),(3,1)]" }, note: "push 2 (freq 2). heap size = k=2" },
+    { pointers: { i: 0 }, vars: { heap: "[(2,2),(3,1)]" }, note: "3 has freq 1 < min(2) → skip. result [1,2]", added: [0,3] }
+  ]'
+/>
 ### Time Complexity
 O(n + m log k), often written O(n log k) when `m ≤ n`. Counting scans all n values, and each of the `m` distinct keys costs O(log k) in the heap.
 

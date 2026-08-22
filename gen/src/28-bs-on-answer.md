@@ -13,6 +13,10 @@ You know the answer lies in a numeric range — a capacity, a speed, a threshold
 - you can *check* a candidate x in linear time but *searching* every x is too slow
 - phrases like "minimum capacity to ship in D days", "slowest speed to finish", "largest minimum gap"
 
+
+<BinarySearchAnim />
+
+
 ### When NOT to use it
 The feasibility predicate isn't monotone — you can find an x where `feasible(x)` is true but `feasible(x+1)` is false. Then you're not searching a single flip point; the search space has multiple boundaries and this technique gives the wrong answer.
 
@@ -107,6 +111,19 @@ int minEatingSpeed(int[] piles, int h) {
 ```
 
 > [note] **Trace it** — `piles=[3,6,7,11], h=8`. Speed 4 takes `1+2+2+3 = 8` hours (feasible); speed 3 takes 10 (too slow). Binary search on speed lands on **4**.
+
+<CodeTrace
+  title="Koko Eating Bananas — piles=[3,6,7,11], h=8"
+  :values="[3,6,7,11]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { lo: 1, hi: 11, mid: 6 }, vars: { hours: 6, ok: "yes" }, note: "speed 6 → 1+1+2+2=6 ≤ 8. try slower" },
+    { pointers: { lo: 1, hi: 6, mid: 3 }, vars: { hours: 10, ok: "no" }, note: "speed 3 → 1+2+3+4=10. too slow" },
+    { pointers: { lo: 4, hi: 6, mid: 5 }, vars: { hours: 8, ok: "yes" }, note: "speed 5 → 8 hrs. try slower" },
+    { pointers: { lo: 4, hi: 5, mid: 4 }, vars: { hours: 8, ok: "yes" }, note: "speed 4 → 8 hrs. converges: answer 4" }
+  ]'
+/>
 
 ### Time Complexity
 O(n log(maxPile)), because each feasibility check scans all piles once, and binary search performs O(log maxPile) checks.
@@ -208,6 +225,20 @@ int partsNeeded(int[] a, long cap) {
 ```
 
 > [note] **Trace it** — `[7,2,5,10,8], m=2`. Cap 18 works: `[7,2,5] | [10,8]` = sums `14, 18`. Any smaller cap forces 3+ parts → answer **18**.
+
+<CodeTrace
+  title="Split Array Largest Sum — nums=[7,2,5,10,8], m=2 parts"
+  :values="[7,2,5,10,8]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { lo: 10, hi: 32, mid: 21 }, vars: { parts: 2, ok: "yes" }, note: "cap 21: [7,2,5]/[10,8]. tighten" },
+    { pointers: { lo: 10, hi: 21, mid: 15 }, vars: { parts: 3, ok: "no" }, note: "cap 15: [7,2,5]/[10]/[8] — 3 parts. loosen" },
+    { pointers: { lo: 16, hi: 21, mid: 18 }, vars: { parts: 2, ok: "yes" }, note: "cap 18: [7,2,5]/[10,8]. tighten" },
+    { pointers: { lo: 16, hi: 18, mid: 17 }, vars: { parts: 3, ok: "no" }, note: "cap 17: cannot 2-partition. loosen" },
+    { pointers: { lo: 18, hi: 18 }, vars: { answer: 18 }, note: "converges: min cap = 18" }
+  ]'
+/>
 
 ### Time Complexity
 O(n log(sum)), where `sum` is the total array sum. Each feasibility check is O(n), and binary search spans from max element to total sum.
@@ -314,6 +345,18 @@ double findMedianSortedArrays(int[] A, int[] B) {
 ```
 
 > [note] **Trace it** — `[1,3]` and `[2]` (total length 3, odd). The correct partition puts `{1,2}` on the left and `{3}` on the right; the median is the max of the left = **2**.
+
+<CodeTrace
+  title="Median of Two Sorted Arrays — A=[1,3], B=[2]"
+  :values="[1,3]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 1, "j (implied)": 1 }, vars: { L1: 1, R1: 3, L2: 2, R2: "∞", ok: "R1>=L2 but L1<L2?" }, note: "partition A after idx 0; B after idx 0" },
+    { pointers: { i: 2, "j (implied)": 0 }, vars: { L1: 3, R1: "∞", L2: "-∞", R2: 2, ok: "no: L1>R2" }, note: "wrong. move i left" },
+    { pointers: { i: 1, "j (implied)": 1 }, vars: { L1: 1, R1: 3, L2: 2, R2: "∞", ok: "yes: L1≤R2 & L2≤R1" }, note: "valid partition. left has {1,2}. odd total → median=max(L1,L2)=2" }
+  ]'
+/>
 
 ### Time Complexity
 O(log min(m,n)), because binary search runs only over the shorter array's partition index.

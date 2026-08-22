@@ -18,6 +18,10 @@ This Part III chapter focuses on heap internals and streaming problems. The Top-
 - graph algorithms that repeatedly pick the cheapest frontier state
 - memory limit hints where sorting the entire changing set is too expensive
 
+
+<HeapAnim />
+
+
 ### When to use it — practical flavors
 
 | Flavor | Typical wording | Heap shape |

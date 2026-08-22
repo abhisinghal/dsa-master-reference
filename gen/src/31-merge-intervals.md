@@ -151,17 +151,19 @@ int[][] merge(int[][] intervals) {
 ```
 
 > [note] **Trace it** — `[[1,3],[2,6],[8,10],[15,18]]` sorted by start.
->
-> | Step | Current interval | Next interval | Decision | Output so far |
-> |---|---|---|---|---|
-> | start | `[1,3]` | — | seed current block | `[]` |
-> | 1 | `[1,3]` | `[2,6]` | `2 <= 3`, merge to `[1,6]` | `[]` |
-> | 2 | `[1,6]` | `[8,10]` | `8 > 6`, emit `[1,6]` | `[[1,6]]` |
-> | 3 | `[8,10]` | `[15,18]` | `15 > 10`, emit `[8,10]` | `[[1,6],[8,10]]` |
-> | finish | `[15,18]` | — | emit last current block | `[[1,6],[8,10],[15,18]]` |
->
-> The last `out.add(cur)` is not optional. The loop only emits when it sees a gap; the final cluster has no future gap to trigger emission.
 
+<CodeTrace
+  title="Merge Intervals — sorted by start"
+  :values="['[1,3]','[2,6]','[8,10]','[15,18]']"
+  :windowKeys="['i']"
+  :cellWidth="60"
+  :steps='[
+    { pointers: { i: 0 }, vars: { last: "[1,3]", out: "[[1,3]]" }, note: "start with first interval" },
+    { pointers: { i: 1 }, vars: { last: "[1,6]", out: "[[1,6]]" }, note: "2 ≤ 3 → overlap, extend end to max(3,6)=6", added: [0,1] },
+    { pointers: { i: 2 }, vars: { last: "[8,10]", out: "[[1,6],[8,10]]" }, note: "8 > 6 → new interval" },
+    { pointers: { i: 3 }, vars: { last: "[15,18]", out: "[[1,6],[8,10],[15,18]]" }, note: "15 > 10 → new interval. done" }
+  ]'
+/>
 ### Time Complexity
 Time O(n log n). Sorting dominates; the left-to-right merge pass is O(n).
 
