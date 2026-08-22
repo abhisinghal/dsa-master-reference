@@ -83,16 +83,16 @@ Delivered across 7 batches: Prefix Sum + Trie + Bit Manip (25), Two Pointers + H
 - `d1a7683` System Design chapter
 - `cdc2ff2` 100% CodeTrace coverage
 
-## Deferred (visual/interactive work — from the Grokking-head audit)
+## Deferred (from prior audits — post-visualizer sweep)
 
-Four items outstanding, ranked by ROI:
+The four visualizer items from the Grokking-head audit are now shipped:
 
-1. **227 Problem-statement Example previews** — small "Example →" trace strip beside every problem's example (input/output → 1–2 frame walkthrough of what the transformation does). Reuses existing CodeTrace component; big surface-area win. Est. ~40 hours (batchable).
-2. **30 Data-structure operation state-machines** — CodeTrace-style animations for stack push/pop, queue enq/deq, heap sift-up/down, BST rotate, UF union/find, Trie insert/search, deque ops, etc. Each ~1 hour. Est. ~30 hours.
-3. **Complexity growth-curve visualizer** — one interactive Vue component: `n` slider (1..10 000) with bar chart comparing O(1), O(log n), O(n), O(n log n), O(n²), O(2ⁿ) runtimes. Est. ~4 hours.
-4. **6-phase playbook single-page animation** — animated walkthrough of Recognize → Model → Verify → Code → Test → Optimize on one example. Est. ~6 hours.
+1. ✅ **Complexity growth-curve visualizer** — `ComplexityCurve.vue` on complexity chapter (interactive n-slider, 8 classes, ops-vs-wall-time toggle, feasibility verdict)
+2. ✅ **6-phase playbook single-page animation** — `PlaybookPhases.vue` on playbook chapter (colored phase progress, playback controls, working artefact per phase)
+3. ✅ **~30 Data-structure operation state-machines** — `DsStateMachine.vue` + 5 wrappers (StackQueueOps, HeapOps, BstOps, TrieOps, UnionFindOps) covering push/pop/enq/deq, sift-up/sift-down/heapify, BST search/insert/delete/BFS, trie insert/search/prefix, and UF find/union/components. Embedded across 5 DS chapters.
+4. ✅ **~84 Problem-statement Example previews** — `ExamplePreview.vue` + auto-generator `gen/add_example_previews.py` parsing `**Example N:**` lines and auto-embedding input→output visuals with multi-arg support. Coverage across 17 chapters.
 
-**Note on the audit's "90 mini-traces for new tweaks":** superseded — the 184 fully-authored variation pages each already contain the full solution with Java code and cross-linking, which is a strictly stronger deliverable than a mini-trace.
+Nothing outstanding on the audit list.
 
 ## Blocked on you
 
