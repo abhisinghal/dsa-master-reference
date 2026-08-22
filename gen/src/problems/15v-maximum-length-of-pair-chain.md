@@ -2,23 +2,29 @@
 
 *[↗ LeetCode: Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-**The one thing that changes vs the flagship for this pattern:** the same earliest-finish chain, counting length
+Pairs `[a, b]` chain if next pair `[c, d]` has `c > b`. Max chain length.
 
-## The pattern this problem belongs to
+## Approach 1 — DP (LIS style)
 
-This variation of Greedy shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+Sort by first; `dp[i] = 1 + max(dp[j])` over `j` with `pair[j].b < pair[i].a`. O(n²).
 
-- [→ Flagship problem for Greedy](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/greedy) — includes this problem's approach + code + trace + traps
+## Approach 2 — Greedy (activity selection)
 
-## Solution sketch
+**Insight.** Sort by **second** value. Greedily pick every pair whose start > last picked end. Same as interval scheduling.
 
-The pattern chapter's [Greedy](/patterns/greedy) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int findLongestChain(int[][] pairs) {
+    Arrays.sort(pairs, (a, b) -> a[1] - b[1]);
+    int end = Integer.MIN_VALUE, count = 0;
+    for (int[] p : pairs)
+        if (p[0] > end) { end = p[1]; count++; }
+    return count;
+}
+```
 
-1. **Read the pattern chapter's `Maximum Length of Pair Chain` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n log n)**; Space **O(1)**.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/greedy) table for the family tree.
+- [Non-overlapping Intervals](/problems/non-overlapping-intervals) — identical algorithm
+- [Minimum Number of Arrows](/problems/minimum-number-of-arrows-to-burst-balloons)

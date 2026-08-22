@@ -1,24 +1,32 @@
 # Greedy — Course Schedule III
 
-*[↗ LeetCode: Course Schedule III](https://leetcode.com/problems/course-schedule-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
+*[↗ LeetCode: Course Schedule III](https://leetcode.com/problems/course-schedule-iii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/greedy)
 
-**The one thing that changes vs the flagship for this pattern:** sort by deadline; greedily take courses, dropping the longest with a max-heap when you overrun
+Each course `[duration, lastDay]`. Take max number of courses (one at a time, must finish by lastDay).
 
-## The pattern this problem belongs to
+## Approach — Sort by deadline + max-heap of durations (regret-based)
 
-This variation of Greedy shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Sort by deadline. Iterate; always take the course. If cumulative time exceeds the current deadline, **swap out** the previously-taken course with the largest duration (that's the "regret" step). This keeps the count maximal.
 
-- [→ Flagship problem for Greedy](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/greedy) — includes this problem's approach + code + trace + traps
+```java
+int scheduleCourse(int[][] courses) {
+    Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+    PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+    int time = 0;
+    for (int[] c : courses) {
+        time += c[0];
+        pq.offer(c[0]);
+        if (time > c[1]) time -= pq.poll();
+    }
+    return pq.size();
+}
+```
 
-## Solution sketch
+**Why greedy works.** After sorting by deadline, dropping the largest duration among taken courses is always at least as good as dropping the current one — swapping preserves feasibility for the same number of courses picked so far.
 
-The pattern chapter's [Greedy](/patterns/greedy) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(n log n)**; Space **O(n)**.
 
-1. **Read the pattern chapter's `Course Schedule III` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/greedy) table for the family tree.
+- [Maximum Number of Events That Can Be Attended II](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended-ii/) — DP variant
+- [Task Scheduler](https://leetcode.com/problems/task-scheduler/) — greedy sibling

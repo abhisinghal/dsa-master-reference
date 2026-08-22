@@ -2,23 +2,28 @@
 
 *[↗ LeetCode: Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-**The one thing that changes vs the flagship for this pattern:** removals = total − (max non-overlapping kept)
+Minimum intervals to remove so the rest are non-overlapping.
 
-## The pattern this problem belongs to
+## Approach — Sort by end + activity selection
 
-This variation of Greedy shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Equivalent to maximizing non-overlapping intervals; the count to remove is `n - maxKept`. Sort by end, greedily keep intervals whose start ≥ previous end.
 
-- [→ Flagship problem for Greedy](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/greedy) — includes this problem's approach + code + trace + traps
+**Why sort by end.** Choosing the earliest ending interval leaves maximal room for the rest — classic exchange argument.
 
-## Solution sketch
+```java
+int eraseOverlapIntervals(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -> a[1] - b[1]);
+    int kept = 0, end = Integer.MIN_VALUE;
+    for (int[] it : intervals)
+        if (it[0] >= end) { end = it[1]; kept++; }
+    return intervals.length - kept;
+}
+```
 
-The pattern chapter's [Greedy](/patterns/greedy) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(n log n)**; Space **O(1)**.
 
-1. **Read the pattern chapter's `Non-overlapping Intervals` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/greedy) table for the family tree.
+- [Minimum Arrows](/problems/minimum-number-of-arrows-to-burst-balloons) — sibling with weak inequality
+- [Maximum Length of Pair Chain](/problems/maximum-length-of-pair-chain)
+- [Meeting Rooms](/problems/meeting-rooms)
