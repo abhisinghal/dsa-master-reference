@@ -41,11 +41,11 @@ Plus 8 high-value canonical variations:
 - Maximum Subarray (Kadane) · Coin Change · LIS · Edit Distance
 - Permutations · Subsets
 
-### All variation pages fully authored
+### All variation pages fully authored + flagship-format upgraded
 
-**184 variation pages** — every LC problem across all "Same pattern, new tweaks" tables is now a **full multi-approach page**: LC link + difficulty badge + 1–3 approaches with Java code + complexity summary + related-problems cross-links. Zero scaffolds remain.
+**184 variation pages** — every LC problem across all "Same pattern, new tweaks" tables is now a **full multi-approach page** in the **flagship format**: LC link + difficulty badge, problem statement, `---` separators between approaches, 1–3 approaches with Java code + CodeTrace scaffolds (when example is parseable), **Complexity summary** table, **When to use which** bullets, related-problems cross-links.
 
-Delivered across 7 batches: Prefix Sum + Trie + Bit Manip (25), Two Pointers + Hashing (26), Greedy (10), Backtracking (15), Sliding Window (25), DP (28), and prior Merge Intervals / BS on Answer / Union-Find / Monotonic Stack / Binary Search / Topo Sort / Divide &amp; Conquer / Sweep Line / Top-K / K-way Merge / Fast-Slow (55).
+Delivered across 8 batches: Prefix Sum + Trie + Bit Manip (25), Two Pointers + Hashing (26), Greedy (10), Backtracking (15), Sliding Window (25), DP (28), and prior Merge Intervals / BS on Answer / Union-Find / Monotonic Stack / Binary Search / Topo Sort / Divide &amp; Conquer / Sweep Line / Top-K / K-way Merge / Fast-Slow (55) + structural flagship-format upgrade of all 133 variations (`gen/upgrade_problem_pages.py`).
 
 ### Infrastructure
 
@@ -63,6 +63,7 @@ Delivered across 7 batches: Prefix Sum + Trie + Bit Manip (25), Two Pointers + H
 
 ## Recent commits (all live)
 
+- `b11a07f` upgrade all 133 variation pages to flagship format (CodeTrace + Complexity summary + When-to-use)
 - `5a02edb` fix: strip `NNv-` prefix in migrate.py (resolves 90% Practice 404s)
 - `96be326` docs: mark all visualizer items shipped
 - `53be2ab` +84 auto-embedded Example Previews
