@@ -1,24 +1,35 @@
 # Two Pointers — Move Zeroes
 
-*[↗ LeetCode: Move Zeroes](https://leetcode.com/problems/move-zeroes/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
+*[↗ LeetCode: Move Zeroes](https://leetcode.com/problems/move-zeroes/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** two categories (nonzero vs zero); a single write-pointer packs nonzeros to the front
+Move all zeros to end, preserving order of non-zeros. In-place.
 
-## The pattern this problem belongs to
+## Approach — Slow/fast write pointer
 
-This variation of Two Pointers shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `write` points to the next slot for a non-zero; `read` scans. Copy non-zeros forward, then zero-fill the tail. Alternatively, swap on the fly.
 
-- [→ Flagship problem for Two Pointers](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/two-pointers) — includes this problem's approach + code + trace + traps
+```java
+void moveZeroes(int[] nums) {
+    int write = 0;
+    for (int read = 0; read < nums.length; read++)
+        if (nums[read] != 0) nums[write++] = nums[read];
+    while (write < nums.length) nums[write++] = 0;
+}
+```
 
-## Solution sketch
+**One-pass swap variant** (fewer writes when array is mostly zeros):
 
-The pattern chapter's [Two Pointers](/patterns/two-pointers) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+void moveZeroes2(int[] nums) {
+    int write = 0;
+    for (int read = 0; read < nums.length; read++)
+        if (nums[read] != 0) { int t = nums[read]; nums[read] = nums[write]; nums[write++] = t; }
+}
+```
 
-1. **Read the pattern chapter's `Move Zeroes` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/two-pointers) table for the family tree.
+- [Remove Element](https://leetcode.com/problems/remove-element/) — same slow/fast pattern
+- [Sort Array By Parity](/problems/sort-array-by-parity)

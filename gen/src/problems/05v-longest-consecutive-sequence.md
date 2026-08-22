@@ -2,23 +2,38 @@
 
 *[↗ LeetCode: Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-**The one thing that changes vs the flagship for this pattern:** 1-D runs of integers
+Given unsorted `nums`, return length of longest run of consecutive integers. **O(n).**
 
-## The pattern this problem belongs to
+## Approach 1 — Sort
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+O(n log n). Rejected by spec.
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+## Approach 2 — Set + only start from sequence heads
 
-## Solution sketch
+**Insight.** Put all nums in a `HashSet`. Iterate; **only start counting from `x` if `x - 1` is absent** (so `x` is a sequence head). Then extend forward. Each element is visited by the inner loop at most once → O(n) total.
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int longestConsecutive(int[] nums) {
+    Set<Integer> set = new HashSet<>();
+    for (int x : nums) set.add(x);
+    int best = 0;
+    for (int x : set) {
+        if (set.contains(x - 1)) continue;
+        int len = 1;
+        while (set.contains(x + len)) len++;
+        best = Math.max(best, len);
+    }
+    return best;
+}
+```
 
-1. **Read the pattern chapter's `Longest Consecutive Sequence` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n)** average; Space **O(n)**.
 
-## Related problems in the same pattern
+**Trap.** Without the "sequence head" check, you'd re-walk the same run n times → O(n²).
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+**Union-Find alternative.** Union x with x±1 whenever both present; track max component size.
+
+## Related problems
+
+- [Longest Substring Without Repeating Characters](/problems/sliding-window-longest-substring)
+- [Number of Islands](/problems/number-of-islands) — same "connected component" mindset

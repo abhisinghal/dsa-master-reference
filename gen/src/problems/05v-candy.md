@@ -1,24 +1,33 @@
 # Hashing — Candy
 
-*[↗ LeetCode: Candy](https://leetcode.com/problems/candy/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
+*[↗ LeetCode: Candy](https://leetcode.com/problems/candy/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/greedy)
 
-**The one thing that changes vs the flagship for this pattern:** each child must beat both neighbours
+Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly more. Minimize total.
 
-## The pattern this problem belongs to
+## Approach 1 — Two-pass sweep
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Left-to-right: enforce "left neighbor". Right-to-left: enforce "right neighbor". Take the max at each position.
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+```java
+int candy(int[] ratings) {
+    int n = ratings.length;
+    int[] c = new int[n];
+    Arrays.fill(c, 1);
+    for (int i = 1; i < n; i++) if (ratings[i] > ratings[i - 1]) c[i] = c[i - 1] + 1;
+    for (int i = n - 2; i >= 0; i--) if (ratings[i] > ratings[i + 1]) c[i] = Math.max(c[i], c[i + 1] + 1);
+    int sum = 0;
+    for (int x : c) sum += x;
+    return sum;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n)**; Space **O(n)**.
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — One-pass slope counting
 
-1. **Read the pattern chapter's `Candy` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+Track up-slope length, down-slope length, and current peak length. Trickier to get right; useful when interviewer asks for O(1) space.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+- [Trapping Rain Water](/problems/trapping-rain-water) — same "max of two sweeps" idea
+- [Gas Station](/problems/gas-station)

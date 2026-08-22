@@ -1,24 +1,31 @@
 # Hashing — Two Sum Less Than K
 
-*[↗ LeetCode: Two Sum Less Than K](https://leetcode.com/problems/two-sum-less-than-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
+*[↗ LeetCode: Two Sum Less Than K](https://leetcode.com/problems/two-sum-less-than-k/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** largest pair sum strictly **&lt; K**
+Return the max sum `< k` from any pair, or `-1`.
 
-## The pattern this problem belongs to
+## Approach — Sort + two pointer
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Sort. `l` and `r` from ends: if `sum < k`, record and advance `l`; else retreat `r`.
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+```java
+int twoSumLessThanK(int[] nums, int k) {
+    Arrays.sort(nums);
+    int l = 0, r = nums.length - 1, best = -1;
+    while (l < r) {
+        int s = nums[l] + nums[r];
+        if (s < k) { best = Math.max(best, s); l++; }
+        else r--;
+    }
+    return best;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n log n)**; Space **O(1)**.
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Bucket alternative.** Since values are bounded (1..1000), we can bucket-count then two-pointer over buckets → O(n + max) time.
 
-1. **Read the pattern chapter's `Two Sum Less Than K` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+- [Two Sum II](/problems/two-sum-ii-input-array-is-sorted)
+- [3Sum Smaller](/problems/3sum-smaller)

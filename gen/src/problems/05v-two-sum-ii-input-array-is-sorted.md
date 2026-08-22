@@ -1,24 +1,32 @@
-# Hashing — Two Sum II — sorted input
+# Hashing — Two Sum II (Input Array Is Sorted)
 
-*[↗ LeetCode: Two Sum II — sorted input](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
+*[↗ LeetCode: Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** the array is **already sorted**
+Sorted array; return 1-indexed pair summing to target.
 
-## The pattern this problem belongs to
+## Approach 1 — Hash map (ignores sort)
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+Uses O(n) extra space. Works but wastes the sort.
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+## Approach 2 — Opposing two-pointer
 
-## Solution sketch
+**Insight.** With a sorted array, the sum monotonically increases when `l` advances or `r` retreats. So we can move deterministically without storing anything.
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int[] twoSum(int[] nums, int target) {
+    int l = 0, r = nums.length - 1;
+    while (l < r) {
+        int s = nums[l] + nums[r];
+        if (s == target) return new int[]{l + 1, r + 1};
+        if (s < target) l++; else r--;
+    }
+    return new int[]{-1, -1};
+}
+```
 
-1. **Read the pattern chapter's `Two Sum II — sorted input` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+- [Two Sum](/problems/hashing-two-sum) — unsorted
+- [3Sum](/problems/3sum) — outer loop + two-pointer

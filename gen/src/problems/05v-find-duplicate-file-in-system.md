@@ -2,23 +2,37 @@
 
 *[↗ LeetCode: Find Duplicate File in System](https://leetcode.com/problems/find-duplicate-file-in-system/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-**The one thing that changes vs the flagship for this pattern:** same **content**
+Given a list of `"dir file1.ext(content) file2.ext(content) …"` strings, group files with identical content.
 
-## The pattern this problem belongs to
+## Approach — Hash by content
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+```java
+List<List<String>> findDuplicate(String[] paths) {
+    Map<String, List<String>> byContent = new HashMap<>();
+    for (String line : paths) {
+        String[] parts = line.split(" ");
+        String dir = parts[0];
+        for (int i = 1; i < parts.length; i++) {
+            int lp = parts[i].indexOf('(');
+            String name = parts[i].substring(0, lp);
+            String content = parts[i].substring(lp + 1, parts[i].length() - 1);
+            byContent.computeIfAbsent(content, k -> new ArrayList<>()).add(dir + "/" + name);
+        }
+    }
+    List<List<String>> out = new ArrayList<>();
+    for (List<String> g : byContent.values()) if (g.size() > 1) out.add(g);
+    return out;
+}
+```
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+**Complexity** — Time **O(total input size)**; Space **O(total input size)**.
 
-## Solution sketch
+## Follow-ups
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+- **Very large files:** hash a rolling checksum (MD5/SHA1) instead of full content; compare buckets by re-hashing suspects fully.
+- **Filesystem streaming:** compare (size, first-1KB, sha256) triple to avoid touching non-collisions.
+- **Symlinks:** normalize `readlink` before grouping.
 
-1. **Read the pattern chapter's `Find Duplicate File in System` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+- [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — same canonical-key style

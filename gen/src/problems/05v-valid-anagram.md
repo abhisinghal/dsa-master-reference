@@ -1,24 +1,33 @@
 # Hashing — Valid Anagram
 
-*[↗ LeetCode: Valid Anagram](https://leetcode.com/problems/valid-anagram/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
+*[↗ LeetCode: Valid Anagram](https://leetcode.com/problems/valid-anagram/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
-**The one thing that changes vs the flagship for this pattern:** two strings, not a whole group
+Return true iff `t` is an anagram of `s`.
 
-## The pattern this problem belongs to
+## Approach 1 — Sort both, compare
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+O(n log n).
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+## Approach 2 — Frequency map
 
-## Solution sketch
+For lowercase ASCII, size-26 int array. For Unicode, `HashMap<Character, Integer>`. Increment for `s`, decrement for `t`; verify all zeros.
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) return false;
+    int[] cnt = new int[26];
+    for (int i = 0; i < s.length(); i++) { cnt[s.charAt(i) - 'a']++; cnt[t.charAt(i) - 'a']--; }
+    for (int c : cnt) if (c != 0) return false;
+    return true;
+}
+```
 
-1. **Read the pattern chapter's `Valid Anagram` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n)**; Space **O(1)** for ASCII.
 
-## Related problems in the same pattern
+**Follow-up (Unicode).** Iterate `codePoints`; use `HashMap<Integer, Integer>`.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+## Related problems
+
+- [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string) — sliding window
+- [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — canonical-key hashing
+- [Permutation in String](/problems/permutation-in-string)

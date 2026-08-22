@@ -2,23 +2,30 @@
 
 *[↗ LeetCode: Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** sort, then pair the lightest with the heaviest that still fits — a converging-pointer greedy
+Each boat carries at most 2 people totaling ≤ `limit`. Minimize number of boats.
 
-## The pattern this problem belongs to
+## Approach — Sort + greedy two-pointer
 
-This variation of Two Pointers shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Sort. Pair the heaviest with the lightest if possible; otherwise the heaviest goes alone.
 
-- [→ Flagship problem for Two Pointers](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/two-pointers) — includes this problem's approach + code + trace + traps
+**Why optimal.** If the heaviest can't pair with the lightest, they can't pair with anyone; sending them alone is forced. If they can pair, pairing with the lightest is at least as good as any other pairing (leaves the strongest remainder).
 
-## Solution sketch
+```java
+int numRescueBoats(int[] people, int limit) {
+    Arrays.sort(people);
+    int l = 0, r = people.length - 1, boats = 0;
+    while (l <= r) {
+        if (people[l] + people[r] <= limit) l++;
+        r--;
+        boats++;
+    }
+    return boats;
+}
+```
 
-The pattern chapter's [Two Pointers](/patterns/two-pointers) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(n log n)**; Space **O(1)**.
 
-1. **Read the pattern chapter's `Boats to Save People` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/two-pointers) table for the family tree.
+- [Two Sum II - Input Array Is Sorted](/problems/two-sum-ii-input-array-is-sorted)
+- [Assign Cookies](https://leetcode.com/problems/assign-cookies/) — same sort+pair greedy

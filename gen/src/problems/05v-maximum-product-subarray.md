@@ -1,24 +1,40 @@
 # Hashing — Maximum Product Subarray
 
-*[↗ LeetCode: Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
+*[↗ LeetCode: Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** a negative flips sign
+Return max product of a contiguous subarray. (Filed near hashing/DP.)
 
-## The pattern this problem belongs to
+## Approach 1 — Try every subarray
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+O(n²).
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+## Approach 2 — Track min and max ending at i
 
-## Solution sketch
+**Insight.** A negative number flips min ↔ max on the next step. Maintain both.
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int maxProduct(int[] nums) {
+    int maxE = nums[0], minE = nums[0], best = nums[0];
+    for (int i = 1; i < nums.length; i++) {
+        int x = nums[i];
+        int nMax = Math.max(x, Math.max(maxE * x, minE * x));
+        int nMin = Math.min(x, Math.min(maxE * x, minE * x));
+        maxE = nMax; minE = nMin;
+        best = Math.max(best, maxE);
+    }
+    return best;
+}
+```
 
-1. **Read the pattern chapter's `Maximum Product Subarray` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-## Related problems in the same pattern
+**Trap.** Reset both to `nums[i]` when a zero appears (implicitly handled by the `max(x, …)`/`min(x, …)`).
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+## Approach 3 — Prefix + suffix product sweep
+
+Two passes: multiply running prefix; on zero reset to 1. Repeat right-to-left. Answer = max over both sweeps. Elegant on paper; slower to explain.
+
+## Related problems
+
+- [Maximum Subarray (Kadane)](/problems/maximum-subarray) — sum sibling
+- [Maximum Sum Circular Subarray](/problems/maximum-sum-circular-subarray)

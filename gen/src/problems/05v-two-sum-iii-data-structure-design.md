@@ -1,24 +1,36 @@
-# Hashing — Two Sum III — design
+# Hashing — Two Sum III (Data Structure Design)
 
-*[↗ LeetCode: Two Sum III — design](https://leetcode.com/problems/two-sum-iii-data-structure-design/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
+*[↗ LeetCode: Two Sum III - Data Structure Design](https://leetcode.com/problems/two-sum-iii-data-structure-design/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
-**The one thing that changes vs the flagship for this pattern:** numbers **arrive over time**, many `find` queries
+Design `TwoSum` supporting `add(x)` and `find(target)` (any pair summing to target).
 
-## The pattern this problem belongs to
+## Approach 1 — Fast add, slow find
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+Store a count map. `find(t)` iterates keys, checks `t - k`. Handles duplicates via `count[k] > 1` for `k == t/2`.
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+```java
+class TwoSum {
+    Map<Integer, Integer> cnt = new HashMap<>();
+    void add(int x) { cnt.merge(x, 1, Integer::sum); }
+    boolean find(int t) {
+        for (int k : cnt.keySet()) {
+            int need = t - k;
+            if (k == need) { if (cnt.get(k) >= 2) return true; }
+            else if (cnt.containsKey(need)) return true;
+        }
+        return false;
+    }
+}
+```
 
-## Solution sketch
+**add O(1)**, **find O(n)**.
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Fast find, slow add
 
-1. **Read the pattern chapter's `Two Sum III — design` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+Precompute all pair sums into a set on `add`. `find` = O(1). `add` becomes O(n). Use when find ≫ add.
 
-## Related problems in the same pattern
+**Interview reasoning.** Ask about frequency of ops. If adds dominate, choose Approach 1; if finds dominate, choose Approach 2.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+## Related problems
+
+- [Two Sum](/problems/hashing-two-sum) — offline sibling

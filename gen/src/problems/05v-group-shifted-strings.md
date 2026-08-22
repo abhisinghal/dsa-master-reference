@@ -2,23 +2,32 @@
 
 *[↗ LeetCode: Group Shifted Strings](https://leetcode.com/problems/group-shifted-strings/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-**The one thing that changes vs the flagship for this pattern:** same **shift pattern** (`"abc"`≡`"bcd"`)
+Group strings that are cyclic shifts of each other ("abc","bcd","xyz" all shift by 1 pattern).
 
-## The pattern this problem belongs to
+## Approach — Canonical key = diff pattern
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Two strings are shifts iff their consecutive character-difference sequence (mod 26) matches.
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+```java
+List<List<String>> groupStrings(String[] strings) {
+    Map<String, List<String>> groups = new HashMap<>();
+    for (String s : strings) {
+        StringBuilder key = new StringBuilder();
+        for (int i = 1; i < s.length(); i++) {
+            int d = (s.charAt(i) - s.charAt(i - 1) + 26) % 26;
+            key.append(d).append('.');
+        }
+        groups.computeIfAbsent(key.toString(), k -> new ArrayList<>()).add(s);
+    }
+    return new ArrayList<>(groups.values());
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(∑ length)**; Space **O(∑ length)**.
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Trap.** Modulo `+ 26` before `% 26` to avoid negative Java `%`. Delimiter (`.`) between numbers prevents `"11"` colliding with `"1,1"`.
 
-1. **Read the pattern chapter's `Group Shifted Strings` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+- [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — canonical key = sorted string
+- [Isomorphic Strings](/problems/isomorphic-strings)
