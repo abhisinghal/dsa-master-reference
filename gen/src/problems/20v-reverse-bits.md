@@ -4,32 +4,33 @@
 
 Reverse the bits of a 32-bit unsigned integer.
 
+**Example 1** — `n = 0000...1010 (43261596)` → `0011...1001 (964176192)`
+
+**Constraints** — 32 bits.
+
 ---
 
 ## Approach 1 — Bit-by-bit
+
 ```java
-int reverseBits(int n) {
-    int result = 0;
+int reverseBits1(int n) {
+    int r = 0;
     for (int i = 0; i < 32; i++) {
-        result = (result << 1) | (n & 1);
+        r = (r << 1) | (n & 1);
         n >>>= 1;
     }
-    return result;
+    return r;
 }
 ```
 
----
+O(32).
 
-## Approach 2 — Byte swap + cache (interview follow-up)
-If called many times, cache the reversal of each 8-bit chunk in a size-256 table; assemble result in 4 lookups.
+## Approach 2 — SWAR parallel bit swap
 
----
-
-## Approach 3 — SWAR (parallel bit swap)
-**Insight.** Swap adjacent 1-bit groups, then 2-bit, 4-bit, 8-bit, 16-bit.
+**Insight.** Swap adjacent 1-bit groups; then 2-bit; then 4-bit; then 8-bit; then 16-bit halves. Each step is O(1) via bit masks.
 
 ```java
-int reverseBits3(int n) {
+int reverseBits(int n) {
     n = (n >>> 1 & 0x55555555) | (n & 0x55555555) << 1;
     n = (n >>> 2 & 0x33333333) | (n & 0x33333333) << 2;
     n = (n >>> 4 & 0x0f0f0f0f) | (n & 0x0f0f0f0f) << 4;
@@ -38,24 +39,28 @@ int reverseBits3(int n) {
 }
 ```
 
-**Complexity** — All **O(1)**; SWAR is fastest constant.
+**Complexity** — Time **O(1)**; Space **O(1)**.
+
+## Approach 3 — Cache 8-bit chunks
+
+For repeated calls, precompute an int[256] table of reversed bytes.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Bit-by-bit | — | — | baseline |
-| Byte swap + cache (interview follow-up) | — | — | improved |
-| SWAR (parallel bit swap) | O(1) | — | optimum |
+| Bit-by-bit | O(32) | O(1) | baseline |
+| SWAR parallel | **O(1)** | O(1) | canonical |
+| Byte cache | O(1) w/ table | O(256) | production |
 
 ## When to use which
 
-- **State it for signal** → Bit-by-bit (—). Correct baseline; call it out then move on.
-- **Intermediate refinement** → Byte swap + cache (interview follow-up) (—).
-- **Ship this** → SWAR (parallel bit swap) (O(1), —). Expected optimum in interview.
+- **Interview** — SWAR shows constant-time mastery.
+- **Production** — table cache if called in tight loop.
 
 ## Related problems
 
-- [Number of 1 Bits](/problems/number-of-1-bits) — same SWAR pattern for popcount
+- [Number of 1 Bits](/problems/number-of-1-bits) — SWAR popcount
+- [Reverse Integer](https://leetcode.com/problems/reverse-integer/)

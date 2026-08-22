@@ -2,53 +2,62 @@
 
 *[↗ LeetCode: Concatenated Words](https://leetcode.com/problems/concatenated-words/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-Return all words in the dictionary that are concatenations of **two or more** other words in the dictionary.
+Given a list of distinct words, return all words that can be built as a concatenation of **at least two** shorter words from the same list.
+
+**Example 1** — `words=["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]` → `["catsdogcats","dogcatsdog","ratcatdogcat"]`
+
+**Constraints** — `1 ≤ n ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Sort by length + DP with trie / word-set
-**Insight.** Sort words shortest-first. For each word, check if it can be split into ≥ 2 shorter dictionary words using DP (Word Break style). Use a hash set of words seen so far.
+## Approach 1 — Brute force per word
+
+For each word, try all splits recursively; check dict membership. Exponential.
+
+## Approach 2 — Trie + DFS memo (canonical)
+
+**Insight.** Insert all words into a trie. For each word, DFS: walk trie tracking word-end positions; every time we hit an `end`, either finish or restart at root — count sub-words used.
+
+Or (simpler) **DP + hashset**: `dp[i]` = true iff `word[0..i]` splits into dict words; check `dp[n]` with ≥ 2 splits.
 
 ```java
 List<String> findAllConcatenatedWordsInADict(String[] words) {
-    Arrays.sort(words, (a, b) -> a.length() - b.length());
-    Set<String> dict = new HashSet<>();
+    Set<String> dict = new HashSet<>(Arrays.asList(words));
     List<String> out = new ArrayList<>();
-    for (String w : words) {
-        if (canForm(w, dict)) out.add(w);
-        dict.add(w);
-    }
+    for (String w : words)
+        if (canFormFromOthers(w, dict, 0, 0)) out.add(w);
     return out;
 }
-boolean canForm(String w, Set<String> dict) {
-    if (dict.isEmpty()) return false;
-    boolean[] dp = new boolean[w.length() + 1];
-    dp[0] = true;
-    for (int i = 1; i <= w.length(); i++)
-        for (int j = 0; j < i; j++)
-            if (dp[j] && dict.contains(w.substring(j, i))) { dp[i] = true; break; }
-    return dp[w.length()];
+boolean canFormFromOthers(String w, Set<String> dict, int start, int count) {
+    if (start == w.length()) return count >= 2;
+    for (int end = start + 1; end <= w.length(); end++) {
+        String sub = w.substring(start, end);
+        if (dict.contains(sub) && (start > 0 || !sub.equals(w))
+            && canFormFromOthers(w, dict, end, count + 1)) return true;
+    }
+    return false;
 }
 ```
 
-**Complexity** — Time **O(N · L²)** where L = max length; Space **O(N + L)**.
-
-**Alternative** — build a trie for O(L²) per word using trie-walk instead of substring lookup.
+**Complexity** — Time **O(N · L² )**; Space **O(N · L)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort by length + DP with trie / word-set | O(N · L²) | O(N + L) | primary |
+| Brute recursion | exponential | O(N) | baseline |
+| Trie / DP + hashset | **O(N · L²)** | O(N · L) | canonical |
 
 ## When to use which
 
-- **Ship this** → Sort by length + DP with trie / word-set (O(N · L²), O(N + L)). The pattern's standard solution.
+- **Word segmentation problems** → DP + hashset.
+- **Trie** wins when dict lookups dominate.
+- **"Return the segmentations"** → recurse and collect paths.
 
 ## Related problems
 
-- [Word Break](https://leetcode.com/problems/word-break/) — single-word variant
-- [Word Break II](https://leetcode.com/problems/word-break-ii/) — return all sentences
-- [Word Search II](/problems/trie-word-search-ii)
+- [Word Break](https://leetcode.com/problems/word-break/)
+- [Word Break II](https://leetcode.com/problems/word-break-ii/)
+- [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/)

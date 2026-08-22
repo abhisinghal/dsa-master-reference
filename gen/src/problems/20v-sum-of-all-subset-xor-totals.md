@@ -4,36 +4,25 @@
 
 Return the sum of XOR of every subset of `nums` (including empty).
 
-**Example** — `nums=[1,3]` → subsets XOR: 0,1,3,2 → sum = 6.
+**Example 1** — `nums=[1,3]` → `6` (subsets: {},{1},{3},{1,3}; XORs: 0,1,3,2; sum 6)
+**Example 2** — `nums=[5,1,6]` → `28`
+
+**Constraints** — `1 ≤ n ≤ 12`.
 
 ---
 
 ## Approach 1 — Enumerate all 2ⁿ subsets
+
+O(2ⁿ · n). Works for n ≤ 20.
+
+## Approach 2 — Contribution-per-bit (canonical)
+
+**Insight.** Bit `b` contributes `2^b` to a subset's XOR iff the subset contains an odd number of nums with bit `b` set. Exactly half of all 2ⁿ subsets have any specific parity → 2^(n-1) subsets contribute per bit-position that's set in **at least one** num.
+
+So `answer = (OR of all nums) · 2^(n-1)`.
+
 ```java
 int subsetXORSum(int[] nums) {
-    int n = nums.length, total = 0;
-    for (int mask = 0; mask < 1 << n; mask++) {
-        int x = 0;
-        for (int i = 0; i < n; i++) if ((mask >> i & 1) == 1) x ^= nums[i];
-        total += x;
-    }
-    return total;
-}
-```
-
-O(2ⁿ · n).
-
----
-
-## Approach 2 — Bit-by-bit contribution
-**Insight.** Bit `b` contributes `2^b` to the XOR of a subset iff that subset contains an odd number of nums with bit `b` set. If `k` of the nums have bit `b` set, exactly half of the 2ⁿ subsets have an odd count → `2^(n-1)` subsets.
-
-Therefore: bit `b` contributes `2^b · 2^(n-1)` if **any** number has bit b set, else 0.
-
-Combining: `answer = (OR of all nums) · 2^(n-1)`.
-
-```java
-int subsetXORSum2(int[] nums) {
     int or = 0;
     for (int x : nums) or |= x;
     return or << (nums.length - 1);
@@ -46,17 +35,17 @@ int subsetXORSum2(int[] nums) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Enumerate all 2ⁿ subsets | O(2ⁿ · n) | — | baseline |
-| Bit-by-bit contribution | O(n) | O(1) | optimum |
+| Enumerate | O(2ⁿ · n) | O(1) | works |
+| OR × 2^(n-1) | **O(n)** | **O(1)** | canonical |
 
 ## When to use which
 
-- **State it for signal** → Enumerate all 2ⁿ subsets (O(2ⁿ · n)). Correct baseline; call it out then move on.
-- **Ship this** → Bit-by-bit contribution (O(n), O(1)). Expected optimum in interview.
+- **Sum over all subsets of X** → contribution per element or per bit.
+- **AND / SUM over subsets** — similar bit-contribution insights.
 
 ## Related problems
 
-- [Sum of Digits in Base K](https://leetcode.com/problems/sum-of-digits-in-base-k/) — contribution-based counting
-- [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums) — same "count contribution per element" mindset
+- [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums) — contribution counting
+- [Subsets](/problems/bit-manip-subsets)

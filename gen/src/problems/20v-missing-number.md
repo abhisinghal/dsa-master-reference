@@ -2,24 +2,31 @@
 
 *[↗ LeetCode: Missing Number](https://leetcode.com/problems/missing-number/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-Given `nums` containing `n` distinct numbers from `[0, n]`, return the missing one.
+Given `nums` containing `n` distinct integers in `[0, n]`, return the missing one.
 
-**Example** — `nums=[3,0,1]` → `2`
+**Example 1** — `nums=[3,0,1]` → `2`
+**Example 2** — `nums=[0,1]` → `2`
+**Example 3** — `nums=[9,6,4,2,3,5,7,0,1]` → `8`
 
----
-
-## Approach 1 — Sort or hash set
-O(n log n) or O(n) with O(n) space.
-
----
-
-## Approach 2 — Gauss sum
-Expected sum `n(n+1)/2` minus actual sum.
+**Constraints** — `1 ≤ n ≤ 10⁴`.
 
 ---
 
-## Approach 3 — XOR fold
-`missing = 0 ^ 1 ^ … ^ n ^ nums[0] ^ … ^ nums[n-1]` — every present index cancels with its own value.
+## Approach 1 — Sort, find gap
+
+O(n log n). Baseline.
+
+## Approach 2 — Hash set
+
+O(n) time and O(n) space.
+
+## Approach 3 — Gauss sum
+
+`missing = n(n+1)/2 - Σ nums`.
+
+## Approach 4 — XOR fold (canonical)
+
+**Insight.** XOR `0..n` with all of `nums`. Every present index cancels with its value → missing survives.
 
 ```java
 int missingNumber(int[] nums) {
@@ -29,40 +36,27 @@ int missingNumber(int[] nums) {
 }
 ```
 
-
-<CodeTrace
-  title="XOR fold"
-  :values="['3', '0', '1']"
-  :windowKeys="['l','r']"
-  :cellWidth="34"
-  :steps='[
-    { pointers: { l: 0, r: 0 }, vars: { phase: "start" }, note: "Both pointers at the start." },
-    { pointers: { l: 0, r: 0 }, vars: { phase: "extend" }, note: "Right pointer extends; maintain the invariant." },
-    { pointers: { l: 0, r: 2 }, vars: { phase: "finalize" }, note: "Window converged; produce the answer." }
-  ]'
-/>
-
-
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort or hash set | O(n log n) | O(n) | baseline |
-| Gauss sum | — | — | improved |
-| XOR fold | O(n) | O(1) | optimum |
+| Sort | O(n log n) | O(1) | baseline |
+| Hash | O(n) | O(n) | works |
+| Gauss sum | O(n) | O(1) | risk overflow |
+| XOR fold | **O(n)** | **O(1)** | canonical, no overflow |
 
 ## When to use which
 
-- **State it for signal** → Sort or hash set (O(n log n)). Correct baseline; call it out then move on.
-- **Intermediate refinement** → Gauss sum (—).
-- **Ship this** → XOR fold (O(n), O(1)). Expected optimum in interview.
+- **Standard** → XOR fold.
+- **"Multiple missing"** → set difference or sort.
+- **"Overflow-sensitive"** → XOR beats sum.
 
 ## Related problems
 
-- [Single Number](/problems/bit-manip-single-number) — XOR canonical
-- [Find the Difference](/problems/find-the-difference) — sibling
+- [Single Number](/problems/bit-manip-single-number)
+- [Find the Difference](/problems/find-the-difference)
 - [Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)

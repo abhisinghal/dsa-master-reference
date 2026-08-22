@@ -2,60 +2,80 @@
 
 *[↗ LeetCode: Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/divide-conquer)
 
-Given `nums` and `[lower, upper]`, count subarray sums in `[lower, upper]`.
+Count subarrays whose sum lies in `[lower, upper]` (inclusive).
 
-**Example** — `nums=[-2,5,-1], lower=-2, upper=2` → `3` (subarrays: `[-2]`, `[-2,5,-1]`, `[-1]`)
+**Example 1** — `nums=[-2,5,-1], lower=-2, upper=2` → `3`
+**Example 2** — `nums=[0], lower=0, upper=0` → `1`
+
+**Constraints** — `1 ≤ n ≤ 10⁵`; `-2³¹ ≤ nums[i] ≤ 2³¹−1`.
 
 ---
 
-## Approach 1 — Brute (all subarrays)
+## Approach 1 — All subarrays
 
-O(n²). TLE at n=10⁵.
+O(n²). Baseline.
 
-## Approach 2 — Merge sort on prefix sums
+## Approach 2 — Merge sort on prefix sums (canonical)
 
-**Insight.** Subarray sum `nums[i..j] = P[j+1] - P[i]`. Count pairs `(i, j)` with `lower ≤ P[j] − P[i] ≤ upper`.
-
-Merge sort the prefix-sums array. During each merge, since both halves are sorted, use two pointers per left value to count right values within the range.
+**Insight.** Sum of `[i, j]` = `pref[j+1] - pref[i]`. Count pairs `(i, j)` with `lower ≤ pref[j] - pref[i] ≤ upper` and `i < j`. During merge sort of `pref`, whenever left half's element `L` and right half's element `R` maintain `L < R` in the original sequence, count valid `L, R`s via two pointers.
 
 ```java
 int countRangeSum(int[] nums, int lower, int upper) {
-    long[] P = new long[nums.length + 1];
-    for (int i = 0; i < nums.length; i++) P[i + 1] = P[i] + nums[i];
-    return countMerge(P, 0, P.length - 1, lower, upper);
+    long[] pref = new long[nums.length + 1];
+    for (int i = 0; i < nums.length; i++) pref[i + 1] = pref[i] + nums[i];
+    return mergeCount(pref, 0, pref.length, lower, upper);
 }
-int countMerge(long[] P, int lo, int hi, int lower, int upper) {
-    if (lo >= hi) return 0;
+int mergeCount(long[] p, int lo, int hi, int lower, int upper) {
+    if (hi - lo <= 1) return 0;
     int mid = (lo + hi) / 2;
-    int count = countMerge(P, lo, mid, lower, upper) + countMerge(P, mid + 1, hi, lower, upper);
-    int j = mid + 1, k = mid + 1;
-    for (int i = lo; i <= mid; i++) {
-        while (j <= hi && P[j] - P[i] < lower) j++;
-        while (k <= hi && P[k] - P[i] <= upper) k++;
-        count += k - j;
+    int count = mergeCount(p, lo, mid, lower, upper) + mergeCount(p, mid, hi, lower, upper);
+    int i = mid, j = mid;
+    for (int k = lo; k < mid; k++) {
+        while (i < hi && p[i] - p[k] < lower) i++;
+        while (j < hi && p[j] - p[k] <= upper) j++;
+        count += j - i;
     }
-    // standard merge
-    long[] tmp = new long[hi - lo + 1];
-    int p = lo, q = mid + 1, idx = 0;
-    while (p <= mid && q <= hi) tmp[idx++] = P[p] <= P[q] ? P[p++] : P[q++];
-    while (p <= mid) tmp[idx++] = P[p++];
-    while (q <= hi)  tmp[idx++] = P[q++];
-    for (int i = 0; i < tmp.length; i++) P[lo + i] = tmp[i];
+    long[] merged = new long[hi - lo];
+    int a = lo, b = mid, w = 0;
+    while (a < mid && b < hi) merged[w++] = p[a] <= p[b] ? p[a++] : p[b++];
+    while (a < mid) merged[w++] = p[a++];
+    while (b < hi) merged[w++] = p[b++];
+    System.arraycopy(merged, 0, p, lo, merged.length);
     return count;
 }
 ```
 
+<CodeTrace
+  title="Merge — nums=[-2,5,-1], pref=[0,-2,3,2]"
+  :values="['0','-2','3','2']"
+  :windowKeys="['step']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { step: 0 }, vars: { pref: "[0,-2,3,2]" }, note: "" },
+    { pointers: { step: 1 }, vars: { left: "[-2,0]", right: "[2,3]" }, note: "count valid pairs across" },
+    { pointers: { step: 2 }, vars: { total: 3 }, note: "" }
+  ]'
+/>
+
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Brute | O(n²) | O(1) |
-| Merge sort on prefixes | **O(n log n)** | O(n) |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| All subarrays | O(n²) | O(n) | baseline |
+| Merge sort | **O(n log n)** | O(n) | canonical |
+
+## When to use which
+
+- **Count pairs with range constraint on transformed values** → merge sort.
+- **Fenwick/BIT alternative** → compress prefix values; count during single sweep.
+- **Segment tree** → same asymptotics; different implementation.
 
 ## Related problems
 
-- [Reverse Pairs](/problems/reverse-pairs) — same technique on raw values
-- [Count of Smaller Numbers After Self](/problems/divide-conquer-inversions) — merge sort + counting
-- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — exact target, hash map suffices
+- [Reverse Pairs](/problems/reverse-pairs)
+- [Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
+- [Global and Local Inversions](/problems/global-and-local-inversions)

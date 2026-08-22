@@ -2,12 +2,18 @@
 
 *[↗ LeetCode: Hamming Distance](https://leetcode.com/problems/hamming-distance/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-Return number of positions where the bits of `x` and `y` differ.
+Return the number of positions where the bits of `x` and `y` differ.
+
+**Example 1** — `x=1, y=4` → `2`
+**Example 2** — `x=3, y=1` → `1`
+
+**Constraints** — `0 ≤ x, y ≤ 2³¹−1`.
 
 ---
 
-## Approach 1 — Popcount of XOR
-**Insight.** `x XOR y` has 1s exactly where the bits differ. Answer = popcount.
+## Approach — Popcount of XOR
+
+**Insight.** `x XOR y` has 1s exactly at differing positions → answer is popcount(x^y).
 
 ```java
 int hammingDistance(int x, int y) {
@@ -15,21 +21,23 @@ int hammingDistance(int x, int y) {
 }
 ```
 
-**Complexity** — Time **O(1)** (32 bits); Space **O(1)**.
+**Complexity** — Time **O(1)**; Space **O(1)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Popcount of XOR | O(1) | O(1) | primary |
+| Popcount of XOR | **O(1)** | O(1) | optimum |
 
 ## When to use which
 
-- **Ship this** → Popcount of XOR (O(1), O(1)). The pattern's standard solution.
+- **"Sum of pairwise Hamming distances"** → per-bit counting; see [Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/).
+- **Manhattan-like "min flips to reach y"** → same popcount.
 
 ## Related problems
 
-- [Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/) — sum over all pairs; per-bit counting
+- [Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/)
 - [Number of 1 Bits](/problems/number-of-1-bits)
+- [XOR Sum problems]
