@@ -129,7 +129,11 @@ For each element, count how many elements **to its right are smaller** — the "
 
 **Example 1:** `[5,2,6,1]` → `[2,1,1,0]`.
 
+<ExamplePreview compact :input="['5', '2', '6', '1']" :output="['2', '1', '1', '0']" />
+
 **Example 2:** `[2,4,1,3,5]` has inversions `(2,1)`, `(4,1)`, `(4,3)` → total `3`.
+
+<ExamplePreview compact :input="['2', '4', '1', '3', '5']" :output="['(2,1)']" />
 
 ### Solution — brute force
 The obvious baseline checks every pair `(i,j)` with `i < j` and counts when `a[i] > a[j]`.

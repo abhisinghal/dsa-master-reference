@@ -72,7 +72,11 @@ Given an array `nums` and a `target`, return the **indices** of the two entries 
 
 **Example 1:** `nums = [2,7,11,15], target = 9` → `[0,1]` (since `2 + 7 = 9`).
 
+<ExamplePreview compact :input="['2', '7', '11', '15', '|', '9']" :output="['0', '1']" />
+
 **Example 2:** `nums = [3,3], target = 6` → `[0,1]` (two equal values must be different indices).
+
+<ExamplePreview compact :input="['3', '3', '|', '6']" :output="['0', '1']" />
 
 ### Solution — brute force
 Nested loop: for each `i`, scan `j > i` for `nums[i] + nums[j] == target`. This is O(n²) time and O(1) space, and it is correct but too slow once `n` reaches `10⁴`. The hash-map optimization avoids the inner scan by remembering values already seen and asking whether the current value's complement has appeared.
@@ -228,6 +232,8 @@ Given a list of words, bucket together the ones that are **anagrams** of each ot
 
 **Example 2:** `["", "b"]` → `[[""],["b"]]` (empty string has the all-zero signature).
 
+<ExamplePreview compact :input="['""', '"b"']" :output="['[[""],["b"]]']" />
+
 ### Solution — brute force
 Brute force compares each word against every other word by sorting both words or counting letters and checking equality. That can reach O(n²·L log L) time with a visited array, which is correct but wasteful because each group comparison repeats work. The optimized version computes one canonical signature per word and uses it as a hash-map key, so all anagrams land in the same bucket immediately.
 
@@ -344,7 +350,11 @@ Return an array where `answer[i]` is the product of **every element except** `nu
 
 **Example 1:** `nums = [1,2,3,4]` → `[24,12,8,6]` (e.g. position 0 = 2·3·4).
 
+<ExamplePreview compact :input="['1', '2', '3', '4']" :output="['24', '12', '8', '6']" />
+
 **Example 2:** `nums = [-1,1,0,-3,3]` → `[0,0,9,0,0]` (one zero makes only the zero position nonzero).
+
+<ExamplePreview compact :input="['-1', '1', '0', '-3', '3']" :output="['0', '0', '9', '0', '0']" />
 
 ### Solution — brute force
 Brute force builds each `answer[i]` by multiplying every element except index `i`. That is O(n²) time and O(1) extra space beyond the output, and division is not allowed anyway. The optimized idea precomputes the product to the left and the product to the right of each index; the Java code stores the left product in the output, then multiplies in a running right product.
@@ -487,6 +497,8 @@ Given an **unsorted** array, find the length of the longest run of **consecutive
 **Constraints:** `0 ≤ n ≤ 10⁵`; values span the full int range; duplicates may appear.
 
 **Example 1:** `nums = [100,4,200,1,3,2]` → `4` (the run `1,2,3,4`).
+
+<ExamplePreview compact :input="['100', '4', '200', '1', '3', '2']" :output="['4']" />
 
 **Example 2:** `nums = []` → `0` (no numbers means no run).
 

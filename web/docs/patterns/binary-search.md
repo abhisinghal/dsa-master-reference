@@ -169,7 +169,11 @@ A sorted array was **rotated** at an unknown pivot. Find the index of `target` (
 
 **Example 1:** `[4,5,6,7,0,1,2], target = 0` → `4`.
 
+&lt;ExamplePreview compact :input="['4', '5', '6', '7', '0', '1', '2', '|', '0']" :output="['4']" /&gt;
+
 **Example 2:** `[4,5,6,7,0,1,2], target = 3` → `-1`.
+
+&lt;ExamplePreview compact :input="['4', '5', '6', '7', '0', '1', '2', '|', '3']" :output="['-1']" /&gt;
 
 ### Solution — brute force
 Brute force scans the array from left to right and returns the index whose value equals `target`. It is O(n) time and O(1) space, which is acceptable for tiny arrays but misses the required logarithmic guarantee. The optimized version keeps binary search alive by noticing that at least one half around `mid` is sorted, then discarding the half where the target cannot live.

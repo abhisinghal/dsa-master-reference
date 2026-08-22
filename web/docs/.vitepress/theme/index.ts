@@ -36,6 +36,7 @@ import HeapOps from './HeapOps.vue'
 import BstOps from './BstOps.vue'
 import TrieOps from './TrieOps.vue'
 import UnionFindOps from './UnionFindOps.vue'
+import ExamplePreview from './ExamplePreview.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -83,6 +84,7 @@ export default {
     app.component('BstOps', BstOps)
     app.component('TrieOps', TrieOps)
     app.component('UnionFindOps', UnionFindOps)
+    app.component('ExamplePreview', ExamplePreview)
     installSolvedCountBadges(router)
   }
 }

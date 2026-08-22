@@ -113,7 +113,11 @@ Find the **kth largest** element in an unsorted array (a one-shot query) — fas
 
 **Example 1:** `[3,2,1,5,6,4], k = 2` → `5`.
 
+<ExamplePreview compact :input="['3', '2', '1', '5', '6', '4', '|', '2']" :output="['5']" />
+
 **Example 2:** `[3,2,3,1,2,4,5,5,6], k = 4` → `4`.
+
+<ExamplePreview compact :input="['3', '2', '3', '1', '2', '4', '5', '5', '6', '|', '4']" :output="['4']" />
 
 ### Solution — brute force
 The baseline is to sort the array and index into the sorted result.

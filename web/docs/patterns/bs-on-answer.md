@@ -78,7 +78,11 @@ Koko eats `k` bananas/hour (one pile per hour; leftovers still cost a full hour)
 
 **Example 1:** `piles = [3,6,7,11], h = 8` → `4`.
 
+&lt;ExamplePreview compact :input="['3', '6', '7', '11', '|', '8']" :output="['4']" /&gt;
+
 **Example 2:** `piles = [30,11,23,4,20], h = 5` → `30`.
+
+&lt;ExamplePreview compact :input="['30', '11', '23', '4', '20', '|', '5']" :output="['30']" /&gt;
 
 ### Solution — brute force
 Brute force tries every eating speed `k` from 1 up to the largest pile and simulates the total hours for each speed. The feasibility check is O(n), so this is O(n·maxPile) time and O(1) space, far too slow when pile sizes hit `10⁹`. The optimized version keeps the same feasibility check but binary-searches the monotone speed range for the first speed that works.
@@ -224,7 +228,11 @@ Split the array into `m` **contiguous** subarrays so as to **minimize the larges
 
 **Example 1:** `[7,2,5,10,8], m = 2` → `18` (split `[7,2,5] | [10,8]`).
 
+&lt;ExamplePreview compact :input="['7', '2', '5', '10', '8', '|', '2']" :output="['18']" /&gt;
+
 **Example 2:** `[1,2,3,4,5], m = 2` → `9` (split `[1,2,3] | [4,5]`).
+
+&lt;ExamplePreview compact :input="['1', '2', '3', '4', '5', '|', '2']" :output="['9']" /&gt;
 
 ### Solution — brute force
 Brute force enumerates every way to place `m-1` cuts between elements, computes the largest segment sum for that partition, and keeps the minimum. There are exponentially many cut patterns (or combinatorially many for fixed `m`), so it is correct but not scalable. The optimized view guesses the largest allowed segment sum and greedily counts how many parts are needed, then binary-searches the smallest feasible cap.
@@ -366,7 +374,11 @@ Given two sorted arrays, find the **median** of their combined elements in **O(l
 
 **Example 1:** `[1,3]` and `[2]` → `2.0`.
 
+&lt;ExamplePreview compact :input="['1', '3']" :output="['2']" /&gt;
+
 **Example 2:** `[1,2]` and `[3,4]` → `2.5`.
+
+&lt;ExamplePreview compact :input="['1', '2']" :output="['3', '4']" /&gt;
 
 ### Solution — brute force
 Brute force merges the two sorted arrays until the median position, or fully merges them and reads the middle. That is O(m+n) time and O(1) space if you stop early, or O(m+n) extra space for a full merged array. The optimized solution avoids merging by binary-searching a partition of the smaller array so the combined left half and right half are ordered correctly.

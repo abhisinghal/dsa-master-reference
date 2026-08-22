@@ -75,7 +75,11 @@ Count how many **contiguous subarrays** sum exactly to `k`. The array may contai
 
 **Example 1:** `nums = [1,2,1,2,1], k = 3` → `4`.
 
+<ExamplePreview compact :input="['1', '2', '1', '2', '1', '|', '3']" :output="['4']" />
+
 **Example 2:** `nums = [1,-1,0], k = 0` → `3` (`[1,-1]`, `[1,-1,0]`, and `[0]`).
+
+<ExamplePreview compact :input="['1', '-1', '0', '|', '0']" :output="['3']" />
 
 ### Solution — brute force
 Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
@@ -179,6 +183,8 @@ You're given many **range updates** — each adds `v` to every element in `[l, r
 
 **Example 2:** `n = 3`, bookings `[1,1,5]` → `[5,0,0]` (single-point range closes immediately after index 0).
 
+<ExamplePreview compact :input="['3']" :output="['1', '1', '5']" />
+
 ### Solution — brute force
 Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
 
@@ -280,6 +286,8 @@ Preprocess an **immutable** matrix so each query *"sum of the sub-rectangle from
 **Example 1:** on `[[3,1],[2,4]]`, `sumRegion(0,0,1,1) = 10` (the whole grid); `sumRegion(1,1,1,1) = 4`.
 
 **Example 2:** on `[[5]]`, `sumRegion(0,0,0,0) = 5` (padding handles the smallest rectangle).
+
+<ExamplePreview compact :input="['[[5]]']" :output="['5']" />
 
 ### Solution — brute force
 Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.

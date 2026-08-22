@@ -67,7 +67,11 @@ Each `nums[i]` is the **max jump length** from index `i`. Find the **fewest jump
 
 **Example 1:** `[2,3,1,1,4]` → `2` (jump `0→1→4`).
 
+<ExamplePreview compact :input="['2', '3', '1', '1', '4']" :output="['2']" />
+
 **Example 2:** `[2,3,0,1,4]` → `2` (jump `0→1→4`).
+
+<ExamplePreview compact :input="['2', '3', '0', '1', '4']" :output="['2']" />
 
 ### Solution — brute force
 Brute force models each index as a node and explores every reachable next index to find the shortest path to the end. A plain recursive search can be exponential because it branches over all jump lengths; BFS is O(n²) in the worst case if every index reaches many later indices. The optimized greedy scan compresses BFS levels into two integers: the current frontier and the farthest next frontier.
@@ -206,7 +210,11 @@ Around a circular route, station `i` provides `gas[i]` and it costs `cost[i]` to
 
 **Example 1:** `gas = [1,2,3,4,5], cost = [3,4,5,1,2]` → `3`.
 
+<ExamplePreview compact :input="['1', '2', '3', '4', '5', '|', '3', '4', '5', '1', '2']" :output="['3']" />
+
 **Example 2:** `gas = [2,3,4], cost = [3,4,3]` → `-1` because total gas is insufficient.
+
+<ExamplePreview compact :input="['2', '3', '4', '|', '3', '4', '3']" :output="['-1']" />
 
 ### Solution — brute force
 Brute force tries every station as a start and simulates a full circuit while tracking tank balance. That is O(n²) time and O(1) space, and it repeats the same failing prefixes over and over. The optimized greedy scan uses the fact that if a candidate start fails at station `i`, every start inside that failed segment also fails, so the next candidate is `i + 1` after a global total check.
@@ -306,7 +314,11 @@ Given task labels and a cooldown `n` (identical tasks must be at least `n` apart
 
 **Example 1:** `["A","A","A","B","B","B"], n = 2` → `8` (`AB_AB_AB`).
 
+<ExamplePreview compact :input="['"A"', '"A"', '"A"', '"B"', '"B"', '"B"', '|', '2']" :output="['8']" />
+
 **Example 2:** `tasks = ["A","A","A","B","B","B"], n = 0` → `6` because no cooldown gaps are needed.
+
+<ExamplePreview compact :input="['"A"', '"A"', '"A"', '"B"', '"B"', '"B"', '|', '0']" :output="['6']" />
 
 ### Solution — brute force
 For task scheduling, brute force can simulate each time slot by repeatedly choosing an available task and trying schedules with idle slots when blocked. That search branches heavily and is effectively exponential if you enumerate orders; even a priority-queue simulation is more machinery than needed. The optimized formula observes that the most frequent task creates the idle-frame skeleton, then fills gaps with all other tasks in linear time over the task counts.

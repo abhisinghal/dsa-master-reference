@@ -153,7 +153,11 @@ For each day, report **how many days you must wait for a warmer temperature** (0
 
 **Example 1:** `[73,74,75,71,69,72,76,73]` → `[1,1,4,2,1,1,0,0]`.
 
+&lt;ExamplePreview compact :input="['73', '74', '75', '71', '69', '72', '76', '73']" :output="['1', '1', '4', '2', '1', '1', '0', '0']" /&gt;
+
 **Example 2:** `[30,40,50,60]` → `[1,1,1,0]`.
+
+&lt;ExamplePreview compact :input="['30', '40', '50', '60']" :output="['1', '1', '1', '0']" /&gt;
 
 ### Solution — brute force
 For every day `i`, scan days `i+1..n-1` until you find the first warmer temperature. The first warmer day gives the wait length; if none appears, the default answer stays `0`.
@@ -294,7 +298,11 @@ Given the bar heights of a histogram (each of width 1), find the area of the **l
 
 **Example 1:** `[2,1,5,6,2,3]` → `10` (bars `5,6` give height 5 × width 2).
 
+&lt;ExamplePreview compact :input="['2', '1', '5', '6', '2', '3']" :output="['10']" /&gt;
+
 **Example 2:** `[2,4]` → `4` (either height 2 × width 2 or height 4 × width 1).
+
+&lt;ExamplePreview compact :input="['2', '4']" :output="['4']" /&gt;
 
 ### Solution — brute force
 Treat every pair `(left, right)` as a candidate rectangle span. The height of that rectangle is the minimum bar inside the span, so update that running minimum while expanding `right`.

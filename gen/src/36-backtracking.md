@@ -150,6 +150,8 @@ Return **all subsets** (the power set) of a set of distinct integers, in any ord
 
 **Example 2:** `[0]` → `[[],[0]]`.
 
+<ExamplePreview compact :input="['0']" :output="['[[],[0]]']" />
+
 ### Solution — brute force
 Brute force is the full include/exclude decision tree: for each element, choose to take it or skip it, then record the subset at the leaf. That is already O(n·2ⁿ) time and O(n) recursion space, which matches the output-size lower bound. The optimized template is not asymptotically faster; it organizes the search with a `start` index so combinations appear once and duplicate permutations never get generated.
 
@@ -525,7 +527,11 @@ Place `n` queens on an `n×n` board so that **none attack** another (no shared r
 
 **Example 1:** `n = 4` → `2` distinct solutions.
 
+<ExamplePreview compact :input="['4']" :output="['2']" />
+
 **Example 2:** `n = 1` → one board: `["Q"]`.
+
+<ExamplePreview compact :input="['1']" :output="['"Q"']" />
 
 ### Solution — brute force
 Brute force places queens on arbitrary cells and checks every completed board for row, column, and diagonal conflicts. Choosing `n` squares from `n²` and validating them is enormous, and even row-by-row placement is O(n!) before pruning. The optimized backtracking commits to one queen per row and uses column plus diagonal occupancy arrays so each proposed placement is checked in O(1) before descending.
@@ -649,6 +655,8 @@ Given a grid of letters, decide whether a `word` can be spelled by walking throu
 **Example 1:** grid `[[A,B,C],[S,F,C],[A,D,E]]`, word `"ABCCED"` → `true`.
 
 **Example 2:** Same grid, word `"SEE"` → `true` via adjacent `S→E→E`.
+
+<ExamplePreview compact :input="['S', 'E', 'E']" :output="['true']" />
 
 ### Solution — brute force
 Brute force starts a DFS from every cell and explores all four directions for each next character, tracking visited cells so no cell is reused. The worst case is O(R·C·4^L) time with O(L) path state, because many prefixes can match before failing. The optimized version is still backtracking, but it prunes immediately on character mismatch and marks the board in place to avoid an extra visited matrix.

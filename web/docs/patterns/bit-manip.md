@@ -87,7 +87,11 @@ Every element appears **twice except one**; find the single one — in O(n) time
 
 **Example 1:** `[4,1,2,1,2]` → `4`.
 
+&lt;ExamplePreview compact :input="['4', '1', '2', '1', '2']" :output="['4']" /&gt;
+
 **Example 2:** `[2,2,1]` → `1`.
+
+&lt;ExamplePreview compact :input="['2', '2', '1']" :output="['1']" /&gt;
 
 ### Solution — brute force
 Brute force counts frequencies in a hash map, then returns the value whose count is one. That is O(n) time and O(n) space, and a sort-based variant is O(n log n) time with less extra space. The optimized XOR version uses pair cancellation: `a ^ a = 0` and `a ^ 0 = a`, so one accumulator leaves only the unpaired number.
@@ -213,7 +217,11 @@ For every number `0 … n`, return how many **1-bits** it has (its popcount), in
 
 **Example 1:** `n = 5` → `[0,1,1,2,1,2]`.
 
+&lt;ExamplePreview compact :input="['5']" :output="['0', '1', '1', '2', '1', '2']" /&gt;
+
 **Example 2:** `n = 2` → `[0,1,1]`.
+
+&lt;ExamplePreview compact :input="['2']" :output="['0', '1', '1']" /&gt;
 
 ### Solution — brute force
 Brute force computes the popcount of every integer from `0` to `n` independently, shifting or clearing bits until each number becomes zero. That is O(n log n) time and O(n) output space because each integer may need one step per bit. The optimized DP reuses `i >> 1`: dropping the lowest bit gives a smaller number whose count is already known, then adds `i & 1`.
@@ -337,7 +345,11 @@ Generate **all subsets** of an `n`-element set by iterating bitmasks `0 … 2ⁿ
 
 **Example 1:** `[a,b,c]` → all 8 subsets, one per bit pattern `000 … 111`.
 
+&lt;ExamplePreview compact :input="['a', 'b', 'c']" :output="['000 … 111']" /&gt;
+
 **Example 2:** `[x,y]` → masks `00,01,10,11` → `[[],[x],[y],[x,y]]`.
+
+&lt;ExamplePreview compact :input="['x', 'y']" :output="['00,01,10,11']" /&gt;
 
 Enumerate all `2ⁿ` subsets of an `n`-element set by counting masks `0..2ⁿ-1`; bit `i` set means element `i` is included.
 
