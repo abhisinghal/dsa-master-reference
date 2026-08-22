@@ -1,24 +1,73 @@
-# BS on Answer — Median of a Row-wise Sorted Matrix
+# BS on Answer — Kth Smallest Element in a Sorted Matrix
 
-*[↗ LeetCode: Median of a Row-wise Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
+*[↗ LeetCode: Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-**The one thing that changes vs the flagship for this pattern:** binary-search the value and count how many are ≤ mid
+Given `n×n` matrix sorted row and column, return the k-th smallest element.
 
-## The pattern this problem belongs to
+**Example** — `matrix=[[1,5,9],[10,11,13],[12,13,15]], k=8` → `13`
 
-This variation of BS on Answer shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for BS on Answer](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bs-on-answer) — includes this problem's approach + code + trace + traps
+## Approach 1 — Flatten + sort
 
-## Solution sketch
+O(n² log n²).
 
-The pattern chapter's [BS on Answer](/patterns/bs-on-answer) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Min-heap of rows
 
-1. **Read the pattern chapter's `Median of a Row-wise Sorted Matrix` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+Heap starts with each row's head. Pop-then-push-next `k-1` times. O((n+k) log n).
 
-## Related problems in the same pattern
+## Approach 3 — Binary search on value
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bs-on-answer) table for the family tree.
+**Insight.** `countLE(v)` = elements ≤ v. Monotonic in v. Binary search for the smallest v with `countLE(v) ≥ k`. `countLE` uses staircase walk from bottom-left: O(n).
+
+
+
+```java
+int kthSmallest(int[][] m, int k) {
+    int n = m.length;
+    int lo = m[0][0], hi = m[n - 1][n - 1];
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        int count = 0, r = n - 1, c = 0;
+        while (r >= 0 && c < n) {
+            if (m[r][c] <= mid) { count += r + 1; c++; }
+            else                r--;
+        }
+        if (count < k) lo = mid + 1;
+        else           hi = mid;
+    }
+    return lo;
+}
+```
+
+
+
+<CodeTrace
+  title="BS on value — matrix=[[1,5,9],[10,11,13],[12,13,15]], k=8"
+  :values="[1,5,9,10,11,13,12,13,15]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { lo: 1, hi: 15, mid: 8 }, vars: { countLE: 2 }, note: "2 lt 8 → lo=9" },
+    { pointers: { lo: 9, hi: 15, mid: 12 }, vars: { countLE: 6 }, note: "6 lt 8 → lo=13" },
+    { pointers: { lo: 13, hi: 15, mid: 14 }, vars: { countLE: 8 }, note: "8 ≥ 8 → hi=14" },
+    { pointers: { lo: 13, hi: 14, mid: 13 }, vars: { countLE: 8 }, note: "8 ≥ 8 → hi=13" },
+    { pointers: { lo: 13, hi: 13 }, vars: { answer: 13 }, note: "converged → 13" }
+  ]'
+/>
+
+**Complexity** — Time **O(n log(max-min))**; Space **O(1)**.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Flatten + sort | O(n² log n) | O(n²) |
+| Heap of rows | O((n+k) log n) | O(n) |
+| BS on value | **O(n log(max-min))** | O(1) |
+
+## Related problems
+
+- [Find K-th Smallest Pair Distance](/problems/find-k-th-smallest-pair-distance)
+- [Median of Two Sorted Arrays](/problems/median-of-two-sorted-arrays)
+- [Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/) — same staircase walk

@@ -1,24 +1,57 @@
 # BS on Answer — Find K-th Smallest Pair Distance
 
-*[↗ LeetCode: Find K-th Smallest Pair Distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
+*[↗ LeetCode: Find K-th Smallest Pair Distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-**The one thing that changes vs the flagship for this pattern:** binary-search the distance; feasibility counts pairs within it via a sliding window
+Given `nums` and integer `k`, return the k-th smallest **absolute** distance among all pairs.
 
-## The pattern this problem belongs to
+**Example** — `nums=[1,3,1], k=1` → `0` (pair (1,1) has distance 0)
 
-This variation of BS on Answer shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for BS on Answer](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bs-on-answer) — includes this problem's approach + code + trace + traps
+## Approach 1 — Enumerate all pairs, sort
 
-## Solution sketch
+O(n²) pairs, O(n² log n²) sort. TLE at n=10⁴.
 
-The pattern chapter's [BS on Answer](/patterns/bs-on-answer) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Binary search on distance + sliding window count
 
-1. **Read the pattern chapter's `Find K-th Smallest Pair Distance` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** Sort the array. `countLE(d)` = number of pairs with distance ≤ d — computed via sliding window in O(n): for each right `j`, shrink left `i` while `a[j] - a[i] > d`; add `j - i` pairs.
 
-## Related problems in the same pattern
+`countLE(d)` is monotonic in d. Binary-search the smallest d with `countLE(d) ≥ k`.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bs-on-answer) table for the family tree.
+
+
+```java
+int smallestDistancePair(int[] nums, int k) {
+    Arrays.sort(nums);
+    int n = nums.length;
+    int lo = 0, hi = nums[n - 1] - nums[0];
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        int count = 0, i = 0;
+        for (int j = 0; j < n; j++) {
+            while (nums[j] - nums[i] > mid) i++;
+            count += j - i;
+        }
+        if (count < k) lo = mid + 1;
+        else           hi = mid;
+    }
+    return lo;
+}
+```
+
+
+
+**Complexity** — Time **O(n log(max-min))**; Space **O(1)** aside from sort.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Enumerate all pairs | O(n²) | O(n²) |
+| BS on distance | **O(n log(max-min))** | O(1) |
+
+## Related problems
+
+- [Kth Smallest Element in a Sorted Matrix](/problems/kth-smallest-element-in-a-sorted-matrix)
+- [Find K Closest Elements](https://leetcode.com/problems/find-k-closest-elements/)
+- [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)

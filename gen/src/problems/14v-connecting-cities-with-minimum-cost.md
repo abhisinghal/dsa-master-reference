@@ -2,23 +2,33 @@
 
 *[↗ LeetCode: Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-**The one thing that changes vs the flagship for this pattern:** plain Kruskal on the given edge list; return −1 if it stays disconnected
+Given `n` cities and `connections=[city1, city2, cost]`, return min cost to connect all cities, or `-1` if impossible.
 
-## The pattern this problem belongs to
+**Example** — `n=3, [[1,2,5],[1,3,6],[2,3,1]]` → `6` (edges [2,3,1] + [1,2,5])
 
-This variation of Union-Find shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Kruskal's MST
 
-- [→ Flagship problem for Union-Find](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/union-find) — includes this problem's approach + code + trace + traps
+Same skeleton as Min Cost to Connect All Points, but edges are given rather than computed.
 
-## Solution sketch
+```java
+int minimumCost(int n, int[][] connections) {
+    Arrays.sort(connections, (a, b) -> a[2] - b[2]);
+    int[] parent = new int[n + 1];
+    for (int i = 0; i <= n; i++) parent[i] = i;
+    int cost = 0, added = 0;
+    for (int[] e : connections) {
+        int a = find(parent, e[0]), b = find(parent, e[1]);
+        if (a != b) { parent[a] = b; cost += e[2]; added++; }
+    }
+    return added == n - 1 ? cost : -1;
+}
+int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }
+```
 
-The pattern chapter's [Union-Find](/patterns/union-find) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(E log E)**; Space **O(n)**.
 
-1. **Read the pattern chapter's `Connecting Cities With Minimum Cost` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/union-find) table for the family tree.
+- [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points) — coordinates → distances
+- [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village) — MST with virtual source
+- [Find Critical and Pseudo-Critical Edges](/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree)

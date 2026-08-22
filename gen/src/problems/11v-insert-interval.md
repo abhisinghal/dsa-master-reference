@@ -2,23 +2,61 @@
 
 *[↗ LeetCode: Insert Interval](https://leetcode.com/problems/insert-interval/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
-**The one thing that changes vs the flagship for this pattern:** three phases — copy intervals before, merge those overlapping the new one, copy the rest
+Given a sorted list of non-overlapping intervals and a new interval, insert and merge.
 
-## The pattern this problem belongs to
+**Example** — `intervals=[[1,3],[6,9]], newInterval=[2,5]` → `[[1,5],[6,9]]`
 
-This variation of Merge Intervals shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Merge Intervals](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/merge-intervals) — includes this problem's approach + code + trace + traps
+## Approach 1 — Insert + full merge
 
-## Solution sketch
+Add the new interval; sort; run Merge Intervals. O(n log n).
 
-The pattern chapter's [Merge Intervals](/patterns/merge-intervals) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — One-pass three-phase
 
-1. **Read the pattern chapter's `Insert Interval` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** Because input is sorted, walk once:
+1. **Before overlap.** Add intervals that end before newInterval.start.
+2. **Overlap.** Expand newInterval to swallow all intervals whose start ≤ newInterval.end.
+3. **After.** Add remaining intervals as-is.
 
-## Related problems in the same pattern
+```java
+int[][] insert(int[][] intervals, int[] newInterval) {
+    List<int[]> out = new ArrayList<>();
+    int i = 0, n = intervals.length;
+    while (i < n && intervals[i][1] < newInterval[0]) out.add(intervals[i++]);
+    while (i < n && intervals[i][0] <= newInterval[1]) {
+        newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+        newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+        i++;
+    }
+    out.add(newInterval);
+    while (i < n) out.add(intervals[i++]);
+    return out.toArray(new int[0][]);
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/merge-intervals) table for the family tree.
+<CodeTrace
+  title="Three-phase — intervals=[[1,3],[6,9]], newInterval=[2,5]"
+  :values="['[1,3]','[6,9]']"
+  :windowKeys="['i']"
+  :cellWidth="60"
+  :steps='[
+    { pointers: { i: 0 }, vars: { newInterval: "[2,5]", phase: "overlap" }, note: "[1,3] overlaps → merge → [1,5]", added: [0] },
+    { pointers: { i: 1 }, vars: { newInterval: "[1,5]", phase: "after" }, note: "[6,9] after → append. done", added: [1] }
+  ]'
+/>
+
+**Complexity** — Time **O(n)**; Space **O(n)** output.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Insert + full merge | O(n log n) | O(n) |
+| One-pass three-phase | **O(n)** | O(n) |
+
+## Related problems
+
+- [Merge Intervals](/problems/merge-intervals-classic) — full merge, sorted-by-start
+- [Interval List Intersections](/problems/interval-list-intersections) — two sorted interval lists
+- [Non-overlapping Intervals](/problems/non-overlapping-intervals) — remove min count

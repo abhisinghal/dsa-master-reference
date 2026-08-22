@@ -1,24 +1,62 @@
-# BS on Answer — Divide Chocolate / Maximize the Minimum
+# BS on Answer — Divide Chocolate
 
-*[↗ LeetCode: Divide Chocolate / Maximize the Minimum](https://leetcode.com/problems/divide-chocolate/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
+*[↗ LeetCode: Divide Chocolate](https://leetcode.com/problems/divide-chocolate/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-**The one thing that changes vs the flagship for this pattern:** flip it — maximize the smallest piece, so `feasible(x)` = "can make ≥ k pieces each ≥ x."
+Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the smallest sum). Maximize your piece's sweetness.
 
-## The pattern this problem belongs to
+**Example** — `sweetness=[1,2,3,4,5,6,7,8,9], k=5` → `6`
 
-This variation of BS on Answer shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for BS on Answer](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bs-on-answer) — includes this problem's approach + code + trace + traps
+## Approach — Binary search on the minimum
 
-## Solution sketch
+**Insight.** `feasible(cap)` = can we cut into ≥ k+1 pieces each with sum ≥ cap? Monotonic (bigger cap → fewer possible cuts). Range: `lo = 1`, `hi = sum / (k+1)` (or `sum`).
 
-The pattern chapter's [BS on Answer](/patterns/bs-on-answer) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int maximizeSweetness(int[] sweetness, int k) {
+    int lo = Integer.MAX_VALUE, hi = 0;
+    for (int x : sweetness) { lo = Math.min(lo, x); hi += x; }
+    while (lo < hi) {
+        int mid = lo + (hi - lo + 1) / 2;                     // upper mid for max-answer BS
+        int cuts = 0, sum = 0;
+        for (int x : sweetness) {
+            sum += x;
+            if (sum >= mid) { cuts++; sum = 0; }
+        }
+        if (cuts >= k + 1) lo = mid;                          // feasible → try larger
+        else               hi = mid - 1;
+    }
+    return lo;
+}
+```
 
-1. **Read the pattern chapter's `Divide Chocolate / Maximize the Minimum` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+<CodeTrace
+  title="BS on min — sweetness=[1..9], k=5 (6 pieces)"
+  :values="[1,2,3,4,5,6,7,8,9]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="30"
+  :steps='[
+    { pointers: { lo: 1, hi: 45, mid: 23 }, vars: { cuts: 1 }, note: "min 23 → only 1 piece → too big → hi=22" },
+    { pointers: { lo: 1, hi: 22, mid: 12 }, vars: { cuts: 3 }, note: "min 12 → 3 pieces → too big → hi=11" },
+    { pointers: { lo: 1, hi: 11, mid: 6 }, vars: { cuts: 6 }, note: "min 6 → 6 pieces ✓ → lo=6" },
+    { pointers: { lo: 6, hi: 11, mid: 9 }, vars: { cuts: 4 }, note: "min 9 → 4 pieces → too big → hi=8" },
+    { pointers: { lo: 6, hi: 8, mid: 7 }, vars: { cuts: 5 }, note: "min 7 → 5 pieces → too big → hi=6" },
+    { pointers: { lo: 6, hi: 6 }, vars: { answer: 6 }, note: "converged → 6" }
+  ]'
+/>
 
-## Related problems in the same pattern
+**Complexity** — Time **O(n log sum)**; Space **O(1)**.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bs-on-answer) table for the family tree.
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| BS on min | **O(n log sum)** | O(1) |
+
+**Watch the mid formula.** For *maximize-feasible* BS, use `lo + (hi - lo + 1) / 2` (upper mid) to avoid infinite loops.
+
+## Related problems
+
+- [Split Array Largest Sum](/problems/split-array-largest-sum) — minimize the maximum (sibling)
+- [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)
+- [Minimize Max Distance to Gas Station](/problems/minimize-max-distance-to-gas-station)

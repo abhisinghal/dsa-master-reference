@@ -1,24 +1,50 @@
 # Merge Intervals — Meeting Rooms
 
-*[↗ LeetCode: Meeting Rooms](https://leetcode.com/problems/meeting-rooms/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
+*[↗ LeetCode: Meeting Rooms](https://leetcode.com/problems/meeting-rooms/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/merge-intervals)
 
-**The one thing that changes vs the flagship for this pattern:** after sorting by start, any overlap between neighbours means one person cannot attend all meetings
+Given meetings `[start, end]`, return `true` if a single person can attend all (no overlaps).
 
-## The pattern this problem belongs to
+**Example** — `[[0,30],[5,10],[15,20]]` → `false`
 
-This variation of Merge Intervals shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Merge Intervals](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/merge-intervals) — includes this problem's approach + code + trace + traps
+## Approach 1 — Brute nested pair
 
-## Solution sketch
+O(n²). Baseline.
 
-The pattern chapter's [Merge Intervals](/patterns/merge-intervals) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Sort by start, check adjacent
 
-1. **Read the pattern chapter's `Meeting Rooms` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** After sorting by start, an overlap only exists if any adjacent pair has `next.start < prev.end`.
 
-## Related problems in the same pattern
+```java
+boolean canAttendMeetings(int[][] meetings) {
+    Arrays.sort(meetings, (a, b) -> a[0] - b[0]);
+    for (int i = 1; i < meetings.length; i++)
+        if (meetings[i][0] < meetings[i - 1][1]) return false;
+    return true;
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/merge-intervals) table for the family tree.
+<CodeTrace
+  title="Sort + adjacent check — [[0,30],[5,10],[15,20]]"
+  :values="['[0,30]','[5,10]','[15,20]']"
+  :windowKeys="['i']"
+  :cellWidth="60"
+  :steps='[
+    { pointers: { i: 1 }, vars: { prev_end: 30, cur_start: 5 }, note: "5 lt 30 → overlap → return false", removed: [1] }
+  ]'
+/>
+
+**Complexity** — Time **O(n log n)**; Space **O(1)**.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Brute nested | O(n²) | O(1) |
+| Sort + scan | **O(n log n)** | **O(1)** |
+
+## Related problems
+
+- [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii) — return the room count
+- [Non-overlapping Intervals](/problems/non-overlapping-intervals) — remove min count

@@ -1,24 +1,43 @@
 # Union-Find — Optimize Water Distribution in a Village
 
-*[↗ LeetCode: Optimize Water Distribution in a Village](https://leetcode.com/problems/optimize-water-distribution-in-a-village/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
+*[↗ LeetCode: Optimize Water Distribution in a Village](https://leetcode.com/problems/optimize-water-distribution-in-a-village/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
 
-**The one thing that changes vs the flagship for this pattern:** model each well as an edge from a virtual node 0, then run MST
+Each house `i` can have a well (cost `wells[i]`) or share a pipe (cost `pipes[j][2]`). Return min total cost to supply water to every house.
 
-## The pattern this problem belongs to
+**Example** — `n=3, wells=[1,2,2], pipes=[[1,2,1],[2,3,1]]` → `3`
 
-This variation of Union-Find shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Union-Find](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/union-find) — includes this problem's approach + code + trace + traps
+## Approach — Virtual node 0 + Kruskal's MST
 
-## Solution sketch
+**Insight.** Model each well as an edge from a virtual node 0 to house i with weight `wells[i]`. Now it's a standard MST on n+1 nodes.
 
-The pattern chapter's [Union-Find](/patterns/union-find) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Optimize Water Distribution in a Village` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
+```java
+int minCostToSupplyWater(int n, int[] wells, int[][] pipes) {
+    List<int[]> edges = new ArrayList<>();
+    for (int i = 0; i < n; i++) edges.add(new int[]{0, i + 1, wells[i]});
+    for (int[] p : pipes) edges.add(p);
+    edges.sort((a, b) -> a[2] - b[2]);
+    int[] parent = new int[n + 1];
+    for (int i = 0; i <= n; i++) parent[i] = i;
+    int cost = 0, added = 0;
+    for (int[] e : edges) {
+        if (added == n) break;
+        int a = find(parent, e[0]), b = find(parent, e[1]);
+        if (a != b) { parent[a] = b; cost += e[2]; added++; }
+    }
+    return cost;
+}
+int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/union-find) table for the family tree.
+
+
+**Complexity** — Time **O((n + p) log (n + p))**; Space **O(n + p)**.
+
+## Related problems
+
+- [Connecting Cities with Minimum Cost](/problems/connecting-cities-with-minimum-cost) — plain MST
+- [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points)

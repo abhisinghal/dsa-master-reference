@@ -1,24 +1,58 @@
-# Union-Find — Find Critical and Pseudo-Critical Edges
+# Union-Find — Find Critical and Pseudo-Critical Edges in MST
 
-*[↗ LeetCode: Find Critical and Pseudo-Critical Edges](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
+*[↗ LeetCode: Find Critical and Pseudo-Critical Edges in MST](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
 
-**The one thing that changes vs the flagship for this pattern:** rerun MST forcing each edge in / leaving it out to classify it
+Given `n` and weighted edges, classify each edge:
+- **Critical** — appears in EVERY MST.
+- **Pseudo-critical** — appears in SOME but not all MSTs.
 
-## The pattern this problem belongs to
+**Example** — return `[criticals, pseudo]`.
 
-This variation of Union-Find shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Union-Find](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/union-find) — includes this problem's approach + code + trace + traps
+## Approach — Try each edge with Kruskal
 
-## Solution sketch
+**Insight.** Compute the standard MST cost. For each edge `e`:
+1. **Force-exclude** `e`, run Kruskal. If MST cost differs → `e` is *critical*.
+2. If not critical, **force-include** `e`, run Kruskal. If cost matches standard MST cost → *pseudo-critical*.
 
-The pattern chapter's [Union-Find](/patterns/union-find) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+List<List<Integer>> findCriticalAndPseudoCriticalEdges(int n, int[][] edges) {
+    int m = edges.length;
+    int[][] indexed = new int[m][4];
+    for (int i = 0; i < m; i++) indexed[i] = new int[]{edges[i][0], edges[i][1], edges[i][2], i};
+    Arrays.sort(indexed, (a, b) -> a[2] - b[2]);
+    int mstCost = kruskal(n, indexed, -1, -1);
+    List<Integer> critical = new ArrayList<>();
+    List<Integer> pseudo = new ArrayList<>();
+    for (int i = 0; i < m; i++) {
+        if (kruskal(n, indexed, i, -1) > mstCost)      critical.add(indexed[i][3]);
+        else if (kruskal(n, indexed, -1, i) == mstCost) pseudo.add(indexed[i][3]);
+    }
+    return List.of(critical, pseudo);
+}
+// kruskal builds MST; excludeIdx = skip this edge; includeIdx = start by taking this edge
+int kruskal(int n, int[][] edges, int excludeIdx, int includeIdx) {
+    int[] parent = new int[n]; for (int i = 0; i < n; i++) parent[i] = i;
+    int cost = 0, added = 0;
+    if (includeIdx != -1) {
+        int[] e = edges[includeIdx];
+        parent[find(parent, e[0])] = find(parent, e[1]);
+        cost += e[2]; added++;
+    }
+    for (int i = 0; i < edges.length; i++) {
+        if (i == excludeIdx || i == includeIdx) continue;
+        int a = find(parent, edges[i][0]), b = find(parent, edges[i][1]);
+        if (a != b) { parent[a] = b; cost += edges[i][2]; added++; }
+    }
+    return added == n - 1 ? cost : Integer.MAX_VALUE;
+}
+int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }
+```
 
-1. **Read the pattern chapter's `Find Critical and Pseudo-Critical Edges` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(E² α(V))**; Space **O(V)**.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/union-find) table for the family tree.
+- [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points) — plain MST
+- [Kruskal's canonical](/problems/union-find-number-of-provinces) — Union-Find basics

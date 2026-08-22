@@ -2,23 +2,55 @@
 
 *[↗ LeetCode: Remove Covered Intervals](https://leetcode.com/problems/remove-covered-intervals/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
-**The one thing that changes vs the flagship for this pattern:** sort by start then end descending; count intervals not swallowed by the widest previous end
+Given intervals, return how many remain after removing intervals fully covered by another.
 
-## The pattern this problem belongs to
+**Example** — `[[1,4],[3,6],[2,8]]` → `2` ([1,4] covered by [2,8]? no. But [3,6] covered by [2,8]. Answer 2.)
 
-This variation of Merge Intervals shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Merge Intervals](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/merge-intervals) — includes this problem's approach + code + trace + traps
+## Approach 1 — Brute nested pair
 
-## Solution sketch
+O(n²). Check each interval against every other.
 
-The pattern chapter's [Merge Intervals](/patterns/merge-intervals) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Sort by start asc, end desc; count non-covered
 
-1. **Read the pattern chapter's `Remove Covered Intervals` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** Sort by start; break ties by end desc. Walk with `maxEnd` seen so far. Each interval whose end &gt; `maxEnd` is uncovered → count and update `maxEnd`. Others are covered.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/merge-intervals) table for the family tree.
+
+```java
+int removeCoveredIntervals(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -> a[0] != b[0] ? a[0] - b[0] : b[1] - a[1]);
+    int count = 0, end = 0;
+    for (int[] i : intervals) if (i[1] > end) { count++; end = i[1]; }
+    return count;
+}
+```
+
+
+
+<CodeTrace
+  title="Sort + running-end — [[1,4],[3,6],[2,8]]"
+  :values="['[1,4]','[2,8]','[3,6]']"
+  :windowKeys="['i']"
+  :cellWidth="60"
+  :steps='[
+    { pointers: { i: 0 }, vars: { end: 4, count: 1 }, note: "[1,4]. end=4", added: [0] },
+    { pointers: { i: 1 }, vars: { end: 8, count: 2 }, note: "[2,8]. 8 gt 4 → count", added: [1] },
+    { pointers: { i: 2 }, vars: { end: 8, count: 2 }, note: "[3,6]. 6 not gt 8 → covered, skip" }
+  ]'
+/>
+
+**Complexity** — Time **O(n log n)**; Space **O(1)**.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Brute nested | O(n²) | O(1) |
+| Sort + scan | **O(n log n)** | **O(1)** |
+
+## Related problems
+
+- [Merge Intervals](/problems/merge-intervals-classic)
+- [Non-overlapping Intervals](/problems/non-overlapping-intervals)

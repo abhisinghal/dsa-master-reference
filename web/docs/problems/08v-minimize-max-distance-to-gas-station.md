@@ -1,24 +1,52 @@
 # BS on Answer — Minimize Max Distance to Gas Station
 
-*[↗ LeetCode: Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
+*[↗ LeetCode: Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-**The one thing that changes vs the flagship for this pattern:** guess a distance; feasibility counts how many stations you'd have to add (works on real numbers, so fix an iteration count or epsilon)
+Given sorted station positions and integer `k`, add `k` new stations to minimize the max distance between adjacent stations. Return that distance (real number).
 
-## The pattern this problem belongs to
+**Example** — `stations=[1,2,3,4,5,6,7,8,9,10], k=9` → `0.5`
 
-This variation of BS on Answer shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for BS on Answer](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bs-on-answer) — includes this problem's approach + code + trace + traps
+## Approach 1 — Priority queue (greedy)
 
-## Solution sketch
+Track each gap's current "sub-gap size after splits"; repeatedly split the largest. O(k log n).
 
-The pattern chapter's [BS on Answer](/patterns/bs-on-answer) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Binary search on real-number answer
 
-1. **Read the pattern chapter's `Minimize Max Distance to Gas Station` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** `feasible(D)` = "can we place ≤ k stations so every gap ≤ D?" — for each existing gap `g`, we need `⌈g/D⌉ - 1` splits (i.e. `floor(g/D)` new stations). Total ≤ k.
 
-## Related problems in the same pattern
+**Trap.** Real BS: use a small epsilon or a fixed number of iterations to converge.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bs-on-answer) table for the family tree.
+
+
+```java
+double minmaxGasDist(int[] s, int k) {
+    double lo = 0, hi = s[s.length - 1] - s[0];
+    while (hi - lo > 1e-6) {
+        double mid = (lo + hi) / 2;
+        int count = 0;
+        for (int i = 1; i < s.length; i++) count += (int) ((s[i] - s[i - 1]) / mid);
+        if (count > k) lo = mid;                                // need more allowed → increase D
+        else            hi = mid;
+    }
+    return lo;
+}
+```
+
+
+
+**Complexity** — Time **O(n log(hi/eps))** ≈ O(n · 30); Space **O(1)**.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Max-heap greedy | O(k log n) | O(n) |
+| Real-number BS | **O(n · log(hi/eps))** | O(1) |
+
+## Related problems
+
+- [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas) — integer BS
+- [Divide Chocolate](/problems/divide-chocolate) — maximize-min
+- [Path With Minimum Effort](/problems/path-with-minimum-effort)
