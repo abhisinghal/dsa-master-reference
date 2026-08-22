@@ -2,17 +2,22 @@
 
 *[↗ LeetCode: Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-Return the multi-set intersection (each element appears `min(count_a, count_b)` times).
+Return the multi-set intersection (each element appears `min(cnt_a, cnt_b)` times).
+
+**Example 1** — `nums1=[1,2,2,1], nums2=[2,2]` → `[2,2]`
+**Example 2** — `nums1=[4,9,5], nums2=[9,4,9,8,4]` → `[4,9]` or `[9,4]`
+
+**Constraints** — `1 ≤ n, m ≤ 1000`.
 
 ---
 
-## Approach 1 — Hash map count
-Count nums1, iterate nums2, decrement. **O(n+m)** time, **O(n)** space.
+## Approach 1 — Hash-map count
 
----
+Count nums1; iterate nums2 decrementing. O(n+m).
 
-## Approach 2 — Sort + two-pointer
-**Insight.** After sorting, walk both arrays; on equal, emit and advance both.
+## Approach 2 — Sort + two-pointer (canonical for pre-sorted)
+
+**Insight.** After sorting, walk both arrays; on equal emit and advance both.
 
 ```java
 int[] intersect(int[] nums1, int[] nums2) {
@@ -28,25 +33,24 @@ int[] intersect(int[] nums1, int[] nums2) {
 }
 ```
 
-**Time O((n+m) log(n+m))**, **Space O(1)** extra.
-
-**Follow-up.** If nums1 is huge and streamed from disk, hash-map on the smaller side. If both sorted, two-pointer is O(1) extra memory.
+**Complexity** — Time **O((n+m) log(n+m))**; Space **O(1)** extra.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Hash map count | O(n+m) | O(n) | baseline |
-| Sort + two-pointer | O((n+m) log(n+m)) | O(1) | optimum |
+| Hash count | O(n+m) | O(min) | best if small side fits |
+| Sort + 2p | **O((n+m) log)** | O(1) | canonical for sorted / streaming |
 
 ## When to use which
 
-- **State it for signal** → Hash map count (O(n+m)). Correct baseline; call it out then move on.
-- **Ship this** → Sort + two-pointer (O((n+m) log(n+m)), O(1)). Expected optimum in interview.
+- **Presorted input** → 2p.
+- **One huge / one small** → hash on smaller.
+- **Streamed** → hash on materialized side.
 
 ## Related problems
 
-- [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) — set intersection
-- [Merge Sorted Array](/problems/merge-sorted-array) — same two-pointer walk
+- [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) — set version
+- [Merge Sorted Array](/problems/merge-sorted-array)

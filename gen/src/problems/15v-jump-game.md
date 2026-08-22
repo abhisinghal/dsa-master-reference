@@ -2,17 +2,23 @@
 
 *[↗ LeetCode: Jump Game](https://leetcode.com/problems/jump-game/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-`nums[i]` = max jump length from `i`. Can we reach the last index?
+`nums[i]` = max jump length from `i`. Return `true` iff we can reach the last index starting from index 0.
+
+**Example 1** — `nums=[2,3,1,1,4]` → `true`
+**Example 2** — `nums=[3,2,1,0,4]` → `false`
+**Example 3** — `nums=[0]` → `true`
+
+**Constraints** — `1 ≤ n ≤ 10⁴`.
 
 ---
 
-## Approach 1 — DP reachable[i]
-O(n²). Too slow for large inputs.
+## Approach 1 — DP `reachable[i]`
 
----
+O(n²). Baseline.
 
-## Approach 2 — Greedy farthest reachable
-**Insight.** Track `maxReach`. At index `i`, if `i > maxReach` we're stuck. Else update `maxReach = max(maxReach, i + nums[i])`.
+## Approach 2 — Greedy farthest reach (canonical)
+
+**Insight.** Track `maxReach = max(i + nums[i])`. At index `i`, if `i > maxReach`, we're stuck. Update as we go.
 
 ```java
 boolean canJump(int[] nums) {
@@ -26,24 +32,37 @@ boolean canJump(int[] nums) {
 }
 ```
 
+<CodeTrace
+  title="Farthest reach — nums=[3,2,1,0,4]"
+  :values="['3','2','1','0','4']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { maxReach: 3 }, note: "" },
+    { pointers: { i: 3 }, vars: { maxReach: 3 }, note: "still 3" },
+    { pointers: { i: 4 }, vars: { blocked: true }, note: "4 > 3 → false" }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| DP reachable[i] | O(n²) | — | baseline |
-| Greedy farthest reachable | O(n) | O(1) | optimum |
+| DP reachable | O(n²) | O(n) | baseline |
+| Greedy | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **State it for signal** → DP reachable[i] (O(n²)). Correct baseline; call it out then move on.
-- **Ship this** → Greedy farthest reachable (O(n), O(1)). Expected optimum in interview.
+- **Reachability only** → greedy.
+- **Min jumps** → [Jump Game II](/problems/greedy-jump-game-ii) — BFS layers.
+- **Arbitrary graph jumps** → [Jump Game III](/problems/jump-game-iii) — BFS.
 
 ## Related problems
 
-- [Jump Game II](/problems/greedy-jump-game-ii) — minimum jumps (BFS layers)
-- [Jump Game III](/problems/jump-game-iii) — arbitrary graph BFS
-- [Jump Game VI](/problems/jump-game-vi) — DP with deque
+- [Jump Game II](/problems/greedy-jump-game-ii)
+- [Jump Game III](/problems/jump-game-iii)
+- [Jump Game VI](/problems/jump-game-vi)

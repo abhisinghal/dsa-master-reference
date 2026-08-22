@@ -2,12 +2,18 @@
 
 *[↗ LeetCode: Video Stitching](https://leetcode.com/problems/video-stitching/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-Cover `[0, T]` with fewest clips `[a, b]`. Return -1 if impossible.
+Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
+
+**Example 1** — `clips=[[0,2],[4,6],[8,10],[1,9],[1,5],[5,9]], T=10` → `3`
+**Example 2** — `clips=[[0,1],[1,2]], T=5` → `-1`
+
+**Constraints** — `1 ≤ n ≤ 100`; `0 ≤ T ≤ 100`.
 
 ---
 
-## Approach 1 — Sort by start + greedy farthest reach
-**Insight.** Sort by start. Track `[curEnd, farReach]`: while iterating clips with `start ≤ curEnd`, extend `farReach`. When we exhaust that batch, use one more clip (advance `curEnd = farReach`).
+## Approach — Sort by start + farthest reach (canonical)
+
+**Insight.** Same shape as Jump Game II. Sort by start. Maintain `curEnd`; while iterating clips with `start ≤ curEnd`, extend `farReach`. When exhausted, use one clip (advance `curEnd = farReach`).
 
 ```java
 int videoStitching(int[][] clips, int T) {
@@ -17,8 +23,7 @@ int videoStitching(int[][] clips, int T) {
         while (i < clips.length && clips[i][0] <= curEnd)
             farReach = Math.max(farReach, clips[i++][1]);
         if (farReach <= curEnd) return -1;
-        used++;
-        curEnd = farReach;
+        used++; curEnd = farReach;
     }
     return used;
 }
@@ -28,24 +33,18 @@ int videoStitching(int[][] clips, int T) {
 
 ---
 
-## Approach 2 — Bucket by start; single pass without sort
-For each starting time `s`, store the largest end. Sweep — same jump-game logic in O(T).
-
----
-
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort by start + greedy farthest reach | O(n log n) | O(1) | baseline |
-| Bucket by start; single pass without sort | O(T) | — | optimum |
+| Sort + reach | **O(n log n)** | O(1) | canonical |
 
 ## When to use which
 
-- **State it for signal** → Sort by start + greedy farthest reach (O(n log n)). Correct baseline; call it out then move on.
-- **Ship this** → Bucket by start; single pass without sort (O(T), —). Expected optimum in interview.
+- **Min intervals covering [0,T]** → farthest reach.
+- **Same-start bucket by max-end** → O(T) without sort.
 
 ## Related problems
 
-- [Jump Game II](/problems/greedy-jump-game-ii) — same "farthest reach in current layer" idea
-- [Minimum Number of Taps to Open to Water a Garden](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/) — sibling
+- [Jump Game II](/problems/greedy-jump-game-ii)
+- [Minimum Number of Taps](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/)

@@ -2,29 +2,41 @@
 
 *[↗ LeetCode: Move Zeroes](https://leetcode.com/problems/move-zeroes/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-Move all zeros to end, preserving order of non-zeros. In-place.
+Move all zeros to end preserving order of non-zeros. In-place.
+
+**Example 1** — `nums=[0,1,0,3,12]` → `[1,3,12,0,0]`
+**Example 2** — `nums=[0]` → `[0]`
+
+**Constraints** — `1 ≤ n ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Slow/fast write pointer
-**Insight.** `write` points to the next slot for a non-zero; `read` scans. Copy non-zeros forward, then zero-fill the tail. Alternatively, swap on the fly.
+## Approach 1 — Two-pass write
+
+Copy non-zeros forward; zero-fill tail.
+
+## Approach 2 — Slow/fast write pointer (canonical)
+
+**Insight.** One pointer for read, one for the next slot to write.
 
 ```java
 void moveZeroes(int[] nums) {
-    int write = 0;
-    for (int read = 0; read < nums.length; read++)
-        if (nums[read] != 0) nums[write++] = nums[read];
-    while (write < nums.length) nums[write++] = 0;
+    int w = 0;
+    for (int r = 0; r < nums.length; r++)
+        if (nums[r] != 0) nums[w++] = nums[r];
+    while (w < nums.length) nums[w++] = 0;
 }
 ```
 
-**One-pass swap variant** (fewer writes when array is mostly zeros):
+## Approach 3 — Swap on the fly (fewer writes)
+
+Use when array is mostly zeros — each non-zero causes one swap.
 
 ```java
-void moveZeroes2(int[] nums) {
-    int write = 0;
-    for (int read = 0; read < nums.length; read++)
-        if (nums[read] != 0) { int t = nums[read]; nums[read] = nums[write]; nums[write++] = t; }
+void moveZeroesSwap(int[] nums) {
+    int w = 0;
+    for (int r = 0; r < nums.length; r++)
+        if (nums[r] != 0) { int t = nums[r]; nums[r] = nums[w]; nums[w++] = t; }
 }
 ```
 
@@ -34,15 +46,19 @@ void moveZeroes2(int[] nums) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Slow/fast write pointer | O(n) | O(1) | primary |
+| Two-pass | O(n) | O(1) | baseline |
+| Slow/fast writer | **O(n)** | O(1) | canonical |
+| Swap-in-place | O(n) | O(1) | fewer writes |
 
 ## When to use which
 
-- **Ship this** → Slow/fast write pointer (O(n), O(1)). The pattern's standard solution.
+- **Standard** → slow/fast.
+- **Minimize writes** (SSD wear, etc.) → swap variant.
+- **Removes / partition** → same template family.
 
 ## Related problems
 
-- [Remove Element](https://leetcode.com/problems/remove-element/) — same slow/fast pattern
+- [Remove Element](https://leetcode.com/problems/remove-element/)
 - [Sort Array By Parity](/problems/sort-array-by-parity)

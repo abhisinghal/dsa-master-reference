@@ -2,38 +2,53 @@
 
 *[↗ LeetCode: Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-Given bar heights, return the largest rectangle area contained.
+Given bar heights, return the largest rectangle contained.
 
-> Filed under Two Pointers by our curriculum because the O(n) solution uses **two pointer walks** (previous-smaller and next-smaller). But the canonical implementation is a monotonic stack — see the [Monotonic Stack chapter](/patterns/monotonic-stack).
+**Example 1** — `heights=[2,1,5,6,2,3]` → `10`
+**Example 2** — `heights=[2,4]` → `4`
 
----
-
-## Approach 1 — For each bar, expand outward
-O(n²) — for each `i`, walk left/right while ≥ heights[i].
+**Constraints** — `1 ≤ n ≤ 10⁵`.
 
 ---
 
-## Approach 2 — Monotonic increasing stack
-**Insight.** When we push bar `i` and pop bar `t` (because heights[i] < heights[t]), we now know both boundaries of `t`'s maximal rectangle: `next smaller = i`, `previous smaller = stack.peek()` after pop. Area = `heights[t] * (i - prev - 1)`.
+## Approach 1 — For each bar expand outward
+
+O(n²). Baseline.
+
+## Approach 2 — Monotonic increasing stack (canonical)
+
+**Insight.** When we push bar `i` and pop `t` (because `h[i] < h[t]`), both boundaries of `t`'s maximal rectangle are known: `next smaller = i`, `previous smaller = stack.peek()` after pop.
+
+**Sentinel trick.** Iterate `i` from 0 to n **inclusive** with `h=0` at end to flush the stack.
 
 ```java
-int largestRectangleArea(int[] heights) {
-    Deque<Integer> stack = new ArrayDeque<>();
-    int best = 0, n = heights.length;
+int largestRectangleArea(int[] h) {
+    Deque<Integer> st = new ArrayDeque<>();
+    int best = 0, n = h.length;
     for (int i = 0; i <= n; i++) {
-        int h = i == n ? 0 : heights[i];
-        while (!stack.isEmpty() && heights[stack.peek()] > h) {
-            int t = stack.pop();
-            int width = stack.isEmpty() ? i : i - stack.peek() - 1;
-            best = Math.max(best, heights[t] * width);
+        int val = i == n ? 0 : h[i];
+        while (!st.isEmpty() && h[st.peek()] > val) {
+            int t = st.pop();
+            int w = st.isEmpty() ? i : i - st.peek() - 1;
+            best = Math.max(best, h[t] * w);
         }
-        stack.push(i);
+        st.push(i);
     }
     return best;
 }
 ```
 
-**Sentinel trick.** Iterate `i` to `n` inclusive with `h=0` to flush the stack cleanly.
+<CodeTrace
+  title="Mono stack — heights=[2,1,5,6,2,3]"
+  :values="['2','1','5','6','2','3']"
+  :windowKeys="['i']"
+  :cellWidth="30"
+  :steps='[
+    { pointers: { i: 2 }, vars: { st: "[1,2]" }, note: "" },
+    { pointers: { i: 4 }, vars: { pop: 6, area: 6 }, note: "" },
+    { pointers: { i: 4 }, vars: { pop: 5, area: 10 }, note: "5×2=10 best" }
+  ]'
+/>
 
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
@@ -41,18 +56,19 @@ int largestRectangleArea(int[] heights) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| For each bar, expand outward | O(n²) | — | baseline |
-| Monotonic increasing stack | O(n) | O(n) | optimum |
+| Expand | O(n²) | O(1) | baseline |
+| Mono stack | **O(n)** | O(n) | canonical |
 
 ## When to use which
 
-- **State it for signal** → For each bar, expand outward (O(n²)). Correct baseline; call it out then move on.
-- **Ship this** → Monotonic increasing stack (O(n), O(n)). Expected optimum in interview.
+- **"Largest rectangle"** → mono stack + sentinel.
+- **2D binary matrix** → row heights + this template (see [Maximal Rectangle](/problems/maximal-rectangle)).
+- **"Range max/min queries"** → sparse table or seg tree.
 
 ## Related problems
 
-- [Maximal Rectangle](/problems/maximal-rectangle) — stack of largest-rectangle across rows
+- [Maximal Rectangle](/problems/maximal-rectangle)
 - [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums)
-- [Trapping Rain Water](/problems/trapping-rain-water) — sibling two-pointer/stack problem
+- [Trapping Rain Water](/problems/trapping-rain-water)

@@ -2,12 +2,17 @@
 
 *[↗ LeetCode: Number of Islands](https://leetcode.com/problems/number-of-islands/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dfs)
 
-Count connected components of `'1'`s in a grid.
+Count connected components of `'1'`s in a binary grid.
+
+**Example 1** — Grid → count.
+
+**Constraints** — `1 ≤ m, n ≤ 300`.
 
 ---
 
-## Approach 1 — DFS flood fill
-Iterate cells; on unseen `'1'` increment count, DFS/BFS marking `'0'` (or a visited set).
+## Approach 1 — DFS flood fill (canonical)
+
+Iterate cells; on unseen `'1'`, `count++`, DFS marking `'0'`.
 
 ```java
 int numIslands(char[][] grid) {
@@ -20,40 +25,36 @@ int numIslands(char[][] grid) {
 void dfs(char[][] g, int i, int j) {
     if (i < 0 || j < 0 || i >= g.length || j >= g[0].length || g[i][j] != '1') return;
     g[i][j] = '0';
-    dfs(g, i + 1, j); dfs(g, i - 1, j); dfs(g, i, j + 1); dfs(g, i, j - 1);
+    dfs(g, i+1, j); dfs(g, i-1, j); dfs(g, i, j+1); dfs(g, i, j-1);
 }
 ```
-
----
 
 ## Approach 2 — BFS
 Same idea, queue instead of recursion — avoids stack overflow on huge grids.
 
----
-
 ## Approach 3 — Union-Find
-Union adjacent `'1'` cells; final answer = number of components with `'1'`. Useful for streaming variant (Islands II).
+Union adjacent `'1'`s; count components at end. Useful for streaming (Islands II).
 
-**Complexity (all)** — Time **O(mn)**; Space **O(mn)** stack/queue/uf.
+**Complexity** — Time **O(mn)**; Space **O(mn)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| DFS flood fill | — | — | baseline |
-| BFS | — | — | improved |
-| Union-Find | O(mn) | O(mn) | optimum |
+| DFS | O(mn) | O(mn) stack | canonical |
+| BFS | O(mn) | O(min(m,n)) queue | safer |
+| UF | O(mn·α) | O(mn) | streaming variant |
 
 ## When to use which
 
-- **State it for signal** → DFS flood fill (—). Correct baseline; call it out then move on.
-- **Intermediate refinement** → BFS (—).
-- **Ship this** → Union-Find (O(mn), O(mn)). Expected optimum in interview.
+- **Static grid, small** → DFS.
+- **Deep recursion risk** → BFS.
+- **Streaming land additions** → UF (see [Number of Islands II](/problems/number-of-islands-ii)).
 
 ## Related problems
 
-- [Number of Islands II](/problems/number-of-islands-ii) — streaming, requires UF
+- [Number of Islands II](/problems/number-of-islands-ii)
 - [Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
 - [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/)

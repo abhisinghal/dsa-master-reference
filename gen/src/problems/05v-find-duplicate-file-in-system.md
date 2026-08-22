@@ -2,11 +2,16 @@
 
 *[↗ LeetCode: Find Duplicate File in System](https://leetcode.com/problems/find-duplicate-file-in-system/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-Given a list of `"dir file1.ext(content) file2.ext(content) …"` strings, group files with identical content.
+Given `"dir file1.ext(content) file2.ext(content) …"` strings, group files with identical content.
+
+**Example 1** — Various paths → grouped by content.
+
+**Constraints** — total input ≤ 2·10⁷.
 
 ---
 
-## Approach 1 — Hash by content
+## Approach — Hash by content (canonical)
+
 ```java
 List<List<String>> findDuplicate(String[] paths) {
     Map<String, List<String>> byContent = new HashMap<>();
@@ -21,31 +26,32 @@ List<List<String>> findDuplicate(String[] paths) {
         }
     }
     List<List<String>> out = new ArrayList<>();
-    for (List<String> g : byContent.values()) if (g.size() > 1) out.add(g);
+    for (var g : byContent.values()) if (g.size() > 1) out.add(g);
     return out;
 }
 ```
 
-**Complexity** — Time **O(total input size)**; Space **O(total input size)**.
+**Complexity** — Time **O(total input)**; Space **O(total input)**.
 
 ## Follow-ups
 
-- **Very large files:** hash a rolling checksum (MD5/SHA1) instead of full content; compare buckets by re-hashing suspects fully.
-- **Filesystem streaming:** compare (size, first-1KB, sha256) triple to avoid touching non-collisions.
-- **Symlinks:** normalize `readlink` before grouping.
+- **Very large files** → hash by SHA256 of chunks.
+- **Filesystem streaming** → compare `(size, sha1(first 1KB), sha256)` triple.
+- **Symlinks** → normalize `readlink` before grouping.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Hash by content | O(total input size) | O(total input size) | primary |
+| Content hash | **O(N)** | O(N) | canonical |
 
 ## When to use which
 
-- **Ship this** → Hash by content (O(total input size), O(total input size)). The pattern's standard solution.
+- **Small files, batch mode** → full content hash.
+- **Huge files** → chunked hash + verify collisions.
 
 ## Related problems
 
-- [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — same canonical-key style
+- [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — canonical-key style

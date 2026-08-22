@@ -2,14 +2,21 @@
 
 *[↗ LeetCode: Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-Each boat carries at most 2 people totaling ≤ `limit`. Minimize number of boats.
+Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
+
+**Example 1** — `people=[1,2], limit=3` → `1`
+**Example 2** — `people=[3,2,2,1], limit=3` → `3`
+**Example 3** — `people=[3,5,3,4], limit=5` → `4`
+
+**Constraints** — `1 ≤ n ≤ 5·10⁴`.
 
 ---
 
-## Approach 1 — Sort + greedy two-pointer
-**Insight.** Sort. Pair the heaviest with the lightest if possible; otherwise the heaviest goes alone.
+## Approach — Sort + greedy two-pointer (canonical)
 
-**Why optimal.** If the heaviest can't pair with the lightest, they can't pair with anyone; sending them alone is forced. If they can pair, pairing with the lightest is at least as good as any other pairing (leaves the strongest remainder).
+**Insight.** Sort. Pair heaviest with lightest if possible; otherwise heaviest goes alone.
+
+**Why optimal.** If heaviest can't pair with lightest, they can't pair with anyone.
 
 ```java
 int numRescueBoats(int[] people, int limit) {
@@ -17,8 +24,7 @@ int numRescueBoats(int[] people, int limit) {
     int l = 0, r = people.length - 1, boats = 0;
     while (l <= r) {
         if (people[l] + people[r] <= limit) l++;
-        r--;
-        boats++;
+        r--; boats++;
     }
     return boats;
 }
@@ -30,15 +36,16 @@ int numRescueBoats(int[] people, int limit) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + greedy two-pointer | O(n log n) | O(1) | primary |
+| Sort + greedy | **O(n log n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → Sort + greedy two-pointer (O(n log n), O(1)). The pattern's standard solution.
+- **"Pair heaviest + lightest greedy"** → applies to boats, task scheduling, item packing.
+- **"3+ per boat"** → generalizes with DP or different greedy.
 
 ## Related problems
 
-- [Two Sum II - Input Array Is Sorted](/problems/two-sum-ii-input-array-is-sorted)
-- [Assign Cookies](https://leetcode.com/problems/assign-cookies/) — same sort+pair greedy
+- [Two Sum II](/problems/two-sum-ii-input-array-is-sorted)
+- [Assign Cookies](https://leetcode.com/problems/assign-cookies/)

@@ -4,12 +4,15 @@
 
 2D grid of heights; compute total water trapped.
 
-> Filed under Two Pointers because 1D Trapping Rain Water lives here, but the 2D version needs a **min-heap on the boundary**, not opposing pointers.
+**Example 1** — `heightMap=[[1,4,3,1,3,2],[3,2,1,3,2,4],[2,3,3,2,3,1]]` → `4`
+
+**Constraints** — `1 ≤ m, n ≤ 200`.
 
 ---
 
-## Approach 1 — Min-heap Dijkstra-style border expansion
-**Insight.** Water is bounded by the shortest wall along any path to the boundary. Grow a "reached" frontier from all border cells; always process the **lowest wall reachable** first. When we enter a lower neighbor, water trapped = current wall - neighbor height, and that neighbor becomes a wall at the higher level.
+## Approach — Min-heap Dijkstra-style border expansion (canonical)
+
+**Insight.** Water at any cell is bounded by the shortest wall on ANY path to the boundary. Grow a "reached" set from all border cells; always process the **lowest wall reachable** first. When we enter a lower neighbor, water = `current wall - height`; that neighbor becomes a wall at the higher level.
 
 ```java
 int trapRainWater(int[][] h) {
@@ -20,8 +23,7 @@ int trapRainWater(int[][] h) {
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
             if (i == 0 || j == 0 || i == m - 1 || j == n - 1) {
-                pq.offer(new int[]{i, j, h[i][j]});
-                seen[i][j] = true;
+                pq.offer(new int[]{i, j, h[i][j]}); seen[i][j] = true;
             }
     int[][] D = {{1,0},{-1,0},{0,1},{0,-1}};
     int water = 0;
@@ -45,16 +47,17 @@ int trapRainWater(int[][] h) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Min-heap Dijkstra-style border expansion | O(mn log(mn)) | O(mn) | primary |
+| Min-heap border expansion | **O(mn log(mn))** | O(mn) | canonical |
 
 ## When to use which
 
-- **Ship this** → Min-heap Dijkstra-style border expansion (O(mn log(mn)), O(mn)). The pattern's standard solution.
+- **"Process lowest reachable first"** — same idea in path-with-min-effort, swim-in-water.
+- **1D** — see [Trapping Rain Water](/problems/trapping-rain-water) — opposing pointers.
 
 ## Related problems
 
-- [Trapping Rain Water](/problems/trapping-rain-water) — 1D
-- [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/) — same "process lowest first" trick
+- [Trapping Rain Water](/problems/trapping-rain-water)
+- [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/)
 - [Path With Minimum Effort](/problems/path-with-minimum-effort)

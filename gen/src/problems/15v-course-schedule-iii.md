@@ -2,12 +2,19 @@
 
 *[↗ LeetCode: Course Schedule III](https://leetcode.com/problems/course-schedule-iii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/greedy)
 
-Each course `[duration, lastDay]`. Take max number of courses (one at a time, must finish by lastDay).
+Each course `[duration, lastDay]`. Take max number of courses (one at a time). Each must finish by lastDay.
+
+**Example 1** — `courses=[[100,200],[200,1300],[1000,1250],[2000,3200]]` → `3`
+
+**Constraints** — `1 ≤ n ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Sort by deadline + max-heap of durations (regret-based)
-**Insight.** Sort by deadline. Iterate; always take the course. If cumulative time exceeds the current deadline, **swap out** the previously-taken course with the largest duration (that's the "regret" step). This keeps the count maximal.
+## Approach — Sort by deadline + max-heap regret (canonical)
+
+**Insight.** Sort by deadline ascending. Iterate; always take the course; push duration into max-heap. If total time exceeds current deadline, **swap out** the previously-taken course with the largest duration.
+
+**Why greedy works.** After sorting by deadline, dropping the largest duration among taken courses is always at least as good as dropping the current one — swap preserves feasibility for the same count.
 
 ```java
 int scheduleCourse(int[][] courses) {
@@ -15,15 +22,12 @@ int scheduleCourse(int[][] courses) {
     PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
     int time = 0;
     for (int[] c : courses) {
-        time += c[0];
-        pq.offer(c[0]);
+        time += c[0]; pq.offer(c[0]);
         if (time > c[1]) time -= pq.poll();
     }
     return pq.size();
 }
 ```
-
-**Why greedy works.** After sorting by deadline, dropping the largest duration among taken courses is always at least as good as dropping the current one — swapping preserves feasibility for the same number of courses picked so far.
 
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
 
@@ -31,15 +35,16 @@ int scheduleCourse(int[][] courses) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort by deadline + max-heap of durations (… | O(n log n) | O(n) | primary |
+| Regret heap | **O(n log n)** | O(n) | canonical |
 
 ## When to use which
 
-- **Ship this** → Sort by deadline + max-heap of durations (regret-based) (O(n log n), O(n)). The pattern's standard solution.
+- **"Max count with deadlines and swap-out"** → regret heap.
+- **"Max value"** → weighted variant → DP or different greedy.
 
 ## Related problems
 
-- [Maximum Number of Events That Can Be Attended II](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended-ii/) — DP variant
-- [Task Scheduler](https://leetcode.com/problems/task-scheduler/) — greedy sibling
+- [Maximum Events Attended](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/)
+- [Task Scheduler](https://leetcode.com/problems/task-scheduler/)
