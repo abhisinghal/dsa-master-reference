@@ -350,11 +350,11 @@ def main():
             if not name.endswith(".md"):
                 continue
             src_path = os.path.join(problems_src_dir, name)
-            # 00-index.md -> index.md; NN-slug.md or slug.md -> slug.md
+            # 00-index.md -> index.md; NN-slug.md or NNv-slug.md or slug.md -> slug.md
             if name == "00-index.md":
                 dst_name = "index.md"
             else:
-                dst_name = re.sub(r"^\d+-", "", name)
+                dst_name = re.sub(r"^\d+v?-", "", name)
             dst_path = os.path.join(problems_dst_dir, dst_name)
             transformed = transform_file(src_path)
             with open(dst_path, "w", encoding="utf-8") as f:
