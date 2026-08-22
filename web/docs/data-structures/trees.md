@@ -516,7 +516,7 @@ root 5, left 1, right 4 with right's children 3 and 6. It *looks* fine locally, 
   :steps='[
     { pointers: { node: 0 }, vars: { bounds: "(-∞, ∞)", value: 5 }, note: "root 5 → children see bounds", added: [0] },
     { pointers: { node: 1 }, vars: { bounds: "(-∞, 5)", value: 1 }, note: "left child 1 ∈ (-∞, 5) ✓", added: [1] },
-    { pointers: { node: 2 }, vars: { bounds: "(5, ∞)", value: 4 }, note: "right child 4 must be > 5. FAIL → not a BST", removed: [2] }
+    { pointers: { node: 2 }, vars: { bounds: "(5, ∞)", value: 4 }, note: "right child 4 must be gt 5. FAIL → not a BST", removed: [2] }
   ]'
 />
 

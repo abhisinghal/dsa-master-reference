@@ -165,7 +165,7 @@ int[] topKFrequent(int[] nums, int k) {
     { pointers: { i: 5 }, vars: { freq: "{1:3, 2:2, 3:1}", heap: "[]" }, note: "count all frequencies" },
     { pointers: { i: 0 }, vars: { heap: "[(3,1)]" }, note: "push 1 (freq 3)" },
     { pointers: { i: 0 }, vars: { heap: "[(2,2),(3,1)]" }, note: "push 2 (freq 2). heap size = k=2" },
-    { pointers: { i: 0 }, vars: { heap: "[(2,2),(3,1)]" }, note: "3 has freq 1 < min(2) → skip. result [1,2]", added: [0,3] }
+    { pointers: { i: 0 }, vars: { heap: "[(2,2),(3,1)]" }, note: "3 has freq 1 lt min(2) → skip. result [1,2]", added: [0,3] }
   ]'
 />
 ### Time Complexity
@@ -177,6 +177,17 @@ O(n), because the frequency map may store all n values when every value is disti
 More precisely, counting costs O(n), and heap operations cost O(m log k), where `m` is the number of distinct values. The frequency map can hold up to O(n) entries. The heap itself holds O(k) entries, but the total auxiliary space is still O(n) because of the map.
 
 > [trap] **Common Trap** — Wrong heap polarity. *Example:* the *k-th largest* with a **max**-heap of all n elements costs O(n log n) — wasteful. A **min**-heap of size k evicts the smallest; the root is your answer in O(n log k).
+
+<CodeTrace
+  title="Trap — Heap polarity: k-th largest of nums=[3,1,5,2,4], k=2"
+  :values="[3,1,5,2,4]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 4 }, vars: { max_heap: "[5,4,3,2,1]", cost: "O(n log n)" }, note: "BUG: max-heap of all 5 → build + pop 2 for 2nd largest = 4. wasteful" },
+    { pointers: { i: 4 }, vars: { min_heap: "[4,5]", size: 2, cost: "O(n log k)" }, note: "FIX: min-heap capped at k=2. root=4 = 2nd largest", added: [4] }
+  ]'
+/>
 
 > [note] **Interview script** — First, I'd count each number because frequency is the ranking key. The brute force is to sort all distinct numbers by frequency and take the first k, which is O(n + m log m). Since we only need k winners, I'll keep a min-heap of size k ordered by frequency and evict the least frequent whenever the heap grows too large. That gives O(n + m log k) time and O(n) space, and the output order can be arbitrary because the problem allows it.
 

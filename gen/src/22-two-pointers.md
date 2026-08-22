@@ -217,6 +217,18 @@ Extra space is O(1) excluding the output and sort implementation, because the al
 
 > [trap] **Common Trap** — Missing any of the three duplicate-skips yields repeated triplets. *Example:* `nums=[-1,-1,-1,2]`. Without skipping duplicate pivots you emit `[-1,-1,2]` twice (once per `-1` as pivot); without skipping `lo`/`hi` after a hit, `[0,0,0,0]` emits `[0,0,0]` multiple times.
 
+<CodeTrace
+  title="Trap — 3Sum missing pivot dedup: nums=[-1,-1,-1,2]"
+  :values="[-1,-1,-1,2]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0, lo: 1, hi: 3 }, vars: { pivot: -1, pair: "-1+2=1" }, note: "pivot -1 → emit [-1,-1,2]", added: [0,1,3] },
+    { pointers: { i: 1, lo: 2, hi: 3 }, vars: { pivot: -1, pair: "-1+2=1" }, note: "BUG: pivot -1 again → emit [-1,-1,2] again", added: [1,2,3] },
+    { pointers: { i: 1 }, vars: { skip: "yes: nums[i]==nums[i-1]" }, note: "FIX: skip pivot dup → only one -1 triplet" }
+  ]'
+/>
+
 > [pat] **Pattern Connection** — Generalizes to k-Sum by recursion (fix outer indices, two-pointer the base case). 4Sum = one more loop.
 
 ### Common Mistakes

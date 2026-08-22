@@ -243,6 +243,18 @@ Only checking `fast != null`. *Example:* even-length list `1→2`. After one ste
 
 </Callout>
 
+<CodeTrace
+  title="Trap — Fast/slow NPE: list 1→2 (even length)"
+  :values="[1,2]"
+  :windowKeys="['fast']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { slow: 0, fast: 0 }, vars: { list: "1→2→null" }, note: "start: both at head" },
+    { pointers: { slow: 1, fast: 1 }, vars: { note: "fast=2, non-null" }, note: "BUG: check fast!=null → true, but fast.next.next NPEs on null" },
+    { pointers: { slow: 1, fast: 1 }, vars: { fix: "check fast!=null AND fast.next!=null" }, note: "FIX: guard both → loop ends cleanly, returns null (no cycle)" }
+  ]'
+/>
+
 <Callout kind="note" title="Interview script">
 
 First, I'd verify this is a singly linked list and I need the entry node, not just true/false. The brute force is a `HashSet<ListNode>`: return the first repeated node in O(n) time and O(n) space. To optimize space, I'll use Floyd's two pointers: slow moves one step, fast moves two, and a meeting proves a cycle. Then I reset one pointer to head and move both one step at a time; their next meeting is the entry, so the final complexity is O(n) time and O(1) space.

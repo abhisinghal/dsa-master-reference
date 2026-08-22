@@ -322,7 +322,7 @@ int canCompleteCircuit(int[] gas, int[] cost) {
   :windowKeys="['i']"
   :cellWidth="42"
   :steps='[
-    { pointers: { i: 0 }, vars: { tank: -2, total: -2, start: 1 }, note: "1-3=-2 → tank<0 → try start=1" },
+    { pointers: { i: 0 }, vars: { tank: -2, total: -2, start: 1 }, note: "1-3=-2 → tanklt0 → try start=1" },
     { pointers: { i: 1 }, vars: { tank: -2, total: -4, start: 2 }, note: "2-4=-2 → try start=2" },
     { pointers: { i: 2 }, vars: { tank: -2, total: -6, start: 3 }, note: "3-5=-2 → try start=3" },
     { pointers: { i: 3 }, vars: { tank: 3, total: -3, start: 3 }, note: "4-1=+3 → keep", added: [3] },
@@ -557,7 +557,7 @@ int eraseOverlapIntervals(int[][] intervals) {
   :steps='[
     { pointers: { i: 0 }, vars: { end: 2, keep: "yes", removed: 0 }, note: "keep [1,2]" },
     { pointers: { i: 1 }, vars: { end: 3, keep: "yes", removed: 0 }, note: "[2,3] start=2 ≥ end=2 → keep", added: [0,1] },
-    { pointers: { i: 2 }, vars: { end: 3, keep: "no", removed: 1 }, note: "[1,3] start=1 < 3 → drop", removed: [2] },
+    { pointers: { i: 2 }, vars: { end: 3, keep: "no", removed: 1 }, note: "[1,3] start=1 lt 3 → drop", removed: [2] },
     { pointers: { i: 3 }, vars: { end: 4, keep: "yes", removed: 1 }, note: "[3,4] start=3 ≥ 3 → keep. total=1", added: [3] }
   ]'
 />

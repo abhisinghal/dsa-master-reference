@@ -224,11 +224,11 @@ inversion count for `[5,2,6,1]`.
   :windowKeys="['i','j']"
   :cellWidth="42"
   :steps='[
-    { pointers: { i: 0, j: 1 }, vars: { subarray: "[5,2]", split: 1 }, note: "merge halves [5]/[2]. 5 > 2 → 1 inversion", added: [0,1] },
-    { pointers: { i: 2, j: 3 }, vars: { subarray: "[6,1]", split: 1 }, note: "merge halves [6]/[1]. 6 > 1 → 1 inversion", added: [2,3] },
+    { pointers: { i: 0, j: 1 }, vars: { subarray: "[5,2]", split: 1 }, note: "merge halves [5]/[2]. 5 gt 2 → 1 inversion", added: [0,1] },
+    { pointers: { i: 2, j: 3 }, vars: { subarray: "[6,1]", split: 1 }, note: "merge halves [6]/[1]. 6 gt 1 → 1 inversion", added: [2,3] },
     { pointers: { i: 0, j: 2 }, vars: { L: "[2,5]", R: "[1,6]", inv: 2 }, note: "merge: L[0]=2 vs R[0]=1 → R first (+2 inv from L)" },
-    { pointers: { i: 0, j: 3 }, vars: { L: "[2,5]", R: "[6]", inv: 2 }, note: "L[0]=2 < R[0]=6 → take 2" },
-    { pointers: { i: 1, j: 3 }, vars: { L: "[5]", R: "[6]", inv: 2 }, note: "5 < 6 → take 5, then 6. total = 1+1+2 = 4" }
+    { pointers: { i: 0, j: 3 }, vars: { L: "[2,5]", R: "[6]", inv: 2 }, note: "L[0]=2 lt R[0]=6 → take 2" },
+    { pointers: { i: 1, j: 3 }, vars: { L: "[5]", R: "[6]", inv: 2 }, note: "5 lt 6 → take 5, then 6. total = 1+1+2 = 4" }
   ]'
 />
 #### How this differs from quicksort-style divide and conquer

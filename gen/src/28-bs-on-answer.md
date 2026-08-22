@@ -138,6 +138,18 @@ O(1), because the search stores only bounds and the running `hours` counter.
 
 > [trap] **Common Trap** — Feasibility direction flipped. *Example:* `piles=[3,6,7,11]`, `h=8`. If `feasible(speed)` returns `true` when speed is too slow, binary search converges to the fastest failing speed. Sanity-check: `feasible(min)` should be `false` and `feasible(max)` should be `true`.
 
+<CodeTrace
+  title="Trap — Feasibility flipped: piles=[3,6,7,11], h=8"
+  :values="[3,6,7,11]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { lo: 1, hi: 11, mid: 6 }, vars: { hours: 6, "flipped": "hours gt h → false" }, note: "BUG: 6 hrs ≤ 8 is fine, but flipped test says false → wrong direction" },
+    { pointers: { lo: 7, hi: 11 }, vars: { direction: "wrong" }, note: "BUG: converges to some high speed like 8 or 11 instead of minimum 4" },
+    { pointers: { lo: 1, hi: 6, mid: 3 }, vars: { "correct feasible": "hours ≤ h" }, note: "FIX: feasible(k) = totalHours(k) ≤ h. converges to min speed 4" }
+  ]'
+/>
+
 > [pat] **Pattern Connection** — Identical structure to *Capacity to Ship Packages in D Days* (feasibility on capacity) and *Minimize Max Distance to Gas Station*.
 
 ### Learning notes
@@ -352,8 +364,8 @@ double findMedianSortedArrays(int[] A, int[] B) {
   :windowKeys="['i']"
   :cellWidth="42"
   :steps='[
-    { pointers: { i: 1, "j (implied)": 1 }, vars: { L1: 1, R1: 3, L2: 2, R2: "∞", ok: "R1>=L2 but L1<L2?" }, note: "partition A after idx 0; B after idx 0" },
-    { pointers: { i: 2, "j (implied)": 0 }, vars: { L1: 3, R1: "∞", L2: "-∞", R2: 2, ok: "no: L1>R2" }, note: "wrong. move i left" },
+    { pointers: { i: 1, "j (implied)": 1 }, vars: { L1: 1, R1: 3, L2: 2, R2: "∞", ok: "R1gt=L2 but L1ltL2?" }, note: "partition A after idx 0; B after idx 0" },
+    { pointers: { i: 2, "j (implied)": 0 }, vars: { L1: 3, R1: "∞", L2: "-∞", R2: 2, ok: "no: L1gtR2" }, note: "wrong. move i left" },
     { pointers: { i: 1, "j (implied)": 1 }, vars: { L1: 1, R1: 3, L2: 2, R2: "∞", ok: "yes: L1≤R2 & L2≤R1" }, note: "valid partition. left has {1,2}. odd total → median=max(L1,L2)=2" }
   ]'
 />

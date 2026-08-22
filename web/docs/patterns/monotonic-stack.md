@@ -244,6 +244,19 @@ Storing values instead of indices. *Example:* `temps=[73,74,75]`. The answer at 
 
 </Callout>
 
+<CodeTrace
+  title="Trap — Monotonic stack storing values not indices: temps=[73,74,75]"
+  :values="[73,74,75]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { stack: "[73]" }, note: "BUG: push value 73" },
+    { pointers: { i: 1 }, vars: { stack: "[74]", ans: "?-?" }, note: "BUG: 74 pops 73, but which index? cannot compute distance" },
+    { pointers: { i: 0 }, vars: { stack: "[0]" }, note: "FIX: push index 0 (temps[0]=73)" },
+    { pointers: { i: 1 }, vars: { stack: "[1]", ans: "1-0=1" }, note: "FIX: pop idx 0, answer[0] = 1-0 = 1", added: [0] }
+  ]'
+/>
+
 <Callout kind="pat" title="Pattern Connection">
 
 The template (`while top violates: pop and resolve; push i`) is identical for *Next Greater Element I/II* (circular → iterate `2n`), *Stock Span*, and *Online Stock Span*.
@@ -376,6 +389,18 @@ O(n), because an increasing histogram can push all indices before the sentinel f
 Forgetting the sentinel `0`. *Example:* `heights=[2,1,5,6,2,3]` — the tallest bar (`6`) never sees a shorter one to its right, so it never gets popped. Append a virtual `0` at the end so every remaining bar is resolved uniformly.
 
 </Callout>
+
+<CodeTrace
+  title="Trap — Largest Rectangle missing sentinel: heights=[2,1,5,6,2,3]"
+  :values="[2,1,5,6,2,3]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 5 }, vars: { stack: "[1,4,5]", best: 10 }, note: "BUG: end of scan. bars 1,2,3 remain unpopped" },
+    { pointers: { i: 5 }, vars: { stack: "[1,4,5]", best: 10 }, note: "BUG: their contributions missed (e.g. rectangle spanning [5]=3 wide-1)" },
+    { pointers: { i: 6 }, vars: { sentinel: 0, stack: "[]", best: 10 }, note: "FIX: append virtual 0 → all remaining bars pop, area computed uniformly" }
+  ]'
+/>
 
 <Callout kind="pat" title="Pattern Connection">
 

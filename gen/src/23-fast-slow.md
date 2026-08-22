@@ -203,6 +203,18 @@ Space is O(1) because it keeps only pointer variables. Unlike the brute-force se
 />
 > [trap] **Common Trap** — Only checking `fast != null`. *Example:* even-length list `1→2`. After one step, `fast` is at `2` (non-null), so `fast.next.next` NPEs on the missing `next`. Check both `fast != null && fast.next != null` before the double hop.
 
+<CodeTrace
+  title="Trap — Fast/slow NPE: list 1→2 (even length)"
+  :values="[1,2]"
+  :windowKeys="['fast']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { slow: 0, fast: 0 }, vars: { list: "1→2→null" }, note: "start: both at head" },
+    { pointers: { slow: 1, fast: 1 }, vars: { note: "fast=2, non-null" }, note: "BUG: check fast!=null → true, but fast.next.next NPEs on null" },
+    { pointers: { slow: 1, fast: 1 }, vars: { fix: "check fast!=null AND fast.next!=null" }, note: "FIX: guard both → loop ends cleanly, returns null (no cycle)" }
+  ]'
+/>
+
 > [note] **Interview script** — First, I'd verify this is a singly linked list and I need the entry node, not just true/false. The brute force is a `HashSet<ListNode>`: return the first repeated node in O(n) time and O(n) space. To optimize space, I'll use Floyd's two pointers: slow moves one step, fast moves two, and a meeting proves a cycle. Then I reset one pointer to head and move both one step at a time; their next meeting is the entry, so the final complexity is O(n) time and O(1) space.
 
 > [pat] **Pattern Connection** — *Find the Duplicate Number* maps an array to a functional graph (`next = nums[i]`) and applies the identical algorithm — a classic "array is secretly a linked list" reframe.

@@ -202,6 +202,19 @@ Marking after recursing. *Example:* grid `[[1,1],[1,1]]`. If you recurse into a 
 
 </Callout>
 
+<CodeTrace
+  title="Trap — DFS mark-after-recurse: grid=[[1,1],[1,1]]"
+  :values="[1,1,1,1]"
+  :windowKeys="['cell']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { cell: 0 }, vars: { visited: "{}" }, note: "at (0,0). BUG: recurse right BEFORE marking" },
+    { pointers: { cell: 1 }, vars: { visited: "{}" }, note: "at (0,1). recurse left → back to (0,0). still not marked" },
+    { pointers: { cell: 0 }, vars: { visited: "{}", stack_depth: "∞" }, note: "BUG: infinite recursion → stack overflow", removed: [0] },
+    { pointers: { cell: 0 }, vars: { visited: "{0}" }, note: "FIX: mark FIRST, then recurse. neighbours skip visited (0,0)", added: [0] }
+  ]'
+/>
+
 <Callout kind="pat" title="Pattern Connection">
 
 Flood fill also solves *Max Area of Island*, *Surrounded Regions* (flood from borders), *Rotting Oranges* (multi-source BFS), and *Pacific Atlantic Water Flow* (reverse flood from both oceans).
@@ -335,6 +348,19 @@ Multi-source BFS also answers *01 Matrix* (distance to nearest 0) and *Walls and
 Single-source BFS on a multi-source problem. *Example:* two rotten oranges at opposite corners with fresh ones between. From one source, the middle rots at time `d`; from both simultaneously, at `d/2`. Queue **all** rotten cells at t=0.
 
 </Callout>
+
+<CodeTrace
+  title="Trap — Multi-source BFS: 2 rotten oranges at opposite corners"
+  :values="[2,1,1,1,1,1,1,1,2]"
+  :windowKeys="['t']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { t: 0 }, vars: { queue: "[(0,0)]", sources: 1 }, note: "BUG: seed with only 1 rotten source" },
+    { pointers: { t: 4 }, vars: { queue: "[]", fresh: 0 }, note: "BUG: last fresh rots at t=4 (walks all the way from corner)" },
+    { pointers: { t: 0 }, vars: { queue: "[(0,0),(2,2)]", sources: 2 }, note: "FIX: seed ALL rotten sources at t=0", added: [0,8] },
+    { pointers: { t: 2 }, vars: { queue: "[]", fresh: 0 }, note: "FIX: last fresh rots at t=2 (meets in middle)" }
+  ]'
+/>
 
 ### Time Complexity
 
@@ -507,6 +533,18 @@ O(V + E) for adjacency, distances, and heap entries.
 Skipping the stale-pop guard. *Example:* edges push `{v,10}` then `{v,3}` for the same node. When you pop `{v,10}` later, without `if (d > dist[v]) continue;` you re-relax neighbours with the wrong distance. Guard every pop.
 
 </Callout>
+
+<CodeTrace
+  title="Trap — Dijkstra stale-pop: node v has entries {v,10} and {v,3}"
+  :values="['A','B','v','C']"
+  :windowKeys="['popped']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { popped: 2 }, vars: { heap: "[{v,10},{v,3}]", dist: "{v:3}" }, note: "pop {v,3}, relax v neighbours with 3", added: [2] },
+    { pointers: { popped: 2 }, vars: { heap: "[{v,10}]", dist: "{v:3}" }, note: "BUG: later pop {v,10}. re-relaxes neighbours with dist 10, overwrites correct 3" },
+    { pointers: { popped: 2 }, vars: { "d gt dist[v]": "10 gt 3 → skip", action: "continue" }, note: "FIX: guard skips stale pop → neighbours retain correct distances" }
+  ]'
+/>
 
 ### Learning notes
 

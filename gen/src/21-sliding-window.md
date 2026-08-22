@@ -589,6 +589,20 @@ The code uses O(1) space under the ASCII constraint because `last` has fixed siz
 
 > [trap] **Common Trap** — Not clamping `left` to its previous position. *Example:* `s="abba"`. At index 3 (`'a'`), the previous `a` was at 0, but `left` has already moved past 2. Without `left = max(left, prev+1)`, `left` retreats and the window contains two `a`s.
 
+<CodeTrace
+  title="Trap — s=&quot;abba&quot; without left-clamp, window retreats and gets duplicate a"
+  :values="['a','b','b','a']"
+  :windowKeys="['left','right']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { left: 0, right: 0 }, vars: { last: "{a:0}" }, note: "a → last[a]=0" },
+    { pointers: { left: 0, right: 1 }, vars: { last: "{a:0,b:1}" }, note: "b → new" },
+    { pointers: { left: 2, right: 2 }, vars: { last: "{a:0,b:2}" }, note: "b collision → jump left past prev b (idx 1). left=2", removed: [0,1] },
+    { pointers: { left: 1, right: 3 }, vars: { last: "{a:3,b:2}" }, note: "BUG: a collision at 0. left=max(2, 0+1)=1 wrong path → left retreats to 1!", removed: [1], added: [0,3] },
+    { pointers: { left: 3, right: 3 }, vars: { last: "{a:3,b:2}" }, note: "FIX: left=max(left, prev+1) keeps left=2. correct len 2" }
+  ]'
+/>
+
 
 <CodeTrace
   title="Longest Substring Without Repeating Chars — s=&quot;abcabcbb&quot;"
@@ -1029,7 +1043,7 @@ Space is O(1) because the method keeps only `left`, `count`, and `product`; it d
   :steps='[
     { pointers: { left: 0, right: 0 }, vars: { product: 10, count: 1 }, note: "add subarrays ending at 0: [10]" },
     { pointers: { left: 0, right: 1 }, vars: { product: 50, count: 3 }, note: "ending at 1: [5],[10,5] → +2" },
-    { pointers: { left: 1, right: 2 }, vars: { product: 10, count: 5 }, note: "product 100 not <k → shrink, then +2 for [2],[5,2]", removed: [0] },
+    { pointers: { left: 1, right: 2 }, vars: { product: 10, count: 5 }, note: "product 100 not ltk → shrink, then +2 for [2],[5,2]", removed: [0] },
     { pointers: { left: 1, right: 3 }, vars: { product: 60, count: 8 }, note: "ending at 3: [6],[2,6],[5,2,6] → +3. final=8" }
   ]'
 />
@@ -1129,6 +1143,19 @@ Space is O(k) because the deque stores indices from the current window only; the
 > [note] **Trace it** — `[1,3,-1,-3,5,3,6,7], k=3`. As the window slides, the deque front always holds the current max → outputs `[3,3,5,5,6,7]`.
 
 > [trap] **Common Trap** — Storing values, not indices. *Example:* `nums=[3,1,3]`, `k=2`. At `i=2`, the front `3` could be the old one that just exited the window — you can't tell without its index. Store indices; expire the front when `dq.peekFirst() <= i-k`.
+
+<CodeTrace
+  title="Trap — store values not indices: nums=[3,1,3], k=2"
+  :values="[3,1,3]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { dq: "[3]" }, note: "push 3 (as value)" },
+    { pointers: { i: 1 }, vars: { dq: "[3,1]" }, note: "1 lt 3 → push (keep monotone)" },
+    { pointers: { i: 2 }, vars: { dq: "[3,3]", output: "max=3?" }, note: "BUG: at i=2, front is 3 — is it the new 3 (still in window) or the old 3 (idx 0, expired)? unknown!", removed: [0] },
+    { pointers: { i: 2 }, vars: { dq: "[2] (idx)", output: "max=3" }, note: "FIX: store indices. front idx 0 ≤ i-k=0 → pop stale. push idx 2. output correct 3", added: [2] }
+  ]'
+/>
 
 
 <CodeTrace

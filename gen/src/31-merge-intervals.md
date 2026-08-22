@@ -160,8 +160,8 @@ int[][] merge(int[][] intervals) {
   :steps='[
     { pointers: { i: 0 }, vars: { last: "[1,3]", out: "[[1,3]]" }, note: "start with first interval" },
     { pointers: { i: 1 }, vars: { last: "[1,6]", out: "[[1,6]]" }, note: "2 ≤ 3 → overlap, extend end to max(3,6)=6", added: [0,1] },
-    { pointers: { i: 2 }, vars: { last: "[8,10]", out: "[[1,6],[8,10]]" }, note: "8 > 6 → new interval" },
-    { pointers: { i: 3 }, vars: { last: "[15,18]", out: "[[1,6],[8,10],[15,18]]" }, note: "15 > 10 → new interval. done" }
+    { pointers: { i: 2 }, vars: { last: "[8,10]", out: "[[1,6],[8,10]]" }, note: "8 gt 6 → new interval" },
+    { pointers: { i: 3 }, vars: { last: "[15,18]", out: "[[1,6],[8,10],[15,18]]" }, note: "15 gt 10 → new interval. done" }
   ]'
 />
 ### Time Complexity

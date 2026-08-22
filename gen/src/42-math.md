@@ -66,9 +66,9 @@ double myPow(double x, int nRaw) {
   :cellWidth="52"
   :steps='[
     { pointers: { bit: 0 }, vars: { base: 2, exp: 10, result: 1 }, note: "start: exp=10=1010₂" },
-    { pointers: { bit: 0 }, vars: { base: 4, exp: 5, result: 1 }, note: "bit 0 of 10 = 0 → skip; base=2²=4, exp>>=1" },
-    { pointers: { bit: 1 }, vars: { base: 16, exp: 2, result: 4 }, note: "bit 0 of 5 = 1 → result *= 4; base=16, exp>>=1", added: [1] },
-    { pointers: { bit: 2 }, vars: { base: 256, exp: 1, result: 4 }, note: "bit 0 of 2 = 0 → skip; base=256, exp>>=1" },
+    { pointers: { bit: 0 }, vars: { base: 4, exp: 5, result: 1 }, note: "bit 0 of 10 = 0 → skip; base=2²=4, expgtgt=1" },
+    { pointers: { bit: 1 }, vars: { base: 16, exp: 2, result: 4 }, note: "bit 0 of 5 = 1 → result *= 4; base=16, expgtgt=1", added: [1] },
+    { pointers: { bit: 2 }, vars: { base: 256, exp: 1, result: 4 }, note: "bit 0 of 2 = 0 → skip; base=256, expgtgt=1" },
     { pointers: { bit: 3 }, vars: { base: 65536, exp: 0, result: 1024 }, note: "bit 0 of 1 = 1 → result *= 256 = 1024. done", added: [3] }
   ]'
 />
@@ -235,7 +235,7 @@ int countPrimes(int n) {
   :steps='[
     { pointers: { i: 0 }, vars: { primes: "[2]", marked: "{}" }, note: "2 prime. mark 4,6,8 as composite", added: [0], removed: [2,4,6] },
     { pointers: { i: 1 }, vars: { primes: "[2,3]", marked: "{4,6,8}" }, note: "3 prime. mark 9 as composite", added: [1], removed: [7] },
-    { pointers: { i: 3 }, vars: { primes: "[2,3,5]", marked: "+9" }, note: "5 prime. next multiple 25 > 10 → skip", added: [3] },
+    { pointers: { i: 3 }, vars: { primes: "[2,3,5]", marked: "+9" }, note: "5 prime. next multiple 25 gt 10 → skip", added: [3] },
     { pointers: { i: 5 }, vars: { primes: "[2,3,5,7]", marked: "same" }, note: "7 prime. count = 4", added: [5] }
   ]'
 />

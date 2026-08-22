@@ -150,6 +150,18 @@ Space is O(n) in the worst case because the map may store every prior value befo
 
 > [trap] **Common Trap** — Inserting into the map **before** the check makes an element match itself. *Example:* `nums=[3,2,4]`, `target=6`. If you `put(3,0)` first, then check for `target-3=3`, you find yourself and emit `(0,0)`. Check first, insert after.
 
+<CodeTrace
+  title="Trap — Two Sum matches self: nums=[3,2,4], target=6"
+  :values="[3,2,4]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { seen: "{3:0}" }, note: "BUG: put(3,0) first" },
+    { pointers: { i: 0 }, vars: { need: 3, hit: "seen[3]=0" }, note: "BUG: check complement 3 → seen[3]=0 → return [0,0] WRONG!", added: [0] },
+    { pointers: { i: 0 }, vars: { seen: "{}", need: 3 }, note: "FIX: check first (miss), then insert seen[3]=0" }
+  ]'
+/>
+
 > [pat] **Pattern Connection** — Hashing. In a *sorted* array the same task becomes **two pointers** in O(1) space; the sorted-vs-unsorted choice recurs throughout.
 
 ### Same pattern, new tweaks
@@ -557,6 +569,20 @@ Space is O(n) because the hash set stores the distinct input values; duplicates 
 />
 
 > [trap] **Common Trap** — Omitting the `x-1` guard makes it O(n²). *Example:* `nums=[1,2,3,4]` — without the guard you walk the run from 1, then from 2, then from 3, then from 4 → 4+3+2+1 steps. Only start from values whose predecessor is absent.
+
+<CodeTrace
+  title="Trap — Longest Consecutive without x-1 guard: nums=[1,2,3,4]"
+  :values="[1,2,3,4]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { walks: "1→2→3→4", steps: 4 }, note: "BUG: from 1 walks 4 steps" },
+    { pointers: { i: 1 }, vars: { walks: "2→3→4", steps: 3 }, note: "BUG: from 2 walks again → O(n²)" },
+    { pointers: { i: 2 }, vars: { walks: "3→4", steps: 2 }, note: "BUG: from 3 walks again" },
+    { pointers: { i: 3 }, vars: { walks: "4", steps: 1 }, note: "total 10 steps for n=4" },
+    { pointers: { i: 1 }, vars: { "check x-1": "yes → skip" }, note: "FIX: skip if x-1 present. only run-starts walk. O(n)" }
+  ]'
+/>
 
 > [pat] **Pattern Connection** — "Start from the boundary" recurs in grid/graph flood-fill and interval merging: identify canonical entry points to avoid redundant work.
 

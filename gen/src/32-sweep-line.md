@@ -214,7 +214,7 @@ int minMeetingRooms(int[][] meetings) {
   :cellWidth="52"
   :steps='[
     { pointers: { i: 0 }, vars: { heap: "[30]", rooms: 1 }, note: "first meeting → room 1 ends at 30" },
-    { pointers: { i: 1 }, vars: { heap: "[10,30]", rooms: 2 }, note: "5 < 30 → need new room. peek=10" },
+    { pointers: { i: 1 }, vars: { heap: "[10,30]", rooms: 2 }, note: "5 lt 30 → need new room. peek=10" },
     { pointers: { i: 2 }, vars: { heap: "[20,30]", rooms: 2 }, note: "15 ≥ 10 → reuse room, replace 10 with 20", added: [2] },
     { pointers: { i: 3 }, vars: { heap: "[20,30]", rooms: 2 }, note: "done. answer = 2 rooms" }
   ]'
@@ -243,10 +243,10 @@ int minMeetingRoomsSweep(int[][] meetings) {
   :windowKeys="['si','ei']"
   :cellWidth="42"
   :steps='[
-    { pointers: { si: 0, ei: 0 }, vars: { rooms: 1, peak: 1 }, note: "0 < 10 → room+" },
-    { pointers: { si: 1, ei: 0 }, vars: { rooms: 2, peak: 2 }, note: "5 < 10 → room+ (2 concurrent)" },
+    { pointers: { si: 0, ei: 0 }, vars: { rooms: 1, peak: 1 }, note: "0 lt 10 → room+" },
+    { pointers: { si: 1, ei: 0 }, vars: { rooms: 2, peak: 2 }, note: "5 lt 10 → room+ (2 concurrent)" },
     { pointers: { si: 2, ei: 0 }, vars: { rooms: 1, peak: 2 }, note: "15 ≥ 10 → advance end (5-10 done)" },
-    { pointers: { si: 2, ei: 1 }, vars: { rooms: 2, peak: 2 }, note: "15 < 20 → room+" },
+    { pointers: { si: 2, ei: 1 }, vars: { rooms: 2, peak: 2 }, note: "15 lt 20 → room+" },
     { pointers: { si: 3, ei: 2 }, vars: { rooms: 2, peak: 2 }, note: "starts exhausted. answer = 2 rooms" }
   ]'
 />

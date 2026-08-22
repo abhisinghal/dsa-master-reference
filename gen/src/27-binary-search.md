@@ -214,6 +214,18 @@ O(1), because the algorithm keeps only `lo`, `hi`, and `mid` plus a few comparis
 
 > [trap] **Common Trap** — Wrong inclusivity on the "sorted-half" test. *Example:* `nums=[3,1]`, `target=1`, `lo=0, hi=1, mid=0`. With strict `a[lo] < a[mid]`, a single-element left half `[3]` isn't marked sorted and the algorithm misroutes. Use `a[lo] <= a[mid]`.
 
+<CodeTrace
+  title="Trap — Rotated BS inclusivity: nums=[3,1], target=1"
+  :values="[3,1]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { lo: 0, hi: 1, mid: 0 }, vars: { "a[lo]": 3, "a[mid]": 3 }, note: "single-element left half. a[lo]==a[mid]" },
+    { pointers: { lo: 0, hi: 1 }, vars: { "test a[lo] lt a[mid]": "3lt3 → FALSE" }, note: "BUG: strict → left half marked unsorted → search wrong side" },
+    { pointers: { lo: 1, hi: 1 }, vars: { "test a[lo] lt= a[mid]": "3lt=3 → TRUE" }, note: "FIX: use lt= → left half correctly sorted → find 1", added: [1] }
+  ]'
+/>
+
 ### Learning notes
 - **Strict vs inclusive** on the sorted-half test — use `a[lo] <= a[mid]` so a length-1 left half is treated as sorted.
 - **Comparing target inclusively on the wrong endpoint** — the target-in-range checks must match the sorted-half boundary.

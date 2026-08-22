@@ -220,6 +220,20 @@ The choose → recurse → undo loop stays fixed; what changes is the choice set
 
 > [trap] **Common Trap** — Forgetting to un-choose. *Example:* generating subsets of `[1,2]`. If you `add(1)` and recurse but don't `remove(1)`, the sibling branch `[2]` starts with path `[1]` and you emit `[1,2]` twice. `remove(path.size()-1)` is the whole discipline.
 
+<CodeTrace
+  title="Trap — Backtracking without un-choose: subsets of [1,2]"
+  :values="[1,2]"
+  :windowKeys="['idx']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { idx: 0 }, vars: { path: "[1]" }, note: "add(1), recurse", added: [0] },
+    { pointers: { idx: 1 }, vars: { path: "[1,2]" }, note: "add(2), emit [1,2]", added: [0,1] },
+    { pointers: { idx: 1 }, vars: { path: "[1,2]" }, note: "BUG: return without remove(2). back at outer scope, path still [1,2]" },
+    { pointers: { idx: 1 }, vars: { path: "[1,2]" }, note: "BUG: sibling branch (skip 1, pick 2) emits [1,2] AGAIN. duplicate!" },
+    { pointers: { idx: 1 }, vars: { path: "[1]" }, note: "FIX: remove(path.size()-1) after recurse. sibling starts clean → emits [2]" }
+  ]'
+/>
+
 > [pat] **Pattern Connection** — `start` = "consider items left-to-right, no repeats" — the backbone of *Combination Sum*, *Palindrome Partitioning*, and subset-sum enumeration. **Dedup with duplicates:** sort, then `if (i > start && a[i]==a[i-1]) continue;`.
 
 ### Time Complexity
@@ -427,6 +441,20 @@ void dfs(int[] c, int start, int remain, List<Integer> path, List<List<Integer>>
 > [note] **Interview script** — "I first confirm candidates are distinct and each candidate may be reused unlimited times. I start with brute force by trying all candidate sequences until the remaining target is zero or negative, which is exponential. I optimize by sorting, using `start` to avoid duplicate orders, and pruning when a candidate is too large, keeping exponential worst-case time but much less search."
 
 > [trap] **Common Trap** — Passing `i+1` when reuse is allowed. *Example:* `candidates=[2,3]`, `target=6`. You need `[2,2,2]` and `[3,3]`, which requires re-picking the same index. Recurse with `i` (not `i+1`) — otherwise you only get `[3,3]`.
+
+<CodeTrace
+  title="Trap — Combination Sum no-reuse when reuse needed: candidates=[2,3], target=6"
+  :values="[2,3]"
+  :windowKeys="['idx']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { idx: 0 }, vars: { path: "[2]", remain: 4 }, note: "pick 2, recurse", added: [0] },
+    { pointers: { idx: 1 }, vars: { path: "[2]", remain: 4 }, note: "BUG: recurse(i+1=1) → can only pick 3+ from now" },
+    { pointers: { idx: 1 }, vars: { path: "[2,3]", remain: 1 }, note: "BUG: cannot reach exact 6 with 2,3,3+ from here → [2,2,2] missed", removed: [0] },
+    { pointers: { idx: 0 }, vars: { path: "[2,2]", remain: 2 }, note: "FIX: recurse(i not i+1) → can pick 2 again", added: [0] },
+    { pointers: { idx: 0 }, vars: { path: "[2,2,2]", remain: 0 }, note: "FIX: SOLUTION found", added: [0] }
+  ]'
+/>
 
 > [pat] **Pattern Connection** — Sorted-input + `break` when the choice overshoots is the universal backtracking prune; it converts many TLE solutions into passing ones.
 
@@ -687,6 +715,19 @@ boolean dfs(char[][] b, int r, int c, String w, int k) {
 > [note] **Interview script** — "I first confirm movement is four-directional and a cell cannot be reused within one path. I start with brute force DFS from each cell over all possible paths, which is O(R·C·4^L) time and O(L) space. I optimize by pruning mismatches immediately and marking visited cells in place, keeping the same worst-case time but using O(1) extra grid space besides recursion."
 
 > [trap] **Common Trap** — Not restoring the cell on the way back up. *Example:* board `[[A,B],[C,D]]` searching `"AB"`. If you mark `A` visited via `#` but forget to restore it after the recursive call, a sibling path can't reuse `A`. Overwrite → recurse → restore.
+
+<CodeTrace
+  title="Trap — Word Search no restore: grid=[[A,B],[C,D]], word=&quot;AB&quot;"
+  :values="['A','B','C','D']"
+  :windowKeys="['idx']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { idx: 0 }, vars: { grid: "[[#,B],[C,D]]" }, note: "mark A→# and recurse", added: [0] },
+    { pointers: { idx: 1 }, vars: { path: "AB", found: true }, note: "found. return true" },
+    { pointers: { idx: 0 }, vars: { grid: "[[#,B],[C,D]]" }, note: "BUG: return without restoring A. any sibling search starting later cannot use A" },
+    { pointers: { idx: 0 }, vars: { grid: "[[A,B],[C,D]]" }, note: "FIX: restore A after recurse → grid ready for other starts", added: [0] }
+  ]'
+/>
 
 > [pat] **Pattern Connection** — In-place visited marking is the memory-lean cousin of a `boolean[][] visited`; the Trie-backed variant is a canonical "combine two data structures" staff question.
 

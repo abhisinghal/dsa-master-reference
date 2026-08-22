@@ -204,6 +204,18 @@ Missing a base case. *Example:* `nums=[5]` for House Robber. If `dp[i-2]` is uns
 
 </Callout>
 
+<CodeTrace
+  title="Trap — House Robber base case: nums=[5]"
+  :values="[5]"
+  :windowKeys="['i']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { i: 0 }, vars: { prev2: "UNSEEDED", prev1: "UNSEEDED" }, note: "BUG: dp[i-2] = dp[-2] undefined → NPE or 0" },
+    { pointers: { i: 0 }, vars: { cur: "max(0, 0+5)=5", "but transition broken": "" }, note: "BUG: for single-house case, answer may return 0 or crash" },
+    { pointers: { i: 0 }, vars: { prev2: 0, prev1: 5 }, note: "FIX: seed prev1=a[0]=5, prev2=0 → cur=max(5,0+5)=5", added: [0] }
+  ]'
+/>
+
 #### Same pattern, new tweaks
 | Variation | The one thing that changes | Time |
 |---|---|---|
@@ -526,6 +538,18 @@ Wrong capacity direction. *Example:* items=`[1]`, cap=2, 0/1 knapsack. Iterating
 
 </Callout>
 
+<CodeTrace
+  title="Trap — Knapsack ascending capacity double-picks item: item=[1,val=5], cap=2"
+  :values="[0,5,10]"
+  :windowKeys="['w']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { w: 1 }, vars: { direction: "ascending", "dp[1]": 5 }, note: "pick item 0 once", added: [1] },
+    { pointers: { w: 2 }, vars: { "dp[2] = dp[1]+val": "5+5=10" }, note: "BUG: uses item 0 AGAIN → illegal in 0/1 knapsack", added: [2] },
+    { pointers: { w: 2 }, vars: { direction: "descending", "dp[2] = dp[1]+val": "0+5=5" }, note: "FIX: descending → dp[1] not yet updated with item 0 → uses only once", added: [1] }
+  ]'
+/>
+
 <Callout kind="pat" title="Pattern Connection">
 
 *Target Sum* (assign ±) reduces to subset-sum; *Coin Change* (min coins, unbounded) and *Coin Change II* (count ways, unbounded) use the upward loop; *Last Stone Weight II* is subset-sum minimizing the gap.
@@ -707,6 +731,18 @@ Time O(amount·coins) · Space O(amount).
 Sentinel overflow. *Example:* if `dp[i-c] = Integer.MAX_VALUE` and you compute `dp[i-c]+1`, you wrap to `Integer.MIN_VALUE` — looks like the smallest answer. Use `amount+1` as the sentinel: bigger than any real answer, safe to add 1.
 
 </Callout>
+
+<CodeTrace
+  title="Trap — Coin Change sentinel overflow"
+  :values="[0,1,2]"
+  :windowKeys="['w']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { w: 5 }, vars: { "dp[5]": "MAX_VALUE" }, note: "state unreachable → sentinel MAX_VALUE" },
+    { pointers: { w: 6 }, vars: { "dp[5]+1": "MIN_VALUE (wraps)" }, note: "BUG: MAX_VALUE + 1 wraps to MIN_VALUE — min() picks it as best!" },
+    { pointers: { w: 6 }, vars: { "sentinel = amount+1": 12, "dp+1": "safe" }, note: "FIX: sentinel amount+1 stays gt any real answer. no overflow" }
+  ]'
+/>
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -945,13 +981,13 @@ int lengthOfLIS(int[] a) {
   :cellWidth="34"
   :steps='[
     { pointers: { i: 0 }, vars: { tails: "[10]", len: 1 }, note: "seed" },
-    { pointers: { i: 1 }, vars: { tails: "[9]", len: 1 }, note: "9 < 10 → replace" },
-    { pointers: { i: 2 }, vars: { tails: "[2]", len: 1 }, note: "2 < 9 → replace" },
-    { pointers: { i: 3 }, vars: { tails: "[2,5]", len: 2 }, note: "5 > 2 → append", added: [2,3] },
-    { pointers: { i: 4 }, vars: { tails: "[2,3]", len: 2 }, note: "3 < 5 → replace at pos 1" },
-    { pointers: { i: 5 }, vars: { tails: "[2,3,7]", len: 3 }, note: "7 > 3 → append", added: [2,4,5] },
-    { pointers: { i: 6 }, vars: { tails: "[2,3,7,101]", len: 4 }, note: "101 > 7 → append", added: [2,4,5,6] },
-    { pointers: { i: 7 }, vars: { tails: "[2,3,7,18]", len: 4 }, note: "18 < 101 → replace. answer 4" }
+    { pointers: { i: 1 }, vars: { tails: "[9]", len: 1 }, note: "9 lt 10 → replace" },
+    { pointers: { i: 2 }, vars: { tails: "[2]", len: 1 }, note: "2 lt 9 → replace" },
+    { pointers: { i: 3 }, vars: { tails: "[2,5]", len: 2 }, note: "5 gt 2 → append", added: [2,3] },
+    { pointers: { i: 4 }, vars: { tails: "[2,3]", len: 2 }, note: "3 lt 5 → replace at pos 1" },
+    { pointers: { i: 5 }, vars: { tails: "[2,3,7]", len: 3 }, note: "7 gt 3 → append", added: [2,4,5] },
+    { pointers: { i: 6 }, vars: { tails: "[2,3,7,101]", len: 4 }, note: "101 gt 7 → append", added: [2,4,5,6] },
+    { pointers: { i: 7 }, vars: { tails: "[2,3,7,18]", len: 4 }, note: "18 lt 101 → replace. answer 4" }
   ]'
 />
 
@@ -1140,6 +1176,17 @@ Interval DP covers *Matrix Chain Multiplication*, *Minimum Cost to Merge Stones*
 Iterating the outer loop over `l` (left endpoint) first. *Example:* Burst Balloons with `nums=[3,1,5,8]`. Outer over left leaves smaller intervals unsolved when you need them. Iterate over **length** first (smallest → largest), so any subinterval is already computed when you need it.
 
 </Callout>
+
+<CodeTrace
+  title="Trap — Interval DP wrong loop order: Burst Balloons"
+  :values="[3,1,5,8]"
+  :windowKeys="['l','r']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { l: 1, r: 3 }, vars: { need: "dp[2][3]", state: "UNCOMPUTED" }, note: "BUG: outer over l → compute dp[1][3] needs dp[2][3] not yet computed" },
+    { pointers: { l: 1, r: 3 }, vars: { "outer over len=1": "dp[2][2],dp[3][3] done", "then len=2": "dp[1][2],dp[2][3]" }, note: "FIX: outer over LENGTH → all subintervals ready. dp[1][3] computes cleanly" }
+  ]'
+/>
 
 ### Time Complexity
 Time O(n³) · Space O(n²).

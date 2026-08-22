@@ -269,10 +269,10 @@ for `i=5` (`101`): `dp[5] = dp[2] + 1 = 1 + 1 = 2`. Sequence `0..5` → `[0,1,1,
   :steps='[
     { pointers: { i: 0 }, vars: { dp: 0 }, note: "dp[0] = 0" },
     { pointers: { i: 1 }, vars: { dp: 1, from: "dp[0]+1" }, note: "1 = 0b1: 1 bit", added: [1] },
-    { pointers: { i: 2 }, vars: { dp: 1, from: "dp[0]+1" }, note: "2 = 0b10: dp[2>>1]+2%2 = 1", added: [2] },
+    { pointers: { i: 2 }, vars: { dp: 1, from: "dp[0]+1" }, note: "2 = 0b10: dp[2gtgt1]+2%2 = 1", added: [2] },
     { pointers: { i: 3 }, vars: { dp: 2, from: "dp[1]+1" }, note: "3 = 0b11: 2 bits", added: [3] },
-    { pointers: { i: 4 }, vars: { dp: 1, from: "dp[2]>>1 = 0+0" }, note: "4 = 0b100: 1 bit", added: [4] },
-    { pointers: { i: 5 }, vars: { dp: 2, from: "dp[2]+1" }, note: "5 = 0b101: dp[5>>1]+1%2 = 1+1 = 2", added: [5] }
+    { pointers: { i: 4 }, vars: { dp: 1, from: "dp[2]gtgt1 = 0+0" }, note: "4 = 0b100: 1 bit", added: [4] },
+    { pointers: { i: 5 }, vars: { dp: 2, from: "dp[2]+1" }, note: "5 = 0b101: dp[5gtgt1]+1%2 = 1+1 = 2", added: [5] }
   ]'
 />
 

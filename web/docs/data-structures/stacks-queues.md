@@ -211,7 +211,7 @@ push `5,3,7`: the paired min-stack tracks `5,3,3`, so `getMin()` reads `3` in O(
   :steps='[
     { pointers: { top: 0 }, vars: { stack: "[5]", min_stack: "[5]", getMin: 5 }, note: "push 5", added: [0] },
     { pointers: { top: 1 }, vars: { stack: "[5,3]", min_stack: "[5,3]", getMin: 3 }, note: "push 3", added: [0,1] },
-    { pointers: { top: 2 }, vars: { stack: "[5,3,7]", min_stack: "[5,3,3]", getMin: 3 }, note: "push 7: min_stack echoes 3 (7 > current min)", added: [0,1,2] },
+    { pointers: { top: 2 }, vars: { stack: "[5,3,7]", min_stack: "[5,3,3]", getMin: 3 }, note: "push 7: min_stack echoes 3 (7 gt current min)", added: [0,1,2] },
     { pointers: { top: 1 }, vars: { stack: "[5,3]", min_stack: "[5,3]", getMin: 3 }, note: "pop 7", removed: [2] },
     { pointers: { top: 0 }, vars: { stack: "[5]", min_stack: "[5]", getMin: 5 }, note: "pop 3: min reverts to 5", removed: [1] }
   ]'

@@ -274,6 +274,20 @@ Forgetting to un-choose. *Example:* generating subsets of `[1,2]`. If you `add(1
 
 </Callout>
 
+<CodeTrace
+  title="Trap — Backtracking without un-choose: subsets of [1,2]"
+  :values="[1,2]"
+  :windowKeys="['idx']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { idx: 0 }, vars: { path: "[1]" }, note: "add(1), recurse", added: [0] },
+    { pointers: { idx: 1 }, vars: { path: "[1,2]" }, note: "add(2), emit [1,2]", added: [0,1] },
+    { pointers: { idx: 1 }, vars: { path: "[1,2]" }, note: "BUG: return without remove(2). back at outer scope, path still [1,2]" },
+    { pointers: { idx: 1 }, vars: { path: "[1,2]" }, note: "BUG: sibling branch (skip 1, pick 2) emits [1,2] AGAIN. duplicate!" },
+    { pointers: { idx: 1 }, vars: { path: "[1]" }, note: "FIX: remove(path.size()-1) after recurse. sibling starts clean → emits [2]" }
+  ]'
+/>
+
 <Callout kind="pat" title="Pattern Connection">
 
 `start` = "consider items left-to-right, no repeats" — the backbone of *Combination Sum*, *Palindrome Partitioning*, and subset-sum enumeration. **Dedup with duplicates:** sort, then `if (i > start && a[i]==a[i-1]) continue;`.
@@ -537,6 +551,20 @@ void dfs(int[] c, int start, int remain, List<Integer> path, List<List<Integer>>
 Passing `i+1` when reuse is allowed. *Example:* `candidates=[2,3]`, `target=6`. You need `[2,2,2]` and `[3,3]`, which requires re-picking the same index. Recurse with `i` (not `i+1`) — otherwise you only get `[3,3]`.
 
 </Callout>
+
+<CodeTrace
+  title="Trap — Combination Sum no-reuse when reuse needed: candidates=[2,3], target=6"
+  :values="[2,3]"
+  :windowKeys="['idx']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { idx: 0 }, vars: { path: "[2]", remain: 4 }, note: "pick 2, recurse", added: [0] },
+    { pointers: { idx: 1 }, vars: { path: "[2]", remain: 4 }, note: "BUG: recurse(i+1=1) → can only pick 3+ from now" },
+    { pointers: { idx: 1 }, vars: { path: "[2,3]", remain: 1 }, note: "BUG: cannot reach exact 6 with 2,3,3+ from here → [2,2,2] missed", removed: [0] },
+    { pointers: { idx: 0 }, vars: { path: "[2,2]", remain: 2 }, note: "FIX: recurse(i not i+1) → can pick 2 again", added: [0] },
+    { pointers: { idx: 0 }, vars: { path: "[2,2,2]", remain: 0 }, note: "FIX: SOLUTION found", added: [0] }
+  ]'
+/>
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -861,6 +889,19 @@ grid `[[A,B,C],[S,F,C],[A,D,E]]`, word `"ABCCED"`. DFS traces `A(0,0)→B→C→
 Not restoring the cell on the way back up. *Example:* board `[[A,B],[C,D]]` searching `"AB"`. If you mark `A` visited via `#` but forget to restore it after the recursive call, a sibling path can't reuse `A`. Overwrite → recurse → restore.
 
 </Callout>
+
+<CodeTrace
+  title="Trap — Word Search no restore: grid=[[A,B],[C,D]], word=&quot;AB&quot;"
+  :values="['A','B','C','D']"
+  :windowKeys="['idx']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { idx: 0 }, vars: { grid: "[[#,B],[C,D]]" }, note: "mark A→# and recurse", added: [0] },
+    { pointers: { idx: 1 }, vars: { path: "AB", found: true }, note: "found. return true" },
+    { pointers: { idx: 0 }, vars: { grid: "[[#,B],[C,D]]" }, note: "BUG: return without restoring A. any sibling search starting later cannot use A" },
+    { pointers: { idx: 0 }, vars: { grid: "[[A,B],[C,D]]" }, note: "FIX: restore A after recurse → grid ready for other starts", added: [0] }
+  ]'
+/>
 
 <Callout kind="pat" title="Pattern Connection">
 
