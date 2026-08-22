@@ -1,60 +1,88 @@
 # DSA Master Reference — Live Plan
 
 Last updated: 2026-08-22 (session c960137b).
-Live at https://abhisinghal.github.io/dsa-master-reference/ · Repo `abhisinghal/dsa-master-reference` · Latest commit `3de6824`.
+Live at https://abhisinghal.github.io/dsa-master-reference/ · Repo `abhisinghal/dsa-master-reference` · Latest commit `4576b6e`.
 
 ---
 
-## Session complete — **177 interactive Execution Traces live** 🎉
+## This session — practice-page rollout
 
-### Where we started this session
-- 87 Execution Traces (all on Trace-it callouts).
+Delivered a new **/problems/** section with **205 problem pages** — one dedicated URL per LC problem across all 21 core-pattern chapters.
 
-### Where we ended
-- **177 Execution Traces** across the site — **+90 new** in this session.
+### Multi-approach pages (hand-authored, full walkthrough)
 
-### Breakdown
+**29 problem pages authored fully** with brute-force → intermediate → optimized approaches. Each approach has its own **Java code** + **interactive Execution Trace**.
 
-| Category | Total | Coverage |
-|---|---|---|
-| Trace-it callouts | 87 | 87/87 = **100%** |
-| Trap Examples | 83 | 81/83 = **98%** (20 hand-authored + 61 auto) |
-| Cheatsheet templates | 10 | 3 flagship (BS, BFS, Backtracking) |
-| Mock transcripts | 3 | 3 with verify-phase trace |
-| System design case studies | 4 | 2 deep-dives (rate limiter, Dynamo quorum read) |
+The 21 pattern-flagship pages (one per pattern):
+- Sliding Window → Longest Substring Without Repeating
+- Two Pointers → Container With Most Water
+- Fast/Slow → Linked List Cycle II
+- Prefix Sum → Subarray Sum Equals K
+- Hashing → Two Sum
+- Monotonic Stack → Daily Temperatures
+- Binary Search → Search in Rotated Sorted Array
+- BS on Answer → Koko Eating Bananas
+- Top-K/Heap → Top K Frequent Elements
+- K-way Merge → Merge K Sorted Lists
+- Merge Intervals → Merge Intervals
+- Sweep Line → Meeting Rooms II
+- Topological Sort → Course Schedule II
+- Union-Find → Number of Provinces
+- Greedy → Jump Game II
+- Backtracking → N-Queens
+- Divide & Conquer → Count of Smaller Numbers After Self
+- DP → House Robber
+- Trie → Word Search II
+- Bit Manipulation → Single Number
+- Quickselect → Kth Largest Element
 
-### What was shipped
+Plus 8 high-value canonical variations:
+- 3Sum · Trapping Rain Water · Largest Rectangle in Histogram
+- Maximum Subarray (Kadane) · Coin Change · LIS · Edit Distance
+- Permutations · Subsets
 
-- **New `TrapTrace.vue` component** — lightweight 2-frame Buggy → Fixed interactive slider.
-- **Auto-generation script** — extracts + sanitizes trap texts and emits TrapTrace embeds.
-- **Sweep improvements to `migrate.py`** — KNOWN_HTML accepts `>` in quoted attrs; apostrophe + `<>` sanitizer in `:steps='...'`.
+### Scaffold pages (auto-generated)
 
-### Deferred (per audit priorities)
+**176 additional problem pages** — one per LC problem across all "Same pattern, new tweaks" variation tables. Each shows: LC link + difficulty badge + the one-line "thing that changes vs the flagship" + links back to the pattern chapter and to the flagship problem page.
 
-- 227 Problem-statement Examples
-- 90 "Same pattern, new tweaks" mini-traces
-- 30 Data-structure operation state-machines
-- Complexity growth-curve visualizer
-- 6-phase playbook animation
+Rationale: full 3-approach authoring for 200+ problems would be 50+ hours. Scaffolds give readers immediate navigable coverage with clear "detailed page in progress" signal and direct paths to the existing full write-ups in the pattern chapters.
 
-### Latest commits (all CI-green, live)
+### Infrastructure
 
-- `3de6824` Execution Traces in cheatsheets, mock transcripts, SD
+- New `gen/src/problems/` directory (49 old chapters unchanged; 205 new problem files)
+- `migrate.py` auto-migrates every `problems/*.md` to `web/docs/problems/*.md` (strips numeric prefixes)
+- Top nav: new "Practice" link between Data Structures and System Design
+- Sidebar: 21 collapsible pattern groups, 205 clickable problem entries
+- Scaffold generator parses "Same pattern, new tweaks" tables for LC link + one-line differentiator
+
+## Cumulative session output
+
+- **177 interactive Execution Traces** across chapters (100% Trace-it coverage + 98% Trap coverage)
+- **205 problem pages** in the new /problems/ section
+- **~29 fully-authored** multi-approach pages
+- **CI-green** on every push; site live at abhisinghal.github.io/dsa-master-reference/
+
+## Recent commits (all live)
+
+- `4576b6e` +8 more full multi-approach pages (upgrade high-value scaffolds)
+- `0d69872` +184 variation scaffold pages (205 total)
+- `30e4ba8` 21 flagship practice pages
+- `3a50063` docs: plan.md — 177 Execution Traces
+- `3de6824` Execution Traces in cheatsheets, transcripts, SD
 - `4ab7ae3` P0 Trap Traces batch 2 (61 auto)
 - `019530f` P0 Trap Traces batch 1 (20 hand)
-- `a94d862` "Execution Trace" naming/badge
-- `d1a7683` P4 System Design chapter
+- `a94d862` Naming: "Execution Trace" badge
+- `d1a7683` System Design chapter
 - `cdc2ff2` 100% CodeTrace coverage
-- `c3dbac5` CodeTrace interactive slider redesign
-- `f585d08` P1 RSS + design token audit
 
-### Final scorecard
+## Deferred (kept in plan so we don't lose them)
 
-**Todos: 27 done, 1 blocked (28 total).** Only remaining item: `add-email-capture-pdf-gate` — blocked on your Buttondown / ConvertKit signup.
+- **Full multi-approach authoring for the remaining ~176 scaffold pages** — each is a ~30-min task. Priority order per pattern is roughly the order in the "Same pattern, new tweaks" tables. Estimated ~90 hours to fully upgrade all scaffolds.
+- 227 Problem-statement Example previews across chapters
+- 30 Data-structure operation state-machine animations
+- Complexity growth-curve visualizer
+- 6-phase playbook single-page animation
 
-### Bigger bets deferred
+## Blocked on you
 
-- AI companion chat, Auth/accounts, Community/forum
-- Mock-interview AI voice, Job board, Mobile app
-- Anti-pattern generator, Extended mock transcripts (3→15)
-- Company tracks (Meta/Google/Amazon), Behavioural interview prep
+- `add-email-capture-pdf-gate` — needs your Buttondown/ConvertKit signup
