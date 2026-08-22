@@ -338,6 +338,18 @@ Space is O(RC) for the padded prefix table `P`; the extra top row and left colum
 
 > [note] **Trace it** — `m=[[3,1],[2,4]]`. The padded prefix table gives `sumRegion(0,0,1,1) = P[2][2] − P[0][2] − P[2][0] + P[0][0] = 10 − 0 − 0 + 0 = 10` (the whole grid), and `sumRegion(1,1,1,1)=4` (just the corner).
 
+<CodeTrace
+  title="2D Range Sum — matrix [[3,1],[2,4]], query sumRegion(1,1,1,1)"
+  :values="[3,1,2,4]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { P: "[[0,0,0],[0,3,4],[0,5,10]]" }, note: "build prefix P with 1-row/col padding" },
+    { pointers: { i: 3 }, vars: { r1: 1, c1: 1, r2: 1, c2: 1 }, note: "query (1,1)-(1,1) → single cell", added: [3] },
+    { pointers: { i: 0 }, vars: { formula: "P[2][2] − P[1][2] − P[2][1] + P[1][1]" }, note: "10 − 4 − 5 + 3 = 4 ✓" }
+  ]'
+/>
+
 > [inv] **Invariant** — `P[i][j]` holds the sum of the sub-rectangle from `(0,0)` to `(i-1,j-1)`; the padding row/column of zeros makes every query boundary-safe.
 
 > [trap] **Common Trap** — Sign/index errors in the four-term formula, or omitting the `+1` padding — then corner queries read out of bounds. Add back the double-subtracted corner (`+ P[r1][c1]`).

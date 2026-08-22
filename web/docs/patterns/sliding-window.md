@@ -518,6 +518,21 @@ Answer: **2** (the window `[4, 3]`). Each index moves through `right` once and t
 
 </Callout>
 
+<CodeTrace
+  title="Minimum Size Subarray Sum — nums=[2,3,1,2,4,3], target=7"
+  :values="[2,3,1,2,4,3]"
+  :windowKeys="['left','right']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { left: 0, right: 0 }, vars: { sum: 2, best: "∞" }, note: "grow to 2" },
+    { pointers: { left: 0, right: 1 }, vars: { sum: 5, best: "∞" }, note: "grow to 5" },
+    { pointers: { left: 0, right: 2 }, vars: { sum: 6, best: "∞" }, note: "grow to 6" },
+    { pointers: { left: 2, right: 3 }, vars: { sum: 5, best: 3 }, note: "sum 8 ≥ 7 → shrink twice, best window [1,2,2,2] shrunk to [1,2,2] length 3", added: [2,3] },
+    { pointers: { left: 3, right: 4 }, vars: { sum: 5, best: 3 }, note: "grow to 9, shrink once" },
+    { pointers: { left: 4, right: 5 }, vars: { sum: 7, best: 2 }, note: "grow to 8, shrink twice: [4,3] sum=7 → best=2", added: [4,5] }
+  ]'
+/>
+
 <Callout kind="trap" title="Common Trap">
 
 Forgetting the "no window found" case. *Example:* `nums=[1,1,1]`, `target=100`. No window satisfies the sum; if you return `best` still at `Integer.MAX_VALUE`, the caller thinks a huge window exists. Return `0` when `best` was never updated.

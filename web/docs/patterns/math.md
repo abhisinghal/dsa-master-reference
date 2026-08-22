@@ -83,6 +83,20 @@ double myPow(double x, int nRaw) {
 
 </Callout>
 
+<CodeTrace
+  title="Fast Power — pow(2, 10)"
+  :values="[2,4,16,256]"
+  :windowKeys="['bit']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { bit: 0 }, vars: { base: 2, exp: 10, result: 1 }, note: "start: exp=10=1010₂" },
+    { pointers: { bit: 0 }, vars: { base: 4, exp: 5, result: 1 }, note: "bit 0 of 10 = 0 → skip; base=2²=4, exp>>=1" },
+    { pointers: { bit: 1 }, vars: { base: 16, exp: 2, result: 4 }, note: "bit 0 of 5 = 1 → result *= 4; base=16, exp>>=1", added: [1] },
+    { pointers: { bit: 2 }, vars: { base: 256, exp: 1, result: 4 }, note: "bit 0 of 2 = 0 → skip; base=256, exp>>=1" },
+    { pointers: { bit: 3 }, vars: { base: 65536, exp: 0, result: 1024 }, note: "bit 0 of 1 = 1 → result *= 256 = 1024. done", added: [3] }
+  ]'
+/>
+
 #### Same pattern, new tweaks
 | Variation | The one thing that changes | Time |
 |---|---|---|
@@ -167,6 +181,18 @@ long lcm(long a, long b) { return a / gcd(a, b) * b; }   // divide before multip
 `gcd(18, 12) → gcd(12, 6) → gcd(6, 0) = 6`. Each step replaces the larger with the remainder; the last non-zero value is the answer.
 
 </Callout>
+
+<CodeTrace
+  title="Euclid GCD — gcd(18, 12)"
+  :values="[18,12,6,0]"
+  :windowKeys="['step']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { step: 0 }, vars: { a: 18, b: 12 }, note: "gcd(18, 12). 18 % 12 = 6", added: [0,1] },
+    { pointers: { step: 1 }, vars: { a: 12, b: 6 }, note: "gcd(12, 6). 12 % 6 = 0", added: [1,2] },
+    { pointers: { step: 2 }, vars: { a: 6, b: 0, result: 6 }, note: "b=0 → return a = 6", added: [2] }
+  ]'
+/>
 
 #### Same pattern, new tweaks
 | Variation | The one thing that changes | Time |
@@ -264,6 +290,19 @@ int countPrimes(int n) {
 `n = 10`. i=2 prime → mark 4,6,8; i=3 prime → mark 9; i=5,7 prime (nothing to mark below 10). Count = 4.
 
 </Callout>
+
+<CodeTrace
+  title="Sieve of Eratosthenes — n=10 (count primes below 10)"
+  :values="[2,3,4,5,6,7,8,9]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { primes: "[2]", marked: "{}" }, note: "2 prime. mark 4,6,8 as composite", added: [0], removed: [2,4,6] },
+    { pointers: { i: 1 }, vars: { primes: "[2,3]", marked: "{4,6,8}" }, note: "3 prime. mark 9 as composite", added: [1], removed: [7] },
+    { pointers: { i: 3 }, vars: { primes: "[2,3,5]", marked: "+9" }, note: "5 prime. next multiple 25 > 10 → skip", added: [3] },
+    { pointers: { i: 5 }, vars: { primes: "[2,3,5,7]", marked: "same" }, note: "7 prime. count = 4", added: [5] }
+  ]'
+/>
 
 #### Same pattern, new tweaks
 | Variation | The one thing that changes | Time |

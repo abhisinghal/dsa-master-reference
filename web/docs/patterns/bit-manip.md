@@ -136,6 +136,20 @@ int singleNumber(int[] a) {            // every other element appears twice
 
 </Callout>
 
+<CodeTrace
+  title="Single Number — nums=[4,1,2,1,2]"
+  :values="[4,1,2,1,2]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { xor: 4 }, note: "xor ^ 4 = 4" },
+    { pointers: { i: 1 }, vars: { xor: 5 }, note: "4 ^ 1 = 5 (101)" },
+    { pointers: { i: 2 }, vars: { xor: 7 }, note: "5 ^ 2 = 7 (111)" },
+    { pointers: { i: 3 }, vars: { xor: 6 }, note: "7 ^ 1 = 6 (110)" },
+    { pointers: { i: 4 }, vars: { xor: 4 }, note: "6 ^ 2 = 4. answer = 4", added: [0] }
+  ]'
+/>
+
 **Time** O(n) single pass · **Space** O(1) — one accumulator, no hash map.
 
 <Callout kind="note" title="Interview script">
@@ -247,6 +261,21 @@ for `i=5` (`101`): `dp[5] = dp[2] + 1 = 1 + 1 = 2`. Sequence `0..5` → `[0,1,1,
 
 </Callout>
 
+<CodeTrace
+  title="Counting Bits (Kernighan DP) — n=5"
+  :values="[0,1,1,2,1,2]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { dp: 0 }, note: "dp[0] = 0" },
+    { pointers: { i: 1 }, vars: { dp: 1, from: "dp[0]+1" }, note: "1 = 0b1: 1 bit", added: [1] },
+    { pointers: { i: 2 }, vars: { dp: 1, from: "dp[0]+1" }, note: "2 = 0b10: dp[2>>1]+2%2 = 1", added: [2] },
+    { pointers: { i: 3 }, vars: { dp: 2, from: "dp[1]+1" }, note: "3 = 0b11: 2 bits", added: [3] },
+    { pointers: { i: 4 }, vars: { dp: 1, from: "dp[2]>>1 = 0+0" }, note: "4 = 0b100: 1 bit", added: [4] },
+    { pointers: { i: 5 }, vars: { dp: 2, from: "dp[2]+1" }, note: "5 = 0b101: dp[5>>1]+1%2 = 1+1 = 2", added: [5] }
+  ]'
+/>
+
 Time O(n) · Space O(n).
 
 <Callout kind="note" title="Interview script">
@@ -352,6 +381,23 @@ List<List<Integer>> subsets(int[] a) {
 `[a,b,c]`. Mask `000`→`{}`, `101`→`{a,c}`, `111`→`{a,b,c}`; counting `0..7` enumerates all **8** subsets, one per bit pattern.
 
 </Callout>
+
+<CodeTrace
+  title="Subsets via Bitmask — nums=[a,b,c], enumerate 000..111"
+  :values="['a','b','c']"
+  :windowKeys="['bit']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { bit: 0 }, vars: { mask: "000", subset: "{}" }, note: "mask 0: empty set" },
+    { pointers: { bit: 0 }, vars: { mask: "001", subset: "{a}" }, note: "mask 1: bit 0 set → a", added: [0] },
+    { pointers: { bit: 0 }, vars: { mask: "010", subset: "{b}" }, note: "mask 2: bit 1 → b", added: [1] },
+    { pointers: { bit: 0 }, vars: { mask: "011", subset: "{a,b}" }, note: "mask 3: bits 0,1", added: [0,1] },
+    { pointers: { bit: 0 }, vars: { mask: "100", subset: "{c}" }, note: "mask 4: bit 2 → c", added: [2] },
+    { pointers: { bit: 0 }, vars: { mask: "101", subset: "{a,c}" }, note: "mask 5", added: [0,2] },
+    { pointers: { bit: 0 }, vars: { mask: "110", subset: "{b,c}" }, note: "mask 6", added: [1,2] },
+    { pointers: { bit: 0 }, vars: { mask: "111", subset: "{a,b,c}" }, note: "mask 7: full set. total 8", added: [0,1,2] }
+  ]'
+/>
 
 Time O(n·2ⁿ) · Space O(n·2ⁿ).
 

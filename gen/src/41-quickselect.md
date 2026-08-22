@@ -164,6 +164,17 @@ void swap(int[] a, int i, int j){ int t=a[i]; a[i]=a[j]; a[j]=t; }
 ```
 
 > [note] **Trace it** — One possible randomized run for `[3,2,1,5,6,4], k=2`; target index is `6-2=4` in ascending order.
+
+<CodeTrace
+  title="Quickselect Kth Largest — nums=[3,2,1,5,6,4], k=2 (target idx=4)"
+  :values="[3,2,1,5,6,4]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { lo: 0, hi: 5, pivot: 4 }, vars: { array: "[3,2,1,4,6,5]" }, note: "pick pivot 6 → partition puts 6 at end. after: [3,2,1,5,4,6]" },
+    { pointers: { lo: 0, hi: 4, pivot: 3 }, vars: { array: "[3,2,1,4,5]" }, note: "pivot 5 → partitions to [3,2,1,4] | 5. idx 4 == k → found 5", added: [4] }
+  ]'
+/>
 >
 > | Round | Active range | Chosen pivot | Array shape after partition | Pivot index | Next move |
 > |---|---|---|---|---|---|

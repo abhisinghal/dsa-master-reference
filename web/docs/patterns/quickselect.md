@@ -195,15 +195,26 @@ void swap(int[] a, int i, int j){ int t=a[i]; a[i]=a[j]; a[j]=t; }
 
 One possible randomized run for `[3,2,1,5,6,4], k=2`; target index is `6-2=4` in ascending order.
 
-| Round | Active range | Chosen pivot | Array shape after partition | Pivot index | Next move |
-|---|---|---|---|---|---|
-| 1 | `0..5` | `4` | values `<4`, then `4`, then values `>4` | `3` | `3 < 4`, search right |
-| 2 | `4..5` | `6` | value `5`, then `6` | `5` | `5 > 4`, search left |
-| stop | `4..4` | — | `a[4]` is fixed enough | `4` | return `5` |
-
-The whole left side below index 4 never needs to be sorted. It only needs to be known as "too small to contain the 2nd largest."
-
 </Callout>
+
+<CodeTrace
+  title="Quickselect Kth Largest — nums=[3,2,1,5,6,4], k=2 (target idx=4)"
+  :values="[3,2,1,5,6,4]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { lo: 0, hi: 5, pivot: 4 }, vars: { array: "[3,2,1,4,6,5]" }, note: "pick pivot 6 → partition puts 6 at end. after: [3,2,1,5,4,6]" },
+    { pointers: { lo: 0, hi: 4, pivot: 3 }, vars: { array: "[3,2,1,4,5]" }, note: "pivot 5 → partitions to [3,2,1,4] | 5. idx 4 == k → found 5", added: [4] }
+  ]'
+/>
+&gt;
+&gt; | Round | Active range | Chosen pivot | Array shape after partition | Pivot index | Next move |
+&gt; |---|---|---|---|---|---|
+&gt; | 1 | `0..5` | `4` | values `<4`, then `4`, then values `>4` | `3` | `3 < 4`, search right |
+&gt; | 2 | `4..5` | `6` | value `5`, then `6` | `5` | `5 > 4`, search left |
+&gt; | stop | `4..4` | — | `a[4]` is fixed enough | `4` | return `5` |
+&gt;
+&gt; The whole left side below index 4 never needs to be sorted. It only needs to be known as "too small to contain the 2nd largest."
 
 #### Rank conversion: kth largest vs kth smallest
 Most bugs in this problem are off-by-one rank bugs. If the array were sorted ascending, the 1st smallest is index `0`, so kth smallest is `k - 1`. The 1st largest is the final index `n - 1`, so kth largest is `n - k`. For `[1,2,3,4,5,6]`, the 2nd largest is `5`, which sits at index `4`; `n-k = 6-2 = 4`. Say this conversion out loud before writing the loop.

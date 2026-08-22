@@ -188,6 +188,20 @@ void dfs(char[][] b, int r, int c, Node node, List<String> res) {
 
 > [note] **Trace it** — words `["oath","pea","eat","rain"]` on a letter grid. Start from `o`: the trie has child `o`, then `a`, then `t`, then `h`, so that path can reach the terminal word `"oath"`. Start from a path like `o → a → x`: after `oa`, there is no `x` child, so the DFS returns immediately. You are not checking four words separately; one prefix walk prunes the whole dictionary.
 
+<CodeTrace
+  title="Word Search II — DFS pruned by trie for word 'oath'"
+  :values="['o','a','t','h']"
+  :windowKeys="['depth']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { depth: 0 }, vars: { grid_cell: "(0,0)=o", trie_node: "root→o" }, note: "start. child o exists → dive", added: [0] },
+    { pointers: { depth: 1 }, vars: { grid_cell: "(0,1)=a", trie_node: "o→a" }, note: "child a exists", added: [0,1] },
+    { pointers: { depth: 2 }, vars: { grid_cell: "(1,1)=t", trie_node: "a→t" }, note: "child t exists", added: [0,1,2] },
+    { pointers: { depth: 3 }, vars: { grid_cell: "(1,0)=h (END)", trie_node: "t→h★" }, note: "trie marks `oath` complete → collect", added: [0,1,2,3] },
+    { pointers: { depth: 2 }, vars: { grid_cell: "(1,1)→x", trie_node: "a→x?" }, note: "alt branch: no x child → prune whole subtree" }
+  ]'
+/>
+
 #### Same pattern, new tweaks
 | Variation | The one thing that changes | Time |
 |---|---|---|
@@ -291,6 +305,20 @@ int findMaximumXOR(int[] nums) {
 ```
 
 > [note] **Trace it** — Use 5-bit versions for readability: `5 = 00101`, `25 = 11001`. Querying `5`, the trie first wants `1` at the 16s bit and can take `25`'s branch, so the XOR gets a high `1`. It next wants `1` at the 8s bit and again follows `25`. Later bits contribute as available. The final path gives `00101 XOR 11001 = 11100` = `28`, better than any pair in `[3,10,5,25,2,8]`.
+
+<CodeTrace
+  title="Maximum XOR — query 5 vs trie of [3,10,5,25,2,8], 5-bit"
+  :values="[1,6,8,4]"
+  :windowKeys="['bit']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { bit: 0 }, vars: { want: "1 (16s)", have_choice: "0 or 1", pick: 1 }, note: "query bit=0 → want 1 → trie has → take 25 branch", added: [0] },
+    { pointers: { bit: 1 }, vars: { want: "1 (8s)", pick: 1 }, note: "query bit=0 → want 1 → 25 branch continues (25=11001)", added: [0,1] },
+    { pointers: { bit: 2 }, vars: { want: "0 (4s)", pick: 0 }, note: "query bit=1 → want 0 → 25 continues (bit 4)", added: [0,1] },
+    { pointers: { bit: 3 }, vars: { want: "0 (2s)", pick: 0 }, note: "query bit=0 → want 0 → but 25 has 0 → 25 (bit 3 of 11001 = 0)", added: [0,1,2] },
+    { pointers: { bit: 4 }, vars: { want: "0 (1s)", pick: 1 }, note: "query bit=1 → want 0 → 25 has 1 → XOR bit set. total = 11100 = 28", added: [0,1,2,3] }
+  ]'
+/>
 
 #### Why MSB-first matters
 XOR is a number, not just a count of different bits. A `1` in the 16s place beats any combination of lower bits. That is why the trie walk starts from bit 31 and commits greedily. If the opposite branch exists at a high bit, take it. Even if that later forces weaker low bits, the high bit already dominates.

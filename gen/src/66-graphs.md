@@ -134,6 +134,19 @@ void sink(char[][] g, int r, int c) {
 
 > [note] **Trace it** — a 3×3 grid with land at the top-left block and one separate cell bottom-right forms **2** islands: the first DFS sinks the connected block, the second sinks the lone cell.
 
+<CodeTrace
+  title="Number of Islands — 3x3 grid, 2 components"
+  :values="[1,1,0,1,0,0,0,0,1]"
+  :windowKeys="['cell']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { cell: 0 }, vars: { islands: 1, "sunk": "1 cell" }, note: "start DFS at (0,0)=1", added: [0] },
+    { pointers: { cell: 1 }, vars: { islands: 1, "sunk": "2 cells" }, note: "spread right", added: [0,1] },
+    { pointers: { cell: 3 }, vars: { islands: 1, "sunk": "3 cells" }, note: "spread down. block done", added: [0,1,3] },
+    { pointers: { cell: 8 }, vars: { islands: 2, "sunk": "4 cells" }, note: "new DFS at (2,2)=1 → 2nd island. answer=2", added: [0,1,3,8] }
+  ]'
+/>
+
 ### Time Complexity
 
 O(R*C): each cell is scanned/sunk at most once.
@@ -232,6 +245,20 @@ int orangesRotting(int[][] g) {
 ```
 
 > [note] **Trace it** — grid `[[2,1,1],[1,1,0],[0,1,1]]` (2=rotten). All rotten oranges spread simultaneously; the last fresh orange rots at minute **4** = the number of BFS layers.
+
+<CodeTrace
+  title="Rotting Oranges (BFS layers) — 3x3 grid"
+  :values="[2,1,1,1,1,0,0,1,1]"
+  :windowKeys="['t']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { t: 0 }, vars: { queue: "[(0,0)]", fresh: 6 }, note: "minute 0: only rotten is (0,0)", removed: [0] },
+    { pointers: { t: 1 }, vars: { queue: "[(0,1),(1,0)]", fresh: 4 }, note: "minute 1: rot spreads to right + below", removed: [0,1,3] },
+    { pointers: { t: 2 }, vars: { queue: "[(0,2),(1,1)]", fresh: 2 }, note: "minute 2: further spread", removed: [0,1,3,2,4] },
+    { pointers: { t: 3 }, vars: { queue: "[(2,1)]", fresh: 1 }, note: "minute 3: 4 rots at (2,1)", removed: [0,1,3,2,4,7] },
+    { pointers: { t: 4 }, vars: { queue: "[(2,2)]", fresh: 0 }, note: "minute 4: last fresh rots. answer 4", removed: [0,1,3,2,4,7,8] }
+  ]'
+/>
 
 
 > [pat] **Pattern Connection** — Multi-source BFS also answers *01 Matrix* (distance to nearest 0) and *Walls and Gates* — seed all zeros/gates, expand once.
@@ -348,6 +375,19 @@ int[] dijkstra(int n, List<int[]>[] adj, int src) {   // adj[u] = {v, weight}
 
 > [note] **Trace it** — from `A`, edges `A→B(1), A→C(4), B→C(2)`. The heap pops `B` at distance 1, which relaxes `C` to `1+2=3` — beating the direct `A→C(4)` → shortest to `C` is **3**.
 
+<CodeTrace
+  title="Dijkstra — source A. edges A→B(1), A→C(4), B→C(2)"
+  :values="['A','B','C']"
+  :windowKeys="['popped']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { popped: 0 }, vars: { dist: "{A:0, B:∞, C:∞}", heap: "[(0,A)]" }, note: "init: dist[A]=0", added: [0] },
+    { pointers: { popped: 0 }, vars: { dist: "{A:0, B:1, C:4}", heap: "[(1,B),(4,C)]" }, note: "pop A. relax B=1, C=4", added: [0] },
+    { pointers: { popped: 1 }, vars: { dist: "{A:0, B:1, C:3}", heap: "[(3,C),(4,C)]" }, note: "pop B. relax C = 1+2 = 3", added: [1] },
+    { pointers: { popped: 2 }, vars: { dist: "{A:0, B:1, C:3}", heap: "[(4,C)]" }, note: "pop C at 3. stale 4 skipped. shortest A→C = 3", added: [2] }
+  ]'
+/>
+
 **Common Mistakes:**
 - **Skipping the stale-pop guard**: without `if (d > dist[u]) continue;`, popped-then-updated nodes re-relax with wrong distances.
 - **Using it with negative edges**: greedy assumption breaks — use Bellman–Ford instead.
@@ -447,6 +487,19 @@ int[] bellmanFord(int n, int[][] edges, int src) {   // edges = {u, v, w}
 ```
 
 > [note] **Trace it** — `A→B(4), A→C(5), C→B(−3)`, source `A`. Pass 1 sets `B=4, C=5`; still pass 1 (edge order dependent) or pass 2 relaxes `B` via `C` to `5−3=2`. After `V−1=2` passes nothing improves → done.
+
+<CodeTrace
+  title="Bellman-Ford — negative edge C→B(-3) improves B"
+  :values="['A','B','C']"
+  :windowKeys="['pass']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { pass: 0 }, vars: { dist: "{A:0, B:∞, C:∞}" }, note: "init: dist[A]=0", added: [0] },
+    { pointers: { pass: 1 }, vars: { dist: "{A:0, B:4, C:5}" }, note: "pass 1: relax A→B, A→C", added: [1,2] },
+    { pointers: { pass: 2 }, vars: { dist: "{A:0, B:2, C:5}" }, note: "pass 2: C→B(-3): 5+(-3)=2 improves B", added: [1] },
+    { pointers: { pass: 2 }, vars: { dist: "{A:0, B:2, C:5}" }, note: "V-1 passes done. no negative cycle" }
+  ]'
+/>
 
 ### Time Complexity
 

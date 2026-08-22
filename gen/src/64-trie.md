@@ -227,6 +227,22 @@ class Trie {
 
 > [note] **Trace it** — Insert `"app"` and `"apple"`. The second insertion reuses the nodes for `a`, first `p`, and second `p`, then creates `l` and `e`. `search("app")` walks three edges and returns true because that node's `word` flag is set. `search("ap")` walks two edges but returns false because the prefix node is not a word. `startsWith("appl")` walks four edges and returns true because the path exists.
 
+<CodeTrace
+  title="Implement Trie — insert 'app', 'apple'; then queries"
+  :values="['a','p','p','l','e']"
+  :windowKeys="['depth']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { depth: 0 }, vars: { op: "insert app", path: "a", word: false }, note: "create a node", added: [0] },
+    { pointers: { depth: 1 }, vars: { op: "insert app", path: "a→p", word: false }, note: "create p", added: [0,1] },
+    { pointers: { depth: 2 }, vars: { op: "insert app", path: "a→p→p ★", word: true }, note: "mark end-of-word", added: [0,1,2] },
+    { pointers: { depth: 3 }, vars: { op: "insert apple", path: "a→p→p→l", word: false }, note: "reuse first 3 nodes, create l", added: [0,1,2,3] },
+    { pointers: { depth: 4 }, vars: { op: "insert apple", path: "l→e ★" }, note: "create e, mark end", added: [0,1,2,3,4] },
+    { pointers: { depth: 1 }, vars: { op: "search ap", found: false }, note: "walks 2 edges but no ★ → false" },
+    { pointers: { depth: 3 }, vars: { op: "startsWith appl", found: true }, note: "path exists → true" }
+  ]'
+/>
+
 ### Time Complexity
 
 O(L) per insert/search/startsWith.

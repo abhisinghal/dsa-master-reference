@@ -150,6 +150,19 @@ class LRUCache {
 
 > [note] **Trace it** — Capacity 2. After `put(1,1), put(2,2)`, list is `2 → 1`. `get(1)` returns `1` and moves key 1 to the front: `1 → 2`. `put(3,3)` inserts `3 → 1 → 2`, then evicts `tail.prev`, which is key 2. The map removes key 2 at the same time.
 
+<CodeTrace
+  title="LRU Cache — capacity=2, doubly-linked list evolves"
+  :values="['put 1,1','put 2,2','get 1','put 3,3']"
+  :windowKeys="['op']"
+  :cellWidth="70"
+  :steps='[
+    { pointers: { op: 0 }, vars: { list: "1", map: "{1}" }, note: "put(1,1) → head=1", added: [0] },
+    { pointers: { op: 1 }, vars: { list: "2 → 1", map: "{1,2}" }, note: "put(2,2) → head=2", added: [1] },
+    { pointers: { op: 2 }, vars: { list: "1 → 2", ret: 1 }, note: "get(1) → return 1, move 1 to head", added: [2] },
+    { pointers: { op: 3 }, vars: { list: "3 → 1", map: "{1,3}" }, note: "put(3,3): evict tail.prev = 2. head=3", added: [3] }
+  ]'
+/>
+
 ### Time Complexity
 
 O(1) average per get and put.
@@ -248,6 +261,19 @@ class RandomizedSet {
 
 > [note] **Trace it** — `insert 3,7,9` → `vals=[3,7,9]`. `remove 3`: index of 3 is 0, last is 9, so write 9 into slot 0, update `idx{9:0, 7:1}`, pop the tail, and remove 3 from the map. `getRandom` now picks index 0 or 1 uniformly, so 9 and 7 each have probability 1/2.
 
+<CodeTrace
+  title="Insert/Delete/GetRandom O(1) — sequence of ops"
+  :values="[3,7,9]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { vals: "[3]", idx: "{3:0}" }, note: "insert 3", added: [0] },
+    { pointers: { i: 1 }, vars: { vals: "[3,7]", idx: "{3:0, 7:1}" }, note: "insert 7", added: [1] },
+    { pointers: { i: 2 }, vars: { vals: "[3,7,9]", idx: "{3:0, 7:1, 9:2}" }, note: "insert 9", added: [2] },
+    { pointers: { i: 0 }, vars: { vals: "[9,7]", idx: "{7:1, 9:0}" }, note: "remove 3: swap-with-last, pop", added: [0], removed: [2] }
+  ]'
+/>
+
 ### Time Complexity
 
 O(1) average for insert, remove, and getRandom.
@@ -330,6 +356,18 @@ int getRandom(ListNode head) {
 ```
 
 > [note] **Trace it** — Three nodes `A,B,C`. `A` is chosen first. At `B`, replace with probability 1/2, so `A` and `B` are each 1/2 after two nodes. At `C`, replace with probability 1/3. `C` ends with 1/3; `A` keeps its earlier 1/2 chance and survives the final non-replacement with probability 2/3, so `A` ends at 1/3 too. Same for `B`.
+
+<CodeTrace
+  title="Reservoir Sampling — 3 nodes A, B, C"
+  :values="['A','B','C']"
+  :windowKeys="['i']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { i: 0 }, vars: { chosen: "A", "P(A)": "1.0" }, note: "seed: A always taken", added: [0] },
+    { pointers: { i: 1 }, vars: { chosen: "A or B", "P(A)": "1/2", "P(B)": "1/2" }, note: "B: replace with prob 1/2" },
+    { pointers: { i: 2 }, vars: { "P(A)": "1/3", "P(B)": "1/3", "P(C)": "1/3" }, note: "C: replace with prob 1/3 → uniform" }
+  ]'
+/>
 
 ### Time Complexity
 

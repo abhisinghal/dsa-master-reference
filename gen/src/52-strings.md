@@ -63,6 +63,21 @@ int expand(String s, int l, int r) {
 
 > [note] **Trace it** — `"cbbd"`. The even center between indices 1–2 (`b|b`) expands to `"bb"`; no other center beats length 2 → answer `"bb"`.
 
+<CodeTrace
+  title="Longest Palindromic Substring — s='cbbd'"
+  :values="['c','b','b','d']"
+  :windowKeys="['left','right']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { left: 0, right: 0 }, vars: { center: "c", len: 1, best: 1 }, note: "odd center at 0: `c`" },
+    { pointers: { left: 0, right: 1 }, vars: { center: "c|b", len: 0, best: 1 }, note: "even center: cb differ → no palindrome" },
+    { pointers: { left: 1, right: 1 }, vars: { center: "b", len: 1, best: 1 }, note: "odd center at 1: `b`" },
+    { pointers: { left: 1, right: 2 }, vars: { center: "b|b", len: 2, best: 2 }, note: "even b|b → matches. best=2", added: [1,2] },
+    { pointers: { left: 2, right: 2 }, vars: { center: "b", len: 1, best: 2 }, note: "odd at 2. no bigger" },
+    { pointers: { left: 3, right: 3 }, vars: { center: "d", len: 1, best: 2 }, note: "done. answer `bb`" }
+  ]'
+/>
+
 ### Time Complexity
 
 O(n^2): 2n-1 centers, each can expand O(n).
@@ -145,6 +160,19 @@ int[] buildLps(String p) {
 ```
 
 > [note] **Trace it** — pattern `"ABAB"` has `lps = [0,0,1,2]`: after matching `"ABAB"` then hitting a mismatch, you fall back to `lps[3]=2` (the prefix `"AB"` already re-matched), so the text pointer never rewinds.
+
+<CodeTrace
+  title="KMP LPS table build — pattern 'ABAB'"
+  :values="['A','B','A','B']"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { lps: "[0,_,_,_]", len: 0 }, note: "lps[0] always 0" },
+    { pointers: { i: 1 }, vars: { lps: "[0,0,_,_]", len: 0 }, note: "B ≠ A → lps[1]=0" },
+    { pointers: { i: 2 }, vars: { lps: "[0,0,1,_]", len: 1 }, note: "A matches prefix[0] → lps[2]=1", added: [0,2] },
+    { pointers: { i: 3 }, vars: { lps: "[0,0,1,2]", len: 2 }, note: "B matches prefix[1] → lps[3]=2", added: [0,1,2,3] }
+  ]'
+/>
 
 > [pat] **Pattern Connection** — Rolling hash is the string face of prefix-sum thinking (a window aggregate updated in O(1)); the failure function is a precomputed-DP over the pattern.
 

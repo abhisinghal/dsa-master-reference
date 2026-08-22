@@ -64,6 +64,18 @@ boolean isValid(String s) {
 
 > [note] **Trace it** — `"([)]"`: push `(`, push `[`, then `)` needs the top to be `(` but it's `[` → mismatch → invalid. `"([])"` closes each in reverse order → valid.
 
+<CodeTrace
+  title="Valid Parentheses — s='([)]'"
+  :values="['(','[',')',']']"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { stack: "[(]" }, note: "push (", added: [0] },
+    { pointers: { i: 1 }, vars: { stack: "[(, []" }, note: "push [", added: [0,1] },
+    { pointers: { i: 2 }, vars: { top: "[", need: "(" }, note: ") expects ( on top, saw [ → INVALID", removed: [2] }
+  ]'
+/>
+
 
 > [trap] **Common Trap** — Returning `true` without checking `stack.isEmpty()`. *Example:* `s="(()"` — every closer matched, but one `(` was never closed. Return `stack.isEmpty()`, not just `true`.
 
@@ -150,6 +162,20 @@ class MinStack {
 ```
 
 > [note] **Trace it** — push `5,3,7`: the paired min-stack tracks `5,3,3`, so `getMin()` reads `3` in O(1). Pop `3` and the min instantly reverts to `5`.
+
+<CodeTrace
+  title="Min Stack — paired min tracking"
+  :values="[5,3,7]"
+  :windowKeys="['top']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { top: 0 }, vars: { stack: "[5]", min_stack: "[5]", getMin: 5 }, note: "push 5", added: [0] },
+    { pointers: { top: 1 }, vars: { stack: "[5,3]", min_stack: "[5,3]", getMin: 3 }, note: "push 3", added: [0,1] },
+    { pointers: { top: 2 }, vars: { stack: "[5,3,7]", min_stack: "[5,3,3]", getMin: 3 }, note: "push 7: min_stack echoes 3 (7 > current min)", added: [0,1,2] },
+    { pointers: { top: 1 }, vars: { stack: "[5,3]", min_stack: "[5,3]", getMin: 3 }, note: "pop 7", removed: [2] },
+    { pointers: { top: 0 }, vars: { stack: "[5]", min_stack: "[5]", getMin: 5 }, note: "pop 3: min reverts to 5", removed: [1] }
+  ]'
+/>
 
 
 > [trap] **Common Trap** — A single scalar `min` can't be restored after `pop`. *Example:* push 5, push 3 (min=3), pop 3 — should min go back to 5? Without a per-entry or parallel min, you've lost that history. Store the running min with each pushed value.

@@ -84,6 +84,18 @@ class Fenwick {
 
 </Callout>
 
+<CodeTrace
+  title="Fenwick prefixSum(6) — walk indices via lowbit"
+  :values="[1,3,5,7,9,11]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 5 }, vars: { i: 6, "i & -i": 2, sum: "tree[6]" }, note: "6 = 110₂, strip 2 → 4", added: [5] },
+    { pointers: { i: 3 }, vars: { i: 4, "i & -i": 4, sum: "tree[6] + tree[4]" }, note: "4 = 100₂, strip 4 → 0", added: [3] },
+    { pointers: { i: -1 }, vars: { i: 0, sum: "total prefix" }, note: "i=0 → done. only 3 nodes visited (log n)" }
+  ]'
+/>
+
 ### Time Complexity
 
 O(log n) per point update and prefix/range query.
@@ -205,6 +217,18 @@ over `[1,3,5,7,9,11]`, a query for `sum(1..3)` combines two canonical nodes (cov
 
 </Callout>
 
+<CodeTrace
+  title="Segment Tree query(1..3) — 2 canonical nodes cover range"
+  :values="[1,3,5,7,9,11]"
+  :windowKeys="['range']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { range: 1, node: 1 }, vars: { covers: "[1,1]=3" }, note: "leaf covers only [1,1] → 3", added: [1] },
+    { pointers: { range: 2, node: 2 }, vars: { covers: "[2,3]=12" }, note: "internal node covers [2,3] → 5+7=12", added: [2,3] },
+    { pointers: { range: -1 }, vars: { total: 15 }, note: "sum = 3 + 12 = 15" }
+  ]'
+/>
+
 **Java (lazy propagation — range add + range sum):**
 
 
@@ -249,6 +273,19 @@ class LazySeg {
 `update(1,0,n-1, 1,3, +2)` on `[1,3,5,7,9,11]` never touches leaves `1..3` individually: nodes fully inside `[1,3]` get a `+2` tag and their `sum` bumped by `2 × (width)`. A later `query` that dives past a tagged node calls `push` first, so children see the pending add exactly when — and only when — they're needed.
 
 </Callout>
+
+<CodeTrace
+  title="Lazy Propagation — range add +2 on [1,3]"
+  :values="[1,3,5,7,9,11]"
+  :windowKeys="['range']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { range: 0, node: 1 }, vars: { covers: "[0,5]", touch: "no" }, note: "root: not fully inside [1,3] → recurse" },
+    { pointers: { range: 1, node: 3 }, vars: { covers: "[1,1]", touch: "yes", tag: "+2" }, note: "leaf [1,1] fully inside → sum += 2", added: [1] },
+    { pointers: { range: 2, node: 5 }, vars: { covers: "[2,3]", touch: "yes", tag: "+2" }, note: "node [2,3] fully inside → sum += 4 (2×2), tag +2", added: [2,3] },
+    { pointers: { range: -1 }, vars: { pending: "tag=+2 on [2,3]" }, note: "children not touched. push() lazily on next query" }
+  ]'
+/>
 
 <Callout kind="trap" title="Common Trap">
 

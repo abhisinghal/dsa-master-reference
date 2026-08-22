@@ -209,6 +209,19 @@ Stream `1,2,3,4`. Add `1`: `low=[1]`, `high=[]`, median `1`. Add `2`: push throu
 
 </Callout>
 
+<CodeTrace
+  title="Find Median from Data Stream — 1,2,3,4"
+  :values="[1,2,3,4]"
+  :windowKeys="['i']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { i: 0 }, vars: { low_max: "[1]", high_min: "[]", median: 1 }, note: "add 1", added: [0] },
+    { pointers: { i: 1 }, vars: { low_max: "[1]", high_min: "[2]", median: 1.5 }, note: "add 2 → push through", added: [1] },
+    { pointers: { i: 2 }, vars: { low_max: "[2,1]", high_min: "[3]", median: 2 }, note: "add 3, rebalance", added: [2] },
+    { pointers: { i: 3 }, vars: { low_max: "[2,1]", high_min: "[3,4]", median: 2.5 }, note: "add 4", added: [3] }
+  ]'
+/>
+
 ### Time Complexity
 
 O(log n) per addNum and O(1) per findMedian.

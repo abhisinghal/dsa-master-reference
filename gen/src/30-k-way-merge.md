@@ -325,7 +325,7 @@ while (pq.size() == lists.size()) {                 // must cover every list
   :windowKeys="['i']"
   :cellWidth="38"
   :steps='[
-    { pointers: { i: 0 }, vars: { heap: "min=[0,4,5]", max: 5, range: "[0,5]" }, note: "seed with each list's first. range width 5" },
+    { pointers: { i: 0 }, vars: { heap: "min=[0,4,5]", max: 5, range: "[0,5]" }, note: "seed with each list`s first. range width 5" },
     { pointers: { i: 0 }, vars: { heap: "min=[4,5,9]", max: 9, range: "[4,9]" }, note: "advance list-1 (0→9). width 5" },
     { pointers: { i: 0 }, vars: { heap: "min=[5,9,10]", max: 10, range: "[5,10]" }, note: "advance list-0 (4→10)" },
     { pointers: { i: 0 }, vars: { heap: "min=[9,10,18]", max: 18, range: "[9,18]" }, note: "advance list-2 (5→18). too wide" },

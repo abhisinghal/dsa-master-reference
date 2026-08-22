@@ -265,6 +265,18 @@ diameter of a tree whose root has left-height 2 and right-height 1: the longest 
 
 </Callout>
 
+<CodeTrace
+  title="Diameter of Binary Tree — height post-order aggregation"
+  :values="[3,2,1,1]"
+  :windowKeys="['node']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { node: 1 }, vars: { leftH: 0, rightH: 0, through: 0, best: 0 }, note: "leaf → height 1, through 0" },
+    { pointers: { node: 2 }, vars: { leftH: 1, rightH: 0, through: 1, best: 1 }, note: "one child → through 1" },
+    { pointers: { node: 3 }, vars: { leftH: 2, rightH: 1, through: 3, best: 3 }, note: "root: through = 2+1 = 3 → diameter", added: [0] }
+  ]'
+/>
+
 
 <Callout kind="trap" title="Common Trap">
 
@@ -372,6 +384,18 @@ TreeNode lca(TreeNode root, TreeNode p, TreeNode q) {
 in a tree rooted at 3 with children 5 and 1, `LCA(5,1)=3` (targets split across the two subtrees), while `LCA(5,4)` where 4 sits under 5 is `5` (a node that is itself an ancestor of the other).
 
 </Callout>
+
+<CodeTrace
+  title="LCA — targets {5,1} in tree rooted at 3"
+  :values="[3,5,1,4]"
+  :windowKeys="['node']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { node: 1 }, vars: { subtree: "left", found: "5" }, note: "recurse into left child 5 → return 5", added: [1] },
+    { pointers: { node: 2 }, vars: { subtree: "right", found: "1" }, note: "recurse into right child 1 → return 1", added: [2] },
+    { pointers: { node: 0 }, vars: { left: 5, right: 1 }, note: "both children non-null → LCA is node 3", added: [0] }
+  ]'
+/>
 
 
 <Callout kind="key" title="Key Insight (BST)">
@@ -483,6 +507,18 @@ boolean valid(TreeNode n, long low, long high) {
 root 5, left 1, right 4 with right's children 3 and 6. It *looks* fine locally, but 4 is under 5's right subtree, so its bound is `(5, ∞)` — 4 violates it → **not** a valid BST. (An in-order walk yields `1,5,3,4,6` — not increasing.)
 
 </Callout>
+
+<CodeTrace
+  title="Validate BST — root=5, structure: (1)(4(3,6))"
+  :values="[5,1,4,3,6]"
+  :windowKeys="['node']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { node: 0 }, vars: { bounds: "(-∞, ∞)", value: 5 }, note: "root 5 → children see bounds", added: [0] },
+    { pointers: { node: 1 }, vars: { bounds: "(-∞, 5)", value: 1 }, note: "left child 1 ∈ (-∞, 5) ✓", added: [1] },
+    { pointers: { node: 2 }, vars: { bounds: "(5, ∞)", value: 4 }, note: "right child 4 must be > 5. FAIL → not a BST", removed: [2] }
+  ]'
+/>
 
 
 <Callout kind="trap" title="Common Trap">
@@ -606,6 +642,20 @@ the tree `1(2, 3(4,5))` serializes pre-order as `1,2,#,#,3,4,#,#,5,#,#` (`#`=nul
 
 </Callout>
 
+<CodeTrace
+  title="Serialize/Deserialize BT — 1(2, 3(4,5))"
+  :values="[1,2,'#','#',3,4,'#','#',5,'#','#']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { building: "1 (root)", stack: "[1]" }, note: "read 1 → root", added: [0] },
+    { pointers: { i: 1 }, vars: { building: "1.left = 2", stack: "[1,2]" }, note: "read 2 → left child of 1", added: [1] },
+    { pointers: { i: 3 }, vars: { building: "2.left/right = null" }, note: "two # → 2 is a leaf" },
+    { pointers: { i: 4 }, vars: { building: "1.right = 3", stack: "[1,3]" }, note: "read 3 → right of 1", added: [4] },
+    { pointers: { i: 8 }, vars: { building: "3.right = 5" }, note: "read 4 as left, 5 as right of 3", added: [5,8] }
+  ]'
+/>
+
 
 <Callout kind="pat" title="Pattern Connection">
 
@@ -720,6 +770,20 @@ preorder `[3,9,20,15,7]`, inorder `[9,3,15,20,7]`. Preorder's first `3` is the r
 
 </Callout>
 
+<CodeTrace
+  title="Construct BT from Preorder+Inorder"
+  :values="[3,9,20,15,7]"
+  :windowKeys="['root_idx']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { root_idx: 0 }, vars: { root: 3, "inorder_split": "9 | 15,20,7" }, note: "preorder[0]=3 → root", added: [0] },
+    { pointers: { root_idx: 1 }, vars: { root: 9, subtree: "left" }, note: "left subtree has size 1 → node 9", added: [1] },
+    { pointers: { root_idx: 2 }, vars: { root: 20, "inorder_split": "15 | 7" }, note: "right subtree root = 20", added: [2] },
+    { pointers: { root_idx: 3 }, vars: { root: 15, subtree: "20.left" }, note: "15 → left child of 20", added: [3] },
+    { pointers: { root_idx: 4 }, vars: { root: 7, subtree: "20.right" }, note: "7 → right child of 20", added: [4] }
+  ]'
+/>
+
 
 <Callout kind="trap" title="Common Trap">
 
@@ -823,6 +887,19 @@ int[] dfs(TreeNode n) {                       // {robThis, skipThis}
 House Robber III: each node returns `(rob, skip)`. If a node robs, it must skip its children (`node.val + childrenSkip`); if it skips, it takes the best of each child. The root's `max(rob, skip)` is the answer.
 
 </Callout>
+
+<CodeTrace
+  title="Tree DP (House Robber III) — return (rob, skip) tuples"
+  :values="[3,2,3,1]"
+  :windowKeys="['node']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { node: 3 }, vars: { rob: 1, skip: 0 }, note: "leaf: rob=1, skip=0", added: [3] },
+    { pointers: { node: 2 }, vars: { rob: 3, skip: 1 }, note: "internal: rob = 3 + child.skip(0) = 3; skip = max(3,1)=3? wait child.rob=1 so skip=1", added: [2] },
+    { pointers: { node: 1 }, vars: { rob: 2, skip: 0 }, note: "leaf 2: rob=2, skip=0" },
+    { pointers: { node: 0 }, vars: { rob: "3+skip(2)+skip(3)=3", skip: "max(rob,skip) each" }, note: "root: max(rob=3, skip=2+3=5) = 5", added: [0] }
+  ]'
+/>
 
 
 <Callout kind="pat" title="Pattern Connection">

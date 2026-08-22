@@ -55,6 +55,18 @@ void rotate(int[][] m) {
 
 > [note] **Trace it** — `[[1,2],[3,4]]`. Transpose → `[[1,3],[2,4]]`; reverse each row → `[[3,1],[4,2]]`. Counter-clockwise is the mirror: reverse rows **first**, then transpose (or transpose then reverse each column).
 
+<CodeTrace
+  title="Rotate Matrix 90° clockwise — 2x2"
+  :values="[1,2,3,4]"
+  :windowKeys="['step']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { step: 0 }, vars: { matrix: "[[1,2],[3,4]]" }, note: "original", added: [0,1,2,3] },
+    { pointers: { step: 1 }, vars: { matrix: "[[1,3],[2,4]]" }, note: "transpose: matrix[i][j] ↔ matrix[j][i]" },
+    { pointers: { step: 2 }, vars: { matrix: "[[3,1],[4,2]]" }, note: "reverse each row → 90° clockwise complete" }
+  ]'
+/>
+
 ### Time Complexity
 O(n²). The transpose loop touches the upper triangle, and the row reversals touch every cell once more.
 

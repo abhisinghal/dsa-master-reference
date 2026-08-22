@@ -380,20 +380,20 @@ smallest range for lists `[4,10,15,24,26]`, `[0,9,12,20]`, `[5,18,22,30]`.
 
 </Callout>
 
-&lt;CodeTrace
+<CodeTrace
   title="Smallest Range Covering K Lists — 3 lists"
   :values="[4,10,15,24,26]"
   :windowKeys="['i']"
   :cellWidth="38"
   :steps='[
-    { pointers: { i: 0 }, vars: { heap: "min=[0,4,5]", max: 5, range: "[0,5]" }, note: "seed with each list's first. range width 5" },
+    { pointers: { i: 0 }, vars: { heap: "min=[0,4,5]", max: 5, range: "[0,5]" }, note: "seed with each list`s first. range width 5" },
     { pointers: { i: 0 }, vars: { heap: "min=[4,5,9]", max: 9, range: "[4,9]" }, note: "advance list-1 (0→9). width 5" },
     { pointers: { i: 0 }, vars: { heap: "min=[5,9,10]", max: 10, range: "[5,10]" }, note: "advance list-0 (4→10)" },
     { pointers: { i: 0 }, vars: { heap: "min=[9,10,18]", max: 18, range: "[9,18]" }, note: "advance list-2 (5→18). too wide" },
     { pointers: { i: 0 }, vars: { heap: "min=[10,12,18]", max: 18, range: "[10,18]" }, note: "advance list-1 (9→12). still wide" },
     { pointers: { i: 0 }, vars: { heap: "min=[15,18,20]", max: 20, range: "[15,20]" }, note: "narrows to 5. final smallest [20,24]-width=5" }
   ]'
-/&gt;
+/>
 ### Time Complexity
 O(N log k), because each element can enter and leave the heap once, and the heap has at most k live fronts.
 

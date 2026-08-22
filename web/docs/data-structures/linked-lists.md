@@ -88,6 +88,19 @@ ListNode reverse(ListNode head) {
 
 </Callout>
 
+<CodeTrace
+  title="Reverse Linked List — 1→2→3→null"
+  :values="[1,2,3]"
+  :windowKeys="['cur']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { prev: -1, cur: 0 }, vars: { list: "1→2→3" }, note: "start: prev=null, cur=head" },
+    { pointers: { prev: 0, cur: 1 }, vars: { list: "1←null; 2→3 (moved)" }, note: "flip 1→null; advance", added: [0] },
+    { pointers: { prev: 1, cur: 2 }, vars: { list: "2→1; 3 remains" }, note: "flip 2→1; advance", added: [0,1] },
+    { pointers: { prev: 2, cur: -1 }, vars: { list: "3→2→1→null" }, note: "flip 3→2; cur=null → done", added: [0,1,2] }
+  ]'
+/>
+
 
 <Callout kind="trap" title="Common Trap">
 
@@ -197,6 +210,21 @@ boolean isPalindrome(ListNode head) {
 palindrome check on `1→2→2→1`. Middle splits it into `1→2` and `2→1`; reverse the second to `1→2`; compare node-by-node — all equal → it's a palindrome.
 
 </Callout>
+
+<CodeTrace
+  title="Palindrome Linked List — 1→2→2→1"
+  :values="[1,2,2,1]"
+  :windowKeys="['slow']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { slow: 0, fast: 0 }, vars: { phase: "find middle" }, note: "start Floyd walk" },
+    { pointers: { slow: 1, fast: 2 }, vars: { phase: "walk" }, note: "slow +1, fast +2" },
+    { pointers: { slow: 2, fast: -1 }, vars: { phase: "middle found" }, note: "fast off-end → slow at middle", added: [2] },
+    { pointers: { slow: 2, fast: 3 }, vars: { phase: "reverse right", right: "[1,2]" }, note: "reverse [2→1] into [1→2]" },
+    { pointers: { slow: 0, fast: 3 }, vars: { phase: "compare", check: "1 vs 1 ✓" }, note: "compare heads: match", added: [0,3] },
+    { pointers: { slow: 1, fast: 2 }, vars: { phase: "compare", check: "2 vs 2 ✓" }, note: "next: match → palindrome true", added: [1,2] }
+  ]'
+/>
 
 
 <Callout kind="inv" title="Invariant">
