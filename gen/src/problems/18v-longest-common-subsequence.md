@@ -1,24 +1,32 @@
-# Dynamic Programming — Longest Common Subsequence
+# DP — Longest Common Subsequence
 
 *[↗ LeetCode: Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** match → `dp[i-1][j-1]+1`, else `max(dp[i-1][j], dp[i][j-1])`
+Length of the longest subsequence appearing in both strings.
 
-## The pattern this problem belongs to
+## Approach — 2D DP
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `dp[i][j]` = LCS of `s1[..i]` and `s2[..j]`.
+- If `s1[i-1] == s2[j-1]`: `dp[i][j] = 1 + dp[i-1][j-1]`.
+- Else: `dp[i][j] = max(dp[i-1][j], dp[i][j-1])`.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+```java
+int longestCommonSubsequence(String s1, String s2) {
+    int m = s1.length(), n = s2.length();
+    int[][] dp = new int[m + 1][n + 1];
+    for (int i = 1; i <= m; i++)
+        for (int j = 1; j <= n; j++)
+            dp[i][j] = s1.charAt(i - 1) == s2.charAt(j - 1)
+                    ? dp[i - 1][j - 1] + 1
+                    : Math.max(dp[i - 1][j], dp[i][j - 1]);
+    return dp[m][n];
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(mn)**; Space **O(mn)**; can compress to **O(n)** with two rows.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Longest Common Subsequence` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Edit Distance](/problems/edit-distance) — sibling DP
+- [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence) — LCS of `s` and `reverse(s)`
+- [Shortest Common Supersequence](https://leetcode.com/problems/shortest-common-supersequence/)

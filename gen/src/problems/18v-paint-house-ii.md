@@ -1,24 +1,37 @@
-# Dynamic Programming — Paint House I/II
+# DP — Paint House II
 
-*[↗ LeetCode: Paint House I/II](https://leetcode.com/problems/paint-house-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Paint House II](https://leetcode.com/problems/paint-house-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** the state is the last colour used; the transition forbids repeating it
+`n` houses, `k` colors. Cost to paint house i color j. Adjacent houses must differ in color. Min total.
 
-## The pattern this problem belongs to
+## Approach 1 — DP O(n · k²)
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+`dp[i][j] = cost[i][j] + min(dp[i-1][j'])` over j' ≠ j.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+## Approach 2 — Track min & second-min per row → O(n · k)
 
-## Solution sketch
+**Insight.** From the previous row, the only info needed is the two smallest DP values (and which color the min belongs to). This lets each new cell pick its best predecessor in O(1).
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int minCostII(int[][] costs) {
+    int n = costs.length, k = costs[0].length;
+    int min1 = 0, min2 = 0, idx1 = -1;
+    for (int i = 0; i < n; i++) {
+        int nMin1 = Integer.MAX_VALUE, nMin2 = Integer.MAX_VALUE, nIdx1 = -1;
+        for (int j = 0; j < k; j++) {
+            int c = costs[i][j] + (j == idx1 ? min2 : min1);
+            if (c < nMin1) { nMin2 = nMin1; nMin1 = c; nIdx1 = j; }
+            else if (c < nMin2) nMin2 = c;
+        }
+        min1 = nMin1; min2 = nMin2; idx1 = nIdx1;
+    }
+    return min1;
+}
+```
 
-1. **Read the pattern chapter's `Paint House I/II` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n · k)**; Space **O(1)**.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Paint House](https://leetcode.com/problems/paint-house/) — k = 3
+- [Paint Fence](https://leetcode.com/problems/paint-fence/) — different adjacency rule

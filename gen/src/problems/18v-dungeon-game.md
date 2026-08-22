@@ -1,24 +1,36 @@
-# Dynamic Programming — Dungeon Game
+# DP — Dungeon Game
 
-*[↗ LeetCode: Dungeon Game](https://leetcode.com/problems/dungeon-game/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Dungeon Game](https://leetcode.com/problems/dungeon-game/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** fill the grid **backwards** from the goal, because required health propagates in reverse
+Knight from top-left to bottom-right; each cell gives/takes HP; HP must stay ≥ 1 throughout. Find min initial HP.
 
-## The pattern this problem belongs to
+## Approach — Reverse DP from bottom-right
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Forward DP fails because "min HP needed" depends on **future** losses. Instead, DP from `(m-1, n-1)` back to `(0, 0)`: `need[i][j]` = min HP required to survive starting from `(i, j)`.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+- Base: at bottom-right, `need = max(1, 1 - room[m-1][n-1])`.
+- Transition: `nextNeed = min(need[i+1][j], need[i][j+1])`; `need[i][j] = max(1, nextNeed - room[i][j])`.
 
-## Solution sketch
+```java
+int calculateMinimumHP(int[][] room) {
+    int m = room.length, n = room[0].length;
+    int[][] need = new int[m + 1][n + 1];
+    for (int[] r : need) Arrays.fill(r, Integer.MAX_VALUE);
+    need[m][n - 1] = need[m - 1][n] = 1;
+    for (int i = m - 1; i >= 0; i--)
+        for (int j = n - 1; j >= 0; j--) {
+            int min = Math.min(need[i + 1][j], need[i][j + 1]);
+            need[i][j] = Math.max(1, min - room[i][j]);
+        }
+    return need[0][0];
+}
+```
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(mn)**; Space **O(mn)** — compressible to O(n).
 
-1. **Read the pattern chapter's `Dungeon Game` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Why reverse.** Forward propagation of "min HP" doesn't compose — the required HP at `(i, j)` depends on the worst path from there onward, which is only known once the future is resolved.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
+- [Cherry Pickup](https://leetcode.com/problems/cherry-pickup/) — 2 knights DP

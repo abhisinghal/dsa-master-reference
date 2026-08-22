@@ -1,24 +1,37 @@
-# Dynamic Programming — Minimum Path Sum / Minimum Falling Path Sum
+# DP — Minimum Falling Path Sum
 
-*[↗ LeetCode: Minimum Path Sum / Minimum Falling Path Sum](https://leetcode.com/problems/minimum-falling-path-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Minimum Falling Path Sum](https://leetcode.com/problems/minimum-falling-path-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** **min** of the neighbours plus the cell
+Grid; falling path picks one cell per row; next row's cell must be in `[j-1, j, j+1]`. Min sum from top row to bottom.
 
-## The pattern this problem belongs to
+## Approach — Bottom-up DP row by row
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `dp[i][j] = grid[i][j] + min(dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1])` with boundary clamps.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+```java
+int minFallingPathSum(int[][] grid) {
+    int n = grid.length;
+    int[] prev = grid[0].clone();
+    for (int i = 1; i < n; i++) {
+        int[] cur = new int[n];
+        for (int j = 0; j < n; j++) {
+            int m = prev[j];
+            if (j > 0) m = Math.min(m, prev[j - 1]);
+            if (j < n - 1) m = Math.min(m, prev[j + 1]);
+            cur[j] = grid[i][j] + m;
+        }
+        prev = cur;
+    }
+    int best = Integer.MAX_VALUE;
+    for (int v : prev) best = Math.min(best, v);
+    return best;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n²)**; Space **O(n)**.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Minimum Path Sum / Minimum Falling Path Sum` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/) — right/down only
+- [Triangle](https://leetcode.com/problems/triangle/) — sibling
+- [Dungeon Game](/problems/dungeon-game) — reversed DP direction

@@ -1,24 +1,33 @@
-# Dynamic Programming — Last Stone Weight II
+# DP — Last Stone Weight II
 
 *[↗ LeetCode: Last Stone Weight II](https://leetcode.com/problems/last-stone-weight-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** minimize `
+Smash pairs; if equal both destroyed; else larger becomes diff. Minimize final remaining stone weight.
 
-## The pattern this problem belongs to
+## Approach — Reduce to subset-sum closest to sum/2
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Every stone is signed ±. Result = |sum(+) - sum(-)| = |total - 2·subsetSum|. Minimize by picking subset closest to `total/2`. Standard 0/1 knapsack on booleans.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+```java
+int lastStoneWeightII(int[] stones) {
+    int total = 0;
+    for (int x : stones) total += x;
+    int half = total / 2;
+    boolean[] dp = new boolean[half + 1];
+    dp[0] = true;
+    for (int x : stones)
+        for (int j = half; j >= x; j--)
+            dp[j] |= dp[j - x];
+    for (int j = half; j >= 0; j--)
+        if (dp[j]) return total - 2 * j;
+    return 0;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n · total)**; Space **O(total)**.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Last Stone Weight II` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Partition Equal Subset Sum](/problems/partition-equal-subset-sum) — same reduction
+- [Target Sum](/problems/target-sum)
+- [Last Stone Weight I](https://leetcode.com/problems/last-stone-weight/) — heap simulation

@@ -1,24 +1,44 @@
-# Dynamic Programming — Regex / Wildcard Matching
+# DP — Regular Expression Matching
 
-*[↗ LeetCode: Regex / Wildcard Matching](https://leetcode.com/problems/regular-expression-matching/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** the same grid, with `*` allowing "skip" or "repeat" transitions
+Match `s` against pattern `p` with `.` (any char) and `*` (0+ of previous char).
 
-## The pattern this problem belongs to
+## Approach — 2D DP
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `dp[i][j]` = whether `s[..i]` matches `p[..j]`.
+- If `p[j-1] == '*'`:
+  - **Zero occurrences**: `dp[i][j] = dp[i][j-2]`.
+  - **One or more**: if `s[i-1]` matches `p[j-2]` (or `p[j-2] == '.'`), also `dp[i-1][j]`.
+- Else if `s[i-1]` matches `p[j-1]`: `dp[i][j] = dp[i-1][j-1]`.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+```java
+boolean isMatch(String s, String p) {
+    int m = s.length(), n = p.length();
+    boolean[][] dp = new boolean[m + 1][n + 1];
+    dp[0][0] = true;
+    for (int j = 2; j <= n; j++)
+        if (p.charAt(j - 1) == '*') dp[0][j] = dp[0][j - 2];
+    for (int i = 1; i <= m; i++)
+        for (int j = 1; j <= n; j++) {
+            if (p.charAt(j - 1) == '*') {
+                dp[i][j] = dp[i][j - 2];
+                if (matches(s, p, i, j - 1)) dp[i][j] |= dp[i - 1][j];
+            } else if (matches(s, p, i, j)) {
+                dp[i][j] = dp[i - 1][j - 1];
+            }
+        }
+    return dp[m][n];
+}
+boolean matches(String s, String p, int i, int j) {
+    char sc = s.charAt(i - 1), pc = p.charAt(j - 1);
+    return pc == '.' || pc == sc;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(mn)**; Space **O(mn)** (can compress to O(n)).
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Regex / Wildcard Matching` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/) — `?` and `*` = zero-or-more-any
+- [Edit Distance](/problems/edit-distance)

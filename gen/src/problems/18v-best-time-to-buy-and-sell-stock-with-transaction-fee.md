@@ -1,24 +1,31 @@
-# Dynamic Programming — Best Time with Transaction Fee
+# DP — Best Time to Buy and Sell Stock with Transaction Fee
 
-*[↗ LeetCode: Best Time with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** subtract the fee on each sell transition
+Unlimited transactions; each sell pays `fee`. Max profit.
 
-## The pattern this problem belongs to
+## Approach — State-machine DP (two states)
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Two states: `hold` (own stock), `cash` (no stock).
+- `hold = max(hold, cash - price)`
+- `cash = max(cash, hold + price - fee)`
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+```java
+int maxProfit(int[] prices, int fee) {
+    int cash = 0, hold = -prices[0];
+    for (int i = 1; i < prices.length; i++) {
+        int nCash = Math.max(cash, hold + prices[i] - fee);
+        int nHold = Math.max(hold, cash - prices[i]);
+        cash = nCash; hold = nHold;
+    }
+    return cash;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Best Time with Transaction Fee` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [With Cooldown](/problems/best-time-to-buy-and-sell-stock-with-cooldown)
+- [At Most K Transactions (IV)](/problems/best-time-to-buy-and-sell-stock-iv)
+- [Single Transaction](/problems/best-time-to-buy-and-sell-stock)

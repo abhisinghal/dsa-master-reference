@@ -1,24 +1,37 @@
-# Dynamic Programming — Minimum Cost to Merge Stones
+# DP — Minimum Cost to Merge Stones
 
-*[↗ LeetCode: Minimum Cost to Merge Stones](https://leetcode.com/problems/minimum-cost-to-merge-stones/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Minimum Cost to Merge Stones](https://leetcode.com/problems/minimum-cost-to-merge-stones/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** merge in groups of `k`; the split respects `(len-1) % (k-1)`
+Merge exactly `k` consecutive piles at a time; cost = sum of merged. Merge all into one; min total cost. Impossible if `(n-1) % (k-1) != 0`.
 
-## The pattern this problem belongs to
+## Approach — Interval DP with residue trick
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `dp[i][j]` = min cost to reduce `stones[i..j]` to `((j-i) mod (k-1)) + 1` piles.
+- If we can reduce to 1 pile (`(j-i) % (k-1) == 0`), add `prefix[j+1] - prefix[i]`.
+- Split `[i..j]` at some `m` where left reduces to 1 pile and right takes the rest.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+```java
+int mergeStones(int[] stones, int k) {
+    int n = stones.length;
+    if ((n - 1) % (k - 1) != 0) return -1;
+    int[] pref = new int[n + 1];
+    for (int i = 0; i < n; i++) pref[i + 1] = pref[i] + stones[i];
+    int[][] dp = new int[n][n];
+    for (int len = k; len <= n; len++)
+        for (int i = 0; i + len - 1 < n; i++) {
+            int j = i + len - 1;
+            dp[i][j] = Integer.MAX_VALUE;
+            for (int m = i; m < j; m += k - 1)
+                dp[i][j] = Math.min(dp[i][j], dp[i][m] + dp[m + 1][j]);
+            if ((j - i) % (k - 1) == 0) dp[i][j] += pref[j + 1] - pref[i];
+        }
+    return dp[0][n - 1];
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n³ / k)**; Space **O(n²)**.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Minimum Cost to Merge Stones` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Burst Balloons](/problems/burst-balloons)
+- [Stone Game](https://leetcode.com/problems/stone-game/) — interval-DP siblings

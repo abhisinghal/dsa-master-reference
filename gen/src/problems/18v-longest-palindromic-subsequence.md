@@ -1,24 +1,44 @@
-# Dynamic Programming — Longest Palindromic Subsequence
+# DP — Longest Palindromic Subsequence
 
 *[↗ LeetCode: Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** LCS of `s` and `reverse(s)`
+Length of the longest subsequence of `s` that is a palindrome.
 
-## The pattern this problem belongs to
+## Approach 1 — LCS(s, reverse(s))
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+O(n²).
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+## Approach 2 — Interval DP
 
-## Solution sketch
+**Insight.** `dp[i][j]` = LPS length in `s[i..j]`.
+- `s[i]==s[j]`: `dp[i][j] = 2 + dp[i+1][j-1]` (with adjustment for i+1 > j-1).
+- Else: `max(dp[i+1][j], dp[i][j-1])`.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+Iterate over lengths, or iterate `i` descending and `j` ascending from `i`.
 
-1. **Read the pattern chapter's `Longest Palindromic Subsequence` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int longestPalindromeSubseq(String s) {
+    int n = s.length();
+    int[][] dp = new int[n][n];
+    for (int i = n - 1; i >= 0; i--) {
+        dp[i][i] = 1;
+        for (int j = i + 1; j < n; j++) {
+            if (s.charAt(i) == s.charAt(j))
+                dp[i][j] = dp[i + 1][j - 1] + 2;
+            else
+                dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+        }
+    }
+    return dp[0][n - 1];
+}
+```
 
-## Related problems in the same pattern
+**Complexity** — Time **O(n²)**; Space **O(n²)**.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+**Corollary.** Minimum insertions to make `s` a palindrome = `n - LPS(s)` (deleted characters have palindromic siblings; leftover characters need insertions).
+
+## Related problems
+
+- [Longest Common Subsequence](/problems/longest-common-subsequence)
+- [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
+- [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)

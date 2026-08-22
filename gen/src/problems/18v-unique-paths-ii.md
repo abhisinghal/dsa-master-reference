@@ -1,24 +1,31 @@
-# Dynamic Programming — Unique Paths / Unique Paths II
+# DP — Unique Paths II
 
-*[↗ LeetCode: Unique Paths / Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** **add** the two neighbours to count paths (obstacles set the cell to 0)
+Grid with obstacles. Count paths from top-left to bottom-right moving right/down.
 
-## The pattern this problem belongs to
+## Approach — Grid DP with obstacle guard
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `dp[i][j] = 0` if obstacle; else `dp[i-1][j] + dp[i][j-1]`.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+```java
+int uniquePathsWithObstacles(int[][] grid) {
+    int m = grid.length, n = grid[0].length;
+    int[] dp = new int[n];
+    dp[0] = grid[0][0] == 0 ? 1 : 0;
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++) {
+            if (grid[i][j] == 1) dp[j] = 0;
+            else if (j > 0) dp[j] += dp[j - 1];
+        }
+    return dp[n - 1];
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(mn)**; Space **O(n)**.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Unique Paths / Unique Paths II` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Unique Paths](https://leetcode.com/problems/unique-paths/) — no obstacles
+- [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/) — same DP, min instead of count
+- [Minimum Falling Path Sum](/problems/minimum-falling-path-sum)

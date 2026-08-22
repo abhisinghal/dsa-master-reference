@@ -1,24 +1,27 @@
-# Dynamic Programming — Min Cost Climbing Stairs / Paint Fence
+# DP — Min Cost Climbing Stairs
 
-*[↗ LeetCode: Min Cost Climbing Stairs / Paint Fence](https://leetcode.com/problems/min-cost-climbing-stairs/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** the same 1-D recurrence with a per-step cost or an adjacency constraint
+Each step has cost. Can start at 0 or 1; step 1 or 2 at a time. Min cost to reach past-the-end.
 
-## The pattern this problem belongs to
+## Approach — DP, O(1) space
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `dp[i]` = min cost to arrive at step i. `dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])`.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+```java
+int minCostClimbingStairs(int[] cost) {
+    int a = 0, b = 0;
+    for (int i = 2; i <= cost.length; i++) {
+        int c = Math.min(b + cost[i - 1], a + cost[i - 2]);
+        a = b; b = c;
+    }
+    return b;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Min Cost Climbing Stairs / Paint Fence` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Climbing Stairs](/problems/climbing-stairs) — counting version
+- [House Robber](/problems/dp-house-robber)

@@ -1,24 +1,36 @@
-# Dynamic Programming — Matrix Chain Multiplication
+# DP — Burst Balloons
 
-*[↗ LeetCode: Matrix Chain Multiplication](https://leetcode.com/problems/burst-balloons/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Burst Balloons](https://leetcode.com/problems/burst-balloons/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** `k` is the last multiplication point; cost combines the two sub-products
+Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r are alive neighbors. Maximize coins.
 
-## The pattern this problem belongs to
+## Approach — Interval DP with "last to burst" trick
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Directly modeling "first to burst" fails — the neighbors change unpredictably. Instead, think of `i` as the **last** balloon burst in the range `(l, r)` (open interval): its neighbors at that moment are `nums[l]` and `nums[r]` — fixed! Then subproblems `(l, i)` and `(i, r)` are independent.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+Padding: prepend and append `1` so the base "neighbors" are always defined.
 
-## Solution sketch
+```java
+int maxCoins(int[] nums) {
+    int n = nums.length;
+    int[] a = new int[n + 2];
+    a[0] = a[n + 1] = 1;
+    for (int i = 0; i < n; i++) a[i + 1] = nums[i];
+    int[][] dp = new int[n + 2][n + 2];
+    for (int len = 2; len <= n + 1; len++)
+        for (int l = 0; l + len <= n + 1; l++) {
+            int r = l + len;
+            for (int k = l + 1; k < r; k++)
+                dp[l][r] = Math.max(dp[l][r], dp[l][k] + dp[k][r] + a[l] * a[k] * a[r]);
+        }
+    return dp[0][n + 1];
+}
+```
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(n³)**; Space **O(n²)**.
 
-1. **Read the pattern chapter's `Matrix Chain Multiplication` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+- [Minimum Cost to Merge Stones](/problems/minimum-cost-to-merge-stones) — interval DP with k-groupings
+- [Matrix Chain Multiplication] — canonical interval DP
+- [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)
