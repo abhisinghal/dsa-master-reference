@@ -1,24 +1,41 @@
 # Bit Manipulation — Number of 1 Bits
 
-*[↗ LeetCode: Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
+*[↗ LeetCode: Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-**The one thing that changes vs the flagship for this pattern:** Brian Kernighan's `x &= x - 1` clears the lowest set bit each step
+Return the popcount (number of set bits) of an unsigned integer.
 
-## The pattern this problem belongs to
+## Approach 1 — Loop bits
 
-This variation of Bit Manipulation shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+```java
+int hammingWeight(int n) {
+    int count = 0;
+    for (int i = 0; i < 32; i++) if ((n & (1 << i)) != 0) count++;
+    return count;
+}
+```
 
-- [→ Flagship problem for Bit Manipulation](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bit-manip) — includes this problem's approach + code + trace + traps
+## Approach 2 — Kernighan's trick (clear lowest set bit)
 
-## Solution sketch
+**Insight.** `n & (n-1)` clears the lowest set bit. Iterate until 0 → number of iterations = popcount.
 
-The pattern chapter's [Bit Manipulation](/patterns/bit-manip) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int hammingWeight2(int n) {
+    int count = 0;
+    while (n != 0) { n &= n - 1; count++; }
+    return count;
+}
+```
 
-1. **Read the pattern chapter's `Number of 1 Bits` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Approach 3 — Built-in
 
-## Related problems in the same pattern
+```java
+int hammingWeight3(int n) { return Integer.bitCount(n); }
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bit-manip) table for the family tree.
+**Complexity** — All **O(#set bits)** at most; Approach 1 always O(32).
+
+## Related problems
+
+- [Counting Bits](/problems/counting-bits) — 0..n via Kernighan DP
+- [Hamming Distance](/problems/hamming-distance) — popcount of XOR
+- [Reverse Bits](/problems/reverse-bits)

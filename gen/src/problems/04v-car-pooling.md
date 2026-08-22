@@ -2,23 +2,28 @@
 
 *[↗ LeetCode: Car Pooling](https://leetcode.com/problems/car-pooling/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-**The one thing that changes vs the flagship for this pattern:** a difference array over the *timeline* of pick-ups (+) and drop-offs (−); check capacity never overflows
+Given trips `[numPassengers, from, to]` and car `capacity`, return `true` iff you can carry all passengers without exceeding capacity.
 
-## The pattern this problem belongs to
+**Example** — `trips=[[2,1,5],[3,3,7]], capacity=4` → `false`
 
-This variation of Prefix Sum shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Difference array
 
-- [→ Flagship problem for Prefix Sum](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/prefix-sum) — includes this problem's approach + code + trace + traps
+**Insight.** Same as Corporate Flight Bookings — `+num` at `from`, `-num` at `to`. Then prefix scan; if any prefix > capacity, false.
 
-## Solution sketch
+```java
+boolean carPooling(int[][] trips, int capacity) {
+    int[] diff = new int[1001];
+    for (int[] t : trips) { diff[t[1]] += t[0]; diff[t[2]] -= t[0]; }
+    int run = 0;
+    for (int c : diff) { run += c; if (run > capacity) return false; }
+    return true;
+}
+```
 
-The pattern chapter's [Prefix Sum](/patterns/prefix-sum) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(n + max)**; Space **O(max)**.
 
-1. **Read the pattern chapter's `Car Pooling` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/prefix-sum) table for the family tree.
+- [Corporate Flight Bookings](/problems/corporate-flight-bookings) — sibling
+- [Range Addition](/problems/range-addition)
+- [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii) — related but with heap

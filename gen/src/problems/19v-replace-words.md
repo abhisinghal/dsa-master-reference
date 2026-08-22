@@ -2,23 +2,43 @@
 
 *[↗ LeetCode: Replace Words](https://leetcode.com/problems/replace-words/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
 
-**The one thing that changes vs the flagship for this pattern:** stop at the shortest terminal prefix instead of collecting all terminals
+Given roots and a sentence, replace each word with its shortest root prefix (if any).
 
-## The pattern this problem belongs to
+**Example** — `dict=["cat","bat","rat"], s="the cattle was rattled by the battery"` → `"the cat was rat by the bat"`
 
-This variation of Trie shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Trie of roots + prefix walk per word
 
-- [→ Flagship problem for Trie](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/trie-pattern) — includes this problem's approach + code + trace + traps
+```java
+class Node { Map<Character, Node> ch = new HashMap<>(); String word; }
+public String replaceWords(List<String> dict, String s) {
+    Node root = new Node();
+    for (String r : dict) {
+        Node cur = root;
+        for (char c : r.toCharArray()) cur = cur.ch.computeIfAbsent(c, k -> new Node());
+        cur.word = r;
+    }
+    StringBuilder out = new StringBuilder();
+    for (String w : s.split(" ")) {
+        if (out.length() > 0) out.append(' ');
+        Node cur = root;
+        StringBuilder replaced = new StringBuilder();
+        for (char c : w.toCharArray()) {
+            if (cur.word != null) { replaced.setLength(0); replaced.append(cur.word); break; }
+            if (!cur.ch.containsKey(c)) { replaced.setLength(0); replaced.append(w); break; }
+            cur = cur.ch.get(c);
+            replaced.append(c);
+        }
+        if (cur.word != null) { replaced.setLength(0); replaced.append(cur.word); }
+        else if (replaced.length() == w.length()) { replaced.setLength(0); replaced.append(w); }
+        out.append(replaced);
+    }
+    return out.toString();
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(D + S)**; Space **O(D)** where D = total chars in dict.
 
-The pattern chapter's [Trie](/patterns/trie-pattern) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Replace Words` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/trie-pattern) table for the family tree.
+- [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/) — basic trie
+- [Word Search II](/problems/trie-word-search-ii)

@@ -1,24 +1,22 @@
 # Bit Manipulation — Hamming Distance
 
-*[↗ LeetCode: Hamming Distance](https://leetcode.com/problems/hamming-distance/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
+*[↗ LeetCode: Hamming Distance](https://leetcode.com/problems/hamming-distance/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-**The one thing that changes vs the flagship for this pattern:** `Integer.bitCount(a ^ b)` — count differing bits
+Return number of positions where the bits of `x` and `y` differ.
 
-## The pattern this problem belongs to
+## Approach — Popcount of XOR
 
-This variation of Bit Manipulation shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `x XOR y` has 1s exactly where the bits differ. Answer = popcount.
 
-- [→ Flagship problem for Bit Manipulation](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bit-manip) — includes this problem's approach + code + trace + traps
+```java
+int hammingDistance(int x, int y) {
+    return Integer.bitCount(x ^ y);
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(1)** (32 bits); Space **O(1)**.
 
-The pattern chapter's [Bit Manipulation](/patterns/bit-manip) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Hamming Distance` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bit-manip) table for the family tree.
+- [Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/) — sum over all pairs; per-bit counting
+- [Number of 1 Bits](/problems/number-of-1-bits)

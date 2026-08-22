@@ -1,24 +1,34 @@
-# Prefix Sum — Contiguous Array (equal 0s and 1s)
+# Prefix Sum — Contiguous Array
 
-*[↗ LeetCode: Contiguous Array (equal 0s and 1s)](https://leetcode.com/problems/contiguous-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
+*[↗ LeetCode: Contiguous Array](https://leetcode.com/problems/contiguous-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-**The one thing that changes vs the flagship for this pattern:** treat 0 as −1; a subarray is balanced when two prefixes are equal
+Return the length of the longest contiguous subarray with equal 0s and 1s.
 
-## The pattern this problem belongs to
+**Example** — `nums=[0,1,0]` → `2`
 
-This variation of Prefix Sum shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Map 0→-1, then prefix sum
 
-- [→ Flagship problem for Prefix Sum](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/prefix-sum) — includes this problem's approach + code + trace + traps
+**Insight.** Treating 0 as -1 makes "equal 0s and 1s" equivalent to "subarray sum = 0". First occurrence of each prefix value → longest subarray with the same prefix.
 
-## Solution sketch
+```java
+int findMaxLength(int[] nums) {
+    Map<Integer, Integer> first = new HashMap<>();
+    first.put(0, -1);
+    int prefix = 0, best = 0;
+    for (int i = 0; i < nums.length; i++) {
+        prefix += nums[i] == 0 ? -1 : 1;
+        if (first.containsKey(prefix))
+            best = Math.max(best, i - first.get(prefix));
+        else
+            first.put(prefix, i);
+    }
+    return best;
+}
+```
 
-The pattern chapter's [Prefix Sum](/patterns/prefix-sum) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(n)**; Space **O(n)**.
 
-1. **Read the pattern chapter's `Contiguous Array (equal 0s and 1s)` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/prefix-sum) table for the family tree.
+- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
+- [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k)

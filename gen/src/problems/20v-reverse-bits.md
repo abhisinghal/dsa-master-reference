@@ -1,24 +1,42 @@
 # Bit Manipulation — Reverse Bits
 
-*[↗ LeetCode: Reverse Bits](https://leetcode.com/problems/reverse-bits/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
+*[↗ LeetCode: Reverse Bits](https://leetcode.com/problems/reverse-bits/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-**The one thing that changes vs the flagship for this pattern:** shift bits out of one int and into another, one position at a time
+Reverse the bits of a 32-bit unsigned integer.
 
-## The pattern this problem belongs to
+## Approach 1 — Bit-by-bit
 
-This variation of Bit Manipulation shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+```java
+int reverseBits(int n) {
+    int result = 0;
+    for (int i = 0; i < 32; i++) {
+        result = (result << 1) | (n & 1);
+        n >>>= 1;
+    }
+    return result;
+}
+```
 
-- [→ Flagship problem for Bit Manipulation](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bit-manip) — includes this problem's approach + code + trace + traps
+## Approach 2 — Byte swap + cache (interview follow-up)
 
-## Solution sketch
+If called many times, cache the reversal of each 8-bit chunk in a size-256 table; assemble result in 4 lookups.
 
-The pattern chapter's [Bit Manipulation](/patterns/bit-manip) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 3 — SWAR (parallel bit swap)
 
-1. **Read the pattern chapter's `Reverse Bits` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** Swap adjacent 1-bit groups, then 2-bit, 4-bit, 8-bit, 16-bit.
 
-## Related problems in the same pattern
+```java
+int reverseBits3(int n) {
+    n = (n >>> 1 & 0x55555555) | (n & 0x55555555) << 1;
+    n = (n >>> 2 & 0x33333333) | (n & 0x33333333) << 2;
+    n = (n >>> 4 & 0x0f0f0f0f) | (n & 0x0f0f0f0f) << 4;
+    n = (n >>> 8 & 0x00ff00ff) | (n & 0x00ff00ff) << 8;
+    return n >>> 16 | n << 16;
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bit-manip) table for the family tree.
+**Complexity** — All **O(1)**; SWAR is fastest constant.
+
+## Related problems
+
+- [Number of 1 Bits](/problems/number-of-1-bits) — same SWAR pattern for popcount

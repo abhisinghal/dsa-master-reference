@@ -1,24 +1,57 @@
 # Trie — Count Pairs With XOR in a Range
 
-*[↗ LeetCode: Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
+*[↗ LeetCode: Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-**The one thing that changes vs the flagship for this pattern:** store subtree counts in the binary trie and count paths whose XOR is `< limit`, then subtract
+Count pairs `(i, j)` with `low ≤ nums[i] XOR nums[j] ≤ high`.
 
-## The pattern this problem belongs to
+## Approach — Binary trie counting
 
-This variation of Trie shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `count(≤ high) - count(≤ low - 1)`. For each nums[i], walk the trie counting how many previously-inserted nums produce `XOR ≤ threshold` using bit-by-bit analysis. Trie stores subtree counts.
 
-- [→ Flagship problem for Trie](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/trie-pattern) — includes this problem's approach + code + trace + traps
+```java
+class Node { Node[] ch = new Node[2]; int cnt; }
+int countPairs(int[] nums, int low, int high) {
+    return countLE(nums, high) - countLE(nums, low - 1);
+}
+int countLE(int[] nums, int threshold) {
+    Node root = new Node();
+    int total = 0;
+    for (int x : nums) {
+        total += queryLE(root, x, threshold);
+        insert(root, x);
+    }
+    return total;
+}
+void insert(Node root, int x) {
+    Node cur = root;
+    for (int i = 15; i >= 0; i--) {
+        int b = (x >> i) & 1;
+        if (cur.ch[b] == null) cur.ch[b] = new Node();
+        cur = cur.ch[b];
+        cur.cnt++;
+    }
+}
+int queryLE(Node root, int x, int t) {
+    Node cur = root;
+    int result = 0;
+    for (int i = 15; i >= 0; i--) {
+        if (cur == null) return result;
+        int xb = (x >> i) & 1, tb = (t >> i) & 1;
+        if (tb == 1) {
+            if (cur.ch[xb] != null) result += cur.ch[xb].cnt;
+            cur = cur.ch[1 - xb];
+        } else {
+            cur = cur.ch[xb];
+        }
+    }
+    if (cur != null) result += cur.cnt;
+    return result;
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n · 16)**; Space **O(n · 16)**.
 
-The pattern chapter's [Trie](/patterns/trie-pattern) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Count Pairs With XOR in a Range` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/trie-pattern) table for the family tree.
+- [Maximum XOR of Two Numbers](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
+- [Maximum XOR With an Element From Array](/problems/maximum-xor-with-an-element-from-array)

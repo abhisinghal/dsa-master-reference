@@ -1,24 +1,28 @@
 # Bit Manipulation — Power of Two
 
-*[↗ LeetCode: Power of Two](https://leetcode.com/problems/power-of-two/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
+*[↗ LeetCode: Power of Two](https://leetcode.com/problems/power-of-two/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-**The one thing that changes vs the flagship for this pattern:** `x > 0 && (x & (x-1)) == 0`
+Return true iff `n` is a positive power of two.
 
-## The pattern this problem belongs to
+## Approach 1 — Divide by 2
 
-This variation of Bit Manipulation shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+O(log n).
 
-- [→ Flagship problem for Bit Manipulation](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bit-manip) — includes this problem's approach + code + trace + traps
+## Approach 2 — `n & (n-1) == 0`
 
-## Solution sketch
+**Insight.** A power of two has exactly one bit set. `n & (n-1)` clears the lowest set bit — result 0 iff there was only one.
 
-The pattern chapter's [Bit Manipulation](/patterns/bit-manip) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+boolean isPowerOfTwo(int n) {
+    return n > 0 && (n & (n - 1)) == 0;
+}
+```
 
-1. **Read the pattern chapter's `Power of Two` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Trap.** Guard `n > 0`: for `n=0`, `0 & -1 == 0` would falsely return true. For negative n, the two's-complement pattern also has one set-like bit form; excluding is required.
 
-## Related problems in the same pattern
+**Complexity** — Time **O(1)**; Space **O(1)**.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bit-manip) table for the family tree.
+## Related problems
+
+- [Power of Three](https://leetcode.com/problems/power-of-three/) — no bit trick, use `1162261467 % n == 0`
+- [Power of Four](https://leetcode.com/problems/power-of-four/) — power of two AND set bit at even position
