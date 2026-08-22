@@ -1,24 +1,35 @@
-# Backtracking — Subsets II (with duplicates)
+# Backtracking — Subsets II
 
-*[↗ LeetCode: Subsets II (with duplicates)](https://leetcode.com/problems/subsets-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: Subsets II](https://leetcode.com/problems/subsets-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** sort first, then skip equal siblings (`i > start && a[i] == a[i-1]`) so you don't emit the same subset twice
+All **unique** subsets when nums may contain duplicates.
 
-## The pattern this problem belongs to
+## Approach — Sort + skip equal after including
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Sort. Standard subset backtracking, but skip duplicates in the outer loop: `if (i > start && nums[i] == nums[i-1]) continue;`. Ensures each duplicate group contributes once per "count of picks".
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+```java
+List<List<Integer>> subsetsWithDup(int[] nums) {
+    Arrays.sort(nums);
+    List<List<Integer>> out = new ArrayList<>();
+    dfs(nums, 0, new ArrayList<>(), out);
+    return out;
+}
+void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
+    out.add(new ArrayList<>(path));
+    for (int i = start; i < a.length; i++) {
+        if (i > start && a[i] == a[i - 1]) continue;
+        path.add(a[i]);
+        dfs(a, i + 1, path, out);
+        path.remove(path.size() - 1);
+    }
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n · 2ⁿ)**; Space **O(n)**.
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Subsets II (with duplicates)` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Subsets](/problems/bit-manip-subsets)
+- [Combination Sum II](/problems/combination-sum-ii)
+- [Permutations II](/problems/permutations-ii)

@@ -1,24 +1,40 @@
-# Backtracking — Permutations II (with duplicates)
+# Backtracking — Permutations II
 
-*[↗ LeetCode: Permutations II (with duplicates)](https://leetcode.com/problems/permutations-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: Permutations II](https://leetcode.com/problems/permutations-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** sort, then skip `i>0 && a[i]==a[i-1] && !used[i-1]` to avoid duplicate orderings
+All **unique** permutations of nums (may contain duplicates).
 
-## The pattern this problem belongs to
+## Approach — Sort + `used[]` + skip equal-and-unused
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Sort. When picking the next element, skip any `nums[i]` such that `nums[i] == nums[i-1]` AND `!used[i-1]` — this enforces a canonical order among duplicates.
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+```java
+List<List<Integer>> permuteUnique(int[] nums) {
+    Arrays.sort(nums);
+    List<List<Integer>> out = new ArrayList<>();
+    boolean[] used = new boolean[nums.length];
+    dfs(nums, used, new ArrayList<>(), out);
+    return out;
+}
+void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> out) {
+    if (path.size() == a.length) { out.add(new ArrayList<>(path)); return; }
+    for (int i = 0; i < a.length; i++) {
+        if (used[i]) continue;
+        if (i > 0 && a[i] == a[i - 1] && !used[i - 1]) continue;
+        used[i] = true;
+        path.add(a[i]);
+        dfs(a, used, path, out);
+        path.remove(path.size() - 1);
+        used[i] = false;
+    }
+}
+```
 
-## Solution sketch
+**Why `!used[i-1]`.** Enforces that among duplicates, we pick "left-to-right" order — if the previous duplicate is unused, skipping now avoids a mirror choice already explored.
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(n · n!)** worst case; Space **O(n)**.
 
-1. **Read the pattern chapter's `Permutations II (with duplicates)` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Permutations](/problems/permutations) — no duplicates
+- [Subsets II](/problems/subsets-ii) — same dedup idea for subsets

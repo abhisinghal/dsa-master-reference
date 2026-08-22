@@ -2,23 +2,35 @@
 
 *[↗ LeetCode: Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** the "constraint" is just the digit→letters map; place one letter per position
+Given digits 2-9, return all letter combinations.
 
-## The pattern this problem belongs to
+## Approach — DFS enumeration
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+```java
+List<String> letterCombinations(String digits) {
+    List<String> out = new ArrayList<>();
+    if (digits.isEmpty()) return out;
+    String[] map = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    dfs(digits, 0, map, new StringBuilder(), out);
+    return out;
+}
+void dfs(String d, int i, String[] map, StringBuilder sb, List<String> out) {
+    if (i == d.length()) { out.add(sb.toString()); return; }
+    for (char c : map[d.charAt(i) - '0'].toCharArray()) {
+        sb.append(c);
+        dfs(d, i + 1, map, sb, out);
+        sb.deleteCharAt(sb.length() - 1);
+    }
+}
+```
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+**Complexity** — Time **O(4ⁿ · n)** worst case (digits 7, 9); Space **O(n)** recursion.
 
-## Solution sketch
+## Approach 2 — Iterative BFS
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+Repeatedly extend all combinations by the next digit's letters — same complexity, no recursion.
 
-1. **Read the pattern chapter's `Letter Combinations of a Phone Number` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) — same recursion shape with constraint
+- [Palindrome Partitioning](/problems/palindrome-partitioning)

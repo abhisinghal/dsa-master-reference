@@ -2,23 +2,34 @@
 
 *[↗ LeetCode: Letter Case Permutation](https://leetcode.com/problems/letter-case-permutation/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** at each letter, branch into lower/upper case
+Given a string, return every case variant of its letters (digits stay).
 
-## The pattern this problem belongs to
+## Approach 1 — DFS with two branches per letter
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+```java
+List<String> letterCasePermutation(String s) {
+    List<String> out = new ArrayList<>();
+    dfs(s.toCharArray(), 0, out);
+    return out;
+}
+void dfs(char[] a, int i, List<String> out) {
+    if (i == a.length) { out.add(new String(a)); return; }
+    dfs(a, i + 1, out);
+    if (Character.isLetter(a[i])) {
+        a[i] ^= 32;                 // flip case
+        dfs(a, i + 1, out);
+        a[i] ^= 32;
+    }
+}
+```
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+**Complexity** — Time **O(n · 2^L)** where L = number of letters; Space **O(n)**.
 
-## Solution sketch
+## Approach 2 — Iterative bit-enumeration
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+Count L = number of letters. For mask 0..2^L - 1, apply the corresponding case flips. Same output.
 
-1. **Read the pattern chapter's `Letter Case Permutation` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Subsets](/problems/bit-manip-subsets) — same 2ⁿ enumeration
+- [Permutations](/problems/permutations)

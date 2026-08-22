@@ -1,24 +1,37 @@
 # Backtracking — Combination Sum IV
 
-*[↗ LeetCode: Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** it *counts ordered* ways → drop backtracking for a 1-D DP (`dp[t] += dp[t-num]`)
+Count of ordered combinations of `nums` summing to `target`. `[1,2]` and `[2,1]` are distinct.
 
-## The pattern this problem belongs to
+> Filed under Backtracking but the intended solution is **DP** — order matters, so we count sequences, not subsets.
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach 1 — Backtracking
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+Enumerate all sequences. Blows up: for target=1000 and nums=[1,2,3], count is astronomical → TLE.
 
-## Solution sketch
+## Approach 2 — DP (coin-change permutations)
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Insight.** `dp[t] = Σ dp[t - x]` for each `x ∈ nums`. Outer loop is target; inner is nums — this counts ordered sequences.
 
-1. **Read the pattern chapter's `Combination Sum IV` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int combinationSum4(int[] nums, int target) {
+    int[] dp = new int[target + 1];
+    dp[0] = 1;
+    for (int t = 1; t <= target; t++)
+        for (int x : nums)
+            if (x <= t) dp[t] += dp[t - x];
+    return dp[target];
+}
+```
 
-## Related problems in the same pattern
+**Trap.** Java `int` may overflow — problem guarantees fits, but if unsure use `long` and check.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+**Complexity** — Time **O(target · n)**; Space **O(target)**.
+
+**Follow-up.** If we wanted unordered (like [Coin Change II](/problems/coin-change-ii)), swap loop order: outer nums, inner target.
+
+## Related problems
+
+- [Coin Change II](/problems/coin-change-ii) — unordered
+- [Combination Sum](https://leetcode.com/problems/combination-sum/) — subsets, unbounded

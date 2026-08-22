@@ -1,24 +1,36 @@
 # Backtracking — Next Permutation
 
-*[↗ LeetCode: Next Permutation](https://leetcode.com/problems/next-permutation/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: Next Permutation](https://leetcode.com/problems/next-permutation/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-**The one thing that changes vs the flagship for this pattern:** in-place — find the pivot, swap with its next-larger suffix element, reverse the suffix
+Rearrange nums to the next lexicographic permutation, in-place. If none, sort ascending.
 
-## The pattern this problem belongs to
+> Filed near Backtracking because it's the "generate permutations in order" primitive. The algorithm itself is **not** backtracking — it's a two-step in-place swap.
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Classic algorithm
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+**Steps.**
+1. Scan from right; find first `i` with `nums[i] < nums[i+1]` (the "pivot"). If none, reverse whole array.
+2. Scan from right; find first `j` with `nums[j] > nums[i]`. Swap.
+3. Reverse the suffix from `i+1` to end (it was decreasing → now increasing = smallest larger permutation).
 
-## Solution sketch
+```java
+void nextPermutation(int[] nums) {
+    int n = nums.length, i = n - 2;
+    while (i >= 0 && nums[i] >= nums[i + 1]) i--;
+    if (i >= 0) {
+        int j = n - 1;
+        while (nums[j] <= nums[i]) j--;
+        swap(nums, i, j);
+    }
+    reverse(nums, i + 1, n - 1);
+}
+void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
+void reverse(int[] a, int l, int r) { while (l < r) swap(a, l++, r--); }
+```
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+**Complexity** — Time **O(n)**; Space **O(1)**.
 
-1. **Read the pattern chapter's `Next Permutation` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Related problems
 
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Permutations](/problems/permutations) — enumerate all
+- [Permutation Sequence](https://leetcode.com/problems/permutation-sequence/) — kth permutation via factorial base

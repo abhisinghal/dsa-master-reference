@@ -1,24 +1,34 @@
 # Backtracking — N-Queens II
 
-*[↗ LeetCode: N-Queens II](https://leetcode.com/problems/n-queens-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: N-Queens II](https://leetcode.com/problems/n-queens-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** just *count* the valid placements instead of listing boards
+Return the **count** of distinct solutions to N-Queens (no need to list boards).
 
-## The pattern this problem belongs to
+## Approach — Bitmask backtracking (fastest classical)
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Encode occupied columns and diagonals as three bitmasks: `cols`, `d1` (top-left to bottom-right), `d2` (top-right to bottom-left). Each row, iterate free positions using `available = ~(cols | d1 | d2) & fullMask`. Shift d1 left, d2 right per row.
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+```java
+int totalNQueens(int n) {
+    int[] count = new int[]{0};
+    dfs(n, 0, 0, 0, 0, count);
+    return count[0];
+}
+void dfs(int n, int row, int cols, int d1, int d2, int[] count) {
+    if (row == n) { count[0]++; return; }
+    int full = (1 << n) - 1;
+    int avail = full & ~(cols | d1 | d2);
+    while (avail != 0) {
+        int pick = avail & -avail; // lowest set bit
+        avail ^= pick;
+        dfs(n, row + 1, cols | pick, (d1 | pick) << 1 & full, (d2 | pick) >> 1, count);
+    }
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(n!)** worst case; each step is O(1) bit-op instead of O(n) column scan → ~50× faster in practice.
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `N-Queens II` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [N-Queens](/problems/backtracking-n-queens) — return boards, not just count
+- [Sudoku Solver](/problems/sudoku-solver) — same bitmask domain-pruning idea

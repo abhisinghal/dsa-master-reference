@@ -2,23 +2,51 @@
 
 *[↗ LeetCode: Beautiful Arrangement](https://leetcode.com/problems/beautiful-arrangement/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** place numbers `1..n` where position `i` must divide (or be divided by) the value
+Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i == 0` or `i % a[i] == 0`.
 
-## The pattern this problem belongs to
+## Approach 1 — Backtracking with used-mask
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+```java
+int countArrangement(int n) {
+    return dfs(n, 1, new boolean[n + 1]);
+}
+int dfs(int n, int pos, boolean[] used) {
+    if (pos > n) return 1;
+    int count = 0;
+    for (int v = 1; v <= n; v++)
+        if (!used[v] && (v % pos == 0 || pos % v == 0)) {
+            used[v] = true;
+            count += dfs(n, pos + 1, used);
+            used[v] = false;
+        }
+    return count;
+}
+```
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+## Approach 2 — Bitmask DP (n ≤ 15)
 
-## Solution sketch
+`dp[mask]` = # ways to fill first `popcount(mask)` positions using selected numbers.
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int countArrangementBM(int n) {
+    int full = 1 << n;
+    int[] dp = new int[full];
+    dp[0] = 1;
+    for (int mask = 1; mask < full; mask++) {
+        int pos = Integer.bitCount(mask);
+        for (int v = 1; v <= n; v++) {
+            int bit = 1 << (v - 1);
+            if ((mask & bit) == 0) continue;
+            if (v % pos == 0 || pos % v == 0) dp[mask] += dp[mask ^ bit];
+        }
+    }
+    return dp[full - 1];
+}
+```
 
-1. **Read the pattern chapter's `Beautiful Arrangement` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Both **O(n · 2ⁿ)** ish; DP is iterative and cleaner for n ≤ 15.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats) — bitmask DP
+- [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)

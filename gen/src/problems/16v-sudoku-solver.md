@@ -1,24 +1,48 @@
 # Backtracking — Sudoku Solver
 
-*[↗ LeetCode: Sudoku Solver](https://leetcode.com/problems/sudoku-solver/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: Sudoku Solver](https://leetcode.com/problems/sudoku-solver/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** three occupancy sets (row, column, 3×3 box); place a digit, recurse, undo
+Fill the 9×9 board so every row/col/box contains 1..9.
 
-## The pattern this problem belongs to
+## Approach — Backtracking + constraint tracking
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Maintain 9-bit masks for each row, col, and box. Try each digit at each empty cell. Backtrack on dead ends.
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+```java
+int[] rows = new int[9], cols = new int[9], boxes = new int[9];
+void solveSudoku(char[][] board) {
+    for (int r = 0; r < 9; r++) for (int c = 0; c < 9; c++)
+        if (board[r][c] != '.') set(r, c, board[r][c] - '0');
+    dfs(board, 0);
+}
+boolean dfs(char[][] b, int p) {
+    if (p == 81) return true;
+    int r = p / 9, c = p % 9;
+    if (b[r][c] != '.') return dfs(b, p + 1);
+    int box = (r / 3) * 3 + c / 3;
+    int used = rows[r] | cols[c] | boxes[box];
+    for (int d = 1; d <= 9; d++) {
+        int bit = 1 << d;
+        if ((used & bit) != 0) continue;
+        b[r][c] = (char) ('0' + d);
+        set(r, c, d);
+        if (dfs(b, p + 1)) return true;
+        unset(r, c, d);
+        b[r][c] = '.';
+    }
+    return false;
+}
+void set(int r, int c, int d) { int bit = 1 << d; rows[r] |= bit; cols[c] |= bit; boxes[(r/3)*3 + c/3] |= bit; }
+void unset(int r, int c, int d) { int bit = 1 << d; rows[r] ^= bit; cols[c] ^= bit; boxes[(r/3)*3 + c/3] ^= bit; }
+```
 
-## Solution sketch
+## Interview extension — MRV heuristic
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+Pick the empty cell with the **fewest legal digits** each step (Minimum Remaining Values). Typical hard puzzles solve in microseconds.
 
-1. **Read the pattern chapter's `Sudoku Solver` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time worst case exponential; MRV makes real Sudokus near instant.
 
-## Related problems in the same pattern
+## Related problems
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Valid Sudoku](/problems/valid-sudoku) — validation only
+- [N-Queens](/problems/backtracking-n-queens) — same constraint-tracking style

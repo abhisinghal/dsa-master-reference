@@ -2,23 +2,32 @@
 
 *[↗ LeetCode: Combination Sum III](https://leetcode.com/problems/combination-sum-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** exactly `k` numbers drawn from `1..9` summing to `n`
+`k` distinct digits from 1..9 summing to `n`.
 
-## The pattern this problem belongs to
+## Approach — Backtracking with pruning
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Prunes:** `path.size() == k`, `rem < 0`, `i > rem` (further digits too big).
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+```java
+List<List<Integer>> combinationSum3(int k, int n) {
+    List<List<Integer>> out = new ArrayList<>();
+    dfs(1, k, n, new ArrayList<>(), out);
+    return out;
+}
+void dfs(int start, int k, int rem, List<Integer> path, List<List<Integer>> out) {
+    if (path.size() == k) { if (rem == 0) out.add(new ArrayList<>(path)); return; }
+    for (int i = start; i <= 9 && i <= rem; i++) {
+        path.add(i);
+        dfs(i + 1, k, rem - i, path, out);
+        path.remove(path.size() - 1);
+    }
+}
+```
 
-## Solution sketch
+**Complexity** — Time **O(C(9, k) · k)**; Space **O(k)**.
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Combination Sum III` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Combination Sum](https://leetcode.com/problems/combination-sum/)
+- [Combination Sum II](/problems/combination-sum-ii)
+- [Combination Sum IV](/problems/combination-sum-iv) — **DP** (unbounded, order matters)

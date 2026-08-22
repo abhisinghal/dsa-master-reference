@@ -1,24 +1,37 @@
 # Backtracking — Unique Paths III
 
-*[↗ LeetCode: Unique Paths III](https://leetcode.com/problems/unique-paths-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: Unique Paths III](https://leetcode.com/problems/unique-paths-iii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** backtrack across the grid, requiring you visit *every* empty cell exactly once
+Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths from 1 → 2 visiting **every** empty cell exactly once.
 
-## The pattern this problem belongs to
+## Approach — Hamiltonian-path DFS with backtracking
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Track remaining empty cells to visit; at end cell, count if remaining == 0. Mark visited by mutating in place (restore on return).
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+```java
+int uniquePathsIII(int[][] grid) {
+    int m = grid.length, n = grid[0].length, sr = 0, sc = 0, remaining = 1;
+    for (int i = 0; i < m; i++) for (int j = 0; j < n; j++) {
+        if (grid[i][j] == 1) { sr = i; sc = j; }
+        else if (grid[i][j] == 0) remaining++;
+    }
+    return dfs(grid, sr, sc, remaining);
+}
+int dfs(int[][] g, int r, int c, int remaining) {
+    if (r < 0 || c < 0 || r >= g.length || c >= g[0].length || g[r][c] == -1) return 0;
+    if (g[r][c] == 2) return remaining == 0 ? 1 : 0;
+    int tmp = g[r][c];
+    g[r][c] = -1;
+    int total = dfs(g, r+1, c, remaining - 1) + dfs(g, r-1, c, remaining - 1)
+              + dfs(g, r, c+1, remaining - 1) + dfs(g, r, c-1, remaining - 1);
+    g[r][c] = tmp;
+    return total;
+}
+```
 
-## Solution sketch
+**Complexity** — Time exponential (~4^cells); grid ≤ 20 cells makes it feasible.
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Unique Paths III` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Robot Room Cleaner](/problems/robot-room-cleaner) — DFS with in-place marking
+- [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes) — bitmask BFS

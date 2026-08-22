@@ -1,24 +1,34 @@
-# Backtracking — Combination Sum / Combination Sum II
+# Backtracking — Combination Sum II
 
-*[↗ LeetCode: Combination Sum / Combination Sum II](https://leetcode.com/problems/combination-sum-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: Combination Sum II](https://leetcode.com/problems/combination-sum-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-**The one thing that changes vs the flagship for this pattern:** carry a remaining-target budget; allow reuse by recursing with the same `i` (unbounded) or forbid it with `i+1` (each item once)
+Combinations summing to target, each candidate used at most **once**, candidates may repeat.
 
-## The pattern this problem belongs to
+## Approach — Sort + skip equal-at-same-depth + prune on sum
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Sort → deduplicate at each recursion level with `if (i > start && cand[i] == cand[i-1]) continue`. Prune when `cand[i] > remaining`.
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+```java
+List<List<Integer>> combinationSum2(int[] cand, int target) {
+    Arrays.sort(cand);
+    List<List<Integer>> out = new ArrayList<>();
+    dfs(cand, 0, target, new ArrayList<>(), out);
+    return out;
+}
+void dfs(int[] a, int start, int rem, List<Integer> path, List<List<Integer>> out) {
+    if (rem == 0) { out.add(new ArrayList<>(path)); return; }
+    for (int i = start; i < a.length && a[i] <= rem; i++) {
+        if (i > start && a[i] == a[i - 1]) continue;
+        path.add(a[i]);
+        dfs(a, i + 1, rem - a[i], path, out);
+        path.remove(path.size() - 1);
+    }
+}
+```
 
-## Solution sketch
+**Complexity** — Time exponential; heavily pruned.
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Related problems
 
-1. **Read the pattern chapter's `Combination Sum / Combination Sum II` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
-
-## Related problems in the same pattern
-
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+- [Combination Sum](https://leetcode.com/problems/combination-sum/) — reuse allowed
+- [Combination Sum III](/problems/combination-sum-iii) — fixed k, digits 1..9
