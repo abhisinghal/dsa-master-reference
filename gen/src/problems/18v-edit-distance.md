@@ -1,24 +1,63 @@
 # Dynamic Programming — Edit Distance
 
-*[↗ LeetCode: Edit Distance](https://leetcode.com/problems/edit-distance/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Edit Distance](https://leetcode.com/problems/edit-distance/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** mismatch costs `1 + min(insert, delete, replace)`
+Given two strings `word1` and `word2`, return the minimum number of edits (insert, delete, replace) to convert `word1` → `word2`.
 
-## The pattern this problem belongs to
+**Example 1** — `word1="horse", word2="ros"` → `3`
+**Example 2** — `word1="intention", word2="execution"` → `5`
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+## Approach 1 — Brute recursion → Approach 2 — Memoized
 
-## Solution sketch
+Same skeleton as Coin Change / House Robber. At `(i, j)`: if chars match, `f(i-1, j-1)`; else `1 + min(insert, delete, replace)`. Brute is exponential; memoization brings it to O(m·n).
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 3 — Bottom-up DP
 
-1. **Read the pattern chapter's `Edit Distance` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int minDistance(String a, String b) {
+    int m = a.length(), n = b.length();
+    int[][] dp = new int[m + 1][n + 1];
+    for (int i = 0; i <= m; i++) dp[i][0] = i;
+    for (int j = 0; j <= n; j++) dp[0][j] = j;
+    for (int i = 1; i <= m; i++)
+        for (int j = 1; j <= n; j++) {
+            if (a.charAt(i - 1) == b.charAt(j - 1))
+                dp[i][j] = dp[i - 1][j - 1];
+            else
+                dp[i][j] = 1 + Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1]));
+        }
+    return dp[m][n];
+}
+```
 
-## Related problems in the same pattern
+<CodeTrace
+  title="Edit Distance — word1=&quot;horse&quot;, word2=&quot;ros&quot;"
+  :values="['h','o','r','s','e']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 1, j: 1 }, vars: { "dp[1][1]": 1, "h vs r": "mismatch" }, note: "1 + min(1,1,0) = 1" },
+    { pointers: { i: 2, j: 2 }, vars: { "dp[2][2]": 1, "o vs o": "match" }, note: "= dp[1][1] = 1" },
+    { pointers: { i: 3, j: 3 }, vars: { "dp[3][3]": 2, "r vs s": "mismatch" }, note: "1 + min(2,2,1) = 2" },
+    { pointers: { i: 5, j: 3 }, vars: { "dp[5][3]": 3 }, note: "final = 3 (delete h, r→s, delete e)", added: [0,2,4] }
+  ]'
+/>
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+**Complexity** — Time **O(m·n)**; Space **O(m·n)** (reducible to **O(min(m,n))** with rolling row).
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Brute recursion | O(3^(m+n)) | O(m+n) |
+| Memoized | O(m·n) | O(m·n) |
+| Tabulated | **O(m·n)** | O(m·n) |
+| Rolling row | O(m·n) | **O(min(m,n))** |
+
+## Related problems
+
+- [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) — same shape, different recurrence
+- [Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/) — count matches instead
+- [Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/) — same 2D table skeleton
