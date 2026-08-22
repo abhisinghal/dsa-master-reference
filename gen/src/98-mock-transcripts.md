@@ -81,6 +81,17 @@ public int[] twoSum(int[] nums, int target) {
 - i=0: complement=7, seen is empty, put(2→0). seen: {2:0}.
 - i=1: complement=2, seen has 2! Return [0, 1]. ✓
 
+<CodeTrace
+  title="Transcript 1 — Two Sum verify: nums=[2,7,11,15], target=9"
+  :values="[2,7,11,15]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { complement: 7, seen: "{}" }, note: "miss. put seen[2]=0" },
+    { pointers: { i: 1 }, vars: { complement: 2, "seen[2]": 0 }, note: "HIT → return [0,1]", added: [0,1] }
+  ]'
+/>
+
 *And `nums = [3, 2, 4], target = 6`:*
 
 - i=0: complement=3, empty, put(3→0). {3:0}
@@ -138,6 +149,20 @@ public int[] twoSum(int[] nums, int target) {
 - `get(1)` → returns "a", cache reorders: `[2→b, 1→a]`, 1 is MRU
 - `put(3, "c")` → capacity full, evict LRU which is 2. Cache: `[1→a, 3→c]`.
 - `get(2)` → returns -1.
+
+<CodeTrace
+  title="Transcript 2 — LRU Cache walkthrough, capacity=2"
+  :values="['put 1,a','put 2,b','get 1','put 3,c','get 2']"
+  :windowKeys="['op']"
+  :cellWidth="70"
+  :steps='[
+    { pointers: { op: 0 }, vars: { list: "1", map: "{1}" }, note: "head=1", added: [0] },
+    { pointers: { op: 1 }, vars: { list: "2 → 1", map: "{1,2}" }, note: "put 2 → head=2 (MRU)", added: [1] },
+    { pointers: { op: 2 }, vars: { list: "1 → 2", ret: "a" }, note: "get(1) → move 1 to head", added: [2] },
+    { pointers: { op: 3 }, vars: { list: "3 → 1", map: "{1,3}" }, note: "put 3 evicts LRU=2", added: [3] },
+    { pointers: { op: 4 }, vars: { list: "3 → 1", ret: -1 }, note: "get(2) → -1 (evicted)" }
+  ]'
+/>
 
 **Interviewer**: Correct.
 
@@ -268,6 +293,20 @@ class LRUCache {
 - `[3, 6, 7]` → max 7
 
 Output: `[3, 3, 5, 5, 6, 7]`.
+
+<CodeTrace
+  title="Transcript 3 — Sliding Window Max: nums=[1,3,-1,-3,5,3,6,7], k=3"
+  :values="[1,3,-1,-3,5,3,6,7]"
+  :windowKeys="['left','right']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { left: 0, right: 2 }, vars: { dq: "[1(idx),2]", output: "[3]" }, note: "first full window. front=3" },
+    { pointers: { left: 1, right: 3 }, vars: { dq: "[1,2,3]", output: "[3,3]" }, note: "-3 pushes, front still 3" },
+    { pointers: { left: 2, right: 4 }, vars: { dq: "[4(5)]", output: "[3,3,5]" }, note: "5 pops all smaller. front=5" },
+    { pointers: { left: 3, right: 5 }, vars: { dq: "[4,5]", output: "[3,3,5,5]" }, note: "3 pushes below 5" },
+    { pointers: { left: 5, right: 7 }, vars: { dq: "[7]", output: "[3,3,5,5,6,7]" }, note: "final: 7 dominates" }
+  ]'
+/>
 
 ---
 

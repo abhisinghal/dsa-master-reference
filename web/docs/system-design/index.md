@@ -431,6 +431,20 @@ Request → App node → Redis (single shard per user, consistent-hash) → allo
 
 Recommended: **Lua script** for accuracy; **lease tokens** if throughput dominates over precise rate limits.
 
+<CodeTrace
+  title="Token bucket refill + consume — rate=2/sec, burst=5, requests at t=[0,0.1,0.2,1.0,1.5]"
+  :values="[0,1,2,3,4]"
+  :windowKeys="['req']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { req: 0 }, vars: { t: 0, tokens: 5, last_refill: 0 }, note: "req 1: tokens=5, decrement → 4. allowed" },
+    { pointers: { req: 1 }, vars: { t: 0.1, tokens: 4 }, note: "req 2: refill = (0.1-0) * 2 = 0.2 rounded down = 0. tokens=4→3. allowed" },
+    { pointers: { req: 2 }, vars: { t: 0.2, tokens: 3 }, note: "req 3: refill = 0. tokens=3→2. allowed" },
+    { pointers: { req: 3 }, vars: { t: 1.0, tokens: 4 }, note: "req 4: refill = (1.0-0.2)*2 = 1.6 → 1. tokens=2+1=3, then 3→2. wait: cap 5, so refill = min(2+1, 5)=3. decrement → 2. allowed" },
+    { pointers: { req: 4 }, vars: { t: 1.5, tokens: 3 }, note: "req 5: refill = 1. tokens=3, decrement → 2. allowed" }
+  ]'
+/>
+
 **Trap:** **clock skew** across nodes. Refill time is stored per-key; if nodes have skewed clocks, refill amount varies. Fix by centralizing time in Redis (`TIME` command) or use a monotonically-increasing counter for refill epochs.
 
 **Scale:**
@@ -455,6 +469,20 @@ Recommended: **Lua script** for accuracy; **lease tokens** if throughput dominat
 - W (write quorum) = 2 — write to any 2 of 3 replicas synchronously.
 - R (read quorum) = 2 — read from any 2 of 3.
 - W + R &gt; N → strong consistency at read-time.
+
+<CodeTrace
+  title="Dynamo quorum read — N=3, W=2, R=2. Replicas A, B, C. Value evolves."
+  :values="['A','B','C']"
+  :windowKeys="['step']"
+  :cellWidth="52"
+  :steps='[
+    { pointers: { step: 0 }, vars: { A: "v1", B: "v1", C: "v1" }, note: "initial: all replicas at v1" },
+    { pointers: { step: 1 }, vars: { A: "v2", B: "v2", C: "v1 (stale)" }, note: "write v2: coord picks any 2 of 3 → A,B updated. W=2 satisfied. return OK", added: [0,1] },
+    { pointers: { step: 2 }, vars: { R: 2, "read from": "A,C" }, note: "read: coord picks any 2 → A returns v2, C returns v1. version conflict" },
+    { pointers: { step: 3 }, vars: { winner: "v2", "read_repair": "C ← v2" }, note: "resolve by version → return v2. also fire read-repair to C", added: [0] },
+    { pointers: { step: 4 }, vars: { A: "v2", B: "v2", C: "v2" }, note: "post read-repair: all replicas converged", added: [0,1,2] }
+  ]'
+/>
 
 **Consistent hash ring** places each key on N successor nodes. Ring is stored in Zookeeper or gossip-based (each node knows the ring).
 

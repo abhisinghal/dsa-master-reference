@@ -105,6 +105,18 @@ Template (B): `P(lo-1)` false, `P(hi)` true. Pick one template style and reuse i
 
 </Callout>
 
+<CodeTrace
+  title="Binary Search template (A) — target=7 in a=[1,3,5,7,9,11]"
+  :values="[1,3,5,7,9,11]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { lo: 0, hi: 5, mid: 2 }, vars: { "a[mid]": 5, target: 7 }, note: "5 lt 7 → lo = mid+1 = 3" },
+    { pointers: { lo: 3, hi: 5, mid: 4 }, vars: { "a[mid]": 9, target: 7 }, note: "9 gt 7 → hi = mid-1 = 3" },
+    { pointers: { lo: 3, hi: 3, mid: 3 }, vars: { "a[mid]": 7, target: 7 }, note: "match → return 3", added: [3] }
+  ]'
+/>
+
 ## Traversal templates
 
 
@@ -135,6 +147,20 @@ int[][] DIR = {{1,0},{-1,0},{0,1},{0,-1}};   // add diagonals for 8-dir
 
 
 
+<CodeTrace
+  title="BFS template on tree 0→[1,2], 1→[3,4]"
+  :values="[0,1,2,3,4]"
+  :windowKeys="['popped']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { popped: 0 }, vars: { queue: "[0]", dist: 0 }, note: "seed src=0" },
+    { pointers: { popped: 0 }, vars: { queue: "[1,2]", dist: 1 }, note: "process layer 0: push 1,2", added: [0] },
+    { pointers: { popped: 1 }, vars: { queue: "[2,3,4]", dist: 2 }, note: "process layer 1: pop 1, push 3,4", added: [0,1] },
+    { pointers: { popped: 2 }, vars: { queue: "[3,4]", dist: 2 }, note: "pop 2 (no new)", added: [0,1,2] },
+    { pointers: { popped: 4 }, vars: { queue: "[]", dist: 2 }, note: "drain. total layers = 2", added: [0,1,2,3,4] }
+  ]'
+/>
+
 ## Backtracking template
 
 
@@ -152,6 +178,21 @@ void backtrack(State s) {
 ```
 
 
+
+<CodeTrace
+  title="Backtracking template — permutations of [1,2,3]"
+  :values="[1,2,3]"
+  :windowKeys="['depth']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { depth: 0 }, vars: { path: "[]" }, note: "start. iterate choices 1,2,3" },
+    { pointers: { depth: 1 }, vars: { path: "[1]" }, note: "choose 1, recurse", added: [0] },
+    { pointers: { depth: 2 }, vars: { path: "[1,2]" }, note: "choose 2", added: [0,1] },
+    { pointers: { depth: 3 }, vars: { path: "[1,2,3]", emit: true }, note: "complete → record", added: [0,1,2] },
+    { pointers: { depth: 2 }, vars: { path: "[1,2]" }, note: "undo → path back to [1,2]" },
+    { pointers: { depth: 1 }, vars: { path: "[1]" }, note: "undo → path back to [1], next choice", added: [0] }
+  ]'
+/>
 
 ## DP design checklist
 
