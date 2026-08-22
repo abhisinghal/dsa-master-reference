@@ -1,77 +1,88 @@
-# K-way Merge — Smallest Range Covering K Lists
+# K-way Merge — Smallest Range Covering Elements from K Lists
 
 *[↗ LeetCode: Smallest Range Covering Elements from K Lists](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/k-way-merge)
 
-Given `k` sorted lists, find the smallest range `[a, b]` that contains at least one element from each list.
+Given `k` sorted lists of integers, find the smallest range `[a, b]` that contains **at least one element from each list**. If multiple, return the one with smaller `a`; if still tied, smaller `b`.
 
-**Example** — `[[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]` → `[20,24]` (contains 24, 20, 22)
+**Example 1** — `lists = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]` → `[20, 24]` (24-20=4)
+**Example 2** — `lists = [[1,2,3],[1,2,3],[1,2,3]]` → `[1, 1]`
+
+**Constraints** — `1 ≤ k ≤ 3500`; total elements ≤ 5·10⁴.
 
 ---
 
-## Approach 1 — Cartesian product (brute force)
+## Approach 1 — Merge, sweep with sliding window on tagged list
 
-Enumerate every combination of "one element from each list"; track min range width. **O(n^k)** — TLE fast.
+**Intuition.** Merge all values with `(value, listId)` tags; sort by value; slide a window over the merged sequence containing at least one from every list; track shortest.
 
-## Approach 2 — Sliding window over merged elements
+**Complexity** — Time **O(N log N)** for sort; Space **O(N)**.
 
-**Insight.** Merge all elements into one sorted array tagged by list-of-origin. Sliding window with a `have`/`need` map ensures all k lists represented; track min window width.
+---
 
-**Complexity** — Time **O(N log N)** for merge sort; Space **O(N)**.
+## Approach 2 — Min-heap sweep (canonical)
 
-## Approach 3 — Min-heap of "one from each list"
+**Insight from merge.** We only need to know the current minimum across all lists (candidate `a`) and track the current max (candidate `b`). A min-heap containing one pointer per list serves this.
 
-**Insight from window.** Maintain a min-heap of exactly one element from each list. The range = `[min(heap), max_seen]`. Pop the min → advance that list; if that list's next value exceeds `max_seen`, update `max_seen`. Repeat.
+- Init: heap of `(lists[i][0], i, 0)`; track `maxSeen` initially = max of all first elements.
+- Loop: pop min → it's the current `a`. Range `[a, maxSeen]` is a candidate.
+- Advance pointer in that list; push next; update `maxSeen`.
+- Stop when a list is exhausted (we can't cover it anymore).
 
 ```java
 int[] smallestRange(List<List<Integer>> lists) {
-    PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-    int max = Integer.MIN_VALUE;
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+    int maxSeen = Integer.MIN_VALUE;
     for (int i = 0; i < lists.size(); i++) {
-        int v = lists.get(i).get(0);
-        heap.offer(new int[]{v, i, 0});
-        max = Math.max(max, v);
+        pq.offer(new int[]{lists.get(i).get(0), i, 0});
+        maxSeen = Math.max(maxSeen, lists.get(i).get(0));
     }
-    int[] best = {heap.peek()[0], max};
-    while (heap.size() == lists.size()) {
-        int[] top = heap.poll();
-        if (max - top[0] < best[1] - best[0]) { best[0] = top[0]; best[1] = max; }
-        int nextIdx = top[2] + 1;
-        if (nextIdx < lists.get(top[1]).size()) {
-            int v = lists.get(top[1]).get(nextIdx);
-            heap.offer(new int[]{v, top[1], nextIdx});
-            max = Math.max(max, v);
-        }
+    int[] best = {-100000, 100000};
+    while (true) {
+        int[] top = pq.poll();
+        int a = top[0];
+        if (maxSeen - a < best[1] - best[0]) { best[0] = a; best[1] = maxSeen; }
+        if (top[2] + 1 == lists.get(top[1]).size()) break;
+        int next = lists.get(top[1]).get(top[2] + 1);
+        maxSeen = Math.max(maxSeen, next);
+        pq.offer(new int[]{next, top[1], top[2] + 1});
     }
     return best;
 }
 ```
 
 <CodeTrace
-  title="Min-heap merge — [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]"
-  :values="[4,10,15,24,26]"
-  :windowKeys="['step']"
-  :cellWidth="42"
+  title="Heap sweep — lists as in Example 1"
+  :values="['4','0','5','...','20','24']"
+  :windowKeys="['min','max']"
+  :cellWidth="34"
   :steps='[
-    { pointers: { step: 0 }, vars: { heap: "[0,4,5]", max: 5, range: "[0,5]" }, note: "seed with head of each list. width 5" },
-    { pointers: { step: 1 }, vars: { heap: "[4,5,9]", max: 9, range: "[4,9]" }, note: "advance list1 (0→9). width 5" },
-    { pointers: { step: 2 }, vars: { heap: "[5,9,10]", max: 10 }, note: "advance list0 (4→10)" },
-    { pointers: { step: 3 }, vars: { heap: "[9,10,18]", max: 18 }, note: "advance list2 (5→18)" },
-    { pointers: { step: 6 }, vars: { heap: "[20,24,22]", max: 24, best: "[20,24]" }, note: "final smallest range = [20,24]", added: [3] }
+    { pointers: { min: 1, max: 2 }, vars: { window: "[0,5]", diff: 5 }, note: "initial: min from list1=0, max=5" },
+    { pointers: { min: 0, max: 2 }, vars: { window: "[4,10]", diff: 6 }, note: "pop 0 → advance list1 to 9; max now 10" },
+    { pointers: { min: 0, max: 3 }, vars: { window: "[5,18]", diff: 13 }, note: "pop 4 → advance list0 to 10; max 18" },
+    { pointers: { min: 1, max: 4 }, vars: { window: "[20,24]", diff: 4 }, note: "after several steps — best window found" }
   ]'
 />
 
 **Complexity** — Time **O(N log k)** where N = total elements; Space **O(k)**.
 
+---
+
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Cartesian product | O(n^k) | O(1) |
-| Merge + sliding window | O(N log N) | O(N) |
-| Min-heap "one from each" | **O(N log k)** | **O(k)** |
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Merge + sliding window | O(N log N) | O(N) | acceptable baseline |
+| Min-heap sweep | **O(N log k)** | **O(k)** | canonical |
+
+## When to use which
+
+- **Standard k-way merge with "cover all" requirement** → min-heap sweep.
+- **Lists arrive as streams (unknown length)** → same min-heap works; break on any list exhausted.
+- **"Range covering ≥ m of k lists"** → generalize; needs a multi-set or ordered map.
+- **Instead of range: find k-th smallest overall** → still min-heap sweep, just count pops.
 
 ## Related problems
 
-- [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — heap of live heads
-- [Ugly Number II](/problems/ugly-number-ii) — 3-way merge
-- [Find K Pairs with Smallest Sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
+- [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — same heap-sweep
+- [Ugly Number II](/problems/ugly-number-ii) — heap merges 3 streams
+- [Median of Two Sorted Arrays](/problems/median-of-two-sorted-arrays) — 2-list balance BS

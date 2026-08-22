@@ -2,90 +2,109 @@
 
 *[↗ LeetCode: Ugly Number II](https://leetcode.com/problems/ugly-number-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/k-way-merge)
 
-An "ugly number" has only 2, 3, or 5 as prime factors. Return the `n`-th ugly number (1-indexed; 1 counts as ugly).
+An **ugly number** has only 2, 3, or 5 as prime factors. `1` is ugly by convention. Return the `n`-th ugly number.
 
-**Example** — `n=10` → `12` (sequence `1,2,3,4,5,6,8,9,10,12`)
+**Example 1** — `n = 10` → `12` (sequence `1, 2, 3, 4, 5, 6, 8, 9, 10, 12`)
+**Example 2** — `n = 1` → `1`
+**Example 3** — `n = 11` → `15`
 
 **Constraints** — `1 ≤ n ≤ 1690`.
 
 ---
 
-## Approach 1 — Brute force check every integer
+## Approach 1 — Test each candidate
 
-For each candidate `k = 1, 2, 3…`, factor out all 2/3/5; if result is 1, it's ugly. Count until `n`. O(n·log candidate).
+**Intuition.** For each integer, divide by 2, 3, 5 repeatedly; if it reduces to 1, it's ugly.
 
-**Complexity** — Slow at n=1690.
+**Complexity** — Time up to **O(n · answer log answer)** — too slow.
 
-## Approach 2 — Min-heap of frontier candidates
+---
 
-**Insight.** If `u` is ugly, so are `2u, 3u, 5u`. Start with `{1}` in a min-heap + a seen-set. Pop smallest → push `2x, 3x, 5x` for that x. The n-th pop is the answer.
+## Approach 2 — Min-heap merge of 3 streams
+
+**Insight.** Every ugly number `u > 1` is `2·u'` or `3·u'` or `5·u'` where `u'` is a smaller ugly number. So the sequence is the sorted merge of three streams: `{2·u_i}`, `{3·u_i}`, `{5·u_i}`.
+
+- Push `1` into heap; track seen set for dedup.
+- Pop `x` (n-th pop = answer). Push `2x, 3x, 5x` if unseen.
 
 ```java
 int nthUglyNumberHeap(int n) {
-    PriorityQueue<Long> heap = new PriorityQueue<>();
+    PriorityQueue<Long> pq = new PriorityQueue<>();
     Set<Long> seen = new HashSet<>();
-    heap.offer(1L); seen.add(1L);
-    long u = 1;
+    pq.offer(1L); seen.add(1L);
+    long ans = 1;
+    int[] primes = {2, 3, 5};
     for (int i = 0; i < n; i++) {
-        u = heap.poll();
-        for (int p : new int[]{2, 3, 5}) {
-            long next = u * p;
-            if (seen.add(next)) heap.offer(next);
+        ans = pq.poll();
+        for (int p : primes) {
+            long next = ans * p;
+            if (seen.add(next)) pq.offer(next);
         }
     }
-    return (int) u;
+    return (int) ans;
 }
 ```
 
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
 
-## Approach 3 — Three-way merge (DP with 3 pointers)
+---
 
-**Insight.** Every ugly number is one of prev-uglies × 2, × 3, or × 5. Maintain three pointers `i2, i3, i5` into the sequence-so-far, each pointing at the smallest prev-ugly whose ×p hasn't been emitted yet. Next ugly = `min(u[i2]*2, u[i3]*3, u[i5]*5)`.
+## Approach 3 — Three pointers (canonical O(n))
+
+**Insight from heap.** Instead of a heap + seen set, maintain three indices `i2, i3, i5` into the growing ugly array. Next ugly = `min(ugly[i2]*2, ugly[i3]*3, ugly[i5]*5)`. Advance whichever pointer(s) produced the minimum — **all of them** if tied — to skip duplicates.
 
 ```java
 int nthUglyNumber(int n) {
-    int[] u = new int[n];
-    u[0] = 1;
+    int[] ugly = new int[n];
+    ugly[0] = 1;
     int i2 = 0, i3 = 0, i5 = 0;
     for (int i = 1; i < n; i++) {
-        int n2 = u[i2] * 2, n3 = u[i3] * 3, n5 = u[i5] * 5;
-        int next = Math.min(n2, Math.min(n3, n5));
-        u[i] = next;
-        if (next == n2) i2++;
-        if (next == n3) i3++;
-        if (next == n5) i5++;
+        int next2 = ugly[i2] * 2, next3 = ugly[i3] * 3, next5 = ugly[i5] * 5;
+        int next = Math.min(next2, Math.min(next3, next5));
+        ugly[i] = next;
+        if (next == next2) i2++;
+        if (next == next3) i3++;
+        if (next == next5) i5++;
     }
-    return u[n - 1];
+    return ugly[n - 1];
 }
 ```
 
 <CodeTrace
-  title="3-way merge — first 10 ugly numbers"
-  :values="[1,2,3,4,5,6,8,9,10,12]"
-  :windowKeys="['i']"
-  :cellWidth="34"
+  title="3-pointer — first few ugly numbers"
+  :values="['1','2','3','4','5','6','8','9','10','12']"
+  :windowKeys="['i2','i3','i5']"
+  :cellWidth="30"
   :steps='[
-    { pointers: { i: 0, i2: 0, i3: 0, i5: 0 }, vars: { emit: 1 }, note: "seed", added: [0] },
-    { pointers: { i: 1, i2: 1, i3: 0, i5: 0 }, vars: { emit: 2 }, note: "min(2,3,5)=2 → advance i2", added: [1] },
-    { pointers: { i: 2, i2: 1, i3: 1, i5: 0 }, vars: { emit: 3 }, note: "min(4,3,5)=3 → advance i3", added: [2] },
-    { pointers: { i: 3, i2: 2, i3: 1, i5: 0 }, vars: { emit: 4 }, note: "min(4,6,5)=4 → advance i2", added: [3] },
-    { pointers: { i: 9, i2: 5, i3: 3, i5: 1 }, vars: { emit: 12 }, note: "…10th ugly = 12", added: [9] }
+    { pointers: { i2: 0, i3: 0, i5: 0 }, vars: { candidates: "2,3,5", pick: 2 }, note: "ugly[1]=2; i2++" },
+    { pointers: { i2: 1, i3: 0, i5: 0 }, vars: { candidates: "4,3,5", pick: 3 }, note: "ugly[2]=3; i3++" },
+    { pointers: { i2: 1, i3: 1, i5: 0 }, vars: { candidates: "4,6,5", pick: 4 }, note: "ugly[3]=4; i2++" },
+    { pointers: { i2: 2, i3: 1, i5: 0 }, vars: { candidates: "6,6,5", pick: 5 }, note: "ugly[4]=5; i5++" },
+    { pointers: { i2: 2, i3: 1, i5: 1 }, vars: { candidates: "6,6,10", pick: 6 }, note: "ugly[5]=6; both i2 and i3 advance" }
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(n)**. Optimal.
+**Complexity** — Time **O(n)**; Space **O(n)** for the array.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Brute check each integer | ~O(n · log) | O(1) |
-| Min-heap of frontier | O(n log n) | O(n) |
-| 3-way merge pointers | **O(n)** | O(n) |
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Test each integer | very slow | O(1) | baseline |
+| Min-heap merge | O(n log n) | O(n) | correct, uses heap pattern |
+| Three-pointer merge | **O(n)** | **O(n)** | canonical answer |
+
+## When to use which
+
+- **Standard** → three-pointer merge.
+- **"With k primes, not just {2,3,5}"** → generalize to k pointers; O(nk).
+- **"Super ugly numbers"** → same, with `primes[]` given; min-heap gets simpler than k pointers.
+- **"nth prime" or "smallest k of type X"** → same merge template if `x` is a closed set.
 
 ## Related problems
 
-- [Super Ugly Number](https://leetcode.com/problems/super-ugly-number/) — k primes; generalized k-way merge
-- [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — same k-way merge shape
-- [Nth Digit](https://leetcode.com/problems/nth-digit/) — different counting problem
+- [Super Ugly Number](https://leetcode.com/problems/super-ugly-number/) — k-primes generalization
+- [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — the pattern seed
+- [Perfect Squares](/problems/perfect-squares) — DP alternative
