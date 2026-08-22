@@ -73,6 +73,10 @@ The pattern gets its name from geometry: imagine a vertical line sweeping across
 - "skyline" — max height at every x-coordinate (event = building start/end).
 - many intervals where only endpoints matter; nothing changes inside an interval.
 
+
+<SweepLineAnim />
+
+
 ### When NOT to use it
 You need to *reconstruct which intervals were merged* rather than count activity. Use [Merge Intervals](/patterns/merge-intervals) instead. Also, if events arrive *online* (no chance to sort up front), reach for a TreeMap or segment tree instead of an event-array sweep.
 
@@ -399,7 +403,7 @@ With a `TreeMap` as the event/difference structure, sweep handles *My Calendar I
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="sweep-line" :questions='[
   {

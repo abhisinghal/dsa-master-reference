@@ -423,7 +423,7 @@ The shared idea is a **min-heap holding one live "front" per sorted source**, so
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="k-way-merge" :questions='[
   {

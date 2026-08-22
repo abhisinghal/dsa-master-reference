@@ -65,7 +65,7 @@ Let's make it concrete. Say we want the sum of every contiguous subarray of size
 
 **Why it matters in interviews.** The brute-force "for each start, scan k elements" is the naive answer to a *huge* family of interview questions on strings and arrays. The moment you recognize a sliding-window shape, you drop an entire nesting level of complexity — often n=10⁵ inputs that would time out at O(n²) fit comfortably at O(n).
 
-<Callout kind="note" title="🎬 Video walkthrough coming soon">
+<Callout kind="note" title="Video walkthrough coming soon">
 
 a 5-10 minute Loom will be embedded here once recorded. If you'd like to be notified, [subscribe on GitHub](https://github.com/abhisinghal/dsa-master-reference/subscription).
 
@@ -203,6 +203,10 @@ Even when the problem is monotone, sliding window has hard limits worth naming o
 - **Doesn't handle "with modifications."** *"Any subarray after up to K swaps"* or *"any subarray of length ≥ L"* usually breaks the monotone extension test. Reach for DP.
 
 Now let's walk through the canonical shapes, from the simplest fixed-size warm-up up through the composed sliding-window + monotonic-deque problem.
+
+
+<SlidingWindowAnim />
+
 
 ## Maximum Average Subarray I (fixed-size warm-up) <span class="diff diff-e">Easy</span>
 
@@ -1311,7 +1315,7 @@ A deque that keeps only "still-useful" candidates in monotone order, dropping ex
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="sliding-window" :questions='[
   {

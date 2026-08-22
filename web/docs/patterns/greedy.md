@@ -554,7 +554,7 @@ Sort by **end time** and greedily keep the earliest-finishing compatible interva
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="greedy" :questions='[
   {

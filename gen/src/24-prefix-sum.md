@@ -321,7 +321,7 @@ Space is O(RC) for the padded prefix table `P`; the extra top row and left colum
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="prefix-sum" :questions='[
   {

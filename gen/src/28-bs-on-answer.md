@@ -347,7 +347,7 @@ O(1), because the algorithm stores boundary indices and values without building 
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="bs-on-answer" :questions='[
   {

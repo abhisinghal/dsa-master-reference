@@ -69,6 +69,10 @@ Union-Find is not a *tree traversal* algorithm; it's a *set-membership* structur
 - "count connected components / groups / islands"
 - "redundant connection" (find the edge that creates a cycle)
 
+
+<UnionFindAnim />
+
+
 ### When NOT to use it
 You need to *walk* the components (traversal, distances, colouring) — Union-Find only tells you set membership, not adjacency. Also, if you must **remove** edges (not just add), Union-Find doesn't support that natively — either process events offline in reverse or use link-cut trees.
 
@@ -378,7 +382,7 @@ Adding before union-check. *Example:* edges `[(A,B,1),(B,C,2),(A,C,3)]`. After a
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="union-find" :questions='[
   {

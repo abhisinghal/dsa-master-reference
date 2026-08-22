@@ -23,7 +23,7 @@ graph TD
 | Postorder (L, R, node) | 4 5 2 3 1 | subtree aggregates |
 | Level-order (BFS) | 1 \| 2 3 \| 4 5 | shortest depth |
 
-<Callout kind="note" title="🎬 Video walkthrough coming soon">
+<Callout kind="note" title="Video walkthrough coming soon">
 
 a 5-10 minute Loom will be embedded here once recorded. If you'd like to be notified, [subscribe on GitHub](https://github.com/abhisinghal/dsa-master-reference/subscription).
 

@@ -306,7 +306,7 @@ O(n·2ⁿ) for output; O(n) temporary subset per mask.
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="bit-manip" :questions='[
   {

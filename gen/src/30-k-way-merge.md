@@ -346,7 +346,7 @@ O(k), because the heap stores one current entry per list. The output stream itse
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="k-way-merge" :questions='[
   {

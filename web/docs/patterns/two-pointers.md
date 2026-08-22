@@ -788,7 +788,7 @@ Also solvable with a monotonic (decreasing) stack that resolves trapped basins b
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="two-pointers" :questions='[
   {

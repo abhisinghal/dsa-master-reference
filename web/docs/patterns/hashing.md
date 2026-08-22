@@ -654,7 +654,7 @@ Same skeleton — *put everything in a set, then only start work from a canonica
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="hashing" :questions='[
   {

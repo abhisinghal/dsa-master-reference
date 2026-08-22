@@ -293,7 +293,7 @@ Two pointers at different speeds detect loops and locate structure without extra
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="fast-slow" :questions='[
   {

@@ -68,6 +68,10 @@ That is the mental upgrade from "recursion" to "divide and conquer." Recursion i
 - constraints around `10^5` where O(n²) pair checking is too slow but O(n log n) fits.
 - input can be split into independent subproblems after you define the right combine information.
 
+
+<DivideConquerAnim />
+
+
 ### When NOT to use it
 The two halves *depend on each other* (state flows across the split). Then you can't recurse independently — reach for DP with a state that captures the cross-half interaction. Also, if the combine step is O(n log n), your total becomes O(n log² n) — check if a single-pass approach exists.
 
@@ -244,7 +248,7 @@ O(n) for the reusable temp array, plus O(log n) recursion stack.
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="divide-conquer" :questions='[
   {

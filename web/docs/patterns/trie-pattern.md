@@ -408,7 +408,7 @@ O(n·32) trie nodes in the worst case.
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="trie-pattern" :questions='[
   {

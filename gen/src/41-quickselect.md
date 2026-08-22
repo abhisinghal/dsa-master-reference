@@ -68,6 +68,10 @@ Trace a tiny example by hand. For `[7, 1, 5, 3, 9, 2]`, the 2nd largest is index
 - constraints where O(n log n) sort is acceptable but the interviewer asks for better average time
 - array is available in memory, so random access and in-place swaps are allowed
 
+
+<QuickselectAnim />
+
+
 ### When NOT to use it
 You need k-th in a **stream** (no random access) — use a heap. You need the k boundary items in order — use a heap or partial sort. Adversarial inputs with the same pivot every time degrade to O(n²) — always pick a **random** pivot or use median-of-medians.
 
@@ -248,7 +252,7 @@ O(1) extra because the selection loop partitions in place.
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="quickselect" :questions='[
   {

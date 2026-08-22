@@ -65,6 +65,10 @@ each pop's "next greater" is the current bar
 - spans, histograms, rectangles bounded by taller / shorter neighbours
 - "largest rectangle", "trapping rain water" (stack variant), stock spans, remove-k-digits
 
+
+<MonoStackAnim />
+
+
 ### When NOT to use it
 You need *farthest* rather than *nearest* — or the comparison isn't a simple ordering. If the "answer per element" depends on *aggregating* over a range instead of picking one boundary, reach for a segment tree or sparse table, not a monotonic stack.
 
@@ -296,7 +300,7 @@ O(n), because an increasing histogram can push all indices before the sentinel f
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="monotonic-stack" :questions='[
   {

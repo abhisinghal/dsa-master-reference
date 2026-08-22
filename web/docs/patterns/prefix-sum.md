@@ -414,7 +414,7 @@ The +/−/− /+ inclusion–exclusion pattern reappears in *Maximal Rectangle* 
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="prefix-sum" :questions='[
   {

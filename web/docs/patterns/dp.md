@@ -32,7 +32,7 @@ flowchart TD
 <div class="figcap">Top-down DP — memoization turns an exponential recursion into O(#states) by returning cached results.</div>
 <div class="readfig"><b>How to read it:</b> This is ordinary recursion with one addition: a cache. Before doing any work for a state, we check the memo — if we've solved this exact subproblem before, we return the stored answer instantly. Otherwise we handle the base case or combine smaller states, then *store* the result before returning. Because each distinct state is computed only once, an otherwise exponential tree of repeated calls collapses to work proportional to the number of states.</div>
 
-<Callout kind="note" title="🎬 Video walkthrough coming soon">
+<Callout kind="note" title="Video walkthrough coming soon">
 
 a 5-10 minute Loom will be embedded here once recorded. If you'd like to be notified, [subscribe on GitHub](https://github.com/abhisinghal/dsa-master-reference/subscription).
 
@@ -1318,7 +1318,7 @@ If answers are wrong, verify in order: (1) does the state capture all future-rel
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="dp" :questions='[
   {

@@ -253,7 +253,7 @@ Run these small cases mentally before trusting the code:
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="top-k-heap" :questions='[
   {

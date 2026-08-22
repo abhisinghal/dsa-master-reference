@@ -622,7 +622,7 @@ Space is O(1) because only two pointers, two running maxima, and the water total
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="two-pointers" :questions='[
   {

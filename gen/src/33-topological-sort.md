@@ -269,7 +269,7 @@ If I choose DFS instead, I would say: "I mark a node as visiting when it enters 
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="topological-sort" :questions='[
   {

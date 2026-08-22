@@ -38,7 +38,7 @@ flowchart TD
 
 <BFSGridAnim />
 
-> [note] **🎬 Video walkthrough coming soon** — a 5-10 minute Loom will be embedded here once recorded. If you'd like to be notified, [subscribe on GitHub](https://github.com/abhisinghal/dsa-master-reference/subscription).
+> [note] **Video walkthrough coming soon** — a 5-10 minute Loom will be embedded here once recorded. If you'd like to be notified, [subscribe on GitHub](https://github.com/abhisinghal/dsa-master-reference/subscription).
 
 ## Number of Islands (grid flood fill) <span class="diff diff-m">Medium</span>
 

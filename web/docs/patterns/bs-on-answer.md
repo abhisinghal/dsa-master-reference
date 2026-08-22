@@ -448,7 +448,7 @@ Partition binary search — the most sophisticated member of the family; demonst
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="bs-on-answer" :questions='[
   {

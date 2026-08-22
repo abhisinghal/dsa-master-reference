@@ -226,7 +226,7 @@ The engine is "one half is always sorted — decide which, then which half to ke
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="binary-search" :questions='[
   {

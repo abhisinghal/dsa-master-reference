@@ -262,7 +262,7 @@ Meeting Rooms II looks like interval merging, but the answer is a count of simul
 
 ---
 
-## 🧠 Check your understanding
+## Check your understanding
 
 <Quiz patternId="merge-intervals" :questions='[
   {
