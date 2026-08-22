@@ -1,24 +1,73 @@
-# Fast/Slow Pointers — Middle of the Linked List
+# Fast/Slow — Middle of the Linked List
 
-*[↗ LeetCode: Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/fast-slow)
+*[↗ LeetCode: Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
-**The one thing that changes vs the flagship for this pattern:** fast moves 2×, slow 1×; when fast ends, slow is the middle
+Return the middle node. If two middles (even length), return the second one.
 
-## The pattern this problem belongs to
+**Example 1** — `[1,2,3,4,5]` → node `3`
+**Example 2** — `[1,2,3,4,5,6]` → node `4`
 
-This variation of Fast/Slow Pointers shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Fast/Slow Pointers](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/fast-slow) — includes this problem's approach + code + trace + traps
+## Approach 1 — Two-pass count
 
-## Solution sketch
 
-The pattern chapter's [Fast/Slow Pointers](/patterns/fast-slow) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Middle of the Linked List` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+ListNode middleNodeCount(ListNode h) {
+    int n = 0;
+    for (ListNode c = h; c != null; c = c.next) n++;
+    ListNode cur = h;
+    for (int i = 0; i < n / 2; i++) cur = cur.next;
+    return cur;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/fast-slow) table for the family tree.
+
+**Complexity** — Time **O(n)**; Space **O(1)**. Works but takes two passes.
+
+## Approach 2 — Fast/slow one-pass
+
+
+
+```java
+ListNode middleNode(ListNode h) {
+    ListNode slow = h, fast = h;
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return slow;                                          // second middle for even
+}
+```
+
+
+
+<CodeTrace
+  title="Fast/slow — [1,2,3,4,5,6]"
+  :values="[1,2,3,4,5,6]"
+  :windowKeys="['slow','fast']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { slow: 0, fast: 0 }, vars: { }, note: "start at head" },
+    { pointers: { slow: 1, fast: 2 }, vars: { }, note: "slow +1, fast +2" },
+    { pointers: { slow: 2, fast: 4 }, vars: { }, note: "slow +1, fast +2" },
+    { pointers: { slow: 3, fast: -1 }, vars: { }, note: "fast reaches null → slow is at 4 (second middle)", added: [3] }
+  ]'
+/>
+
+**Complexity** — Time **O(n)** single pass; Space **O(1)**.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Two-pass count | O(n) | O(1) |
+| Fast/slow | **O(n)** single pass | **O(1)** |
+
+## Related problems
+
+- [Linked List Cycle](/problems/linked-list-cycle) — Floyd
+- [Palindrome Linked List](/problems/palindrome-linked-list) — find middle, reverse second half, compare
+- [Reorder List](https://leetcode.com/problems/reorder-list/) — find middle, reverse, merge

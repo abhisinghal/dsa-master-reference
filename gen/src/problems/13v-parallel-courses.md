@@ -2,23 +2,58 @@
 
 *[↗ LeetCode: Parallel Courses](https://leetcode.com/problems/parallel-courses/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
-**The one thing that changes vs the flagship for this pattern:** Count Kahn "waves"; each wave is one semester of courses that can run together.
+`n` courses; `relations[i] = [a, b]` means take `a` before `b`. In each semester take any set of courses whose prereqs are satisfied. Return the minimum semesters, or `-1` if impossible.
 
-## The pattern this problem belongs to
+**Example** — `n=3, relations=[[1,3],[2,3]]` → `2` (semester 1: courses 1,2; semester 2: course 3)
 
-This variation of Topological Sort shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Topological Sort](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/topological-sort) — includes this problem's approach + code + trace + traps
+## Approach 1 — Kahn's tracking semester level
 
-## Solution sketch
+**Insight.** BFS by *layer* on the DAG. Each layer = one semester's courses.
 
-The pattern chapter's [Topological Sort](/patterns/topological-sort) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int minimumSemesters(int n, int[][] relations) {
+    int[] indeg = new int[n + 1];
+    List<List<Integer>> adj = new ArrayList<>();
+    for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());
+    for (int[] r : relations) { adj.get(r[0]).add(r[1]); indeg[r[1]]++; }
+    Deque<Integer> q = new ArrayDeque<>();
+    for (int i = 1; i <= n; i++) if (indeg[i] == 0) q.offer(i);
+    int semesters = 0, done = 0;
+    while (!q.isEmpty()) {
+        semesters++;
+        for (int size = q.size(); size > 0; size--) {
+            int u = q.poll(); done++;
+            for (int v : adj.get(u)) if (--indeg[v] == 0) q.offer(v);
+        }
+    }
+    return done == n ? semesters : -1;
+}
+```
 
-1. **Read the pattern chapter's `Parallel Courses` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+<CodeTrace
+  title="Layered BFS — n=3, edges 1→3, 2→3"
+  :values="[1,2,3]"
+  :windowKeys="['sem']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { sem: 0 }, vars: { indeg: "[_,0,0,2]", queue: "[1,2]" }, note: "seed: in-deg 0" },
+    { pointers: { sem: 1 }, vars: { done: 2, queue: "[3]" }, note: "layer 1: take {1,2}. 3 unlocks", added: [0,1] },
+    { pointers: { sem: 2 }, vars: { done: 3 }, note: "layer 2: take {3}. answer 2", added: [2] }
+  ]'
+/>
 
-## Related problems in the same pattern
+**Complexity** — Time **O(V + E)**; Space **O(V + E)**.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/topological-sort) table for the family tree.
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Kahn's by layer | **O(V + E)** | O(V + E) |
+
+## Related problems
+
+- [Course Schedule II](/problems/topological-sort-course-schedule) — return order
+- [Parallel Courses II](https://leetcode.com/problems/parallel-courses-ii/) — with a per-semester cap → NP-hard, bitmask DP
+- [Parallel Courses III](https://leetcode.com/problems/parallel-courses-iii/) — course durations added

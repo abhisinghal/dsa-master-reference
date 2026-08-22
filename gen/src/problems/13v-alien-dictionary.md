@@ -1,24 +1,76 @@
 # Topological Sort — Alien Dictionary
 
-*[↗ LeetCode: Alien Dictionary](https://leetcode.com/problems/alien-dictionary/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
+*[↗ LeetCode: Alien Dictionary](https://leetcode.com/problems/alien-dictionary/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/topological-sort)
 
-**The one thing that changes vs the flagship for this pattern:** Build edges by comparing adjacent words' first differing character, then topo-sort the alphabet.
+Given a list of words in an alien language's dictionary order, return the letter order (any valid one) or `""` if no valid order exists.
 
-## The pattern this problem belongs to
+**Example** — `["wrt","wrf","er","ett","rftt"]` → `"wertf"`
 
-This variation of Topological Sort shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Topological Sort](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/topological-sort) — includes this problem's approach + code + trace + traps
+## Approach 1 — Try every permutation of the alphabet
 
-## Solution sketch
+O(26!). Absurd.
 
-The pattern chapter's [Topological Sort](/patterns/topological-sort) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Build a DAG from adjacent pairs, then Kahn's topo-sort
 
-1. **Read the pattern chapter's `Alien Dictionary` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** From adjacent word pairs, the **first differing character** gives an edge: earlier char → later char.
 
-## Related problems in the same pattern
+**Trap.** If a later word is a proper prefix of an earlier word (e.g. `"abc"` before `"ab"`), no valid order exists → return `""`.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/topological-sort) table for the family tree.
+```java
+String alienOrder(String[] words) {
+    Map<Character, Set<Character>> graph = new HashMap<>();
+    int[] indeg = new int[26];
+    boolean[] seen = new boolean[26];
+    for (String w : words) for (char c : w.toCharArray()) { seen[c - 'a'] = true; graph.putIfAbsent(c, new HashSet<>()); }
+    for (int i = 0; i < words.length - 1; i++) {
+        String a = words[i], b = words[i + 1];
+        if (a.length() > b.length() && a.startsWith(b)) return "";      // trap
+        int m = Math.min(a.length(), b.length());
+        for (int j = 0; j < m; j++)
+            if (a.charAt(j) != b.charAt(j)) {
+                if (graph.get(a.charAt(j)).add(b.charAt(j))) indeg[b.charAt(j) - 'a']++;
+                break;
+            }
+    }
+    Deque<Character> q = new ArrayDeque<>();
+    for (int i = 0; i < 26; i++) if (seen[i] && indeg[i] == 0) q.offer((char)('a' + i));
+    StringBuilder sb = new StringBuilder();
+    while (!q.isEmpty()) {
+        char u = q.poll(); sb.append(u);
+        for (char v : graph.get(u)) if (--indeg[v - 'a'] == 0) q.offer(v);
+    }
+    int total = 0; for (int i = 0; i < 26; i++) if (seen[i]) total++;
+    return sb.length() == total ? sb.toString() : "";
+}
+```
+
+<CodeTrace
+  title="Alien order — [wrt,wrf,er,ett,rftt]"
+  :values="['w','r','t','f','e']"
+  :windowKeys="['step']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { step: 0 }, vars: { edges: "t→f, w→e, r→t, e→r" }, note: "derive edges from adjacent pairs" },
+    { pointers: { step: 1 }, vars: { indeg: "{w:0, r:1, t:1, f:1, e:1}" }, note: "compute in-degrees" },
+    { pointers: { step: 2 }, vars: { queue: "[w]", out: "w" }, note: "start with w (in-deg 0)", added: [0] },
+    { pointers: { step: 3 }, vars: { queue: "[e]", out: "we" }, note: "pop w → e unlocks", added: [4] },
+    { pointers: { step: 6 }, vars: { out: "wertf" }, note: "final answer: wertf", added: [0,4,1,2,3] }
+  ]'
+/>
+
+**Complexity** — Time **O(C)** where C = total chars; Space **O(1)** (26 alphabet).
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Try all permutations | O(26!) | O(1) |
+| Topo-sort on DAG | **O(C)** | O(1) |
+
+## Related problems
+
+- [Course Schedule II](/problems/topological-sort-course-schedule) — canonical Kahn's
+- [Sequence Reconstruction](/problems/sequence-reconstruction) — unique topological order
+- [Verifying an Alien Dictionary](https://leetcode.com/problems/verifying-an-alien-dictionary/) — given order, verify sorted

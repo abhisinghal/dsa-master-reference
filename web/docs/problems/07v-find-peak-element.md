@@ -2,23 +2,63 @@
 
 *[↗ LeetCode: Find Peak Element](https://leetcode.com/problems/find-peak-element/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/binary-search)
 
-**The one thing that changes vs the flagship for this pattern:** no sorted array at all — just move toward the larger neighbour; you're guaranteed to climb to a peak
+A peak is `nums[i] > nums[i-1]` and `nums[i] > nums[i+1]`. Return **any** peak's index. O(log n).
 
-## The pattern this problem belongs to
+**Example 1** — `[1,2,3,1]` → `2`
+**Example 2** — `[1,2,1,3,5,6,4]` → `1` or `5`
 
-This variation of Binary Search shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Binary Search](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/binary-search) — includes this problem's approach + code + trace + traps
+## Approach 1 — Linear scan
 
-## Solution sketch
+O(n). Baseline.
 
-The pattern chapter's [Binary Search](/patterns/binary-search) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Binary search (climb uphill)
 
-1. **Read the pattern chapter's `Find Peak Element` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** At any `mid`, compare `a[mid]` with `a[mid+1]`. If `a[mid] < a[mid+1]`, a peak exists in `(mid, hi]` — climb right. Else a peak exists in `[lo, mid]` — descend left.
 
-## Related problems in the same pattern
+**Why it works.** The "uphill" side is guaranteed to hit a peak because the boundary values are `-∞`.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/binary-search) table for the family tree.
+
+
+```java
+int findPeakElement(int[] a) {
+    int lo = 0, hi = a.length - 1;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] < a[mid + 1]) lo = mid + 1;
+        else                     hi = mid;
+    }
+    return lo;
+}
+```
+
+
+
+<CodeTrace
+  title="Uphill climb — [1,2,1,3,5,6,4]"
+  :values="[1,2,1,3,5,6,4]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="38"
+  :steps='[
+    { pointers: { lo: 0, hi: 6, mid: 3 }, vars: { "a[mid]": 3, "a[mid+1]": 5 }, note: "uphill → lo = 4" },
+    { pointers: { lo: 4, hi: 6, mid: 5 }, vars: { "a[mid]": 6, "a[mid+1]": 4 }, note: "downhill → hi = 5" },
+    { pointers: { lo: 4, hi: 5, mid: 4 }, vars: { "a[mid]": 5, "a[mid+1]": 6 }, note: "uphill → lo = 5" },
+    { pointers: { lo: 5, hi: 5 }, vars: { peak: 5 }, note: "converged → peak at idx 5", added: [5] }
+  ]'
+/>
+
+**Complexity** — Time **O(log n)**; Space **O(1)**.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Linear | O(n) | O(1) |
+| BS uphill | **O(log n)** | **O(1)** |
+
+## Related problems
+
+- [Find Peak Element II (2D)](https://leetcode.com/problems/find-a-peak-element-ii/) — 2D peak
+- [Peak Index in Mountain Array](https://leetcode.com/problems/peak-index-in-a-mountain-array/) — guaranteed one peak
+- [Find in Mountain Array](https://leetcode.com/problems/find-in-mountain-array/) — peak-then-two-BS

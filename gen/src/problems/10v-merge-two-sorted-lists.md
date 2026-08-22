@@ -1,24 +1,66 @@
 # K-way Merge — Merge Two Sorted Lists
 
-*[↗ LeetCode: Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/k-way-merge)
+*[↗ LeetCode: Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/k-way-merge)
 
-**The one thing that changes vs the flagship for this pattern:** No heap needed; one comparison between two fronts is enough.
+Merge two sorted lists into one sorted list.
 
-## The pattern this problem belongs to
+**Example** — `l1=[1,2,4], l2=[1,3,4]` → `[1,1,2,3,4,4]`
 
-This variation of K-way Merge shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for K-way Merge](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/k-way-merge) — includes this problem's approach + code + trace + traps
+## Approach 1 — Dummy-head splice (iterative)
 
-## Solution sketch
+```java
+ListNode mergeTwoLists(ListNode a, ListNode b) {
+    ListNode dummy = new ListNode(0), tail = dummy;
+    while (a != null && b != null) {
+        if (a.val <= b.val) { tail.next = a; a = a.next; }
+        else                { tail.next = b; b = b.next; }
+        tail = tail.next;
+    }
+    tail.next = a != null ? a : b;
+    return dummy.next;
+}
+```
 
-The pattern chapter's [K-way Merge](/patterns/k-way-merge) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+<CodeTrace
+  title="Two-pointer splice — [1,2,4] + [1,3,4]"
+  :values="[1,2,4]"
+  :windowKeys="['step']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { step: 0 }, vars: { a: 1, b: 1, out: "" }, note: "tie → take a" },
+    { pointers: { step: 1 }, vars: { a: 2, b: 1, out: "1" }, note: "1 lt 2 → take b" },
+    { pointers: { step: 2 }, vars: { a: 2, b: 3, out: "1,1" }, note: "take a" },
+    { pointers: { step: 3 }, vars: { a: 4, b: 3, out: "1,1,2" }, note: "take b" },
+    { pointers: { step: 4 }, vars: { a: 4, b: 4, out: "1,1,2,3,4,4" }, note: "drain → final" }
+  ]'
+/>
 
-1. **Read the pattern chapter's `Merge Two Sorted Lists` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Complexity** — Time **O(n + m)**; Space **O(1)** (in-place link splice).
 
-## Related problems in the same pattern
+## Approach 2 — Recursive
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/k-way-merge) table for the family tree.
+```java
+ListNode mergeRec(ListNode a, ListNode b) {
+    if (a == null) return b;
+    if (b == null) return a;
+    if (a.val <= b.val) { a.next = mergeRec(a.next, b); return a; }
+    else                { b.next = mergeRec(a, b.next); return b; }
+}
+```
+
+**Complexity** — Time **O(n + m)**; Space **O(n + m)** stack.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Iterative splice | O(n + m) | O(1) |
+| Recursive | O(n + m) | O(n + m) stack |
+
+## Related problems
+
+- [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — same, generalized to k
+- [Sort List](https://leetcode.com/problems/sort-list/) — merge sort on linked list uses this as merge step
+- [Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) — array version, merge from the back

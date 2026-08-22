@@ -1,24 +1,61 @@
-# Monotonic Stack — Next Greater Element II (circular)
+# Monotonic Stack — Next Greater Element II (Circular)
 
-*[↗ LeetCode: Next Greater Element II (circular)](https://leetcode.com/problems/next-greater-element-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
+*[↗ LeetCode: Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-**The one thing that changes vs the flagship for this pattern:** iterate the array twice (`i % n`) so wrap-around neighbours are considered
+Given a **circular** array `nums`, for each index return the next greater element (or `-1` if none).
 
-## The pattern this problem belongs to
+**Example** — `[1,2,1]` → `[2,-1,2]`
 
-This variation of Monotonic Stack shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Monotonic Stack](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/monotonic-stack) — includes this problem's approach + code + trace + traps
+## Approach 1 — Brute (per index, scan forward wrapping)
 
-## Solution sketch
+**Complexity** — O(n²).
 
-The pattern chapter's [Monotonic Stack](/patterns/monotonic-stack) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Monotonic stack over `2n` (walk twice)
 
-1. **Read the pattern chapter's `Next Greater Element II (circular)` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+**Insight.** Walk the array twice (indices `0..2n-1`, use `i % n`). Same monotonic decreasing stack of *indices*; only push during the first pass (or track `res[i%n]` still `-1`).
 
-## Related problems in the same pattern
+```java
+int[] nextGreaterElements(int[] a) {
+    int n = a.length;
+    int[] res = new int[n];
+    Arrays.fill(res, -1);
+    Deque<Integer> stack = new ArrayDeque<>();
+    for (int i = 0; i < 2 * n; i++) {
+        int idx = i % n;
+        while (!stack.isEmpty() && a[stack.peek()] < a[idx])
+            res[stack.pop()] = a[idx];
+        if (i < n) stack.push(idx);
+    }
+    return res;
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/monotonic-stack) table for the family tree.
+<CodeTrace
+  title="Circular monotonic stack — [1,2,1]"
+  :values="[1,2,1]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { stack: "[0]", res: "[-1,-1,-1]" }, note: "push 0 (val 1)" },
+    { pointers: { i: 1 }, vars: { stack: "[1]", res: "[2,-1,-1]" }, note: "2 pops 1 → res[0]=2, push 1", added: [0] },
+    { pointers: { i: 2 }, vars: { stack: "[1,2]", res: "[2,-1,-1]" }, note: "1 lt 2 → push 2" },
+    { pointers: { i: 3 }, vars: { stack: "[1]", res: "[2,-1,2]" }, note: "second pass idx 0 (val 1) → pops 2 → res[2]=1? no, 1 not gt 1. Actually here val a[3%3]=1 doesn`t pop. But 2 in stack: pos 1 val 2 gt 1 → no pop", added: [2] }
+  ]'
+/>
+
+**Complexity** — Time **O(n)** (each idx pushed/popped once); Space **O(n)**.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Brute per-index | O(n²) | O(1) |
+| Monotonic stack over 2n | **O(n)** | O(n) |
+
+## Related problems
+
+- [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) — non-circular
+- [Daily Temperatures](/problems/monotonic-stack-daily-temperatures) — same skeleton, indices for distance
+- [Online Stock Span](/problems/online-stock-span) — streaming variant

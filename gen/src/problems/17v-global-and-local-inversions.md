@@ -2,23 +2,57 @@
 
 *[↗ LeetCode: Global and Local Inversions](https://leetcode.com/problems/global-and-local-inversions/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/divide-conquer)
 
-**The one thing that changes vs the flagship for this pattern:** Compare total inversions with local adjacent inversions; the count idea explains the distinction.
+Return `true` iff the count of **global** inversions (pairs `i < j` with `a[i] > a[j]`) equals the count of **local** inversions (adjacent pairs `a[i] > a[i+1]`).
 
-## The pattern this problem belongs to
+**Example** — `[1,0,2]` → `true` (1 global = 1 local); `[1,2,0]` → `false` (2 global, 1 local)
 
-This variation of Divide & Conquer shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Divide & Conquer](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/divide-conquer) — includes this problem's approach + code + trace + traps
+## Approach 1 — Count both directly
 
-## Solution sketch
+O(n²) for global. TLE.
 
-The pattern chapter's [Divide & Conquer](/patterns/divide-conquer) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Merge sort to count global
 
-1. **Read the pattern chapter's `Global and Local Inversions` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+Global count = inversion count via merge sort (O(n log n)); local count is O(n). Compare.
 
-## Related problems in the same pattern
+## Approach 3 — Observation trick (O(n))
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/divide-conquer) table for the family tree.
+**Insight.** Every local inversion IS a global inversion, so global ≥ local. They are equal iff no non-adjacent inversion exists — meaning every value `a[i]` is at most 1 position away from its sorted position `i`.
+
+**Rule.** Return `false` if any `|a[i] - i| > 1`.
+
+```java
+boolean isIdealPermutation(int[] a) {
+    for (int i = 0; i < a.length; i++)
+        if (Math.abs(a[i] - i) > 1) return false;
+    return true;
+}
+```
+
+<CodeTrace
+  title="Position drift check — [1,0,2]"
+  :values="[1,0,2]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { "|a[i]-i|": 1 }, note: "1 vs 0 → drift 1. OK" },
+    { pointers: { i: 1 }, vars: { "|a[i]-i|": 1 }, note: "0 vs 1 → drift 1. OK" },
+    { pointers: { i: 2 }, vars: { "|a[i]-i|": 0 }, note: "2 vs 2 → OK. answer true", added: [0,1,2] }
+  ]'
+/>
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Direct global (nested) | O(n²) | O(1) |
+| Merge sort count | O(n log n) | O(n) |
+| Drift check | **O(n)** | **O(1)** |
+
+## Related problems
+
+- [Count of Smaller Numbers After Self](/problems/divide-conquer-inversions) — merge sort framework
+- [Reverse Pairs](/problems/reverse-pairs)

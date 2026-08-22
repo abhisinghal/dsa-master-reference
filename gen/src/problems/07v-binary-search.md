@@ -1,24 +1,54 @@
-# Binary Search — Order-Agnostic Binary Search
+# Binary Search — Standard (Order-agnostic)
 
-*[↗ LeetCode: Order-Agnostic Binary Search](https://leetcode.com/problems/binary-search/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/binary-search)
+*[↗ LeetCode: Binary Search](https://leetcode.com/problems/binary-search/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/binary-search)
 
-**The one thing that changes vs the flagship for this pattern:** first peek at the ends to detect ascending vs descending, then flip the comparison accordingly
+Given a sorted array and target, return the index or `-1`. O(log n).
 
-## The pattern this problem belongs to
+**Example** — `nums=[-1,0,3,5,9,12], target=9` → `4`
 
-This variation of Binary Search shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+---
 
-- [→ Flagship problem for Binary Search](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/binary-search) — includes this problem's approach + code + trace + traps
+## Approach 1 — Linear scan
 
-## Solution sketch
+O(n). Trivial baseline.
 
-The pattern chapter's [Binary Search](/patterns/binary-search) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+## Approach 2 — Classic binary search (closed interval)
 
-1. **Read the pattern chapter's `Order-Agnostic Binary Search` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int search(int[] a, int t) {
+    int lo = 0, hi = a.length - 1;
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] == t) return mid;
+        else if (a[mid] < t) lo = mid + 1;
+        else                 hi = mid - 1;
+    }
+    return -1;
+}
+```
 
-## Related problems in the same pattern
+<CodeTrace
+  title="Binary search — target=9 in [-1,0,3,5,9,12]"
+  :values="[-1,0,3,5,9,12]"
+  :windowKeys="['lo','hi']"
+  :cellWidth="42"
+  :steps='[
+    { pointers: { lo: 0, hi: 5, mid: 2 }, vars: { "a[mid]": 3 }, note: "3 lt 9 → lo = mid+1 = 3" },
+    { pointers: { lo: 3, hi: 5, mid: 4 }, vars: { "a[mid]": 9 }, note: "match → return 4", added: [4] }
+  ]'
+/>
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/binary-search) table for the family tree.
+**Complexity** — Time **O(log n)**; Space **O(1)**.
+
+## Complexity summary
+
+| Approach | Time | Space |
+|---|---|---|
+| Linear scan | O(n) | O(1) |
+| Binary search | **O(log n)** | **O(1)** |
+
+## Related problems
+
+- [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted)
+- [Find First and Last Position of Element](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) — two binary searches
+- [Guess Number Higher or Lower](https://leetcode.com/problems/guess-number-higher-or-lower/) — interactive
