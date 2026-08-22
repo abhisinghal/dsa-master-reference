@@ -25,6 +25,42 @@ graph TD
 
 ## Traversals (iterative &amp; the recursion skeleton)
 
+```svg
+<svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="720" height="260" rx="12" fill="var(--dsa-bg)"/>
+  <text x="360" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">Same tree, four traversals</text>
+  <g font-family="var(--dsa-font)" text-anchor="middle" font-size="15" font-weight="700" fill="var(--dsa-ink)">
+    <line x1="160" y1="76" x2="110" y2="126" stroke="var(--dsa-neutral)" stroke-width="1.6"/>
+    <line x1="160" y1="76" x2="210" y2="126" stroke="var(--dsa-neutral)" stroke-width="1.6"/>
+    <line x1="110" y1="146" x2="70" y2="196" stroke="var(--dsa-neutral)" stroke-width="1.6"/>
+    <line x1="110" y1="146" x2="150" y2="196" stroke="var(--dsa-neutral)" stroke-width="1.6"/>
+    <line x1="210" y1="146" x2="250" y2="196" stroke="var(--dsa-neutral)" stroke-width="1.6"/>
+    <circle cx="160" cy="66" r="20" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.8"/><text x="160" y="72">1</text>
+    <circle cx="110" cy="136" r="20" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.8"/><text x="110" y="142">2</text>
+    <circle cx="210" cy="136" r="20" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.8"/><text x="210" y="142">3</text>
+    <circle cx="70" cy="206" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="70" y="212">4</text>
+    <circle cx="150" cy="206" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="150" y="212">5</text>
+    <circle cx="250" cy="206" r="20" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="250" y="212">6</text>
+  </g>
+  <g font-family="var(--dsa-font)" font-size="12">
+    <text x="330" y="72" font-weight="700" fill="var(--dsa-primary)">preorder (root-L-R)</text>
+    <text x="330" y="92" fill="var(--dsa-ink)">1 → 2 → 4 → 5 → 3 → 6</text>
+    <text x="330" y="122" font-weight="700" fill="var(--dsa-success)">inorder (L-root-R)</text>
+    <text x="330" y="142" fill="var(--dsa-ink)">4 → 2 → 5 → 1 → 3 → 6</text>
+    <text x="330" y="172" font-weight="700" fill="var(--dsa-warning)">postorder (L-R-root)</text>
+    <text x="330" y="192" fill="var(--dsa-ink)">4 → 5 → 2 → 6 → 3 → 1</text>
+    <text x="530" y="72" font-weight="700" fill="var(--dsa-info)">level order (BFS)</text>
+    <text x="530" y="92" fill="var(--dsa-ink)">[[1], [2,3], [4,5,6]]</text>
+  </g>
+  <rect x="524" y="108" width="176" height="84" rx="10" fill="var(--dsa-info-soft)" stroke="var(--dsa-info)" stroke-width="1.8"/>
+  <text x="612" y="128" text-anchor="middle" font-family="var(--dsa-font)" font-size="11.5" font-weight="700" fill="var(--dsa-info)">queue (FIFO)</text>
+  <text x="612" y="150" text-anchor="middle" font-family="var(--dsa-font)" font-size="11" fill="var(--dsa-ink)">1) enqueue root</text>
+  <text x="612" y="167" text-anchor="middle" font-family="var(--dsa-font)" font-size="11" fill="var(--dsa-ink)">2) pop, emit, enqueue kids</text>
+  <text x="612" y="184" text-anchor="middle" font-family="var(--dsa-font)" font-size="11" fill="var(--dsa-ink)">3) size-per-loop → depth</text>
+  <text x="360" y="240" text-anchor="middle" font-family="var(--dsa-font)" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">DFS lives on the recursion stack; BFS lives on a queue. Same tree, four orders.</text>
+</svg>
+```
+
 ### Problem
 
 Visit every node of a binary tree in the order the task requires: DFS preorder/inorder/postorder or BFS level order.

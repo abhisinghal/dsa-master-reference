@@ -63,6 +63,49 @@ a 5-10 minute Loom will be embedded here once recorded. If you'd like to be noti
 
 <ProgressCheck id="number-of-islands-grid-flood-fill" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">Flood-fill each unvisited '1' — count islands</text>
+  <g font-family="var(--dsa-font)" text-anchor="middle" font-size="15" font-weight="700" fill="var(--dsa-ink)">
+    <rect x="80" y="46" width="36" height="36" rx="6" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="98" y="70">1</text>
+    <rect x="120" y="46" width="36" height="36" rx="6" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="138" y="70">1</text>
+    <rect x="160" y="46" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="178" y="70">0</text>
+    <rect x="200" y="46" width="36" height="36" rx="6" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="218" y="70">1</text>
+    <rect x="240" y="46" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="258" y="70">0</text>
+    <rect x="80" y="86" width="36" height="36" rx="6" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="98" y="110">1</text>
+    <rect x="120" y="86" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="138" y="110">0</text>
+    <rect x="160" y="86" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="178" y="110">0</text>
+    <rect x="200" y="86" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="218" y="110">0</text>
+    <rect x="240" y="86" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="258" y="110">0</text>
+    <rect x="80" y="126" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="98" y="150">0</text>
+    <rect x="120" y="126" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="138" y="150">0</text>
+    <rect x="160" y="126" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="178" y="150">0</text>
+    <rect x="200" y="126" width="36" height="36" rx="6" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="218" y="150">1</text>
+    <rect x="240" y="126" width="36" height="36" rx="6" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="258" y="150">1</text>
+    <rect x="80" y="166" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="98" y="190">0</text>
+    <rect x="120" y="166" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="138" y="190">0</text>
+    <rect x="160" y="166" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="178" y="190">0</text>
+    <rect x="200" y="166" width="36" height="36" rx="6" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="218" y="190">1</text>
+    <rect x="240" y="166" width="36" height="36" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="258" y="190">0</text>
+  </g>
+  <rect x="290" y="50" width="86" height="30" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <text x="333" y="70" text-anchor="middle" font-family="var(--dsa-font)" font-size="12" font-weight="700" fill="var(--dsa-success)">island #1</text>
+  <rect x="290" y="88" width="86" height="30" rx="8" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <text x="333" y="108" text-anchor="middle" font-family="var(--dsa-font)" font-size="12" font-weight="700" fill="var(--dsa-primary)">island #2</text>
+  <rect x="290" y="126" width="86" height="30" rx="8" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/>
+  <text x="333" y="146" text-anchor="middle" font-family="var(--dsa-font)" font-size="12" font-weight="700" fill="var(--dsa-warning)">island #3</text>
+  <text x="200" y="222" text-anchor="middle" font-family="var(--dsa-font)" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">Each DFS/BFS from an unvisited '1' floods one component. Count = 3.</text>
+</svg>
+</div>
+
+
+
+
 ### Problem
 
 Count the number of **islands** in a grid of `'1'` (land) and `'0'` (water); an island is land connected 4-directionally.

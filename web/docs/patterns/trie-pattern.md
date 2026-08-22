@@ -97,6 +97,57 @@ The important interview move is to name the alphabet. Letter tries branch over c
 
 <ProgressCheck id="word-search-ii-trie-backtracking" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="720" height="260" rx="12" fill="var(--dsa-bg)"/>
+  <text x="360" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">Trie of {"cat","car","cop"} + DFS on grid emits "car"</text>
+  <g font-family="var(--dsa-font)" text-anchor="middle" font-size="14" font-weight="700" fill="var(--dsa-ink)">
+    <circle cx="120" cy="70" r="16" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="120" y="75" font-size="11" fill="var(--dsa-neutral)">root</text>
+    <circle cx="120" cy="125" r="16" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="120" y="130">c</text>
+    <circle cx="80" cy="175" r="16" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="80" y="180">a</text>
+    <circle cx="170" cy="175" r="16" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="170" y="180">o</text>
+    <circle cx="50" cy="225" r="16" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="50" y="230">t</text>
+    <circle cx="110" cy="225" r="16" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.2"/><text x="110" y="230">r*</text>
+    <circle cx="170" cy="225" r="16" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="170" y="230">p</text>
+    <path d="M120,86 L120,109" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" fill="none"/>
+    <path d="M110,138 L90,161" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" fill="none"/>
+    <path d="M130,138 L160,161" stroke="var(--dsa-neutral)" stroke-width="1.5" fill="none"/>
+    <path d="M75,190 L54,212" stroke="var(--dsa-neutral)" stroke-width="1.5" fill="none"/>
+    <path d="M88,190 L104,212" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" fill="none"/>
+    <path d="M170,190 L170,212" stroke="var(--dsa-neutral)" stroke-width="1.5" fill="none"/>
+  </g>
+  <g font-family="var(--dsa-font)" text-anchor="middle">
+    <text x="450" y="52" font-size="12" font-weight="700" fill="var(--dsa-neutral)">grid</text>
+    <g font-size="15" font-weight="700" fill="var(--dsa-ink)">
+      <rect x="360" y="66" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="382" y="94">c</text>
+      <rect x="410" y="66" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="432" y="94">a</text>
+      <rect x="460" y="66" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.2"/><text x="482" y="94">r</text>
+      <rect x="510" y="66" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="532" y="94">z</text>
+      <rect x="360" y="116" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="382" y="144">o</text>
+      <rect x="410" y="116" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="432" y="144">p</text>
+      <rect x="460" y="116" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="482" y="144">t</text>
+      <rect x="510" y="116" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="532" y="144">s</text>
+    </g>
+    <path d="M404,88 L410,88" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" fill="none" marker-end="url(#tw-ar)"/>
+    <path d="M454,88 L460,88" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" fill="none" marker-end="url(#tw-ar)"/>
+    <defs>
+      <marker id="tw-ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    </defs>
+    <rect x="600" y="80" width="94" height="60" rx="10" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.4"/>
+    <text x="647" y="106" font-family="var(--dsa-font)" font-size="12" font-weight="700" fill="var(--dsa-success)">found</text>
+    <text x="647" y="128" font-family="var(--dsa-font)" font-size="16" font-weight="700" fill="var(--dsa-ink)">"car"</text>
+  </g>
+  <text x="360" y="238" text-anchor="middle" font-family="var(--dsa-font)" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">DFS walks the grid; the trie prunes any prefix not in the dictionary.</text>
+</svg>
+</div>
+
+
+
+
 ### Problem
 Given a grid of letters and a dictionary, return **all dictionary words** that can be traced through **adjacent** cells (up/down/left/right), never reusing a cell within one word.
 
