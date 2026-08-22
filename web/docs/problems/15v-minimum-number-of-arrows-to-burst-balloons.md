@@ -1,24 +1,32 @@
-# Greedy — Minimum Number of Arrows
+# Greedy — Minimum Number of Arrows to Burst Balloons
 
-*[↗ LeetCode: Minimum Number of Arrows](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
+*[↗ LeetCode: Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-**The one thing that changes vs the flagship for this pattern:** the interval-cover cousin (sort by end)
+Each balloon spans `[x_start, x_end]`. A vertical arrow at `x` bursts every balloon whose span contains `x`. Minimum arrows.
 
-## The pattern this problem belongs to
+## Approach — Sort by end + shoot at end of first alive
 
-This variation of Greedy shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Sort by `x_end`. Shoot the first balloon at its end. That arrow bursts every balloon starting ≤ end. Move to first balloon starting &gt; end, repeat.
 
-- [→ Flagship problem for Greedy](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/greedy) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Greedy](/patterns/greedy) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int findMinArrowShots(int[][] points) {
+    Arrays.sort(points, (a, b) -> Integer.compare(a[1], b[1])); // avoid int overflow
+    int arrows = 1, end = points[0][1];
+    for (int i = 1; i < points.length; i++)
+        if (points[i][0] > end) { arrows++; end = points[i][1]; }
+    return arrows;
+}
+```
 
-1. **Read the pattern chapter's `Minimum Number of Arrows` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/greedy) table for the family tree.
+**Trap.** Use `Integer.compare` — subtraction can overflow when spans include `INT_MAX/INT_MIN`.
+
+**Complexity** — Time **O(n log n)**; Space **O(1)**.
+
+## Related problems
+
+- [Non-overlapping Intervals](/problems/non-overlapping-intervals) — strict inequality variant
+- [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)

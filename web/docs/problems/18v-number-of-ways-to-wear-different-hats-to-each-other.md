@@ -1,24 +1,48 @@
-# Dynamic Programming — Number of Ways to Assign (hats/jobs)
+# DP — Number of Ways to Wear Different Hats to Each Other
 
-*[↗ LeetCode: Number of Ways to Assign (hats/jobs)](https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Number of Ways to Wear Different Hats to Each Other](https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** iterate the mask of assigned people, adding one compatible assignment at a time
+`n` people (n ≤ 10), 40 hats. Each person has a preference list. Each hat used by ≤ 1 person; each person wears exactly one hat. Count assignments (mod 1e9+7).
 
-## The pattern this problem belongs to
+## Approach — Bitmask DP over people, iterate hats
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Iterate hats (there are more of them but each contributes only if some person likes it). `dp[h][mask]` = # ways to satisfy people in mask using hats `1..h`. Transition:
+- Skip hat h: `dp[h][mask] += dp[h-1][mask]`.
+- Give hat h to any person p in mask who likes it: `dp[h][mask] += dp[h-1][mask ^ (1 << p)]`.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+Answer: `dp[40][fullMask]`.
 
-## Solution sketch
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Number of Ways to Assign (hats/jobs)` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int MOD = 1_000_000_007;
+int numberWays(List<List<Integer>> hats) {
+    int n = hats.size(), full = 1 << n;
+    List<List<Integer>> hatToPeople = new ArrayList<>();
+    for (int i = 0; i <= 40; i++) hatToPeople.add(new ArrayList<>());
+    for (int p = 0; p < n; p++)
+        for (int h : hats.get(p)) hatToPeople.get(h).add(p);
+    int[] dp = new int[full];
+    dp[0] = 1;
+    for (int h = 1; h <= 40; h++) {
+        int[] nd = dp.clone();
+        for (int mask = 0; mask < full; mask++) {
+            for (int p : hatToPeople.get(h))
+                if ((mask & (1 << p)) == 0)
+                    nd[mask | (1 << p)] = (nd[mask | (1 << p)] + dp[mask]) % MOD;
+        }
+        dp = nd;
+    }
+    return dp[full - 1];
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+
+**Complexity** — Time **O(40 · 2ⁿ · n)**; Space **O(2ⁿ)**.
+
+## Related problems
+
+- [Beautiful Arrangement](/problems/beautiful-arrangement) — bitmask DP
+- [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)
+- [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes)

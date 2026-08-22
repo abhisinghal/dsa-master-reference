@@ -1,24 +1,51 @@
-# Two Pointers — Trapping Rain Water II (2D)
+# Two Pointers — Trapping Rain Water II
 
-*[↗ LeetCode: Trapping Rain Water II (2D)](https://leetcode.com/problems/trapping-rain-water-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
+*[↗ LeetCode: Trapping Rain Water II](https://leetcode.com/problems/trapping-rain-water-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** the "walls" are a whole grid boundary, so process cells outward from the lowest border using a min-heap
+2D grid of heights; compute total water trapped.
 
-## The pattern this problem belongs to
+&gt; Filed under Two Pointers because 1D Trapping Rain Water lives here, but the 2D version needs a **min-heap on the boundary**, not opposing pointers.
 
-This variation of Two Pointers shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Min-heap Dijkstra-style border expansion
 
-- [→ Flagship problem for Two Pointers](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/two-pointers) — includes this problem's approach + code + trace + traps
+**Insight.** Water is bounded by the shortest wall along any path to the boundary. Grow a "reached" frontier from all border cells; always process the **lowest wall reachable** first. When we enter a lower neighbor, water trapped = current wall - neighbor height, and that neighbor becomes a wall at the higher level.
 
-## Solution sketch
 
-The pattern chapter's [Two Pointers](/patterns/two-pointers) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Trapping Rain Water II (2D)` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int trapRainWater(int[][] h) {
+    int m = h.length, n = h[0].length;
+    if (m < 3 || n < 3) return 0;
+    boolean[][] seen = new boolean[m][n];
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            if (i == 0 || j == 0 || i == m - 1 || j == n - 1) {
+                pq.offer(new int[]{i, j, h[i][j]});
+                seen[i][j] = true;
+            }
+    int[][] D = {{1,0},{-1,0},{0,1},{0,-1}};
+    int water = 0;
+    while (!pq.isEmpty()) {
+        int[] c = pq.poll();
+        for (int[] d : D) {
+            int ni = c[0] + d[0], nj = c[1] + d[1];
+            if (ni < 0 || nj < 0 || ni >= m || nj >= n || seen[ni][nj]) continue;
+            seen[ni][nj] = true;
+            water += Math.max(0, c[2] - h[ni][nj]);
+            pq.offer(new int[]{ni, nj, Math.max(c[2], h[ni][nj])});
+        }
+    }
+    return water;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/two-pointers) table for the family tree.
+
+**Complexity** — Time **O(mn log(mn))**; Space **O(mn)**.
+
+## Related problems
+
+- [Trapping Rain Water](/problems/trapping-rain-water) — 1D
+- [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/) — same "process lowest first" trick
+- [Path With Minimum Effort](/problems/path-with-minimum-effort)

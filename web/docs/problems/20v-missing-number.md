@@ -1,24 +1,39 @@
 # Bit Manipulation — Missing Number
 
-*[↗ LeetCode: Missing Number](https://leetcode.com/problems/missing-number/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
+*[↗ LeetCode: Missing Number](https://leetcode.com/problems/missing-number/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-**The one thing that changes vs the flagship for this pattern:** XOR all indices `0..n` with all values; the survivor is the missing one
+Given `nums` containing `n` distinct numbers from `[0, n]`, return the missing one.
 
-## The pattern this problem belongs to
+**Example** — `nums=[3,0,1]` → `2`
 
-This variation of Bit Manipulation shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach 1 — Sort or hash set
 
-- [→ Flagship problem for Bit Manipulation](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bit-manip) — includes this problem's approach + code + trace + traps
+O(n log n) or O(n) with O(n) space.
 
-## Solution sketch
+## Approach 2 — Gauss sum
 
-The pattern chapter's [Bit Manipulation](/patterns/bit-manip) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+Expected sum `n(n+1)/2` minus actual sum.
 
-1. **Read the pattern chapter's `Missing Number` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+## Approach 3 — XOR fold
 
-## Related problems in the same pattern
+`missing = 0 ^ 1 ^ … ^ n ^ nums[0] ^ … ^ nums[n-1]` — every present index cancels with its own value.
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bit-manip) table for the family tree.
+
+
+```java
+int missingNumber(int[] nums) {
+    int x = nums.length;
+    for (int i = 0; i < nums.length; i++) x ^= i ^ nums[i];
+    return x;
+}
+```
+
+
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Single Number](/problems/bit-manip-single-number) — XOR canonical
+- [Find the Difference](/problems/find-the-difference) — sibling
+- [Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)

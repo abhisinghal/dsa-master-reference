@@ -1,24 +1,37 @@
-# Sliding Window — Longest Substring with At Most K Distinct
+# Sliding Window — Longest Substring With At Most K Distinct
 
-*[↗ LeetCode: Longest Substring with At Most K Distinct](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Longest Substring with At Most K Distinct Characters](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** allow up to `K` different characters instead of zero repeats; shrink while the distinct-count exceeds `K` (track counts in a small map)
+Longest substring containing at most `k` distinct characters.
 
-## The pattern this problem belongs to
+## Approach — Variable window with distinct counter
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Extend right; on new distinct char increment `distinct`. If `distinct > k`, shrink from left: decrement each char's count; when a count hits 0, decrement `distinct`.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int lengthOfLongestSubstringKDistinct(String s, int k) {
+    if (k == 0) return 0;
+    int[] cnt = new int[128];
+    int distinct = 0, best = 0, l = 0;
+    for (int r = 0; r < s.length(); r++) {
+        if (cnt[s.charAt(r)]++ == 0) distinct++;
+        while (distinct > k) {
+            if (--cnt[s.charAt(l++)] == 0) distinct--;
+        }
+        best = Math.max(best, r - l + 1);
+    }
+    return best;
+}
+```
 
-1. **Read the pattern chapter's `Longest Substring with At Most K Distinct` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(σ)**.
+
+## Related problems
+
+- [Longest Substring Without Repeating Characters](/problems/sliding-window-longest-substring) — k = ∞
+- [Fruit Into Baskets](/problems/fruit-into-baskets) — k = 2
+- [Longest Substring with At Most Two Distinct](https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/)

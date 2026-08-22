@@ -2,23 +2,33 @@
 
 *[↗ LeetCode: Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-**The one thing that changes vs the flagship for this pattern:** +seats at `first`, −seats after `last`; one sweep gives per-flight totals
+Given `n` flights and bookings `[first, last, seats]` (1-indexed inclusive), return per-flight seat totals.
 
-## The pattern this problem belongs to
+**Example** — `n=5, [[1,2,10],[2,3,20],[2,5,25]]` → `[10,55,45,25,25]`
 
-This variation of Prefix Sum shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Difference array + prefix pass
 
-- [→ Flagship problem for Prefix Sum](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/prefix-sum) — includes this problem's approach + code + trace + traps
+**Insight.** Range add `[l, r] += x` via `diff[l] += x, diff[r+1] -= x`. One prefix pass reconstructs per-position totals.
 
-## Solution sketch
 
-The pattern chapter's [Prefix Sum](/patterns/prefix-sum) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Corporate Flight Bookings` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int[] corpFlightBookings(int[][] bookings, int n) {
+    int[] diff = new int[n + 1];
+    for (int[] b : bookings) { diff[b[0] - 1] += b[2]; diff[b[1]] -= b[2]; }
+    int[] out = new int[n];
+    int run = 0;
+    for (int i = 0; i < n; i++) { run += diff[i]; out[i] = run; }
+    return out;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/prefix-sum) table for the family tree.
+
+**Complexity** — Time **O(n + b)**; Space **O(n)**.
+
+## Related problems
+
+- [Car Pooling](/problems/car-pooling) — same idea, capacity check
+- [Range Addition](/problems/range-addition)
+- [Range Addition II](/problems/range-addition-ii)

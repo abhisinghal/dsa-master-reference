@@ -115,6 +115,8 @@ Use this version when the alphabet is unknown or sparse. The algorithmic idea is
 
 <ProgressCheck id="implement-trie" />
 
+<TrieOps />
+
 ```svg
 <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
   <defs>

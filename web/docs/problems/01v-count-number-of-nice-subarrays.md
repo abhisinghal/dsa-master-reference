@@ -2,23 +2,35 @@
 
 *[↗ LeetCode: Count Number of Nice Subarrays](https://leetcode.com/problems/count-number-of-nice-subarrays/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** same trick, "K odd numbers" as the count
+Count subarrays containing exactly `k` odd numbers.
 
-## The pattern this problem belongs to
+## Approach — Treat odd = 1, even = 0 → Binary Subarrays With Sum
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Same trick: `atMost(k) - atMost(k-1)`.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int numberOfSubarrays(int[] nums, int k) {
+    return atMost(nums, k) - atMost(nums, k - 1);
+}
+int atMost(int[] nums, int k) {
+    if (k < 0) return 0;
+    int l = 0, odd = 0, res = 0;
+    for (int r = 0; r < nums.length; r++) {
+        if (nums[r] % 2 == 1) odd++;
+        while (odd > k) if (nums[l++] % 2 == 1) odd--;
+        res += r - l + 1;
+    }
+    return res;
+}
+```
 
-1. **Read the pattern chapter's `Count Number of Nice Subarrays` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Binary Subarrays With Sum](/problems/binary-subarrays-with-sum) — identical mechanics
+- [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)

@@ -1,24 +1,41 @@
-# Trie — Add and Search Word
+# Trie — Design Add and Search Words Data Structure
 
-*[↗ LeetCode: Add and Search Word](https://leetcode.com/problems/design-add-and-search-words-data-structure/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
+*[↗ LeetCode: Design Add and Search Words](https://leetcode.com/problems/design-add-and-search-words-data-structure/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
 
-**The one thing that changes vs the flagship for this pattern:** wildcard `.` branches into all children at that depth
+Support `addWord(w)` and `search(w)` where `w` may contain `'.'` matching any single letter.
 
-## The pattern this problem belongs to
+## Approach — Trie + wildcard-aware DFS
 
-This variation of Trie shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Standard trie for adds. Search recursively; when hitting `'.'`, try every child.
 
-- [→ Flagship problem for Trie](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/trie-pattern) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Trie](/patterns/trie-pattern) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+class WordDictionary {
+    static class Node { Map<Character, Node> ch = new HashMap<>(); boolean end; }
+    Node root = new Node();
+    public void addWord(String w) {
+        Node cur = root;
+        for (char c : w.toCharArray()) cur = cur.ch.computeIfAbsent(c, k -> new Node());
+        cur.end = true;
+    }
+    public boolean search(String w) { return dfs(root, w, 0); }
+    boolean dfs(Node node, String w, int i) {
+        if (i == w.length()) return node.end;
+        char c = w.charAt(i);
+        if (c != '.') return node.ch.containsKey(c) && dfs(node.ch.get(c), w, i + 1);
+        for (Node child : node.ch.values()) if (dfs(child, w, i + 1)) return true;
+        return false;
+    }
+}
+```
 
-1. **Read the pattern chapter's `Add and Search Word` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/trie-pattern) table for the family tree.
+**Complexity** — addWord: **O(L)**; search: **O(L)** avg, **O(26^L)** worst-case with all dots.
+
+## Related problems
+
+- [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/) — no wildcards
+- [Word Search II](/problems/trie-word-search-ii)
+- [Replace Words](/problems/replace-words)

@@ -1,24 +1,35 @@
 # Greedy — Best Time to Buy and Sell Stock
 
-*[↗ LeetCode: Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
+*[↗ LeetCode: Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/greedy)
 
-**The one thing that changes vs the flagship for this pattern:** track the min price so far and the best profit against it
+At most one buy + one sell. Max profit.
 
-## The pattern this problem belongs to
+## Approach 1 — Compare every pair O(n²)
 
-This variation of Greedy shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach 2 — Track running minimum
 
-- [→ Flagship problem for Greedy](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/greedy) — includes this problem's approach + code + trace + traps
+**Insight.** Maximum profit if selling on day `i` is `prices[i] - minPrice(0..i-1)`.
 
-## Solution sketch
 
-The pattern chapter's [Greedy](/patterns/greedy) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Best Time to Buy and Sell Stock` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int maxProfit(int[] prices) {
+    int min = Integer.MAX_VALUE, best = 0;
+    for (int p : prices) {
+        min = Math.min(min, p);
+        best = Math.max(best, p - min);
+    }
+    return best;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/greedy) table for the family tree.
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) — unlimited transactions, greedy sum of positives
+- [Best Time to Buy and Sell Stock III / IV](/problems/best-time-to-buy-and-sell-stock-iv) — at most k transactions, DP
+- [With Cooldown](/problems/best-time-to-buy-and-sell-stock-with-cooldown) — state machine DP
+- [With Transaction Fee](/problems/best-time-to-buy-and-sell-stock-with-transaction-fee) — state machine DP

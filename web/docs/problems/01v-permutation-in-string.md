@@ -2,23 +2,38 @@
 
 *[↗ LeetCode: Permutation in String](https://leetcode.com/problems/permutation-in-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** same as above; return true on the first match
+Return true if `s2` contains any permutation of `s1` as a substring.
 
-## The pattern this problem belongs to
+## Approach — Fixed-size window with frequency-match
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Same as anagram-matching: slide a window of size `|s1|` across `s2`; keep a 26-int count. Match when window count equals target count.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+boolean checkInclusion(String s1, String s2) {
+    if (s1.length() > s2.length()) return false;
+    int[] need = new int[26], win = new int[26];
+    for (char c : s1.toCharArray()) need[c - 'a']++;
+    int k = s1.length();
+    for (int i = 0; i < s2.length(); i++) {
+        win[s2.charAt(i) - 'a']++;
+        if (i >= k) win[s2.charAt(i - k) - 'a']--;
+        if (Arrays.equals(need, win)) return true;
+    }
+    return false;
+}
+```
 
-1. **Read the pattern chapter's `Permutation in String` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O((n - k) · 26)**; Space **O(1)**.
+
+## Optimized comparison — running match count
+
+Instead of `Arrays.equals` per step (26-cost), maintain a `matches` counter incrementally: increment when a frequency bucket becomes equal after add/remove, decrement when it moves away. Turns each step into O(1).
+
+## Related problems
+
+- [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string) — return all indices
+- [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words)

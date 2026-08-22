@@ -72,6 +72,8 @@ You need to *walk* the components (traversal, distances, colouring) — Union-Fi
 
 <ProgressCheck id="union-find-disjoint-set-union" />
 
+<UnionFindOps />
+
 ```svg
 <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
   <defs>

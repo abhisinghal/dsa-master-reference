@@ -1,24 +1,44 @@
 # Prefix Sum — Count Submatrices With Target Sum
 
-*[↗ LeetCode: Count Submatrices With Target Sum](https://leetcode.com/problems/count-submatrices-with-target-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
+*[↗ LeetCode: Count Submatrices With Target Sum](https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/prefix-sum)
 
-**The one thing that changes vs the flagship for this pattern:** fix a pair of rows, collapse columns to 1D prefix sums, then reuse the "subarray sum = k" hash-map count
+Count submatrices whose sum equals `target`.
 
-## The pattern this problem belongs to
+## Approach — Row prefix + 1D subarray-sum-K
 
-This variation of Prefix Sum shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Fix two rows `r1, r2`. Compress the column-sums between them into a 1D array; then count subarrays with sum = target using the hash-map prefix-sum trick.
 
-- [→ Flagship problem for Prefix Sum](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/prefix-sum) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Prefix Sum](/patterns/prefix-sum) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int numSubmatrixSumTarget(int[][] mat, int target) {
+    int m = mat.length, n = mat[0].length;
+    // rowsum[r][c] = sum of mat[0..r][c] prefix-by-row
+    int[][] R = new int[m][n];
+    for (int c = 0; c < n; c++) { int s = 0; for (int r = 0; r < m; r++) { s += mat[r][c]; R[r][c] = s; } }
+    int count = 0;
+    for (int r1 = 0; r1 < m; r1++)
+        for (int r2 = r1; r2 < m; r2++) {
+            Map<Integer, Integer> map = new HashMap<>();
+            map.put(0, 1);
+            int prefix = 0;
+            for (int c = 0; c < n; c++) {
+                int colSum = R[r2][c] - (r1 > 0 ? R[r1 - 1][c] : 0);
+                prefix += colSum;
+                count += map.getOrDefault(prefix - target, 0);
+                map.merge(prefix, 1, Integer::sum);
+            }
+        }
+    return count;
+}
+```
 
-1. **Read the pattern chapter's `Count Submatrices With Target Sum` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/prefix-sum) table for the family tree.
+**Complexity** — Time **O(m²·n)**; Space **O(n)** per pair.
+
+## Related problems
+
+- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — 1D building block
+- [Matrix Block Sum](/problems/matrix-block-sum)
+- [Range Sum Query 2D — Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/)

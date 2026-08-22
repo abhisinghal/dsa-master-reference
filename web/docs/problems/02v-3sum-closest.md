@@ -2,23 +2,40 @@
 
 *[↗ LeetCode: 3Sum Closest](https://leetcode.com/problems/3sum-closest/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** instead of hunting for exactly 0, track the sum closest to `target` as the pointers move
+Find three numbers whose sum is closest to `target`; return the sum.
 
-## The pattern this problem belongs to
+## Approach 1 — Triple loop O(n³)
 
-This variation of Two Pointers shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach 2 — Sort + two-pointer
 
-- [→ Flagship problem for Two Pointers](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/two-pointers) — includes this problem's approach + code + trace + traps
+**Insight.** Sort. For each `i`, use two pointers on `[i+1, n-1]`; move whichever pointer reduces distance to target.
 
-## Solution sketch
 
-The pattern chapter's [Two Pointers](/patterns/two-pointers) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `3Sum Closest` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int threeSumClosest(int[] nums, int target) {
+    Arrays.sort(nums);
+    int best = nums[0] + nums[1] + nums[2];
+    for (int i = 0; i < nums.length - 2; i++) {
+        int l = i + 1, r = nums.length - 1;
+        while (l < r) {
+            int s = nums[i] + nums[l] + nums[r];
+            if (Math.abs(s - target) < Math.abs(best - target)) best = s;
+            if (s < target) l++;
+            else if (s > target) r--;
+            else return s;
+        }
+    }
+    return best;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/two-pointers) table for the family tree.
+
+**Complexity** — Time **O(n²)**; Space **O(1)** extra.
+
+## Related problems
+
+- [3Sum](/problems/3sum)
+- [3Sum Smaller](/problems/3sum-smaller)
+- [4Sum](/problems/4sum)

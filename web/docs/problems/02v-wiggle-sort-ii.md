@@ -1,24 +1,42 @@
-# Two Pointers — Wiggle Sort
+# Two Pointers — Wiggle Sort II
 
-*[↗ LeetCode: Wiggle Sort](https://leetcode.com/problems/wiggle-sort-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
+*[↗ LeetCode: Wiggle Sort II](https://leetcode.com/problems/wiggle-sort-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** partition around the median, then interleave the two halves
+Reorder `nums` so `a[0] < a[1] > a[2] < a[3] …` (strict — differs from Wiggle Sort I).
 
-## The pattern this problem belongs to
+## Approach 1 — Sort + interleave
 
-This variation of Two Pointers shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+Sort. Place larger half at odd indices (in reverse), smaller half at even indices (in reverse). Reverse orders prevent duplicates on the boundary from colliding.
 
-- [→ Flagship problem for Two Pointers](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/two-pointers) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Two Pointers](/patterns/two-pointers) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+void wiggleSort(int[] nums) {
+    int[] sorted = nums.clone();
+    Arrays.sort(sorted);
+    int n = nums.length, mid = (n + 1) / 2, r = n - 1, i = 0;
+    // even indices get larger-of-smaller-half (reverse), odd get largest (reverse)
+    for (int k = 0; k < n; k++)
+        nums[k] = (k % 2 == 0) ? sorted[--mid] : sorted[r--];
+}
+```
 
-1. **Read the pattern chapter's `Wiggle Sort` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/two-pointers) table for the family tree.
+Wait: careful. Standard formulation: even indices ← smaller-half reversed; odd ← larger-half reversed. Reversal prevents adjacent duplicates when median values dominate.
+
+**Complexity** — Time **O(n log n)**; Space **O(n)**.
+
+## Approach 2 — Quickselect median + 3-way partition + virtual indexing
+
+**Insight.** Find median via Quickselect. Then use a virtual index mapping `A(i) = (2i + 1) % (n | 1)`. Dutch-flag partition wrt median under this mapping places larger on odd indices, smaller on even, with median centered.
+
+**Complexity** — Time **O(n)** average; Space **O(1)** extra.
+
+Code is subtle — study the classic Dutch-flag-with-virtual-index writeup before an interview.
+
+## Related problems
+
+- [Wiggle Sort I](https://leetcode.com/problems/wiggle-sort/) — non-strict, greedy swap works
+- [Kth Largest](/problems/kth-largest-element-in-an-array) — same Quickselect
+- [Sort Colors](https://leetcode.com/problems/sort-colors/) — Dutch flag partition

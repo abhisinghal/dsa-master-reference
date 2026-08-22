@@ -2,23 +2,35 @@
 
 *[↗ LeetCode: Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** over a 0/1 array, shrink only when the number of zeros in the window exceeds `K` (you may flip `K` zeros)
+Longest subarray of 1s where at most `k` zeros can be flipped.
 
-## The pattern this problem belongs to
+## Approach — Variable window bounded by zero count
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Window is valid iff it contains ≤ k zeros. Extend r; when zero count exceeds k, shrink from l.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int longestOnes(int[] nums, int k) {
+    int l = 0, zeros = 0, best = 0;
+    for (int r = 0; r < nums.length; r++) {
+        if (nums[r] == 0) zeros++;
+        while (zeros > k) {
+            if (nums[l++] == 0) zeros--;
+        }
+        best = Math.max(best, r - l + 1);
+    }
+    return best;
+}
+```
 
-1. **Read the pattern chapter's `Max Consecutive Ones III` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**"Never shrink" variant.** For a *maximum-length* answer, we can replace the `while` with an `if`: window never shrinks below its best; `best` = size of the window at the end. Same `O(n)`, simpler.
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Longest Subarray of 1's After Deleting One Element](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) — k=1 with deletion
+- [Fruit Into Baskets](/problems/fruit-into-baskets)

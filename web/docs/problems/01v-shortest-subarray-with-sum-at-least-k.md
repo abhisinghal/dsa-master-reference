@@ -1,24 +1,46 @@
-# Sliding Window — Shortest Subarray with Sum ≥ K (negatives allowed)
+# Sliding Window — Shortest Subarray With Sum at Least K
 
-*[↗ LeetCode: Shortest Subarray with Sum ≥ K (negatives allowed)](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Shortest Subarray with Sum at Least K](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-**The one thing that changes vs the flagship for this pattern:** the window breaks with negatives → switch to prefix sums + a monotonic deque
+Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 
-## The pattern this problem belongs to
+## Approach 1 — Sliding window fails
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+With negatives, sum is not monotone in window size — can't shrink safely.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+## Approach 2 — Prefix sums + monotonic deque
 
-## Solution sketch
+**Insight.** Define `P[i]` = prefix sum. Answer = min `j - i` with `P[j] - P[i] ≥ k`. For each `j`, we want the earliest `i < j` with `P[i] ≤ P[j] - k`.
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+Maintain a deque of candidate `i` indices where `P` is **increasing**. On processing `j`:
+- **Pop front** while `P[deque.front] ≤ P[j] - k` — those `i` yield candidates (record length) and can be discarded (any later `j'` picking them would give a longer subarray).
+- **Pop back** while `P[deque.back] ≥ P[j]` — a smaller-or-equal prefix at later index dominates.
 
-1. **Read the pattern chapter's `Shortest Subarray with Sum ≥ K (negatives allowed)` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+```java
+int shortestSubarray(int[] nums, int k) {
+    int n = nums.length;
+    long[] P = new long[n + 1];
+    for (int i = 0; i < n; i++) P[i + 1] = P[i] + nums[i];
+    Deque<Integer> dq = new ArrayDeque<>();
+    int best = Integer.MAX_VALUE;
+    for (int j = 0; j <= n; j++) {
+        while (!dq.isEmpty() && P[j] - P[dq.peekFirst()] >= k)
+            best = Math.min(best, j - dq.pollFirst());
+        while (!dq.isEmpty() && P[dq.peekLast()] >= P[j]) dq.pollLast();
+        dq.offerLast(j);
+    }
+    return best == Integer.MAX_VALUE ? -1 : best;
+}
+```
+
+
+
+**Complexity** — Time **O(n)**; Space **O(n)**.
+
+## Related problems
+
+- [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum) — positives only, plain window
+- [Constrained Subsequence Sum](/problems/constrained-subsequence-sum) — DP with monotonic deque
+- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) — deque template

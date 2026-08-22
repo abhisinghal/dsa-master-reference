@@ -1,24 +1,42 @@
-# Sliding Window — Longest Substring with **exactly** K distinct
+# Sliding Window — Subarrays With K Different Integers
 
-*[↗ LeetCode: Longest Substring with **exactly** K distinct](https://leetcode.com/problems/subarrays-with-k-different-integers/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Subarrays with K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** Exactly-K validity isn't monotone: a window with 3 distinct isn't "valid" for K=2 nor for K=4.
+Count subarrays with **exactly** K distinct integers.
 
-## The pattern this problem belongs to
+## Approach — At-most-K minus at-most-(K-1)
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Direct "exactly K" is hard to slide. But `exactly(K) = atMost(K) - atMost(K-1)`. Each `atMost` is standard sliding window (distinct counter).
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int subarraysWithKDistinct(int[] nums, int k) {
+    return atMost(nums, k) - atMost(nums, k - 1);
+}
+int atMost(int[] nums, int k) {
+    if (k < 0) return 0;
+    Map<Integer, Integer> cnt = new HashMap<>();
+    int l = 0, res = 0;
+    for (int r = 0; r < nums.length; r++) {
+        cnt.merge(nums[r], 1, Integer::sum);
+        while (cnt.size() > k) {
+            cnt.merge(nums[l], -1, Integer::sum);
+            if (cnt.get(nums[l]) == 0) cnt.remove(nums[l]);
+            l++;
+        }
+        res += r - l + 1;
+    }
+    return res;
+}
+```
 
-1. **Read the pattern chapter's `Longest Substring with **exactly** K distinct` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(k)**.
+
+## Related problems
+
+- [Binary Subarrays With Sum](/problems/binary-subarrays-with-sum) — same at-most trick with sums
+- [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays) — at-most on odd count
+- [Longest Substring With At Most K Distinct](/problems/longest-substring-with-at-most-k-distinct)

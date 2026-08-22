@@ -1,24 +1,47 @@
-# Dynamic Programming — Shortest Path Visiting All Nodes
+# DP — Shortest Path Visiting All Nodes
 
-*[↗ LeetCode: Shortest Path Visiting All Nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Shortest Path Visiting All Nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** BFS over `(node, mask)` states — shortest walk covering every node
+Undirected graph. Shortest length path visiting **every** node (may reuse edges/nodes; start anywhere).
 
-## The pattern this problem belongs to
+## Approach — Bitmask BFS
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** State = `(node, visitedMask)`. BFS from all `(i, 1 << i)` initial states simultaneously. Terminate when `visitedMask == fullMask`.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int shortestPathLength(int[][] graph) {
+    int n = graph.length, full = (1 << n) - 1;
+    Queue<int[]> q = new ArrayDeque<>();
+    boolean[][] seen = new boolean[n][1 << n];
+    for (int i = 0; i < n; i++) {
+        q.offer(new int[]{i, 1 << i});
+        seen[i][1 << i] = true;
+    }
+    int steps = 0;
+    while (!q.isEmpty()) {
+        for (int sz = q.size(); sz > 0; sz--) {
+            int[] cur = q.poll();
+            int node = cur[0], mask = cur[1];
+            if (mask == full) return steps;
+            for (int nb : graph[node]) {
+                int nMask = mask | (1 << nb);
+                if (!seen[nb][nMask]) { seen[nb][nMask] = true; q.offer(new int[]{nb, nMask}); }
+            }
+        }
+        steps++;
+    }
+    return -1;
+}
+```
 
-1. **Read the pattern chapter's `Shortest Path Visiting All Nodes` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+**Complexity** — Time **O(n · 2ⁿ · degree)**; Space **O(n · 2ⁿ)**.
+
+## Related problems
+
+- [Traveling Salesman] — bitmask DP for exact
+- [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats)
+- [Find the Shortest Superstring](/problems/find-the-shortest-superstring) — bitmask DP

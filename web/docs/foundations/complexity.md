@@ -17,6 +17,8 @@ Drop constants and lower-order terms, but *never* drop them silently in an inter
 
 </Callout>
 
+&lt;ComplexityCurve title="Interactive · How input size becomes runtime" :default-n="1000" /&gt;
+
 ## Input-size → target-complexity heuristic
 <p class="secgoal"><b>What & why:</b> a table that turns the problem's input limit into the complexity — and therefore the technique — the interviewer expects. Goal — learn to read `n` as a hint so you pick the right approach before writing code.</p>
 

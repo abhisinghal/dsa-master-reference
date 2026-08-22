@@ -1,24 +1,37 @@
-# Sliding Window — Fruits into Baskets
+# Sliding Window — Fruit Into Baskets
 
-*[↗ LeetCode: Fruits into Baskets](https://leetcode.com/problems/fruit-into-baskets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Fruit Into Baskets](https://leetcode.com/problems/fruit-into-baskets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** it's literally "at most **2** distinct" dressed up as picking fruit into two baskets
+Longest subarray with at most 2 distinct values.
 
-## The pattern this problem belongs to
+## Approach — Sliding window (k = 2)
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Special case of "at most k distinct" with k = 2. Same template.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int totalFruit(int[] fruits) {
+    Map<Integer, Integer> cnt = new HashMap<>();
+    int l = 0, best = 0;
+    for (int r = 0; r < fruits.length; r++) {
+        cnt.merge(fruits[r], 1, Integer::sum);
+        while (cnt.size() > 2) {
+            cnt.merge(fruits[l], -1, Integer::sum);
+            if (cnt.get(fruits[l]) == 0) cnt.remove(fruits[l]);
+            l++;
+        }
+        best = Math.max(best, r - l + 1);
+    }
+    return best;
+}
+```
 
-1. **Read the pattern chapter's `Fruits into Baskets` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Longest Substring With At Most K Distinct](/problems/longest-substring-with-at-most-k-distinct)
+- [Max Consecutive Ones III](/problems/max-consecutive-ones-iii)

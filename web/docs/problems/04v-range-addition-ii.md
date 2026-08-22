@@ -1,24 +1,29 @@
-# Prefix Sum — 2D — Range Addition II / stamping a grid
+# Prefix Sum — Range Addition II
 
-*[↗ LeetCode: 2D — Range Addition II / stamping a grid](https://leetcode.com/problems/range-addition-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
+*[↗ LeetCode: Range Addition II](https://leetcode.com/problems/range-addition-ii/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/prefix-sum)
 
-**The one thing that changes vs the flagship for this pattern:** a 2D difference array marks the four corners of each rectangle
+`m × n` matrix; each op is `[a, b]` = increment cells `[0..a-1] × [0..b-1]`. After all ops, return the count of the maximum value.
 
-## The pattern this problem belongs to
+**Example** — `m=3, n=3, ops=[[2,2],[3,3]]` → `4`
 
-This variation of Prefix Sum shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Intersection of all ops
 
-- [→ Flagship problem for Prefix Sum](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/prefix-sum) — includes this problem's approach + code + trace + traps
+**Insight.** After all ops, the max cells are precisely the intersection: `[0..min(a_i)-1] × [0..min(b_i)-1]`. Count = product of min-dimensions.
 
-## Solution sketch
 
-The pattern chapter's [Prefix Sum](/patterns/prefix-sum) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `2D — Range Addition II / stamping a grid` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int maxCount(int m, int n, int[][] ops) {
+    for (int[] op : ops) { m = Math.min(m, op[0]); n = Math.min(n, op[1]); }
+    return m * n;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/prefix-sum) table for the family tree.
+
+**Complexity** — Time **O(#ops)**; Space **O(1)**.
+
+## Related problems
+
+- [Range Addition](/problems/range-addition) — 1D
+- [Corporate Flight Bookings](/problems/corporate-flight-bookings)

@@ -1,24 +1,58 @@
 # Hashing — Word Ladder
 
-*[↗ LeetCode: Word Ladder](https://leetcode.com/problems/word-ladder/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
+*[↗ LeetCode: Word Ladder](https://leetcode.com/problems/word-ladder/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bfs)
 
-**The one thing that changes vs the flagship for this pattern:** words linked by 1-letter edits
+Transform `beginWord` → `endWord` by changing one letter at a time; each intermediate must be in dict. Return length (or 0).
 
-## The pattern this problem belongs to
+## Approach 1 — BFS over full word graph
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+Naïvely, edges are all word pairs differing in 1 char → **O(N² · L)** to build.
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
+## Approach 2 — BFS via wildcard-key hashing
 
-## Solution sketch
+**Insight.** For each word, generate `L` patterns like `"h*t"`, `"*ot"` and bucket words by pattern. Two words are neighbors iff they share a wildcard bucket. Traversal touches each pattern once.
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Word Ladder` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
+```java
+int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    Set<String> dict = new HashSet<>(wordList);
+    if (!dict.contains(endWord)) return 0;
+    Map<String, List<String>> buckets = new HashMap<>();
+    for (String w : dict)
+        for (int i = 0; i < w.length(); i++) {
+            String k = w.substring(0, i) + "*" + w.substring(i + 1);
+            buckets.computeIfAbsent(k, x -> new ArrayList<>()).add(w);
+        }
+    Queue<String> q = new ArrayDeque<>();
+    Set<String> seen = new HashSet<>();
+    q.add(beginWord); seen.add(beginWord);
+    int steps = 1;
+    while (!q.isEmpty()) {
+        for (int sz = q.size(); sz > 0; sz--) {
+            String w = q.poll();
+            if (w.equals(endWord)) return steps;
+            for (int i = 0; i < w.length(); i++) {
+                String k = w.substring(0, i) + "*" + w.substring(i + 1);
+                for (String nb : buckets.getOrDefault(k, List.of()))
+                    if (seen.add(nb)) q.add(nb);
+            }
+        }
+        steps++;
+    }
+    return 0;
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+
+
+## Approach 3 — Bidirectional BFS
+
+Expand from both ends; stop when frontiers meet. Roughly halves the exponent → O(2 · b^(d/2)).
+
+**Complexity** — Time **O(N · L²)**; Space **O(N · L²)** for buckets.
+
+## Related problems
+
+- [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) — return all paths, needs parent map + DFS reconstruct
+- [Minimum Genetic Mutation](https://leetcode.com/problems/minimum-genetic-mutation/) — same pattern

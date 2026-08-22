@@ -1,24 +1,40 @@
 # Backtracking — Valid Sudoku
 
-*[↗ LeetCode: Valid Sudoku](https://leetcode.com/problems/valid-sudoku/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: Valid Sudoku](https://leetcode.com/problems/valid-sudoku/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-**The one thing that changes vs the flagship for this pattern:** no search at all — only check the occupancy sets for conflicts
+Check partial Sudoku validity (no duplicates within any row/col/box among filled cells).
 
-## The pattern this problem belongs to
+## Approach 1 — Three passes
 
-This variation of Backtracking shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+Rows, columns, boxes — separate scans. O(81).
 
-- [→ Flagship problem for Backtracking](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/backtracking) — includes this problem's approach + code + trace + traps
+## Approach 2 — One pass with encoded keys
 
-## Solution sketch
+**Insight.** Emit three keys per filled cell into a set: `"r{r}={d}"`, `"c{c}={d}"`, `"b{r/3}{c/3}={d}"`. Any duplicate = invalid.
 
-The pattern chapter's [Backtracking](/patterns/backtracking) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Valid Sudoku` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
+```java
+boolean isValidSudoku(char[][] board) {
+    Set<String> seen = new HashSet<>();
+    for (int r = 0; r < 9; r++)
+        for (int c = 0; c < 9; c++) {
+            char d = board[r][c];
+            if (d == '.') continue;
+            if (!seen.add("r" + r + d) || !seen.add("c" + c + d) || !seen.add("b" + r/3 + c/3 + d)) return false;
+        }
+    return true;
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/backtracking) table for the family tree.
+
+
+## Approach 3 — Bitmasks (fastest)
+
+`rows[9]`, `cols[9]`, `boxes[9]` as ints. Check + set the bit for each cell. Same shape as Sudoku Solver.
+
+**Complexity** — Time **O(1)** (fixed 81); Space **O(1)**.
+
+## Related problems
+
+- [Sudoku Solver](/problems/sudoku-solver) — full backtracking

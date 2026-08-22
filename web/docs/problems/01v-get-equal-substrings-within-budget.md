@@ -2,23 +2,31 @@
 
 *[↗ LeetCode: Get Equal Substrings Within Budget](https://leetcode.com/problems/get-equal-substrings-within-budget/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** shrink when the total change-cost inside the window exceeds the budget
+Given `s`, `t`, `maxCost`. Convert `s[i]` → `t[i]` costs `|s[i] - t[i]|`. Return the longest substring convertible within `maxCost`.
 
-## The pattern this problem belongs to
+## Approach — Sliding window on the cost array
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Compute `diff[i] = |s[i] - t[i]|`. Now: longest subarray with sum ≤ maxCost — classic positive-only sliding window.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int equalSubstring(String s, String t, int maxCost) {
+    int l = 0, cost = 0, best = 0;
+    for (int r = 0; r < s.length(); r++) {
+        cost += Math.abs(s.charAt(r) - t.charAt(r));
+        while (cost > maxCost) cost -= Math.abs(s.charAt(l) - t.charAt(l++));
+        best = Math.max(best, r - l + 1);
+    }
+    return best;
+}
+```
 
-1. **Read the pattern chapter's `Get Equal Substrings Within Budget` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Longest Substring With At Most K Distinct](/problems/longest-substring-with-at-most-k-distinct)
+- [Max Consecutive Ones III](/problems/max-consecutive-ones-iii)

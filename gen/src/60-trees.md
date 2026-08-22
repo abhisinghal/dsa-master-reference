@@ -360,6 +360,8 @@ O(h) recursion stack, O(n) worst case.
 
 <ProgressCheck id="validate-bst-amp-bst-operations" />
 
+<BstOps />
+
 ### Problem
 
 Decide whether a binary tree is a valid **BST** — every node greater than all values in its left subtree and less than all in its right (not just its immediate children).

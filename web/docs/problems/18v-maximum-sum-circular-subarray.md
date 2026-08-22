@@ -1,24 +1,38 @@
-# Dynamic Programming — Maximum Sum Circular Subarray
+# DP — Maximum Sum Circular Subarray
 
 *[↗ LeetCode: Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** answer = max(normal Kadane, total − **min**-subarray)
+Max subarray sum in a **circular** array.
 
-## The pattern this problem belongs to
+## Approach — Kadane on both max and min
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Answer is either:
+- **Non-wrapping**: standard Kadane max.
+- **Wrapping**: `totalSum - minSubarraySum` (subtract out the "middle").
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+Return `max(kadaneMax, total - kadaneMin)`. **Edge case:** if all numbers are negative, `total - kadaneMin` computes to 0 (empty subarray) — return `kadaneMax` instead.
 
-## Solution sketch
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Maximum Sum Circular Subarray` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int maxSubarraySumCircular(int[] nums) {
+    int total = 0, curMax = 0, curMin = 0, maxSum = nums[0], minSum = nums[0];
+    for (int x : nums) {
+        total += x;
+        curMax = Math.max(curMax + x, x);
+        maxSum = Math.max(maxSum, curMax);
+        curMin = Math.min(curMin + x, x);
+        minSum = Math.min(minSum, curMin);
+    }
+    return maxSum > 0 ? Math.max(maxSum, total - minSum) : maxSum;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Maximum Subarray](/problems/maximum-subarray) — Kadane
+- [Maximum Product Subarray](/problems/maximum-product-subarray)

@@ -1,24 +1,35 @@
-# Dynamic Programming — Delete and Earn
+# DP — Delete and Earn
 
 *[↗ LeetCode: Delete and Earn](https://leetcode.com/problems/delete-and-earn/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** bucket the array by value, then it's House Robber over `value × count`
+Delete a number x to earn x points, but doing so also removes all x-1 and x+1. Maximize points.
 
-## The pattern this problem belongs to
+## Approach — Reduce to House Robber
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Bucket totals: `points[v] = v · count(v)`. Picking `v` forbids `v±1` — this is exactly House Robber on the `points[]` array indexed by value.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int deleteAndEarn(int[] nums) {
+    int max = 0;
+    for (int x : nums) max = Math.max(max, x);
+    int[] points = new int[max + 1];
+    for (int x : nums) points[x] += x;
+    int prev = 0, curr = 0;
+    for (int v = 0; v <= max; v++) {
+        int t = Math.max(curr, prev + points[v]);
+        prev = curr; curr = t;
+    }
+    return curr;
+}
+```
 
-1. **Read the pattern chapter's `Delete and Earn` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+**Complexity** — Time **O(n + max)**; Space **O(max)**.
+
+## Related problems
+
+- [House Robber](/problems/dp-house-robber) — the reduction target
+- [House Robber II](/problems/house-robber-ii)

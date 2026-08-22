@@ -1,24 +1,39 @@
-# Dynamic Programming — Target Sum
+# DP — Target Sum
 
 *[↗ LeetCode: Target Sum](https://leetcode.com/problems/target-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** assigning ± signs reduces to "subset summing to `(sum+target)/2`" → count instead of boolean
+Assign + or - to each num; count ways to reach `target`.
 
-## The pattern this problem belongs to
+## Approach 1 — Backtracking
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+O(2ⁿ). Baseline.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+## Approach 2 — Reduce to subset-sum count
 
-## Solution sketch
+**Insight.** Let `P` = sum of + numbers, `N` = sum of - numbers. Then `P - N = target` and `P + N = total`. So `P = (total + target) / 2`. Count subsets summing to P.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Target Sum` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
+```java
+int findTargetSumWays(int[] nums, int target) {
+    int total = 0;
+    for (int x : nums) total += x;
+    if (Math.abs(target) > total || (total + target) % 2 != 0) return 0;
+    int P = (total + target) / 2;
+    int[] dp = new int[P + 1];
+    dp[0] = 1;
+    for (int x : nums)
+        for (int j = P; j >= x; j--)
+            dp[j] += dp[j - x];
+    return dp[P];
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+
+
+**Complexity** — Time **O(n · P)**; Space **O(P)**.
+
+## Related problems
+
+- [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)
+- [Coin Change II](/problems/coin-change-ii)

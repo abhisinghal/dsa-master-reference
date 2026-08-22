@@ -271,3 +271,5 @@ O(n) because each entry stores value and min-so-far.
 Stack↔queue conversions rest on the observation that reversing twice restores order; the amortized cost is O(1) because each element is transferred once.
 
 </Callout>
+
+&lt;StackQueueOps /&gt;

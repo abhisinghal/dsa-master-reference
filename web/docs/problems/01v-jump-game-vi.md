@@ -1,24 +1,38 @@
 # Sliding Window — Jump Game VI
 
-*[↗ LeetCode: Jump Game VI](https://leetcode.com/problems/jump-game-vi/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Jump Game VI](https://leetcode.com/problems/jump-game-vi/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** the deque holds the best `dp` value reachable within the jump range; front = best score to jump from
+Start at 0. At index i, jump 1..k steps. Max total score.
 
-## The pattern this problem belongs to
+## Approach — DP + monotonic deque (sliding window max)
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `dp[i] = nums[i] + max(dp[i-k..i-1])`. Window max via deque of indices with decreasing `dp`.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int maxResult(int[] nums, int k) {
+    int n = nums.length;
+    int[] dp = new int[n];
+    dp[0] = nums[0];
+    Deque<Integer> dq = new ArrayDeque<>();
+    dq.offerLast(0);
+    for (int i = 1; i < n; i++) {
+        if (dq.peekFirst() < i - k) dq.pollFirst();
+        dp[i] = nums[i] + dp[dq.peekFirst()];
+        while (!dq.isEmpty() && dp[dq.peekLast()] <= dp[i]) dq.pollLast();
+        dq.offerLast(i);
+    }
+    return dp[n - 1];
+}
+```
 
-1. **Read the pattern chapter's `Jump Game VI` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(n)**.
+
+## Related problems
+
+- [Constrained Subsequence Sum](/problems/constrained-subsequence-sum) — same deque idea
+- [Jump Game II](/problems/greedy-jump-game-ii)
+- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) — the primitive

@@ -1,24 +1,34 @@
 # Hashing — Isomorphic Strings
 
-*[↗ LeetCode: Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
+*[↗ LeetCode: Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
-**The one thing that changes vs the flagship for this pattern:** same **structure** (`"egg"`≡`"add"`)
+Return true iff there's a **bijection** of characters mapping `s → t`.
 
-## The pattern this problem belongs to
+## Approach — Two maps (or two arrays)
 
-This variation of Hashing shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** One-way map is insufficient — need to forbid two source chars mapping to the same target. Track both `s→t` and `t→s`.
 
-- [→ Flagship problem for Hashing](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/hashing) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Hashing](/patterns/hashing) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+boolean isIsomorphic(String s, String t) {
+    int[] fwd = new int[256], bwd = new int[256];
+    for (int i = 0; i < s.length(); i++) {
+        char a = s.charAt(i), b = t.charAt(i);
+        if (fwd[a] == 0 && bwd[b] == 0) { fwd[a] = b; bwd[b] = a; }
+        else if (fwd[a] != b || bwd[b] != a) return false;
+    }
+    return true;
+}
+```
 
-1. **Read the pattern chapter's `Isomorphic Strings` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/hashing) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(σ)**.
+
+**Alternative "first-index" trick.** Two strings are isomorphic iff `firstIndex(s[i]) == firstIndex(t[i])` for all i. One pass.
+
+## Related problems
+
+- [Word Pattern](https://leetcode.com/problems/word-pattern/) — same bijection with words
+- [Group Shifted Strings](/problems/group-shifted-strings) — canonical-key variant

@@ -1,24 +1,31 @@
-# Bit Manipulation — Find the Difference / Set Mismatch
+# Bit Manipulation — Find the Difference
 
-*[↗ LeetCode: Find the Difference / Set Mismatch](https://leetcode.com/problems/find-the-difference/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
+*[↗ LeetCode: Find the Difference](https://leetcode.com/problems/find-the-difference/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-**The one thing that changes vs the flagship for this pattern:** XOR the two collections so shared characters cancel, leaving the odd one out
+`t` is `s` with one extra letter shuffled. Find that letter.
 
-## The pattern this problem belongs to
+**Example** — `s="abcd", t="abcde"` → `'e'`
 
-This variation of Bit Manipulation shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — XOR fold
 
-- [→ Flagship problem for Bit Manipulation](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bit-manip) — includes this problem's approach + code + trace + traps
+XOR every character of s and t; duplicates cancel; result is the added letter.
 
-## Solution sketch
 
-The pattern chapter's [Bit Manipulation](/patterns/bit-manip) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Find the Difference / Set Mismatch` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+char findTheDifference(String s, String t) {
+    int x = 0;
+    for (char c : s.toCharArray()) x ^= c;
+    for (char c : t.toCharArray()) x ^= c;
+    return (char) x;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bit-manip) table for the family tree.
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Single Number](/problems/bit-manip-single-number)
+- [Missing Number](/problems/missing-number)

@@ -84,6 +84,8 @@ You need to *walk* the components (traversal, distances, colouring) — Union-Fi
 
 <ProgressCheck id="union-find-disjoint-set-union" />
 
+&lt;UnionFindOps /&gt;
+
 
 
 

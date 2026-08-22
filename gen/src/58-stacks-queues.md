@@ -219,3 +219,5 @@ O(n) because each entry stores value and min-so-far.
 - **Implement queue with two stacks** — amortized O(1): push onto `in`; when popping, if `out` empty, pour `in`→`out` (reversing order). Each element moves at most twice.
 
 > [key] **Key Insight** — Stack↔queue conversions rest on the observation that reversing twice restores order; the amortized cost is O(1) because each element is transferred once.
+
+<StackQueueOps />

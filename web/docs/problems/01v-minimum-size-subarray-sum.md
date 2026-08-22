@@ -2,23 +2,39 @@
 
 *[↗ LeetCode: Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** this exact shape (positive values, sum ≥ target)
+Smallest contiguous subarray with sum ≥ `target`. (Positive integers.)
 
-## The pattern this problem belongs to
+## Approach 1 — O(n²) brute force
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach 2 — Sliding window
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+**Insight.** With **positive** values, `sum` is monotone in window size. Extend r; while sum ≥ target, shrink from l tracking min length.
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Minimum Size Subarray Sum` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int minSubArrayLen(int target, int[] nums) {
+    int l = 0, sum = 0, best = Integer.MAX_VALUE;
+    for (int r = 0; r < nums.length; r++) {
+        sum += nums[r];
+        while (sum >= target) {
+            best = Math.min(best, r - l + 1);
+            sum -= nums[l++];
+        }
+    }
+    return best == Integer.MAX_VALUE ? 0 : best;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Approach 3 — Prefix sum + binary search
+
+Compute prefix sums; for each `i`, binary-search the smallest `j ≥ i` with `prefix[j] - prefix[i] ≥ target`. O(n log n). Necessary when the array has **negatives** (window fails); see Shortest Subarray with Sum at Least K.
+
+## Related problems
+
+- [Shortest Subarray with Sum at Least K](/problems/shortest-subarray-with-sum-at-least-k) — with negatives → monotonic deque
+- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — count, not length

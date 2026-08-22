@@ -1,24 +1,45 @@
 # Trie — Concatenated Words
 
-*[↗ LeetCode: Concatenated Words](https://leetcode.com/problems/concatenated-words/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
+*[↗ LeetCode: Concatenated Words](https://leetcode.com/problems/concatenated-words/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-**The one thing that changes vs the flagship for this pattern:** a trie of all words + DFS to test whether a word is built from shorter ones
+Return all words in the dictionary that are concatenations of **two or more** other words in the dictionary.
 
-## The pattern this problem belongs to
+## Approach — Sort by length + DP with trie / word-set
 
-This variation of Trie shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Sort words shortest-first. For each word, check if it can be split into ≥ 2 shorter dictionary words using DP (Word Break style). Use a hash set of words seen so far.
 
-- [→ Flagship problem for Trie](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/trie-pattern) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Trie](/patterns/trie-pattern) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+List<String> findAllConcatenatedWordsInADict(String[] words) {
+    Arrays.sort(words, (a, b) -> a.length() - b.length());
+    Set<String> dict = new HashSet<>();
+    List<String> out = new ArrayList<>();
+    for (String w : words) {
+        if (canForm(w, dict)) out.add(w);
+        dict.add(w);
+    }
+    return out;
+}
+boolean canForm(String w, Set<String> dict) {
+    if (dict.isEmpty()) return false;
+    boolean[] dp = new boolean[w.length() + 1];
+    dp[0] = true;
+    for (int i = 1; i <= w.length(); i++)
+        for (int j = 0; j < i; j++)
+            if (dp[j] && dict.contains(w.substring(j, i))) { dp[i] = true; break; }
+    return dp[w.length()];
+}
+```
 
-1. **Read the pattern chapter's `Concatenated Words` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/trie-pattern) table for the family tree.
+**Complexity** — Time **O(N · L²)** where L = max length; Space **O(N + L)**.
+
+**Alternative** — build a trie for O(L²) per word using trie-walk instead of substring lookup.
+
+## Related problems
+
+- [Word Break](https://leetcode.com/problems/word-break/) — single-word variant
+- [Word Break II](https://leetcode.com/problems/word-break-ii/) — return all sentences
+- [Word Search II](/problems/trie-word-search-ii)

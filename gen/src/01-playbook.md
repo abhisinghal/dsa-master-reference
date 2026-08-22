@@ -18,6 +18,8 @@ The strongest candidates rarely produce the cleverest algorithm — they produce
 
 > [inv] **Invariant of the loop** — you never write real code you can't already justify. If you can't state the invariant in one sentence (phase 4), you're not ready for phase 5 — go back.
 
+<PlaybookPhases problem="Longest Substring Without Repeating Characters" example='s = "abcabcbb"' />
+
 ## Reading the signals — trigger → say this
 
 The recognition table (Part II) maps *problem words* → *pattern*. This one maps the same triggers to the **sentence** that shows the interviewer you saw it.

@@ -2,23 +2,37 @@
 
 *[↗ LeetCode: Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** the window is valid while `windowLen − countOfMostFrequentChar ≤ K` (you may replace up to `K` of the minority)
+Longest substring achievable by replacing at most `k` characters so all become identical.
 
-## The pattern this problem belongs to
+## Approach — Sliding window with `maxCount`
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** A window `[l, r]` is valid iff `windowLen - maxCount ≤ k` (where `maxCount` is the most frequent letter's count in the window). We don't need to shrink `maxCount` precisely — once we lock in a `maxCount`, only a **larger** window with a strictly larger max is interesting.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int characterReplacement(String s, int k) {
+    int[] cnt = new int[26];
+    int l = 0, maxCount = 0, best = 0;
+    for (int r = 0; r < s.length(); r++) {
+        cnt[s.charAt(r) - 'A']++;
+        maxCount = Math.max(maxCount, cnt[s.charAt(r) - 'A']);
+        if (r - l + 1 - maxCount > k) {
+            cnt[s.charAt(l++) - 'A']--;
+        }
+        best = Math.max(best, r - l + 1);
+    }
+    return best;
+}
+```
 
-1. **Read the pattern chapter's `Longest Repeating Character Replacement` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Why the "lazy maxCount" is OK.** We only care about finding the best `best`; if `maxCount` becomes stale (window's real max is lower), we still shrink by exactly one per step, but never grow the answer. The final `best` remains correct.
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Longest Substring With At Most K Distinct](/problems/longest-substring-with-at-most-k-distinct)
+- [Replace the Substring for Balanced String](/problems/replace-the-substring-for-balanced-string)

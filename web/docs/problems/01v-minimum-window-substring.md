@@ -1,24 +1,47 @@
 # Sliding Window — Minimum Window Substring
 
-*[↗ LeetCode: Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** validity is "covers all required characters," tracked with a have/need counter
+Smallest window in `s` containing every char of `t` (with multiplicity).
 
-## The pattern this problem belongs to
+## Approach 1 — Enumerate all substrings
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+O(n²·|t|).
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+## Approach 2 — Sliding window + need/have counter
 
-## Solution sketch
+**Insight.** Track `need = Σ counts in t`. Maintain a window; extend `r`; whenever a character reduces the "deficit", decrement `have`. Once `have == need`, shrink from `l` while the window still satisfies. Record min.
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Minimum Window Substring` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
+```java
+String minWindow(String s, String t) {
+    int[] need = new int[128];
+    for (char c : t.toCharArray()) need[c]++;
+    int required = t.length(), have = 0;
+    int bestL = 0, bestLen = Integer.MAX_VALUE;
+    int l = 0;
+    for (int r = 0; r < s.length(); r++) {
+        char c = s.charAt(r);
+        if (need[c]-- > 0) have++;
+        while (have == required) {
+            if (r - l + 1 < bestLen) { bestLen = r - l + 1; bestL = l; }
+            char lc = s.charAt(l++);
+            if (++need[lc] > 0) have--;
+        }
+    }
+    return bestLen == Integer.MAX_VALUE ? "" : s.substring(bestL, bestL + bestLen);
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+
+
+**Invariant.** `need[c]` may go negative for chars over-represented in the window — that's fine; only positive values count toward deficit.
+
+**Complexity** — Time **O(n)**; Space **O(σ)**.
+
+## Related problems
+
+- [Minimum Window Subsequence](/problems/minimum-window-subsequence) — order matters
+- [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words)
+- [Permutation in String](/problems/permutation-in-string)

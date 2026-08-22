@@ -1,24 +1,42 @@
-# Dynamic Programming — Perfect Squares
+# DP — Perfect Squares
 
 *[↗ LeetCode: Perfect Squares](https://leetcode.com/problems/perfect-squares/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** the "coins" are the square numbers `1, 4, 9, 16, …`; minimize the count
+Min count of perfect squares summing to `n`.
 
-## The pattern this problem belongs to
+## Approach 1 — DP (min coin change, coins = squares)
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Standard unbounded-min-coin: `dp[i] = 1 + min(dp[i - k²])` over all `k² ≤ i`.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int numSquares(int n) {
+    int[] dp = new int[n + 1];
+    Arrays.fill(dp, Integer.MAX_VALUE);
+    dp[0] = 0;
+    for (int i = 1; i <= n; i++)
+        for (int k = 1; k * k <= i; k++)
+            if (dp[i - k * k] != Integer.MAX_VALUE)
+                dp[i] = Math.min(dp[i], dp[i - k * k] + 1);
+    return dp[n];
+}
+```
 
-1. **Read the pattern chapter's `Perfect Squares` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+**Complexity** — Time **O(n · √n)**; Space **O(n)**.
+
+## Approach 2 — Lagrange's four-square theorem
+
+Every positive integer = sum of ≤ 4 squares. Result is always in `{1, 2, 3, 4}`.
+- 1 iff n is a perfect square.
+- 4 iff n = 4^k · (8m + 7) (Legendre's three-square theorem).
+- Else check if n = a² + b² for some a, b → return 2; else return 3.
+
+**O(√n)** — beat the DP.
+
+## Related problems
+
+- [Coin Change](/problems/coin-change) — min-count with arbitrary coins
+- [Word Break](https://leetcode.com/problems/word-break/)

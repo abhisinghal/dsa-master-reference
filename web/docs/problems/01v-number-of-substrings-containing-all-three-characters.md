@@ -2,23 +2,34 @@
 
 *[↗ LeetCode: Number of Substrings Containing All Three Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** count from the *shrinking* side: `count += left` at each valid `right`
+Count substrings containing at least one 'a', one 'b', one 'c'.
 
-## The pattern this problem belongs to
+## Approach — For each r, count valid `l`s
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Once window `[l, r]` contains all three, **every** `l' ≤ l` also works up to r. So for each r, add `l` (the smallest left with all three) to the answer. Then continue extending r.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int numberOfSubstrings(String s) {
+    int[] cnt = new int[3];
+    int l = 0, res = 0;
+    for (int r = 0; r < s.length(); r++) {
+        cnt[s.charAt(r) - 'a']++;
+        while (cnt[0] > 0 && cnt[1] > 0 && cnt[2] > 0) {
+            cnt[s.charAt(l++) - 'a']--;
+        }
+        res += l; // number of valid starts is `l` (0..l-1)
+    }
+    return res;
+}
+```
 
-1. **Read the pattern chapter's `Number of Substrings Containing All Three Characters` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Longest Substring With At Most K Distinct](/problems/longest-substring-with-at-most-k-distinct)
+- [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)

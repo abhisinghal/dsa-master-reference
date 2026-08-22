@@ -1,24 +1,40 @@
 # Two Pointers — Intersection of Two Arrays II
 
-*[↗ LeetCode: Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
+*[↗ LeetCode: Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** sort both, then two pointers advancing the smaller side
+Return the multi-set intersection (each element appears `min(count_a, count_b)` times).
 
-## The pattern this problem belongs to
+## Approach 1 — Hash map count
 
-This variation of Two Pointers shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+Count nums1, iterate nums2, decrement. **O(n+m)** time, **O(n)** space.
 
-- [→ Flagship problem for Two Pointers](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/two-pointers) — includes this problem's approach + code + trace + traps
+## Approach 2 — Sort + two-pointer
 
-## Solution sketch
+**Insight.** After sorting, walk both arrays; on equal, emit and advance both.
 
-The pattern chapter's [Two Pointers](/patterns/two-pointers) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Intersection of Two Arrays II` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
+```java
+int[] intersect(int[] nums1, int[] nums2) {
+    Arrays.sort(nums1); Arrays.sort(nums2);
+    List<Integer> out = new ArrayList<>();
+    int i = 0, j = 0;
+    while (i < nums1.length && j < nums2.length) {
+        if (nums1[i] == nums2[j]) { out.add(nums1[i]); i++; j++; }
+        else if (nums1[i] < nums2[j]) i++;
+        else j++;
+    }
+    return out.stream().mapToInt(Integer::intValue).toArray();
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/two-pointers) table for the family tree.
+
+
+**Time O((n+m) log(n+m))**, **Space O(1)** extra.
+
+**Follow-up.** If nums1 is huge and streamed from disk, hash-map on the smaller side. If both sorted, two-pointer is O(1) extra memory.
+
+## Related problems
+
+- [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) — set intersection
+- [Merge Sorted Array](/problems/merge-sorted-array) — same two-pointer walk

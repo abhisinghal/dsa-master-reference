@@ -84,6 +84,8 @@ For a min-heap, insert always starts at the next open array slot. Suppose the he
 
 Polling is symmetric. Remove root `2`, move last `8` to root: `[8, 6, 3, 10, 7]`. Compare children `6` and `3`; swap with smaller child `3`: `[3, 6, 8, 10, 7]`. Now `8` has no smaller child, so stop. This is why heap operations are predictable even when the internal array looks only half-sorted.
 
+<HeapOps />
+
 ### Java `PriorityQueue` operation costs
 
 | Operation | Cost | Notes |

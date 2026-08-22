@@ -2,23 +2,51 @@
 
 *[↗ LeetCode: Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-**The one thing that changes vs the flagship for this pattern:** key the map on `pre mod k` instead of the raw prefix
+Count contiguous subarrays whose sum is divisible by `k`.
 
-## The pattern this problem belongs to
+**Example** — `nums=[4,5,0,-2,-3,1], k=5` → `7`
 
-This variation of Prefix Sum shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Prefix mod + hash map
 
-- [→ Flagship problem for Prefix Sum](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/prefix-sum) — includes this problem's approach + code + trace + traps
+**Insight.** Subarray sum divisible by k iff `P[j] ≡ P[i] (mod k)`. Count prefix-remainders; matches with each other = valid subarrays.
 
-## Solution sketch
+**Trap.** For negatives, use `((prefix % k) + k) % k` for positive modulo.
 
-The pattern chapter's [Prefix Sum](/patterns/prefix-sum) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Subarray Sums Divisible by K` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
+```java
+int subarraysDivByK(int[] nums, int k) {
+    Map<Integer, Integer> cnt = new HashMap<>();
+    cnt.put(0, 1);
+    int prefix = 0, ans = 0;
+    for (int x : nums) {
+        prefix = ((prefix + x) % k + k) % k;
+        ans += cnt.getOrDefault(prefix, 0);
+        cnt.merge(prefix, 1, Integer::sum);
+    }
+    return ans;
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/prefix-sum) table for the family tree.
+
+
+<CodeTrace
+  title="Prefix mod — nums=[4,5,0,-2,-3,1], k=5"
+  :values="[4,5,0,-2,-3,1]"
+  :windowKeys="['i']"
+  :cellWidth="46"
+  :steps='[
+    { pointers: { i: 0 }, vars: { prefix: 4, ans: 0, cnt: "{0:1,4:1}" }, note: "prefix mod 5 = 4" },
+    { pointers: { i: 1 }, vars: { prefix: 4, ans: 1, cnt: "{0:1,4:2}" }, note: "seen 4 already → +1" },
+    { pointers: { i: 4 }, vars: { prefix: 4, ans: 4, cnt: "{...4:3}" }, note: "3 pairs so far", added: [1,3,4] },
+    { pointers: { i: 5 }, vars: { prefix: 0, ans: 7 }, note: "seen[0]=1+more → final 7" }
+  ]'
+/>
+
+**Complexity** — Time **O(n)**; Space **O(k)**.
+
+## Related problems
+
+- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — sibling with exact match
+- [Continuous Subarray Sum](/problems/continuous-subarray-sum)
+- [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/)

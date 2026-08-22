@@ -2,23 +2,38 @@
 
 *[↗ LeetCode: Replace the Substring for Balanced String](https://leetcode.com/problems/replace-the-substring-for-balanced-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** shrink while the outside-window counts are already balanced
+String of Q,W,E,R (length n divisible by 4). Return length of the smallest substring to replace so each letter appears n/4 times.
 
-## The pattern this problem belongs to
+## Approach — Sliding window over "outside" counts
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** A substring `[l, r]` is a valid replacement window iff **outside** it, no letter exceeds `n/4`. Equivalently, `outsideCount[x] ≤ n/4` for all x.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
+Sweep r, decrement inside-window-adjusted counts implicitly; shrink l while the outside-condition still holds; track min window length.
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Replace the Substring for Balanced String` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int balancedString(String s) {
+    int n = s.length(), k = n / 4;
+    int[] cnt = new int[128];
+    for (char c : s.toCharArray()) cnt[c]++;
+    int l = 0, best = n;
+    for (int r = 0; r < n; r++) {
+        cnt[s.charAt(r)]--; // temporarily "remove" s[r] from outside
+        while (l < n && cnt['Q'] <= k && cnt['W'] <= k && cnt['E'] <= k && cnt['R'] <= k) {
+            best = Math.min(best, r - l + 1);
+            cnt[s.charAt(l++)]++;
+        }
+    }
+    return best;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Longest Repeating Character Replacement](/problems/longest-repeating-character-replacement)
+- [Minimum Operations to Make All Array Elements Equal](https://leetcode.com/problems/minimum-operations-to-make-array-equal/)

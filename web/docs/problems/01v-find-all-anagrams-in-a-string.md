@@ -2,23 +2,45 @@
 
 *[↗ LeetCode: Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-**The one thing that changes vs the flagship for this pattern:** slide a **char-count vector**; record `left` when it matches `need[]`
+Return all starting indices where `p`'s anagram appears in `s`.
 
-## The pattern this problem belongs to
+## Approach — Fixed-window with `matches` counter
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Same skeleton as Permutation in String, but collect every matching index instead of returning early. Use a `matches` counter (26 buckets equal) for O(1) per step.
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+List<Integer> findAnagrams(String s, String p) {
+    List<Integer> out = new ArrayList<>();
+    if (p.length() > s.length()) return out;
+    int[] need = new int[26], have = new int[26];
+    for (char c : p.toCharArray()) need[c - 'a']++;
+    int distinct = 0;
+    for (int c : need) if (c > 0) distinct++;
+    int matches = 0, k = p.length();
+    for (int i = 0; i < s.length(); i++) {
+        int idx = s.charAt(i) - 'a';
+        have[idx]++;
+        if (have[idx] == need[idx]) matches++;
+        else if (have[idx] == need[idx] + 1) matches--;
+        if (i >= k) {
+            int out_idx = s.charAt(i - k) - 'a';
+            have[out_idx]--;
+            if (have[out_idx] == need[out_idx]) matches++;
+            else if (have[out_idx] == need[out_idx] - 1) matches--;
+        }
+        if (matches == distinct) out.add(i - k + 1);
+    }
+    return out;
+}
+```
 
-1. **Read the pattern chapter's `Find All Anagrams in a String` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Permutation in String](/problems/permutation-in-string) — return boolean
+- [Valid Anagram](/problems/valid-anagram)

@@ -1,24 +1,38 @@
-# Two Pointers — Valid Palindrome / Valid Palindrome II
+# Two Pointers — Valid Palindrome II
 
-*[↗ LeetCode: Valid Palindrome / Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
+*[↗ LeetCode: Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** compare from both ends inward; II allows one mismatch (try skipping either side)
+Given `s`, return true if you can delete at most one character to make it a palindrome.
 
-## The pattern this problem belongs to
+## Approach — Two pointers + one skip
 
-This variation of Two Pointers shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Advance `l`, `r` from ends. On mismatch, try skipping `l` OR skipping `r` — check whichever remaining substring is a palindrome.
 
-- [→ Flagship problem for Two Pointers](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/two-pointers) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Two Pointers](/patterns/two-pointers) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+boolean validPalindrome(String s) {
+    int l = 0, r = s.length() - 1;
+    while (l < r) {
+        if (s.charAt(l) != s.charAt(r))
+            return isPali(s, l + 1, r) || isPali(s, l, r - 1);
+        l++; r--;
+    }
+    return true;
+}
+boolean isPali(String s, int l, int r) {
+    while (l < r) if (s.charAt(l++) != s.charAt(r--)) return false;
+    return true;
+}
+```
 
-1. **Read the pattern chapter's `Valid Palindrome / Valid Palindrome II` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/two-pointers) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+**Extension.** Delete-at-most-k → recursive two-pointer with memoization, or use LCS with reverse (LPS-based).
+
+## Related problems
+
+- [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) — 0 deletions
+- [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence) — k-deletion generalization

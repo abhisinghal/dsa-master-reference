@@ -1,24 +1,37 @@
-# Dynamic Programming — House Robber II
+# DP — House Robber II
 
 *[↗ LeetCode: House Robber II](https://leetcode.com/problems/house-robber-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** houses in a circle → run the linear DP twice (exclude first, exclude last) and take the max
+Same as House Robber but houses are in a **circle** — first and last are adjacent.
 
-## The pattern this problem belongs to
+## Approach — Two linear runs
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Because rob(first) forbids rob(last), the optimum is either "consider houses[0..n-2]" or "houses[1..n-1]". Both are linear house robber → max of the two.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int rob(int[] nums) {
+    int n = nums.length;
+    if (n == 1) return nums[0];
+    return Math.max(linear(nums, 0, n - 2), linear(nums, 1, n - 1));
+}
+int linear(int[] nums, int lo, int hi) {
+    int prev = 0, curr = 0;
+    for (int i = lo; i <= hi; i++) {
+        int t = Math.max(curr, prev + nums[i]);
+        prev = curr; curr = t;
+    }
+    return curr;
+}
+```
 
-1. **Read the pattern chapter's `House Robber II` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [House Robber](/problems/dp-house-robber) — flagship
+- [House Robber III](https://leetcode.com/problems/house-robber-iii/) — tree DP
+- [Delete and Earn](/problems/delete-and-earn) — reduction to House Robber

@@ -1,24 +1,44 @@
-# Dynamic Programming — Best Time to Buy/Sell with Cooldown
+# DP — Best Time to Buy and Sell Stock with Cooldown
 
-*[↗ LeetCode: Best Time to Buy/Sell with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** states `hold / sold / rest`; selling forces a rest day
+Unlimited transactions, but you must skip one day between sell and next buy.
 
-## The pattern this problem belongs to
+## Approach — State-machine DP
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Three states each day:
+- `hold[i]` = max profit holding a stock at end of day i
+- `sold[i]` = max profit just sold today
+- `rest[i]` = max profit not holding, not just sold (cooldown or idle)
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+Transitions:
+- `hold[i] = max(hold[i-1], rest[i-1] - price[i])`
+- `sold[i] = hold[i-1] + price[i]`
+- `rest[i] = max(rest[i-1], sold[i-1])`
 
-## Solution sketch
+Answer: `max(sold[n-1], rest[n-1])`.
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Best Time to Buy/Sell with Cooldown` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
+```java
+int maxProfit(int[] prices) {
+    int hold = -prices[0], sold = 0, rest = 0;
+    for (int i = 1; i < prices.length; i++) {
+        int nHold = Math.max(hold, rest - prices[i]);
+        int nSold = hold + prices[i];
+        int nRest = Math.max(rest, sold);
+        hold = nHold; sold = nSold; rest = nRest;
+    }
+    return Math.max(sold, rest);
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Related problems
+
+- [Best Time to Buy and Sell Stock IV](/problems/best-time-to-buy-and-sell-stock-iv) — at most k transactions
+- [Best Time to Buy and Sell Stock with Transaction Fee](/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
+- [Best Time to Buy and Sell Stock](/problems/best-time-to-buy-and-sell-stock) — single transaction

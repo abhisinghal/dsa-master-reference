@@ -2,23 +2,31 @@
 
 *[↗ LeetCode: Range Addition](https://leetcode.com/problems/range-addition/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-**The one thing that changes vs the flagship for this pattern:** the canonical form — apply many `[l, r] += v` in O(1) each, reconstruct once
+Given array size `n` and `updates=[start, end, val]`, apply all as range add and return final array.
 
-## The pattern this problem belongs to
+**Example** — `n=5, [[1,3,2],[2,4,3],[0,2,-2]]` → `[-2,0,3,5,3]`
 
-This variation of Prefix Sum shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Difference array + one prefix pass
 
-- [→ Flagship problem for Prefix Sum](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/prefix-sum) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Prefix Sum](/patterns/prefix-sum) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int[] getModifiedArray(int n, int[][] updates) {
+    int[] diff = new int[n + 1];
+    for (int[] u : updates) { diff[u[0]] += u[2]; diff[u[1] + 1] -= u[2]; }
+    int[] out = new int[n];
+    int run = 0;
+    for (int i = 0; i < n; i++) { run += diff[i]; out[i] = run; }
+    return out;
+}
+```
 
-1. **Read the pattern chapter's `Range Addition` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/prefix-sum) table for the family tree.
+**Complexity** — Time **O(n + updates)**; Space **O(n)**.
+
+## Related problems
+
+- [Corporate Flight Bookings](/problems/corporate-flight-bookings)
+- [Car Pooling](/problems/car-pooling)
+- [Range Addition II](/problems/range-addition-ii)

@@ -26,6 +26,8 @@ you never write real code you can't already justify. If you can't state the inva
 
 </Callout>
 
+&lt;PlaybookPhases problem="Longest Substring Without Repeating Characters" example='s = "abcabcbb"' /&gt;
+
 ## Reading the signals — trigger → say this
 
 The recognition table (Part II) maps *problem words* → *pattern*. This one maps the same triggers to the **sentence** that shows the interviewer you saw it.

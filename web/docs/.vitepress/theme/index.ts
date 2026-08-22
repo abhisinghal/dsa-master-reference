@@ -28,6 +28,14 @@ import TwoSumStepStrip from './TwoSumStepStrip.vue'
 import CodeTrace from './CodeTrace.vue'
 import TrapTrace from './TrapTrace.vue'
 import Icon from './Icon.vue'
+import ComplexityCurve from './ComplexityCurve.vue'
+import PlaybookPhases from './PlaybookPhases.vue'
+import DsStateMachine from './DsStateMachine.vue'
+import StackQueueOps from './StackQueueOps.vue'
+import HeapOps from './HeapOps.vue'
+import BstOps from './BstOps.vue'
+import TrieOps from './TrieOps.vue'
+import UnionFindOps from './UnionFindOps.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -67,6 +75,14 @@ export default {
     app.component('CodeTrace', CodeTrace)
     app.component('TrapTrace', TrapTrace)
     app.component('Icon', Icon)
+    app.component('ComplexityCurve', ComplexityCurve)
+    app.component('PlaybookPhases', PlaybookPhases)
+    app.component('DsStateMachine', DsStateMachine)
+    app.component('StackQueueOps', StackQueueOps)
+    app.component('HeapOps', HeapOps)
+    app.component('BstOps', BstOps)
+    app.component('TrieOps', TrieOps)
+    app.component('UnionFindOps', UnionFindOps)
     installSolvedCountBadges(router)
   }
 }

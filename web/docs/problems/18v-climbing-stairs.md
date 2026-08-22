@@ -1,24 +1,35 @@
-# Dynamic Programming — Climbing Stairs
+# DP — Climbing Stairs
 
-*[↗ LeetCode: Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** `dp[i] = dp[i-1] + dp[i-2]` (count ways, no conflict)
+Steps of 1 or 2. Number of ways to reach step n.
 
-## The pattern this problem belongs to
+## Approach 1 — Recursion + memo
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach 2 — Bottom-up DP, O(1) space
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
+**Insight.** `dp[i] = dp[i-1] + dp[i-2]` (Fibonacci).
 
-## Solution sketch
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Climbing Stairs` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int climbStairs(int n) {
+    int a = 1, b = 1;
+    for (int i = 2; i <= n; i++) { int c = a + b; a = b; b = c; }
+    return b;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+## Approach 3 — Matrix exponentiation
+
+`[[1,1],[1,0]]^n` gives Fibonacci in **O(log n)**. Interview curiosity when asked "can it be sublinear".
+
+## Related problems
+
+- [Min Cost Climbing Stairs](/problems/min-cost-climbing-stairs) — cost variant
+- [House Robber](/problems/dp-house-robber) — same recurrence with pick/skip
+- [Fibonacci Number](https://leetcode.com/problems/fibonacci-number/)

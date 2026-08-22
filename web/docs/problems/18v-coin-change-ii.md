@@ -1,24 +1,34 @@
-# Dynamic Programming — Coin Change II (count ways)
+# DP — Coin Change II
 
-*[↗ LeetCode: Coin Change II (count ways)](https://leetcode.com/problems/coin-change-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
+*[↗ LeetCode: Coin Change II](https://leetcode.com/problems/coin-change-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** `dp[a] += dp[a−coin]`, with **coins in the outer loop** so each combination is counted once (order ignored)
+Count the number of ways to make `amount` from coins (unlimited each, **unordered**).
 
-## The pattern this problem belongs to
+## Approach — Unbounded knapsack counting
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Loop coins OUTER, amount INNER — this counts **unordered** combinations (each coin's contribution is fixed in order).
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int change(int amount, int[] coins) {
+    int[] dp = new int[amount + 1];
+    dp[0] = 1;
+    for (int c : coins)
+        for (int t = c; t <= amount; t++)
+            dp[t] += dp[t - c];
+    return dp[amount];
+}
+```
 
-1. **Read the pattern chapter's `Coin Change II (count ways)` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+**Contrast.** If you swap loop order (amount outer, coins inner), you count **ordered** sequences → that's [Combination Sum IV](/problems/combination-sum-iv).
+
+**Complexity** — Time **O(amount · |coins|)**; Space **O(amount)**.
+
+## Related problems
+
+- [Coin Change](/problems/coin-change) — min coins, not count
+- [Combination Sum IV](/problems/combination-sum-iv) — ordered version
+- [Perfect Squares](/problems/perfect-squares)

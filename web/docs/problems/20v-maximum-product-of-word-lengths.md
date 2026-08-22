@@ -2,23 +2,38 @@
 
 *[↗ LeetCode: Maximum Product of Word Lengths](https://leetcode.com/problems/maximum-product-of-word-lengths/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
 
-**The one thing that changes vs the flagship for this pattern:** encode each word's letters as a 26-bit mask; two words share no letter iff `maskA & maskB == 0`
+Return `max(len(w[i]) * len(w[j]))` over pairs whose character sets are disjoint (no shared letter).
 
-## The pattern this problem belongs to
+## Approach 1 — Set intersection per pair
 
-This variation of Bit Manipulation shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+For each pair build a `Set<Character>` and check intersection. **O(n² · L)**.
 
-- [→ Flagship problem for Bit Manipulation](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/bit-manip) — includes this problem's approach + code + trace + traps
+## Approach 2 — Bitmask signatures
 
-## Solution sketch
+**Insight.** Each word only uses 26 lowercase letters → represent its letter set as a 26-bit int. Two words share no letters iff `mask[i] & mask[j] == 0`. Pair comparison becomes a single AND.
 
-The pattern chapter's [Bit Manipulation](/patterns/bit-manip) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Maximum Product of Word Lengths` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
+```java
+int maxProduct(String[] words) {
+    int n = words.length;
+    int[] mask = new int[n];
+    for (int i = 0; i < n; i++)
+        for (char c : words[i].toCharArray())
+            mask[i] |= 1 << (c - 'a');
+    int best = 0;
+    for (int i = 0; i < n; i++)
+        for (int j = i + 1; j < n; j++)
+            if ((mask[i] & mask[j]) == 0)
+                best = Math.max(best, words[i].length() * words[j].length());
+    return best;
+}
+```
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/bit-manip) table for the family tree.
+
+
+**Complexity** — Time **O(n · L + n²)**; Space **O(n)**.
+
+## Related problems
+
+- [Bitmask Subset Enumeration] — same 26-bit letter-set idea appears in word-existence/anagram problems

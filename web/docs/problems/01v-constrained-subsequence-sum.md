@@ -1,24 +1,40 @@
 # Sliding Window — Constrained Subsequence Sum
 
-*[↗ LeetCode: Constrained Subsequence Sum](https://leetcode.com/problems/constrained-subsequence-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
+*[↗ LeetCode: Constrained Subsequence Sum](https://leetcode.com/problems/constrained-subsequence-sum/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** same windowed-max of a `dp` array, with the window being the allowed gap `k`
+Max sum of a subsequence where every two consecutive chosen indices differ by at most `k`.
 
-## The pattern this problem belongs to
+## Approach — DP with monotonic deque
 
-This variation of Sliding Window shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** `dp[i] = nums[i] + max(0, max(dp[i-k..i-1]))`. Window-max query on a sliding window → monotonic deque (like Sliding Window Maximum).
 
-- [→ Flagship problem for Sliding Window](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/sliding-window) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Sliding Window](/patterns/sliding-window) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int constrainedSubsetSum(int[] nums, int k) {
+    int n = nums.length;
+    int[] dp = new int[n];
+    Deque<Integer> dq = new ArrayDeque<>();
+    int best = Integer.MIN_VALUE;
+    for (int i = 0; i < n; i++) {
+        dp[i] = nums[i] + (dq.isEmpty() ? 0 : Math.max(0, dp[dq.peekFirst()]));
+        while (!dq.isEmpty() && dp[dq.peekLast()] <= dp[i]) dq.pollLast();
+        dq.offerLast(i);
+        if (dq.peekFirst() == i - k) dq.pollFirst();
+        best = Math.max(best, dp[i]);
+    }
+    return best;
+}
+```
 
-1. **Read the pattern chapter's `Constrained Subsequence Sum` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/sliding-window) table for the family tree.
+**Invariant.** Deque holds indices in the current k-window, with `dp` values strictly decreasing → front is the window max.
+
+**Complexity** — Time **O(n)**; Space **O(k)**.
+
+## Related problems
+
+- [Jump Game VI](/problems/jump-game-vi) — same deque template
+- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
+- [Shortest Subarray with Sum at Least K](/problems/shortest-subarray-with-sum-at-least-k)

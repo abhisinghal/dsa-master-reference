@@ -1,24 +1,42 @@
-# Dynamic Programming — Partition Equal Subset Sum
+# DP — Partition Equal Subset Sum
 
 *[↗ LeetCode: Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-**The one thing that changes vs the flagship for this pattern:** target = `sum/2`; the boolean knapsack asks if it's reachable
+Can `nums` be split into two subsets with equal sum?
 
-## The pattern this problem belongs to
+## Approach — Subset-sum DP (0/1 knapsack)
 
-This variation of Dynamic Programming shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** Equal partition possible iff sum is even and a subset sums to `sum/2`. Standard 0/1 knapsack on booleans.
 
-- [→ Flagship problem for Dynamic Programming](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/dp) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Dynamic Programming](/patterns/dp) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+boolean canPartition(int[] nums) {
+    int sum = 0;
+    for (int x : nums) sum += x;
+    if (sum % 2 == 1) return false;
+    int t = sum / 2;
+    boolean[] dp = new boolean[t + 1];
+    dp[0] = true;
+    for (int x : nums)
+        for (int j = t; j >= x; j--)
+            dp[j] |= dp[j - x];
+    return dp[t];
+}
+```
 
-1. **Read the pattern chapter's `Partition Equal Subset Sum` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/dp) table for the family tree.
+**Trap.** Iterate `j` **descending** — the 0/1 knapsack idiom that prevents an item from being counted twice.
+
+**Complexity** — Time **O(n · sum)**; Space **O(sum)**.
+
+## Bitset optimization
+
+Represent `dp` as a `BitSet` (java.util.BitSet); each item is `dp |= dp << x` → speedup by word-size factor.
+
+## Related problems
+
+- [Target Sum](/problems/target-sum) — reduces to this
+- [Last Stone Weight II](/problems/last-stone-weight-ii) — variant
+- [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets) — bitmask DP

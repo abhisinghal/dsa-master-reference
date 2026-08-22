@@ -1,24 +1,35 @@
 # Greedy — Jump Game III
 
-*[↗ LeetCode: Jump Game III](https://leetcode.com/problems/jump-game-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
+*[↗ LeetCode: Jump Game III](https://leetcode.com/problems/jump-game-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bfs)
 
-**The one thing that changes vs the flagship for this pattern:** actual BFS/DFS since you can jump both directions by `arr[i]`
+From index `start`, you may jump `i ± arr[i]`. Can you reach any zero?
 
-## The pattern this problem belongs to
+&gt; Filed under Greedy in the curriculum, but the natural solution is BFS/DFS on an implicit graph — there's nothing "greedy" to exploit.
 
-This variation of Greedy shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — BFS from start
 
-- [→ Flagship problem for Greedy](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/greedy) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Greedy](/patterns/greedy) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+boolean canReach(int[] arr, int start) {
+    Queue<Integer> q = new ArrayDeque<>();
+    boolean[] seen = new boolean[arr.length];
+    q.add(start); seen[start] = true;
+    while (!q.isEmpty()) {
+        int i = q.poll();
+        if (arr[i] == 0) return true;
+        for (int j : new int[]{i + arr[i], i - arr[i]})
+            if (j >= 0 && j < arr.length && !seen[j]) { seen[j] = true; q.add(j); }
+    }
+    return false;
+}
+```
 
-1. **Read the pattern chapter's `Jump Game III` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/greedy) table for the family tree.
+**Complexity** — Time **O(n)**; Space **O(n)**.
+
+## Related problems
+
+- [Jump Game IV](https://leetcode.com/problems/jump-game-iv/) — same-value edges → BFS with "process all same-value neighbors and clear"
+- [Minimum Jumps to Reach Home](https://leetcode.com/problems/minimum-jumps-to-reach-home/) — bounded BFS

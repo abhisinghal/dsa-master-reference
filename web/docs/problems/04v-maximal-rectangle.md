@@ -1,24 +1,51 @@
-# Prefix Sum — Maximal Square / Maximal Rectangle
+# Prefix Sum — Maximal Rectangle
 
-*[↗ LeetCode: Maximal Square / Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
+*[↗ LeetCode: Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/prefix-sum)
 
-**The one thing that changes vs the flagship for this pattern:** combine per-row prefix counts with a histogram/DP to bound the largest all-ones region
+Given a binary matrix, find the largest all-1s axis-aligned rectangle.
 
-## The pattern this problem belongs to
+**Example** — `matrix=[[1,0,1,0,0],[1,0,1,1,1],[1,1,1,1,1],[1,0,0,1,0]]` → `6`
 
-This variation of Prefix Sum shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+## Approach — Per-row histogram + Largest Rectangle in Histogram
 
-- [→ Flagship problem for Prefix Sum](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/prefix-sum) — includes this problem's approach + code + trace + traps
+**Insight.** For each row, compute the running "height" of consecutive 1s above each column. That row of heights = a histogram. The answer is `max` over each row's LRH.
 
-## Solution sketch
 
-The pattern chapter's [Prefix Sum](/patterns/prefix-sum) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
 
-1. **Read the pattern chapter's `Maximal Square / Maximal Rectangle` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
+```java
+int maximalRectangle(char[][] mat) {
+    if (mat.length == 0) return 0;
+    int m = mat.length, n = mat[0].length;
+    int[] h = new int[n];
+    int best = 0;
+    for (int r = 0; r < m; r++) {
+        for (int c = 0; c < n; c++) h[c] = mat[r][c] == '1' ? h[c] + 1 : 0;
+        best = Math.max(best, largestRectangle(h));
+    }
+    return best;
+}
+int largestRectangle(int[] h) {
+    Deque<Integer> stack = new ArrayDeque<>();
+    int best = 0;
+    for (int i = 0; i <= h.length; i++) {
+        int cur = i == h.length ? 0 : h[i];
+        while (!stack.isEmpty() && h[stack.peek()] > cur) {
+            int height = h[stack.pop()];
+            int left = stack.isEmpty() ? -1 : stack.peek();
+            best = Math.max(best, height * (i - left - 1));
+        }
+        stack.push(i);
+    }
+    return best;
+}
+```
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/prefix-sum) table for the family tree.
+
+**Complexity** — Time **O(m·n)**; Space **O(n)**.
+
+## Related problems
+
+- [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram)
+- [Maximal Square](https://leetcode.com/problems/maximal-square/) — sibling DP
+- [Count Submatrices With Target Sum](/problems/count-submatrices-with-target-sum)

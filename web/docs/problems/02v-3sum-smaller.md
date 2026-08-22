@@ -2,23 +2,34 @@
 
 *[↗ LeetCode: 3Sum Smaller](https://leetcode.com/problems/3sum-smaller/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-**The one thing that changes vs the flagship for this pattern:** count triplets with sum `< target`; when `a[lo]+a[hi] < target`, *all* `hi−lo` pairs qualify at once, so add them in one shot
+Count triplets `(i, j, k)` with `i < j < k` and `nums[i] + nums[j] + nums[k] < target`.
 
-## The pattern this problem belongs to
+## Approach — Sort + counting two-pointer
 
-This variation of Two Pointers shares the flagship's skeleton — see the pattern's canonical multi-approach walkthrough for the full brute-force → optimized ladder, then apply the tweak above.
+**Insight.** After sorting, for each `i` and left pointer `l`, if `nums[i]+nums[l]+nums[r] < target`, then **every** `k` in `(l, r]` also satisfies it — add `r - l` and advance `l`. Otherwise, decrement `r`.
 
-- [→ Flagship problem for Two Pointers](/problems/) — see the multi-approach walkthrough
-- [→ Pattern chapter (theory + all variations in context)](/patterns/two-pointers) — includes this problem's approach + code + trace + traps
 
-## Solution sketch
 
-The pattern chapter's [Two Pointers](/patterns/two-pointers) walks the brute → optimized ladder for this problem inline; a dedicated multi-approach page is planned. In the meantime:
+```java
+int threeSumSmaller(int[] nums, int target) {
+    Arrays.sort(nums);
+    int count = 0;
+    for (int i = 0; i < nums.length - 2; i++) {
+        int l = i + 1, r = nums.length - 1;
+        while (l < r) {
+            if (nums[i] + nums[l] + nums[r] < target) { count += r - l; l++; }
+            else r--;
+        }
+    }
+    return count;
+}
+```
 
-1. **Read the pattern chapter's `3Sum Smaller` section** — brute force, Java code, and Execution Trace are already there.
-2. **Read the flagship problem's multi-approach walkthrough** — the *shape* of the reasoning is identical.
-3. **Apply the tweak above** — that's what distinguishes this variation.
 
-## Related problems in the same pattern
 
-See the pattern chapter's ["Same pattern, new tweaks"](/patterns/two-pointers) table for the family tree.
+**Complexity** — Time **O(n²)**; Space **O(1)**.
+
+## Related problems
+
+- [3Sum](/problems/3sum)
+- [3Sum Closest](/problems/3sum-closest)
