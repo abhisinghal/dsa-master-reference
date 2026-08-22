@@ -70,13 +70,11 @@ The sort is the setup. `cur` is the union of the current overlapping cluster. If
 <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">merge intervals after sorting by start</text>
-
   <line x1="48" y1="64" x2="352" y2="64" stroke="var(--dsa-neutral)" stroke-width="2"/>
   <g text-anchor="middle" font-size="11" fill="var(--dsa-neutral)">
     <text x="50" y="82">1</text><text x="83" y="82">2</text><text x="149" y="82">4</text><text x="182" y="82">5</text>
     <text x="248" y="82">7</text><text x="281" y="82">8</text><text x="314" y="82">9</text><text x="347" y="82">10</text>
   </g>
-
   <rect x="50" y="102" width="99" height="16" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
   <rect x="83" y="124" width="99" height="16" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
   <rect x="248" y="102" width="66" height="16" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
@@ -84,7 +82,6 @@ The sort is the setup. `cur` is the union of the current overlapping cluster. If
   <g font-size="11" font-weight="700" fill="var(--dsa-ink)">
     <text x="84" y="114">[1,4]</text><text x="117" y="136">[2,5]</text><text x="266" y="114">[7,9]</text><text x="300" y="136">[8,10]</text>
   </g>
-
   <text x="200" y="166" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dsa-warning)">sort by start, then extend or emit</text>
   <rect x="50" y="184" width="132" height="18" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/>
   <rect x="248" y="184" width="99" height="18" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/>
@@ -315,7 +312,7 @@ Meeting Rooms II looks like interval merging, but the answer is a count of simul
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="merge-intervals" :questions='[
+<Quiz patternId="merge-intervals" :questions='[
   {
     "q": "After sorting intervals by start, when does the next interval merge with the running one?",
     "choices": [
@@ -373,4 +370,4 @@ Meeting Rooms II looks like interval merging, but the answer is a count of simul
       }
     ]
   }
-]' /&gt;
+]' />

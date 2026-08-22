@@ -109,7 +109,6 @@ The cleanest way to see the total cost is to draw the **recursion tree** — one
     <marker id="rt-a" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/></marker>
   </defs>
   <rect x="0" y="0" width="720" height="360" fill="#fbfcfe"/>
-
   <!-- edges -->
   <g stroke="#94a3b8" stroke-width="1.4" fill="none" marker-end="url(#rt-a)">
     <path d="M250,58 L166,96"/><path d="M250,58 L334,96"/>
@@ -120,7 +119,6 @@ The cleanest way to see the total cost is to draw the **recursion tree** — one
     <path d="M100,186 L92,236"/><path d="M120,186 L150,236"/>
     <path d="M300,186 L300,236"/><path d="M400,186 L420,236"/>
   </g>
-
   <!-- level 0 -->
   <rect x="220" y="32" width="60" height="26" rx="7" fill="#eff6ff" stroke="#2563eb" stroke-width="1.6"/>
   <text x="250" y="49" text-anchor="middle" font-size="13" font-weight="700" fill="#0b1220">n</text>
@@ -147,11 +145,9 @@ The cleanest way to see the total cost is to draw the **recursion tree** — one
     <rect x="360" y="236" width="20" height="20" rx="5" fill="#f0fdf4" stroke="#16a34a"/><text x="370" y="250">1</text>
     <rect x="412" y="236" width="20" height="20" rx="5" fill="#f0fdf4" stroke="#16a34a"/><text x="422" y="250">1</text>
   </g>
-
   <!-- level brace (left) -->
   <path d="M22,32 q-8,0 -8,10 L14,238 q0,10 8,10" stroke="#a78bfa" stroke-width="1.4" fill="none"/>
   <text x="8" y="150" transform="rotate(-90 8,150)" text-anchor="middle" font-size="11" fill="#7c3aed">log₂ n + 1 levels</text>
-
   <!-- work-per-level annotations (right) -->
   <g font-size="12" fill="#334155">
     <text x="470" y="49">1 piece × n</text>       <text x="592" y="49" font-weight="700" fill="#2563eb">= n</text>
@@ -159,7 +155,6 @@ The cleanest way to see the total cost is to draw the **recursion tree** — one
     <text x="470" y="176">4 pieces × n/4</text>    <text x="592" y="176" font-weight="700" fill="#2563eb">= n</text>
     <text x="470" y="250">n pieces × 1</text>       <text x="592" y="250" font-weight="700" fill="#2563eb">= n</text>
   </g>
-
   <!-- summary bar -->
   <rect x="40" y="300" width="640" height="42" rx="9" fill="#eef5ff" stroke="#2563eb"/>
   <text x="360" y="326" text-anchor="middle" font-size="13" fill="#0b1220">

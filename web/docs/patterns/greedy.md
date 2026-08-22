@@ -43,7 +43,6 @@ A locally-best choice can be regretted later — construct a counterexample ("if
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">greedy BFS frontier: current range → farthest next</text>
-
   <rect x="124" y="67" width="100" height="62" rx="10" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2.4"/>
   <text x="174" y="59" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">current range</text>
   <g text-anchor="middle">
@@ -198,7 +197,6 @@ This is BFS on an implicit graph collapsed to O(n). *Jump Game I* (reachability)
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">prefix-balance greedy on a circular route</text>
-
   <circle cx="200" cy="118" r="72" fill="none" stroke="var(--dsa-neutral-line)" stroke-width="2.4"/>
   <path d="M254 72 C282 100, 283 136, 260 165" fill="none" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-gas-primary)"/>
   <g text-anchor="middle">
@@ -558,7 +556,7 @@ Sort by **end time** and greedily keep the earliest-finishing compatible interva
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="greedy" :questions='[
+<Quiz patternId="greedy" :questions='[
   {
     "q": "For interval scheduling that maximizes how many intervals you keep, which sort key is usually safe?",
     "choices": [
@@ -616,4 +614,4 @@ Sort by **end time** and greedily keep the earliest-finishing compatible interva
       }
     ]
   }
-]' /&gt;
+]' />

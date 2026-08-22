@@ -14,6 +14,8 @@ The *pattern* chapter is about those applications. For the mechanics of a trie n
 
 > [key] **Key Insight** — A trie turns many repeated prefix checks into one shared walk. A binary trie does the same thing for bits: build once, then each query makes 32 greedy choices instead of scanning all prior numbers.
 
+<TrieWalkAnim />
+
 ### Recognize by
 - *prefix queries against a shared dictionary* — "starts with," "autocomplete," "replace by root," "dictionary path"
 - *many target strings tested against the same search space* — especially grid DFS plus a word list

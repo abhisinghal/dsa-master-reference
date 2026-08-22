@@ -15,6 +15,8 @@ import SweepLineAnim from './SweepLineAnim.vue'
 import DivideConquerAnim from './DivideConquerAnim.vue'
 import QuickselectAnim from './QuickselectAnim.vue'
 import BacktrackingAnim from './BacktrackingAnim.vue'
+import DpFillAnim from './DpFillAnim.vue'
+import TrieWalkAnim from './TrieWalkAnim.vue'
 import BinarySearchAnim from './BinarySearchAnim.vue'
 import HeapAnim from './HeapAnim.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
@@ -48,6 +50,8 @@ export default {
     app.component('DivideConquerAnim', DivideConquerAnim)
     app.component('QuickselectAnim', QuickselectAnim)
     app.component('BacktrackingAnim', BacktrackingAnim)
+    app.component('DpFillAnim', DpFillAnim)
+    app.component('TrieWalkAnim', TrieWalkAnim)
     app.component('BinarySearchAnim', BinarySearchAnim)
     app.component('HeapAnim', HeapAnim)
     app.component('Breadcrumbs', Breadcrumbs)

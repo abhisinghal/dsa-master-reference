@@ -42,6 +42,44 @@ Two workhorses: `x & (x-1)` **removes** the lowest set bit (Brian Kernighan's po
 
 <ProgressCheck id="single-number-i-ii-iii-xor" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">XOR accumulator cancels duplicate pairs</text>
+  <g font-family="var(--dsa-font)" text-anchor="middle">
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <rect x="34" y="50" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="56" y="78">4</text>
+      <rect x="84" y="50" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="106" y="78">1</text>
+      <rect x="134" y="50" width="44" height="44" rx="7" fill="var(--dsa-info-soft)" stroke="var(--dsa-info)" stroke-width="1.6"/><text x="156" y="78">2</text>
+      <rect x="184" y="50" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="206" y="78">1</text>
+      <rect x="234" y="50" width="44" height="44" rx="7" fill="var(--dsa-info-soft)" stroke="var(--dsa-info)" stroke-width="1.6"/><text x="256" y="78">2</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="56" y="108">i=0</text><text x="106" y="108">i=1</text><text x="156" y="108">i=2</text><text x="206" y="108">i=3</text><text x="256" y="108">i=4</text>
+    </g>
+  </g>
+  <g font-family="var(--dsa-font)" font-size="12" font-weight="700">
+    <text x="38" y="140" fill="var(--dsa-neutral)">0 ⊕ 4 = 4</text>
+    <text x="38" y="162" fill="var(--dsa-neutral)">4 ⊕ 1 = 5</text>
+    <text x="38" y="184" fill="var(--dsa-neutral)">5 ⊕ 2 = 7</text>
+    <text x="38" y="206" fill="var(--dsa-neutral)">7 ⊕ 1 = 6</text>
+    <text x="38" y="228" fill="var(--dsa-neutral)">6 ⊕ 2 = 4</text>
+  </g>
+  <rect x="292" y="146" width="76" height="62" rx="10" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2.4"/>
+  <text x="330" y="170" text-anchor="middle" font-family="var(--dsa-font)" font-size="12" font-weight="700" fill="var(--dsa-primary)">answer</text>
+  <text x="330" y="196" text-anchor="middle" font-family="var(--dsa-font)" font-size="24" font-weight="700" fill="var(--dsa-ink)">4</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> duplicates cancel via XOR; the lone number remains.</div>
+
 ### Problem
 Every element appears **twice except one**; find the single one — in O(n) time, O(1) space. (Variants II/III: one element appears 3×, or there are two singles.)
 
@@ -357,7 +395,7 @@ O(n·2ⁿ) for output; O(n) temporary subset per mask.
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="bit-manip" :questions='[
+<Quiz patternId="bit-manip" :questions='[
   {
     "q": "What does x AND (x minus 1) do to a positive integer?",
     "choices": [
@@ -415,4 +453,4 @@ O(n·2ⁿ) for output; O(n) temporary subset per mask.
       }
     ]
   }
-]' /&gt;
+]' />

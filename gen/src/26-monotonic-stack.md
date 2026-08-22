@@ -76,6 +76,53 @@ You need *farthest* rather than *nearest* — or the comparison isn't a simple o
 
 <ProgressCheck id="daily-temperatures-next-greater-element" />
 
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-dt-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <marker id="ar-dt-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">A warmer arrival resolves colder stacked days</text>
+
+  <g text-anchor="middle">
+    <rect x="8" y="58" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="52" y="58" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="96" y="58" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="140" y="58" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="184" y="58" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="228" y="58" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="272" y="58" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <rect x="316" y="58" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
+    <g font-size="14" font-weight="700" fill="var(--dsa-ink)">
+      <text x="30" y="85">73</text><text x="74" y="85">74</text><text x="118" y="85">75</text><text x="162" y="85">71</text>
+      <text x="206" y="85">69</text><text x="250" y="85">72</text><text x="294" y="85">76</text><text x="338" y="85">73</text>
+    </g>
+    <g font-size="10.5" fill="var(--dsa-neutral)">
+      <text x="30" y="117">0</text><text x="74" y="117">1</text><text x="118" y="117">2</text><text x="162" y="117">3</text>
+      <text x="206" y="117">4</text><text x="250" y="117">5</text><text x="294" y="117">6</text><text x="338" y="117">7</text>
+    </g>
+  </g>
+
+  <line x1="250" y1="129" x2="250" y2="105" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-dt-success)"/>
+  <text x="250" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">i=5, 72</text>
+
+  <rect x="284" y="132" width="84" height="82" rx="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <text x="326" y="151" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">stack</text>
+  <rect x="302" y="160" width="48" height="18" rx="5" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.4"/>
+  <text x="326" y="173" text-anchor="middle" font-size="11" fill="var(--dsa-neutral)">2:75</text>
+  <rect x="302" y="184" width="48" height="18" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.4"/>
+  <text x="326" y="197" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">5:72</text>
+
+  <path d="M228 134 C250 165 272 170 300 174" fill="none" stroke="var(--dsa-danger)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-dt-danger)"/>
+  <path d="M184 128 C225 206 260 210 300 196" fill="none" stroke="var(--dsa-danger)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-dt-danger)" stroke-dasharray="6 4"/>
+  <text x="136" y="164" font-size="12" font-weight="700" fill="var(--dsa-danger)">pop 4,3</text>
+  <text x="200" y="231" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">monotone-decreasing stack; larger arrival pops smaller unresolved days</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> The stack stores unresolved days in decreasing temperature order; when <b>72</b> arrives, it pops colder days <b>69</b> and <b>71</b> and records their waits.</div>
+
 ### Problem
 For each day, report **how many days you must wait for a warmer temperature** (0 if it never gets warmer).
 

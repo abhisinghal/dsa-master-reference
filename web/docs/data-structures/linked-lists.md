@@ -17,7 +17,7 @@ Almost every list problem reduces to carefully rewiring `next` while never losin
 
 Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
 
-&lt;JavaRunner problemSlug="reverse-linked-list" :tests='[{ input: "5\n1 2 3 4 5", expected: "5 4 3 2 1" }, { input: "2\n1 2", expected: "2 1" }]' /&gt;
+<JavaRunner problemSlug="reverse-linked-list" :tests='[{ input: "5\n1 2 3 4 5", expected: "5 4 3 2 1" }, { input: "2\n1 2", expected: "2 1" }]' />
 
 
 <ProgressCheck id="reverse-a-linked-list" />

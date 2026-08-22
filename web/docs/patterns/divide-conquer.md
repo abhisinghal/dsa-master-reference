@@ -294,7 +294,7 @@ O(n) for the reusable temp array, plus O(log n) recursion stack.
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="divide-conquer" :questions='[
+<Quiz patternId="divide-conquer" :questions='[
   {
     "q": "Which problem shape best suggests divide and conquer?",
     "choices": [
@@ -352,4 +352,4 @@ O(n) for the reusable temp array, plus O(log n) recursion stack.
       }
     ]
   }
-]' /&gt;
+]' />

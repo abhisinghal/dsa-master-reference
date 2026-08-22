@@ -18,6 +18,8 @@ A trie turns many repeated prefix checks into one shared walk. A binary trie doe
 
 </Callout>
 
+<TrieWalkAnim />
+
 ### Recognize by
 - *prefix queries against a shared dictionary* — "starts with," "autocomplete," "replace by root," "dictionary path"
 - *many target strings tested against the same search space* — especially grid DFS plus a word list
@@ -357,7 +359,7 @@ O(n·32) trie nodes in the worst case.
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="trie-pattern" :questions='[
+<Quiz patternId="trie-pattern" :questions='[
   {
     "q": "Many query words share prefixes, and repeated prefix checks dominate. Which structure helps?",
     "choices": [
@@ -415,4 +417,4 @@ O(n·32) trie nodes in the worst case.
       }
     ]
   }
-]' /&gt;
+]' />

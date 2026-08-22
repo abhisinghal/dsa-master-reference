@@ -28,7 +28,7 @@ You need a *contiguous* result (subarray, substring) and the running quantity is
 
 Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
 
-&lt;JavaRunner problemSlug="two-sum" :tests='[{ input: "4\n2 7 11 15\n9", expected: "0 1" }, { input: "2\n3 3\n6", expected: "0 1" }]' /&gt;
+<JavaRunner problemSlug="two-sum" :tests='[{ input: "4\n2 7 11 15\n9", expected: "0 1" }, { input: "2\n3 3\n6", expected: "0 1" }]' />
 
 
 <ProgressCheck id="two-sum" />
@@ -45,7 +45,6 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Complement lookup turns pair search into O(1)</text>
   <text x="82" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-neutral)">target = 9</text>
-
   <g text-anchor="middle">
     <rect x="28" y="84" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
     <rect x="80" y="84" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="var(--dsa-cell-stroke)"/>
@@ -58,7 +57,6 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
       <text x="50" y="143">0</text><text x="102" y="143">1</text><text x="154" y="143">2</text><text x="206" y="143">3</text>
     </g>
   </g>
-
   <path d="M72 108 C118 62 222 62 268 96" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-ts-primary)"/>
   <text x="169" y="61" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">complement 7 → seen?</text>
   <rect x="260" y="84" width="112" height="72" rx="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
@@ -217,12 +215,10 @@ all of these are *"find elements that combine to a target."* The decision tree i
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Canonical keys make equivalent words collide</text>
-
   <g font-size="13" font-weight="700" text-anchor="middle">
     <rect x="24" y="54" width="58" height="30" rx="8" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="53" y="74" fill="var(--dsa-ink)">eat</text>
     <rect x="24" y="104" width="58" height="30" rx="8" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="53" y="124" fill="var(--dsa-ink)">tea</text>
     <rect x="24" y="154" width="58" height="30" rx="8" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="53" y="174" fill="var(--dsa-ink)">tan</text>
-
     <rect x="138" y="54" width="58" height="30" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="167" y="74" fill="var(--dsa-success)">aet</text>
     <rect x="138" y="104" width="58" height="30" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="167" y="124" fill="var(--dsa-success)">aet</text>
     <rect x="138" y="154" width="58" height="30" rx="8" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="167" y="174" fill="var(--dsa-warning)">ant</text>
@@ -231,7 +227,6 @@ all of these are *"find elements that combine to a target."* The decision tree i
     <path d="M84 69 L132 69"/><path d="M84 119 L132 119"/><path d="M84 169 L132 169"/>
   </g>
   <text x="110" y="48" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-neutral)">sort chars</text>
-
   <rect x="236" y="62" width="134" height="112" rx="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
   <text x="303" y="85" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">hash map</text>
   <text x="303" y="112" text-anchor="middle" font-size="12" fill="var(--dsa-success)">"aet" → [eat, tea]</text>
@@ -494,6 +489,48 @@ Same skeleton — *combine a running result from the left with one from the righ
 
 <ProgressCheck id="longest-consecutive-sequence" />
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-lcs-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Only start a streak at the left edge</text>
+  <rect x="22" y="54" width="356" height="76" rx="12" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <text x="44" y="78" font-size="12" font-weight="700" fill="var(--dsa-neutral)">set</text>
+  <g text-anchor="middle" font-size="14" font-weight="700">
+    <rect x="70" y="70" width="52" height="32" rx="8" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="96" y="91" fill="var(--dsa-ink)">100</text>
+    <rect x="132" y="70" width="38" height="32" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="151" y="91" fill="var(--dsa-success)">4</text>
+    <rect x="180" y="70" width="52" height="32" rx="8" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="206" y="91" fill="var(--dsa-ink)">200</text>
+    <rect x="242" y="70" width="38" height="32" rx="8" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="261" y="91" fill="var(--dsa-primary)">1</text>
+    <rect x="290" y="70" width="38" height="32" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="309" y="91" fill="var(--dsa-success)">3</text>
+    <rect x="338" y="70" width="32" height="32" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="354" y="91" fill="var(--dsa-success)">2</text>
+  </g>
+  <text x="96" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">0 absent</text>
+  <path d="M118 152 C150 140 205 140 242 152" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" stroke-dasharray="6 4"/>
+  <g text-anchor="middle" font-size="17" font-weight="700">
+    <circle cx="110" cy="186" r="19" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="110" y="192" fill="var(--dsa-primary)">1</text>
+    <circle cx="170" cy="186" r="19" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="170" y="192" fill="var(--dsa-success)">2</text>
+    <circle cx="230" cy="186" r="19" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="230" y="192" fill="var(--dsa-success)">3</text>
+    <circle cx="290" cy="186" r="19" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="290" y="192" fill="var(--dsa-success)">4</text>
+  </g>
+  <g stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-lcs-success)" fill="none">
+    <path d="M129 186 L148 186"/><path d="M189 186 L208 186"/><path d="M249 186 L268 186"/>
+  </g>
+  <rect x="132" y="214" width="136" height="24" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-line)" stroke-width="1.6"/>
+  <text x="200" y="231" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">streak length = 4</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> Start counting only when <code>x - 1</code> is absent; then walking <b>1→2→3→4</b> counts each run once instead of restarting inside it.</div>
+
 ### Problem
 Given an **unsorted** array, find the length of the longest run of **consecutive integers** (like 1,2,3,4) — in O(n), so sorting (O(n log n)) is off the table.
 
@@ -619,7 +656,7 @@ Same skeleton — *put everything in a set, then only start work from a canonica
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="hashing" :questions='[
+<Quiz patternId="hashing" :questions='[
   {
     "q": "In Two Sum, why check the complement before inserting the current value?",
     "choices": [
@@ -678,4 +715,4 @@ Same skeleton — *put everything in a set, then only start work from a canonica
       }
     ]
   }
-]' /&gt;
+]' />

@@ -122,7 +122,6 @@ for (int v : b) { /* visit v */ }
   <defs><marker id="al-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker></defs>
   <rect x="0" y="0" width="680" height="212" fill="#fbfcfe"/>
   <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">ArrayList doubles its backing array when full → appends are O(1) amortized</text>
-
   <text x="22" y="58" font-size="11.5" font-weight="700" fill="#334155">size=4, cap=4 (full)</text>
   <g>
     <rect x="22"  y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
@@ -131,11 +130,9 @@ for (int v : b) { /* visit v */ }
     <rect x="142" y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
   </g>
   <g font-size="15" font-weight="700" fill="#0b1220" text-anchor="middle"><text x="42" y="91">a</text><text x="82" y="91">b</text><text x="122" y="91">c</text><text x="162" y="91">d</text></g>
-
   <line x1="196" y1="85" x2="248" y2="85" stroke="#2563eb" stroke-width="2" marker-end="url(#al-a)"/>
   <text x="222" y="76" font-size="10.5" fill="#dc2626" text-anchor="middle">add e → full!</text>
   <text x="222" y="100" font-size="10" fill="#64748b" text-anchor="middle">alloc cap 8, copy 4</text>
-
   <text x="262" y="58" font-size="11.5" font-weight="700" fill="#334155">cap=8 — next 3 adds are instant</text>
   <g>
     <rect x="262" y="66" width="40" height="38" rx="6" fill="#eef5ff" stroke="#2563eb"/>
@@ -148,7 +145,6 @@ for (int v : b) { /* visit v */ }
     <rect x="542" y="66" width="40" height="38" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-dasharray="3 3"/>
   </g>
   <g font-size="15" font-weight="700" fill="#0b1220" text-anchor="middle"><text x="282" y="91">a</text><text x="322" y="91">b</text><text x="362" y="91">c</text><text x="402" y="91">d</text><text x="442" y="91" fill="#16a34a">e</text></g>
-
   <rect x="22" y="132" width="620" height="60" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
   <text x="40" y="156" font-size="12" fill="#0b1220">Because capacity <tspan font-weight="700">doubles</tspan> (1, 2, 4, 8, …), resizes get exponentially rarer.</text>
   <text x="40" y="178" font-size="12" fill="#2563eb">Total copy work over n appends &lt; 2n → each add averages O(1) <tspan fill="#64748b">(that's "amortized")</tspan>.</text>
@@ -241,7 +237,6 @@ never `l.remove(...)` (the list method) inside a for-each loop; it corrupts the 
   </defs>
   <rect x="0" y="0" width="680" height="232" fill="#fbfcfe"/>
   <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">ArrayDeque = a ring buffer — head/tail indices wrap around (mod 8)</text>
-
   <!-- ring of 8 slots, center (150,124) r=66 -->
   <g stroke-width="1.6">
     <circle cx="150" cy="58"  r="21" fill="#eef5ff" stroke="#2563eb"/>
@@ -267,7 +262,6 @@ never `l.remove(...)` (the list method) inside a for-each loop; it corrupts the 
   <line x1="36" y1="122" x2="61" y2="124" stroke="#2563eb" stroke-width="2" marker-end="url(#dq-b)"/>
   <text x="266" y="120" font-size="12" font-weight="700" fill="#dc2626">tail</text>
   <line x1="264" y1="124" x2="239" y2="124" stroke="#dc2626" stroke-width="2" marker-end="url(#dq-r)"/>
-
   <rect x="330" y="52" width="330" height="140" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
   <text x="348" y="78" font-size="12.5" font-weight="700" fill="#0b1220">Logical order: a → b → c → d</text>
   <text x="348" y="102" font-size="12" fill="#16a34a">poll() / pop() — remove from <tspan font-weight="700">head</tspan></text>
@@ -467,12 +461,10 @@ head.next = new ListNode(2);          // builds 1 -> 2
   <defs><marker id="hm-a" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker></defs>
   <rect x="0" y="0" width="680" height="212" fill="#fbfcfe"/>
   <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">HashMap — hash(key) picks a bucket; keys that collide chain together</text>
-
   <rect x="26" y="86" width="94" height="40" rx="8" fill="#eef5ff" stroke="#2563eb" stroke-width="1.6"/>
   <text x="73" y="111" font-size="14" font-weight="700" fill="#0b1220" text-anchor="middle">key "cat"</text>
   <line x1="122" y1="106" x2="184" y2="106" stroke="#2563eb" stroke-width="2" marker-end="url(#hm-a)"/>
   <text x="153" y="98" font-size="10" fill="#64748b" text-anchor="middle">hash % cap</text>
-
   <!-- buckets -->
   <g font-size="12.5" fill="#475569">
     <rect x="190" y="56" width="150" height="30" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/><text x="204" y="76">0:  —</text>
@@ -481,7 +473,6 @@ head.next = new ListNode(2);          // builds 1 -> 2
     <rect x="190" y="158" width="150" height="30" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/><text x="204" y="178">3:  —</text>
   </g>
   <text x="240" y="48" font-size="10.5" fill="#64748b">buckets</text>
-
   <!-- chain in bucket 2 -->
   <rect x="378" y="122" width="110" height="34" rx="7" fill="#fff" stroke="#e0a52b" stroke-width="1.6"/>
   <text x="433" y="144" font-size="12.5" font-weight="700" fill="#0b1220" text-anchor="middle">(cat, 7)</text>
@@ -490,7 +481,6 @@ head.next = new ListNode(2);          // builds 1 -> 2
   <line x1="340" y1="139" x2="374" y2="139" stroke="#e0a52b" stroke-width="2" marker-end="url(#hm-a)"/>
   <line x1="488" y1="139" x2="516" y2="139" stroke="#e0a52b" stroke-width="2" marker-end="url(#hm-a)"/>
   <text x="504" y="112" font-size="10.5" fill="#d97706" text-anchor="middle">collision → chain</text>
-
   <text x="26" y="204" font-size="11" fill="#64748b">Even spread → O(1). Adversarial pile-up → O(n), which Java caps by <tspan fill="#2563eb" font-weight="700">treeifying</tspan> a long chain to O(log n).</text>
 </svg>
 </div>
@@ -593,7 +583,6 @@ for (int x : set) { /* HashSet — any order */ }
   </defs>
   <rect x="0" y="0" width="680" height="196" fill="#fbfcfe"/>
   <text x="22" y="28" font-size="13" font-weight="700" fill="#2563eb">LinkedHashMap = HashMap buckets + a doubly-linked order chain</text>
-
   <text x="40" y="60" font-size="11.5" font-weight="700" fill="#334155">buckets — O(1) lookup</text>
   <g>
     <rect x="40" y="72" width="150" height="26" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
@@ -603,7 +592,6 @@ for (int x : set) { /* HashSet — any order */ }
   <g font-size="12" fill="#475569">
     <text x="52" y="90">0: (a) </text><text x="52" y="120">1: (c)</text><text x="52" y="150">2: (b)</text>
   </g>
-
   <text x="250" y="60" font-size="11.5" font-weight="700" fill="#334155">order chain — predictable iteration / recency</text>
   <g font-weight="700">
     <rect x="300" y="96" width="42" height="38" rx="8" fill="#f3f0fc" stroke="#7c3aed" stroke-width="1.6"/>
@@ -819,7 +807,6 @@ Iterator<Integer> back = ts.descendingIterator();        // descending
     <circle cx="188" cy="178" r="20" fill="#f8fafc" stroke="#cbd5e1"/><text x="188" y="184" fill="#0b1220">7</text>
   </g>
   <text x="160" y="44" font-size="10.5" fill="#16a34a" text-anchor="middle">root = min</text>
-
   <!-- array mapping -->
   <text x="380" y="70" font-size="11.5" font-weight="700" fill="#334155">same heap as an array</text>
   <g>

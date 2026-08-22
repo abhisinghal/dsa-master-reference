@@ -47,7 +47,6 @@ You need to *update* array values *and* query ranges in the same run — a plain
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Subarray sum = difference between two prefixes</text>
-
   <text x="44" y="86" text-anchor="end" font-size="12" font-weight="700" fill="var(--dsa-neutral)">nums</text>
   <text x="44" y="158" text-anchor="end" font-size="12" font-weight="700" fill="var(--dsa-neutral)">prefix</text>
   <g text-anchor="middle">
@@ -60,7 +59,6 @@ You need to *update* array values *and* query ranges in the same run — a plain
     </g>
     <rect x="118" y="50" width="104" height="60" rx="10" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-outline-stroke)"/>
     <text x="170" y="45" font-size="12" font-weight="700" fill="var(--dsa-primary)">subarray [2,3]</text>
-
     <rect x="70" y="130" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="var(--dsa-cell-stroke)"/>
     <rect x="122" y="130" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
     <rect x="174" y="130" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="var(--dsa-cell-stroke)"/>
@@ -418,7 +416,7 @@ The +/−/− /+ inclusion–exclusion pattern reappears in *Maximal Rectangle* 
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="prefix-sum" :questions='[
+<Quiz patternId="prefix-sum" :questions='[
   {
     "q": "You must count subarrays with sum k, and numbers may be negative. Which pattern applies?",
     "choices": [
@@ -477,4 +475,4 @@ The +/−/− /+ inclusion–exclusion pattern reappears in *Maximal Rectangle* 
       }
     ]
   }
-]' /&gt;
+]' />

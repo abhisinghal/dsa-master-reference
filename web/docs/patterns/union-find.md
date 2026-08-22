@@ -93,7 +93,6 @@ You need to *walk* the components (traversal, distances, colouring) — Union-Fi
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">union links representatives, not every node</text>
-
   <text x="93" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dsa-neutral)">before: {0,1,2} and {3}</text>
   <g stroke="var(--dsa-neutral)" stroke-width="2" fill="none">
     <line x1="93" y1="83" x2="62" y2="124"/><line x1="93" y1="83" x2="124" y2="124"/>
@@ -104,10 +103,8 @@ You need to *walk* the components (traversal, distances, colouring) — Union-Fi
     <circle cx="124" cy="142" r="18" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="124" y="147">1</text>
     <circle cx="164" cy="98" r="18" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="164" y="103">3</text>
   </g>
-
   <line x1="192" y1="112" x2="244" y2="112" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-uf-primary)"/>
   <text x="218" y="99" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dsa-primary)">union(2,3)</text>
-
   <text x="310" y="51" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dsa-neutral)">after: {0,1,2,3}</text>
   <g stroke="var(--dsa-neutral)" stroke-width="2" fill="none">
     <line x1="310" y1="83" x2="267" y2="136"/><line x1="310" y1="83" x2="310" y2="136"/><line x1="310" y1="83" x2="353" y2="136"/>
@@ -383,7 +380,7 @@ Adding before union-check. *Example:* edges `[(A,B,1),(B,C,2),(A,C,3)]`. After a
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="union-find" :questions='[
+<Quiz patternId="union-find" :questions='[
   {
     "q": "You repeatedly ask whether two items are already in the same group. Which structure fits?",
     "choices": [
@@ -442,4 +439,4 @@ Adding before union-check. *Example:* edges `[(A,B,1),(B,C,2),(A,C,3)]`. After a
       }
     ]
   }
-]' /&gt;
+]' />

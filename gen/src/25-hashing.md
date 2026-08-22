@@ -380,6 +380,43 @@ Same skeleton — *combine a running result from the left with one from the righ
 
 <ProgressCheck id="longest-consecutive-sequence" />
 
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+  <defs>
+    <marker id="ar-lcs-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Only start a streak at the left edge</text>
+
+  <rect x="22" y="54" width="356" height="76" rx="12" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <text x="44" y="78" font-size="12" font-weight="700" fill="var(--dsa-neutral)">set</text>
+  <g text-anchor="middle" font-size="14" font-weight="700">
+    <rect x="70" y="70" width="52" height="32" rx="8" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="96" y="91" fill="var(--dsa-ink)">100</text>
+    <rect x="132" y="70" width="38" height="32" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="151" y="91" fill="var(--dsa-success)">4</text>
+    <rect x="180" y="70" width="52" height="32" rx="8" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="206" y="91" fill="var(--dsa-ink)">200</text>
+    <rect x="242" y="70" width="38" height="32" rx="8" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="261" y="91" fill="var(--dsa-primary)">1</text>
+    <rect x="290" y="70" width="38" height="32" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="309" y="91" fill="var(--dsa-success)">3</text>
+    <rect x="338" y="70" width="32" height="32" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="354" y="91" fill="var(--dsa-success)">2</text>
+  </g>
+
+  <text x="96" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">0 absent</text>
+  <path d="M118 152 C150 140 205 140 242 152" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" stroke-dasharray="6 4"/>
+  <g text-anchor="middle" font-size="17" font-weight="700">
+    <circle cx="110" cy="186" r="19" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="110" y="192" fill="var(--dsa-primary)">1</text>
+    <circle cx="170" cy="186" r="19" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="170" y="192" fill="var(--dsa-success)">2</text>
+    <circle cx="230" cy="186" r="19" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="230" y="192" fill="var(--dsa-success)">3</text>
+    <circle cx="290" cy="186" r="19" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="290" y="192" fill="var(--dsa-success)">4</text>
+  </g>
+  <g stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-lcs-success)" fill="none">
+    <path d="M129 186 L148 186"/><path d="M189 186 L208 186"/><path d="M249 186 L268 186"/>
+  </g>
+  <rect x="132" y="214" width="136" height="24" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-line)" stroke-width="1.6"/>
+  <text x="200" y="231" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">streak length = 4</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> Start counting only when <code>x - 1</code> is absent; then walking <b>1→2→3→4</b> counts each run once instead of restarting inside it.</div>
+
 ### Problem
 Given an **unsorted** array, find the length of the longest run of **consecutive integers** (like 1,2,3,4) — in O(n), so sorting (O(n log n)) is off the table.
 

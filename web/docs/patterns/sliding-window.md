@@ -18,14 +18,12 @@ Let's make it concrete. Say we want the sum of every contiguous subarray of size
     <filter id="s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="#94a3b8" flood-opacity="0.5"/></filter>
   </defs>
   <rect x="0" y="0" width="720" height="220" fill="#fbfcfe"/>
-
   <!-- window A outline (indices 0..4) -->
   <rect x="6" y="70" width="278" height="52" rx="9" fill="none" stroke="#2563eb" stroke-width="2.5"/>
   <text x="145" y="62" text-anchor="middle" font-size="12" fill="#2563eb" font-weight="700">window at 0..4  (sum = 11)</text>
   <!-- window B outline (indices 1..5), dashed green -->
   <rect x="62" y="78" width="278" height="52" rx="9" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="6 4"/>
   <text x="360" y="150" text-anchor="middle" font-size="12" fill="#16a34a" font-weight="700">slides right → window at 1..5 (sum = 14)</text>
-
   <!-- cells -->
   <g filter="url(#s1)">
     <rect x="10"  y="76" width="50" height="40" rx="7" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
@@ -48,13 +46,11 @@ Let's make it concrete. Say we want the sum of every contiguous subarray of size
     <text x="203" y="134">3</text><text x="259" y="134">4</text><text x="315" y="134">5</text>
     <text x="371" y="134">6</text><text x="427" y="134">7</text><text x="483" y="134">8</text>
   </g>
-
   <!-- leave / enter annotations -->
   <line x1="35" y1="170" x2="35" y2="120" stroke="#dc2626" stroke-width="2" marker-end="url(#ar-red)"/>
   <text x="35" y="188" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">− leaves</text>
   <line x1="315" y1="170" x2="315" y2="120" stroke="#16a34a" stroke-width="2" marker-end="url(#ar-grn)"/>
   <text x="315" y="188" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">+ enters</text>
-
   <!-- formula -->
   <rect x="524" y="74" width="188" height="60" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
   <text x="618" y="98" text-anchor="middle" font-size="12" font-weight="700" fill="#0b1220">reuse, don't recompute</text>
@@ -226,12 +222,10 @@ Now let's walk through the canonical shapes, from the simplest fixed-size warm-u
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Slide k=4: reuse the overlapping sum</text>
-
   <rect x="38" y="76" width="216" height="60" rx="10" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-outline-stroke)"/>
   <text x="146" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">window 0..3  sum = 2</text>
   <rect x="90" y="84" width="216" height="60" rx="10" fill="none" stroke="var(--dsa-success)" stroke-width="var(--dsa-outline-stroke)" stroke-dasharray="7 5"/>
   <text x="266" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">window 1..4  sum = 51</text>
-
   <g text-anchor="middle">
     <rect x="42" y="88" width="44" height="44" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="var(--dsa-cell-stroke)"/>
     <rect x="94" y="88" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
@@ -248,7 +242,6 @@ Now let's walk through the canonical shapes, from the simplest fixed-size warm-u
       <text x="220" y="147">3</text><text x="272" y="147">4</text><text x="324" y="147">5</text>
     </g>
   </g>
-
   <line x1="64" y1="184" x2="64" y2="135" stroke="var(--dsa-danger)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-mavg-danger)"/>
   <text x="64" y="203" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">leaves: -1</text>
   <line x1="272" y1="184" x2="272" y2="135" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-mavg-success)"/>
@@ -538,7 +531,7 @@ The "shrink-to-minimize" twin of Minimum Window Substring (which minimizes over 
 
 Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
 
-&lt;JavaRunner problemSlug="longest-substring-without-repeating-characters" :tests='[{ input: "abcabcbb", expected: "3" }, { input: "bbbbb", expected: "1" }, { input: "pwwkew", expected: "3" }]' /&gt;
+<JavaRunner problemSlug="longest-substring-without-repeating-characters" :tests='[{ input: "abcabcbb", expected: "3" }, { input: "bbbbb", expected: "1" }, { input: "pwwkew", expected: "3" }]' />
 
 
 <ProgressCheck id="longest-substring-without-repeating-characters" />
@@ -555,10 +548,8 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Keep a distinct window; jump left on duplicate</text>
-
   <rect x="6" y="76" width="148" height="60" rx="10" fill="none" stroke="var(--dsa-primary)" stroke-width="var(--dsa-outline-stroke)"/>
   <text x="80" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">best window: abc</text>
-
   <g text-anchor="middle">
     <rect x="10" y="84" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
     <rect x="58" y="84" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
@@ -577,7 +568,6 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
       <text x="224" y="143">4</text><text x="272" y="143">5</text><text x="320" y="143">6</text><text x="368" y="143">7</text>
     </g>
   </g>
-
   <text x="176" y="103" text-anchor="middle" font-size="28" font-weight="700" fill="var(--dsa-danger)">×</text>
   <line x1="32" y1="178" x2="32" y2="132" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-ls-primary)"/>
   <text x="32" y="197" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">left</text>
@@ -1323,7 +1313,7 @@ A deque that keeps only "still-useful" candidates in monotone order, dropping ex
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="sliding-window" :questions='[
+<Quiz patternId="sliding-window" :questions='[
   {
     "q": "In Longest Repeating Character Replacement, why can maxFreq stay stale after the window shrinks?",
     "choices": [
@@ -1385,4 +1375,4 @@ A deque that keeps only "still-useful" candidates in monotone order, dropping ex
       }
     ]
   }
-]' /&gt;
+]' />

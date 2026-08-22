@@ -95,7 +95,6 @@ The template has three moving pieces. The `Entry` remembers not just the value, 
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="26" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">merge k sorted lists by comparing only heads</text>
-
   <g text-anchor="middle">
     <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
       <rect x="24" y="46" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="46" y="74">1</text>
@@ -111,7 +110,6 @@ The template has three moving pieces. The `Entry` remembers not just the value, 
       <text x="12" y="73">L1</text><text x="12" y="125">L2</text><text x="12" y="177">L3</text>
     </g>
   </g>
-
   <line x1="178" y1="121" x2="228" y2="121" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-kmerge-primary)"/>
   <text x="203" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">heads</text>
   <line x1="291" y1="96" x2="264" y2="135" stroke="var(--dsa-neutral)" stroke-width="2"/>
@@ -427,7 +425,7 @@ The shared idea is a **min-heap holding one live "front" per sorted source**, so
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="k-way-merge" :questions='[
+<Quiz patternId="k-way-merge" :questions='[
   {
     "q": "You have k sorted linked lists and need one sorted output. What does the heap store?",
     "choices": [
@@ -485,4 +483,4 @@ The shared idea is a **min-heap holding one live "front" per sorted source**, so
       }
     ]
   }
-]' /&gt;
+]' />

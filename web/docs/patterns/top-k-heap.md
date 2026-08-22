@@ -4,7 +4,7 @@
 
 Imagine you are watching a live scoreboard with millions of scores, but the product manager only cares about the top 10. Sorting every score every time would be silly: rank 11 through rank 1,000,000 do not matter. The Top-K heap pattern exists because you can keep a tiny "VIP room" of size `k` instead of arranging the whole crowd. Every new candidate enters the room briefly; if the room is too full, you kick out the worst person currently inside. At the end, the room contains exactly the best `k` candidates.
 
-&lt;HeapAnim /&gt;
+<HeapAnim />
 
 Use a concrete example: find the 3 largest numbers in `[7, 1, 9, 3, 10, 2, 8]`. Keep a min-heap of size 3. Read `7,1,9` → heap has `{1,7,9}`. Read `3` → heap becomes `{1,3,7,9}`, too large, so remove the smallest `1`; room is `{3,7,9}`. Read `10` → remove `3`; room is `{7,9,10}`. Read `2` → remove `2` immediately. Read `8` → remove `7`; final room is `{8,9,10}`. Notice the heap root is not the answer to "largest"; it is the weakest of the winners, the one easiest to evict.
 
@@ -82,13 +82,11 @@ Fill in `compareWorstFirst` based on what "worst among the winners" means. For k
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">keep only the current top k boundary</text>
-
   <rect x="31" y="92" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
   <text x="53" y="120" text-anchor="middle" font-size="17" font-weight="700" fill="var(--dsa-ink)">12</text>
   <text x="53" y="153" text-anchor="middle" font-size="11.5" fill="var(--dsa-success)">incoming</text>
   <line x1="80" y1="114" x2="137" y2="114" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-topk-success)"/>
   <text x="105" y="101" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">larger</text>
-
   <line x1="200" y1="95" x2="164" y2="138" stroke="var(--dsa-neutral)" stroke-width="2"/>
   <line x1="200" y1="95" x2="236" y2="138" stroke="var(--dsa-neutral)" stroke-width="2"/>
   <circle cx="200" cy="76" r="22" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6"/>
@@ -302,7 +300,7 @@ Run these small cases mentally before trusting the code:
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="top-k-heap" :questions='[
+<Quiz patternId="top-k-heap" :questions='[
   {
     "q": "For the k-th largest element in a stream, which heap should be maintained?",
     "choices": [
@@ -360,4 +358,4 @@ Run these small cases mentally before trusting the code:
       }
     ]
   }
-]' /&gt;
+]' />

@@ -36,7 +36,6 @@ The feasibility predicate isn't monotone — you can find an x where `feasible(x
 <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">binary search over the answer: eating rate k</text>
-
   <line x1="48" y1="72" x2="352" y2="72" stroke="var(--dsa-neutral)" stroke-width="2"/>
   <circle cx="58" cy="72" r="6" fill="var(--dsa-primary)"/>
   <circle cx="342" cy="72" r="6" fill="var(--dsa-primary)"/>
@@ -45,7 +44,6 @@ The feasibility predicate isn't monotone — you can find an x where `feasible(x
   <text x="342" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">high=max</text>
   <text x="202" y="43" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">mid k=4</text>
   <text x="200" y="92" text-anchor="middle" font-size="11.5" fill="var(--dsa-neutral)">rate k</text>
-
   <g text-anchor="middle">
     <rect x="82" y="114" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
     <rect x="134" y="114" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
@@ -452,7 +450,7 @@ Partition binary search — the most sophisticated member of the family; demonst
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="bs-on-answer" :questions='[
+<Quiz patternId="bs-on-answer" :questions='[
   {
     "q": "A problem asks for the minimum speed that finishes within h hours. Which pattern fits?",
     "choices": [
@@ -511,4 +509,4 @@ Partition binary search — the most sophisticated member of the family; demonst
       }
     ]
   }
-]' /&gt;
+]' />

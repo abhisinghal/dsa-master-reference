@@ -48,7 +48,7 @@ flowchart TD
 <div class="figcap">BFS control flow — layer-by-layer expansion gives shortest distances in an unweighted graph.</div>
 <div class="readfig"><b>How to read it:</b> Picture ripples spreading from where you drop a stone. BFS visits everything one "hop" away, then everything two hops away, and so on — one full ring at a time. The loop says: while the queue isn't empty, take the whole current ring, mark each unvisited neighbour and queue it for the next ring, then bump the distance by one. Because you reach each node on the earliest possible ring, the first time you see a node is via a shortest path.</div>
 
-&lt;BFSGridAnim /&gt;
+<BFSGridAnim />
 
 <Callout kind="note" title="🎬 Video walkthrough coming soon">
 
@@ -102,7 +102,7 @@ Once a component is flooded (marked), it is never revisited; the outer scan coun
 
 </Callout>
 
-&lt;DFSGridAnim /&gt;
+<DFSGridAnim />
 
 **Java (DFS, in-place marking):**
 

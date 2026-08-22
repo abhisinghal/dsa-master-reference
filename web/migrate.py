@@ -194,7 +194,13 @@ def escape_lt_gt_in_prose(body: str) -> str:
         r"</?(a|b|i|u|em|strong|span|div|p|br|hr|img|code|pre|kbd|sub|sup|"
         r"h[1-6]|ul|ol|li|table|thead|tbody|tr|th|td|blockquote|small|"
         r"details|summary|figure|figcaption|dl|dt|dd|"
-        r"Callout|CodeTabs|ProgressCheck|slot|script|style|template)"
+        r"Callout|CodeTabs|ProgressCheck|JavaRunner|Breadcrumbs|ReadingTime|"
+        r"RecentUpdates|Quiz|StepStrip|"
+        r"SlidingWindowAnim|MonoStackAnim|UnionFindAnim|SweepLineAnim|"
+        r"DivideConquerAnim|QuickselectAnim|BacktrackingAnim|"
+        r"TwoPointersAnim|FastSlowAnim|BinarySearchAnim|HeapAnim|"
+        r"BFSGridAnim|DFSGridAnim|DpFillAnim|TrieWalkAnim|"
+        r"ClientOnly|slot|script|style|template)"
         r"(\s[^>]*)?/?>",
         re.IGNORECASE
     )
@@ -275,6 +281,10 @@ def transform_svg_fences(text: str) -> str:
                 svg,
                 count=1
             )
+        # CRITICAL: strip blank lines inside the SVG — markdown-it treats a blank line
+        # inside a raw HTML block as a terminator, causing the closing </div> to become
+        # an orphan and the Vue SFC parser to fail with "Element is missing end tag".
+        svg = re.sub(r"\n\s*\n", "\n", svg)
         return f"\n\n<div class=\"svg-figure\">\n{svg}\n</div>\n\n"
     return re.sub(r"^```svg\n(.*?)\n^```\s*$", sub, text, flags=re.MULTILINE | re.DOTALL)
 

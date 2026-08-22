@@ -13,7 +13,7 @@ This chapter covers the plain stack/queue *containers* — their operations and 
 
 Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
 
-&lt;JavaRunner problemSlug="valid-parentheses" :tests='[{ input: "()", expected: "true" }, { input: "()[]{}", expected: "true" }, { input: "(]", expected: "false" }]' /&gt;
+<JavaRunner problemSlug="valid-parentheses" :tests='[{ input: "()", expected: "true" }, { input: "()[]{}", expected: "true" }, { input: "(]", expected: "false" }]' />
 
 
 <ProgressCheck id="valid-parentheses" />

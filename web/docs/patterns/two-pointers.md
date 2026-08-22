@@ -2,7 +2,7 @@
 
 Instead of checking every pair with two nested loops (that's O(n²)), you keep **two indices** and move them cleverly so each step rules out a whole batch of pairs at once. The trick almost always leans on the array being **sorted** — that order is what tells you *which* pointer to move.
 
-&lt;TwoPointersAnim /&gt;
+<TwoPointersAnim />
 
 Say the array is sorted and you want two numbers that add up to a target. Put one pointer at each end and look at their sum:
 
@@ -25,7 +25,6 @@ Every move discards a number you've *proven* can't help, so you sweep the array 
   </defs>
   <rect x="0" y="0" width="720" height="200" fill="#fbfcfe"/>
   <text x="20" y="28" font-size="13" font-weight="700" fill="#2563eb">sorted array — find two numbers summing to 9</text>
-
   <g filter="url(#tp-s)">
     <rect x="18"  y="54" width="54" height="42" rx="7" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.6"/>
     <rect x="82"  y="54" width="54" height="42" rx="7" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
@@ -42,12 +41,10 @@ Every move discards a number you've *proven* can't help, so you sweep the array 
     <text x="45" y="112">0</text><text x="109" y="112">1</text><text x="173" y="112">2</text>
     <text x="237" y="112">3</text><text x="301" y="112">4</text><text x="365" y="112">5</text>
   </g>
-
   <line x1="45"  y1="150" x2="45"  y2="100" stroke="#16a34a" stroke-width="2" marker-end="url(#tp-g)"/>
   <text x="45"  y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">lo</text>
   <line x1="365" y1="150" x2="365" y2="100" stroke="#dc2626" stroke-width="2" marker-end="url(#tp-r)"/>
   <text x="365" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">hi</text>
-
   <rect x="440" y="52" width="264" height="92" rx="9" fill="#f6f8fb" stroke="#d9dee7"/>
   <text x="456" y="76" font-size="13" font-weight="700" fill="#0b1220">a[lo] + a[hi] = 1 + 11 = 12</text>
   <text x="456" y="100" font-size="13" fill="#dc2626">12 &gt; 9  →  too big, move hi ◀ left</text>
@@ -97,7 +94,6 @@ The array **isn't sorted** and you can't afford to sort it (O(n log n) prep) —
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Sort, fix one value, two-pointer the rest</text>
-
   <g text-anchor="middle">
     <rect x="44" y="82" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="var(--dsa-cell-stroke)"/>
     <rect x="96" y="82" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="var(--dsa-cell-stroke)"/>
@@ -114,14 +110,12 @@ The array **isn't sorted** and you can't afford to sort it (O(n log n) prep) —
       <text x="222" y="141">3</text><text x="274" y="141">4</text><text x="326" y="141">5</text>
     </g>
   </g>
-
   <line x1="118" y1="54" x2="118" y2="79" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-3sum-primary)"/>
   <text x="118" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">i fixed</text>
   <line x1="170" y1="174" x2="170" y2="130" stroke="var(--dsa-success)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-3sum-success)"/>
   <text x="170" y="193" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">left</text>
   <line x1="326" y1="174" x2="326" y2="130" stroke="var(--dsa-danger)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-3sum-danger)"/>
   <text x="326" y="193" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">right</text>
-
   <rect x="62" y="210" width="276" height="24" rx="8" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-line)" stroke-width="1.6"/>
   <text x="200" y="227" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">sum = -1 + -1 + 2 = 0 → hit!</text>
 </svg>
@@ -287,7 +281,6 @@ Sort once, then let two converging pointers do the work — the target and the c
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-primary)">Start widest; move the shorter wall</text>
-
   <rect x="46" y="151" width="304" height="11" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-info)" stroke-width="1.6" opacity="0.85"/>
   <line x1="46" y1="162" x2="350" y2="162" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
   <g text-anchor="middle">
@@ -305,7 +298,6 @@ Sort once, then let two converging pointers do the work — the target and the c
       <text x="236" y="181">4</text><text x="274" y="181">8</text><text x="312" y="181">3</text><text x="350" y="181">7</text>
     </g>
   </g>
-
   <line x1="46" y1="212" x2="46" y2="166" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-cwm-primary)"/>
   <text x="46" y="231" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">left</text>
   <line x1="350" y1="212" x2="350" y2="166" stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" marker-end="url(#ar-cwm-primary)"/>
@@ -798,7 +790,7 @@ Also solvable with a monotonic (decreasing) stack that resolves trapped basins b
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="two-pointers" :questions='[
+<Quiz patternId="two-pointers" :questions='[
   {
     "q": "In sorted two-sum, the current sum is too large. Which pointer move is justified?",
     "choices": [
@@ -857,4 +849,4 @@ Also solvable with a monotonic (decreasing) stack that resolves trapped basins b
       }
     ]
   }
-]' /&gt;
+]' />

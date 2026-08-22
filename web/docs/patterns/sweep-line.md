@@ -144,7 +144,6 @@ At equal coordinates, you must know whether an end and a start overlap. For meet
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">sweep events and track active meetings</text>
-
   <line x1="50" y1="57" x2="350" y2="57" stroke="var(--dsa-neutral)" stroke-width="2"/>
   <g font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">
     <text x="70" y="75">0</text><text x="120" y="75">5</text><text x="170" y="75">10</text><text x="230" y="75">15</text><text x="280" y="75">20</text><text x="330" y="75">30</text>
@@ -157,7 +156,6 @@ At equal coordinates, you must know whether an end and a start overlap. For meet
   </g>
   <line x1="145" y1="43" x2="145" y2="176" stroke="var(--dsa-primary)" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ar-sweep-primary)"/>
   <text x="151" y="42" font-size="11.5" font-weight="700" fill="var(--dsa-primary)">sweep</text>
-
   <rect x="70" y="185" width="260" height="30" rx="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
   <text x="200" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-ink)">count: 0→1→2→1→0, peak = 2</text>
   <text x="200" y="233" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">max concurrency = peak count on sweep</text>
@@ -403,7 +401,7 @@ With a `TreeMap` as the event/difference structure, sweep handles *My Calendar I
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="sweep-line" :questions='[
+<Quiz patternId="sweep-line" :questions='[
   {
     "q": "A meeting problem asks for the maximum number active at once. Which lens fits best?",
     "choices": [
@@ -461,4 +459,4 @@ With a `TreeMap` as the event/difference structure, sweep handles *My Calendar I
       }
     ]
   }
-]' /&gt;
+]' />

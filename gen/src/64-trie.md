@@ -111,6 +111,38 @@ Use this version when the alphabet is unknown or sparse. The algorithmic idea is
 
 <ProgressCheck id="implement-trie" />
 
+```svg
+<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="trie-ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">shared prefix: c → a branches to t* and r*</text>
+  <g stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" fill="none" marker-end="url(#trie-ar)">
+    <line x1="86" y1="122" x2="124" y2="122"/><line x1="168" y1="122" x2="206" y2="122"/>
+    <line x1="250" y1="112" x2="286" y2="84"/><line x1="250" y1="132" x2="286" y2="160"/>
+  </g>
+  <g font-family="var(--dsa-font)" font-size="12" font-weight="700" text-anchor="middle" fill="var(--dsa-neutral)">
+    <text x="105" y="112">c</text><text x="187" y="112">a</text><text x="268" y="88">t</text><text x="268" y="158">r</text>
+  </g>
+  <g font-family="var(--dsa-font)" text-anchor="middle" font-size="17" font-weight="700" fill="var(--dsa-ink)">
+    <rect x="42" y="100" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="64" y="127" font-size="11">root</text>
+    <rect x="124" y="100" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="146" y="128">c</text>
+    <rect x="206" y="100" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="228" y="128">a</text>
+    <rect x="286" y="58" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="308" y="86">t</text>
+    <rect x="286" y="142" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="308" y="170">r</text>
+  </g>
+  <g font-family="var(--dsa-font)" font-size="17" font-weight="700" text-anchor="middle" fill="var(--dsa-success)">
+    <text x="336" y="72">*</text><text x="336" y="156">*</text>
+  </g>
+  <text x="200" y="220" text-anchor="middle" font-family="var(--dsa-font)" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">search(cat) and search(car) reuse the same c,a walk.</text>
+</svg>
+```
+
+<div class="readfig"><b>How to read it:</b> each edge = one char; end-of-word flag on terminal nodes.</div>
+
 ### Problem
 
 Implement a trie supporting `insert(word)`, `search(word)` (exact word), and `startsWith(prefix)`.

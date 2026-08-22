@@ -52,6 +52,8 @@ A DP value is final once written; this requires an acyclic dependency graph amon
 
 **Top-down vs bottom-up** — memoized recursion mirrors the recurrence directly and computes only reachable states (great for sparse/irregular spaces); tabulation removes call overhead and enables rolling-array space cuts. Prefer whichever makes the transition clearest, then optimize.
 
+<DpFillAnim />
+
 ### Recognize by
 - "how many ways / min-max cost / can I reach" over discrete choices
 - overlapping subproblems — the naive recursion re-solves f(n−1), f(n−2) exponentially
@@ -217,7 +219,7 @@ O(1): only `prev2`, `prev1`, and `cur` are kept.
 
 Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
 
-&lt;JavaRunner problemSlug="maximum-subarray" :tests='[{ input: "9\n-2 1 -3 4 -1 2 1 -5 4", expected: "6" }, { input: "1\n1", expected: "1" }]' /&gt;
+<JavaRunner problemSlug="maximum-subarray" :tests='[{ input: "9\n-2 1 -3 4 -1 2 1 -5 4", expected: "6" }, { input: "1\n1", expected: "1" }]' />
  — **Medium**
 
 <ProgressCheck id="maximum-subarray-kadane-the-running-optimum-dp" />
@@ -244,7 +246,6 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
       <rect x="398" y="44" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="420" y="72">1</text>
       <rect x="450" y="44" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="472" y="72">-5</text>
       <rect x="502" y="44" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="524" y="72">4</text>
-
       <rect x="86" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="108" y="136">-2</text>
       <rect x="138" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="160" y="136">1</text>
       <rect x="190" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="212" y="136">-2</text>
@@ -254,7 +255,6 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
       <rect x="398" y="108" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="420" y="136">6</text>
       <rect x="450" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="472" y="136">1</text>
       <rect x="502" y="108" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="524" y="136">5</text>
-
       <rect x="86" y="172" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="108" y="200">-2</text>
       <rect x="138" y="172" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="160" y="200">1</text>
       <rect x="190" y="172" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="212" y="200">1</text>
@@ -512,10 +512,65 @@ O(target): one boolean row of reachable sums.
 
 Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
 
-&lt;JavaRunner problemSlug="coin-change" :tests='[{ input: "3\n1 2 5\n11", expected: "3" }, { input: "1\n2\n3", expected: "-1" }]' /&gt;
+<JavaRunner problemSlug="coin-change" :tests='[{ input: "3\n1 2 5\n11", expected: "3" }, { input: "1\n2\n3", expected: "-1" }]' />
 
 
 <ProgressCheck id="coin-change-unbounded-min-count" />
+
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="coin-ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="720" height="260" rx="12" fill="var(--dsa-bg)"/>
+  <text x="360" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">amount = 11, coins = [1,2,5]</text>
+  <g font-family="var(--dsa-font)" text-anchor="middle">
+    <g font-size="11" fill="var(--dsa-neutral)">
+      <text x="50" y="88">i</text><text x="90" y="88">0</text><text x="134" y="88">1</text><text x="178" y="88">2</text><text x="222" y="88">3</text><text x="266" y="88">4</text><text x="310" y="88">5</text><text x="354" y="88">6</text><text x="398" y="88">7</text><text x="442" y="88">8</text><text x="486" y="88">9</text><text x="530" y="88">10</text><text x="574" y="88">11</text>
+    </g>
+    <text x="50" y="122" font-size="12" font-weight="700" fill="var(--dsa-neutral)">dp</text>
+    <g font-size="15" font-weight="700" fill="var(--dsa-ink)">
+      <rect x="68" y="98" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="90" y="126">0</text>
+      <rect x="112" y="98" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="134" y="126">1</text>
+      <rect x="156" y="98" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="178" y="126">1</text>
+      <rect x="200" y="98" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="222" y="126">2</text>
+      <rect x="244" y="98" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="266" y="126">2</text>
+      <rect x="288" y="98" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="310" y="126">1</text>
+      <rect x="332" y="98" width="44" height="44" rx="7" fill="var(--dsa-info-soft)" stroke="var(--dsa-info)" stroke-width="1.6"/><text x="354" y="126">2</text>
+      <rect x="376" y="98" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="398" y="126">2</text>
+      <rect x="420" y="98" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="442" y="126">3</text>
+      <rect x="464" y="98" width="44" height="44" rx="7" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/><text x="486" y="126">3</text>
+      <rect x="508" y="98" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="530" y="126">2</text>
+      <rect x="552" y="98" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="574" y="126">3</text>
+    </g>
+  </g>
+  <g stroke="var(--dsa-primary)" stroke-width="var(--dsa-arrow-stroke)" fill="none" marker-end="url(#coin-ar)">
+    <path d="M530,146 C542,168 558,168 570,146"/>
+    <path d="M486,146 C510,188 550,186 570,146"/>
+    <path d="M354,146 C420,216 540,206 570,146"/>
+  </g>
+  <g font-family="var(--dsa-font)" font-size="11" font-weight="700" text-anchor="middle">
+    <text x="530" y="164" fill="var(--dsa-success)">coin 1</text>
+    <text x="486" y="184" fill="var(--dsa-warning)">coin 2</text>
+    <text x="354" y="214" fill="var(--dsa-info)">coin 5</text>
+  </g>
+  <rect x="610" y="88" width="92" height="74" rx="10" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2.4"/>
+  <text x="656" y="113" text-anchor="middle" font-family="var(--dsa-font)" font-size="12" font-weight="700" fill="var(--dsa-primary)">dp[11]</text>
+  <text x="656" y="137" text-anchor="middle" font-family="var(--dsa-font)" font-size="11.5" fill="var(--dsa-ink)">min(10,9,6)+1</text>
+  <text x="360" y="238" text-anchor="middle" font-family="var(--dsa-font)" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">dp[0] seeds every reusable coin transition.</text>
+</svg>
+</div>
+
+
+
+
+<div class="readfig"><b>How to read it:</b> coins outer prevents double-counting; O(coins·amount).</div>
 
 ### Problem
 Given coin denominations (each reusable) and an amount, return the **fewest coins** that make the amount, or -1 if impossible.
@@ -1265,7 +1320,7 @@ If answers are wrong, verify in order: (1) does the state capture all future-rel
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="dp" :questions='[
+<Quiz patternId="dp" :questions='[
   {
     "q": "What should you design first in a dynamic programming solution?",
     "choices": [
@@ -1324,4 +1379,4 @@ If answers are wrong, verify in order: (1) does the state capture all future-rel
       }
     ]
   }
-]' /&gt;
+]' />

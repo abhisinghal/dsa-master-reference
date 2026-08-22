@@ -114,7 +114,6 @@ This is a common interview twist: topological sort is only half the solution. Th
   </defs>
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">Kahn's algorithm emits zero-in-degree courses</text>
-
   <g stroke="var(--dsa-primary)" stroke-width="2" fill="none" marker-end="url(#ar-topo-primary)">
     <line x1="116" y1="80" x2="178" y2="80"/>
     <line x1="116" y1="96" x2="178" y2="150"/>
@@ -133,7 +132,6 @@ This is a common interview twist: topological sort is only half the solution. Th
       <text x="90" y="122">in=0</text><text x="200" y="114">in=1</text><text x="200" y="192">in=1</text><text x="310" y="138">in=2</text>
     </g>
   </g>
-
   <text x="67" y="211" font-size="12" font-weight="700" fill="var(--dsa-success)">queue</text>
   <rect x="116" y="193" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
   <text x="138" y="221" text-anchor="middle" font-size="17" font-weight="700" fill="var(--dsa-ink)">A</text>
@@ -322,7 +320,7 @@ If I choose DFS instead, I would say: "I mark a node as visiting when it enters 
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="topological-sort" :questions='[
+<Quiz patternId="topological-sort" :questions='[
   {
     "q": "A course schedule problem gives prerequisite edges. What property must exist for a valid order?",
     "choices": [
@@ -380,4 +378,4 @@ If I choose DFS instead, I would say: "I mark a node as visiting when it enters 
       }
     ]
   }
-]' /&gt;
+]' />

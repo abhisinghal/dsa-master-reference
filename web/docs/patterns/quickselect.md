@@ -294,7 +294,7 @@ O(1) extra because the selection loop partitions in place.
 
 ## 🧠 Check your understanding
 
-&lt;Quiz patternId="quickselect" :questions='[
+<Quiz patternId="quickselect" :questions='[
   {
     "q": "You need the k-th largest value in an unsorted array, not the full order. Which pattern fits?",
     "choices": [
@@ -352,4 +352,4 @@ O(1) extra because the selection loop partitions in place.
       }
     ]
   }
-]' /&gt;
+]' />
