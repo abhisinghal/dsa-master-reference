@@ -4,8 +4,9 @@
 
 Minimum cuts so every part of `s` is a palindrome.
 
-## Approach — Two DPs (pal[i][j] + cuts[i])
+---
 
+## Approach 1 — Two DPs (pal[i][j] + cuts[i])
 **Insight.**
 1. Precompute `pal[i][j]` = whether `s[i..j]` is palindrome — DP in O(n²).
 2. `cuts[i]` = min cuts to partition `s[0..i]`. If `s[0..i]` is palindrome, cuts[i] = 0. Else `cuts[i] = min(cuts[j] + 1)` over all `j` with `s[j+1..i]` palindrome.
@@ -30,6 +31,18 @@ int minCut(String s) {
 ```
 
 **Complexity** — Time **O(n²)**; Space **O(n²)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Two DPs (pal[i][j] + cuts[i]) | O(n²) | O(n²) | primary |
+
+## When to use which
+
+- **Ship this** → Two DPs (pal[i][j] + cuts[i]) (O(n²), O(n²)). The pattern's standard solution.
 
 ## Related problems
 

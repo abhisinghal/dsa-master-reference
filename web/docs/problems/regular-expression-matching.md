@@ -4,8 +4,9 @@
 
 Match `s` against pattern `p` with `.` (any char) and `*` (0+ of previous char).
 
-## Approach — 2D DP
+---
 
+## Approach 1 — 2D DP
 **Insight.** `dp[i][j]` = whether `s[..i]` matches `p[..j]`.
 - If `p[j-1] == '*'`:
   - **Zero occurrences**: `dp[i][j] = dp[i][j-2]`.
@@ -41,6 +42,18 @@ boolean matches(String s, String p, int i, int j) {
 
 
 **Complexity** — Time **O(mn)**; Space **O(mn)** (can compress to O(n)).
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| 2D DP | O(mn) | O(mn) | primary |
+
+## When to use which
+
+- **Ship this** → 2D DP (O(mn), O(mn)). The pattern's standard solution.
 
 ## Related problems
 

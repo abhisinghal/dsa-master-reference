@@ -4,8 +4,9 @@
 
 Return the popcount (number of set bits) of an unsigned integer.
 
-## Approach 1 — Loop bits
+---
 
+## Approach 1 — Loop bits
 ```java
 int hammingWeight(int n) {
     int count = 0;
@@ -14,8 +15,9 @@ int hammingWeight(int n) {
 }
 ```
 
-## Approach 2 — Kernighan's trick (clear lowest set bit)
+---
 
+## Approach 2 — Kernighan's trick (clear lowest set bit)
 **Insight.** `n & (n-1)` clears the lowest set bit. Iterate until 0 → number of iterations = popcount.
 
 ```java
@@ -26,13 +28,30 @@ int hammingWeight2(int n) {
 }
 ```
 
-## Approach 3 — Built-in
+---
 
+## Approach 3 — Built-in
 ```java
 int hammingWeight3(int n) { return Integer.bitCount(n); }
 ```
 
 **Complexity** — All **O(#set bits)** at most; Approach 1 always O(32).
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Loop bits | — | — | baseline |
+| Kernighan's trick (clear lowest set bit) | — | — | improved |
+| Built-in | O(#set bits) | O(32) | optimum |
+
+## When to use which
+
+- **State it for signal** → Loop bits (—). Correct baseline; call it out then move on.
+- **Intermediate refinement** → Kernighan's trick (clear lowest set bit) (—).
+- **Ship this** → Built-in (O(#set bits), O(32)). Expected optimum in interview.
 
 ## Related problems
 

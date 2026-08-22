@@ -4,8 +4,9 @@
 
 Count contiguous subarrays whose product is strictly less than `k`. **Positive values only.**
 
-## Approach — Sliding window with product
+---
 
+## Approach 1 — Sliding window with product
 **Insight.** Fix `r`. Shrink `l` while product ≥ k. Every subarray ending at `r` with left ≥ current `l` is valid → contributes `r - l + 1` new subarrays.
 
 ```java
@@ -25,6 +26,18 @@ int numSubarrayProductLessThanK(int[] nums, int k) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 **Trap.** `k <= 1` — no product of positives is < 1, return 0 early. Guard against integer overflow with `long prod`.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sliding window with product | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sliding window with product (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

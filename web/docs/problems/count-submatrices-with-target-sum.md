@@ -4,8 +4,9 @@
 
 Count submatrices whose sum equals `target`.
 
-## Approach — Row prefix + 1D subarray-sum-K
+---
 
+## Approach 1 — Row prefix + 1D subarray-sum-K
 **Insight.** Fix two rows `r1, r2`. Compress the column-sums between them into a 1D array; then count subarrays with sum = target using the hash-map prefix-sum trick.
 
 
@@ -36,6 +37,18 @@ int numSubmatrixSumTarget(int[][] mat, int target) {
 
 
 **Complexity** — Time **O(m²·n)**; Space **O(n)** per pair.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Row prefix + 1D subarray-sum-K | O(m²·n) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Row prefix + 1D subarray-sum-K (O(m²·n), O(n)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,12 +4,14 @@
 
 Merge `nums2` into `nums1` in-place; `nums1` has `m + n` slots (last `n` empty).
 
-## Approach 1 — Naïve merge into buffer
+---
 
+## Approach 1 — Naïve merge into buffer
 Copy nums1 first m into a temp, then two-pointer merge into nums1. O(m+n) time, O(m) space.
 
-## Approach 2 — Backward two-pointer
+---
 
+## Approach 2 — Backward two-pointer
 **Insight.** Fill from the back so we never overwrite an unread element.
 
 
@@ -29,6 +31,20 @@ void merge(int[] nums1, int m, int[] nums2, int n) {
 **Why safe.** Any element we overwrite at index `k` has already been read (its original position `≤ k` was consumed earlier).
 
 **Complexity** — Time **O(m+n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Naïve merge into buffer | O(m+n) | O(m) | baseline |
+| Backward two-pointer | O(m+n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Naïve merge into buffer (O(m+n)). Correct baseline; call it out then move on.
+- **Ship this** → Backward two-pointer (O(m+n), O(1)). Expected optimum in interview.
 
 ## Related problems
 

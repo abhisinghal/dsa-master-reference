@@ -4,8 +4,9 @@
 
 `n` people (n ≤ 10), 40 hats. Each person has a preference list. Each hat used by ≤ 1 person; each person wears exactly one hat. Count assignments (mod 1e9+7).
 
-## Approach — Bitmask DP over people, iterate hats
+---
 
+## Approach 1 — Bitmask DP over people, iterate hats
 **Insight.** Iterate hats (there are more of them but each contributes only if some person likes it). `dp[h][mask]` = # ways to satisfy people in mask using hats `1..h`. Transition:
 - Skip hat h: `dp[h][mask] += dp[h-1][mask]`.
 - Give hat h to any person p in mask who likes it: `dp[h][mask] += dp[h-1][mask ^ (1 << p)]`.
@@ -36,6 +37,18 @@ int numberWays(List<List<Integer>> hats) {
 ```
 
 **Complexity** — Time **O(40 · 2ⁿ · n)**; Space **O(2ⁿ)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Bitmask DP over people, iterate hats | O(40 · 2ⁿ · n) | O(2ⁿ) | primary |
+
+## When to use which
+
+- **Ship this** → Bitmask DP over people, iterate hats (O(40 · 2ⁿ · n), O(2ⁿ)). The pattern's standard solution.
 
 ## Related problems
 

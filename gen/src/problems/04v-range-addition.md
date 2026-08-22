@@ -6,8 +6,9 @@ Given array size `n` and `updates=[start, end, val]`, apply all as range add and
 
 **Example** — `n=5, [[1,3,2],[2,4,3],[0,2,-2]]` → `[-2,0,3,5,3]`
 
-## Approach — Difference array + one prefix pass
+---
 
+## Approach 1 — Difference array + one prefix pass
 ```java
 int[] getModifiedArray(int n, int[][] updates) {
     int[] diff = new int[n + 1];
@@ -19,7 +20,33 @@ int[] getModifiedArray(int n, int[][] updates) {
 }
 ```
 
+
+<CodeTrace
+  title="Difference array + one prefix pass"
+  :values="['1', '3', '2']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
+    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+  ]'
+/>
+
+
 **Complexity** — Time **O(n + updates)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Difference array + one prefix pass | O(n + updates) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Difference array + one prefix pass (O(n + updates), O(n)). The pattern's standard solution.
 
 ## Related problems
 

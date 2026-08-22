@@ -6,8 +6,9 @@ From index `start`, you may jump `i ± arr[i]`. Can you reach any zero?
 
 > Filed under Greedy in the curriculum, but the natural solution is BFS/DFS on an implicit graph — there's nothing "greedy" to exploit.
 
-## Approach — BFS from start
+---
 
+## Approach 1 — BFS from start
 ```java
 boolean canReach(int[] arr, int start) {
     Queue<Integer> q = new ArrayDeque<>();
@@ -24,6 +25,18 @@ boolean canReach(int[] arr, int start) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| BFS from start | O(n) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → BFS from start (O(n), O(n)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 All **unique** permutations of nums (may contain duplicates).
 
-## Approach — Sort + `used[]` + skip equal-and-unused
+---
 
+## Approach 1 — Sort + `used[]` + skip equal-and-unused
 **Insight.** Sort. When picking the next element, skip any `nums[i]` such that `nums[i] == nums[i-1]` AND `!used[i-1]` — this enforces a canonical order among duplicates.
 
 ```java
@@ -33,6 +34,18 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> out) {
 **Why `!used[i-1]`.** Enforces that among duplicates, we pick "left-to-right" order — if the previous duplicate is unused, skipping now avoids a mirror choice already explored.
 
 **Complexity** — Time **O(n · n!)** worst case; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort + `used[]` + skip equal-and-unused | O(n · n!) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Sort + `used[]` + skip equal-and-unused (O(n · n!), O(n)). The pattern's standard solution.
 
 ## Related problems
 

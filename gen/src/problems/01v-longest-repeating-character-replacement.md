@@ -4,8 +4,9 @@
 
 Longest substring achievable by replacing at most `k` characters so all become identical.
 
-## Approach — Sliding window with `maxCount`
+---
 
+## Approach 1 — Sliding window with `maxCount`
 **Insight.** A window `[l, r]` is valid iff `windowLen - maxCount ≤ k` (where `maxCount` is the most frequent letter's count in the window). We don't need to shrink `maxCount` precisely — once we lock in a `maxCount`, only a **larger** window with a strictly larger max is interesting.
 
 ```java
@@ -27,6 +28,18 @@ int characterReplacement(String s, int k) {
 **Why the "lazy maxCount" is OK.** We only care about finding the best `best`; if `maxCount` becomes stale (window's real max is lower), we still shrink by exactly one per step, but never grow the answer. The final `best` remains correct.
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sliding window with `maxCount` | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sliding window with `maxCount` (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 Start at 0. At index i, jump 1..k steps. Max total score.
 
-## Approach — DP + monotonic deque (sliding window max)
+---
 
+## Approach 1 — DP + monotonic deque (sliding window max)
 **Insight.** `dp[i] = nums[i] + max(dp[i-k..i-1])`. Window max via deque of indices with decreasing `dp`.
 
 ```java
@@ -26,6 +27,18 @@ int maxResult(int[] nums, int k) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DP + monotonic deque (sliding window max) | O(n) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → DP + monotonic deque (sliding window max) (O(n), O(n)). The pattern's standard solution.
 
 ## Related problems
 

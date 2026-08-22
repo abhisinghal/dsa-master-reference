@@ -4,12 +4,14 @@
 
 Given heights, compute total water trapped.
 
-## Approach 1 — Precompute leftMax, rightMax
+---
 
+## Approach 1 — Precompute leftMax, rightMax
 For each i, water = min(leftMax[i], rightMax[i]) - h[i]. **O(n)** time, **O(n)** space.
 
-## Approach 2 — Opposing two-pointer, no arrays
+---
 
+## Approach 2 — Opposing two-pointer, no arrays
 **Insight.** Move whichever pointer has the smaller wall — the water level at that pointer is bounded by whichever *known* max is smaller.
 
 
@@ -36,9 +38,26 @@ int trap(int[] h) {
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
-## Approach 3 — Monotonic decreasing stack
+---
 
+## Approach 3 — Monotonic decreasing stack
 Push indices while heights decrease; on rise, pop the "bottom" and compute water in the pocket bounded by new top and current bar. Same **O(n)**, different mental model — useful teaching link to Largest Rectangle.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Precompute leftMax, rightMax | O(n) | O(n) | baseline |
+| Opposing two-pointer, no arrays | O(n) | O(1) | improved |
+| Monotonic decreasing stack | O(n) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → Precompute leftMax, rightMax (O(n)). Correct baseline; call it out then move on.
+- **Intermediate refinement** → Opposing two-pointer, no arrays (O(n)).
+- **Ship this** → Monotonic decreasing stack (O(n), —). Expected optimum in interview.
 
 ## Related problems
 

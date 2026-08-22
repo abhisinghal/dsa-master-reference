@@ -4,8 +4,9 @@
 
 Given `s`, return true if you can delete at most one character to make it a palindrome.
 
-## Approach — Two pointers + one skip
+---
 
+## Approach 1 — Two pointers + one skip
 **Insight.** Advance `l`, `r` from ends. On mismatch, try skipping `l` OR skipping `r` — check whichever remaining substring is a palindrome.
 
 ```java
@@ -27,6 +28,18 @@ boolean isPali(String s, int l, int r) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 **Extension.** Delete-at-most-k → recursive two-pointer with memoization, or use LCS with reverse (LPS-based).
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Two pointers + one skip | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Two pointers + one skip (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

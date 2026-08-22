@@ -4,8 +4,9 @@
 
 Each balloon spans `[x_start, x_end]`. A vertical arrow at `x` bursts every balloon whose span contains `x`. Minimum arrows.
 
-## Approach — Sort by end + shoot at end of first alive
+---
 
+## Approach 1 — Sort by end + shoot at end of first alive
 **Insight.** Sort by `x_end`. Shoot the first balloon at its end. That arrow bursts every balloon starting ≤ end. Move to first balloon starting &gt; end, repeat.
 
 
@@ -25,6 +26,18 @@ int findMinArrowShots(int[][] points) {
 **Trap.** Use `Integer.compare` — subtraction can overflow when spans include `INT_MAX/INT_MIN`.
 
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort by end + shoot at end of first alive | O(n log n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sort by end + shoot at end of first alive (O(n log n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

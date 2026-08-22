@@ -4,8 +4,9 @@
 
 Streaming interface: after each `query(c)`, return true iff any word in the dictionary matches a **suffix** of the stream so far.
 
-## Approach — Trie of REVERSED words, walk stream in reverse
+---
 
+## Approach 1 — Trie of REVERSED words, walk stream in reverse
 **Insight.** Checking "does any word end at position i in the stream?" = "does any *reversed word* start at position i and read backwards?". Insert reversed words into the trie; on each query, walk backward through the buffered stream.
 
 ```java
@@ -34,6 +35,18 @@ class StreamChecker {
 ```
 
 **Complexity** — Time **O(max_word_len)** per query; Space **O(D)** for dictionary.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Trie of REVERSED words, walk stream in rev… | O(max_word_len) | O(D) | primary |
+
+## When to use which
+
+- **Ship this** → Trie of REVERSED words, walk stream in reverse (O(max_word_len), O(D)). The pattern's standard solution.
 
 ## Related problems
 

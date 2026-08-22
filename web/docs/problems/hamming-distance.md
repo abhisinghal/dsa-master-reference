@@ -4,8 +4,9 @@
 
 Return number of positions where the bits of `x` and `y` differ.
 
-## Approach — Popcount of XOR
+---
 
+## Approach 1 — Popcount of XOR
 **Insight.** `x XOR y` has 1s exactly where the bits differ. Answer = popcount.
 
 
@@ -19,6 +20,18 @@ int hammingDistance(int x, int y) {
 
 
 **Complexity** — Time **O(1)** (32 bits); Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Popcount of XOR | O(1) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Popcount of XOR (O(1), O(1)). The pattern's standard solution.
 
 ## Related problems
 

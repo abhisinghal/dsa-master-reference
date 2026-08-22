@@ -4,8 +4,9 @@
 
 Same as House Robber but houses are in a **circle** — first and last are adjacent.
 
-## Approach — Two linear runs
+---
 
+## Approach 1 — Two linear runs
 **Insight.** Because rob(first) forbids rob(last), the optimum is either "consider houses[0..n-2]" or "houses[1..n-1]". Both are linear house robber → max of the two.
 
 ```java
@@ -25,6 +26,18 @@ int linear(int[] nums, int lo, int hi) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Two linear runs | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Two linear runs (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

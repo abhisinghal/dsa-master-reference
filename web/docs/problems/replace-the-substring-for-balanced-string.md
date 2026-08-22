@@ -4,8 +4,9 @@
 
 String of Q,W,E,R (length n divisible by 4). Return length of the smallest substring to replace so each letter appears n/4 times.
 
-## Approach — Sliding window over "outside" counts
+---
 
+## Approach 1 — Sliding window over "outside" counts
 **Insight.** A substring `[l, r]` is a valid replacement window iff **outside** it, no letter exceeds `n/4`. Equivalently, `outsideCount[x] ≤ n/4` for all x.
 
 Sweep r, decrement inside-window-adjusted counts implicitly; shrink l while the outside-condition still holds; track min window length.
@@ -32,6 +33,18 @@ int balancedString(String s) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sliding window over "outside" counts | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sliding window over "outside" counts (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

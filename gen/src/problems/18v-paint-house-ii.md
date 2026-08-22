@@ -4,12 +4,14 @@
 
 `n` houses, `k` colors. Cost to paint house i color j. Adjacent houses must differ in color. Min total.
 
-## Approach 1 — DP O(n · k²)
+---
 
+## Approach 1 — DP O(n · k²)
 `dp[i][j] = cost[i][j] + min(dp[i-1][j'])` over j' ≠ j.
 
-## Approach 2 — Track min & second-min per row → O(n · k)
+---
 
+## Approach 2 — Track min & second-min per row → O(n · k)
 **Insight.** From the previous row, the only info needed is the two smallest DP values (and which color the min belongs to). This lets each new cell pick its best predecessor in O(1).
 
 ```java
@@ -30,6 +32,20 @@ int minCostII(int[][] costs) {
 ```
 
 **Complexity** — Time **O(n · k)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DP O(n · k²) | — | — | baseline |
+| Track min & second-min per row → O(n · k) | O(n · k) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → DP O(n · k²) (—). Correct baseline; call it out then move on.
+- **Ship this** → Track min & second-min per row → O(n · k) (O(n · k), O(1)). Expected optimum in interview.
 
 ## Related problems
 

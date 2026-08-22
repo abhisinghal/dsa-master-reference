@@ -4,8 +4,9 @@
 
 Move all zeros to end, preserving order of non-zeros. In-place.
 
-## Approach — Slow/fast write pointer
+---
 
+## Approach 1 — Slow/fast write pointer
 **Insight.** `write` points to the next slot for a non-zero; `read` scans. Copy non-zeros forward, then zero-fill the tail. Alternatively, swap on the fly.
 
 
@@ -36,6 +37,18 @@ void moveZeroes2(int[] nums) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Slow/fast write pointer | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Slow/fast write pointer (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

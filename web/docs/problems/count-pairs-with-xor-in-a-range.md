@@ -4,8 +4,9 @@
 
 Count pairs `(i, j)` with `low ≤ nums[i] XOR nums[j] ≤ high`.
 
-## Approach — Binary trie counting
+---
 
+## Approach 1 — Binary trie counting
 **Insight.** `count(≤ high) - count(≤ low - 1)`. For each nums[i], walk the trie counting how many previously-inserted nums produce `XOR ≤ threshold` using bit-by-bit analysis. Trie stores subtree counts.
 
 
@@ -54,6 +55,18 @@ int queryLE(Node root, int x, int t) {
 
 
 **Complexity** — Time **O(n · 16)**; Space **O(n · 16)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Binary trie counting | O(n · 16) | O(n · 16) | primary |
+
+## When to use which
+
+- **Ship this** → Binary trie counting (O(n · 16), O(n · 16)). The pattern's standard solution.
 
 ## Related problems
 

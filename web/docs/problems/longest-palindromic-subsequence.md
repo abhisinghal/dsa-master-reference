@@ -4,12 +4,14 @@
 
 Length of the longest subsequence of `s` that is a palindrome.
 
-## Approach 1 — LCS(s, reverse(s))
+---
 
+## Approach 1 — LCS(s, reverse(s))
 O(n²).
 
-## Approach 2 — Interval DP
+---
 
+## Approach 2 — Interval DP
 **Insight.** `dp[i][j]` = LPS length in `s[i..j]`.
 - `s[i]==s[j]`: `dp[i][j] = 2 + dp[i+1][j-1]` (with adjustment for i+1 &gt; j-1).
 - Else: `max(dp[i+1][j], dp[i][j-1])`.
@@ -40,6 +42,20 @@ int longestPalindromeSubseq(String s) {
 **Complexity** — Time **O(n²)**; Space **O(n²)**.
 
 **Corollary.** Minimum insertions to make `s` a palindrome = `n - LPS(s)` (deleted characters have palindromic siblings; leftover characters need insertions).
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| LCS(s, reverse(s)) | O(n²) | — | baseline |
+| Interval DP | O(n²) | O(n²) | optimum |
+
+## When to use which
+
+- **State it for signal** → LCS(s, reverse(s)) (O(n²)). Correct baseline; call it out then move on.
+- **Ship this** → Interval DP (O(n²), O(n²)). Expected optimum in interview.
 
 ## Related problems
 

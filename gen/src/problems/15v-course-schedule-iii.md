@@ -4,8 +4,9 @@
 
 Each course `[duration, lastDay]`. Take max number of courses (one at a time, must finish by lastDay).
 
-## Approach — Sort by deadline + max-heap of durations (regret-based)
+---
 
+## Approach 1 — Sort by deadline + max-heap of durations (regret-based)
 **Insight.** Sort by deadline. Iterate; always take the course. If cumulative time exceeds the current deadline, **swap out** the previously-taken course with the largest duration (that's the "regret" step). This keeps the count maximal.
 
 ```java
@@ -25,6 +26,18 @@ int scheduleCourse(int[][] courses) {
 **Why greedy works.** After sorting by deadline, dropping the largest duration among taken courses is always at least as good as dropping the current one — swapping preserves feasibility for the same number of courses picked so far.
 
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort by deadline + max-heap of durations (… | O(n log n) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Sort by deadline + max-heap of durations (regret-based) (O(n log n), O(n)). The pattern's standard solution.
 
 ## Related problems
 

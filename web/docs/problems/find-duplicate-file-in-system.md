@@ -4,8 +4,9 @@
 
 Given a list of `"dir file1.ext(content) file2.ext(content) …"` strings, group files with identical content.
 
-## Approach — Hash by content
+---
 
+## Approach 1 — Hash by content
 
 
 ```java
@@ -36,6 +37,18 @@ List<List<String>> findDuplicate(String[] paths) {
 - **Very large files:** hash a rolling checksum (MD5/SHA1) instead of full content; compare buckets by re-hashing suspects fully.
 - **Filesystem streaming:** compare (size, first-1KB, sha256) triple to avoid touching non-collisions.
 - **Symlinks:** normalize `readlink` before grouping.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Hash by content | O(total input size) | O(total input size) | primary |
+
+## When to use which
+
+- **Ship this** → Hash by content (O(total input size), O(total input size)). The pattern's standard solution.
 
 ## Related problems
 

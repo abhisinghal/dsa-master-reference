@@ -4,10 +4,13 @@
 
 At most one buy + one sell. Max profit.
 
+---
+
 ## Approach 1 — Compare every pair O(n²)
 
-## Approach 2 — Track running minimum
+---
 
+## Approach 2 — Track running minimum
 **Insight.** Maximum profit if selling on day `i` is `prices[i] - minPrice(0..i-1)`.
 
 ```java
@@ -22,6 +25,20 @@ int maxProfit(int[] prices) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Compare every pair O(n²) | — | — | baseline |
+| Track running minimum | O(n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Compare every pair O(n²) (—). Correct baseline; call it out then move on.
+- **Ship this** → Track running minimum (O(n), O(1)). Expected optimum in interview.
 
 ## Related problems
 

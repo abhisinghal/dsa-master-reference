@@ -4,8 +4,9 @@
 
 Knight from top-left to bottom-right; each cell gives/takes HP; HP must stay ≥ 1 throughout. Find min initial HP.
 
-## Approach — Reverse DP from bottom-right
+---
 
+## Approach 1 — Reverse DP from bottom-right
 **Insight.** Forward DP fails because "min HP needed" depends on **future** losses. Instead, DP from `(m-1, n-1)` back to `(0, 0)`: `need[i][j]` = min HP required to survive starting from `(i, j)`.
 
 - Base: at bottom-right, `need = max(1, 1 - room[m-1][n-1])`.
@@ -29,6 +30,18 @@ int calculateMinimumHP(int[][] room) {
 **Complexity** — Time **O(mn)**; Space **O(mn)** — compressible to O(n).
 
 **Why reverse.** Forward propagation of "min HP" doesn't compose — the required HP at `(i, j)` depends on the worst path from there onward, which is only known once the future is resolved.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Reverse DP from bottom-right | O(mn) | O(mn) | primary |
+
+## When to use which
+
+- **Ship this** → Reverse DP from bottom-right (O(mn), O(mn)). The pattern's standard solution.
 
 ## Related problems
 

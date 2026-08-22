@@ -4,12 +4,14 @@
 
 Return true iff `t` is an anagram of `s`.
 
-## Approach 1 — Sort both, compare
+---
 
+## Approach 1 — Sort both, compare
 O(n log n).
 
-## Approach 2 — Frequency map
+---
 
+## Approach 2 — Frequency map
 For lowercase ASCII, size-26 int array. For Unicode, `HashMap<Character, Integer>`. Increment for `s`, decrement for `t`; verify all zeros.
 
 
@@ -29,6 +31,20 @@ boolean isAnagram(String s, String t) {
 **Complexity** — Time **O(n)**; Space **O(1)** for ASCII.
 
 **Follow-up (Unicode).** Iterate `codePoints`; use `HashMap<Integer, Integer>`.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort both, compare | O(n log n) | — | baseline |
+| Frequency map | O(n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Sort both, compare (O(n log n)). Correct baseline; call it out then move on.
+- **Ship this** → Frequency map (O(n), O(1)). Expected optimum in interview.
 
 ## Related problems
 

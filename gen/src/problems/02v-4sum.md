@@ -4,10 +4,13 @@
 
 Return all unique quadruplets summing to `target`.
 
+---
+
 ## Approach 1 — Quadruple loop O(n⁴)
 
-## Approach 2 — Sort + two nested loops + two-pointer
+---
 
+## Approach 2 — Sort + two nested loops + two-pointer
 **Insight.** Fix `i` and `j`, then two-pointer over the rest. Skip duplicates at each of the four levels. Use `long` for the sum to avoid overflow on adversarial inputs.
 
 ```java
@@ -39,6 +42,20 @@ List<List<Integer>> fourSum(int[] nums, int target) {
 **Complexity** — Time **O(n³)**; Space **O(1)** extra.
 
 **Generalization.** kSum → recursion + 2Sum base case gives O(n^(k-1)).
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Quadruple loop O(n⁴) | — | — | baseline |
+| Sort + two nested loops + two-pointer | O(n³) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Quadruple loop O(n⁴) (—). Correct baseline; call it out then move on.
+- **Ship this** → Sort + two nested loops + two-pointer (O(n³), O(1)). Expected optimum in interview.
 
 ## Related problems
 

@@ -4,12 +4,14 @@
 
 Assign + or - to each num; count ways to reach `target`.
 
-## Approach 1 — Backtracking
+---
 
+## Approach 1 — Backtracking
 O(2ⁿ). Baseline.
 
-## Approach 2 — Reduce to subset-sum count
+---
 
+## Approach 2 — Reduce to subset-sum count
 **Insight.** Let `P` = sum of + numbers, `N` = sum of - numbers. Then `P - N = target` and `P + N = total`. So `P = (total + target) / 2`. Count subsets summing to P.
 
 ```java
@@ -28,6 +30,20 @@ int findTargetSumWays(int[] nums, int target) {
 ```
 
 **Complexity** — Time **O(n · P)**; Space **O(P)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Backtracking | O(2ⁿ) | — | baseline |
+| Reduce to subset-sum count | O(n · P) | O(P) | optimum |
+
+## When to use which
+
+- **State it for signal** → Backtracking (O(2ⁿ)). Correct baseline; call it out then move on.
+- **Ship this** → Reduce to subset-sum count (O(n · P), O(P)). Expected optimum in interview.
 
 ## Related problems
 

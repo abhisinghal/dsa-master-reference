@@ -4,8 +4,9 @@
 
 Given a string, return every case variant of its letters (digits stay).
 
-## Approach 1 — DFS with two branches per letter
+---
 
+## Approach 1 — DFS with two branches per letter
 
 
 ```java
@@ -29,9 +30,24 @@ void dfs(char[] a, int i, List<String> out) {
 
 **Complexity** — Time **O(n · 2^L)** where L = number of letters; Space **O(n)**.
 
-## Approach 2 — Iterative bit-enumeration
+---
 
+## Approach 2 — Iterative bit-enumeration
 Count L = number of letters. For mask 0..2^L - 1, apply the corresponding case flips. Same output.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DFS with two branches per letter | O(n · 2^L) | O(n) | baseline |
+| Iterative bit-enumeration | — | — | optimum |
+
+## When to use which
+
+- **State it for signal** → DFS with two branches per letter (O(n · 2^L)). Correct baseline; call it out then move on.
+- **Ship this** → Iterative bit-enumeration (—, —). Expected optimum in interview.
 
 ## Related problems
 

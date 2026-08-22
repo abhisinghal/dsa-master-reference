@@ -4,8 +4,9 @@
 
 Return all words in the dictionary that are concatenations of **two or more** other words in the dictionary.
 
-## Approach — Sort by length + DP with trie / word-set
+---
 
+## Approach 1 — Sort by length + DP with trie / word-set
 **Insight.** Sort words shortest-first. For each word, check if it can be split into ≥ 2 shorter dictionary words using DP (Word Break style). Use a hash set of words seen so far.
 
 ```java
@@ -33,6 +34,18 @@ boolean canForm(String w, Set<String> dict) {
 **Complexity** — Time **O(N · L²)** where L = max length; Space **O(N + L)**.
 
 **Alternative** — build a trie for O(L²) per word using trie-walk instead of substring lookup.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort by length + DP with trie / word-set | O(N · L²) | O(N + L) | primary |
+
+## When to use which
+
+- **Ship this** → Sort by length + DP with trie / word-set (O(N · L²), O(N + L)). The pattern's standard solution.
 
 ## Related problems
 

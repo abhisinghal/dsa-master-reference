@@ -6,8 +6,9 @@ Given roots and a sentence, replace each word with its shortest root prefix (if 
 
 **Example** — `dict=["cat","bat","rat"], s="the cattle was rattled by the battery"` → `"the cat was rat by the bat"`
 
-## Approach — Trie of roots + prefix walk per word
+---
 
+## Approach 1 — Trie of roots + prefix walk per word
 
 
 ```java
@@ -40,7 +41,33 @@ public String replaceWords(List<String> dict, String s) {
 
 
 
+
+<CodeTrace
+  title="Trie of roots + prefix walk per word"
+  :values="['cat', 'bat', 'rat']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
+    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+  ]'
+/>
+
+
 **Complexity** — Time **O(D + S)**; Space **O(D)** where D = total chars in dict.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Trie of roots + prefix walk per word | O(D + S) | O(D) | primary |
+
+## When to use which
+
+- **Ship this** → Trie of roots + prefix walk per word (O(D + S), O(D)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 All **unique** subsets when nums may contain duplicates.
 
-## Approach — Sort + skip equal after including
+---
 
+## Approach 1 — Sort + skip equal after including
 **Insight.** Sort. Standard subset backtracking, but skip duplicates in the outer loop: `if (i > start && nums[i] == nums[i-1]) continue;`. Ensures each duplicate group contributes once per "count of picks".
 
 ```java
@@ -27,6 +28,18 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 ```
 
 **Complexity** — Time **O(n · 2ⁿ)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort + skip equal after including | O(n · 2ⁿ) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Sort + skip equal after including (O(n · 2ⁿ), O(n)). The pattern's standard solution.
 
 ## Related problems
 

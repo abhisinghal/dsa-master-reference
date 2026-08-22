@@ -4,8 +4,9 @@
 
 Given words. Return the shortest string containing every word as a substring.
 
-## Approach — Bitmask TSP-style DP + overlap precompute
+---
 
+## Approach 1 — Bitmask TSP-style DP + overlap precompute
 **Insight.**
 1. Precompute `overlap[i][j]` = max suffix of `words[i]` that is prefix of `words[j]`.
 2. `dp[mask][i]` = shortest length ending at word `i` after using set `mask`. Transition: `dp[mask | (1<<j)][j] = min(…, dp[mask][i] + len[j] - overlap[i][j])`.
@@ -59,6 +60,18 @@ int computeOverlap(String a, String b) {
 ```
 
 **Complexity** — Time **O(n² · 2ⁿ)**; Space **O(n · 2ⁿ)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Bitmask TSP-style DP + overlap precompute | O(n² · 2ⁿ) | O(n · 2ⁿ) | primary |
+
+## When to use which
+
+- **Ship this** → Bitmask TSP-style DP + overlap precompute (O(n² · 2ⁿ), O(n · 2ⁿ)). The pattern's standard solution.
 
 ## Related problems
 

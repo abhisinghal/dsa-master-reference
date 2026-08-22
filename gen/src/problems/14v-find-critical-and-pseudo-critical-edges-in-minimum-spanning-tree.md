@@ -10,8 +10,9 @@ Given `n` and weighted edges, classify each edge:
 
 ---
 
-## Approach — Try each edge with Kruskal
+---
 
+## Approach 1 — Try each edge with Kruskal
 **Insight.** Compute the standard MST cost. For each edge `e`:
 1. **Force-exclude** `e`, run Kruskal. If MST cost differs → `e` is *critical*.
 2. If not critical, **force-include** `e`, run Kruskal. If cost matches standard MST cost → *pseudo-critical*.
@@ -51,6 +52,18 @@ int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } retur
 ```
 
 **Complexity** — Time **O(E² α(V))**; Space **O(V)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Try each edge with Kruskal | O(E² α(V)) | O(V) | primary |
+
+## When to use which
+
+- **Ship this** → Try each edge with Kruskal (O(E² α(V)), O(V)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,12 +4,14 @@
 
 Check partial Sudoku validity (no duplicates within any row/col/box among filled cells).
 
-## Approach 1 — Three passes
+---
 
+## Approach 1 — Three passes
 Rows, columns, boxes — separate scans. O(81).
 
-## Approach 2 — One pass with encoded keys
+---
 
+## Approach 2 — One pass with encoded keys
 **Insight.** Emit three keys per filled cell into a set: `"r{r}={d}"`, `"c{c}={d}"`, `"b{r/3}{c/3}={d}"`. Any duplicate = invalid.
 
 ```java
@@ -25,11 +27,28 @@ boolean isValidSudoku(char[][] board) {
 }
 ```
 
-## Approach 3 — Bitmasks (fastest)
+---
 
+## Approach 3 — Bitmasks (fastest)
 `rows[9]`, `cols[9]`, `boxes[9]` as ints. Check + set the bit for each cell. Same shape as Sudoku Solver.
 
 **Complexity** — Time **O(1)** (fixed 81); Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Three passes | O(81) | — | baseline |
+| One pass with encoded keys | — | — | improved |
+| Bitmasks (fastest) | O(1) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Three passes (O(81)). Correct baseline; call it out then move on.
+- **Intermediate refinement** → One pass with encoded keys (—).
+- **Ship this** → Bitmasks (fastest) (O(1), O(1)). Expected optimum in interview.
 
 ## Related problems
 

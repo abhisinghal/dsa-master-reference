@@ -4,8 +4,9 @@
 
 Return the max sum `< k` from any pair, or `-1`.
 
-## Approach — Sort + two pointer
+---
 
+## Approach 1 — Sort + two pointer
 **Insight.** Sort. `l` and `r` from ends: if `sum < k`, record and advance `l`; else retreat `r`.
 
 ```java
@@ -24,6 +25,18 @@ int twoSumLessThanK(int[] nums, int k) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 **Bucket alternative.** Since values are bounded (1..1000), we can bucket-count then two-pointer over buckets → O(n + max) time.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort + two pointer | O(n log n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sort + two pointer (O(n log n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

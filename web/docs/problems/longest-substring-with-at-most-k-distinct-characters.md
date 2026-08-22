@@ -4,8 +4,9 @@
 
 Longest substring containing at most `k` distinct characters.
 
-## Approach — Variable window with distinct counter
+---
 
+## Approach 1 — Variable window with distinct counter
 **Insight.** Extend right; on new distinct char increment `distinct`. If `distinct > k`, shrink from left: decrement each char's count; when a count hits 0, decrement `distinct`.
 
 
@@ -29,6 +30,18 @@ int lengthOfLongestSubstringKDistinct(String s, int k) {
 
 
 **Complexity** — Time **O(n)**; Space **O(σ)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Variable window with distinct counter | O(n) | O(σ) | primary |
+
+## When to use which
+
+- **Ship this** → Variable window with distinct counter (O(n), O(σ)). The pattern's standard solution.
 
 ## Related problems
 

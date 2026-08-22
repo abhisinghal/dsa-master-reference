@@ -4,8 +4,9 @@
 
 Given `s`, `t`, `maxCost`. Convert `s[i]` → `t[i]` costs `|s[i] - t[i]|`. Return the longest substring convertible within `maxCost`.
 
-## Approach — Sliding window on the cost array
+---
 
+## Approach 1 — Sliding window on the cost array
 **Insight.** Compute `diff[i] = |s[i] - t[i]|`. Now: longest subarray with sum ≤ maxCost — classic positive-only sliding window.
 
 
@@ -25,6 +26,18 @@ int equalSubstring(String s, String t, int maxCost) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sliding window on the cost array | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sliding window on the cost array (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

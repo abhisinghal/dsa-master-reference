@@ -4,8 +4,9 @@
 
 Grid with obstacles. Count paths from top-left to bottom-right moving right/down.
 
-## Approach — Grid DP with obstacle guard
+---
 
+## Approach 1 — Grid DP with obstacle guard
 **Insight.** `dp[i][j] = 0` if obstacle; else `dp[i-1][j] + dp[i][j-1]`.
 
 
@@ -27,6 +28,18 @@ int uniquePathsWithObstacles(int[][] grid) {
 
 
 **Complexity** — Time **O(mn)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Grid DP with obstacle guard | O(mn) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Grid DP with obstacle guard (O(mn), O(n)). The pattern's standard solution.
 
 ## Related problems
 

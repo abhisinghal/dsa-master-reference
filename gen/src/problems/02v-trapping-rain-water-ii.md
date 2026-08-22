@@ -6,8 +6,9 @@
 
 > Filed under Two Pointers because 1D Trapping Rain Water lives here, but the 2D version needs a **min-heap on the boundary**, not opposing pointers.
 
-## Approach — Min-heap Dijkstra-style border expansion
+---
 
+## Approach 1 — Min-heap Dijkstra-style border expansion
 **Insight.** Water is bounded by the shortest wall along any path to the boundary. Grow a "reached" frontier from all border cells; always process the **lowest wall reachable** first. When we enter a lower neighbor, water trapped = current wall - neighbor height, and that neighbor becomes a wall at the higher level.
 
 ```java
@@ -39,6 +40,18 @@ int trapRainWater(int[][] h) {
 ```
 
 **Complexity** — Time **O(mn log(mn))**; Space **O(mn)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Min-heap Dijkstra-style border expansion | O(mn log(mn)) | O(mn) | primary |
+
+## When to use which
+
+- **Ship this** → Min-heap Dijkstra-style border expansion (O(mn log(mn)), O(mn)). The pattern's standard solution.
 
 ## Related problems
 

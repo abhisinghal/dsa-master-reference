@@ -4,8 +4,9 @@
 
 Reorder `nums` so `a[0] < a[1] > a[2] < a[3] …` (strict — differs from Wiggle Sort I).
 
-## Approach 1 — Sort + interleave
+---
 
+## Approach 1 — Sort + interleave
 Sort. Place larger half at odd indices (in reverse), smaller half at even indices (in reverse). Reverse orders prevent duplicates on the boundary from colliding.
 
 ```java
@@ -23,13 +24,28 @@ Wait: careful. Standard formulation: even indices ← smaller-half reversed; odd
 
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
 
-## Approach 2 — Quickselect median + 3-way partition + virtual indexing
+---
 
+## Approach 2 — Quickselect median + 3-way partition + virtual indexing
 **Insight.** Find median via Quickselect. Then use a virtual index mapping `A(i) = (2i + 1) % (n | 1)`. Dutch-flag partition wrt median under this mapping places larger on odd indices, smaller on even, with median centered.
 
 **Complexity** — Time **O(n)** average; Space **O(1)** extra.
 
 Code is subtle — study the classic Dutch-flag-with-virtual-index writeup before an interview.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort + interleave | O(n log n) | O(n) | baseline |
+| Quickselect median + 3-way partition + vir… | O(n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Sort + interleave (O(n log n)). Correct baseline; call it out then move on.
+- **Ship this** → Quickselect median + 3-way partition + virtual indexing (O(n), O(1)). Expected optimum in interview.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 `k` distinct digits from 1..9 summing to `n`.
 
-## Approach — Backtracking with pruning
+---
 
+## Approach 1 — Backtracking with pruning
 **Prunes:** `path.size() == k`, `rem < 0`, `i > rem` (further digits too big).
 
 ```java
@@ -25,6 +26,18 @@ void dfs(int start, int k, int rem, List<Integer> path, List<List<Integer>> out)
 ```
 
 **Complexity** — Time **O(C(9, k) · k)**; Space **O(k)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Backtracking with pruning | O(C(9, k) · k) | O(k) | primary |
+
+## When to use which
+
+- **Ship this** → Backtracking with pruning (O(C(9, k) · k), O(k)). The pattern's standard solution.
 
 ## Related problems
 

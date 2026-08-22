@@ -4,8 +4,9 @@
 
 Given a rooted tree of gene values and queries `[node, val]`, return `max XOR(val, x)` where `x` is any ancestor value of `node` (including node itself).
 
-## Approach — Offline DFS + binary trie with subtree insert/erase
+---
 
+## Approach 1 — Offline DFS + binary trie with subtree insert/erase
 **Insight.** Group queries by node. DFS from root; on entering a node, insert its value into a shared binary trie; on leaving, remove it. Answer each node's queries when the trie contains exactly the ancestor path.
 
 
@@ -56,6 +57,18 @@ int queryMax(Node root, int v) {
 
 
 **Complexity** — Time **O((n + q) · 18)**; Space **O(n · 18)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Offline DFS + binary trie with subtree ins… | O((n + q) · 18) | O(n · 18) | primary |
+
+## When to use which
+
+- **Ship this** → Offline DFS + binary trie with subtree insert/erase (O((n + q) · 18), O(n · 18)). The pattern's standard solution.
 
 ## Related problems
 

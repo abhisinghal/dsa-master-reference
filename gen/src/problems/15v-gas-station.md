@@ -4,12 +4,14 @@
 
 Circular route: at station `i` you gain `gas[i]`, pay `cost[i]` to reach `i+1`. Find start index that completes the loop, or -1.
 
-## Approach 1 — Brute force try each start
+---
 
+## Approach 1 — Brute force try each start
 O(n²).
 
-## Approach 2 — Single pass total + local reset
+---
 
+## Approach 2 — Single pass total + local reset
 **Insight.**
 1. If `sum(gas) < sum(cost)`, impossible.
 2. Otherwise, a solution exists. Walk once: if running `tank < 0` at station `i`, no start in `[startCandidate..i]` works — reset `startCandidate = i+1`, `tank = 0`.
@@ -30,6 +32,20 @@ int canCompleteCircuit(int[] gas, int[] cost) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Brute force try each start | O(n²) | — | baseline |
+| Single pass total + local reset | O(n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Brute force try each start (O(n²)). Correct baseline; call it out then move on.
+- **Ship this** → Single pass total + local reset (O(n), O(1)). Expected optimum in interview.
 
 ## Related problems
 

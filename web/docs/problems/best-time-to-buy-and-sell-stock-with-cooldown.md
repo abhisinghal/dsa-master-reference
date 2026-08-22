@@ -4,8 +4,9 @@
 
 Unlimited transactions, but you must skip one day between sell and next buy.
 
-## Approach — State-machine DP
+---
 
+## Approach 1 — State-machine DP
 **Insight.** Three states each day:
 - `hold[i]` = max profit holding a stock at end of day i
 - `sold[i]` = max profit just sold today
@@ -36,6 +37,18 @@ int maxProfit(int[] prices) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| State-machine DP | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → State-machine DP (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

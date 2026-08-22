@@ -4,8 +4,9 @@
 
 Max average of any contiguous subarray of length `k`.
 
-## Approach — Fixed-window running sum
+---
 
+## Approach 1 — Fixed-window running sum
 Max sum ÷ k; sliding sum of window k.
 
 
@@ -26,6 +27,18 @@ double findMaxAverage(int[] nums, int k) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Fixed-window running sum | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Fixed-window running sum (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths from 1 → 2 visiting **every** empty cell exactly once.
 
-## Approach — Hamiltonian-path DFS with backtracking
+---
 
+## Approach 1 — Hamiltonian-path DFS with backtracking
 **Insight.** Track remaining empty cells to visit; at end cell, count if remaining == 0. Mark visited by mutating in place (restore on return).
 
 
@@ -34,6 +35,18 @@ int dfs(int[][] g, int r, int c, int remaining) {
 
 
 **Complexity** — Time exponential (~4^cells); grid ≤ 20 cells makes it feasible.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Hamiltonian-path DFS with backtracking | — | — | primary |
+
+## When to use which
+
+- **Ship this** → Hamiltonian-path DFS with backtracking (—, —). The pattern's standard solution.
 
 ## Related problems
 

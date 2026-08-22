@@ -4,12 +4,14 @@
 
 Given unsorted `nums`, return length of longest run of consecutive integers. **O(n).**
 
-## Approach 1 — Sort
+---
 
+## Approach 1 — Sort
 O(n log n). Rejected by spec.
 
-## Approach 2 — Set + only start from sequence heads
+---
 
+## Approach 2 — Set + only start from sequence heads
 **Insight.** Put all nums in a `HashSet`. Iterate; **only start counting from `x` if `x - 1` is absent** (so `x` is a sequence head). Then extend forward. Each element is visited by the inner loop at most once → O(n) total.
 
 ```java
@@ -32,6 +34,20 @@ int longestConsecutive(int[] nums) {
 **Trap.** Without the "sequence head" check, you'd re-walk the same run n times → O(n²).
 
 **Union-Find alternative.** Union x with x±1 whenever both present; track max component size.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort | O(n log n) | — | baseline |
+| Set + only start from sequence heads | O(n) | O(n) | optimum |
+
+## When to use which
+
+- **State it for signal** → Sort (O(n log n)). Correct baseline; call it out then move on.
+- **Ship this** → Set + only start from sequence heads (O(n), O(n)). Expected optimum in interview.
 
 ## Related problems
 

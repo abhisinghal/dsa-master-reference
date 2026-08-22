@@ -4,12 +4,14 @@
 
 Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 
-## Approach 1 — Sliding window fails
+---
 
+## Approach 1 — Sliding window fails
 With negatives, sum is not monotone in window size — can't shrink safely.
 
-## Approach 2 — Prefix sums + monotonic deque
+---
 
+## Approach 2 — Prefix sums + monotonic deque
 **Insight.** Define `P[i]` = prefix sum. Answer = min `j - i` with `P[j] - P[i] ≥ k`. For each `j`, we want the earliest `i < j` with `P[i] ≤ P[j] - k`.
 
 Maintain a deque of candidate `i` indices where `P` is **increasing**. On processing `j`:
@@ -34,6 +36,20 @@ int shortestSubarray(int[] nums, int k) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sliding window fails | — | — | baseline |
+| Prefix sums + monotonic deque | O(n) | O(n) | optimum |
+
+## When to use which
+
+- **State it for signal** → Sliding window fails (—). Correct baseline; call it out then move on.
+- **Ship this** → Prefix sums + monotonic deque (O(n), O(n)). Expected optimum in interview.
 
 ## Related problems
 

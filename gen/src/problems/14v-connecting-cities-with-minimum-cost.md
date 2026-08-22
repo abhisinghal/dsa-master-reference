@@ -6,8 +6,9 @@ Given `n` cities and `connections=[city1, city2, cost]`, return min cost to conn
 
 **Example** — `n=3, [[1,2,5],[1,3,6],[2,3,1]]` → `6` (edges [2,3,1] + [1,2,5])
 
-## Approach — Kruskal's MST
+---
 
+## Approach 1 — Kruskal's MST
 Same skeleton as Min Cost to Connect All Points, but edges are given rather than computed.
 
 ```java
@@ -25,7 +26,33 @@ int minimumCost(int n, int[][] connections) {
 int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }
 ```
 
+
+<CodeTrace
+  title="Kruskal's MST"
+  :values="['1', '2', '5']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
+    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+  ]'
+/>
+
+
 **Complexity** — Time **O(E log E)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Kruskal's MST | O(E log E) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Kruskal's MST (O(E log E), O(n)). The pattern's standard solution.
 
 ## Related problems
 

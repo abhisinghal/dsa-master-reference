@@ -4,10 +4,13 @@
 
 Find three numbers whose sum is closest to `target`; return the sum.
 
+---
+
 ## Approach 1 — Triple loop O(n³)
 
-## Approach 2 — Sort + two-pointer
+---
 
+## Approach 2 — Sort + two-pointer
 **Insight.** Sort. For each `i`, use two pointers on `[i+1, n-1]`; move whichever pointer reduces distance to target.
 
 ```java
@@ -29,6 +32,20 @@ int threeSumClosest(int[] nums, int target) {
 ```
 
 **Complexity** — Time **O(n²)**; Space **O(1)** extra.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Triple loop O(n³) | — | — | baseline |
+| Sort + two-pointer | O(n²) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Triple loop O(n³) (—). Correct baseline; call it out then move on.
+- **Ship this** → Sort + two-pointer (O(n²), O(1)). Expected optimum in interview.
 
 ## Related problems
 

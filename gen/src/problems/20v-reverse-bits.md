@@ -4,8 +4,9 @@
 
 Reverse the bits of a 32-bit unsigned integer.
 
-## Approach 1 — Bit-by-bit
+---
 
+## Approach 1 — Bit-by-bit
 ```java
 int reverseBits(int n) {
     int result = 0;
@@ -17,12 +18,14 @@ int reverseBits(int n) {
 }
 ```
 
-## Approach 2 — Byte swap + cache (interview follow-up)
+---
 
+## Approach 2 — Byte swap + cache (interview follow-up)
 If called many times, cache the reversal of each 8-bit chunk in a size-256 table; assemble result in 4 lookups.
 
-## Approach 3 — SWAR (parallel bit swap)
+---
 
+## Approach 3 — SWAR (parallel bit swap)
 **Insight.** Swap adjacent 1-bit groups, then 2-bit, 4-bit, 8-bit, 16-bit.
 
 ```java
@@ -36,6 +39,22 @@ int reverseBits3(int n) {
 ```
 
 **Complexity** — All **O(1)**; SWAR is fastest constant.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Bit-by-bit | — | — | baseline |
+| Byte swap + cache (interview follow-up) | — | — | improved |
+| SWAR (parallel bit swap) | O(1) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → Bit-by-bit (—). Correct baseline; call it out then move on.
+- **Intermediate refinement** → Byte swap + cache (interview follow-up) (—).
+- **Ship this** → SWAR (parallel bit swap) (O(1), —). Expected optimum in interview.
 
 ## Related problems
 

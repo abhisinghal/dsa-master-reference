@@ -4,8 +4,9 @@
 
 Return true iff there's a **bijection** of characters mapping `s → t`.
 
-## Approach — Two maps (or two arrays)
+---
 
+## Approach 1 — Two maps (or two arrays)
 **Insight.** One-way map is insufficient — need to forbid two source chars mapping to the same target. Track both `s→t` and `t→s`.
 
 
@@ -27,6 +28,18 @@ boolean isIsomorphic(String s, String t) {
 **Complexity** — Time **O(n)**; Space **O(σ)**.
 
 **Alternative "first-index" trick.** Two strings are isomorphic iff `firstIndex(s[i]) == firstIndex(t[i])` for all i. One pass.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Two maps (or two arrays) | O(n) | O(σ) | primary |
+
+## When to use which
+
+- **Ship this** → Two maps (or two arrays) (O(n), O(σ)). The pattern's standard solution.
 
 ## Related problems
 

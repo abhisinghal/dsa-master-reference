@@ -4,8 +4,9 @@
 
 Undirected graph. Shortest length path visiting **every** node (may reuse edges/nodes; start anywhere).
 
-## Approach — Bitmask BFS
+---
 
+## Approach 1 — Bitmask BFS
 **Insight.** State = `(node, visitedMask)`. BFS from all `(i, 1 << i)` initial states simultaneously. Terminate when `visitedMask == fullMask`.
 
 ```java
@@ -35,6 +36,18 @@ int shortestPathLength(int[][] graph) {
 ```
 
 **Complexity** — Time **O(n · 2ⁿ · degree)**; Space **O(n · 2ⁿ)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Bitmask BFS | O(n · 2ⁿ · degree) | O(n · 2ⁿ) | primary |
+
+## When to use which
+
+- **Ship this** → Bitmask BFS (O(n · 2ⁿ · degree), O(n · 2ⁿ)). The pattern's standard solution.
 
 ## Related problems
 

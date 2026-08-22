@@ -4,8 +4,9 @@
 
 Count connected components of `'1'`s in a grid.
 
-## Approach 1 — DFS flood fill
+---
 
+## Approach 1 — DFS flood fill
 Iterate cells; on unseen `'1'` increment count, DFS/BFS marking `'0'` (or a visited set).
 
 ```java
@@ -23,15 +24,33 @@ void dfs(char[][] g, int i, int j) {
 }
 ```
 
-## Approach 2 — BFS
+---
 
+## Approach 2 — BFS
 Same idea, queue instead of recursion — avoids stack overflow on huge grids.
 
-## Approach 3 — Union-Find
+---
 
+## Approach 3 — Union-Find
 Union adjacent `'1'` cells; final answer = number of components with `'1'`. Useful for streaming variant (Islands II).
 
 **Complexity (all)** — Time **O(mn)**; Space **O(mn)** stack/queue/uf.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DFS flood fill | — | — | baseline |
+| BFS | — | — | improved |
+| Union-Find | O(mn) | O(mn) | optimum |
+
+## When to use which
+
+- **State it for signal** → DFS flood fill (—). Correct baseline; call it out then move on.
+- **Intermediate refinement** → BFS (—).
+- **Ship this** → Union-Find (O(mn), O(mn)). Expected optimum in interview.
 
 ## Related problems
 

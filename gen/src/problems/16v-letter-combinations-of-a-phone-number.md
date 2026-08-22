@@ -4,8 +4,9 @@
 
 Given digits 2-9, return all letter combinations.
 
-## Approach — DFS enumeration
+---
 
+## Approach 1 — DFS enumeration
 ```java
 List<String> letterCombinations(String digits) {
     List<String> out = new ArrayList<>();
@@ -26,9 +27,24 @@ void dfs(String d, int i, String[] map, StringBuilder sb, List<String> out) {
 
 **Complexity** — Time **O(4ⁿ · n)** worst case (digits 7, 9); Space **O(n)** recursion.
 
-## Approach 2 — Iterative BFS
+---
 
+## Approach 2 — Iterative BFS
 Repeatedly extend all combinations by the next digit's letters — same complexity, no recursion.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DFS enumeration | O(4ⁿ · n) | O(n) | baseline |
+| Iterative BFS | — | — | optimum |
+
+## When to use which
+
+- **State it for signal** → DFS enumeration (O(4ⁿ · n)). Correct baseline; call it out then move on.
+- **Ship this** → Iterative BFS (—, —). Expected optimum in interview.
 
 ## Related problems
 

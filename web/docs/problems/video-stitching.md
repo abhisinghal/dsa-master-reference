@@ -4,8 +4,9 @@
 
 Cover `[0, T]` with fewest clips `[a, b]`. Return -1 if impossible.
 
-## Approach 1 — Sort by start + greedy farthest reach
+---
 
+## Approach 1 — Sort by start + greedy farthest reach
 **Insight.** Sort by start. Track `[curEnd, farReach]`: while iterating clips with `start ≤ curEnd`, extend `farReach`. When we exhaust that batch, use one more clip (advance `curEnd = farReach`).
 
 
@@ -29,9 +30,24 @@ int videoStitching(int[][] clips, int T) {
 
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
-## Approach 2 — Bucket by start; single pass without sort
+---
 
+## Approach 2 — Bucket by start; single pass without sort
 For each starting time `s`, store the largest end. Sweep — same jump-game logic in O(T).
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort by start + greedy farthest reach | O(n log n) | O(1) | baseline |
+| Bucket by start; single pass without sort | O(T) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → Sort by start + greedy farthest reach (O(n log n)). Correct baseline; call it out then move on.
+- **Ship this** → Bucket by start; single pass without sort (O(T), —). Expected optimum in interview.
 
 ## Related problems
 

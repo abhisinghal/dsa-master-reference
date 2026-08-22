@@ -4,8 +4,9 @@
 
 Max subarray sum in a **circular** array.
 
-## Approach — Kadane on both max and min
+---
 
+## Approach 1 — Kadane on both max and min
 **Insight.** Answer is either:
 - **Non-wrapping**: standard Kadane max.
 - **Wrapping**: `totalSum - minSubarraySum` (subtract out the "middle").
@@ -27,6 +28,18 @@ int maxSubarraySumCircular(int[] nums) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Kadane on both max and min | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Kadane on both max and min (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

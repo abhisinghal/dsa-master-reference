@@ -4,8 +4,9 @@
 
 Smash pairs; if equal both destroyed; else larger becomes diff. Minimize final remaining stone weight.
 
-## Approach — Reduce to subset-sum closest to sum/2
+---
 
+## Approach 1 — Reduce to subset-sum closest to sum/2
 **Insight.** Every stone is signed ±. Result = |sum(+) - sum(-)| = |total - 2·subsetSum|. Minimize by picking subset closest to `total/2`. Standard 0/1 knapsack on booleans.
 
 
@@ -29,6 +30,18 @@ int lastStoneWeightII(int[] stones) {
 
 
 **Complexity** — Time **O(n · total)**; Space **O(total)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Reduce to subset-sum closest to sum/2 | O(n · total) | O(total) | primary |
+
+## When to use which
+
+- **Ship this** → Reduce to subset-sum closest to sum/2 (O(n · total), O(total)). The pattern's standard solution.
 
 ## Related problems
 

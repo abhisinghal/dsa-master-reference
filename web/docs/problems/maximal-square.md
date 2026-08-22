@@ -4,8 +4,9 @@
 
 Largest all-ones square in a binary matrix. Return area.
 
-## Approach — DP `side[i][j]` = largest square ending at (i, j)
+---
 
+## Approach 1 — DP `side[i][j]` = largest square ending at (i, j)
 **Insight.** If `mat[i][j] == '1'`:
 `side[i][j] = 1 + min(side[i-1][j], side[i][j-1], side[i-1][j-1])`.
 
@@ -36,6 +37,18 @@ int maximalSquare(char[][] mat) {
 
 
 **Complexity** — Time **O(mn)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DP `side[i][j]` = largest square ending at… | O(mn) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → DP `side[i][j]` = largest square ending at (i, j) (O(mn), O(n)). The pattern's standard solution.
 
 ## Related problems
 

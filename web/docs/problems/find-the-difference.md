@@ -6,8 +6,9 @@
 
 **Example** — `s="abcd", t="abcde"` → `'e'`
 
-## Approach — XOR fold
+---
 
+## Approach 1 — XOR fold
 XOR every character of s and t; duplicates cancel; result is the added letter.
 
 
@@ -24,6 +25,18 @@ char findTheDifference(String s, String t) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| XOR fold | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → XOR fold (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

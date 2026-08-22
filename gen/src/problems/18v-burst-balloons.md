@@ -4,8 +4,9 @@
 
 Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r are alive neighbors. Maximize coins.
 
-## Approach — Interval DP with "last to burst" trick
+---
 
+## Approach 1 — Interval DP with "last to burst" trick
 **Insight.** Directly modeling "first to burst" fails — the neighbors change unpredictably. Instead, think of `i` as the **last** balloon burst in the range `(l, r)` (open interval): its neighbors at that moment are `nums[l]` and `nums[r]` — fixed! Then subproblems `(l, i)` and `(i, r)` are independent.
 
 Padding: prepend and append `1` so the base "neighbors" are always defined.
@@ -28,6 +29,18 @@ int maxCoins(int[] nums) {
 ```
 
 **Complexity** — Time **O(n³)**; Space **O(n²)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Interval DP with "last to burst" trick | O(n³) | O(n²) | primary |
+
+## When to use which
+
+- **Ship this** → Interval DP with "last to burst" trick (O(n³), O(n²)). The pattern's standard solution.
 
 ## Related problems
 

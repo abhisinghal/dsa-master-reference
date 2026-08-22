@@ -4,8 +4,9 @@
 
 Count triplets `(i, j, k)` with `i < j < k` and `nums[i] + nums[j] + nums[k] < target`.
 
-## Approach — Sort + counting two-pointer
+---
 
+## Approach 1 — Sort + counting two-pointer
 **Insight.** After sorting, for each `i` and left pointer `l`, if `nums[i]+nums[l]+nums[r] < target`, then **every** `k` in `(l, r]` also satisfies it — add `r - l` and advance `l`. Otherwise, decrement `r`.
 
 
@@ -28,6 +29,18 @@ int threeSumSmaller(int[] nums, int target) {
 
 
 **Complexity** — Time **O(n²)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort + counting two-pointer | O(n²) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sort + counting two-pointer (O(n²), O(1)). The pattern's standard solution.
 
 ## Related problems
 

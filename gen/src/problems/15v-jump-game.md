@@ -4,12 +4,14 @@
 
 `nums[i]` = max jump length from `i`. Can we reach the last index?
 
-## Approach 1 — DP reachable[i]
+---
 
+## Approach 1 — DP reachable[i]
 O(n²). Too slow for large inputs.
 
-## Approach 2 — Greedy farthest reachable
+---
 
+## Approach 2 — Greedy farthest reachable
 **Insight.** Track `maxReach`. At index `i`, if `i > maxReach` we're stuck. Else update `maxReach = max(maxReach, i + nums[i])`.
 
 ```java
@@ -25,6 +27,20 @@ boolean canJump(int[] nums) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DP reachable[i] | O(n²) | — | baseline |
+| Greedy farthest reachable | O(n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → DP reachable[i] (O(n²)). Correct baseline; call it out then move on.
+- **Ship this** → Greedy farthest reachable (O(n), O(1)). Expected optimum in interview.
 
 ## Related problems
 

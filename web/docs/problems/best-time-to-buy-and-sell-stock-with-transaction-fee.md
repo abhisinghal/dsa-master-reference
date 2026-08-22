@@ -4,8 +4,9 @@
 
 Unlimited transactions; each sell pays `fee`. Max profit.
 
-## Approach — State-machine DP (two states)
+---
 
+## Approach 1 — State-machine DP (two states)
 **Insight.** Two states: `hold` (own stock), `cash` (no stock).
 - `hold = max(hold, cash - price)`
 - `cash = max(cash, hold + price - fee)`
@@ -27,6 +28,18 @@ int maxProfit(int[] prices, int fee) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| State-machine DP (two states) | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → State-machine DP (two states) (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

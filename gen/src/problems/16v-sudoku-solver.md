@@ -4,8 +4,9 @@
 
 Fill the 9×9 board so every row/col/box contains 1..9.
 
-## Approach — Backtracking + constraint tracking
+---
 
+## Approach 1 — Backtracking + constraint tracking
 **Insight.** Maintain 9-bit masks for each row, col, and box. Try each digit at each empty cell. Backtrack on dead ends.
 
 ```java
@@ -41,6 +42,18 @@ void unset(int r, int c, int d) { int bit = 1 << d; rows[r] ^= bit; cols[c] ^= b
 Pick the empty cell with the **fewest legal digits** each step (Minimum Remaining Values). Typical hard puzzles solve in microseconds.
 
 **Complexity** — Time worst case exponential; MRV makes real Sudokus near instant.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Backtracking + constraint tracking | — | — | primary |
+
+## When to use which
+
+- **Ship this** → Backtracking + constraint tracking (—, —). The pattern's standard solution.
 
 ## Related problems
 

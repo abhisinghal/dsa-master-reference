@@ -4,12 +4,14 @@
 
 Return squares of a sorted (possibly-negative) array, sorted.
 
-## Approach 1 — Square then sort
+---
 
+## Approach 1 — Square then sort
 O(n log n).
 
-## Approach 2 — Two pointers filling from back
+---
 
+## Approach 2 — Two pointers filling from back
 **Insight.** Largest square is at one of the two ends (most negative or most positive). Compare, place at `k = n-1`, decrement, repeat.
 
 
@@ -30,6 +32,20 @@ int[] sortedSquares(int[] nums) {
 
 
 **Complexity** — Time **O(n)**; Space **O(n)** for output.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Square then sort | O(n log n) | — | baseline |
+| Two pointers filling from back | O(n) | O(n) | optimum |
+
+## When to use which
+
+- **State it for signal** → Square then sort (O(n log n)). Correct baseline; call it out then move on.
+- **Ship this** → Two pointers filling from back (O(n), O(n)). Expected optimum in interview.
 
 ## Related problems
 

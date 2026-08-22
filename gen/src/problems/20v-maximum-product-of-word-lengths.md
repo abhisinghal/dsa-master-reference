@@ -4,12 +4,14 @@
 
 Return `max(len(w[i]) * len(w[j]))` over pairs whose character sets are disjoint (no shared letter).
 
-## Approach 1 — Set intersection per pair
+---
 
+## Approach 1 — Set intersection per pair
 For each pair build a `Set<Character>` and check intersection. **O(n² · L)**.
 
-## Approach 2 — Bitmask signatures
+---
 
+## Approach 2 — Bitmask signatures
 **Insight.** Each word only uses 26 lowercase letters → represent its letter set as a 26-bit int. Two words share no letters iff `mask[i] & mask[j] == 0`. Pair comparison becomes a single AND.
 
 ```java
@@ -29,6 +31,20 @@ int maxProduct(String[] words) {
 ```
 
 **Complexity** — Time **O(n · L + n²)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Set intersection per pair | O(n² · L) | — | baseline |
+| Bitmask signatures | O(n · L + n²) | O(n) | optimum |
+
+## When to use which
+
+- **State it for signal** → Set intersection per pair (O(n² · L)). Correct baseline; call it out then move on.
+- **Ship this** → Bitmask signatures (O(n · L + n²), O(n)). Expected optimum in interview.
 
 ## Related problems
 

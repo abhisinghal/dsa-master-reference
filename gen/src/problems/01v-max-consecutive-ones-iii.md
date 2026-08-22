@@ -4,8 +4,9 @@
 
 Longest subarray of 1s where at most `k` zeros can be flipped.
 
-## Approach — Variable window bounded by zero count
+---
 
+## Approach 1 — Variable window bounded by zero count
 **Insight.** Window is valid iff it contains ≤ k zeros. Extend r; when zero count exceeds k, shrink from l.
 
 ```java
@@ -25,6 +26,18 @@ int longestOnes(int[] nums, int k) {
 **"Never shrink" variant.** For a *maximum-length* answer, we can replace the `while` with an `if`: window never shrinks below its best; `best` = size of the window at the end. Same `O(n)`, simpler.
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Variable window bounded by zero count | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Variable window bounded by zero count (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

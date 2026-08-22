@@ -4,8 +4,9 @@
 
 Min count of perfect squares summing to `n`.
 
-## Approach 1 — DP (min coin change, coins = squares)
+---
 
+## Approach 1 — DP (min coin change, coins = squares)
 **Insight.** Standard unbounded-min-coin: `dp[i] = 1 + min(dp[i - k²])` over all `k² ≤ i`.
 
 ```java
@@ -23,14 +24,29 @@ int numSquares(int n) {
 
 **Complexity** — Time **O(n · √n)**; Space **O(n)**.
 
-## Approach 2 — Lagrange's four-square theorem
+---
 
+## Approach 2 — Lagrange's four-square theorem
 Every positive integer = sum of ≤ 4 squares. Result is always in `{1, 2, 3, 4}`.
 - 1 iff n is a perfect square.
 - 4 iff n = 4^k · (8m + 7) (Legendre's three-square theorem).
 - Else check if n = a² + b² for some a, b → return 2; else return 3.
 
 **O(√n)** — beat the DP.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DP (min coin change, coins = squares) | O(n · √n) | O(n) | baseline |
+| Lagrange's four-square theorem | O(√n) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → DP (min coin change, coins = squares) (O(n · √n)). Correct baseline; call it out then move on.
+- **Ship this** → Lagrange's four-square theorem (O(√n), —). Expected optimum in interview.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 Longest subarray with at most 2 distinct values.
 
-## Approach — Sliding window (k = 2)
+---
 
+## Approach 1 — Sliding window (k = 2)
 **Insight.** Special case of "at most k distinct" with k = 2. Same template.
 
 
@@ -30,6 +31,18 @@ int totalFruit(int[] fruits) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sliding window (k = 2) | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sliding window (k = 2) (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,12 +4,14 @@
 
 Transform `beginWord` → `endWord` by changing one letter at a time; each intermediate must be in dict. Return length (or 0).
 
-## Approach 1 — BFS over full word graph
+---
 
+## Approach 1 — BFS over full word graph
 Naïvely, edges are all word pairs differing in 1 char → **O(N² · L)** to build.
 
-## Approach 2 — BFS via wildcard-key hashing
+---
 
+## Approach 2 — BFS via wildcard-key hashing
 **Insight.** For each word, generate `L` patterns like `"h*t"`, `"*ot"` and bucket words by pattern. Two words are neighbors iff they share a wildcard bucket. Traversal touches each pattern once.
 
 
@@ -46,11 +48,28 @@ int ladderLength(String beginWord, String endWord, List<String> wordList) {
 
 
 
-## Approach 3 — Bidirectional BFS
+---
 
+## Approach 3 — Bidirectional BFS
 Expand from both ends; stop when frontiers meet. Roughly halves the exponent → O(2 · b^(d/2)).
 
 **Complexity** — Time **O(N · L²)**; Space **O(N · L²)** for buckets.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| BFS over full word graph | O(N² · L) | — | baseline |
+| BFS via wildcard-key hashing | — | — | improved |
+| Bidirectional BFS | O(N · L²) | O(N · L²) | optimum |
+
+## When to use which
+
+- **State it for signal** → BFS over full word graph (O(N² · L)). Correct baseline; call it out then move on.
+- **Intermediate refinement** → BFS via wildcard-key hashing (—).
+- **Ship this** → Bidirectional BFS (O(N · L²), O(N · L²)). Expected optimum in interview.
 
 ## Related problems
 

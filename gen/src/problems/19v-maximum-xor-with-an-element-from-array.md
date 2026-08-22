@@ -4,8 +4,9 @@
 
 Given `nums` and queries `[query_val, max_allowed]`, for each query return `max XOR(query_val, x)` where `x ∈ nums` and `x ≤ max_allowed`, or `-1` if none.
 
-## Approach — Sort + offline queries + binary trie
+---
 
+## Approach 1 — Sort + offline queries + binary trie
 **Insight.** Sort nums and queries by their upper bound. Process queries in order, inserting new nums into a **binary trie** as their values become eligible. For each query, walk the trie greedily choosing the opposite bit.
 
 ```java
@@ -47,6 +48,18 @@ int maxXor(Node root, int v) {
 ```
 
 **Complexity** — Time **O((n + q) · 32 + q log q)**; Space **O(n · 32)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort + offline queries + binary trie | O((n + q) · 32 + q log q) | O(n · 32) | primary |
+
+## When to use which
+
+- **Ship this** → Sort + offline queries + binary trie (O((n + q) · 32 + q log q), O(n · 32)). The pattern's standard solution.
 
 ## Related problems
 

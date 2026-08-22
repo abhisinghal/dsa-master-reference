@@ -6,8 +6,9 @@ Rearrange nums to the next lexicographic permutation, in-place. If none, sort as
 
 &gt; Filed near Backtracking because it's the "generate permutations in order" primitive. The algorithm itself is **not** backtracking — it's a two-step in-place swap.
 
-## Approach — Classic algorithm
+---
 
+## Approach 1 — Classic algorithm
 **Steps.**
 1. Scan from right; find first `i` with `nums[i] < nums[i+1]` (the "pivot"). If none, reverse whole array.
 2. Scan from right; find first `j` with `nums[j] > nums[i]`. Swap.
@@ -33,6 +34,18 @@ void reverse(int[] a, int l, int r) { while (l < r) swap(a, l++, r--); }
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Classic algorithm | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Classic algorithm (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

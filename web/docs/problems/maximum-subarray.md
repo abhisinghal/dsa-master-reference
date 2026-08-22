@@ -4,10 +4,13 @@
 
 Max sum of a contiguous non-empty subarray.
 
+---
+
 ## Approach 1 — All subarrays O(n²) or prefix-sum O(n²)
 
-## Approach 2 — Kadane
+---
 
+## Approach 2 — Kadane
 **Insight.** `bestEndingHere` either extends previous or restarts at current: `max(x, bestEndingHere + x)`. Global answer = max over all i.
 
 
@@ -27,9 +30,26 @@ int maxSubArray(int[] nums) {
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
-## Approach 3 — Divide & Conquer
+---
 
+## Approach 3 — Divide & Conquer
 `max(left, right, crossing)`. **O(n log n)**. Interview curiosity — used to teach recursion but not competitive with Kadane.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| All subarrays O(n²) or prefix-sum O(n²) | — | — | baseline |
+| Kadane | O(n) | O(1) | improved |
+| Divide & Conquer | O(n log n) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → All subarrays O(n²) or prefix-sum O(n²) (—). Correct baseline; call it out then move on.
+- **Intermediate refinement** → Kadane (O(n)).
+- **Ship this** → Divide & Conquer (O(n log n), —). Expected optimum in interview.
 
 ## Related problems
 

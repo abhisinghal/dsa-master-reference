@@ -4,8 +4,9 @@
 
 Merge exactly `k` consecutive piles at a time; cost = sum of merged. Merge all into one; min total cost. Impossible if `(n-1) % (k-1) != 0`.
 
-## Approach — Interval DP with residue trick
+---
 
+## Approach 1 — Interval DP with residue trick
 **Insight.** `dp[i][j]` = min cost to reduce `stones[i..j]` to `((j-i) mod (k-1)) + 1` piles.
 - If we can reduce to 1 pile (`(j-i) % (k-1) == 0`), add `prefix[j+1] - prefix[i]`.
 - Split `[i..j]` at some `m` where left reduces to 1 pile and right takes the rest.
@@ -30,6 +31,18 @@ int mergeStones(int[] stones, int k) {
 ```
 
 **Complexity** — Time **O(n³ / k)**; Space **O(n²)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Interval DP with residue trick | O(n³ / k) | O(n²) | primary |
+
+## When to use which
+
+- **Ship this** → Interval DP with residue trick (O(n³ / k), O(n²)). The pattern's standard solution.
 
 ## Related problems
 

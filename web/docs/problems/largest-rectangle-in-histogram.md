@@ -6,12 +6,14 @@ Given bar heights, return the largest rectangle area contained.
 
 &gt; Filed under Two Pointers by our curriculum because the O(n) solution uses **two pointer walks** (previous-smaller and next-smaller). But the canonical implementation is a monotonic stack — see the [Monotonic Stack chapter](/patterns/monotonic-stack).
 
-## Approach 1 — For each bar, expand outward
+---
 
+## Approach 1 — For each bar, expand outward
 O(n²) — for each `i`, walk left/right while ≥ heights[i].
 
-## Approach 2 — Monotonic increasing stack
+---
 
+## Approach 2 — Monotonic increasing stack
 **Insight.** When we push bar `i` and pop bar `t` (because heights[i] &lt; heights[t]), we now know both boundaries of `t`'s maximal rectangle: `next smaller = i`, `previous smaller = stack.peek()` after pop. Area = `heights[t] * (i - prev - 1)`.
 
 
@@ -38,6 +40,20 @@ int largestRectangleArea(int[] heights) {
 **Sentinel trick.** Iterate `i` to `n` inclusive with `h=0` to flush the stack cleanly.
 
 **Complexity** — Time **O(n)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| For each bar, expand outward | O(n²) | — | baseline |
+| Monotonic increasing stack | O(n) | O(n) | optimum |
+
+## When to use which
+
+- **State it for signal** → For each bar, expand outward (O(n²)). Correct baseline; call it out then move on.
+- **Ship this** → Monotonic increasing stack (O(n), O(n)). Expected optimum in interview.
 
 ## Related problems
 

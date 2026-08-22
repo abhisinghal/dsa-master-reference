@@ -4,8 +4,9 @@
 
 Count the number of ways to make `amount` from coins (unlimited each, **unordered**).
 
-## Approach — Unbounded knapsack counting
+---
 
+## Approach 1 — Unbounded knapsack counting
 **Insight.** Loop coins OUTER, amount INNER — this counts **unordered** combinations (each coin's contribution is fixed in order).
 
 ```java
@@ -22,6 +23,18 @@ int change(int amount, int[] coins) {
 **Contrast.** If you swap loop order (amount outer, coins inner), you count **ordered** sequences → that's [Combination Sum IV](/problems/combination-sum-iv).
 
 **Complexity** — Time **O(amount · |coins|)**; Space **O(amount)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Unbounded knapsack counting | O(amount · |coins|) | O(amount) | primary |
+
+## When to use which
+
+- **Ship this** → Unbounded knapsack counting (O(amount · |coins|), O(amount)). The pattern's standard solution.
 
 ## Related problems
 

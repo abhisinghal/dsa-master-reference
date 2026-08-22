@@ -8,8 +8,9 @@ Each house `i` can have a well (cost `wells[i]`) or share a pipe (cost `pipes[j]
 
 ---
 
-## Approach — Virtual node 0 + Kruskal's MST
+---
 
+## Approach 1 — Virtual node 0 + Kruskal's MST
 **Insight.** Model each well as an edge from a virtual node 0 to house i with weight `wells[i]`. Now it's a standard MST on n+1 nodes.
 
 ```java
@@ -31,7 +32,33 @@ int minCostToSupplyWater(int n, int[] wells, int[][] pipes) {
 int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }
 ```
 
+
+<CodeTrace
+  title="Virtual node 0 + Kruskal's MST"
+  :values="['1', '2', '2']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
+    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+  ]'
+/>
+
+
 **Complexity** — Time **O((n + p) log (n + p))**; Space **O(n + p)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Virtual node 0 + Kruskal's MST | O((n + p) log (n + p)) | O(n + p) | primary |
+
+## When to use which
+
+- **Ship this** → Virtual node 0 + Kruskal's MST (O((n + p) log (n + p)), O(n + p)). The pattern's standard solution.
 
 ## Related problems
 

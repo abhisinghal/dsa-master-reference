@@ -4,12 +4,14 @@
 
 Smallest window in `s` such that `t` is a **subsequence** (order matters).
 
-## Approach 1 — DP `dp[i][j] = latest start of match in s[..i] using t[..j]`
+---
 
+## Approach 1 — DP `dp[i][j] = latest start of match in s[..i] using t[..j]`
 O(m·n) time and space.
 
-## Approach 2 — Two-pointer forward + backward
+---
 
+## Approach 2 — Two-pointer forward + backward
 **Insight.** Advance `i` in `s` matching `t` chars in order; when full match found at end index `iEnd`, walk **backward** from `iEnd` to shrink to minimal window that still contains `t` as subsequence. Repeat starting after the previous match's start.
 
 ```java
@@ -42,6 +44,20 @@ String minWindow(String s, String t) {
 ```
 
 **Complexity** — Time **O(m · n)** worst case; often much faster.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DP `dp[i][j] = latest start of match in s[… | O(m·n) | — | baseline |
+| Two-pointer forward + backward | O(m · n) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → DP `dp[i][j] = latest start of match in s[..i] using t[..j]` (O(m·n)). Correct baseline; call it out then move on.
+- **Ship this** → Two-pointer forward + backward (O(m · n), —). Expected optimum in interview.
 
 ## Related problems
 

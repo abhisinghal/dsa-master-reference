@@ -4,8 +4,9 @@
 
 Count substrings containing at least one 'a', one 'b', one 'c'.
 
-## Approach — For each r, count valid `l`s
+---
 
+## Approach 1 — For each r, count valid `l`s
 **Insight.** Once window `[l, r]` contains all three, **every** `l' ≤ l` also works up to r. So for each r, add `l` (the smallest left with all three) to the answer. Then continue extending r.
 
 
@@ -28,6 +29,18 @@ int numberOfSubstrings(String s) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| For each r, count valid `l`s | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → For each r, count valid `l`s (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

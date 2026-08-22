@@ -4,8 +4,9 @@
 
 Delete a number x to earn x points, but doing so also removes all x-1 and x+1. Maximize points.
 
-## Approach — Reduce to House Robber
+---
 
+## Approach 1 — Reduce to House Robber
 **Insight.** Bucket totals: `points[v] = v · count(v)`. Picking `v` forbids `v±1` — this is exactly House Robber on the `points[]` array indexed by value.
 
 ```java
@@ -24,6 +25,18 @@ int deleteAndEarn(int[] nums) {
 ```
 
 **Complexity** — Time **O(n + max)**; Space **O(max)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Reduce to House Robber | O(n + max) | O(max) | primary |
+
+## When to use which
+
+- **Ship this** → Reduce to House Robber (O(n + max), O(max)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i == 0` or `i % a[i] == 0`.
 
-## Approach 1 — Backtracking with used-mask
+---
 
+## Approach 1 — Backtracking with used-mask
 ```java
 int countArrangement(int n) {
     return dfs(n, 1, new boolean[n + 1]);
@@ -23,8 +24,9 @@ int dfs(int n, int pos, boolean[] used) {
 }
 ```
 
-## Approach 2 — Bitmask DP (n ≤ 15)
+---
 
+## Approach 2 — Bitmask DP (n ≤ 15)
 `dp[mask]` = # ways to fill first `popcount(mask)` positions using selected numbers.
 
 ```java
@@ -45,6 +47,20 @@ int countArrangementBM(int n) {
 ```
 
 **Complexity** — Both **O(n · 2ⁿ)** ish; DP is iterative and cleaner for n ≤ 15.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Backtracking with used-mask | — | — | baseline |
+| Bitmask DP (n ≤ 15) | O(n · 2ⁿ) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → Backtracking with used-mask (—). Correct baseline; call it out then move on.
+- **Ship this** → Bitmask DP (n ≤ 15) (O(n · 2ⁿ), —). Expected optimum in interview.
 
 ## Related problems
 

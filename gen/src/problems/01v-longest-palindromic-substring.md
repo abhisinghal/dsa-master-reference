@@ -6,14 +6,18 @@ Longest palindromic substring of `s`.
 
 > Filed under Sliding Window in the curriculum, but the O(n²) solution is "expand around center" (two pointers), and the O(n) solution is Manacher's.
 
+---
+
 ## Approach 1 — Try every substring O(n³)
 
-## Approach 2 — DP `pal[i][j]`
+---
 
+## Approach 2 — DP `pal[i][j]`
 O(n²) time and space.
 
-## Approach 3 — Expand around each center
+---
 
+## Approach 3 — Expand around each center
 **Insight.** A palindrome has either an odd (single) center or an even (double) center — 2n-1 centers total.
 
 ```java
@@ -38,9 +42,28 @@ int expand(String s, int l, int r) {
 
 **Complexity** — Time **O(n²)**; Space **O(1)**.
 
-## Approach 4 — Manacher's algorithm
+---
 
+## Approach 4 — Manacher's algorithm
 Insert sentinels; maintain palindrome-radius array with reuse across mirrored centers. **O(n)**. Beautiful but rarely required in interviews unless asked "can you go faster than n²".
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Try every substring O(n³) | — | — | baseline |
+| DP `pal[i][j]` | O(n²) | — | improved |
+| Expand around each center | O(n²) | O(1) | improved |
+| Manacher's algorithm | O(n) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → Try every substring O(n³) (—). Correct baseline; call it out then move on.
+- **Intermediate refinement** → DP `pal[i][j]` (O(n²)).
+- **Intermediate refinement** → Expand around each center (O(n²)).
+- **Ship this** → Manacher's algorithm (O(n), —). Expected optimum in interview.
 
 ## Related problems
 

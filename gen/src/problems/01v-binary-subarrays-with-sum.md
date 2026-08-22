@@ -4,12 +4,14 @@
 
 Count binary subarrays with sum exactly `goal`.
 
-## Approach 1 — Prefix-sum hash (works for any integers)
+---
 
+## Approach 1 — Prefix-sum hash (works for any integers)
 `count[preSum - goal]` accumulated as we sweep. See [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k).
 
-## Approach 2 — At-most-goal minus at-most-(goal-1)
+---
 
+## Approach 2 — At-most-goal minus at-most-(goal-1)
 **Insight.** With nonneg integers, `atMost(goal)` slides cleanly: extend r; shrink from l while sum > goal; add `r - l + 1`. Then subtract.
 
 ```java
@@ -29,6 +31,20 @@ int atMost(int[] nums, int goal) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Prefix-sum hash (works for any integers) | — | — | baseline |
+| At-most-goal minus at-most-(goal-1) | O(n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Prefix-sum hash (works for any integers) (—). Correct baseline; call it out then move on.
+- **Ship this** → At-most-goal minus at-most-(goal-1) (O(n), O(1)). Expected optimum in interview.
 
 ## Related problems
 

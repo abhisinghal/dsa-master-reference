@@ -4,8 +4,9 @@
 
 Count subarrays with **exactly** K distinct integers.
 
-## Approach — At-most-K minus at-most-(K-1)
+---
 
+## Approach 1 — At-most-K minus at-most-(K-1)
 **Insight.** Direct "exactly K" is hard to slide. But `exactly(K) = atMost(K) - atMost(K-1)`. Each `atMost` is standard sliding window (distinct counter).
 
 ```java
@@ -30,6 +31,18 @@ int atMost(int[] nums, int k) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(k)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| At-most-K minus at-most-(K-1) | O(n) | O(k) | primary |
+
+## When to use which
+
+- **Ship this** → At-most-K minus at-most-(K-1) (O(n), O(k)). The pattern's standard solution.
 
 ## Related problems
 

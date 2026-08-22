@@ -4,8 +4,9 @@
 
 Can `nums` be split into two subsets with equal sum?
 
-## Approach — Subset-sum DP (0/1 knapsack)
+---
 
+## Approach 1 — Subset-sum DP (0/1 knapsack)
 **Insight.** Equal partition possible iff sum is even and a subset sums to `sum/2`. Standard 0/1 knapsack on booleans.
 
 ```java
@@ -30,6 +31,18 @@ boolean canPartition(int[] nums) {
 ## Bitset optimization
 
 Represent `dp` as a `BitSet` (java.util.BitSet); each item is `dp |= dp << x` → speedup by word-size factor.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Subset-sum DP (0/1 knapsack) | O(n · sum) | O(sum) | primary |
+
+## When to use which
+
+- **Ship this** → Subset-sum DP (0/1 knapsack) (O(n · sum), O(sum)). The pattern's standard solution.
 
 ## Related problems
 

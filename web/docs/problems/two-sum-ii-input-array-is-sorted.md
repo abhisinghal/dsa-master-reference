@@ -4,12 +4,14 @@
 
 Sorted array; return 1-indexed pair summing to target.
 
-## Approach 1 — Hash map (ignores sort)
+---
 
+## Approach 1 — Hash map (ignores sort)
 Uses O(n) extra space. Works but wastes the sort.
 
-## Approach 2 — Opposing two-pointer
+---
 
+## Approach 2 — Opposing two-pointer
 **Insight.** With a sorted array, the sum monotonically increases when `l` advances or `r` retreats. So we can move deterministically without storing anything.
 
 
@@ -29,6 +31,20 @@ int[] twoSum(int[] nums, int target) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Hash map (ignores sort) | O(n) | — | baseline |
+| Opposing two-pointer | O(n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Hash map (ignores sort) (O(n)). Correct baseline; call it out then move on.
+- **Ship this** → Opposing two-pointer (O(n), O(1)). Expected optimum in interview.
 
 ## Related problems
 

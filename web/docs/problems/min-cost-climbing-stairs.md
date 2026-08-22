@@ -4,8 +4,9 @@
 
 Each step has cost. Can start at 0 or 1; step 1 or 2 at a time. Min cost to reach past-the-end.
 
-## Approach — DP, O(1) space
+---
 
+## Approach 1 — DP, O(1) space
 **Insight.** `dp[i]` = min cost to arrive at step i. `dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])`.
 
 
@@ -24,6 +25,18 @@ int minCostClimbingStairs(int[] cost) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DP, O(1) space | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → DP, O(1) space (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 Grid; falling path picks one cell per row; next row's cell must be in `[j-1, j, j+1]`. Min sum from top row to bottom.
 
-## Approach — Bottom-up DP row by row
+---
 
+## Approach 1 — Bottom-up DP row by row
 **Insight.** `dp[i][j] = grid[i][j] + min(dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1])` with boundary clamps.
 
 
@@ -33,6 +34,18 @@ int minFallingPathSum(int[][] grid) {
 
 
 **Complexity** — Time **O(n²)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Bottom-up DP row by row | O(n²) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Bottom-up DP row by row (O(n²), O(n)). The pattern's standard solution.
 
 ## Related problems
 

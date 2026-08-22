@@ -4,8 +4,9 @@
 
 Return all starting indices where `p`'s anagram appears in `s`.
 
-## Approach — Fixed-window with `matches` counter
+---
 
+## Approach 1 — Fixed-window with `matches` counter
 **Insight.** Same skeleton as Permutation in String, but collect every matching index instead of returning early. Use a `matches` counter (26 buckets equal) for O(1) per step.
 
 
@@ -39,6 +40,18 @@ List<Integer> findAnagrams(String s, String p) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Fixed-window with `matches` counter | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Fixed-window with `matches` counter (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

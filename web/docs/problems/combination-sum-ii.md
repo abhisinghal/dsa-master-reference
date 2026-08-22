@@ -4,8 +4,9 @@
 
 Combinations summing to target, each candidate used at most **once**, candidates may repeat.
 
-## Approach — Sort + skip equal-at-same-depth + prune on sum
+---
 
+## Approach 1 — Sort + skip equal-at-same-depth + prune on sum
 **Insight.** Sort → deduplicate at each recursion level with `if (i > start && cand[i] == cand[i-1]) continue`. Prune when `cand[i] > remaining`.
 
 
@@ -31,6 +32,18 @@ void dfs(int[] a, int start, int rem, List<Integer> path, List<List<Integer>> ou
 
 
 **Complexity** — Time exponential; heavily pruned.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort + skip equal-at-same-depth + prune on… | — | — | primary |
+
+## When to use which
+
+- **Ship this** → Sort + skip equal-at-same-depth + prune on sum (—, —). The pattern's standard solution.
 
 ## Related problems
 

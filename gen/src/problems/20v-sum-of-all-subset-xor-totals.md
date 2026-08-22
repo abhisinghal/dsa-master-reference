@@ -6,8 +6,9 @@ Return the sum of XOR of every subset of `nums` (including empty).
 
 **Example** — `nums=[1,3]` → subsets XOR: 0,1,3,2 → sum = 6.
 
-## Approach 1 — Enumerate all 2ⁿ subsets
+---
 
+## Approach 1 — Enumerate all 2ⁿ subsets
 ```java
 int subsetXORSum(int[] nums) {
     int n = nums.length, total = 0;
@@ -22,8 +23,9 @@ int subsetXORSum(int[] nums) {
 
 O(2ⁿ · n).
 
-## Approach 2 — Bit-by-bit contribution
+---
 
+## Approach 2 — Bit-by-bit contribution
 **Insight.** Bit `b` contributes `2^b` to the XOR of a subset iff that subset contains an odd number of nums with bit `b` set. If `k` of the nums have bit `b` set, exactly half of the 2ⁿ subsets have an odd count → `2^(n-1)` subsets.
 
 Therefore: bit `b` contributes `2^b · 2^(n-1)` if **any** number has bit b set, else 0.
@@ -39,6 +41,20 @@ int subsetXORSum2(int[] nums) {
 ```
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Enumerate all 2ⁿ subsets | O(2ⁿ · n) | — | baseline |
+| Bit-by-bit contribution | O(n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Enumerate all 2ⁿ subsets (O(2ⁿ · n)). Correct baseline; call it out then move on.
+- **Ship this** → Bit-by-bit contribution (O(n), O(1)). Expected optimum in interview.
 
 ## Related problems
 

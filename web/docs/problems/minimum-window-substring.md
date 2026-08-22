@@ -4,12 +4,14 @@
 
 Smallest window in `s` containing every char of `t` (with multiplicity).
 
-## Approach 1 — Enumerate all substrings
+---
 
+## Approach 1 — Enumerate all substrings
 O(n²·|t|).
 
-## Approach 2 — Sliding window + need/have counter
+---
 
+## Approach 2 — Sliding window + need/have counter
 **Insight.** Track `need = Σ counts in t`. Maintain a window; extend `r`; whenever a character reduces the "deficit", decrement `have`. Once `have == need`, shrink from `l` while the window still satisfies. Record min.
 
 
@@ -39,6 +41,20 @@ String minWindow(String s, String t) {
 **Invariant.** `need[c]` may go negative for chars over-represented in the window — that's fine; only positive values count toward deficit.
 
 **Complexity** — Time **O(n)**; Space **O(σ)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Enumerate all substrings | O(n²·|t|) | — | baseline |
+| Sliding window + need/have counter | O(n) | O(σ) | optimum |
+
+## When to use which
+
+- **State it for signal** → Enumerate all substrings (O(n²·|t|)). Correct baseline; call it out then move on.
+- **Ship this** → Sliding window + need/have counter (O(n), O(σ)). Expected optimum in interview.
 
 ## Related problems
 

@@ -6,8 +6,9 @@ Return the length of the longest contiguous subarray with equal 0s and 1s.
 
 **Example** — `nums=[0,1,0]` → `2`
 
-## Approach — Map 0→-1, then prefix sum
+---
 
+## Approach 1 — Map 0→-1, then prefix sum
 **Insight.** Treating 0 as -1 makes "equal 0s and 1s" equivalent to "subarray sum = 0". First occurrence of each prefix value → longest subarray with the same prefix.
 
 ```java
@@ -26,7 +27,33 @@ int findMaxLength(int[] nums) {
 }
 ```
 
+
+<CodeTrace
+  title="Map 0→-1, then prefix sum"
+  :values="['0', '1', '0']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
+    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+  ]'
+/>
+
+
 **Complexity** — Time **O(n)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Map 0→-1, then prefix sum | O(n) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Map 0→-1, then prefix sum (O(n), O(n)). The pattern's standard solution.
 
 ## Related problems
 

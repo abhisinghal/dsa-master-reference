@@ -4,10 +4,13 @@
 
 Smallest contiguous subarray with sum ≥ `target`. (Positive integers.)
 
+---
+
 ## Approach 1 — O(n²) brute force
 
-## Approach 2 — Sliding window
+---
 
+## Approach 2 — Sliding window
 **Insight.** With **positive** values, `sum` is monotone in window size. Extend r; while sum ≥ target, shrink from l tracking min length.
 
 ```java
@@ -26,9 +29,26 @@ int minSubArrayLen(int target, int[] nums) {
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
-## Approach 3 — Prefix sum + binary search
+---
 
+## Approach 3 — Prefix sum + binary search
 Compute prefix sums; for each `i`, binary-search the smallest `j ≥ i` with `prefix[j] - prefix[i] ≥ target`. O(n log n). Necessary when the array has **negatives** (window fails); see Shortest Subarray with Sum at Least K.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| O(n²) brute force | — | — | baseline |
+| Sliding window | O(n) | O(1) | improved |
+| Prefix sum + binary search | O(n log n) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → O(n²) brute force (—). Correct baseline; call it out then move on.
+- **Intermediate refinement** → Sliding window (O(n)).
+- **Ship this** → Prefix sum + binary search (O(n log n), —). Expected optimum in interview.
 
 ## Related problems
 

@@ -6,8 +6,9 @@ Given a binary matrix, find the largest all-1s axis-aligned rectangle.
 
 **Example** — `matrix=[[1,0,1,0,0],[1,0,1,1,1],[1,1,1,1,1],[1,0,0,1,0]]` → `6`
 
-## Approach — Per-row histogram + Largest Rectangle in Histogram
+---
 
+## Approach 1 — Per-row histogram + Largest Rectangle in Histogram
 **Insight.** For each row, compute the running "height" of consecutive 1s above each column. That row of heights = a histogram. The answer is `max` over each row's LRH.
 
 ```java
@@ -38,7 +39,33 @@ int largestRectangle(int[] h) {
 }
 ```
 
+
+<CodeTrace
+  title="Per-row histogram + Largest Rectangle in Histogram"
+  :values="['1', '0', '1', '0', '0']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through the scan." },
+    { pointers: { i: 4 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+  ]'
+/>
+
+
 **Complexity** — Time **O(m·n)**; Space **O(n)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Per-row histogram + Largest Rectangle in H… | O(m·n) | O(n) | primary |
+
+## When to use which
+
+- **Ship this** → Per-row histogram + Largest Rectangle in Histogram (O(m·n), O(n)). The pattern's standard solution.
 
 ## Related problems
 

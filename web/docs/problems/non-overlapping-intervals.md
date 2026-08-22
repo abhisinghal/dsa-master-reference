@@ -4,8 +4,9 @@
 
 Minimum intervals to remove so the rest are non-overlapping.
 
-## Approach — Sort by end + activity selection
+---
 
+## Approach 1 — Sort by end + activity selection
 **Insight.** Equivalent to maximizing non-overlapping intervals; the count to remove is `n - maxKept`. Sort by end, greedily keep intervals whose start ≥ previous end.
 
 **Why sort by end.** Choosing the earliest ending interval leaves maximal room for the rest — classic exchange argument.
@@ -25,6 +26,18 @@ int eraseOverlapIntervals(int[][] intervals) {
 
 
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort by end + activity selection | O(n log n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sort by end + activity selection (O(n log n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 Rearrange so all even values come before all odd. Any valid partition accepted.
 
-## Approach — Opposing pointers, swap on mismatch
+---
 
+## Approach 1 — Opposing pointers, swap on mismatch
 **Insight.** `l` from left seeks first odd; `r` from right seeks first even; swap; repeat.
 
 
@@ -27,6 +28,18 @@ int[] sortArrayByParity(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 **Trap.** For stable ordering (preserve original relative order within each group) → use a slow/fast writer, not opposing pointers.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Opposing pointers, swap on mismatch | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Opposing pointers, swap on mismatch (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

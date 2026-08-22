@@ -6,8 +6,9 @@ Count contiguous subarrays whose sum is divisible by `k`.
 
 **Example** — `nums=[4,5,0,-2,-3,1], k=5` → `7`
 
-## Approach — Prefix mod + hash map
+---
 
+## Approach 1 — Prefix mod + hash map
 **Insight.** Subarray sum divisible by k iff `P[j] ≡ P[i] (mod k)`. Count prefix-remainders; matches with each other = valid subarrays.
 
 **Trap.** For negatives, use `((prefix % k) + k) % k` for positive modulo.
@@ -30,6 +31,20 @@ int subarraysDivByK(int[] nums, int k) {
 
 
 
+
+<CodeTrace
+  title="Prefix mod + hash map"
+  :values="['4', '5', '0', '-2', '-3', '1']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through the scan." },
+    { pointers: { i: 5 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+  ]'
+/>
+
+
 <CodeTrace
   title="Prefix mod — nums=[4,5,0,-2,-3,1], k=5"
   :values="[4,5,0,-2,-3,1]"
@@ -44,6 +59,18 @@ int subarraysDivByK(int[] nums, int k) {
 />
 
 **Complexity** — Time **O(n)**; Space **O(k)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Prefix mod + hash map | O(n) | O(k) | primary |
+
+## When to use which
+
+- **Ship this** → Prefix mod + hash map (O(n), O(k)). The pattern's standard solution.
 
 ## Related problems
 

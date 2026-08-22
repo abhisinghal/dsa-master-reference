@@ -4,8 +4,9 @@
 
 Support `addWord(w)` and `search(w)` where `w` may contain `'.'` matching any single letter.
 
-## Approach — Trie + wildcard-aware DFS
+---
 
+## Approach 1 — Trie + wildcard-aware DFS
 **Insight.** Standard trie for adds. Search recursively; when hitting `'.'`, try every child.
 
 
@@ -33,6 +34,18 @@ class WordDictionary {
 
 
 **Complexity** — addWord: **O(L)**; search: **O(L)** avg, **O(26^L)** worst-case with all dots.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Trie + wildcard-aware DFS | O(L) | O(L) | primary |
+
+## When to use which
+
+- **Ship this** → Trie + wildcard-aware DFS (O(L), O(L)). The pattern's standard solution.
 
 ## Related problems
 

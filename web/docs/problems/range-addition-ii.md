@@ -6,8 +6,9 @@
 
 **Example** — `m=3, n=3, ops=[[2,2],[3,3]]` → `4`
 
-## Approach — Intersection of all ops
+---
 
+## Approach 1 — Intersection of all ops
 **Insight.** After all ops, the max cells are precisely the intersection: `[0..min(a_i)-1] × [0..min(b_i)-1]`. Count = product of min-dimensions.
 
 
@@ -21,7 +22,33 @@ int maxCount(int m, int n, int[][] ops) {
 
 
 
+
+<CodeTrace
+  title="Intersection of all ops"
+  :values="['2', '2']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
+    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
+    { pointers: { i: 1 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+  ]'
+/>
+
+
 **Complexity** — Time **O(#ops)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Intersection of all ops | O(#ops) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Intersection of all ops (O(#ops), O(1)). The pattern's standard solution.
 
 ## Related problems
 

@@ -4,12 +4,14 @@
 
 Can we split nums into k non-empty subsets each summing to `total/k`?
 
-## Approach 1 — Backtracking with sort-desc + pruning
+---
 
+## Approach 1 — Backtracking with sort-desc + pruning
 Sort desc; try to place each number into one of k buckets; skip mirrored empty buckets to avoid re-exploring.
 
-## Approach 2 — Bitmask DP
+---
 
+## Approach 2 — Bitmask DP
 **Insight.** `dp[mask]` = min "leftover" sum of the current partially-filled bucket after using elements in mask. Transition: for each unused element `i`, add it to the current bucket if it fits (leftover + nums[i] ≤ target). When a bucket fills, reset leftover to 0.
 
 ```java
@@ -36,6 +38,20 @@ boolean canPartitionKSubsets(int[] nums, int k) {
 ```
 
 **Complexity** — Time **O(n · 2ⁿ)**; Space **O(2ⁿ)** — n ≤ 16.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Backtracking with sort-desc + pruning | — | — | baseline |
+| Bitmask DP | O(n · 2ⁿ) | O(2ⁿ) | optimum |
+
+## When to use which
+
+- **State it for signal** → Backtracking with sort-desc + pruning (—). Correct baseline; call it out then move on.
+- **Ship this** → Bitmask DP (O(n · 2ⁿ), O(2ⁿ)). Expected optimum in interview.
 
 ## Related problems
 

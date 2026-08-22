@@ -4,12 +4,14 @@
 
 Find start indices of substrings that are concatenations of every word in `words` (each used exactly once, any order). All words same length `L`.
 
-## Approach 1 — Try every start
+---
 
+## Approach 1 — Try every start
 O(n · k · L). Too slow for large.
 
-## Approach 2 — Sliding window on word-aligned offsets
+---
 
+## Approach 2 — Sliding window on word-aligned offsets
 **Insight.** Iterate `offset ∈ [0, L)`. For each offset, walk `s` in chunks of L. Maintain a `have` count; if a word not in `words`, reset window; if a word over-count, shrink from left until fine. Emit start when `have == k` words.
 
 ```java
@@ -42,6 +44,20 @@ List<Integer> findSubstring(String s, String[] words) {
 ```
 
 **Complexity** — Time **O(n · L)** total across offsets; Space **O(k · L)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Try every start | O(n · k · L) | — | baseline |
+| Sliding window on word-aligned offsets | O(n · L) | O(k · L) | optimum |
+
+## When to use which
+
+- **State it for signal** → Try every start (O(n · k · L)). Correct baseline; call it out then move on.
+- **Ship this** → Sliding window on word-aligned offsets (O(n · L), O(k · L)). Expected optimum in interview.
 
 ## Related problems
 

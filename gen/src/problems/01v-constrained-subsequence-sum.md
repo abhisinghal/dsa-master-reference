@@ -4,8 +4,9 @@
 
 Max sum of a subsequence where every two consecutive chosen indices differ by at most `k`.
 
-## Approach — DP with monotonic deque
+---
 
+## Approach 1 — DP with monotonic deque
 **Insight.** `dp[i] = nums[i] + max(0, max(dp[i-k..i-1]))`. Window-max query on a sliding window → monotonic deque (like Sliding Window Maximum).
 
 ```java
@@ -28,6 +29,18 @@ int constrainedSubsetSum(int[] nums, int k) {
 **Invariant.** Deque holds indices in the current k-window, with `dp` values strictly decreasing → front is the window max.
 
 **Complexity** — Time **O(n)**; Space **O(k)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DP with monotonic deque | O(n) | O(k) | primary |
+
+## When to use which
+
+- **Ship this** → DP with monotonic deque (O(n), O(k)). The pattern's standard solution.
 
 ## Related problems
 

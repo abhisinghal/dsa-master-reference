@@ -4,8 +4,9 @@
 
 Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly more. Minimize total.
 
-## Approach 1 — Two-pass sweep
+---
 
+## Approach 1 — Two-pass sweep
 **Insight.** Left-to-right: enforce "left neighbor". Right-to-left: enforce "right neighbor". Take the max at each position.
 
 
@@ -27,9 +28,24 @@ int candy(int[] ratings) {
 
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
-## Approach 2 — One-pass slope counting
+---
 
+## Approach 2 — One-pass slope counting
 Track up-slope length, down-slope length, and current peak length. Trickier to get right; useful when interviewer asks for O(1) space.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Two-pass sweep | O(n) | O(n) | baseline |
+| One-pass slope counting | O(1) | — | optimum |
+
+## When to use which
+
+- **State it for signal** → Two-pass sweep (O(n)). Correct baseline; call it out then move on.
+- **Ship this** → One-pass slope counting (O(1), —). Expected optimum in interview.
 
 ## Related problems
 

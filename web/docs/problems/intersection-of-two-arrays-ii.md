@@ -4,12 +4,14 @@
 
 Return the multi-set intersection (each element appears `min(count_a, count_b)` times).
 
-## Approach 1 — Hash map count
+---
 
+## Approach 1 — Hash map count
 Count nums1, iterate nums2, decrement. **O(n+m)** time, **O(n)** space.
 
-## Approach 2 — Sort + two-pointer
+---
 
+## Approach 2 — Sort + two-pointer
 **Insight.** After sorting, walk both arrays; on equal, emit and advance both.
 
 
@@ -33,6 +35,20 @@ int[] intersect(int[] nums1, int[] nums2) {
 **Time O((n+m) log(n+m))**, **Space O(1)** extra.
 
 **Follow-up.** If nums1 is huge and streamed from disk, hash-map on the smaller side. If both sorted, two-pointer is O(1) extra memory.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Hash map count | O(n+m) | O(n) | baseline |
+| Sort + two-pointer | O((n+m) log(n+m)) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → Hash map count (O(n+m)). Correct baseline; call it out then move on.
+- **Ship this** → Sort + two-pointer (O((n+m) log(n+m)), O(1)). Expected optimum in interview.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 All partitions of `s` where every part is a palindrome.
 
-## Approach 1 — DFS + palindrome check on the fly
+---
 
+## Approach 1 — DFS + palindrome check on the fly
 
 
 ```java
@@ -32,11 +33,26 @@ boolean isPali(String s, int l, int r) {
 
 
 
-## Approach 2 — Precompute `pal[i][j]` DP
+---
 
+## Approach 2 — Precompute `pal[i][j]` DP
 `pal[i][j]` = whether `s[i..j]` is palindrome — DP in O(n²) time / space. Then O(1) checks during recursion.
 
 **Complexity** — Time exponential (~2ⁿ · n); Space **O(n²)** for DP + recursion depth.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DFS + palindrome check on the fly | — | — | baseline |
+| Precompute `pal[i][j]` DP | — | O(n²) | optimum |
+
+## When to use which
+
+- **State it for signal** → DFS + palindrome check on the fly (—). Correct baseline; call it out then move on.
+- **Ship this** → Precompute `pal[i][j]` DP (—, O(n²)). Expected optimum in interview.
 
 ## Related problems
 

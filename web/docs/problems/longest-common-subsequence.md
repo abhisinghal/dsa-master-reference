@@ -4,8 +4,9 @@
 
 Length of the longest subsequence appearing in both strings.
 
-## Approach — 2D DP
+---
 
+## Approach 1 — 2D DP
 **Insight.** `dp[i][j]` = LCS of `s1[..i]` and `s2[..j]`.
 - If `s1[i-1] == s2[j-1]`: `dp[i][j] = 1 + dp[i-1][j-1]`.
 - Else: `dp[i][j] = max(dp[i-1][j], dp[i][j-1])`.
@@ -28,6 +29,18 @@ int longestCommonSubsequence(String s1, String s2) {
 
 
 **Complexity** — Time **O(mn)**; Space **O(mn)**; can compress to **O(n)** with two rows.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| 2D DP | O(mn) | O(mn) | primary |
+
+## When to use which
+
+- **Ship this** → 2D DP (O(mn), O(mn)). The pattern's standard solution.
 
 ## Related problems
 

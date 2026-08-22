@@ -4,12 +4,14 @@
 
 Return all permutations of distinct integers.
 
-## Approach 1 — Insert into every position
+---
 
+## Approach 1 — Insert into every position
 Recursively insert `nums[i]` into every position of every partial permutation of `nums[0..i-1]`. O(n! · n).
 
-## Approach 2 — Swap-in-place
+---
 
+## Approach 2 — Swap-in-place
 **Insight.** At depth `k`, swap each remaining candidate into position `k`, recurse, swap back.
 
 
@@ -40,9 +42,26 @@ void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 
 **Complexity** — Time **O(n · n!)**; Space **O(n)** recursion.
 
-## Approach 3 — Used-set + build
+---
 
+## Approach 3 — Used-set + build
 Cleaner when duplicates exist (see Permutations II).
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Insert into every position | O(n! · n) | — | baseline |
+| Swap-in-place | O(n · n!) | O(n) | improved |
+| Used-set + build | — | — | optimum |
+
+## When to use which
+
+- **State it for signal** → Insert into every position (O(n! · n)). Correct baseline; call it out then move on.
+- **Intermediate refinement** → Swap-in-place (O(n · n!)).
+- **Ship this** → Used-set + build (—, —). Expected optimum in interview.
 
 ## Related problems
 

@@ -4,8 +4,9 @@
 
 Count subarrays containing exactly `k` odd numbers.
 
-## Approach — Treat odd = 1, even = 0 → Binary Subarrays With Sum
+---
 
+## Approach 1 — Treat odd = 1, even = 0 → Binary Subarrays With Sum
 **Insight.** Same trick: `atMost(k) - atMost(k-1)`.
 
 
@@ -29,6 +30,18 @@ int atMost(int[] nums, int k) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Treat odd = 1, even = 0 → Binary Subarrays… | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Treat odd = 1, even = 0 → Binary Subarrays With Sum (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

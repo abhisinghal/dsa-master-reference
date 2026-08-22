@@ -4,8 +4,9 @@
 
 Fixed window of size `k` over calories. For each window: +1 if sum &gt; upper; −1 if sum &lt; lower; 0 otherwise. Return total.
 
-## Approach — Fixed-size window
+---
 
+## Approach 1 — Fixed-size window
 **Insight.** Standard fixed-size sum window: pre-sum first k, then slide adding right and subtracting left.
 
 
@@ -29,6 +30,18 @@ int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
 
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Fixed-size window | O(n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Fixed-size window (O(n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

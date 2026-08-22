@@ -4,8 +4,9 @@
 
 Given nums and budget `k` (increments), maximize the frequency of any single value.
 
-## Approach — Sort + sliding window with sum budget
+---
 
+## Approach 1 — Sort + sliding window with sum budget
 **Insight.** Sort. In a window `[l, r]` of sorted nums, raising every value to `nums[r]` costs `nums[r] * (r - l + 1) - windowSum`. Extend r; while cost &gt; k, shrink l. Track max window size.
 
 
@@ -27,6 +28,18 @@ int maxFrequency(int[] nums, int k) {
 
 
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort + sliding window with sum budget | O(n log n) | O(1) | primary |
+
+## When to use which
+
+- **Ship this** → Sort + sliding window with sum budget (O(n log n), O(1)). The pattern's standard solution.
 
 ## Related problems
 

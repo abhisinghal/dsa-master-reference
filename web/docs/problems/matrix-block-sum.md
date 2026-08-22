@@ -4,8 +4,9 @@
 
 For each `(i, j)`, return the sum of `mat[r][c]` over all `(r, c)` with `|r-i| ≤ k` and `|c-j| ≤ k`.
 
-## Approach — 2D prefix sums
+---
 
+## Approach 1 — 2D prefix sums
 Precompute `P[i+1][j+1] = sum(mat[0..i][0..j])`. Any block sum via inclusion-exclusion: `P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1]`.
 
 
@@ -31,6 +32,18 @@ int[][] matrixBlockSum(int[][] mat, int k) {
 
 
 **Complexity** — Time **O(m·n)**; Space **O(m·n)** for the prefix table.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| 2D prefix sums | O(m·n) | O(m·n) | primary |
+
+## When to use which
+
+- **Ship this** → 2D prefix sums (O(m·n), O(m·n)). The pattern's standard solution.
 
 ## Related problems
 

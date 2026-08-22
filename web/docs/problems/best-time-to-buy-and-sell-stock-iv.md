@@ -4,16 +4,18 @@
 
 At most `k` transactions. Max profit.
 
-## Approach 1 — Full DP `dp[i][t][0/1]`
+---
 
+## Approach 1 — Full DP `dp[i][t][0/1]`
 `dp[i][t][held?]`. Transitions:
 - `dp[i][t][0] = max(dp[i-1][t][0], dp[i-1][t][1] + price[i])`
 - `dp[i][t][1] = max(dp[i-1][t][1], dp[i-1][t-1][0] - price[i])`
 
 Answer `dp[n-1][k][0]`. Space **O(n·k)** or **O(k)** with row-compression.
 
-## Approach 2 — Optimization: k ≥ n/2 → unlimited
+---
 
+## Approach 2 — Optimization: k ≥ n/2 → unlimited
 **Insight.** With that many allowed transactions we can capture every increasing step → sum of positive diffs.
 
 
@@ -40,6 +42,20 @@ int maxProfit(int k, int[] prices) {
 
 
 **Complexity** — Time **O(n · k)**; Space **O(k)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Full DP `dp[i][t][0/1]` | O(n·k) | O(k) | baseline |
+| Optimization: k ≥ n/2 → unlimited | O(n · k) | O(k) | optimum |
+
+## When to use which
+
+- **State it for signal** → Full DP `dp[i][t][0/1]` (O(n·k)). Correct baseline; call it out then move on.
+- **Ship this** → Optimization: k ≥ n/2 → unlimited (O(n · k), O(k)). Expected optimum in interview.
 
 ## Related problems
 

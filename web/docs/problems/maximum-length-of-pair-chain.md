@@ -4,12 +4,14 @@
 
 Pairs `[a, b]` chain if next pair `[c, d]` has `c > b`. Max chain length.
 
-## Approach 1 — DP (LIS style)
+---
 
+## Approach 1 — DP (LIS style)
 Sort by first; `dp[i] = 1 + max(dp[j])` over `j` with `pair[j].b < pair[i].a`. O(n²).
 
-## Approach 2 — Greedy (activity selection)
+---
 
+## Approach 2 — Greedy (activity selection)
 **Insight.** Sort by **second** value. Greedily pick every pair whose start &gt; last picked end. Same as interval scheduling.
 
 
@@ -27,6 +29,20 @@ int findLongestChain(int[][] pairs) {
 
 
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
+
+---
+
+## Complexity summary
+
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| DP (LIS style) | O(n²) | — | baseline |
+| Greedy (activity selection) | O(n log n) | O(1) | optimum |
+
+## When to use which
+
+- **State it for signal** → DP (LIS style) (O(n²)). Correct baseline; call it out then move on.
+- **Ship this** → Greedy (activity selection) (O(n log n), O(1)). Expected optimum in interview.
 
 ## Related problems
 
