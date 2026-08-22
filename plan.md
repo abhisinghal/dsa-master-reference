@@ -41,11 +41,24 @@ Plus 8 high-value canonical variations:
 - Maximum Subarray (Kadane) · Coin Change · LIS · Edit Distance
 - Permutations · Subsets
 
-### All variation pages fully authored + flagship-format upgraded
+### Flagship-quality rewrite in progress
 
-**184 variation pages** — every LC problem across all "Same pattern, new tweaks" tables is now a **full multi-approach page** in the **flagship format**: LC link + difficulty badge, problem statement, `---` separators between approaches, 1–3 approaches with Java code + CodeTrace scaffolds (when example is parseable), **Complexity summary** table, **When to use which** bullets, related-problems cross-links.
+**38 pages fully rewritten to flagship quality** this session (see /problems/sliding-window-longest-substring for the target format):
+- Sliding Window: 13 pages (100% of pattern complete)
+- Two Pointers: 3 pages (3sum-closest, 4sum, valid-palindrome-ii)
+- Hashing: 3 pages (3sum, valid-anagram, longest-consecutive-sequence)
+- Fast &amp; Slow: 5 pages (100% of pattern complete)
+- Binary Search: 4 pages (100% of pattern complete)
+- Top-K / Heap: 3 pages (100% of pattern complete)
+- K-way Merge: 3 pages (100% of pattern complete)
+- Monotonic Stack: 4 pages (100% of pattern complete)
 
-Delivered across 8 batches: Prefix Sum + Trie + Bit Manip (25), Two Pointers + Hashing (26), Greedy (10), Backtracking (15), Sliding Window (25), DP (28), and prior Merge Intervals / BS on Answer / Union-Find / Monotonic Stack / Binary Search / Topo Sort / Divide &amp; Conquer / Sweep Line / Top-K / K-way Merge / Fast-Slow (55) + structural flagship-format upgrade of all 133 variations (`gen/upgrade_problem_pages.py`).
+**Every page includes**: 3 numbered Examples, Constraints, 2–4 approaches with Intuition + Java code + real `<CodeTrace>` tied to the specific example + Complexity, Complexity summary table, When-to-use bullets, Related LC links.
+
+**Remaining**: 95 more variation pages need flagship-quality rewrite:
+- Prefix Sum (10), Merge Intervals (5), Sweep Line (2), Topological Sort (4), Union-Find (8), Greedy (10 — subset upgraded structurally only), Backtracking (16 — structural), Divide &amp; Conquer (4), DP (28 — 3 already flagship-quality: coin-change, LIS, edit-distance), Trie (7), Bit Manipulation (9 — 1 already: subsets), Two Pointers (10 remaining), Hashing (10 remaining).
+
+Realistic per-session: 30–40 pages given the depth (5-6 KB per page with real CodeTrace). Multiple sessions needed for full completion.
 
 ### Infrastructure
 
@@ -63,7 +76,11 @@ Delivered across 8 batches: Prefix Sum + Trie + Bit Manip (25), Two Pointers + H
 
 ## Recent commits (all live)
 
-- `b11a07f` upgrade all 133 variation pages to flagship format (CodeTrace + Complexity summary + When-to-use)
+- `5a18eec` flagship-quality — 10 more pages (Top-K 3, K-way Merge 3, Monotonic Stack 4) — 38 total this session
+- `9df65d2` flagship-quality — 9 more pages (Fast/Slow 5, Binary Search 4)
+- `68d0579` flagship-quality — 11 more pages (SW 5, TP 3, Hash 3)
+- `f56dd1d` flagship-quality — 8 Sliding Window pages
+- `b11a07f` upgrade all 133 variation pages to flagship format (structural)
 - `5a02edb` fix: strip `NNv-` prefix in migrate.py (resolves 90% Practice 404s)
 - `96be326` docs: mark all visualizer items shipped
 - `53be2ab` +84 auto-embedded Example Previews
