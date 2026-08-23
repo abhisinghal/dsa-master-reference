@@ -146,3 +146,5 @@ int[] topKFrequentBucket(int[] nums, int k) {
 - [Reorganize String](https://leetcode.com/problems/reorganize-string/) — max-heap on char frequencies
 
 &lt;FeedbackWidget problem-slug="top-k-frequent-elements" /&gt;
+
+&lt;RelatedProblems problems="merge-two-sorted-lists::Merge Two Sorted Lists|kth-largest-element-in-a-stream::Kth Largest Element In A Stream|reorganize-string::Reorganize String" /&gt;

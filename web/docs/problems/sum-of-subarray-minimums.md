@@ -130,3 +130,5 @@ int sumSubarrayMins(int[] arr) {
 - [Maximum Sum of Minimum of Every Subarray](https://leetcode.com/problems/maximum-of-minimum-values-in-all-subarrays/) — related
 
 &lt;FeedbackWidget problem-slug="sum-of-subarray-minimums" /&gt;
+
+&lt;RelatedProblems problems="online-stock-span::Online Stock Span|monotonic-stack-daily-temperatures::Monotonic Stack Daily Temperatures|next-greater-element-ii::Next Greater Element II" /&gt;

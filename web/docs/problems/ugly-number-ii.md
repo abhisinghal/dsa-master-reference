@@ -135,3 +135,5 @@ int nthUglyNumber(int n) {
 - [Perfect Squares](/problems/perfect-squares) — DP alternative
 
 &lt;FeedbackWidget problem-slug="ugly-number-ii" /&gt;
+
+&lt;RelatedProblems problems="reorganize-string::Reorganize String|kth-largest-element-in-a-stream::Kth Largest Element In A Stream|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists" /&gt;

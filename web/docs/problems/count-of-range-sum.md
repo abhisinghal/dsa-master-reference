@@ -102,3 +102,5 @@ int mergeCount(long[] p, int lo, int hi, int lower, int upper) {
 - [Global and Local Inversions](/problems/global-and-local-inversions)
 
 &lt;FeedbackWidget problem-slug="count-of-range-sum" /&gt;
+
+&lt;RelatedProblems problems="reverse-pairs::Reverse Pairs|sort-list::Sort List|inversions::Inversions" /&gt;

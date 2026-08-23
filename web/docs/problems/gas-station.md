@@ -88,3 +88,5 @@ int canCompleteCircuit(int[] gas, int[] cost) {
 - [Best Sightseeing Pair](https://leetcode.com/problems/best-sightseeing-pair/)
 
 &lt;FeedbackWidget problem-slug="gas-station" /&gt;
+
+&lt;RelatedProblems problems="course-schedule-iii::Course Schedule III|best-time-to-buy-and-sell-stock::Best Time To Buy And Sell Stock|jump-game-ii::Jump Game II" /&gt;

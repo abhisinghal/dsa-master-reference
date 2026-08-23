@@ -86,3 +86,5 @@ List<List<String>> groupStrings(String[] strings) {
 - [Isomorphic Strings](/problems/isomorphic-strings)
 
 &lt;FeedbackWidget problem-slug="group-shifted-strings" /&gt;
+
+&lt;RelatedProblems problems="hashing-two-sum::Hashing Two Sum|longest-consecutive-sequence::Longest Consecutive Sequence|3sum::3sum" /&gt;

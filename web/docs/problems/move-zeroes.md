@@ -101,3 +101,5 @@ void moveZeroesSwap(int[] nums) {
 - [Sort Array By Parity](/problems/sort-array-by-parity)
 
 &lt;FeedbackWidget problem-slug="move-zeroes" /&gt;
+
+&lt;RelatedProblems problems="4sum::4sum|container-with-most-water::Container With Most Water|squares-of-a-sorted-array::Squares Of A Sorted Array" /&gt;

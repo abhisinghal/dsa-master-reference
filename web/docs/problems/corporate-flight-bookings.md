@@ -88,3 +88,5 @@ int[] corpFlightBookings(int[][] bookings, int n) {
 - [Range Addition II](/problems/range-addition-ii)
 
 &lt;FeedbackWidget problem-slug="corporate-flight-bookings" /&gt;
+
+&lt;RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|continuous-subarray-sum::Continuous Subarray Sum|range-addition::Range Addition" /&gt;

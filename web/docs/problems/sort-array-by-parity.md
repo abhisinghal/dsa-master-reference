@@ -84,3 +84,5 @@ int[] sortArrayByParity(int[] nums) {
 - [Move Zeroes](/problems/move-zeroes)
 
 &lt;FeedbackWidget problem-slug="sort-array-by-parity" /&gt;
+
+&lt;RelatedProblems problems="valid-palindrome-ii::Valid Palindrome II|container-with-most-water::Container With Most Water|4sum::4sum" /&gt;

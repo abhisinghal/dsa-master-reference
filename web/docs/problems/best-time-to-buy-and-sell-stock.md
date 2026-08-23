@@ -86,3 +86,5 @@ int maxProfit(int[] prices) {
 - [With Transaction Fee](/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
 
 &lt;FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock" /&gt;
+
+&lt;RelatedProblems problems="gas-station::Gas Station|non-overlapping-intervals::Non Overlapping Intervals|jump-game::Jump Game" /&gt;

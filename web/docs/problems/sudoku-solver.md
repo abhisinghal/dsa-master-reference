@@ -89,3 +89,5 @@ Pick cell with **fewest legal digits** each step — typical hard puzzles solve 
 - [N-Queens](/problems/backtracking-n-queens)
 
 &lt;FeedbackWidget problem-slug="sudoku-solver" /&gt;
+
+&lt;RelatedProblems problems="combination-sum-ii::Combination Sum II|beautiful-arrangement::Beautiful Arrangement|combination-sum-iv::Combination Sum IV" /&gt;

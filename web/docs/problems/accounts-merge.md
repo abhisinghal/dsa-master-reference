@@ -97,3 +97,5 @@ void union(int[] p, int a, int b) { p[find(p, a)] = find(p, b); }
 - [Most Stones Removed with Same Row or Column](/problems/most-stones-removed-with-same-row-or-column)
 
 &lt;FeedbackWidget problem-slug="accounts-merge" /&gt;
+
+&lt;RelatedProblems problems="min-cost-to-connect-all-points::Min Cost To Connect All Points|connecting-cities-with-minimum-cost::Connecting Cities With Minimum Cost|most-stones-removed-with-same-row-or-column::Most Stones Removed With Same Row Or Column" /&gt;

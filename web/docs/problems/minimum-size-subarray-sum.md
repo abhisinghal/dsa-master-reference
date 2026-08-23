@@ -158,3 +158,5 @@ int minSubArrayLenBS(int target, int[] nums) {
 - [Minimum Window Substring](/problems/minimum-window-substring) — same shrinking template
 
 &lt;FeedbackWidget problem-slug="minimum-size-subarray-sum" /&gt;
+
+&lt;RelatedProblems problems="count-number-of-nice-subarrays::Count Number Of Nice Subarrays|max-consecutive-ones-iii::Max Consecutive Ones III|subarray-product-less-than-k::Subarray Product Less Than K" /&gt;

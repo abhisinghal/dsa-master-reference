@@ -124,3 +124,5 @@ int findMinDup(int[] nums) {
 - [Find Peak Element](/problems/find-peak-element) — related BS on non-monotone
 
 &lt;FeedbackWidget problem-slug="find-minimum-in-rotated-sorted-array" /&gt;
+
+&lt;RelatedProblems problems="split-array-largest-sum::Split Array Largest Sum|binary-search::Binary Search|median-of-two-sorted-arrays::Median Of Two Sorted Arrays" /&gt;

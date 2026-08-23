@@ -163,3 +163,5 @@ ListNode mergeKListsHeap(ListNode[] lists) {
 - [Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) — heap of row heads
 
 &lt;FeedbackWidget problem-slug="k-way-merge-k-sorted-lists" /&gt;
+
+&lt;RelatedProblems problems="top-k-frequent-elements::Top K Frequent Elements|ugly-number-ii::Ugly Number II|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists" /&gt;

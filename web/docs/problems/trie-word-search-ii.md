@@ -140,3 +140,5 @@ void dfs(char[][] b, int r, int c, TrieNode node, List<String> out) {
 - [Stream of Characters](https://leetcode.com/problems/stream-of-characters/) — trie in reverse
 
 &lt;FeedbackWidget problem-slug="trie-word-search-ii" /&gt;
+
+&lt;RelatedProblems problems="replace-words::Replace Words|stream-of-characters::Stream Of Characters|word-search-ii::Word Search II" /&gt;

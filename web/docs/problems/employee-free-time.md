@@ -100,3 +100,5 @@ Better when k is much smaller than N.
 - [Smallest Range Covering k Lists](/problems/smallest-range-covering-elements-from-k-lists)
 
 &lt;FeedbackWidget problem-slug="employee-free-time" /&gt;
+
+&lt;RelatedProblems problems="meeting-rooms::Meeting Rooms|meeting-rooms-ii::Meeting Rooms II|the-skyline-problem::The Skyline Problem" /&gt;

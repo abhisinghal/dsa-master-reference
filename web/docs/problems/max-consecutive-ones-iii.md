@@ -165,3 +165,5 @@ int longestOnes(int[] nums, int k) {
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)
 
 &lt;FeedbackWidget problem-slug="max-consecutive-ones-iii" /&gt;
+
+&lt;RelatedProblems problems="longest-palindromic-substring::Longest Palindromic Substring|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|subarray-product-less-than-k::Subarray Product Less Than K" /&gt;

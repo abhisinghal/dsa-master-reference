@@ -126,3 +126,5 @@ int numSubarrayProductLessThanK(int[] nums, int k) {
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)
 
 &lt;FeedbackWidget problem-slug="subarray-product-less-than-k" /&gt;
+
+&lt;RelatedProblems problems="max-consecutive-ones-iii::Max Consecutive Ones III|longest-repeating-character-replacement::Longest Repeating Character Replacement|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K" /&gt;

@@ -133,3 +133,5 @@ boolean isAnagramUnicode(String s, String t) {
 - [Permutation in String](/problems/permutation-in-string) — sliding boolean version
 
 &lt;FeedbackWidget problem-slug="valid-anagram" /&gt;
+
+&lt;RelatedProblems problems="isomorphic-strings::Isomorphic Strings|group-shifted-strings::Group Shifted Strings|hashing-two-sum::Hashing Two Sum" /&gt;

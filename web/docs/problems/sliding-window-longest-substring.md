@@ -188,3 +188,5 @@ Optimal. One pass, O(1) work per index.
 - [Permutation in String](https://leetcode.com/problems/permutation-in-string/) — fixed-size window, count-match
 
 &lt;FeedbackWidget problem-slug="sliding-window-longest-substring" /&gt;
+
+&lt;RelatedProblems problems="fruit-into-baskets::Fruit Into Baskets|count-number-of-nice-subarrays::Count Number Of Nice Subarrays|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K" /&gt;

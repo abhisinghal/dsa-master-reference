@@ -91,3 +91,5 @@ boolean canPartition(int[] nums) {
 - [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)
 
 &lt;FeedbackWidget problem-slug="partition-equal-subset-sum" /&gt;
+
+&lt;RelatedProblems problems="delete-and-earn::Delete And Earn|climbing-stairs::Climbing Stairs|house-robber-ii::House Robber II" /&gt;

@@ -89,3 +89,5 @@ boolean canJump(int[] nums) {
 - [Jump Game VI](/problems/jump-game-vi)
 
 &lt;FeedbackWidget problem-slug="jump-game" /&gt;
+
+&lt;RelatedProblems problems="non-overlapping-intervals::Non Overlapping Intervals|gas-station::Gas Station|best-time-to-buy-and-sell-stock::Best Time To Buy And Sell Stock" /&gt;

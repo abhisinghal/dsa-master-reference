@@ -84,3 +84,5 @@ int deleteAndEarn(int[] nums) {
 - [House Robber II](/problems/house-robber-ii)
 
 &lt;FeedbackWidget problem-slug="delete-and-earn" /&gt;
+
+&lt;RelatedProblems problems="coin-change-ii::Coin Change II|min-cost-climbing-stairs::Min Cost Climbing Stairs|unique-paths-ii::Unique Paths II" /&gt;

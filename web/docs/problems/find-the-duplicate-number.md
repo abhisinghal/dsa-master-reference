@@ -126,3 +126,5 @@ int findDuplicate(int[] nums) {
 - [First Missing Positive](https://leetcode.com/problems/first-missing-positive/) — index-marking
 
 &lt;FeedbackWidget problem-slug="find-the-duplicate-number" /&gt;
+
+&lt;RelatedProblems problems="middle-of-the-linked-list::Middle Of The Linked List|palindrome-linked-list::Palindrome Linked List|happy-number::Happy Number" /&gt;

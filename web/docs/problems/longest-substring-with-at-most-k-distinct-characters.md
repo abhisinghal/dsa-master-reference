@@ -151,3 +151,5 @@ int lengthOfLongestSubstringKDistinctLRU(String s, int k) {
 - [Longest Substring with At Most Two Distinct Characters](https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/)
 
 &lt;FeedbackWidget problem-slug="longest-substring-with-at-most-k-distinct-characters" /&gt;
+
+&lt;RelatedProblems problems="number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters|minimum-window-substring::Minimum Window Substring|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K" /&gt;

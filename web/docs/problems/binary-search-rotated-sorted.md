@@ -151,3 +151,5 @@ int search(int[] a, int target) {
 - [Find Peak Element](https://leetcode.com/problems/find-peak-element/) — BS on an unsorted array via the peak invariant
 
 &lt;FeedbackWidget problem-slug="binary-search-rotated-sorted" /&gt;
+
+&lt;RelatedProblems problems="find-minimum-in-rotated-sorted-array::Find Minimum In Rotated Sorted Array|koko-bananas::Koko Bananas|capacity-to-ship-packages-within-d-days::Capacity To Ship Packages Within D Days" /&gt;

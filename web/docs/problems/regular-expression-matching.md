@@ -97,3 +97,5 @@ boolean matches(String s, String p, int i, int j) {
 - [Edit Distance](/problems/edit-distance)
 
 &lt;FeedbackWidget problem-slug="regular-expression-matching" /&gt;
+
+&lt;RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|maximal-square::Maximal Square|longest-palindromic-subsequence::Longest Palindromic Subsequence" /&gt;

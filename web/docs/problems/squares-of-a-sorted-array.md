@@ -87,3 +87,5 @@ int[] sortedSquares(int[] nums) {
 - [Sort Colors](https://leetcode.com/problems/sort-colors/)
 
 &lt;FeedbackWidget problem-slug="squares-of-a-sorted-array" /&gt;
+
+&lt;RelatedProblems problems="3sum-closest::3sum Closest|move-zeroes::Move Zeroes|container-with-most-water::Container With Most Water" /&gt;

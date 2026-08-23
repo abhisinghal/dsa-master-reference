@@ -92,3 +92,5 @@ int minCut(String s) {
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence)
 
 &lt;FeedbackWidget problem-slug="palindrome-partitioning-ii" /&gt;
+
+&lt;RelatedProblems problems="longest-palindromic-subsequence::Longest Palindromic Subsequence|min-cost-climbing-stairs::Min Cost Climbing Stairs|partition-equal-subset-sum::Partition Equal Subset Sum" /&gt;

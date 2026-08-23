@@ -140,3 +140,5 @@ Small proof: iterate 1..810; every trajectory either reaches 1 or hits `4 → 16
 - [Find the Duplicate Number](/problems/find-the-duplicate-number) — cycle on implicit function
 
 &lt;FeedbackWidget problem-slug="happy-number" /&gt;
+
+&lt;RelatedProblems problems="linked-list-cycle::Linked List Cycle|middle-of-the-linked-list::Middle Of The Linked List|find-the-duplicate-number::Find The Duplicate Number" /&gt;

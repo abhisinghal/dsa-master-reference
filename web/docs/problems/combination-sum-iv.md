@@ -91,3 +91,5 @@ int combinationSum4(int[] nums, int target) {
 - [Combination Sum](https://leetcode.com/problems/combination-sum/)
 
 &lt;FeedbackWidget problem-slug="combination-sum-iv" /&gt;
+
+&lt;RelatedProblems problems="permutations-ii::Permutations II|combination-sum-ii::Combination Sum II|n-queens-ii::N Queens II" /&gt;

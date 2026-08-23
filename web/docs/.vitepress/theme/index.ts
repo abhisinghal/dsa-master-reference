@@ -57,6 +57,8 @@ import SocialProof from './SocialProof.vue'
 import SupportPanel from './SupportPanel.vue'
 import StreakTracker from './StreakTracker.vue'
 import ShareButtons from './ShareButtons.vue'
+import ReadingProgressBar from './ReadingProgressBar.vue'
+import BackToTop from './BackToTop.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -65,7 +67,8 @@ export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
       'doc-before': () => h(Breadcrumbs),
-      'layout-bottom': () => [h(ShortcutHint), h(OnboardingTour), h(PageAnalytics)],
+      'layout-top': () => h(ReadingProgressBar),
+      'layout-bottom': () => [h(ShortcutHint), h(OnboardingTour), h(PageAnalytics), h(BackToTop)],
     })
   },
   enhanceApp({ app, router }) {

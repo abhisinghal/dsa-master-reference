@@ -95,3 +95,5 @@ boolean checkSubarraySum(int[] nums, int k) {
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
 
 &lt;FeedbackWidget problem-slug="continuous-subarray-sum" /&gt;
+
+&lt;RelatedProblems problems="contiguous-array::Contiguous Array|car-pooling::Car Pooling|range-addition::Range Addition" /&gt;

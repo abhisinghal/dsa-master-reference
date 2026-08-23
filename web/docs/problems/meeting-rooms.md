@@ -84,3 +84,5 @@ boolean canAttendMeetings(int[][] intervals) {
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)
 
 &lt;FeedbackWidget problem-slug="meeting-rooms" /&gt;
+
+&lt;RelatedProblems problems="meeting-rooms-ii::Meeting Rooms II|insert-interval::Insert Interval|remove-covered-intervals::Remove Covered Intervals" /&gt;

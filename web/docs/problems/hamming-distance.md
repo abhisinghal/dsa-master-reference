@@ -64,3 +64,5 @@ int hammingDistance(int x, int y) {
 - [XOR Sum problems]
 
 &lt;FeedbackWidget problem-slug="hamming-distance" /&gt;
+
+&lt;RelatedProblems problems="number-of-1-bits::Number Of 1 Bits|power-of-two::Power Of Two|maximum-product-of-word-lengths::Maximum Product Of Word Lengths" /&gt;

@@ -91,3 +91,5 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - [Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/)
 
 &lt;FeedbackWidget problem-slug="redundant-connection" /&gt;
+
+&lt;RelatedProblems problems="accounts-merge::Accounts Merge|number-of-provinces::Number Of Provinces|number-of-islands-ii::Number Of Islands II" /&gt;

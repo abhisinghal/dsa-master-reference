@@ -94,3 +94,5 @@ int shipWithinDays(int[] w, int days) {
 - [Divide Chocolate](/problems/divide-chocolate) — maximise the minimum
 
 &lt;FeedbackWidget problem-slug="capacity-to-ship-packages-within-d-days" /&gt;
+
+&lt;RelatedProblems problems="koko-bananas::Koko Bananas|find-peak-element::Find Peak Element|median-of-two-sorted-arrays::Median Of Two Sorted Arrays" /&gt;

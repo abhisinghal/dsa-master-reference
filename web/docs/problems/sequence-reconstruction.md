@@ -103,3 +103,5 @@ boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
 - [Parallel Courses](/problems/parallel-courses)
 
 &lt;FeedbackWidget problem-slug="sequence-reconstruction" /&gt;
+
+&lt;RelatedProblems problems="alien-dictionary::Alien Dictionary|minimum-height-trees::Minimum Height Trees|course-schedule::Course Schedule" /&gt;

@@ -101,3 +101,5 @@ O(n) linear pass; rejected.
 - [Find a Peak Element II](https://leetcode.com/problems/find-a-peak-element-ii/) — 2D
 
 &lt;FeedbackWidget problem-slug="find-peak-element" /&gt;
+
+&lt;RelatedProblems problems="search-in-rotated-sorted-array-ii::Search In Rotated Sorted Array II|binary-search-rotated-sorted::Binary Search Rotated Sorted|binary-search::Binary Search" /&gt;

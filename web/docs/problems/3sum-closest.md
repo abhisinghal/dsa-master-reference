@@ -122,3 +122,5 @@ int threeSumClosest(int[] nums, int target) {
 - [Two Sum](/problems/hashing-two-sum)
 
 &lt;FeedbackWidget problem-slug="3sum-closest" /&gt;
+
+&lt;RelatedProblems problems="container-with-most-water::Container With Most Water|boats-to-save-people::Boats To Save People|squares-of-a-sorted-array::Squares Of A Sorted Array" /&gt;

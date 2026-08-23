@@ -86,3 +86,5 @@ void merge(int[] nums1, int m, int[] nums2, int n) {
 - [Sort Colors](https://leetcode.com/problems/sort-colors/)
 
 &lt;FeedbackWidget problem-slug="merge-sorted-array" /&gt;
+
+&lt;RelatedProblems problems="4sum::4sum|squares-of-a-sorted-array::Squares Of A Sorted Array|move-zeroes::Move Zeroes" /&gt;

@@ -100,3 +100,5 @@ int mergeSort(int[] a, int lo, int hi) {
 - [Count Inversions](/problems/divide-conquer-inversions)
 
 &lt;FeedbackWidget problem-slug="reverse-pairs" /&gt;
+
+&lt;RelatedProblems problems="count-of-range-sum::Count Of Range Sum|inversions::Inversions|sort-list::Sort List" /&gt;

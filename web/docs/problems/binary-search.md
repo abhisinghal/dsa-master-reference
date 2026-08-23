@@ -120,3 +120,5 @@ int searchHO(int[] nums, int target) {
 - [Find Peak Element](/problems/find-peak-element) — BS on non-monotone
 
 &lt;FeedbackWidget problem-slug="binary-search" /&gt;
+
+&lt;RelatedProblems problems="koko-bananas::Koko Bananas|search-in-rotated-sorted-array-ii::Search In Rotated Sorted Array II|binary-search-rotated-sorted::Binary Search Rotated Sorted" /&gt;

@@ -117,3 +117,5 @@ ListNode mergeTwoListsRec(ListNode l1, ListNode l2) {
 - [Sort List](/problems/sort-list) — mergesort using merge as primitive
 
 &lt;FeedbackWidget problem-slug="merge-two-sorted-lists" /&gt;
+
+&lt;RelatedProblems problems="k-closest-points-to-origin::K Closest Points To Origin|reorganize-string::Reorganize String|top-k-frequent-elements::Top K Frequent Elements" /&gt;

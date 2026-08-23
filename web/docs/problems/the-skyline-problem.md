@@ -102,3 +102,5 @@ List<List<Integer>> getSkyline(int[][] buildings) {
 - [Rectangle Area II](https://leetcode.com/problems/rectangle-area-ii/)
 
 &lt;FeedbackWidget problem-slug="the-skyline-problem" /&gt;
+
+&lt;RelatedProblems problems="my-calendar-ii::My Calendar II|insert-interval::Insert Interval|employee-free-time::Employee Free Time" /&gt;

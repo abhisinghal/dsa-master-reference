@@ -152,3 +152,5 @@ int totalFruitTwoTypes(int[] fruits) {
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers) — count variant
 
 &lt;FeedbackWidget problem-slug="fruit-into-baskets" /&gt;
+
+&lt;RelatedProblems problems="subarrays-with-k-different-integers::Subarrays With K Different Integers|longest-repeating-character-replacement::Longest Repeating Character Replacement|sliding-window-longest-substring::Sliding Window Longest Substring" /&gt;

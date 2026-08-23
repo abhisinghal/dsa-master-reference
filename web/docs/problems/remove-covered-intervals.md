@@ -86,3 +86,5 @@ int removeCoveredIntervals(int[][] intervals) {
 - [Maximum Length of Pair Chain](/problems/maximum-length-of-pair-chain)
 
 &lt;FeedbackWidget problem-slug="remove-covered-intervals" /&gt;
+
+&lt;RelatedProblems problems="the-skyline-problem::The Skyline Problem|my-calendar-ii::My Calendar II|meeting-rooms-ii::Meeting Rooms II" /&gt;

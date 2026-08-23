@@ -99,3 +99,5 @@ Push indices while heights decrease; on rise, pop the "bottom" and compute water
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram)
 
 &lt;FeedbackWidget problem-slug="trapping-rain-water" /&gt;
+
+&lt;RelatedProblems problems="subarrays-with-k-different-integers::Subarrays With K Different Integers|max-consecutive-ones-iii::Max Consecutive Ones III|number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters" /&gt;

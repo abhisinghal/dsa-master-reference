@@ -109,3 +109,5 @@ int[] smallestRange(List<List<Integer>> lists) {
 - [Median of Two Sorted Arrays](/problems/median-of-two-sorted-arrays) — 2-list balance BS
 
 &lt;FeedbackWidget problem-slug="smallest-range-covering-elements-from-k-lists" /&gt;
+
+&lt;RelatedProblems problems="k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists|top-k-frequent-elements::Top K Frequent Elements|merge-two-sorted-lists::Merge Two Sorted Lists" /&gt;

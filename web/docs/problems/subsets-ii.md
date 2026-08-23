@@ -88,3 +88,5 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 - [Permutations II](/problems/permutations-ii)
 
 &lt;FeedbackWidget problem-slug="subsets-ii" /&gt;
+
+&lt;RelatedProblems problems="letter-combinations-of-a-phone-number::Letter Combinations Of A Phone Number|n-queens-ii::N Queens II|combination-sum-iii::Combination Sum III" /&gt;

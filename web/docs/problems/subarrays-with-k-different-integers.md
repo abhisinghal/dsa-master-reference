@@ -129,3 +129,5 @@ Then `atMost(2) - atMost(1) = 12 - 5 = 7`.
 - [Subarray Product Less Than K](/problems/subarray-product-less-than-k)
 
 &lt;FeedbackWidget problem-slug="subarrays-with-k-different-integers" /&gt;
+
+&lt;RelatedProblems problems="number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters|minimum-window-substring::Minimum Window Substring|count-number-of-nice-subarrays::Count Number Of Nice Subarrays" /&gt;

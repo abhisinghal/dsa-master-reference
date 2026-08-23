@@ -95,3 +95,5 @@ int subarraysDivByK(int[] nums, int k) {
 - [Contiguous Array](/problems/contiguous-array) — same modulo trick with +1/−1
 
 &lt;FeedbackWidget problem-slug="subarray-sums-divisible-by-k" /&gt;
+
+&lt;RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|continuous-subarray-sum::Continuous Subarray Sum|car-pooling::Car Pooling" /&gt;

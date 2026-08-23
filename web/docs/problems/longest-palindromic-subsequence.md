@@ -93,3 +93,5 @@ int longestPalindromeSubseq(String s) {
 - [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)
 
 &lt;FeedbackWidget problem-slug="longest-palindromic-subsequence" /&gt;
+
+&lt;RelatedProblems problems="maximal-square::Maximal Square|delete-and-earn::Delete And Earn|climbing-stairs::Climbing Stairs" /&gt;

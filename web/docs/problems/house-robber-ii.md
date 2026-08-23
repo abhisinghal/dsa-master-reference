@@ -86,3 +86,5 @@ int linear(int[] nums, int lo, int hi) {
 - [Delete and Earn](/problems/delete-and-earn)
 
 &lt;FeedbackWidget problem-slug="house-robber-ii" /&gt;
+
+&lt;RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|delete-and-earn::Delete And Earn|maximal-square::Maximal Square" /&gt;

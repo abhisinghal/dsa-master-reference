@@ -110,3 +110,5 @@ class StockSpanner {
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) — deque-based sibling
 
 &lt;FeedbackWidget problem-slug="online-stock-span" /&gt;
+
+&lt;RelatedProblems problems="remove-k-digits::Remove K Digits|sum-of-subarray-minimums::Sum Of Subarray Minimums|next-greater-element-ii::Next Greater Element II" /&gt;

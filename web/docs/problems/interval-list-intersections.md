@@ -92,3 +92,5 @@ int[][] intervalIntersection(int[][] A, int[][] B) {
 - [Interval Union / Difference] — variants
 
 &lt;FeedbackWidget problem-slug="interval-list-intersections" /&gt;
+
+&lt;RelatedProblems problems="insert-interval::Insert Interval|my-calendar-ii::My Calendar II|merge-intervals-classic::Merge Intervals Classic" /&gt;

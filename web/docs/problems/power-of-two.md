@@ -73,3 +73,5 @@ boolean isPowerOfTwo(int n) {
 - [Number of 1 Bits](/problems/number-of-1-bits)
 
 &lt;FeedbackWidget problem-slug="power-of-two" /&gt;
+
+&lt;RelatedProblems problems="single-number::Single Number|hamming-distance::Hamming Distance|find-the-difference::Find The Difference" /&gt;

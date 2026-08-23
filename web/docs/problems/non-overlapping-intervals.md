@@ -81,3 +81,5 @@ int eraseOverlapIntervals(int[][] intervals) {
 - [Meeting Rooms](/problems/meeting-rooms)
 
 &lt;FeedbackWidget problem-slug="non-overlapping-intervals" /&gt;
+
+&lt;RelatedProblems problems="best-time-to-buy-and-sell-stock::Best Time To Buy And Sell Stock|course-schedule-iii::Course Schedule III|jump-game::Jump Game" /&gt;

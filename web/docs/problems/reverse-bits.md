@@ -91,3 +91,5 @@ For repeated calls, precompute an int[256] table of reversed bytes.
 - [Reverse Integer](https://leetcode.com/problems/reverse-integer/)
 
 &lt;FeedbackWidget problem-slug="reverse-bits" /&gt;
+
+&lt;RelatedProblems problems="find-the-difference::Find The Difference|maximum-product-of-word-lengths::Maximum Product Of Word Lengths|number-of-1-bits::Number Of 1 Bits" /&gt;

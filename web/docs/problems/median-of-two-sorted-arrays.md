@@ -97,3 +97,5 @@ double findMedianSortedArrays(int[] A, int[] B) {
 - [Merge Two Sorted Lists](/problems/merge-two-sorted-lists)
 
 &lt;FeedbackWidget problem-slug="median-of-two-sorted-arrays" /&gt;
+
+&lt;RelatedProblems problems="search-in-rotated-sorted-array-ii::Search In Rotated Sorted Array II|split-array-largest-sum::Split Array Largest Sum|find-peak-element::Find Peak Element" /&gt;

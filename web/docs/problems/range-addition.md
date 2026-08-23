@@ -87,3 +87,5 @@ int[] getModifiedArray(int n, int[][] updates) {
 - [Range Addition II](/problems/range-addition-ii)
 
 &lt;FeedbackWidget problem-slug="range-addition" /&gt;
+
+&lt;RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|continuous-subarray-sum::Continuous Subarray Sum|car-pooling::Car Pooling" /&gt;

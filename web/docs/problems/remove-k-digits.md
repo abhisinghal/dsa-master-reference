@@ -117,3 +117,5 @@ So the correct trace at i=5 (digit 1): after previous [1, 2, 2], seeing 1: pop 2
 - [Create Maximum Number](https://leetcode.com/problems/create-maximum-number/) — two-array variant
 
 &lt;FeedbackWidget problem-slug="remove-k-digits" /&gt;
+
+&lt;RelatedProblems problems="next-greater-element-ii::Next Greater Element II|monotonic-stack-daily-temperatures::Monotonic Stack Daily Temperatures|online-stock-span::Online Stock Span" /&gt;

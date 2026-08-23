@@ -87,3 +87,5 @@ int maxCoins(int[] nums) {
 - [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)
 
 &lt;FeedbackWidget problem-slug="burst-balloons" /&gt;
+
+&lt;RelatedProblems problems="palindrome-partitioning-ii::Palindrome Partitioning II|delete-and-earn::Delete And Earn|unique-paths-ii::Unique Paths II" /&gt;

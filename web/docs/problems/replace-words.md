@@ -106,3 +106,5 @@ String replaceWords(List<String> dict, String sentence) {
 - [Word Break](https://leetcode.com/problems/word-break/) — DP with trie option
 
 &lt;FeedbackWidget problem-slug="replace-words" /&gt;
+
+&lt;RelatedProblems problems="stream-of-characters::Stream Of Characters|word-search-ii::Word Search II|design-add-and-search-words-data-structure::Design Add And Search Words Data Structure" /&gt;

@@ -92,3 +92,5 @@ boolean isIdealPermutation(int[] nums) {
 - [Number of Reverse Pairs in Array](https://leetcode.com/problems/number-of-reverse-pairs-in-array/)
 
 &lt;FeedbackWidget problem-slug="global-and-local-inversions" /&gt;
+
+&lt;RelatedProblems problems="count-of-range-sum::Count Of Range Sum|inversions::Inversions|reverse-pairs::Reverse Pairs" /&gt;
