@@ -522,6 +522,8 @@ export default withMermaid(defineConfig({
             { text: 'Practice Solutions', link: '/appendix/practice-solutions' },
             { text: 'Mock Interview Transcripts', link: '/appendix/mock-transcripts' },
             { text: 'Traps Catalog', link: '/appendix/traps-catalog' },
+            { text: 'Interview Day Kit', link: '/appendix/interview-day-kit' },
+            { text: 'Behavioral Crash Course', link: '/appendix/behavioral-crash-course' },
             { text: 'Changelog', link: '/appendix/changelog' }
           ]
         }

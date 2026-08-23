@@ -62,6 +62,7 @@ MAPPING = {
     "68-segment-fenwick.md":    "data-structures/segment-fenwick.md",
     "90-cheatsheets.md":        "appendix/cheatsheets.md",
     "91-interview-day-kit.md":  "appendix/interview-day-kit.md",
+    "92-behavioral-crash-course.md": "appendix/behavioral-crash-course.md",
     "93-changelog.md":          "appendix/changelog.md",
     "95-self-check.md":         "appendix/self-check.md",
     "96-problem-index.md":      "appendix/problem-index.md",
