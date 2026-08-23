@@ -50,6 +50,8 @@ import OnboardingTour from './OnboardingTour.vue'
 import PageAnalytics from './PageAnalytics.vue'
 import MarkSolved from './MarkSolved.vue'
 import StorageManager from './StorageManager.vue'
+import SocialProof from './SocialProof.vue'
+import SupportPanel from './SupportPanel.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -112,6 +114,8 @@ export default {
     app.component('PageAnalytics', PageAnalytics)
     app.component('MarkSolved', MarkSolved)
     app.component('StorageManager', StorageManager)
+    app.component('SocialProof', SocialProof)
+    app.component('SupportPanel', SupportPanel)
     installSolvedCountBadges(router)
   }
 }
