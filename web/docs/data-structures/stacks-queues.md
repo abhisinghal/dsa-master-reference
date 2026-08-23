@@ -272,4 +272,4 @@ Stack↔queue conversions rest on the observation that reversing twice restores 
 
 </Callout>
 
-&lt;StackQueueOps /&gt;
+<StackQueueOps />

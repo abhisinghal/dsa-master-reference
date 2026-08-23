@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/quickselect)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Bloomberg, Apple, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Bloomberg, Apple, Uber" />
 
 Given `nums` and integer `k`, return the k-th **largest** element (1-indexed). O(n) average time expected.
 
@@ -12,16 +12,16 @@ Given `nums` and integer `k`, return the k-th **largest** element (1-indexed). O
 **Constraints** — `1 ≤ k ≤ n ≤ 10⁵`; `-10⁴ ≤ nums[i] ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="You want the k-th element but not the sorted order. Sort is O(n log n) — can you do O(n) average?"
   hint2="Quickselect: pick a pivot, partition, recurse into the side containing index k."
   hint3="Randomize pivot to avoid O(n²) worst case. Worst-case O(n) via median-of-medians (rarely worth it in interviews)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="quickselect-kth-largest" /&gt; &lt;Bookmark problem-slug="quickselect-kth-largest" /&gt;
+<MarkSolved problem-slug="quickselect-kth-largest" /> <Bookmark problem-slug="quickselect-kth-largest" />
 
-&lt;InterviewTimer problem-slug="quickselect-kth-largest" /&gt;
+<InterviewTimer problem-slug="quickselect-kth-largest" />
 
 
 
@@ -133,7 +133,7 @@ void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 - **Streaming input** → min-heap size k (quickselect needs the whole array).
 - **k = 1** → linear scan is enough.
 
-&lt;AiCompanion problem-slug="quickselect-kth-largest" pattern-hint="quickselect" /&gt;
+<AiCompanion problem-slug="quickselect-kth-largest" pattern-hint="quickselect" />
 
 ## Related problems (same ladder applies)
 
@@ -142,4 +142,4 @@ void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 - [Wiggle Sort II](https://leetcode.com/problems/wiggle-sort-ii/) — quickselect to find median, then three-way partition
 - [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) — two heaps (streaming counterpart)
 
-&lt;FeedbackWidget problem-slug="quickselect-kth-largest" /&gt;
+<FeedbackWidget problem-slug="quickselect-kth-largest" />

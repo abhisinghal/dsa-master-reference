@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Palindrome Partitioning II](https://leetcode.com/problems/palindrome-partitioning-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 Min cuts so every part of `s` is palindrome.
 
@@ -13,16 +13,16 @@ Min cuts so every part of `s` is palindrome.
 **Constraints** — `1 ≤ n ≤ 2000`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="palindrome-partitioning-ii" /&gt; &lt;Bookmark problem-slug="palindrome-partitioning-ii" /&gt;
+<MarkSolved problem-slug="palindrome-partitioning-ii" /> <Bookmark problem-slug="palindrome-partitioning-ii" />
 
-&lt;InterviewTimer problem-slug="palindrome-partitioning-ii" /&gt;
+<InterviewTimer problem-slug="palindrome-partitioning-ii" />
 
 
 
@@ -87,13 +87,13 @@ int minCut(String s) {
 - **Enumerate partitions** → [Palindrome Partitioning I](/problems/palindrome-partitioning).
 - **Longest palindrome** → LPS DP.
 
-&lt;AiCompanion problem-slug="palindrome-partitioning-ii" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="palindrome-partitioning-ii" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Palindrome Partitioning](/problems/palindrome-partitioning)
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence)
 
-&lt;FeedbackWidget problem-slug="palindrome-partitioning-ii" /&gt;
+<FeedbackWidget problem-slug="palindrome-partitioning-ii" />
 
-&lt;RelatedProblems problems="longest-palindromic-subsequence::Longest Palindromic Subsequence|min-cost-climbing-stairs::Min Cost Climbing Stairs|partition-equal-subset-sum::Partition Equal Subset Sum" /&gt;
+<RelatedProblems problems="longest-palindromic-subsequence::Longest Palindromic Subsequence|min-cost-climbing-stairs::Min Cost Climbing Stairs|partition-equal-subset-sum::Partition Equal Subset Sum" />

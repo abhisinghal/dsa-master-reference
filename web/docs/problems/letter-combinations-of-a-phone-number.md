@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber, Bloomberg" />
 
 Given digits 2-9, return all letter combinations.
 
@@ -12,16 +12,16 @@ Given digits 2-9, return all letter combinations.
 **Constraints** — `0 ≤ len ≤ 4`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="letter-combinations-of-a-phone-number" /&gt; &lt;Bookmark problem-slug="letter-combinations-of-a-phone-number" /&gt;
+<MarkSolved problem-slug="letter-combinations-of-a-phone-number" /> <Bookmark problem-slug="letter-combinations-of-a-phone-number" />
 
-&lt;InterviewTimer problem-slug="letter-combinations-of-a-phone-number" /&gt;
+<InterviewTimer problem-slug="letter-combinations-of-a-phone-number" />
 
 
 
@@ -85,13 +85,13 @@ Extend all combinations by next digit's letters; same complexity, no recursion.
 - **Very deep** → BFS to avoid stack.
 - **First combination only** → early return in DFS.
 
-&lt;AiCompanion problem-slug="letter-combinations-of-a-phone-number" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="letter-combinations-of-a-phone-number" pattern-hint="backtracking" />
 
 ## Related problems
 
 - [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)
 - [Palindrome Partitioning](/problems/palindrome-partitioning)
 
-&lt;FeedbackWidget problem-slug="letter-combinations-of-a-phone-number" /&gt;
+<FeedbackWidget problem-slug="letter-combinations-of-a-phone-number" />
 
-&lt;RelatedProblems problems="permutations::Permutations|palindrome-partitioning::Palindrome Partitioning|n-queens-ii::N Queens II" /&gt;
+<RelatedProblems problems="permutations::Permutations|palindrome-partitioning::Palindrome Partitioning|n-queens-ii::N Queens II" />

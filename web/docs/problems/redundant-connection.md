@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Redundant Connection](https://leetcode.com/problems/redundant-connection/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 Given an undirected graph that starts as a tree with `n` nodes and has **one** extra edge added, return that redundant edge.
 
@@ -12,16 +12,16 @@ Given an undirected graph that starts as a tree with `n` nodes and has **one** e
 **Constraints** — `3 ≤ n ≤ 1000`; `edges.length == n`.
 
 
-&lt;Hints
+<Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
   hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="redundant-connection" /&gt; &lt;Bookmark problem-slug="redundant-connection" /&gt;
+<MarkSolved problem-slug="redundant-connection" /> <Bookmark problem-slug="redundant-connection" />
 
-&lt;InterviewTimer problem-slug="redundant-connection" /&gt;
+<InterviewTimer problem-slug="redundant-connection" />
 
 
 
@@ -85,7 +85,7 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - **Directed variant (LC 685)** → more complex — need to handle 2-parent + cycle cases.
 - **"Return all redundant edges"** → skip returning early; collect all matches.
 
-&lt;AiCompanion problem-slug="redundant-connection" pattern-hint="union-find" /&gt;
+<AiCompanion problem-slug="redundant-connection" pattern-hint="union-find" />
 
 ## Related problems
 
@@ -93,6 +93,6 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - [Redundant Connection II](https://leetcode.com/problems/redundant-connection-ii/) — directed
 - [Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/)
 
-&lt;FeedbackWidget problem-slug="redundant-connection" /&gt;
+<FeedbackWidget problem-slug="redundant-connection" />
 
-&lt;RelatedProblems problems="accounts-merge::Accounts Merge|number-of-provinces::Number Of Provinces|number-of-islands-ii::Number Of Islands II" /&gt;
+<RelatedProblems problems="accounts-merge::Accounts Merge|number-of-provinces::Number Of Provinces|number-of-islands-ii::Number Of Islands II" />

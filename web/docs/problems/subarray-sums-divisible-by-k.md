@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Count subarrays whose sum is divisible by `k`.
 
@@ -13,16 +13,16 @@ Count subarrays whose sum is divisible by `k`.
 **Constraints** — `1 ≤ n ≤ 3·10⁴`; `2 ≤ k ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="subarray-sums-divisible-by-k" /&gt; &lt;Bookmark problem-slug="subarray-sums-divisible-by-k" /&gt;
+<MarkSolved problem-slug="subarray-sums-divisible-by-k" /> <Bookmark problem-slug="subarray-sums-divisible-by-k" />
 
-&lt;InterviewTimer problem-slug="subarray-sums-divisible-by-k" /&gt;
+<InterviewTimer problem-slug="subarray-sums-divisible-by-k" />
 
 
 
@@ -89,7 +89,7 @@ int subarraysDivByK(int[] nums, int k) {
 - **Negatives possible** → the `((% + k) % k)` normalization is required.
 - **"Longest / shortest such subarray"** → change map to store first-index; take max/min index difference.
 
-&lt;AiCompanion problem-slug="subarray-sums-divisible-by-k" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="subarray-sums-divisible-by-k" pattern-hint="prefix sum" />
 
 ## Related problems
 
@@ -97,6 +97,6 @@ int subarraysDivByK(int[] nums, int k) {
 - [Continuous Subarray Sum](/problems/continuous-subarray-sum) — sum multiple of k with length ≥ 2
 - [Contiguous Array](/problems/contiguous-array) — same modulo trick with +1/−1
 
-&lt;FeedbackWidget problem-slug="subarray-sums-divisible-by-k" /&gt;
+<FeedbackWidget problem-slug="subarray-sums-divisible-by-k" />
 
-&lt;RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|continuous-subarray-sum::Continuous Subarray Sum|car-pooling::Car Pooling" /&gt;
+<RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|continuous-subarray-sum::Continuous Subarray Sum|car-pooling::Car Pooling" />

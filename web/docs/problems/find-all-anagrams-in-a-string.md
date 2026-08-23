@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" />
 
 Given strings `s` and `p`, return all starting indices in `s` where a permutation of `p` occurs as a substring.
 
@@ -13,16 +13,16 @@ Given strings `s` and `p`, return all starting indices in `s` where a permutatio
 **Constraints** — `1 ≤ |s|, |p| ≤ 3 · 10⁴`. Lowercase English.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="find-all-anagrams-in-a-string" /&gt; &lt;Bookmark problem-slug="find-all-anagrams-in-a-string" /&gt;
+<MarkSolved problem-slug="find-all-anagrams-in-a-string" /> <Bookmark problem-slug="find-all-anagrams-in-a-string" />
 
-&lt;InterviewTimer problem-slug="find-all-anagrams-in-a-string" /&gt;
+<InterviewTimer problem-slug="find-all-anagrams-in-a-string" />
 
 
 
@@ -151,7 +151,7 @@ List<Integer> findAnagrams(String s, String p) {
 - **Unicode alphabet** → running match with `HashMap` — same structure.
 - **Return count only, not indices** → same skeleton; increment a counter instead of appending.
 
-&lt;AiCompanion problem-slug="find-all-anagrams-in-a-string" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="find-all-anagrams-in-a-string" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -160,6 +160,6 @@ List<Integer> findAnagrams(String s, String p) {
 - [Minimum Window Substring](/problems/minimum-window-substring) — variable window with need/have
 - [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words)
 
-&lt;FeedbackWidget problem-slug="find-all-anagrams-in-a-string" /&gt;
+<FeedbackWidget problem-slug="find-all-anagrams-in-a-string" />
 
-&lt;RelatedProblems problems="binary-subarrays-with-sum::Binary Subarrays With Sum|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|permutation-in-string::Permutation In String" /&gt;
+<RelatedProblems problems="binary-subarrays-with-sum::Binary Subarrays With Sum|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|permutation-in-string::Permutation In String" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/binary-search)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg, Adobe" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg, Adobe" />
 
 Given a rotated ascending array `nums` and `target`, return its index or `-1`. Time must be **O(log n)**.
 
@@ -13,16 +13,16 @@ Given a rotated ascending array `nums` and `target`, return its index or `-1`. T
 **Constraints** — `1 ≤ n ≤ 5000`; values distinct.
 
 
-&lt;Hints
+<Hints
   hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
   hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."
   hint3="For rotated arrays: one half is always sorted — compare mid with lo (or hi) to detect which side."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="binary-search-rotated-sorted" /&gt; &lt;Bookmark problem-slug="binary-search-rotated-sorted" /&gt;
+<MarkSolved problem-slug="binary-search-rotated-sorted" /> <Bookmark problem-slug="binary-search-rotated-sorted" />
 
-&lt;InterviewTimer problem-slug="binary-search-rotated-sorted" /&gt;
+<InterviewTimer problem-slug="binary-search-rotated-sorted" />
 
 
 
@@ -145,7 +145,7 @@ int search(int[] a, int target) {
 - **Cold interview** → walk linear → one-pass BS. Two-pass is only worth mentioning if the interviewer wants to see you break the problem into "find rotation, then search."
 - **Duplicates allowed?** → Approach 3 doesn't work; you have to shrink `lo`/`hi` by 1 when `nums[lo] == nums[mid] == nums[hi]`, giving worst-case O(n).
 
-&lt;AiCompanion problem-slug="binary-search-rotated-sorted" pattern-hint="binary search" /&gt;
+<AiCompanion problem-slug="binary-search-rotated-sorted" pattern-hint="binary search" />
 
 ## Related problems (same ladder applies)
 
@@ -153,6 +153,6 @@ int search(int[] a, int target) {
 - [Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) — same shape, duplicates → worst-case O(n)
 - [Find Peak Element](https://leetcode.com/problems/find-peak-element/) — BS on an unsorted array via the peak invariant
 
-&lt;FeedbackWidget problem-slug="binary-search-rotated-sorted" /&gt;
+<FeedbackWidget problem-slug="binary-search-rotated-sorted" />
 
-&lt;RelatedProblems problems="find-minimum-in-rotated-sorted-array::Find Minimum In Rotated Sorted Array|koko-bananas::Koko Bananas|capacity-to-ship-packages-within-d-days::Capacity To Ship Packages Within D Days" /&gt;
+<RelatedProblems problems="find-minimum-in-rotated-sorted-array::Find Minimum In Rotated Sorted Array|koko-bananas::Koko Bananas|capacity-to-ship-packages-within-d-days::Capacity To Ship Packages Within D Days" />

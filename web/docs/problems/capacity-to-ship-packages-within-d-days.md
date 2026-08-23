@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Given package weights and `days`, find the minimum ship capacity that ships all in `days` days.
 
@@ -11,16 +11,16 @@ Given package weights and `days`, find the minimum ship capacity that ships all 
 **Constraints** — `1 ≤ days ≤ n ≤ 5·10⁴`; `1 ≤ weights[i] ≤ 500`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
   hint3="The feasibility check is O(n); total complexity is O(n log range)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="capacity-to-ship-packages-within-d-days" /&gt; &lt;Bookmark problem-slug="capacity-to-ship-packages-within-d-days" /&gt;
+<MarkSolved problem-slug="capacity-to-ship-packages-within-d-days" /> <Bookmark problem-slug="capacity-to-ship-packages-within-d-days" />
 
-&lt;InterviewTimer problem-slug="capacity-to-ship-packages-within-d-days" /&gt;
+<InterviewTimer problem-slug="capacity-to-ship-packages-within-d-days" />
 
 
 
@@ -88,7 +88,7 @@ int shipWithinDays(int[] w, int days) {
 - **Return the split itself** → after BS converges, re-simulate to record boundaries.
 - **Very large sums** → use `long` for hi bound.
 
-&lt;AiCompanion problem-slug="capacity-to-ship-packages-within-d-days" pattern-hint="binary search on answer" /&gt;
+<AiCompanion problem-slug="capacity-to-ship-packages-within-d-days" pattern-hint="binary search on answer" />
 
 ## Related problems
 
@@ -96,6 +96,6 @@ int shipWithinDays(int[] w, int days) {
 - [Split Array Largest Sum](/problems/split-array-largest-sum) — same skeleton
 - [Divide Chocolate](/problems/divide-chocolate) — maximise the minimum
 
-&lt;FeedbackWidget problem-slug="capacity-to-ship-packages-within-d-days" /&gt;
+<FeedbackWidget problem-slug="capacity-to-ship-packages-within-d-days" />
 
-&lt;RelatedProblems problems="koko-bananas::Koko Bananas|find-peak-element::Find Peak Element|median-of-two-sorted-arrays::Median Of Two Sorted Arrays" /&gt;
+<RelatedProblems problems="koko-bananas::Koko Bananas|find-peak-element::Find Peak Element|median-of-two-sorted-arrays::Median Of Two Sorted Arrays" />

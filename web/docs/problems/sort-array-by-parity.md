@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Sort Array By Parity](https://leetcode.com/problems/sort-array-by-parity/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Amazon" /&gt;
+<CompanyTags companies="Meta, Amazon" />
 
 Rearrange so all even values come before all odd. Any valid partition accepted.
 
@@ -12,16 +12,16 @@ Rearrange so all even values come before all odd. Any valid partition accepted.
 **Constraints** — `1 ≤ n ≤ 5000`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="sort-array-by-parity" /&gt; &lt;Bookmark problem-slug="sort-array-by-parity" /&gt;
+<MarkSolved problem-slug="sort-array-by-parity" /> <Bookmark problem-slug="sort-array-by-parity" />
 
-&lt;InterviewTimer problem-slug="sort-array-by-parity" /&gt;
+<InterviewTimer problem-slug="sort-array-by-parity" />
 
 
 
@@ -79,13 +79,13 @@ int[] sortArrayByParity(int[] nums) {
 - **"Stable ordering"** → slow/fast writer + zero-fill (order-preserving).
 - **Three-way partition** → Dutch national flag.
 
-&lt;AiCompanion problem-slug="sort-array-by-parity" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="sort-array-by-parity" pattern-hint="two pointers" />
 
 ## Related problems
 
 - [Sort Colors](https://leetcode.com/problems/sort-colors/) — 3-way
 - [Move Zeroes](/problems/move-zeroes)
 
-&lt;FeedbackWidget problem-slug="sort-array-by-parity" /&gt;
+<FeedbackWidget problem-slug="sort-array-by-parity" />
 
-&lt;RelatedProblems problems="valid-palindrome-ii::Valid Palindrome II|container-with-most-water::Container With Most Water|4sum::4sum" /&gt;
+<RelatedProblems problems="valid-palindrome-ii::Valid Palindrome II|container-with-most-water::Container With Most Water|4sum::4sum" />

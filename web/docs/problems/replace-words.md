@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Replace Words](https://leetcode.com/problems/replace-words/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Given a dictionary of roots and a `sentence`, replace each word with its **shortest** root that is a prefix. If no root, keep the word.
 
@@ -11,16 +11,16 @@ Given a dictionary of roots and a `sentence`, replace each word with its **short
 **Constraints** — dict ≤ 1000 roots; sentence words ≤ 1000.
 
 
-&lt;Hints
+<Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
   hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="replace-words" /&gt; &lt;Bookmark problem-slug="replace-words" /&gt;
+<MarkSolved problem-slug="replace-words" /> <Bookmark problem-slug="replace-words" />
 
-&lt;InterviewTimer problem-slug="replace-words" /&gt;
+<InterviewTimer problem-slug="replace-words" />
 
 
 
@@ -100,7 +100,7 @@ String replaceWords(List<String> dict, String sentence) {
 - **Longest prefix instead** → don't break early; track deepest `end`.
 - **"Any prefix in dict"** → return boolean at first end.
 
-&lt;AiCompanion problem-slug="replace-words" pattern-hint="trie" /&gt;
+<AiCompanion problem-slug="replace-words" pattern-hint="trie" />
 
 ## Related problems
 
@@ -108,6 +108,6 @@ String replaceWords(List<String> dict, String sentence) {
 - [Implement Trie](/problems/implement-trie)
 - [Word Break](https://leetcode.com/problems/word-break/) — DP with trie option
 
-&lt;FeedbackWidget problem-slug="replace-words" /&gt;
+<FeedbackWidget problem-slug="replace-words" />
 
-&lt;RelatedProblems problems="stream-of-characters::Stream Of Characters|word-search-ii::Word Search II|design-add-and-search-words-data-structure::Design Add And Search Words Data Structure" /&gt;
+<RelatedProblems problems="stream-of-characters::Stream Of Characters|word-search-ii::Word Search II|design-add-and-search-words-data-structure::Design Add And Search Words Data Structure" />

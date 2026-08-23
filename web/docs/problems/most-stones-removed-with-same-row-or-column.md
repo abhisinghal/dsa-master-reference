@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Given stones on a 2D plane, remove a stone if it shares a row/column with another. Return max stones removable.
 
@@ -12,16 +12,16 @@ Given stones on a 2D plane, remove a stone if it shares a row/column with anothe
 **Constraints** — `1 ≤ n ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
   hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="most-stones-removed-with-same-row-or-column" /&gt; &lt;Bookmark problem-slug="most-stones-removed-with-same-row-or-column" /&gt;
+<MarkSolved problem-slug="most-stones-removed-with-same-row-or-column" /> <Bookmark problem-slug="most-stones-removed-with-same-row-or-column" />
 
-&lt;InterviewTimer problem-slug="most-stones-removed-with-same-row-or-column" /&gt;
+<InterviewTimer problem-slug="most-stones-removed-with-same-row-or-column" />
 
 
 
@@ -95,7 +95,7 @@ void union(Map<Integer, Integer> p, int a, int b) {
 - **"Fewest to keep"** → same result (`#components`).
 - **"Sharing row OR col OR diagonal"** → add diagonals as a 3rd entity type.
 
-&lt;AiCompanion problem-slug="most-stones-removed-with-same-row-or-column" pattern-hint="union-find" /&gt;
+<AiCompanion problem-slug="most-stones-removed-with-same-row-or-column" pattern-hint="union-find" />
 
 ## Related problems
 
@@ -103,6 +103,6 @@ void union(Map<Integer, Integer> p, int a, int b) {
 - [Accounts Merge](/problems/accounts-merge)
 - [Connecting Cities With Minimum Cost](/problems/connecting-cities-with-minimum-cost)
 
-&lt;FeedbackWidget problem-slug="most-stones-removed-with-same-row-or-column" /&gt;
+<FeedbackWidget problem-slug="most-stones-removed-with-same-row-or-column" />
 
-&lt;RelatedProblems problems="redundant-connection::Redundant Connection|min-cost-to-connect-all-points::Min Cost To Connect All Points|number-of-islands-ii::Number Of Islands II" /&gt;
+<RelatedProblems problems="redundant-connection::Redundant Connection|min-cost-to-connect-all-points::Min Cost To Connect All Points|number-of-islands-ii::Number Of Islands II" />

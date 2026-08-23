@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Matrix Block Sum](https://leetcode.com/problems/matrix-block-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Given matrix `mat[m][n]` and integer `k`, return `answer[i][j]` = sum of all elements `mat[r][c]` with `|r-i| ≤ k` and `|c-j| ≤ k`.
 
@@ -12,16 +12,16 @@ Given matrix `mat[m][n]` and integer `k`, return `answer[i][j]` = sum of all ele
 **Constraints** — `1 ≤ m, n ≤ 100`; `1 ≤ k ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="matrix-block-sum" /&gt; &lt;Bookmark problem-slug="matrix-block-sum" /&gt;
+<MarkSolved problem-slug="matrix-block-sum" /> <Bookmark problem-slug="matrix-block-sum" />
 
-&lt;InterviewTimer problem-slug="matrix-block-sum" /&gt;
+<InterviewTimer problem-slug="matrix-block-sum" />
 
 
 
@@ -87,7 +87,7 @@ int[][] matrixBlockSum(int[][] mat, int k) {
 - **Updates + queries** → 2D Fenwick / BIT.
 - **1D version** → same technique on a 1D prefix array.
 
-&lt;AiCompanion problem-slug="matrix-block-sum" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="matrix-block-sum" pattern-hint="prefix sum" />
 
 ## Related problems
 
@@ -95,4 +95,4 @@ int[][] matrixBlockSum(int[][] mat, int k) {
 - [Count Submatrices with Target Sum](/problems/count-submatrices-with-target-sum)
 - [Maximal Rectangle](/problems/maximal-rectangle)
 
-&lt;FeedbackWidget problem-slug="matrix-block-sum" /&gt;
+<FeedbackWidget problem-slug="matrix-block-sum" />

@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Quickselect" duration="8–12 min" />
+
 <PatternProgress pattern-id="quickselect" problems="kth-largest" />
 
 

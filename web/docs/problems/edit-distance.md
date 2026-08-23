@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Edit Distance](https://leetcode.com/problems/edit-distance/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" />
 
 Given two strings `word1` and `word2`, return the minimum number of edits (insert, delete, replace) to convert `word1` → `word2`.
 
@@ -12,16 +12,16 @@ Given two strings `word1` and `word2`, return the minimum number of edits (inser
 **Constraints** — `0 ≤ m, n ≤ 500`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="edit-distance" /&gt; &lt;Bookmark problem-slug="edit-distance" /&gt;
+<MarkSolved problem-slug="edit-distance" /> <Bookmark problem-slug="edit-distance" />
 
-&lt;InterviewTimer problem-slug="edit-distance" /&gt;
+<InterviewTimer problem-slug="edit-distance" />
 
 
 
@@ -86,7 +86,7 @@ int minDistance(String a, String b) {
 - **Only insertions allowed** → LCS variant.
 - **Return the operations** → track parent choices during DP.
 
-&lt;AiCompanion problem-slug="edit-distance" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="edit-distance" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -94,6 +94,6 @@ int minDistance(String a, String b) {
 - [Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/) — count matches instead
 - [Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/) — same 2D table skeleton
 
-&lt;FeedbackWidget problem-slug="edit-distance" /&gt;
+<FeedbackWidget problem-slug="edit-distance" />
 
-&lt;RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|maximal-square::Maximal Square|coin-change-ii::Coin Change II" /&gt;
+<RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|maximal-square::Maximal Square|coin-change-ii::Coin Change II" />

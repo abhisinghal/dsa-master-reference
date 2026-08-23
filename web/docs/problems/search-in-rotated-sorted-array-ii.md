@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/binary-search)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
 
 Sorted array rotated at unknown pivot, **may contain duplicates**. Return true iff `target` exists.
 
@@ -13,16 +13,16 @@ Sorted array rotated at unknown pivot, **may contain duplicates**. Return true i
 **Constraints** — `1 ≤ n ≤ 5000`; duplicates allowed.
 
 
-&lt;Hints
+<Hints
   hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
   hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."
   hint3="For rotated arrays: one half is always sorted — compare mid with lo (or hi) to detect which side."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="search-in-rotated-sorted-array-ii" /&gt; &lt;Bookmark problem-slug="search-in-rotated-sorted-array-ii" /&gt;
+<MarkSolved problem-slug="search-in-rotated-sorted-array-ii" /> <Bookmark problem-slug="search-in-rotated-sorted-array-ii" />
 
-&lt;InterviewTimer problem-slug="search-in-rotated-sorted-array-ii" /&gt;
+<InterviewTimer problem-slug="search-in-rotated-sorted-array-ii" />
 
 
 
@@ -103,7 +103,7 @@ For `target = 3`:
 - **Duplicates possible** → this problem — accept O(n) worst case.
 - **"Return the index, not boolean"** → same skeleton; `return mid` on match, `return -1` at end.
 
-&lt;AiCompanion problem-slug="search-in-rotated-sorted-array-ii" pattern-hint="binary search" /&gt;
+<AiCompanion problem-slug="search-in-rotated-sorted-array-ii" pattern-hint="binary search" />
 
 ## Related problems
 
@@ -111,6 +111,6 @@ For `target = 3`:
 - [Find Minimum in Rotated Sorted Array](/problems/find-minimum-in-rotated-sorted-array) — same pivot logic
 - [Find Minimum in Rotated Sorted Array II](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/) — duplicates variant of that
 
-&lt;FeedbackWidget problem-slug="search-in-rotated-sorted-array-ii" /&gt;
+<FeedbackWidget problem-slug="search-in-rotated-sorted-array-ii" />
 
-&lt;RelatedProblems problems="median-of-two-sorted-arrays::Median Of Two Sorted Arrays|split-array-largest-sum::Split Array Largest Sum|binary-search::Binary Search" /&gt;
+<RelatedProblems problems="median-of-two-sorted-arrays::Median Of Two Sorted Arrays|split-array-largest-sum::Split Array Largest Sum|binary-search::Binary Search" />

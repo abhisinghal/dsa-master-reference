@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/divide-conquer)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Count subarrays whose sum lies in `[lower, upper]` (inclusive).
 
@@ -12,16 +12,16 @@ Count subarrays whose sum lies in `[lower, upper]` (inclusive).
 **Constraints** — `1 ≤ n ≤ 10⁵`; `-2³¹ ≤ nums[i] ≤ 2³¹−1`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
   hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."
   hint3="For count-of-X-across-boundary, two-pointer walk during the merge step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="count-of-range-sum" /&gt; &lt;Bookmark problem-slug="count-of-range-sum" /&gt;
+<MarkSolved problem-slug="count-of-range-sum" /> <Bookmark problem-slug="count-of-range-sum" />
 
-&lt;InterviewTimer problem-slug="count-of-range-sum" /&gt;
+<InterviewTimer problem-slug="count-of-range-sum" />
 
 
 
@@ -96,7 +96,7 @@ int mergeCount(long[] p, int lo, int hi, int lower, int upper) {
 - **Fenwick/BIT alternative** → compress prefix values; count during single sweep.
 - **Segment tree** → same asymptotics; different implementation.
 
-&lt;AiCompanion problem-slug="count-of-range-sum" pattern-hint="divide & conquer" /&gt;
+<AiCompanion problem-slug="count-of-range-sum" pattern-hint="divide & conquer" />
 
 ## Related problems
 
@@ -104,6 +104,6 @@ int mergeCount(long[] p, int lo, int hi, int lower, int upper) {
 - [Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
 - [Global and Local Inversions](/problems/global-and-local-inversions)
 
-&lt;FeedbackWidget problem-slug="count-of-range-sum" /&gt;
+<FeedbackWidget problem-slug="count-of-range-sum" />
 
-&lt;RelatedProblems problems="reverse-pairs::Reverse Pairs|sort-list::Sort List|inversions::Inversions" /&gt;
+<RelatedProblems problems="reverse-pairs::Reverse Pairs|sort-list::Sort List|inversions::Inversions" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Meta, Google, Microsoft, Amazon" /&gt;
+<CompanyTags companies="Meta, Google, Microsoft, Amazon" />
 
 Given a binary array `nums` and integer `k`, return the maximum length of a subarray containing only 1s after flipping at most `k` zeros.
 
@@ -13,16 +13,16 @@ Given a binary array `nums` and integer `k`, return the maximum length of a suba
 **Constraints** — `1 ≤ n ≤ 10⁵`; `nums[i] ∈ {0, 1}`; `0 ≤ k ≤ n`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="max-consecutive-ones-iii" /&gt; &lt;Bookmark problem-slug="max-consecutive-ones-iii" /&gt;
+<MarkSolved problem-slug="max-consecutive-ones-iii" /> <Bookmark problem-slug="max-consecutive-ones-iii" />
 
-&lt;InterviewTimer problem-slug="max-consecutive-ones-iii" /&gt;
+<InterviewTimer problem-slug="max-consecutive-ones-iii" />
 
 
 
@@ -158,7 +158,7 @@ int longestOnes(int[] nums, int k) {
 - **"Return the window itself"** → keep the shrinking version and track `(bestL, bestLen)`.
 - **"Flip 1s to 0s instead"** → complementary problem — swap semantics.
 
-&lt;AiCompanion problem-slug="max-consecutive-ones-iii" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="max-consecutive-ones-iii" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -167,6 +167,6 @@ int longestOnes(int[] nums, int k) {
 - [Fruit Into Baskets](/problems/fruit-into-baskets) — `k=2` distinct
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)
 
-&lt;FeedbackWidget problem-slug="max-consecutive-ones-iii" /&gt;
+<FeedbackWidget problem-slug="max-consecutive-ones-iii" />
 
-&lt;RelatedProblems problems="longest-palindromic-substring::Longest Palindromic Substring|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|subarray-product-less-than-k::Subarray Product Less Than K" /&gt;
+<RelatedProblems problems="longest-palindromic-substring::Longest Palindromic Substring|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|subarray-product-less-than-k::Subarray Product Less Than K" />

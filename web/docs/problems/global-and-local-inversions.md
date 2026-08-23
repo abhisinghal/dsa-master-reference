@@ -10,16 +10,16 @@ Return `true` iff **number of global inversions == number of local inversions**.
 **Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ nums[i] ≤ n − 1` (permutation).
 
 
-&lt;Hints
+<Hints
   hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
   hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."
   hint3="For count-of-X-across-boundary, two-pointer walk during the merge step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="global-and-local-inversions" /&gt; &lt;Bookmark problem-slug="global-and-local-inversions" /&gt;
+<MarkSolved problem-slug="global-and-local-inversions" /> <Bookmark problem-slug="global-and-local-inversions" />
 
-&lt;InterviewTimer problem-slug="global-and-local-inversions" /&gt;
+<InterviewTimer problem-slug="global-and-local-inversions" />
 
 
 
@@ -86,7 +86,7 @@ boolean isIdealPermutation(int[] nums) {
 - **"Count both separately"** → merge sort for global; O(n) for local.
 - **"Are they within k?"** → merge sort remains most general.
 
-&lt;AiCompanion problem-slug="global-and-local-inversions" pattern-hint="divide & conquer" /&gt;
+<AiCompanion problem-slug="global-and-local-inversions" pattern-hint="divide & conquer" />
 
 ## Related problems
 
@@ -94,6 +94,6 @@ boolean isIdealPermutation(int[] nums) {
 - [Count Inversions](/problems/divide-conquer-inversions)
 - [Number of Reverse Pairs in Array](https://leetcode.com/problems/number-of-reverse-pairs-in-array/)
 
-&lt;FeedbackWidget problem-slug="global-and-local-inversions" /&gt;
+<FeedbackWidget problem-slug="global-and-local-inversions" />
 
-&lt;RelatedProblems problems="count-of-range-sum::Count Of Range Sum|inversions::Inversions|reverse-pairs::Reverse Pairs" /&gt;
+<RelatedProblems problems="count-of-range-sum::Count Of Range Sum|inversions::Inversions|reverse-pairs::Reverse Pairs" />

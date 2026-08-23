@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Sudoku Solver](https://leetcode.com/problems/sudoku-solver/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" />
 
 Fill the 9×9 board so every row/col/box contains 1..9.
 
@@ -11,16 +11,16 @@ Fill the 9×9 board so every row/col/box contains 1..9.
 **Constraints** — 9×9 board, `.` for empty.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="sudoku-solver" /&gt; &lt;Bookmark problem-slug="sudoku-solver" /&gt;
+<MarkSolved problem-slug="sudoku-solver" /> <Bookmark problem-slug="sudoku-solver" />
 
-&lt;InterviewTimer problem-slug="sudoku-solver" /&gt;
+<InterviewTimer problem-slug="sudoku-solver" />
 
 
 
@@ -84,13 +84,13 @@ Pick cell with **fewest legal digits** each step — typical hard puzzles solve 
 - **Hard puzzles fast** → add MRV.
 - **Uniqueness check** → count solutions, stop at 2.
 
-&lt;AiCompanion problem-slug="sudoku-solver" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="sudoku-solver" pattern-hint="backtracking" />
 
 ## Related problems
 
 - [Valid Sudoku](/problems/valid-sudoku)
 - [N-Queens](/problems/backtracking-n-queens)
 
-&lt;FeedbackWidget problem-slug="sudoku-solver" /&gt;
+<FeedbackWidget problem-slug="sudoku-solver" />
 
-&lt;RelatedProblems problems="combination-sum-ii::Combination Sum II|beautiful-arrangement::Beautiful Arrangement|combination-sum-iv::Combination Sum IV" /&gt;
+<RelatedProblems problems="combination-sum-ii::Combination Sum II|beautiful-arrangement::Beautiful Arrangement|combination-sum-iv::Combination Sum IV" />

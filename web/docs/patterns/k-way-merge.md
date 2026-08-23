@@ -1,8 +1,9 @@
 # K-way Merge
 
 
-&lt;PatternVideo pattern-name="K-way Merge" duration="8–12 min" /&gt;
-&lt;PatternProgress pattern-id="k-way-merge" problems="k-way-merge-k-sorted-lists, merge-two-sorted-lists, smallest-range-covering-elements-from-k-lists, ugly-number-ii" /&gt;
+<PatternVideo pattern-name="K-way Merge" duration="8–12 min" />
+
+<PatternProgress pattern-id="k-way-merge" problems="k-way-merge-k-sorted-lists, merge-two-sorted-lists, smallest-range-covering-elements-from-k-lists, ugly-number-ii" />
 
 
 
@@ -462,6 +463,6 @@ The shared idea is a **min-heap holding one live "front" per sorted source**, so
   :questions='[{"q": "For merging k sorted lists into one, what is the heap-based complexity?", "choices": [{"text": "O(N log k) where N = total elements", "correct": true, "explanation": "Heap holds one head per list; O(log k) per pop."}, {"text": "O(N log N)", "correct": false, "explanation": "Full sort of merged; wastes existing sortedness."}, {"text": "O(k · N)", "correct": false, "explanation": "Naive round-robin merge."}, {"text": "O(N)", "correct": false}]}, {"q": "For Smallest Range Covering k Lists, what does the heap track?", "choices": [{"text": "Current-minimum across all lists (via one pointer per list)", "correct": true, "explanation": "And separately track current-max seen; range = [heapMin, currentMax]."}, {"text": "All possible ranges", "correct": false, "explanation": "Exponential; not needed."}, {"text": "Only the k smallest values", "correct": false, "explanation": "Different problem."}, {"text": "Only the k largest values", "correct": false}]}, {"q": "When does K-way Merge stop for the \"smallest range\" problem?", "choices": [{"text": "When any one list is exhausted", "correct": true, "explanation": "We can no longer cover that list; done."}, {"text": "When the heap is empty", "correct": false, "explanation": "That is total exhaustion."}, {"text": "After N iterations", "correct": false}, {"text": "Never", "correct": false}]}, {"q": "For Ugly Number II, why does the 3-pointer approach beat the min-heap?", "choices": [{"text": "It avoids duplicates and the heap overhead — pure O(n)", "correct": true, "explanation": "Three pointers into the growing ugly[] give exact sequence generation."}, {"text": "It uses less memory", "correct": false, "explanation": "Same memory."}, {"text": "Heap doesn’t work", "correct": false, "explanation": "Heap works too, but slower."}, {"text": "Randomness", "correct": false}]}, {"q": "Merging two sorted linked lists is best done with:", "choices": [{"text": "Two-pointer merge with a dummy head, in-place re-linking", "correct": true, "explanation": "O(m+n) time, O(1) space (nodes reused)."}, {"text": "Copying to array, sorting, rebuilding", "correct": false, "explanation": "Wastes existing sortedness."}, {"text": "Heap-based merge", "correct": false, "explanation": "Overkill for k=2."}, {"text": "Recursion only", "correct": false, "explanation": "Works but O(n) stack."}]}]'
 />
 
-&lt;PrintButton /&gt;
+<PrintButton />
 
-&lt;RelatedPatterns pattern-id="heap" /&gt;
+<RelatedPatterns pattern-id="heap" />

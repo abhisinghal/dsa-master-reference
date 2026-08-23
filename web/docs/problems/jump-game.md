@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Jump Game](https://leetcode.com/problems/jump-game/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
 
 `nums[i]` = max jump length from `i`. Return `true` iff we can reach the last index starting from index 0.
 
@@ -13,16 +13,16 @@
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="jump-game" /&gt; &lt;Bookmark problem-slug="jump-game" /&gt;
+<MarkSolved problem-slug="jump-game" /> <Bookmark problem-slug="jump-game" />
 
-&lt;InterviewTimer problem-slug="jump-game" /&gt;
+<InterviewTimer problem-slug="jump-game" />
 
 
 
@@ -83,7 +83,7 @@ boolean canJump(int[] nums) {
 - **Min jumps** → [Jump Game II](/problems/greedy-jump-game-ii) — BFS layers.
 - **Arbitrary graph jumps** → [Jump Game III](/problems/jump-game-iii) — BFS.
 
-&lt;AiCompanion problem-slug="jump-game" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="jump-game" pattern-hint="greedy" />
 
 ## Related problems
 
@@ -91,6 +91,6 @@ boolean canJump(int[] nums) {
 - [Jump Game III](/problems/jump-game-iii)
 - [Jump Game VI](/problems/jump-game-vi)
 
-&lt;FeedbackWidget problem-slug="jump-game" /&gt;
+<FeedbackWidget problem-slug="jump-game" />
 
-&lt;RelatedProblems problems="non-overlapping-intervals::Non Overlapping Intervals|gas-station::Gas Station|best-time-to-buy-and-sell-stock::Best Time To Buy And Sell Stock" /&gt;
+<RelatedProblems problems="non-overlapping-intervals::Non Overlapping Intervals|gas-station::Gas Station|best-time-to-buy-and-sell-stock::Best Time To Buy And Sell Stock" />

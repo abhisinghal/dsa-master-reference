@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Permutation in String](https://leetcode.com/problems/permutation-in-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Meta, Google, Microsoft, Amazon, Apple" /&gt;
+<CompanyTags companies="Meta, Google, Microsoft, Amazon, Apple" />
 
 Given strings `s1` and `s2`, return `true` iff `s2` contains any permutation of `s1` as a substring.
 
@@ -13,16 +13,16 @@ Given strings `s1` and `s2`, return `true` iff `s2` contains any permutation of 
 **Constraints** — `1 ≤ |s1|, |s2| ≤ 10⁴`. Lowercase English.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="permutation-in-string" /&gt; &lt;Bookmark problem-slug="permutation-in-string" /&gt;
+<MarkSolved problem-slug="permutation-in-string" /> <Bookmark problem-slug="permutation-in-string" />
 
-&lt;InterviewTimer problem-slug="permutation-in-string" /&gt;
+<InterviewTimer problem-slug="permutation-in-string" />
 
 
 
@@ -173,7 +173,7 @@ boolean checkInclusion(String s1, String s2) {
 - **Unicode alphabet** → use `HashMap<Character,Integer>`; running-match trick still applies with slightly more bookkeeping.
 - **Return all match indices** → this is [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string).
 
-&lt;AiCompanion problem-slug="permutation-in-string" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="permutation-in-string" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -182,6 +182,6 @@ boolean checkInclusion(String s1, String s2) {
 - [Minimum Window Substring](/problems/minimum-window-substring) — variable-size window with need/have
 - [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words) — window on word offsets
 
-&lt;FeedbackWidget problem-slug="permutation-in-string" /&gt;
+<FeedbackWidget problem-slug="permutation-in-string" />
 
-&lt;RelatedProblems problems="number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters|longest-repeating-character-replacement::Longest Repeating Character Replacement|minimum-size-subarray-sum::Minimum Size Subarray Sum" /&gt;
+<RelatedProblems problems="number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters|longest-repeating-character-replacement::Longest Repeating Character Replacement|minimum-size-subarray-sum::Minimum Size Subarray Sum" />

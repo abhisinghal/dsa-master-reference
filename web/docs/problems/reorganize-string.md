@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Reorganize String](https://leetcode.com/problems/reorganize-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/top-k-heap)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
 
 Given string `s`, rearrange characters so no two adjacent characters are the same. Return the result, or `""` if impossible.
 
@@ -13,16 +13,16 @@ Given string `s`, rearrange characters so no two adjacent characters are the sam
 **Constraints** — `1 ≤ n ≤ 500`. Lowercase English.
 
 
-&lt;Hints
+<Hints
   hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
   hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."
   hint3="For ’k closest’ or ’k most frequent’, the heap’s comparator holds the distance/frequency metric."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="reorganize-string" /&gt; &lt;Bookmark problem-slug="reorganize-string" /&gt;
+<MarkSolved problem-slug="reorganize-string" /> <Bookmark problem-slug="reorganize-string" />
 
-&lt;InterviewTimer problem-slug="reorganize-string" /&gt;
+<InterviewTimer problem-slug="reorganize-string" />
 
 
 
@@ -137,7 +137,7 @@ String reorganizeBucket(String s) {
 - **"K-length gap between duplicates"** → this generalizes: [Rearrange String k Distance Apart](https://leetcode.com/problems/rearrange-string-k-distance-apart/).
 - **"Task scheduling with cooldown"** → same skeleton; see [Task Scheduler](https://leetcode.com/problems/task-scheduler/).
 
-&lt;AiCompanion problem-slug="reorganize-string" pattern-hint="top-K / heap" /&gt;
+<AiCompanion problem-slug="reorganize-string" pattern-hint="top-K / heap" />
 
 ## Related problems
 
@@ -145,6 +145,6 @@ String reorganizeBucket(String s) {
 - [Rearrange String k Distance Apart](https://leetcode.com/problems/rearrange-string-k-distance-apart/) — k-generalization
 - [Top K Frequent Elements](/problems/top-k-frequent-elements)
 
-&lt;FeedbackWidget problem-slug="reorganize-string" /&gt;
+<FeedbackWidget problem-slug="reorganize-string" />
 
-&lt;RelatedProblems problems="ugly-number-ii::Ugly Number II|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists|k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists" /&gt;
+<RelatedProblems problems="ugly-number-ii::Ugly Number II|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists|k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists" />

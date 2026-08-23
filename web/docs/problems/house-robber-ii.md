@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: House Robber II](https://leetcode.com/problems/house-robber-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 
@@ -12,16 +12,16 @@ Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 **Constraints** — `1 ≤ n ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="house-robber-ii" /&gt; &lt;Bookmark problem-slug="house-robber-ii" /&gt;
+<MarkSolved problem-slug="house-robber-ii" /> <Bookmark problem-slug="house-robber-ii" />
 
-&lt;InterviewTimer problem-slug="house-robber-ii" /&gt;
+<InterviewTimer problem-slug="house-robber-ii" />
 
 
 
@@ -81,13 +81,13 @@ int linear(int[] nums, int lo, int hi) {
 - **Linear** → [House Robber](/problems/dp-house-robber).
 - **Tree** → [House Robber III](https://leetcode.com/problems/house-robber-iii/).
 
-&lt;AiCompanion problem-slug="house-robber-ii" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="house-robber-ii" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [House Robber](/problems/dp-house-robber)
 - [Delete and Earn](/problems/delete-and-earn)
 
-&lt;FeedbackWidget problem-slug="house-robber-ii" /&gt;
+<FeedbackWidget problem-slug="house-robber-ii" />
 
-&lt;RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|delete-and-earn::Delete And Earn|maximal-square::Maximal Square" /&gt;
+<RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|delete-and-earn::Delete And Earn|maximal-square::Maximal Square" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Pair `[a,b]` chains with next `[c,d]` iff `c > b`. Return longest chain length.
 
@@ -12,16 +12,16 @@ Pair `[a,b]` chains with next `[c,d]` iff `c > b`. Return longest chain length.
 **Constraints** — `1 ≤ n ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximum-length-of-pair-chain" /&gt; &lt;Bookmark problem-slug="maximum-length-of-pair-chain" /&gt;
+<MarkSolved problem-slug="maximum-length-of-pair-chain" /> <Bookmark problem-slug="maximum-length-of-pair-chain" />
 
-&lt;InterviewTimer problem-slug="maximum-length-of-pair-chain" /&gt;
+<InterviewTimer problem-slug="maximum-length-of-pair-chain" />
 
 
 
@@ -79,7 +79,7 @@ int findLongestChain(int[][] pairs) {
 - **"Return the chain"** → track predecessor indices.
 - **"Weighted chain"** → DP required.
 
-&lt;AiCompanion problem-slug="maximum-length-of-pair-chain" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="maximum-length-of-pair-chain" pattern-hint="greedy" />
 
 ## Related problems
 
@@ -87,4 +87,4 @@ int findLongestChain(int[][] pairs) {
 - [Minimum Number of Arrows](/problems/minimum-number-of-arrows-to-burst-balloons)
 - [Longest Increasing Subsequence](/problems/longest-increasing-subsequence)
 
-&lt;FeedbackWidget problem-slug="maximum-length-of-pair-chain" /&gt;
+<FeedbackWidget problem-slug="maximum-length-of-pair-chain" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Maximal Square](https://leetcode.com/problems/maximal-square/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta, Uber" /&gt;
+<CompanyTags companies="Amazon, Google, Meta, Uber" />
 
 Largest square of `1`s in binary matrix. Return area.
 
@@ -11,16 +11,16 @@ Largest square of `1`s in binary matrix. Return area.
 **Constraints** — `1 ≤ m, n ≤ 300`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximal-square" /&gt; &lt;Bookmark problem-slug="maximal-square" /&gt;
+<MarkSolved problem-slug="maximal-square" /> <Bookmark problem-slug="maximal-square" />
 
-&lt;InterviewTimer problem-slug="maximal-square" /&gt;
+<InterviewTimer problem-slug="maximal-square" />
 
 
 
@@ -72,13 +72,13 @@ int maximalSquare(char[][] mat) {
 - **Rectangles** → [Maximal Rectangle](/problems/maximal-rectangle) — row heights + stack.
 - **Count all squares** → sum of `side[i][j]`.
 
-&lt;AiCompanion problem-slug="maximal-square" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="maximal-square" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Maximal Rectangle](/problems/maximal-rectangle)
 - [Count Square Submatrices](https://leetcode.com/problems/count-square-submatrices-with-all-ones/)
 
-&lt;FeedbackWidget problem-slug="maximal-square" /&gt;
+<FeedbackWidget problem-slug="maximal-square" />
 
-&lt;RelatedProblems problems="delete-and-earn::Delete And Earn|climbing-stairs::Climbing Stairs|regular-expression-matching::Regular Expression Matching" /&gt;
+<RelatedProblems problems="delete-and-earn::Delete And Earn|climbing-stairs::Climbing Stairs|regular-expression-matching::Regular Expression Matching" />

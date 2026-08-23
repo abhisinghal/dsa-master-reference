@@ -1,8 +1,9 @@
 # Monotonic Stack
 
 
-&lt;PatternVideo pattern-name="Monotonic Stack" duration="8–12 min" /&gt;
-&lt;PatternProgress pattern-id="monotonic-stack" problems="monotonic-stack-daily-temperatures, next-greater-element-ii, online-stock-span, remove-k-digits, sum-of-subarray-minimums" /&gt;
+<PatternVideo pattern-name="Monotonic Stack" duration="8–12 min" />
+
+<PatternProgress pattern-id="monotonic-stack" problems="monotonic-stack-daily-temperatures, next-greater-element-ii, online-stock-span, remove-k-digits, sum-of-subarray-minimums" />
 
 
 
@@ -449,6 +450,6 @@ Forgetting the sentinel `0`. *Example:* `heights=[2,1,5,6,2,3]` — the tallest 
   :questions='[{"q": "What is the amortized cost per element in a monotonic-stack sweep?", "choices": [{"text": "O(1)", "correct": true, "explanation": "Each element pushed and popped at most once → 2n total operations."}, {"text": "O(log n)", "correct": false}, {"text": "O(n)", "correct": false}, {"text": "O(σ)", "correct": false}]}, {"q": "For \"next greater element\", which stack orientation do you maintain?", "choices": [{"text": "Monotonically decreasing from bottom to top", "correct": true, "explanation": "New larger element pops smaller predecessors — those find their answer."}, {"text": "Monotonically increasing", "correct": false, "explanation": "That is for \"next smaller\"."}, {"text": "Not monotonic", "correct": false}, {"text": "Sorted at insertion", "correct": false}]}, {"q": "Why does Largest Rectangle in Histogram benefit from a \"sentinel\" bar?", "choices": [{"text": "A trailing height-0 flushes any remaining stack cleanly", "correct": true, "explanation": "Otherwise you need special-case code after the loop."}, {"text": "To handle negative heights", "correct": false, "explanation": "Heights are non-negative."}, {"text": "For randomness", "correct": false}, {"text": "To detect end-of-input", "correct": false}]}, {"q": "Sum of Subarray Minimums uses \"contribution counting\". What is the key idea?", "choices": [{"text": "For each element, count how many subarrays it is minimum of (L·R spans)", "correct": true, "explanation": "Turn \"for each subarray find min\" into \"for each element count contributions\"."}, {"text": "Sum over all subarrays", "correct": false, "explanation": "That is O(n²)."}, {"text": "Only iterate subarrays of length ≤ log n", "correct": false}, {"text": "Sort the array first", "correct": false}]}, {"q": "For Online Stock Span, what does the stack store?", "choices": [{"text": "(price, span) pairs", "correct": true, "explanation": "On next price ≥ top, pop and accumulate span."}, {"text": "Only prices", "correct": false, "explanation": "Would lose the span info."}, {"text": "Only spans", "correct": false}, {"text": "All prices ever seen", "correct": false, "explanation": "Would defeat the amortization."}]}]'
 />
 
-&lt;PrintButton /&gt;
+<PrintButton />
 
-&lt;RelatedPatterns pattern-id="monotonic-stack" /&gt;
+<RelatedPatterns pattern-id="monotonic-stack" />

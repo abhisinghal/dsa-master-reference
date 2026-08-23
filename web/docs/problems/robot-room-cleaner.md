@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Robot Room Cleaner](https://leetcode.com/problems/robot-room-cleaner/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Google, Amazon" /&gt;
+<CompanyTags companies="Meta, Google, Amazon" />
 
 Robot API: `move()`, `turnLeft()`, `turnRight()`, `clean()`. No coordinates. Clean every reachable cell.
 
@@ -11,16 +11,16 @@ Robot API: `move()`, `turnLeft()`, `turnRight()`, `clean()`. No coordinates. Cle
 **Example 1** — Room modeled as grid with obstacles; robot at `(row, col)`. Robot cleans every reachable cell.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="robot-room-cleaner" /&gt; &lt;Bookmark problem-slug="robot-room-cleaner" /&gt;
+<MarkSolved problem-slug="robot-room-cleaner" /> <Bookmark problem-slug="robot-room-cleaner" />
 
-&lt;InterviewTimer problem-slug="robot-room-cleaner" /&gt;
+<InterviewTimer problem-slug="robot-room-cleaner" />
 
 
 
@@ -72,11 +72,11 @@ void dfs(Robot r, int x, int y, int d, Set<String> seen) {
 - **Known grid** → simpler DFS/BFS.
 - **Multi-agent** → parallel exploration primitives.
 
-&lt;AiCompanion problem-slug="robot-room-cleaner" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="robot-room-cleaner" pattern-hint="backtracking" />
 
 ## Related problems
 
 - [Number of Islands](/problems/number-of-islands)
 - [Unique Paths III](/problems/unique-paths-iii)
 
-&lt;FeedbackWidget problem-slug="robot-room-cleaner" /&gt;
+<FeedbackWidget problem-slug="robot-room-cleaner" />

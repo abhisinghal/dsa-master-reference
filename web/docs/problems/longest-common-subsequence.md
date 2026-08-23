@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Adobe" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Adobe" />
 
 Length of longest subsequence appearing in both strings.
 
@@ -13,16 +13,16 @@ Length of longest subsequence appearing in both strings.
 **Constraints** — `1 ≤ m, n ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="longest-common-subsequence" /&gt; &lt;Bookmark problem-slug="longest-common-subsequence" /&gt;
+<MarkSolved problem-slug="longest-common-subsequence" /> <Bookmark problem-slug="longest-common-subsequence" />
 
-&lt;InterviewTimer problem-slug="longest-common-subsequence" /&gt;
+<InterviewTimer problem-slug="longest-common-subsequence" />
 
 
 
@@ -81,7 +81,7 @@ int longestCommonSubsequence(String s1, String s2) {
 - **Return the subsequence** → track predecessors.
 - **LCS of 3+ strings** → nD DP.
 
-&lt;AiCompanion problem-slug="longest-common-subsequence" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="longest-common-subsequence" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -89,6 +89,6 @@ int longestCommonSubsequence(String s1, String s2) {
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence)
 - [Shortest Common Supersequence](https://leetcode.com/problems/shortest-common-supersequence/)
 
-&lt;FeedbackWidget problem-slug="longest-common-subsequence" /&gt;
+<FeedbackWidget problem-slug="longest-common-subsequence" />
 
-&lt;RelatedProblems problems="palindrome-partitioning-ii::Palindrome Partitioning II|coin-change::Coin Change|unique-paths-ii::Unique Paths II" /&gt;
+<RelatedProblems problems="palindrome-partitioning-ii::Palindrome Partitioning II|coin-change::Coin Change|unique-paths-ii::Unique Paths II" />

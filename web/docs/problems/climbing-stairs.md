@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Adobe, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Adobe, Bloomberg" />
 
 Steps of 1 or 2. Number of ways to reach step `n`.
 
@@ -12,16 +12,16 @@ Steps of 1 or 2. Number of ways to reach step `n`.
 **Constraints** — `1 ≤ n ≤ 45`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="climbing-stairs" /&gt; &lt;Bookmark problem-slug="climbing-stairs" /&gt;
+<MarkSolved problem-slug="climbing-stairs" /> <Bookmark problem-slug="climbing-stairs" />
 
-&lt;InterviewTimer problem-slug="climbing-stairs" /&gt;
+<InterviewTimer problem-slug="climbing-stairs" />
 
 
 
@@ -69,7 +69,7 @@ int climbStairs(int n) {
 - **Very large n** → matrix expo or closed-form Binet.
 - **Steps of {1..k}** → same recurrence extended.
 
-&lt;AiCompanion problem-slug="climbing-stairs" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="climbing-stairs" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -77,6 +77,6 @@ int climbStairs(int n) {
 - [House Robber](/problems/dp-house-robber)
 - [Fibonacci Number](https://leetcode.com/problems/fibonacci-number/)
 
-&lt;FeedbackWidget problem-slug="climbing-stairs" /&gt;
+<FeedbackWidget problem-slug="climbing-stairs" />
 
-&lt;RelatedProblems problems="coin-change::Coin Change|target-sum::Target Sum|min-cost-climbing-stairs::Min Cost Climbing Stairs" /&gt;
+<RelatedProblems problems="coin-change::Coin Change|target-sum::Target Sum|min-cost-climbing-stairs::Min Cost Climbing Stairs" />

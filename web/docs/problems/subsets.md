@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple" />
 
 Given distinct integers `nums`, return all possible subsets (the power set).
 
@@ -12,16 +12,16 @@ Given distinct integers `nums`, return all possible subsets (the power set).
 **Constraints** — `1 ≤ n ≤ 10`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="subsets" /&gt; &lt;Bookmark problem-slug="subsets" /&gt;
+<MarkSolved problem-slug="subsets" /> <Bookmark problem-slug="subsets" />
 
-&lt;InterviewTimer problem-slug="subsets" /&gt;
+<InterviewTimer problem-slug="subsets" />
 
 
 
@@ -108,7 +108,7 @@ List<List<Integer>> subsetsBM(int[] nums) {
 - **All subsets with duplicate elements** → sort + skip; see [Subsets II](/problems/subsets-ii).
 - **Only subsets of size k** → recurse with size arg; or DP.
 
-&lt;AiCompanion problem-slug="subsets" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="subsets" pattern-hint="bit manipulation" />
 
 ## Related problems
 
@@ -116,4 +116,4 @@ List<List<Integer>> subsetsBM(int[] nums) {
 - [Combination Sum](https://leetcode.com/problems/combination-sum/)
 - [Permutations](/problems/permutations)
 
-&lt;FeedbackWidget problem-slug="subsets" /&gt;
+<FeedbackWidget problem-slug="subsets" />

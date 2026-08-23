@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 
@@ -13,16 +13,16 @@ Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 **Constraints** — `1 ≤ n ≤ 5·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="boats-to-save-people" /&gt; &lt;Bookmark problem-slug="boats-to-save-people" /&gt;
+<MarkSolved problem-slug="boats-to-save-people" /> <Bookmark problem-slug="boats-to-save-people" />
 
-&lt;InterviewTimer problem-slug="boats-to-save-people" /&gt;
+<InterviewTimer problem-slug="boats-to-save-people" />
 
 
 
@@ -79,13 +79,13 @@ int numRescueBoats(int[] people, int limit) {
 - **"Pair heaviest + lightest greedy"** → applies to boats, task scheduling, item packing.
 - **"3+ per boat"** → generalizes with DP or different greedy.
 
-&lt;AiCompanion problem-slug="boats-to-save-people" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="boats-to-save-people" pattern-hint="two pointers" />
 
 ## Related problems
 
 - [Two Sum II](/problems/two-sum-ii-input-array-is-sorted)
 - [Assign Cookies](https://leetcode.com/problems/assign-cookies/)
 
-&lt;FeedbackWidget problem-slug="boats-to-save-people" /&gt;
+<FeedbackWidget problem-slug="boats-to-save-people" />
 
-&lt;RelatedProblems problems="squares-of-a-sorted-array::Squares Of A Sorted Array|valid-palindrome-ii::Valid Palindrome II|sort-array-by-parity::Sort Array By Parity" /&gt;
+<RelatedProblems problems="squares-of-a-sorted-array::Squares Of A Sorted Array|valid-palindrome-ii::Valid Palindrome II|sort-array-by-parity::Sort Array By Parity" />

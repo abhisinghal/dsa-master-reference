@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Valid Sudoku](https://leetcode.com/problems/valid-sudoku/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Uber, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Uber, Bloomberg" />
 
 Check partial Sudoku validity (no duplicates within row/col/box among filled cells).
 
@@ -12,16 +12,16 @@ Check partial Sudoku validity (no duplicates within row/col/box among filled cel
 **Example 2** — Same as 1 but with two `8`s in same column → `false`
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="valid-sudoku" /&gt; &lt;Bookmark problem-slug="valid-sudoku" /&gt;
+<MarkSolved problem-slug="valid-sudoku" /> <Bookmark problem-slug="valid-sudoku" />
 
-&lt;InterviewTimer problem-slug="valid-sudoku" /&gt;
+<InterviewTimer problem-slug="valid-sudoku" />
 
 
 
@@ -75,10 +75,10 @@ boolean isValidSudoku(char[][] board) {
 - **Speed** → bitmasks.
 - **Solve, not validate** → see [Sudoku Solver](/problems/sudoku-solver).
 
-&lt;AiCompanion problem-slug="valid-sudoku" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="valid-sudoku" pattern-hint="backtracking" />
 
 ## Related problems
 
 - [Sudoku Solver](/problems/sudoku-solver)
 
-&lt;FeedbackWidget problem-slug="valid-sudoku" /&gt;
+<FeedbackWidget problem-slug="valid-sudoku" />

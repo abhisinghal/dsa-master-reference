@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Uber" />
 
 Can `nums` split into two subsets with equal sum?
 
@@ -12,16 +12,16 @@ Can `nums` split into two subsets with equal sum?
 **Constraints** — `1 ≤ n ≤ 200`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="partition-equal-subset-sum" /&gt; &lt;Bookmark problem-slug="partition-equal-subset-sum" /&gt;
+<MarkSolved problem-slug="partition-equal-subset-sum" /> <Bookmark problem-slug="partition-equal-subset-sum" />
 
-&lt;InterviewTimer problem-slug="partition-equal-subset-sum" /&gt;
+<InterviewTimer problem-slug="partition-equal-subset-sum" />
 
 
 
@@ -85,7 +85,7 @@ boolean canPartition(int[] nums) {
 - **k subsets** → [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets).
 - **Return the partition** → track parent choices.
 
-&lt;AiCompanion problem-slug="partition-equal-subset-sum" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="partition-equal-subset-sum" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -93,6 +93,6 @@ boolean canPartition(int[] nums) {
 - [Last Stone Weight II](/problems/last-stone-weight-ii)
 - [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)
 
-&lt;FeedbackWidget problem-slug="partition-equal-subset-sum" /&gt;
+<FeedbackWidget problem-slug="partition-equal-subset-sum" />
 
-&lt;RelatedProblems problems="delete-and-earn::Delete And Earn|climbing-stairs::Climbing Stairs|house-robber-ii::House Robber II" /&gt;
+<RelatedProblems problems="delete-and-earn::Delete And Earn|climbing-stairs::Climbing Stairs|house-robber-ii::House Robber II" />

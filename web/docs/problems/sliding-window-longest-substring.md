@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" />
 
 Given a string `s`, return the length of the longest substring with all distinct characters.
 
@@ -13,16 +13,16 @@ Given a string `s`, return the length of the longest substring with all distinct
 **Constraints** — `0 ≤ s.length ≤ 5·10⁴`; ASCII / extended ASCII characters.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="sliding-window-longest-substring" /&gt; &lt;Bookmark problem-slug="sliding-window-longest-substring" /&gt;
+<MarkSolved problem-slug="sliding-window-longest-substring" /> <Bookmark problem-slug="sliding-window-longest-substring" />
 
-&lt;InterviewTimer problem-slug="sliding-window-longest-substring" /&gt;
+<InterviewTimer problem-slug="sliding-window-longest-substring" />
 
 
 
@@ -181,7 +181,7 @@ Optimal. One pass, O(1) work per index.
 - **"Return the substring itself, not just length"** → track the best `(start, length)` pair.
 - **"What if the alphabet is Unicode?"** → HashMap works unchanged; a `char[128]` array works for ASCII only.
 
-&lt;AiCompanion problem-slug="sliding-window-longest-substring" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="sliding-window-longest-substring" pattern-hint="sliding window" />
 
 ## Related problems (same ladder applies)
 
@@ -190,6 +190,6 @@ Optimal. One pass, O(1) work per index.
 - [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) — window is valid if `(windowLen − maxFreq) ≤ k`
 - [Permutation in String](https://leetcode.com/problems/permutation-in-string/) — fixed-size window, count-match
 
-&lt;FeedbackWidget problem-slug="sliding-window-longest-substring" /&gt;
+<FeedbackWidget problem-slug="sliding-window-longest-substring" />
 
-&lt;RelatedProblems problems="fruit-into-baskets::Fruit Into Baskets|count-number-of-nice-subarrays::Count Number Of Nice Subarrays|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K" /&gt;
+<RelatedProblems problems="fruit-into-baskets::Fruit Into Baskets|count-number-of-nice-subarrays::Count Number Of Nice Subarrays|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K" />

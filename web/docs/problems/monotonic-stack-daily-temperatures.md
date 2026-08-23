@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Given `temps`, return `answer` where `answer[i]` is the number of days until a warmer temperature (or 0 if none).
 
@@ -12,16 +12,16 @@ Given `temps`, return `answer` where `answer[i]` is the number of days until a w
 **Constraints** — `1 ≤ n ≤ 10⁵`; `30 ≤ temps[i] ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
   hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
   hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="monotonic-stack-daily-temperatures" /&gt; &lt;Bookmark problem-slug="monotonic-stack-daily-temperatures" /&gt;
+<MarkSolved problem-slug="monotonic-stack-daily-temperatures" /> <Bookmark problem-slug="monotonic-stack-daily-temperatures" />
 
-&lt;InterviewTimer problem-slug="monotonic-stack-daily-temperatures" /&gt;
+<InterviewTimer problem-slug="monotonic-stack-daily-temperatures" />
 
 
 
@@ -145,7 +145,7 @@ int[] dailyTemperatures(int[] t) {
 - **Cold interview** → brute → stack. RTL is smart but hard to explain fast.
 - **"Next greater element" family** → always monotonic stack. Once you see the pattern (`while stack.top < current: pop and record`), the whole family is solved by adjusting the comparator.
 
-&lt;AiCompanion problem-slug="monotonic-stack-daily-temperatures" pattern-hint="monotonic stack" /&gt;
+<AiCompanion problem-slug="monotonic-stack-daily-temperatures" pattern-hint="monotonic stack" />
 
 ## Related problems (same ladder applies)
 
@@ -154,6 +154,6 @@ int[] dailyTemperatures(int[] t) {
 - [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) — monotonic stack + contribution technique
 - [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) — closest-smaller-both-sides via one stack
 
-&lt;FeedbackWidget problem-slug="monotonic-stack-daily-temperatures" /&gt;
+<FeedbackWidget problem-slug="monotonic-stack-daily-temperatures" />
 
-&lt;RelatedProblems problems="next-greater-element-ii::Next Greater Element II|online-stock-span::Online Stock Span|remove-k-digits::Remove K Digits" /&gt;
+<RelatedProblems problems="next-greater-element-ii::Next Greater Element II|online-stock-span::Online Stock Span|remove-k-digits::Remove K Digits" />

@@ -141,7 +141,7 @@ def process(path: Path, pid: str, slugs: list) -> bool:
     if '<PatternProgress' in text:
         return False
     slugs_str = ', '.join(slugs)
-    block = f'\n<PatternProgress pattern-id="{pid}" problems="{slugs_str}" />\n\n'
+    block = f'\n\n<PatternProgress pattern-id="{pid}" problems="{slugs_str}" />\n\n'
     # Insert AFTER <PatternVideo... /> (which was added at top)
     m = re.search(r'<PatternVideo[^>]*/>', text)
     if m:

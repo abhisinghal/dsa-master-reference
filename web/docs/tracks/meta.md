@@ -1,6 +1,6 @@
 # Meta / Facebook Interview Kit
 
-&lt;PatternVideo pattern-name="Meta Interview Kit" duration="prep video coming soon" /&gt;
+<PatternVideo pattern-name="Meta Interview Kit" duration="prep video coming soon" />
 
 Meta's coding interviews at E4–E6 rely heavily on **Sliding Window**, **DFS/BFS on graphs**, **Trees**, and **DP** — with a strong preference for problems that test *invariant reasoning*, not memorized templates.
 
@@ -47,9 +47,9 @@ Solve in this order — each builds on the previous.
 - **Test the sample.** Trace input by hand at the end.
 - **Handle edge cases proactively.** Empty, single element, all-same, adversarial.
 
-&lt;SocialProof /&gt;
+<SocialProof />
 
-&lt;EmailCapture /&gt;
+<EmailCapture />
 
 <Callout kind="pat" title="Data disclaimer">
 Meta interview kits are curated from public interview reports and blog posts. This is not from Meta insider knowledge. Individual mileage varies.

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: 3Sum Closest](https://leetcode.com/problems/3sum-closest/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
 
 Given an integer array `nums` of length `n` and integer `target`, return the sum of three integers from `nums` that is closest to `target`.
 
@@ -13,16 +13,16 @@ Given an integer array `nums` of length `n` and integer `target`, return the sum
 **Constraints** — `3 ≤ n ≤ 500`; `-10³ ≤ nums[i], target ≤ 10³`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="3sum-closest" /&gt; &lt;Bookmark problem-slug="3sum-closest" /&gt;
+<MarkSolved problem-slug="3sum-closest" /> <Bookmark problem-slug="3sum-closest" />
 
-&lt;InterviewTimer problem-slug="3sum-closest" /&gt;
+<InterviewTimer problem-slug="3sum-closest" />
 
 
 
@@ -115,7 +115,7 @@ int threeSumClosest(int[] nums, int target) {
 - **"kSum closest"** → recurse: fix (k-2) values, close with 2-pointer.
 - **Skip duplicates** — not required for closeness (any triplet is fine), but if asked to return the *first* found or all tying triplets, add dedup skips.
 
-&lt;AiCompanion problem-slug="3sum-closest" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="3sum-closest" pattern-hint="two pointers" />
 
 ## Related problems
 
@@ -124,6 +124,6 @@ int threeSumClosest(int[] nums, int target) {
 - [4Sum](/problems/4sum) — one more nested loop
 - [Two Sum](/problems/hashing-two-sum)
 
-&lt;FeedbackWidget problem-slug="3sum-closest" /&gt;
+<FeedbackWidget problem-slug="3sum-closest" />
 
-&lt;RelatedProblems problems="container-with-most-water::Container With Most Water|boats-to-save-people::Boats To Save People|squares-of-a-sorted-array::Squares Of A Sorted Array" /&gt;
+<RelatedProblems problems="container-with-most-water::Container With Most Water|boats-to-save-people::Boats To Save People|squares-of-a-sorted-array::Squares Of A Sorted Array" />

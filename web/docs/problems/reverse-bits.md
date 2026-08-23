@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Reverse Bits](https://leetcode.com/problems/reverse-bits/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Apple, Microsoft, Adobe" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Apple, Microsoft, Adobe" />
 
 Reverse the bits of a 32-bit unsigned integer.
 
@@ -11,16 +11,16 @@ Reverse the bits of a 32-bit unsigned integer.
 **Constraints** — 32 bits.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="reverse-bits" /&gt; &lt;Bookmark problem-slug="reverse-bits" /&gt;
+<MarkSolved problem-slug="reverse-bits" /> <Bookmark problem-slug="reverse-bits" />
 
-&lt;InterviewTimer problem-slug="reverse-bits" /&gt;
+<InterviewTimer problem-slug="reverse-bits" />
 
 
 
@@ -86,13 +86,13 @@ For repeated calls, precompute an int[256] table of reversed bytes.
 - **Interview** — SWAR shows constant-time mastery.
 - **Production** — table cache if called in tight loop.
 
-&lt;AiCompanion problem-slug="reverse-bits" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="reverse-bits" pattern-hint="bit manipulation" />
 
 ## Related problems
 
 - [Number of 1 Bits](/problems/number-of-1-bits) — SWAR popcount
 - [Reverse Integer](https://leetcode.com/problems/reverse-integer/)
 
-&lt;FeedbackWidget problem-slug="reverse-bits" /&gt;
+<FeedbackWidget problem-slug="reverse-bits" />
 
-&lt;RelatedProblems problems="find-the-difference::Find The Difference|maximum-product-of-word-lengths::Maximum Product Of Word Lengths|number-of-1-bits::Number Of 1 Bits" /&gt;
+<RelatedProblems problems="find-the-difference::Find The Difference|maximum-product-of-word-lengths::Maximum Product Of Word Lengths|number-of-1-bits::Number Of 1 Bits" />

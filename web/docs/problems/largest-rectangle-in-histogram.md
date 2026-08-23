@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-&lt;CompanyTags companies="Amazon, Google, Microsoft, Meta, Adobe" /&gt;
+<CompanyTags companies="Amazon, Google, Microsoft, Meta, Adobe" />
 
 Given bar heights, return the largest rectangle contained.
 
@@ -12,16 +12,16 @@ Given bar heights, return the largest rectangle contained.
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="largest-rectangle-in-histogram" /&gt; &lt;Bookmark problem-slug="largest-rectangle-in-histogram" /&gt;
+<MarkSolved problem-slug="largest-rectangle-in-histogram" /> <Bookmark problem-slug="largest-rectangle-in-histogram" />
 
-&lt;InterviewTimer problem-slug="largest-rectangle-in-histogram" /&gt;
+<InterviewTimer problem-slug="largest-rectangle-in-histogram" />
 
 
 
@@ -89,7 +89,7 @@ int largestRectangleArea(int[] h) {
 - **2D binary matrix** → row heights + this template (see [Maximal Rectangle](/problems/maximal-rectangle)).
 - **"Range max/min queries"** → sparse table or seg tree.
 
-&lt;AiCompanion problem-slug="largest-rectangle-in-histogram" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="largest-rectangle-in-histogram" pattern-hint="two pointers" />
 
 ## Related problems
 
@@ -97,4 +97,4 @@ int largestRectangleArea(int[] h) {
 - [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums)
 - [Trapping Rain Water](/problems/trapping-rain-water)
 
-&lt;FeedbackWidget problem-slug="largest-rectangle-in-histogram" /&gt;
+<FeedbackWidget problem-slug="largest-rectangle-in-histogram" />

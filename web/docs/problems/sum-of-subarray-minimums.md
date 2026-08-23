@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Given an integer array `arr`, return the sum of `min(subarray)` over every contiguous subarray. Return modulo `10⁹ + 7`.
 
@@ -12,16 +12,16 @@ Given an integer array `arr`, return the sum of `min(subarray)` over every conti
 **Constraints** — `1 ≤ n ≤ 3 · 10⁴`; `1 ≤ arr[i] ≤ 3 · 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
   hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
   hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="sum-of-subarray-minimums" /&gt; &lt;Bookmark problem-slug="sum-of-subarray-minimums" /&gt;
+<MarkSolved problem-slug="sum-of-subarray-minimums" /> <Bookmark problem-slug="sum-of-subarray-minimums" />
 
-&lt;InterviewTimer problem-slug="sum-of-subarray-minimums" /&gt;
+<InterviewTimer problem-slug="sum-of-subarray-minimums" />
 
 
 
@@ -124,7 +124,7 @@ int sumSubarrayMins(int[] arr) {
 - **"Sum of (max − min) over subarrays"** → do both, subtract.
 - **Handling duplicates** — asymmetric strict/non-strict boundaries prevent double-counting.
 
-&lt;AiCompanion problem-slug="sum-of-subarray-minimums" pattern-hint="monotonic stack" /&gt;
+<AiCompanion problem-slug="sum-of-subarray-minimums" pattern-hint="monotonic stack" />
 
 ## Related problems
 
@@ -132,6 +132,6 @@ int sumSubarrayMins(int[] arr) {
 - [Sum of Subarray Ranges](https://leetcode.com/problems/sum-of-subarray-ranges/) — max − min
 - [Maximum Sum of Minimum of Every Subarray](https://leetcode.com/problems/maximum-of-minimum-values-in-all-subarrays/) — related
 
-&lt;FeedbackWidget problem-slug="sum-of-subarray-minimums" /&gt;
+<FeedbackWidget problem-slug="sum-of-subarray-minimums" />
 
-&lt;RelatedProblems problems="online-stock-span::Online Stock Span|monotonic-stack-daily-temperatures::Monotonic Stack Daily Temperatures|next-greater-element-ii::Next Greater Element II" /&gt;
+<RelatedProblems problems="online-stock-span::Online Stock Span|monotonic-stack-daily-temperatures::Monotonic Stack Daily Temperatures|next-greater-element-ii::Next Greater Element II" />

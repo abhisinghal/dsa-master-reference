@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
-&lt;CompanyTags companies="Meta, Amazon, Microsoft, Adobe" /&gt;
+<CompanyTags companies="Meta, Amazon, Microsoft, Adobe" />
 
 Given the head of a singly linked list, return `true` iff it's a palindrome.
 
@@ -13,16 +13,16 @@ Given the head of a singly linked list, return `true` iff it's a palindrome.
 **Constraints** — `1 ≤ n ≤ 10⁵`. Follow-up: O(n) time, O(1) space.
 
 
-&lt;Hints
+<Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
   hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="palindrome-linked-list" /&gt; &lt;Bookmark problem-slug="palindrome-linked-list" /&gt;
+<MarkSolved problem-slug="palindrome-linked-list" /> <Bookmark problem-slug="palindrome-linked-list" />
 
-&lt;InterviewTimer problem-slug="palindrome-linked-list" /&gt;
+<InterviewTimer problem-slug="palindrome-linked-list" />
 
 
 
@@ -145,7 +145,7 @@ boolean check(ListNode node) {
 - **"Restore list at end"** → always mention; some interviewers require it.
 - **Doubly linked list** → true two-pointer O(1) space and no reversal.
 
-&lt;AiCompanion problem-slug="palindrome-linked-list" pattern-hint="fast/slow pointers" /&gt;
+<AiCompanion problem-slug="palindrome-linked-list" pattern-hint="fast/slow pointers" />
 
 ## Related problems
 
@@ -153,6 +153,6 @@ boolean check(ListNode node) {
 - [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) — the reversal primitive
 - [Reorder List](https://leetcode.com/problems/reorder-list/) — same split + reverse + interleave
 
-&lt;FeedbackWidget problem-slug="palindrome-linked-list" /&gt;
+<FeedbackWidget problem-slug="palindrome-linked-list" />
 
-&lt;RelatedProblems problems="linked-list-cycle::Linked List Cycle|find-the-duplicate-number::Find The Duplicate Number|happy-number::Happy Number" /&gt;
+<RelatedProblems problems="linked-list-cycle::Linked List Cycle|find-the-duplicate-number::Find The Duplicate Number|happy-number::Happy Number" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Merge Intervals](https://leetcode.com/problems/merge-intervals/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple, Adobe" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple, Adobe" />
 
 Given a list of intervals, merge all overlapping ones and return the result.
 
@@ -12,16 +12,16 @@ Given a list of intervals, merge all overlapping ones and return the result.
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
   hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="merge-intervals-classic" /&gt; &lt;Bookmark problem-slug="merge-intervals-classic" /&gt;
+<MarkSolved problem-slug="merge-intervals-classic" /> <Bookmark problem-slug="merge-intervals-classic" />
 
-&lt;InterviewTimer problem-slug="merge-intervals-classic" /&gt;
+<InterviewTimer problem-slug="merge-intervals-classic" />
 
 
 
@@ -115,7 +115,7 @@ int[][] merge(int[][] intervals) {
 - **Cold interview** → jump straight to sort+sweep (brute is only worth stating).
 - **Touching vs strict overlap** — clarify with the interviewer. `cur[0] <= last[1]` merges touching; `cur[0] < last[1]` keeps them separate.
 
-&lt;AiCompanion problem-slug="merge-intervals-classic" pattern-hint="merge intervals" /&gt;
+<AiCompanion problem-slug="merge-intervals-classic" pattern-hint="merge intervals" />
 
 ## Related problems (same ladder applies)
 
@@ -124,6 +124,6 @@ int[][] merge(int[][] intervals) {
 - [Meeting Rooms](https://leetcode.com/problems/meeting-rooms/) — sorted + adjacent check
 - [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) — greedy on end times
 
-&lt;FeedbackWidget problem-slug="merge-intervals-classic" /&gt;
+<FeedbackWidget problem-slug="merge-intervals-classic" />
 
-&lt;RelatedProblems problems="employee-free-time::Employee Free Time|my-calendar-ii::My Calendar II|meeting-rooms-ii::Meeting Rooms II" /&gt;
+<RelatedProblems problems="employee-free-time::Employee Free Time|my-calendar-ii::My Calendar II|meeting-rooms-ii::Meeting Rooms II" />

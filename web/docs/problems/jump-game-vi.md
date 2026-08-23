@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Jump Game VI](https://leetcode.com/problems/jump-game-vi/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Start at 0. At index `i`, jump 1..k steps. Max total score reaching last index.
 
@@ -12,16 +12,16 @@ Start at 0. At index `i`, jump 1..k steps. Max total score reaching last index.
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="jump-game-vi" /&gt; &lt;Bookmark problem-slug="jump-game-vi" /&gt;
+<MarkSolved problem-slug="jump-game-vi" /> <Bookmark problem-slug="jump-game-vi" />
 
-&lt;InterviewTimer problem-slug="jump-game-vi" /&gt;
+<InterviewTimer problem-slug="jump-game-vi" />
 
 
 
@@ -82,7 +82,7 @@ int maxResult(int[] nums, int k) {
 - **"Min steps"** → BFS layers instead.
 - **k=∞ (unbounded)** → prefix max is enough.
 
-&lt;AiCompanion problem-slug="jump-game-vi" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="jump-game-vi" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -90,4 +90,4 @@ int maxResult(int[] nums, int k) {
 - [Jump Game II](/problems/greedy-jump-game-ii)
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
 
-&lt;FeedbackWidget problem-slug="jump-game-vi" /&gt;
+<FeedbackWidget problem-slug="jump-game-vi" />

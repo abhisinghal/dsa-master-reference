@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Gas Station](https://leetcode.com/problems/gas-station/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Amazon, Google, Meta, Bloomberg" /&gt;
+<CompanyTags companies="Amazon, Google, Meta, Bloomberg" />
 
 Circular route: at station `i` you gain `gas[i]`, pay `cost[i]` to reach `i+1`. Return start index that completes the loop, or `-1`.
 
@@ -12,16 +12,16 @@ Circular route: at station `i` you gain `gas[i]`, pay `cost[i]` to reach `i+1`. 
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="gas-station" /&gt; &lt;Bookmark problem-slug="gas-station" /&gt;
+<MarkSolved problem-slug="gas-station" /> <Bookmark problem-slug="gas-station" />
 
-&lt;InterviewTimer problem-slug="gas-station" /&gt;
+<InterviewTimer problem-slug="gas-station" />
 
 
 
@@ -83,13 +83,13 @@ int canCompleteCircuit(int[] gas, int[] cost) {
 - **Multiple valid starts** → all indices past all resets are valid.
 - **Two-direction travel** → separate check for each.
 
-&lt;AiCompanion problem-slug="gas-station" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="gas-station" pattern-hint="greedy" />
 
 ## Related problems
 
 - [Candy](/problems/candy) — two-sweep sibling
 - [Best Sightseeing Pair](https://leetcode.com/problems/best-sightseeing-pair/)
 
-&lt;FeedbackWidget problem-slug="gas-station" /&gt;
+<FeedbackWidget problem-slug="gas-station" />
 
-&lt;RelatedProblems problems="course-schedule-iii::Course Schedule III|best-time-to-buy-and-sell-stock::Best Time To Buy And Sell Stock|jump-game-ii::Jump Game II" /&gt;
+<RelatedProblems problems="course-schedule-iii::Course Schedule III|best-time-to-buy-and-sell-stock::Best Time To Buy And Sell Stock|jump-game-ii::Jump Game II" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Given `n` cities and `connections[i] = [a, b, cost]`, return the minimum cost to make all connected. `-1` if impossible.
 
@@ -12,16 +12,16 @@ Given `n` cities and `connections[i] = [a, b, cost]`, return the minimum cost to
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
   hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="connecting-cities-with-minimum-cost" /&gt; &lt;Bookmark problem-slug="connecting-cities-with-minimum-cost" /&gt;
+<MarkSolved problem-slug="connecting-cities-with-minimum-cost" /> <Bookmark problem-slug="connecting-cities-with-minimum-cost" />
 
-&lt;InterviewTimer problem-slug="connecting-cities-with-minimum-cost" /&gt;
+<InterviewTimer problem-slug="connecting-cities-with-minimum-cost" />
 
 
 
@@ -87,7 +87,7 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - **Dense graph** → Prim + heap: O(E + V log V).
 - **"Second-best MST"** → replace each MST edge with best non-MST alternative.
 
-&lt;AiCompanion problem-slug="connecting-cities-with-minimum-cost" pattern-hint="union-find" /&gt;
+<AiCompanion problem-slug="connecting-cities-with-minimum-cost" pattern-hint="union-find" />
 
 ## Related problems
 
@@ -95,6 +95,6 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village)
 - [Find Critical/Pseudo-Critical MST Edges](/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree)
 
-&lt;FeedbackWidget problem-slug="connecting-cities-with-minimum-cost" /&gt;
+<FeedbackWidget problem-slug="connecting-cities-with-minimum-cost" />
 
-&lt;RelatedProblems problems="min-cost-to-connect-all-points::Min Cost To Connect All Points|number-of-islands-ii::Number Of Islands II|accounts-merge::Accounts Merge" /&gt;
+<RelatedProblems problems="min-cost-to-connect-all-points::Min Cost To Connect All Points|number-of-islands-ii::Number Of Islands II|accounts-merge::Accounts Merge" />

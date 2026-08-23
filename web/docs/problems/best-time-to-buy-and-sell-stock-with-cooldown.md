@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
 
 Unlimited transactions; must skip one day between sell and next buy.
 
@@ -11,16 +11,16 @@ Unlimited transactions; must skip one day between sell and next buy.
 **Constraints** — `1 ≤ n ≤ 5000`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" /&gt; &lt;Bookmark problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" /&gt;
+<MarkSolved problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" /> <Bookmark problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" />
 
-&lt;InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" /&gt;
+<InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" />
 
 
 
@@ -80,11 +80,11 @@ int maxProfit(int[] prices) {
 - **Fee** → 2 states.
 - **k transactions** → 2k states.
 
-&lt;AiCompanion problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Best Time to Buy and Sell Stock IV](/problems/best-time-to-buy-and-sell-stock-iv)
 - [With Transaction Fee](/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
 
-&lt;FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" /&gt;
+<FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" />

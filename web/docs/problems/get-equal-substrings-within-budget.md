@@ -11,16 +11,16 @@ Given `s`, `t`, `maxCost`. Convert `s[i]` → `t[i]` costs `|s[i] - t[i]|`. Retu
 **Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ maxCost ≤ 10⁶`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="get-equal-substrings-within-budget" /&gt; &lt;Bookmark problem-slug="get-equal-substrings-within-budget" /&gt;
+<MarkSolved problem-slug="get-equal-substrings-within-budget" /> <Bookmark problem-slug="get-equal-substrings-within-budget" />
 
-&lt;InterviewTimer problem-slug="get-equal-substrings-within-budget" /&gt;
+<InterviewTimer problem-slug="get-equal-substrings-within-budget" />
 
 
 
@@ -75,7 +75,7 @@ int equalSubstring(String s, String t, int maxCost) {
 - **Multi-alphabet Unicode** → codePoints instead of chars.
 - **"Return the substring"** → track `(bestL, bestLen)` and slice.
 
-&lt;AiCompanion problem-slug="get-equal-substrings-within-budget" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="get-equal-substrings-within-budget" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -83,4 +83,4 @@ int equalSubstring(String s, String t, int maxCost) {
 - [Max Consecutive Ones III](/problems/max-consecutive-ones-iii)
 - [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum)
 
-&lt;FeedbackWidget problem-slug="get-equal-substrings-within-budget" /&gt;
+<FeedbackWidget problem-slug="get-equal-substrings-within-budget" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Maximum Genetic Difference Query](https://leetcode.com/problems/maximum-genetic-difference-query/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Given a rooted tree of gene values `parents[]` and queries `[node, val]`, for each query return `max XOR(val, x)` over `x` in any ancestor of `node` (including `node` itself).
 
@@ -11,16 +11,16 @@ Given a rooted tree of gene values `parents[]` and queries `[node, val]`, for ea
 **Example 1** — `parents=[-1,0,1,1], queries=[[0,2],[3,2],[2,5]]` → `[2,3,7]`
 
 
-&lt;Hints
+<Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
   hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximum-genetic-difference-query" /&gt; &lt;Bookmark problem-slug="maximum-genetic-difference-query" /&gt;
+<MarkSolved problem-slug="maximum-genetic-difference-query" /> <Bookmark problem-slug="maximum-genetic-difference-query" />
 
-&lt;InterviewTimer problem-slug="maximum-genetic-difference-query" /&gt;
+<InterviewTimer problem-slug="maximum-genetic-difference-query" />
 
 
 
@@ -106,7 +106,7 @@ int queryMax(Node root, int v) {
 - **Adjacent-subtree queries** → Euler tour + Fenwick / mo's algorithm.
 - **Static path** (no ancestor constraint) → offline sort on max_allowed.
 
-&lt;AiCompanion problem-slug="maximum-genetic-difference-query" pattern-hint="trie" /&gt;
+<AiCompanion problem-slug="maximum-genetic-difference-query" pattern-hint="trie" />
 
 ## Related problems
 
@@ -114,4 +114,4 @@ int queryMax(Node root, int v) {
 - [Count Pairs With XOR in Range](/problems/count-pairs-with-xor-in-a-range)
 - [Maximum XOR of Two Numbers](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
 
-&lt;FeedbackWidget problem-slug="maximum-genetic-difference-query" /&gt;
+<FeedbackWidget problem-slug="maximum-genetic-difference-query" />

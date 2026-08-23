@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/k-way-merge)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" />
 
 Given the heads of two sorted linked lists, merge them into one sorted list.
 
@@ -13,16 +13,16 @@ Given the heads of two sorted linked lists, merge them into one sorted list.
 **Constraints** — `0 ≤ len ≤ 50`; values in `[-100, 100]`; both sorted ascending.
 
 
-&lt;Hints
+<Hints
   hint1="You have k sorted sequences. Which element is globally next?"
   hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."
   hint3="For ’smallest range covering k lists’, track max-in-heap; window is [minInHeap, maxSeen]."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="merge-two-sorted-lists" /&gt; &lt;Bookmark problem-slug="merge-two-sorted-lists" /&gt;
+<MarkSolved problem-slug="merge-two-sorted-lists" /> <Bookmark problem-slug="merge-two-sorted-lists" />
 
-&lt;InterviewTimer problem-slug="merge-two-sorted-lists" /&gt;
+<InterviewTimer problem-slug="merge-two-sorted-lists" />
 
 
 
@@ -111,7 +111,7 @@ ListNode mergeTwoListsRec(ListNode l1, ListNode l2) {
 - **Sorted arrays instead of lists** → same skeleton (see [Merge Sorted Array](/problems/merge-sorted-array)).
 - **k lists** → use min-heap (see [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists)).
 
-&lt;AiCompanion problem-slug="merge-two-sorted-lists" pattern-hint="k-way merge" /&gt;
+<AiCompanion problem-slug="merge-two-sorted-lists" pattern-hint="k-way merge" />
 
 ## Related problems
 
@@ -119,6 +119,6 @@ ListNode mergeTwoListsRec(ListNode l1, ListNode l2) {
 - [Merge Sorted Array](/problems/merge-sorted-array) — sorted arrays, fill from back
 - [Sort List](/problems/sort-list) — mergesort using merge as primitive
 
-&lt;FeedbackWidget problem-slug="merge-two-sorted-lists" /&gt;
+<FeedbackWidget problem-slug="merge-two-sorted-lists" />
 
-&lt;RelatedProblems problems="k-closest-points-to-origin::K Closest Points To Origin|reorganize-string::Reorganize String|top-k-frequent-elements::Top K Frequent Elements" /&gt;
+<RelatedProblems problems="k-closest-points-to-origin::K Closest Points To Origin|reorganize-string::Reorganize String|top-k-frequent-elements::Top K Frequent Elements" />

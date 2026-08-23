@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Last Stone Weight II](https://leetcode.com/problems/last-stone-weight-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Smash pairs (larger becomes diff). Minimize final remaining weight.
 
@@ -12,16 +12,16 @@ Smash pairs (larger becomes diff). Minimize final remaining weight.
 **Constraints** — `1 ≤ n ≤ 30`; `1 ≤ stones[i] ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="last-stone-weight-ii" /&gt; &lt;Bookmark problem-slug="last-stone-weight-ii" /&gt;
+<MarkSolved problem-slug="last-stone-weight-ii" /> <Bookmark problem-slug="last-stone-weight-ii" />
 
-&lt;InterviewTimer problem-slug="last-stone-weight-ii" /&gt;
+<InterviewTimer problem-slug="last-stone-weight-ii" />
 
 
 
@@ -78,11 +78,11 @@ int lastStoneWeightII(int[] stones) {
 - **Minimize sum diff** → subset-sum close to half.
 - **Return which stones on each side** → track parent choices.
 
-&lt;AiCompanion problem-slug="last-stone-weight-ii" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="last-stone-weight-ii" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)
 - [Target Sum](/problems/target-sum)
 
-&lt;FeedbackWidget problem-slug="last-stone-weight-ii" /&gt;
+<FeedbackWidget problem-slug="last-stone-weight-ii" />

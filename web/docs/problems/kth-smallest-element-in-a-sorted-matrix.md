@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Uber, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Uber, Bloomberg" />
 
 Given `n×n` matrix sorted row and column, return the k-th smallest element.
 
@@ -11,16 +11,16 @@ Given `n×n` matrix sorted row and column, return the k-th smallest element.
 **Constraints** — `1 ≤ n ≤ 300`; `1 ≤ k ≤ n²`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
   hint3="The feasibility check is O(n); total complexity is O(n log range)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="kth-smallest-element-in-a-sorted-matrix" /&gt; &lt;Bookmark problem-slug="kth-smallest-element-in-a-sorted-matrix" /&gt;
+<MarkSolved problem-slug="kth-smallest-element-in-a-sorted-matrix" /> <Bookmark problem-slug="kth-smallest-element-in-a-sorted-matrix" />
 
-&lt;InterviewTimer problem-slug="kth-smallest-element-in-a-sorted-matrix" /&gt;
+<InterviewTimer problem-slug="kth-smallest-element-in-a-sorted-matrix" />
 
 
 
@@ -92,7 +92,7 @@ int kthSmallest(int[][] m, int k) {
 - **BS on value** is cleaner for max n; heap wins for small n.
 - **Kth in unsorted** → Quickselect or heap.
 
-&lt;AiCompanion problem-slug="kth-smallest-element-in-a-sorted-matrix" pattern-hint="binary search on answer" /&gt;
+<AiCompanion problem-slug="kth-smallest-element-in-a-sorted-matrix" pattern-hint="binary search on answer" />
 
 ## Related problems
 
@@ -100,4 +100,4 @@ int kthSmallest(int[][] m, int k) {
 - [Median of Two Sorted Arrays](/problems/median-of-two-sorted-arrays)
 - [Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/) — same staircase walk
 
-&lt;FeedbackWidget problem-slug="kth-smallest-element-in-a-sorted-matrix" /&gt;
+<FeedbackWidget problem-slug="kth-smallest-element-in-a-sorted-matrix" />

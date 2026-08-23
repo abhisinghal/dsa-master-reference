@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/divide-conquer)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 For each index `i`, return the number of `j > i` with `nums[j] < nums[i]`.
 
@@ -11,16 +11,16 @@ For each index `i`, return the number of `j > i` with `nums[j] < nums[i]`.
 **Constraints** — `1 ≤ n ≤ 10⁵`; values fit in `int`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
   hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."
   hint3="For count-of-X-across-boundary, two-pointer walk during the merge step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="divide-conquer-inversions" /&gt; &lt;Bookmark problem-slug="divide-conquer-inversions" /&gt;
+<MarkSolved problem-slug="divide-conquer-inversions" /> <Bookmark problem-slug="divide-conquer-inversions" />
 
-&lt;InterviewTimer problem-slug="divide-conquer-inversions" /&gt;
+<InterviewTimer problem-slug="divide-conquer-inversions" />
 
 
 
@@ -154,7 +154,7 @@ void mergeSort(int[] nums, Integer[] idx, int lo, int hi) {
 - **You know BIT well** → shorter code, easier to explain.
 - **You want to reuse merge sort** → same skeleton solves Reverse Pairs, Count of Range Sum, Global-and-Local Inversions.
 
-&lt;AiCompanion problem-slug="divide-conquer-inversions" pattern-hint="divide & conquer" /&gt;
+<AiCompanion problem-slug="divide-conquer-inversions" pattern-hint="divide & conquer" />
 
 ## Related problems (same ladder applies)
 
@@ -163,4 +163,4 @@ void mergeSort(int[] nums, Integer[] idx, int lo, int hi) {
 - [Global and Local Inversions](https://leetcode.com/problems/global-and-local-inversions/)
 - [Sort List](https://leetcode.com/problems/sort-list/) — merge sort on linked list
 
-&lt;FeedbackWidget problem-slug="divide-conquer-inversions" /&gt;
+<FeedbackWidget problem-slug="divide-conquer-inversions" />

@@ -1,6 +1,6 @@
 # Google Interview Kit
 
-&lt;PatternVideo pattern-name="Google Interview Kit" duration="prep video coming soon" /&gt;
+<PatternVideo pattern-name="Google Interview Kit" duration="prep video coming soon" />
 
 Google's L4–L6 interviews emphasize **DP**, **Graph algorithms**, **Backtracking**, and **Divide & Conquer** — with sharp attention to **correctness proofs** and **complexity analysis**.
 
@@ -45,9 +45,9 @@ Google's L4–L6 interviews emphasize **DP**, **Graph algorithms**, **Backtracki
 - **Code quality** — variable naming, function decomposition, no dead code.
 - **Follow-up scaling** — "What if n = 10⁹?"
 
-&lt;SocialProof /&gt;
+<SocialProof />
 
-&lt;EmailCapture /&gt;
+<EmailCapture />
 
 <Callout kind="pat" title="Data disclaimer">
 Google interview kits are curated from public interview reports. Not from Google insider knowledge.

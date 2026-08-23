@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Union-Find" duration="8–12 min" />
+
 <PatternProgress pattern-id="union-find" problems="number-of-provinces, accounts-merge, redundant-connection, number-of-islands-ii, most-stones-removed-with-same-row-or-column, connecting-cities-with-minimum-cost, min-cost-to-connect-all-points, optimize-water-distribution-in-a-village, find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />
 
 

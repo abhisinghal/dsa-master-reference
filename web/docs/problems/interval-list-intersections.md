@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Interval List Intersections](https://leetcode.com/problems/interval-list-intersections/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
-&lt;CompanyTags companies="Meta, Google, Amazon" /&gt;
+<CompanyTags companies="Meta, Google, Amazon" />
 
 Two lists of **sorted, disjoint** intervals. Return their intersection.
 
@@ -12,16 +12,16 @@ Two lists of **sorted, disjoint** intervals. Return their intersection.
 **Constraints** — `0 ≤ A.length, B.length ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
   hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="interval-list-intersections" /&gt; &lt;Bookmark problem-slug="interval-list-intersections" /&gt;
+<MarkSolved problem-slug="interval-list-intersections" /> <Bookmark problem-slug="interval-list-intersections" />
 
-&lt;InterviewTimer problem-slug="interval-list-intersections" /&gt;
+<InterviewTimer problem-slug="interval-list-intersections" />
 
 
 
@@ -86,7 +86,7 @@ int[][] intervalIntersection(int[][] A, int[][] B) {
 - **k lists intersection** → generalize with k pointers; complexity O(N·k).
 - **"Union of intervals"** → merge intervals template instead.
 
-&lt;AiCompanion problem-slug="interval-list-intersections" pattern-hint="merge intervals" /&gt;
+<AiCompanion problem-slug="interval-list-intersections" pattern-hint="merge intervals" />
 
 ## Related problems
 
@@ -94,6 +94,6 @@ int[][] intervalIntersection(int[][] A, int[][] B) {
 - [Employee Free Time](/problems/employee-free-time) — k-list union
 - [Interval Union / Difference] — variants
 
-&lt;FeedbackWidget problem-slug="interval-list-intersections" /&gt;
+<FeedbackWidget problem-slug="interval-list-intersections" />
 
-&lt;RelatedProblems problems="insert-interval::Insert Interval|my-calendar-ii::My Calendar II|merge-intervals-classic::Merge Intervals Classic" /&gt;
+<RelatedProblems problems="insert-interval::Insert Interval|my-calendar-ii::My Calendar II|merge-intervals-classic::Merge Intervals Classic" />

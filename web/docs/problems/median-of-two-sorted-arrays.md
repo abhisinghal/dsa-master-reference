@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Adobe, Apple" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Adobe, Apple" />
 
 Given two sorted arrays, return the median in **O(log(min(m,n)))**.
 
@@ -11,16 +11,16 @@ Given two sorted arrays, return the median in **O(log(min(m,n)))**.
 **Constraints** — `0 ≤ n, m ≤ 1000`; total ≥ 1.
 
 
-&lt;Hints
+<Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
   hint3="The feasibility check is O(n); total complexity is O(n log range)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="median-of-two-sorted-arrays" /&gt; &lt;Bookmark problem-slug="median-of-two-sorted-arrays" /&gt;
+<MarkSolved problem-slug="median-of-two-sorted-arrays" /> <Bookmark problem-slug="median-of-two-sorted-arrays" />
 
-&lt;InterviewTimer problem-slug="median-of-two-sorted-arrays" /&gt;
+<InterviewTimer problem-slug="median-of-two-sorted-arrays" />
 
 
 
@@ -92,13 +92,13 @@ double findMedianSortedArrays(int[] A, int[] B) {
 - **"Median of k sorted"** → heap or divide-and-conquer.
 - **"kth of two sorted"** → same BS with different partition target.
 
-&lt;AiCompanion problem-slug="median-of-two-sorted-arrays" pattern-hint="binary search on answer" /&gt;
+<AiCompanion problem-slug="median-of-two-sorted-arrays" pattern-hint="binary search on answer" />
 
 ## Related problems
 
 - [Kth Smallest in Two Sorted Arrays](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
 - [Merge Two Sorted Lists](/problems/merge-two-sorted-lists)
 
-&lt;FeedbackWidget problem-slug="median-of-two-sorted-arrays" /&gt;
+<FeedbackWidget problem-slug="median-of-two-sorted-arrays" />
 
-&lt;RelatedProblems problems="search-in-rotated-sorted-array-ii::Search In Rotated Sorted Array II|split-array-largest-sum::Split Array Largest Sum|find-peak-element::Find Peak Element" /&gt;
+<RelatedProblems problems="search-in-rotated-sorted-array-ii::Search In Rotated Sorted Array II|split-array-largest-sum::Split Array Largest Sum|find-peak-element::Find Peak Element" />

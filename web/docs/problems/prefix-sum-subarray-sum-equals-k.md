@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
 
 Given an integer array `nums` (may contain negatives) and integer `k`, return the number of **contiguous subarrays** whose sum equals `k`.
 
@@ -13,16 +13,16 @@ Given an integer array `nums` (may contain negatives) and integer `k`, return th
 **Constraints** — `1 ≤ n ≤ 2·10⁴`; `-10³ ≤ nums[i] ≤ 10³`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="prefix-sum-subarray-sum-equals-k" /&gt; &lt;Bookmark problem-slug="prefix-sum-subarray-sum-equals-k" /&gt;
+<MarkSolved problem-slug="prefix-sum-subarray-sum-equals-k" /> <Bookmark problem-slug="prefix-sum-subarray-sum-equals-k" />
 
-&lt;InterviewTimer problem-slug="prefix-sum-subarray-sum-equals-k" /&gt;
+<InterviewTimer problem-slug="prefix-sum-subarray-sum-equals-k" />
 
 
 
@@ -149,7 +149,7 @@ int subarraySum(int[] nums, int k) {
 - **Cold interview** → walk brute → prefix reframing → hash map.
 - **Interviewer probes "what if all values are positive?"** → sliding window would work in O(n), O(1) space. But **negatives break sliding window** — this is why hash-map prefix is the general answer.
 
-&lt;AiCompanion problem-slug="prefix-sum-subarray-sum-equals-k" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="prefix-sum-subarray-sum-equals-k" pattern-hint="prefix sum" />
 
 ## Related problems (same ladder applies)
 
@@ -158,6 +158,6 @@ int subarraySum(int[] nums, int k) {
 - [Contiguous Array](https://leetcode.com/problems/contiguous-array/) — map 0→-1, then it's "sum equals 0"
 - [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/) — same skeleton
 
-&lt;FeedbackWidget problem-slug="prefix-sum-subarray-sum-equals-k" /&gt;
+<FeedbackWidget problem-slug="prefix-sum-subarray-sum-equals-k" />
 
-&lt;RelatedProblems problems="subarray-sums-divisible-by-k::Subarray Sums Divisible By K|car-pooling::Car Pooling|contiguous-array::Contiguous Array" /&gt;
+<RelatedProblems problems="subarray-sums-divisible-by-k::Subarray Sums Divisible By K|car-pooling::Car Pooling|contiguous-array::Contiguous Array" />

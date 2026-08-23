@@ -209,6 +209,15 @@ def escape_lt_gt_in_prose(body: str) -> str:
         r"DivideConquerAnim|QuickselectAnim|BacktrackingAnim|"
         r"TwoPointersAnim|FastSlowAnim|BinarySearchAnim|HeapAnim|"
         r"BFSGridAnim|DFSGridAnim|DpFillAnim|TrieWalkAnim|"
+        r"ComplexityCurve|PlaybookPhases|DsStateMachine|"
+        r"StackQueueOps|HeapOps|BstOps|TrieOps|UnionFindOps|"
+        r"Hints|CompanyTags|EmailCapture|UserProfile|PatternVideo|AiCompanion|"
+        r"PatternProgress|RelatedPatterns|DueForReview|RelatedProblems|"
+        r"FeedbackWidget|ShortcutHint|OnboardingTour|PageAnalytics|"
+        r"MarkSolved|Bookmark|BookmarksList|StorageManager|SocialProof|"
+        r"SupportPanel|StreakTracker|ShareButtons|ReadingProgressBar|BackToTop|"
+        r"NotFound|ProblemStats|NotificationBell|PrintButton|InterviewTimer|"
+        r"RoadmapChecklist|StudyPlanGenerator|"
         r"ClientOnly|slot|script|style|template)"
         rf"{ATTR}\s*/?>",
         re.IGNORECASE | re.DOTALL

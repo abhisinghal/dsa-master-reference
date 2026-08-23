@@ -1,8 +1,9 @@
 # Recursion &amp; Backtracking
 
 
-&lt;PatternVideo pattern-name="Backtracking" duration="8–12 min" /&gt;
-&lt;PatternProgress pattern-id="backtracking" problems="n-queens, permutations, permutations-ii, subsets-ii, combination-sum-ii, combination-sum-iii, combination-sum-iv, letter-combinations-of-a-phone-number, palindrome-partitioning, n-queens-ii, sudoku-solver, valid-sudoku, beautiful-arrangement, unique-paths-iii, robot-room-cleaner, next-permutation, letter-case-permutation" /&gt;
+<PatternVideo pattern-name="Backtracking" duration="8–12 min" />
+
+<PatternProgress pattern-id="backtracking" problems="n-queens, permutations, permutations-ii, subsets-ii, combination-sum-ii, combination-sum-iii, combination-sum-iv, letter-combinations-of-a-phone-number, palindrome-partitioning, n-queens-ii, sudoku-solver, valid-sudoku, beautiful-arrangement, unique-paths-iii, robot-room-cleaner, next-permutation, letter-case-permutation" />
 
 
 
@@ -953,6 +954,6 @@ O(L) recursion stack; O(1) extra visited storage because the board is marked in 
   :questions='[{"q": "What is the key invariant of backtracking?", "choices": [{"text": "On return, state is restored to before the call", "correct": true, "explanation": "Choose → recurse → un-choose is the discipline."}, {"text": "Global state only", "correct": false}, {"text": "No recursion allowed", "correct": false}, {"text": "Purely functional (no mutation)", "correct": false, "explanation": "Mutation is fine as long as undone."}]}, {"q": "For Permutations II (with duplicates), how do you dedup?", "choices": [{"text": "Sort; skip `nums[i]` if equal to previous AND previous not used", "correct": true, "explanation": "Enforces canonical duplicate order."}, {"text": "Use a HashSet of results", "correct": false, "explanation": "Works but wasteful."}, {"text": "Never emit", "correct": false}, {"text": "Sort output at end", "correct": false, "explanation": "Doesn’t prevent generation."}]}, {"q": "For N-Queens II (count), what state accelerates the check?", "choices": [{"text": "Three bitmasks: cols, diag1, diag2", "correct": true, "explanation": "`avail = ~(cols | d1 | d2)`; each pick uses `avail & -avail`."}, {"text": "A 2D boolean board", "correct": false, "explanation": "Works but slower per step."}, {"text": "A HashSet of coordinates", "correct": false}, {"text": "DP", "correct": false}]}, {"q": "For Sudoku Solver, what is the \"MRV\" heuristic?", "choices": [{"text": "Pick the empty cell with the fewest legal digits next", "correct": true, "explanation": "Minimum Remaining Values — prunes hardest branches first."}, {"text": "Random ordering", "correct": false}, {"text": "Top-left first", "correct": false, "explanation": "Works but slow on hard puzzles."}, {"text": "Left-to-right", "correct": false}]}, {"q": "What is a common cause of TLE in backtracking?", "choices": [{"text": "Missing pruning (input not sorted, no early-return check)", "correct": true, "explanation": "Aggressive pruning is essential."}, {"text": "Wrong programming language", "correct": false}, {"text": "Too many comments", "correct": false}, {"text": "Using recursion", "correct": false}]}]'
 />
 
-&lt;PrintButton /&gt;
+<PrintButton />
 
-&lt;RelatedPatterns pattern-id="backtracking" /&gt;
+<RelatedPatterns pattern-id="backtracking" />

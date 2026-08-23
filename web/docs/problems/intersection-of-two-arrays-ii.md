@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Uber" />
 
 Return the multi-set intersection (each element appears `min(cnt_a, cnt_b)` times).
 
@@ -12,16 +12,16 @@ Return the multi-set intersection (each element appears `min(cnt_a, cnt_b)` time
 **Constraints** — `1 ≤ n, m ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="intersection-of-two-arrays-ii" /&gt; &lt;Bookmark problem-slug="intersection-of-two-arrays-ii" /&gt;
+<MarkSolved problem-slug="intersection-of-two-arrays-ii" /> <Bookmark problem-slug="intersection-of-two-arrays-ii" />
 
-&lt;InterviewTimer problem-slug="intersection-of-two-arrays-ii" /&gt;
+<InterviewTimer problem-slug="intersection-of-two-arrays-ii" />
 
 
 
@@ -84,11 +84,11 @@ int[] intersect(int[] nums1, int[] nums2) {
 - **One huge / one small** → hash on smaller.
 - **Streamed** → hash on materialized side.
 
-&lt;AiCompanion problem-slug="intersection-of-two-arrays-ii" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="intersection-of-two-arrays-ii" pattern-hint="two pointers" />
 
 ## Related problems
 
 - [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) — set version
 - [Merge Sorted Array](/problems/merge-sorted-array)
 
-&lt;FeedbackWidget problem-slug="intersection-of-two-arrays-ii" /&gt;
+<FeedbackWidget problem-slug="intersection-of-two-arrays-ii" />

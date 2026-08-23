@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-&lt;CompanyTags companies="Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Amazon, Google, Bloomberg" />
 
 Given a **circular** integer array `nums`, return the next greater element for each position. If none exists, output `-1`.
 
@@ -13,16 +13,16 @@ Given a **circular** integer array `nums`, return the next greater element for e
 **Constraints** — `1 ≤ n ≤ 10⁴`; `-10⁹ ≤ nums[i] ≤ 10⁹`.
 
 
-&lt;Hints
+<Hints
   hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
   hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
   hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="next-greater-element-ii" /&gt; &lt;Bookmark problem-slug="next-greater-element-ii" /&gt;
+<MarkSolved problem-slug="next-greater-element-ii" /> <Bookmark problem-slug="next-greater-element-ii" />
 
-&lt;InterviewTimer problem-slug="next-greater-element-ii" /&gt;
+<InterviewTimer problem-slug="next-greater-element-ii" />
 
 
 
@@ -114,7 +114,7 @@ int[] nextGreaterElements(int[] nums) {
 - **Return indices, not values** → push indices instead of values.
 - **Nearest greater in a **stream** ** → maintain the stack incrementally; answer only for finalized items.
 
-&lt;AiCompanion problem-slug="next-greater-element-ii" pattern-hint="monotonic stack" /&gt;
+<AiCompanion problem-slug="next-greater-element-ii" pattern-hint="monotonic stack" />
 
 ## Related problems
 
@@ -123,6 +123,6 @@ int[] nextGreaterElements(int[] nums) {
 - [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums) — count contribution per element
 - [Trapping Rain Water](/problems/trapping-rain-water) — monotonic stack solution exists
 
-&lt;FeedbackWidget problem-slug="next-greater-element-ii" /&gt;
+<FeedbackWidget problem-slug="next-greater-element-ii" />
 
-&lt;RelatedProblems problems="monotonic-stack-daily-temperatures::Monotonic Stack Daily Temperatures|sum-of-subarray-minimums::Sum Of Subarray Minimums|remove-k-digits::Remove K Digits" /&gt;
+<RelatedProblems problems="monotonic-stack-daily-temperatures::Monotonic Stack Daily Temperatures|sum-of-subarray-minimums::Sum Of Subarray Minimums|remove-k-digits::Remove K Digits" />

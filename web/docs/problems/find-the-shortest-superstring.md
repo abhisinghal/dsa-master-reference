@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Find the Shortest Superstring](https://leetcode.com/problems/find-the-shortest-superstring/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Return shortest string containing every given word as substring.
 
@@ -12,16 +12,16 @@ Return shortest string containing every given word as substring.
 **Example 2** — `words=["catg","ctaagt","gcta","ttca","atgcatc"]` → `"gctaagttcatgcatc"`
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="find-the-shortest-superstring" /&gt; &lt;Bookmark problem-slug="find-the-shortest-superstring" /&gt;
+<MarkSolved problem-slug="find-the-shortest-superstring" /> <Bookmark problem-slug="find-the-shortest-superstring" />
 
-&lt;InterviewTimer problem-slug="find-the-shortest-superstring" /&gt;
+<InterviewTimer problem-slug="find-the-shortest-superstring" />
 
 
 
@@ -103,10 +103,10 @@ int computeOverlap(String a, String b) {
 - **Small n TSP-style** → bitmask DP.
 - **Approximation** → greedy longest-overlap merge.
 
-&lt;AiCompanion problem-slug="find-the-shortest-superstring" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="find-the-shortest-superstring" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes)
 
-&lt;FeedbackWidget problem-slug="find-the-shortest-superstring" /&gt;
+<FeedbackWidget problem-slug="find-the-shortest-superstring" />

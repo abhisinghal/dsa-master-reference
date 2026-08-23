@@ -383,6 +383,6 @@ Forgetting `(a − b + MOD) % MOD` when a subtraction can go negative, or applyi
 
 </Callout>
 
-&lt;PrintButton /&gt;
+<PrintButton />
 
-&lt;RelatedPatterns pattern-id="math" /&gt;
+<RelatedPatterns pattern-id="math" />

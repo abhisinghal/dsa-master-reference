@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Find the Difference](https://leetcode.com/problems/find-the-difference/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 `t` is `s` shuffled with **one extra letter**. Return that letter.
 
@@ -12,16 +12,16 @@
 **Constraints** — `0 ≤ |s| ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="find-the-difference" /&gt; &lt;Bookmark problem-slug="find-the-difference" /&gt;
+<MarkSolved problem-slug="find-the-difference" /> <Bookmark problem-slug="find-the-difference" />
 
-&lt;InterviewTimer problem-slug="find-the-difference" /&gt;
+<InterviewTimer problem-slug="find-the-difference" />
 
 
 
@@ -84,7 +84,7 @@ char findTheDifference(String s, String t) {
 - **"Multiple extra chars"** → count map.
 - **"Which position was added"** → walk both with two pointers.
 
-&lt;AiCompanion problem-slug="find-the-difference" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="find-the-difference" pattern-hint="bit manipulation" />
 
 ## Related problems
 
@@ -92,6 +92,6 @@ char findTheDifference(String s, String t) {
 - [Single Number](/problems/bit-manip-single-number)
 - [Valid Anagram](/problems/valid-anagram)
 
-&lt;FeedbackWidget problem-slug="find-the-difference" /&gt;
+<FeedbackWidget problem-slug="find-the-difference" />
 
-&lt;RelatedProblems problems="reverse-bits::Reverse Bits|single-number::Single Number|power-of-two::Power Of Two" /&gt;
+<RelatedProblems problems="reverse-bits::Reverse Bits|single-number::Single Number|power-of-two::Power Of Two" />

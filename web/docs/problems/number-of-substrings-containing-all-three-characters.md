@@ -11,16 +11,16 @@ Given a string `s` over `{a, b, c}`, return the number of substrings containing 
 **Constraints** — `3 ≤ n ≤ 5 · 10⁴`. `s[i] ∈ {a, b, c}`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="number-of-substrings-containing-all-three-characters" /&gt; &lt;Bookmark problem-slug="number-of-substrings-containing-all-three-characters" /&gt;
+<MarkSolved problem-slug="number-of-substrings-containing-all-three-characters" /> <Bookmark problem-slug="number-of-substrings-containing-all-three-characters" />
 
-&lt;InterviewTimer problem-slug="number-of-substrings-containing-all-three-characters" /&gt;
+<InterviewTimer problem-slug="number-of-substrings-containing-all-three-characters" />
 
 
 
@@ -136,7 +136,7 @@ int numberOfSubstringsLast(String s) {
 - **Generalize to k distinct required chars** → last-seen extends to `min(lastX) + 1`.
 - **"Contains at least K of each char"** → this becomes a `need[]/have[]` problem — see [Minimum Window Substring](/problems/minimum-window-substring).
 
-&lt;AiCompanion problem-slug="number-of-substrings-containing-all-three-characters" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="number-of-substrings-containing-all-three-characters" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -144,6 +144,6 @@ int numberOfSubstringsLast(String s) {
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)
 
-&lt;FeedbackWidget problem-slug="number-of-substrings-containing-all-three-characters" /&gt;
+<FeedbackWidget problem-slug="number-of-substrings-containing-all-three-characters" />
 
-&lt;RelatedProblems problems="minimum-size-subarray-sum::Minimum Size Subarray Sum|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|count-number-of-nice-subarrays::Count Number Of Nice Subarrays" /&gt;
+<RelatedProblems problems="minimum-size-subarray-sum::Minimum Size Subarray Sum|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|count-number-of-nice-subarrays::Count Number Of Nice Subarrays" />

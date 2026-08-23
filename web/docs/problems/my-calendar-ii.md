@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: My Calendar II](https://leetcode.com/problems/my-calendar-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sweep-line)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 Design `MyCalendarTwo`. `book(start, end)` returns `true` iff the new event can be added without causing a **triple** overlap.
 
@@ -24,16 +24,16 @@ c.book(25, 55); // true
 **Constraints** — `≤ 1000` `book` calls; `0 ≤ start < end ≤ 10⁹`.
 
 
-&lt;Hints
+<Hints
   hint1="Turn events into `(time, +1/-1)` pairs. What’s the ’active count’ or ’max concurrent’?"
   hint2="Sort events by time; break ties consistently (end before start for ’meetings’, or vice versa)."
   hint3="Sweep; maintain a running count/set. Max active gives room count; drops give free slots."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="my-calendar-ii" /&gt; &lt;Bookmark problem-slug="my-calendar-ii" /&gt;
+<MarkSolved problem-slug="my-calendar-ii" /> <Bookmark problem-slug="my-calendar-ii" />
 
-&lt;InterviewTimer problem-slug="my-calendar-ii" /&gt;
+<InterviewTimer problem-slug="my-calendar-ii" />
 
 
 
@@ -117,7 +117,7 @@ class MyCalendarTwo2 {
 - **"My Calendar k"** (no k-th overlap) → delta map + threshold.
 - **Streaming with heavy queries** → segment tree with lazy prop.
 
-&lt;AiCompanion problem-slug="my-calendar-ii" pattern-hint="sweep line" /&gt;
+<AiCompanion problem-slug="my-calendar-ii" pattern-hint="sweep line" />
 
 ## Related problems
 
@@ -125,6 +125,6 @@ class MyCalendarTwo2 {
 - [My Calendar III](https://leetcode.com/problems/my-calendar-iii/) — return current max concurrency
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
 
-&lt;FeedbackWidget problem-slug="my-calendar-ii" /&gt;
+<FeedbackWidget problem-slug="my-calendar-ii" />
 
-&lt;RelatedProblems problems="merge-intervals-classic::Merge Intervals Classic|insert-interval::Insert Interval|remove-covered-intervals::Remove Covered Intervals" /&gt;
+<RelatedProblems problems="merge-intervals-classic::Merge Intervals Classic|insert-interval::Insert Interval|remove-covered-intervals::Remove Covered Intervals" />

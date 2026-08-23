@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 Koko has `n` piles of bananas, `piles[i]` in each. She can eat at speed `k` bananas/hour. Each hour she picks one pile; if it has ≥ `k` bananas she eats `k`, otherwise she eats the whole pile (and rests the remainder of that hour). She must finish all piles in `h` hours. Return the minimum `k`.
 
@@ -13,16 +13,16 @@ Koko has `n` piles of bananas, `piles[i]` in each. She can eat at speed `k` bana
 **Constraints** — `1 ≤ n ≤ 10⁴`; `1 ≤ piles[i] ≤ 10⁹`; `n ≤ h ≤ 10⁹`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
   hint3="The feasibility check is O(n); total complexity is O(n log range)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="bs-on-answer-koko-bananas" /&gt; &lt;Bookmark problem-slug="bs-on-answer-koko-bananas" /&gt;
+<MarkSolved problem-slug="bs-on-answer-koko-bananas" /> <Bookmark problem-slug="bs-on-answer-koko-bananas" />
 
-&lt;InterviewTimer problem-slug="bs-on-answer-koko-bananas" /&gt;
+<InterviewTimer problem-slug="bs-on-answer-koko-bananas" />
 
 
 
@@ -112,7 +112,7 @@ private boolean feasible(int[] piles, int k, int h) {
 - **"Minimum X such that … works"** or **"maximum X such that … works"** → BS on answer.
 - **Sanity-check the feasibility direction**: `feasible(minSpeed)` should be `false`, `feasible(maxSpeed)` should be `true`. If not, you have the polarity wrong.
 
-&lt;AiCompanion problem-slug="bs-on-answer-koko-bananas" pattern-hint="binary search on answer" /&gt;
+<AiCompanion problem-slug="bs-on-answer-koko-bananas" pattern-hint="binary search on answer" />
 
 ## Related problems (same ladder applies)
 
@@ -121,4 +121,4 @@ private boolean feasible(int[] piles, int k, int h) {
 - [Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/) — real-number BS on max gap
 - [Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/) — BS on the partition point
 
-&lt;FeedbackWidget problem-slug="bs-on-answer-koko-bananas" /&gt;
+<FeedbackWidget problem-slug="bs-on-answer-koko-bananas" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Number of Islands](https://leetcode.com/problems/number-of-islands/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dfs)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple" />
 
 Count connected components of `'1'`s in a binary grid.
 
@@ -11,16 +11,16 @@ Count connected components of `'1'`s in a binary grid.
 **Constraints** — `1 ≤ m, n ≤ 300`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="number-of-islands" /&gt; &lt;Bookmark problem-slug="number-of-islands" /&gt;
+<MarkSolved problem-slug="number-of-islands" /> <Bookmark problem-slug="number-of-islands" />
 
-&lt;InterviewTimer problem-slug="number-of-islands" /&gt;
+<InterviewTimer problem-slug="number-of-islands" />
 
 
 
@@ -75,7 +75,7 @@ Union adjacent `'1'`s; count components at end. Useful for streaming (Islands II
 - **Deep recursion risk** → BFS.
 - **Streaming land additions** → UF (see [Number of Islands II](/problems/number-of-islands-ii)).
 
-&lt;AiCompanion problem-slug="number-of-islands" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="number-of-islands" pattern-hint="hashing" />
 
 ## Related problems
 
@@ -83,4 +83,4 @@ Union adjacent `'1'`s; count components at end. Useful for streaming (Islands II
 - [Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
 - [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/)
 
-&lt;FeedbackWidget problem-slug="number-of-islands" /&gt;
+<FeedbackWidget problem-slug="number-of-islands" />

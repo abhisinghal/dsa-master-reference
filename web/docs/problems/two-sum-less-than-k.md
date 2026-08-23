@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Two Sum Less Than K](https://leetcode.com/problems/two-sum-less-than-k/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Return max sum `< k` from any pair, or `-1`.
 
@@ -12,16 +12,16 @@ Return max sum `< k` from any pair, or `-1`.
 **Constraints** — `1 ≤ n ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="two-sum-less-than-k" /&gt; &lt;Bookmark problem-slug="two-sum-less-than-k" /&gt;
+<MarkSolved problem-slug="two-sum-less-than-k" /> <Bookmark problem-slug="two-sum-less-than-k" />
 
-&lt;InterviewTimer problem-slug="two-sum-less-than-k" /&gt;
+<InterviewTimer problem-slug="two-sum-less-than-k" />
 
 
 
@@ -81,11 +81,11 @@ int twoSumLessThanK(int[] nums, int k) {
 - **Bounded values** → bucket count for O(n).
 - **"≤ k" or "≥ k"** → symmetric variants.
 
-&lt;AiCompanion problem-slug="two-sum-less-than-k" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="two-sum-less-than-k" pattern-hint="hashing" />
 
 ## Related problems
 
 - [Two Sum II](/problems/two-sum-ii-input-array-is-sorted)
 - [3Sum Smaller](/problems/3sum-smaller)
 
-&lt;FeedbackWidget problem-slug="two-sum-less-than-k" /&gt;
+<FeedbackWidget problem-slug="two-sum-less-than-k" />

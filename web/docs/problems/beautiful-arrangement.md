@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Beautiful Arrangement](https://leetcode.com/problems/beautiful-arrangement/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i == 0` OR `i % a[i] == 0`.
 
@@ -12,16 +12,16 @@ Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i =
 **Constraints** — `1 ≤ n ≤ 15`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="beautiful-arrangement" /&gt; &lt;Bookmark problem-slug="beautiful-arrangement" /&gt;
+<MarkSolved problem-slug="beautiful-arrangement" /> <Bookmark problem-slug="beautiful-arrangement" />
 
-&lt;InterviewTimer problem-slug="beautiful-arrangement" /&gt;
+<InterviewTimer problem-slug="beautiful-arrangement" />
 
 
 
@@ -94,13 +94,13 @@ int countArrangementBM(int n) {
 - **n ≤ 15** → bitmask DP is clean.
 - **Larger n** → no polynomial algo.
 
-&lt;AiCompanion problem-slug="beautiful-arrangement" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="beautiful-arrangement" pattern-hint="backtracking" />
 
 ## Related problems
 
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other)
 - [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)
 
-&lt;FeedbackWidget problem-slug="beautiful-arrangement" /&gt;
+<FeedbackWidget problem-slug="beautiful-arrangement" />
 
-&lt;RelatedProblems problems="permutations-ii::Permutations II|sudoku-solver::Sudoku Solver|combination-sum-ii::Combination Sum II" /&gt;
+<RelatedProblems problems="permutations-ii::Permutations II|sudoku-solver::Sudoku Solver|combination-sum-ii::Combination Sum II" />

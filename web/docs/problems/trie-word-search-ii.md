@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Word Search II](https://leetcode.com/problems/word-search-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" />
 
 Given `board[m][n]` of letters and a dictionary `words`, return all words in `words` that can be traced through adjacent cells (no cell reused within a single word).
 
@@ -11,16 +11,16 @@ Given `board[m][n]` of letters and a dictionary `words`, return all words in `wo
 **Constraints** — `1 ≤ m, n ≤ 12`; up to 3·10⁴ words.
 
 
-&lt;Hints
+<Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
   hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="trie-word-search-ii" /&gt; &lt;Bookmark problem-slug="trie-word-search-ii" /&gt;
+<MarkSolved problem-slug="trie-word-search-ii" /> <Bookmark problem-slug="trie-word-search-ii" />
 
-&lt;InterviewTimer problem-slug="trie-word-search-ii" /&gt;
+<InterviewTimer problem-slug="trie-word-search-ii" />
 
 
 
@@ -133,7 +133,7 @@ void dfs(char[][] b, int r, int c, TrieNode node, List<String> out) {
 - **One word, big board** → plain DFS is fine.
 - **Interviewer probes "any way to prune early?"** → the trie IS the pruner.
 
-&lt;AiCompanion problem-slug="trie-word-search-ii" pattern-hint="trie" /&gt;
+<AiCompanion problem-slug="trie-word-search-ii" pattern-hint="trie" />
 
 ## Related problems (same ladder applies)
 
@@ -142,6 +142,6 @@ void dfs(char[][] b, int r, int c, TrieNode node, List<String> out) {
 - [Replace Words](https://leetcode.com/problems/replace-words/) — trie for shortest root prefix
 - [Stream of Characters](https://leetcode.com/problems/stream-of-characters/) — trie in reverse
 
-&lt;FeedbackWidget problem-slug="trie-word-search-ii" /&gt;
+<FeedbackWidget problem-slug="trie-word-search-ii" />
 
-&lt;RelatedProblems problems="replace-words::Replace Words|stream-of-characters::Stream Of Characters|word-search-ii::Word Search II" /&gt;
+<RelatedProblems problems="replace-words::Replace Words|stream-of-characters::Stream Of Characters|word-search-ii::Word Search II" />

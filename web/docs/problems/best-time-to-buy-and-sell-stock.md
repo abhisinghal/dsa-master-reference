@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg, Adobe" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg, Adobe" />
 
 At most one buy + one sell. Max profit.
 
@@ -12,16 +12,16 @@ At most one buy + one sell. Max profit.
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock" /&gt; &lt;Bookmark problem-slug="best-time-to-buy-and-sell-stock" /&gt;
+<MarkSolved problem-slug="best-time-to-buy-and-sell-stock" /> <Bookmark problem-slug="best-time-to-buy-and-sell-stock" />
 
-&lt;InterviewTimer problem-slug="best-time-to-buy-and-sell-stock" /&gt;
+<InterviewTimer problem-slug="best-time-to-buy-and-sell-stock" />
 
 
 
@@ -80,7 +80,7 @@ int maxProfit(int[] prices) {
 - **Unlimited transactions** → sum positive diffs (see [Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)).
 - **k transactions** → DP (see [Stock IV](/problems/best-time-to-buy-and-sell-stock-iv)).
 
-&lt;AiCompanion problem-slug="best-time-to-buy-and-sell-stock" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="best-time-to-buy-and-sell-stock" pattern-hint="greedy" />
 
 ## Related problems
 
@@ -88,6 +88,6 @@ int maxProfit(int[] prices) {
 - [With Cooldown](/problems/best-time-to-buy-and-sell-stock-with-cooldown)
 - [With Transaction Fee](/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
 
-&lt;FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock" /&gt;
+<FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock" />
 
-&lt;RelatedProblems problems="gas-station::Gas Station|non-overlapping-intervals::Non Overlapping Intervals|jump-game::Jump Game" /&gt;
+<RelatedProblems problems="gas-station::Gas Station|non-overlapping-intervals::Non Overlapping Intervals|jump-game::Jump Game" />

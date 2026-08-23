@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Find Peak Element](https://leetcode.com/problems/find-peak-element/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/binary-search)
 
-&lt;CompanyTags companies="Meta, Google, Amazon, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Google, Amazon, Bloomberg" />
 
 A peak is an element strictly greater than its neighbors. Given `nums` (with `nums[-1] = nums[n] = -∞`), return the index of any peak. Must run in **O(log n)**.
 
@@ -13,16 +13,16 @@ A peak is an element strictly greater than its neighbors. Given `nums` (with `nu
 **Constraints** — `1 ≤ n ≤ 1000`; `-2³¹ ≤ nums[i] ≤ 2³¹ − 1`; adjacent values differ (no plateau).
 
 
-&lt;Hints
+<Hints
   hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
   hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."
   hint3="For rotated arrays: one half is always sorted — compare mid with lo (or hi) to detect which side."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="find-peak-element" /&gt; &lt;Bookmark problem-slug="find-peak-element" /&gt;
+<MarkSolved problem-slug="find-peak-element" /> <Bookmark problem-slug="find-peak-element" />
 
-&lt;InterviewTimer problem-slug="find-peak-element" /&gt;
+<InterviewTimer problem-slug="find-peak-element" />
 
 
 
@@ -95,7 +95,7 @@ O(n) linear pass; rejected.
 - **"Peak in 2D matrix"** → recurse on rows/cols, similar BS idea (LC 1901).
 - **"Peak with plateau"** → strict inequality assumption fails; problem becomes harder.
 
-&lt;AiCompanion problem-slug="find-peak-element" pattern-hint="binary search" /&gt;
+<AiCompanion problem-slug="find-peak-element" pattern-hint="binary search" />
 
 ## Related problems
 
@@ -103,6 +103,6 @@ O(n) linear pass; rejected.
 - [Peak Index in a Mountain Array](https://leetcode.com/problems/peak-index-in-a-mountain-array/) — guaranteed single peak
 - [Find a Peak Element II](https://leetcode.com/problems/find-a-peak-element-ii/) — 2D
 
-&lt;FeedbackWidget problem-slug="find-peak-element" /&gt;
+<FeedbackWidget problem-slug="find-peak-element" />
 
-&lt;RelatedProblems problems="search-in-rotated-sorted-array-ii::Search In Rotated Sorted Array II|binary-search-rotated-sorted::Binary Search Rotated Sorted|binary-search::Binary Search" /&gt;
+<RelatedProblems problems="search-in-rotated-sorted-array-ii::Search In Rotated Sorted Array II|binary-search-rotated-sorted::Binary Search Rotated Sorted|binary-search::Binary Search" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Parallel Courses](https://leetcode.com/problems/parallel-courses/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Given `n` courses and prerequisites `[a, b]` (must take `a` before `b`), each semester you can take any courses whose prereqs are met. Return the min number of semesters. `-1` if impossible.
 
@@ -12,16 +12,16 @@ Given `n` courses and prerequisites `[a, b]` (must take `a` before `b`), each se
 **Constraints** — `1 ≤ n ≤ 5000`.
 
 
-&lt;Hints
+<Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
   hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="parallel-courses" /&gt; &lt;Bookmark problem-slug="parallel-courses" /&gt;
+<MarkSolved problem-slug="parallel-courses" /> <Bookmark problem-slug="parallel-courses" />
 
-&lt;InterviewTimer problem-slug="parallel-courses" /&gt;
+<InterviewTimer problem-slug="parallel-courses" />
 
 
 
@@ -91,7 +91,7 @@ int minimumSemesters(int n, int[][] relations) {
 - **"Order courses list"** → flat toposort.
 - **Course capacity ≤ k per semester** → see [Parallel Courses III](https://leetcode.com/problems/parallel-courses-iii/) — DP on levels.
 
-&lt;AiCompanion problem-slug="parallel-courses" pattern-hint="topological sort" /&gt;
+<AiCompanion problem-slug="parallel-courses" pattern-hint="topological sort" />
 
 ## Related problems
 
@@ -99,6 +99,6 @@ int minimumSemesters(int n, int[][] relations) {
 - [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
 - [Alien Dictionary](/problems/alien-dictionary)
 
-&lt;FeedbackWidget problem-slug="parallel-courses" /&gt;
+<FeedbackWidget problem-slug="parallel-courses" />
 
-&lt;RelatedProblems problems="course-schedule::Course Schedule|minimum-height-trees::Minimum Height Trees|sequence-reconstruction::Sequence Reconstruction" /&gt;
+<RelatedProblems problems="course-schedule::Course Schedule|minimum-height-trees::Minimum Height Trees|sequence-reconstruction::Sequence Reconstruction" />

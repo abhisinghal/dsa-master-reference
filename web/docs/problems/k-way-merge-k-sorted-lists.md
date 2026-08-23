@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/k-way-merge)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Adobe, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Adobe, Uber" />
 
 Merge `k` sorted linked lists into one sorted list.
 
@@ -11,16 +11,16 @@ Merge `k` sorted linked lists into one sorted list.
 **Constraints** — `k ≤ 10⁴`; total nodes `N ≤ 10⁴`; values `-10⁴..10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="You have k sorted sequences. Which element is globally next?"
   hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."
   hint3="For ’smallest range covering k lists’, track max-in-heap; window is [minInHeap, maxSeen]."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="k-way-merge-k-sorted-lists" /&gt; &lt;Bookmark problem-slug="k-way-merge-k-sorted-lists" /&gt;
+<MarkSolved problem-slug="k-way-merge-k-sorted-lists" /> <Bookmark problem-slug="k-way-merge-k-sorted-lists" />
 
-&lt;InterviewTimer problem-slug="k-way-merge-k-sorted-lists" /&gt;
+<InterviewTimer problem-slug="k-way-merge-k-sorted-lists" />
 
 
 
@@ -156,7 +156,7 @@ ListNode mergeKListsHeap(ListNode[] lists) {
 - **Streaming or k unknown at start** → min-heap.
 - **k = 2 special case** → dummy-head splice (see Merge Two Sorted Lists).
 
-&lt;AiCompanion problem-slug="k-way-merge-k-sorted-lists" pattern-hint="k-way merge" /&gt;
+<AiCompanion problem-slug="k-way-merge-k-sorted-lists" pattern-hint="k-way merge" />
 
 ## Related problems (same ladder applies)
 
@@ -165,6 +165,6 @@ ListNode mergeKListsHeap(ListNode[] lists) {
 - [Ugly Number II](https://leetcode.com/problems/ugly-number-ii/) — 3-way merge with dedup
 - [Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) — heap of row heads
 
-&lt;FeedbackWidget problem-slug="k-way-merge-k-sorted-lists" /&gt;
+<FeedbackWidget problem-slug="k-way-merge-k-sorted-lists" />
 
-&lt;RelatedProblems problems="top-k-frequent-elements::Top K Frequent Elements|ugly-number-ii::Ugly Number II|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists" /&gt;
+<RelatedProblems problems="top-k-frequent-elements::Top K Frequent Elements|ugly-number-ii::Ugly Number II|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Grid with obstacles. Count paths from top-left to bottom-right (right/down).
 
@@ -12,16 +12,16 @@ Grid with obstacles. Count paths from top-left to bottom-right (right/down).
 **Constraints** — `1 ≤ m, n ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="unique-paths-ii" /&gt; &lt;Bookmark problem-slug="unique-paths-ii" /&gt;
+<MarkSolved problem-slug="unique-paths-ii" /> <Bookmark problem-slug="unique-paths-ii" />
 
-&lt;InterviewTimer problem-slug="unique-paths-ii" /&gt;
+<InterviewTimer problem-slug="unique-paths-ii" />
 
 
 
@@ -79,7 +79,7 @@ int uniquePathsWithObstacles(int[][] grid) {
 - **Return path** → track predecessors.
 - **Min sum instead** → same shape, min not add.
 
-&lt;AiCompanion problem-slug="unique-paths-ii" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="unique-paths-ii" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -87,6 +87,6 @@ int uniquePathsWithObstacles(int[][] grid) {
 - [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
 - [Minimum Falling Path Sum](/problems/minimum-falling-path-sum)
 
-&lt;FeedbackWidget problem-slug="unique-paths-ii" /&gt;
+<FeedbackWidget problem-slug="unique-paths-ii" />
 
-&lt;RelatedProblems problems="palindrome-partitioning-ii::Palindrome Partitioning II|min-cost-climbing-stairs::Min Cost Climbing Stairs|coin-change::Coin Change" /&gt;
+<RelatedProblems problems="palindrome-partitioning-ii::Palindrome Partitioning II|min-cost-climbing-stairs::Min Cost Climbing Stairs|coin-change::Coin Change" />

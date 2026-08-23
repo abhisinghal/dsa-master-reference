@@ -11,16 +11,16 @@ String of Q,W,E,R (length n divisible by 4). Return length of smallest substring
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="replace-the-substring-for-balanced-string" /&gt; &lt;Bookmark problem-slug="replace-the-substring-for-balanced-string" /&gt;
+<MarkSolved problem-slug="replace-the-substring-for-balanced-string" /> <Bookmark problem-slug="replace-the-substring-for-balanced-string" />
 
-&lt;InterviewTimer problem-slug="replace-the-substring-for-balanced-string" /&gt;
+<InterviewTimer problem-slug="replace-the-substring-for-balanced-string" />
 
 
 
@@ -81,7 +81,7 @@ int balancedString(String s) {
 - **Any character allowed as replacement** → this template.
 - **Fixed replacement char** → different constraint.
 
-&lt;AiCompanion problem-slug="replace-the-substring-for-balanced-string" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="replace-the-substring-for-balanced-string" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -89,4 +89,4 @@ int balancedString(String s) {
 - [Minimum Window Substring](/problems/minimum-window-substring)
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)
 
-&lt;FeedbackWidget problem-slug="replace-the-substring-for-balanced-string" /&gt;
+<FeedbackWidget problem-slug="replace-the-substring-for-balanced-string" />

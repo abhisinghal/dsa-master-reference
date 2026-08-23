@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Accounts Merge](https://leetcode.com/problems/accounts-merge/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Given accounts `[name, email1, email2, …]`, merge accounts sharing any email into one. Return merged accounts with emails sorted.
 
@@ -12,16 +12,16 @@ Given accounts `[name, email1, email2, …]`, merge accounts sharing any email i
 **Constraints** — total emails ≤ 30·10³.
 
 
-&lt;Hints
+<Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
   hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="accounts-merge" /&gt; &lt;Bookmark problem-slug="accounts-merge" /&gt;
+<MarkSolved problem-slug="accounts-merge" /> <Bookmark problem-slug="accounts-merge" />
 
-&lt;InterviewTimer problem-slug="accounts-merge" /&gt;
+<InterviewTimer problem-slug="accounts-merge" />
 
 
 
@@ -91,7 +91,7 @@ void union(int[] p, int a, int b) { p[find(p, a)] = find(p, b); }
 - **Static / one-shot** → DFS is fine.
 - **"Return count of merged accounts"** → count distinct roots.
 
-&lt;AiCompanion problem-slug="accounts-merge" pattern-hint="union-find" /&gt;
+<AiCompanion problem-slug="accounts-merge" pattern-hint="union-find" />
 
 ## Related problems
 
@@ -99,6 +99,6 @@ void union(int[] p, int a, int b) { p[find(p, a)] = find(p, b); }
 - [Redundant Connection](/problems/redundant-connection)
 - [Most Stones Removed with Same Row or Column](/problems/most-stones-removed-with-same-row-or-column)
 
-&lt;FeedbackWidget problem-slug="accounts-merge" /&gt;
+<FeedbackWidget problem-slug="accounts-merge" />
 
-&lt;RelatedProblems problems="min-cost-to-connect-all-points::Min Cost To Connect All Points|connecting-cities-with-minimum-cost::Connecting Cities With Minimum Cost|most-stones-removed-with-same-row-or-column::Most Stones Removed With Same Row Or Column" /&gt;
+<RelatedProblems problems="min-cost-to-connect-all-points::Min Cost To Connect All Points|connecting-cities-with-minimum-cost::Connecting Cities With Minimum Cost|most-stones-removed-with-same-row-or-column::Most Stones Removed With Same Row Or Column" />

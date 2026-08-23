@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Hamming Distance](https://leetcode.com/problems/hamming-distance/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Adobe" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Adobe" />
 
 Return the number of positions where the bits of `x` and `y` differ.
 
@@ -12,16 +12,16 @@ Return the number of positions where the bits of `x` and `y` differ.
 **Constraints** — `0 ≤ x, y ≤ 2³¹−1`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="hamming-distance" /&gt; &lt;Bookmark problem-slug="hamming-distance" /&gt;
+<MarkSolved problem-slug="hamming-distance" /> <Bookmark problem-slug="hamming-distance" />
 
-&lt;InterviewTimer problem-slug="hamming-distance" /&gt;
+<InterviewTimer problem-slug="hamming-distance" />
 
 
 
@@ -58,7 +58,7 @@ int hammingDistance(int x, int y) {
 - **"Sum of pairwise Hamming distances"** → per-bit counting; see [Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/).
 - **Manhattan-like "min flips to reach y"** → same popcount.
 
-&lt;AiCompanion problem-slug="hamming-distance" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="hamming-distance" pattern-hint="bit manipulation" />
 
 ## Related problems
 
@@ -66,6 +66,6 @@ int hammingDistance(int x, int y) {
 - [Number of 1 Bits](/problems/number-of-1-bits)
 - [XOR Sum problems]
 
-&lt;FeedbackWidget problem-slug="hamming-distance" /&gt;
+<FeedbackWidget problem-slug="hamming-distance" />
 
-&lt;RelatedProblems problems="number-of-1-bits::Number Of 1 Bits|power-of-two::Power Of Two|maximum-product-of-word-lengths::Maximum Product Of Word Lengths" /&gt;
+<RelatedProblems problems="number-of-1-bits::Number Of 1 Bits|power-of-two::Power Of Two|maximum-product-of-word-lengths::Maximum Product Of Word Lengths" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Balloons span `[xstart, xend]`. Arrow at x bursts every balloon whose span contains x. Min arrows.
 
@@ -12,16 +12,16 @@ Balloons span `[xstart, xend]`. Arrow at x bursts every balloon whose span conta
 **Constraints** — `1 ≤ n ≤ 10⁵`; `-2³¹ ≤ x ≤ 2³¹−1`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="minimum-number-of-arrows-to-burst-balloons" /&gt; &lt;Bookmark problem-slug="minimum-number-of-arrows-to-burst-balloons" /&gt;
+<MarkSolved problem-slug="minimum-number-of-arrows-to-burst-balloons" /> <Bookmark problem-slug="minimum-number-of-arrows-to-burst-balloons" />
 
-&lt;InterviewTimer problem-slug="minimum-number-of-arrows-to-burst-balloons" /&gt;
+<InterviewTimer problem-slug="minimum-number-of-arrows-to-burst-balloons" />
 
 
 
@@ -76,13 +76,13 @@ int findMinArrowShots(int[][] points) {
 - **"Min points to hit all intervals"** → sort by end + greedy.
 - **"Which balloons burst by each arrow"** → track intervals per arrow.
 
-&lt;AiCompanion problem-slug="minimum-number-of-arrows-to-burst-balloons" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="minimum-number-of-arrows-to-burst-balloons" pattern-hint="greedy" />
 
 ## Related problems
 
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
 
-&lt;FeedbackWidget problem-slug="minimum-number-of-arrows-to-burst-balloons" /&gt;
+<FeedbackWidget problem-slug="minimum-number-of-arrows-to-burst-balloons" />
 
-&lt;RelatedProblems problems="jump-game::Jump Game|course-schedule-iii::Course Schedule III|non-overlapping-intervals::Non Overlapping Intervals" /&gt;
+<RelatedProblems problems="jump-game::Jump Game|course-schedule-iii::Course Schedule III|non-overlapping-intervals::Non Overlapping Intervals" />

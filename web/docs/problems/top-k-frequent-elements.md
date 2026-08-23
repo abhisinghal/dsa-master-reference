@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/top-k-heap)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber, Bloomberg" />
 
 Given `nums` and integer `k`, return the `k` most frequent elements (any order).
 
@@ -12,16 +12,16 @@ Given `nums` and integer `k`, return the `k` most frequent elements (any order).
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ #distinct`.
 
 
-&lt;Hints
+<Hints
   hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
   hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."
   hint3="For ’k closest’ or ’k most frequent’, the heap’s comparator holds the distance/frequency metric."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="top-k-frequent-elements" /&gt; &lt;Bookmark problem-slug="top-k-frequent-elements" /&gt;
+<MarkSolved problem-slug="top-k-frequent-elements" /> <Bookmark problem-slug="top-k-frequent-elements" />
 
-&lt;InterviewTimer problem-slug="top-k-frequent-elements" /&gt;
+<InterviewTimer problem-slug="top-k-frequent-elements" />
 
 
 
@@ -139,7 +139,7 @@ int[] topKFrequentBucket(int[] nums, int k) {
 - **k tiny compared to m** → heap is idiomatic and easy to defend.
 - **Interviewer probes "beat log k"** → bucket sort. Trades a bit of space for O(n).
 
-&lt;AiCompanion problem-slug="top-k-frequent-elements" pattern-hint="top-K / heap" /&gt;
+<AiCompanion problem-slug="top-k-frequent-elements" pattern-hint="top-K / heap" />
 
 ## Related problems (same ladder applies)
 
@@ -148,6 +148,6 @@ int[] topKFrequentBucket(int[] nums, int k) {
 - [Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) — heap on rows
 - [Reorganize String](https://leetcode.com/problems/reorganize-string/) — max-heap on char frequencies
 
-&lt;FeedbackWidget problem-slug="top-k-frequent-elements" /&gt;
+<FeedbackWidget problem-slug="top-k-frequent-elements" />
 
-&lt;RelatedProblems problems="merge-two-sorted-lists::Merge Two Sorted Lists|kth-largest-element-in-a-stream::Kth Largest Element In A Stream|reorganize-string::Reorganize String" /&gt;
+<RelatedProblems problems="merge-two-sorted-lists::Merge Two Sorted Lists|kth-largest-element-in-a-stream::Kth Largest Element In A Stream|reorganize-string::Reorganize String" />

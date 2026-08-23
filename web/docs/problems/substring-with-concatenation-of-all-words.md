@@ -10,16 +10,16 @@ Find starting indices of substrings that are concatenations of every word in `wo
 **Constraints** — `1 ≤ |s| ≤ 10⁴`; each word ≤ 30 chars.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="substring-with-concatenation-of-all-words" /&gt; &lt;Bookmark problem-slug="substring-with-concatenation-of-all-words" /&gt;
+<MarkSolved problem-slug="substring-with-concatenation-of-all-words" /> <Bookmark problem-slug="substring-with-concatenation-of-all-words" />
 
-&lt;InterviewTimer problem-slug="substring-with-concatenation-of-all-words" /&gt;
+<InterviewTimer problem-slug="substring-with-concatenation-of-all-words" />
 
 
 
@@ -97,7 +97,7 @@ List<Integer> findSubstring(String s, String[] words) {
 - **Variable-length words** → totally different — DP on word breaks.
 - **Return only count** → same skeleton, count instead of appending.
 
-&lt;AiCompanion problem-slug="substring-with-concatenation-of-all-words" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="substring-with-concatenation-of-all-words" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -105,4 +105,4 @@ List<Integer> findSubstring(String s, String[] words) {
 - [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string)
 - [Permutation in String](/problems/permutation-in-string)
 
-&lt;FeedbackWidget problem-slug="substring-with-concatenation-of-all-words" /&gt;
+<FeedbackWidget problem-slug="substring-with-concatenation-of-all-words" />

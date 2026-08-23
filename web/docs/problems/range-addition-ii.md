@@ -11,16 +11,16 @@ Given matrix of zeros `m × n` and operations `[a, b]` that add 1 to every cell 
 **Constraints** — `1 ≤ m, n ≤ 4·10⁴`; `0 ≤ ops.length ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="range-addition-ii" /&gt; &lt;Bookmark problem-slug="range-addition-ii" /&gt;
+<MarkSolved problem-slug="range-addition-ii" /> <Bookmark problem-slug="range-addition-ii" />
 
-&lt;InterviewTimer problem-slug="range-addition-ii" /&gt;
+<InterviewTimer problem-slug="range-addition-ii" />
 
 
 
@@ -75,11 +75,11 @@ int maxCount(int m, int n, int[][] ops) {
 - **All rectangles anchored at corner** → intersection min trick.
 - **Arbitrary rectangle positions** → 2D difference array.
 
-&lt;AiCompanion problem-slug="range-addition-ii" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="range-addition-ii" pattern-hint="prefix sum" />
 
 ## Related problems
 
 - [Range Addition](/problems/range-addition)
 - [Matrix Block Sum](/problems/matrix-block-sum)
 
-&lt;FeedbackWidget problem-slug="range-addition-ii" /&gt;
+<FeedbackWidget problem-slug="range-addition-ii" />

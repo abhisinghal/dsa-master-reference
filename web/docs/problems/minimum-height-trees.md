@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Given an undirected tree of `n` nodes, return all nodes that when picked as root give minimum height tree. At most 2 exist.
 
@@ -12,16 +12,16 @@ Given an undirected tree of `n` nodes, return all nodes that when picked as root
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
   hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="minimum-height-trees" /&gt; &lt;Bookmark problem-slug="minimum-height-trees" /&gt;
+<MarkSolved problem-slug="minimum-height-trees" /> <Bookmark problem-slug="minimum-height-trees" />
 
-&lt;InterviewTimer problem-slug="minimum-height-trees" /&gt;
+<InterviewTimer problem-slug="minimum-height-trees" />
 
 
 
@@ -92,7 +92,7 @@ List<Integer> findMinHeightTrees(int n, int[][] edges) {
 - **General graph center** → different — use eccentricity / all-pairs BFS.
 - **"Return the actual height"** → 2-BFS: BFS from any node to find farthest u; BFS from u to find diameter.
 
-&lt;AiCompanion problem-slug="minimum-height-trees" pattern-hint="topological sort" /&gt;
+<AiCompanion problem-slug="minimum-height-trees" pattern-hint="topological sort" />
 
 ## Related problems
 
@@ -100,6 +100,6 @@ List<Integer> findMinHeightTrees(int n, int[][] edges) {
 - [Tree Diameter](https://leetcode.com/problems/tree-diameter/)
 - [Longest Path in Tree](https://leetcode.com/problems/longest-path-with-different-adjacent-characters/)
 
-&lt;FeedbackWidget problem-slug="minimum-height-trees" /&gt;
+<FeedbackWidget problem-slug="minimum-height-trees" />
 
-&lt;RelatedProblems problems="course-schedule::Course Schedule|sequence-reconstruction::Sequence Reconstruction|alien-dictionary::Alien Dictionary" /&gt;
+<RelatedProblems problems="course-schedule::Course Schedule|sequence-reconstruction::Sequence Reconstruction|alien-dictionary::Alien Dictionary" />

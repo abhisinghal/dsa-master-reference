@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Reverse Pairs](https://leetcode.com/problems/reverse-pairs/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/divide-conquer)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Count pairs `(i, j)` with `i < j` and `nums[i] > 2 · nums[j]`.
 
@@ -12,16 +12,16 @@ Count pairs `(i, j)` with `i < j` and `nums[i] > 2 · nums[j]`.
 **Constraints** — `1 ≤ n ≤ 5·10⁴`; `-2³¹ ≤ nums[i] ≤ 2³¹−1`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
   hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."
   hint3="For count-of-X-across-boundary, two-pointer walk during the merge step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="reverse-pairs" /&gt; &lt;Bookmark problem-slug="reverse-pairs" /&gt;
+<MarkSolved problem-slug="reverse-pairs" /> <Bookmark problem-slug="reverse-pairs" />
 
-&lt;InterviewTimer problem-slug="reverse-pairs" /&gt;
+<InterviewTimer problem-slug="reverse-pairs" />
 
 
 
@@ -94,7 +94,7 @@ int mergeSort(int[] a, int lo, int hi) {
 - **BIT alternative** → compress values; sweep left-to-right; BIT counts smaller / larger.
 - **k times threshold** → same skeleton with different pointer logic.
 
-&lt;AiCompanion problem-slug="reverse-pairs" pattern-hint="divide & conquer" /&gt;
+<AiCompanion problem-slug="reverse-pairs" pattern-hint="divide & conquer" />
 
 ## Related problems
 
@@ -102,6 +102,6 @@ int mergeSort(int[] a, int lo, int hi) {
 - [Global and Local Inversions](/problems/global-and-local-inversions)
 - [Count Inversions](/problems/divide-conquer-inversions)
 
-&lt;FeedbackWidget problem-slug="reverse-pairs" /&gt;
+<FeedbackWidget problem-slug="reverse-pairs" />
 
-&lt;RelatedProblems problems="count-of-range-sum::Count Of Range Sum|inversions::Inversions|sort-list::Sort List" /&gt;
+<RelatedProblems problems="count-of-range-sum::Count Of Range Sum|inversions::Inversions|sort-list::Sort List" />

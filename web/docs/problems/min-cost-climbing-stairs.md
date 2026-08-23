@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Meta, Google" /&gt;
+<CompanyTags companies="Amazon, Meta, Google" />
 
 Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end.
 
@@ -12,16 +12,16 @@ Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end
 **Constraints** — `2 ≤ n ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="min-cost-climbing-stairs" /&gt; &lt;Bookmark problem-slug="min-cost-climbing-stairs" /&gt;
+<MarkSolved problem-slug="min-cost-climbing-stairs" /> <Bookmark problem-slug="min-cost-climbing-stairs" />
 
-&lt;InterviewTimer problem-slug="min-cost-climbing-stairs" /&gt;
+<InterviewTimer problem-slug="min-cost-climbing-stairs" />
 
 
 
@@ -76,13 +76,13 @@ int minCostClimbingStairs(int[] cost) {
 - **Return steps taken** → track predecessors.
 - **k-step variants** → same skeleton with min over last k.
 
-&lt;AiCompanion problem-slug="min-cost-climbing-stairs" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="min-cost-climbing-stairs" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Climbing Stairs](/problems/climbing-stairs)
 - [House Robber](/problems/dp-house-robber)
 
-&lt;FeedbackWidget problem-slug="min-cost-climbing-stairs" /&gt;
+<FeedbackWidget problem-slug="min-cost-climbing-stairs" />
 
-&lt;RelatedProblems problems="longest-palindromic-subsequence::Longest Palindromic Subsequence|longest-common-subsequence::Longest Common Subsequence|climbing-stairs::Climbing Stairs" /&gt;
+<RelatedProblems problems="longest-palindromic-subsequence::Longest Palindromic Subsequence|longest-common-subsequence::Longest Common Subsequence|climbing-stairs::Climbing Stairs" />

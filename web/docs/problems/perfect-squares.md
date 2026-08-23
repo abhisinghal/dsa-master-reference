@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Perfect Squares](https://leetcode.com/problems/perfect-squares/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Min count of perfect squares summing to `n`.
 
@@ -12,16 +12,16 @@ Min count of perfect squares summing to `n`.
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="perfect-squares" /&gt; &lt;Bookmark problem-slug="perfect-squares" /&gt;
+<MarkSolved problem-slug="perfect-squares" /> <Bookmark problem-slug="perfect-squares" />
 
-&lt;InterviewTimer problem-slug="perfect-squares" /&gt;
+<InterviewTimer problem-slug="perfect-squares" />
 
 
 
@@ -75,11 +75,11 @@ Every positive integer = sum of ≤ 4 squares. Result ∈ {1,2,3,4}.
 - **"Fast bound"** → Lagrange trick.
 - **Return the squares** → DP with parent pointers.
 
-&lt;AiCompanion problem-slug="perfect-squares" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="perfect-squares" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Coin Change](/problems/coin-change)
 - [Word Break](https://leetcode.com/problems/word-break/)
 
-&lt;FeedbackWidget problem-slug="perfect-squares" /&gt;
+<FeedbackWidget problem-slug="perfect-squares" />

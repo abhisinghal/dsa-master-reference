@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Divide & Conquer" duration="8–12 min" />
+
 <PatternProgress pattern-id="divide-conquer" problems="inversions, count-of-range-sum, reverse-pairs, global-and-local-inversions, sort-list" />
 
 

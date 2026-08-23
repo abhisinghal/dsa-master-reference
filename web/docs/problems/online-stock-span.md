@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Online Stock Span](https://leetcode.com/problems/online-stock-span/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Design `StockSpanner`. Method `next(price)` returns the span of the current day — the max number of consecutive days (going back and including today) where the price was **less than or equal to** today's.
 
@@ -25,16 +25,16 @@ S.next(85);    // 6
 **Constraints** — `1 ≤ price ≤ 10⁵`; up to `10⁴` calls.
 
 
-&lt;Hints
+<Hints
   hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
   hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
   hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="online-stock-span" /&gt; &lt;Bookmark problem-slug="online-stock-span" /&gt;
+<MarkSolved problem-slug="online-stock-span" /> <Bookmark problem-slug="online-stock-span" />
 
-&lt;InterviewTimer problem-slug="online-stock-span" /&gt;
+<InterviewTimer problem-slug="online-stock-span" />
 
 
 
@@ -104,7 +104,7 @@ class StockSpanner {
 - **Offline max — no streaming** → non-streaming variant is [Daily Temperatures](/problems/monotonic-stack-daily-temperatures).
 - **"Span with equality reversed (strictly less)"** → change the pop condition to `< price`.
 
-&lt;AiCompanion problem-slug="online-stock-span" pattern-hint="monotonic stack" /&gt;
+<AiCompanion problem-slug="online-stock-span" pattern-hint="monotonic stack" />
 
 ## Related problems
 
@@ -112,6 +112,6 @@ class StockSpanner {
 - [Next Greater Element II](/problems/next-greater-element-ii) — circular sibling
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) — deque-based sibling
 
-&lt;FeedbackWidget problem-slug="online-stock-span" /&gt;
+<FeedbackWidget problem-slug="online-stock-span" />
 
-&lt;RelatedProblems problems="remove-k-digits::Remove K Digits|sum-of-subarray-minimums::Sum Of Subarray Minimums|next-greater-element-ii::Next Greater Element II" /&gt;
+<RelatedProblems problems="remove-k-digits::Remove K Digits|sum-of-subarray-minimums::Sum Of Subarray Minimums|next-greater-element-ii::Next Greater Element II" />

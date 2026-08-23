@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Fruit Into Baskets](https://leetcode.com/problems/fruit-into-baskets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Google, Meta, Amazon" /&gt;
+<CompanyTags companies="Google, Meta, Amazon" />
 
 Given an array `fruits` where `fruits[i]` is a type of fruit, and 2 baskets each holding a single fruit type, pick fruits from a contiguous subarray. Return the max number of fruits you can collect.
 
@@ -13,16 +13,16 @@ Given an array `fruits` where `fruits[i]` is a type of fruit, and 2 baskets each
 **Constraints** — `1 ≤ n ≤ 10⁵`; `fruits[i] ∈ [0, n−1]`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="fruit-into-baskets" /&gt; &lt;Bookmark problem-slug="fruit-into-baskets" /&gt;
+<MarkSolved problem-slug="fruit-into-baskets" /> <Bookmark problem-slug="fruit-into-baskets" />
 
-&lt;InterviewTimer problem-slug="fruit-into-baskets" /&gt;
+<InterviewTimer problem-slug="fruit-into-baskets" />
 
 
 
@@ -146,7 +146,7 @@ int totalFruitTwoTypes(int[] fruits) {
 - **"k ≠ 2" generalization** → see [Longest Substring with At Most K Distinct](/problems/longest-substring-with-at-most-k-distinct-characters).
 - **"Exactly 2 types, not at most"** → `exactly(2) = atMost(2) - atMost(1)`.
 
-&lt;AiCompanion problem-slug="fruit-into-baskets" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="fruit-into-baskets" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -154,6 +154,6 @@ int totalFruitTwoTypes(int[] fruits) {
 - [Max Consecutive Ones III](/problems/max-consecutive-ones-iii) — binary variant
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers) — count variant
 
-&lt;FeedbackWidget problem-slug="fruit-into-baskets" /&gt;
+<FeedbackWidget problem-slug="fruit-into-baskets" />
 
-&lt;RelatedProblems problems="subarrays-with-k-different-integers::Subarrays With K Different Integers|longest-repeating-character-replacement::Longest Repeating Character Replacement|sliding-window-longest-substring::Sliding Window Longest Substring" /&gt;
+<RelatedProblems problems="subarrays-with-k-different-integers::Subarrays With K Different Integers|longest-repeating-character-replacement::Longest Repeating Character Replacement|sliding-window-longest-substring::Sliding Window Longest Substring" />

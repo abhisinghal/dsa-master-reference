@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Wiggle Sort II](https://leetcode.com/problems/wiggle-sort-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Reorder `nums` so `a[0] < a[1] > a[2] < a[3] …` (strict inequality).
 
@@ -12,16 +12,16 @@ Reorder `nums` so `a[0] < a[1] > a[2] < a[3] …` (strict inequality).
 **Constraints** — `1 ≤ n ≤ 5·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="wiggle-sort-ii" /&gt; &lt;Bookmark problem-slug="wiggle-sort-ii" /&gt;
+<MarkSolved problem-slug="wiggle-sort-ii" /> <Bookmark problem-slug="wiggle-sort-ii" />
 
-&lt;InterviewTimer problem-slug="wiggle-sort-ii" /&gt;
+<InterviewTimer problem-slug="wiggle-sort-ii" />
 
 
 
@@ -84,7 +84,7 @@ Code is subtle — study the classic writeup before an interview.
 - **Best asymptotic + O(1) space** → Quickselect + virtual index.
 - **Wiggle non-strict** → simple pairwise swaps.
 
-&lt;AiCompanion problem-slug="wiggle-sort-ii" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="wiggle-sort-ii" pattern-hint="two pointers" />
 
 ## Related problems
 
@@ -92,4 +92,4 @@ Code is subtle — study the classic writeup before an interview.
 - [Kth Largest Element in an Array](/problems/quickselect-kth-largest)
 - [Sort Colors](https://leetcode.com/problems/sort-colors/) — Dutch partition
 
-&lt;FeedbackWidget problem-slug="wiggle-sort-ii" /&gt;
+<FeedbackWidget problem-slug="wiggle-sort-ii" />

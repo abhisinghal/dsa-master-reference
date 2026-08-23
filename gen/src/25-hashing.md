@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Hashing" duration="8–12 min" />
+
 <PatternProgress pattern-id="hashing" problems="hashing-two-sum, 3sum, two-sum-ii-input-array-is-sorted, two-sum-iii-data-structure-design, valid-anagram, isomorphic-strings, longest-consecutive-sequence, group-shifted-strings, maximum-product-subarray, number-of-islands, word-ladder, candy" />
 
 

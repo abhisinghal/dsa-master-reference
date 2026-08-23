@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Subsets II](https://leetcode.com/problems/subsets-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
 
 All **unique** subsets when nums may contain duplicates.
 
@@ -11,16 +11,16 @@ All **unique** subsets when nums may contain duplicates.
 **Constraints** — `1 ≤ n ≤ 10`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="subsets-ii" /&gt; &lt;Bookmark problem-slug="subsets-ii" /&gt;
+<MarkSolved problem-slug="subsets-ii" /> <Bookmark problem-slug="subsets-ii" />
 
-&lt;InterviewTimer problem-slug="subsets-ii" /&gt;
+<InterviewTimer problem-slug="subsets-ii" />
 
 
 
@@ -82,7 +82,7 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 - **Distinct** → simpler subsets bitmask.
 - **Fixed size k** → cut early when `path.size() == k`.
 
-&lt;AiCompanion problem-slug="subsets-ii" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="subsets-ii" pattern-hint="backtracking" />
 
 ## Related problems
 
@@ -90,6 +90,6 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 - [Combination Sum II](/problems/combination-sum-ii)
 - [Permutations II](/problems/permutations-ii)
 
-&lt;FeedbackWidget problem-slug="subsets-ii" /&gt;
+<FeedbackWidget problem-slug="subsets-ii" />
 
-&lt;RelatedProblems problems="letter-combinations-of-a-phone-number::Letter Combinations Of A Phone Number|n-queens-ii::N Queens II|combination-sum-iii::Combination Sum III" /&gt;
+<RelatedProblems problems="letter-combinations-of-a-phone-number::Letter Combinations Of A Phone Number|n-queens-ii::N Queens II|combination-sum-iii::Combination Sum III" />

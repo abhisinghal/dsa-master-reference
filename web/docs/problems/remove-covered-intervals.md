@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Remove Covered Intervals](https://leetcode.com/problems/remove-covered-intervals/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Count intervals remaining after removing every interval covered by another.
 
@@ -12,16 +12,16 @@ Count intervals remaining after removing every interval covered by another.
 **Constraints** — `1 ≤ intervals.length ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
   hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="remove-covered-intervals" /&gt; &lt;Bookmark problem-slug="remove-covered-intervals" /&gt;
+<MarkSolved problem-slug="remove-covered-intervals" /> <Bookmark problem-slug="remove-covered-intervals" />
 
-&lt;InterviewTimer problem-slug="remove-covered-intervals" /&gt;
+<InterviewTimer problem-slug="remove-covered-intervals" />
 
 
 
@@ -80,7 +80,7 @@ int removeCoveredIntervals(int[][] intervals) {
 - **"Count covered instead"** → total − remaining.
 - **"Which intervals covered"** → track indices before sort, mark during walk.
 
-&lt;AiCompanion problem-slug="remove-covered-intervals" pattern-hint="merge intervals" /&gt;
+<AiCompanion problem-slug="remove-covered-intervals" pattern-hint="merge intervals" />
 
 ## Related problems
 
@@ -88,6 +88,6 @@ int removeCoveredIntervals(int[][] intervals) {
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)
 - [Maximum Length of Pair Chain](/problems/maximum-length-of-pair-chain)
 
-&lt;FeedbackWidget problem-slug="remove-covered-intervals" /&gt;
+<FeedbackWidget problem-slug="remove-covered-intervals" />
 
-&lt;RelatedProblems problems="the-skyline-problem::The Skyline Problem|my-calendar-ii::My Calendar II|meeting-rooms-ii::Meeting Rooms II" /&gt;
+<RelatedProblems problems="the-skyline-problem::The Skyline Problem|my-calendar-ii::My Calendar II|meeting-rooms-ii::Meeting Rooms II" />

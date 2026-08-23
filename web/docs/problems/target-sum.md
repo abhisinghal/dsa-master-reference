@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Target Sum](https://leetcode.com/problems/target-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Assign + or − to each `nums[i]`; count ways to reach `target`.
 
@@ -12,16 +12,16 @@ Assign + or − to each `nums[i]`; count ways to reach `target`.
 **Constraints** — `1 ≤ n ≤ 20`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="target-sum" /&gt; &lt;Bookmark problem-slug="target-sum" /&gt;
+<MarkSolved problem-slug="target-sum" /> <Bookmark problem-slug="target-sum" />
 
-&lt;InterviewTimer problem-slug="target-sum" /&gt;
+<InterviewTimer problem-slug="target-sum" />
 
 
 
@@ -82,13 +82,13 @@ int findTargetSumWays(int[] nums, int target) {
 - **± assignment counting** → reduce to subset-sum.
 - **Return the assignment** → track parent choices.
 
-&lt;AiCompanion problem-slug="target-sum" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="target-sum" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)
 - [Coin Change II](/problems/coin-change-ii)
 
-&lt;FeedbackWidget problem-slug="target-sum" /&gt;
+<FeedbackWidget problem-slug="target-sum" />
 
-&lt;RelatedProblems problems="climbing-stairs::Climbing Stairs|longest-increasing-subsequence::Longest Increasing Subsequence|partition-equal-subset-sum::Partition Equal Subset Sum" /&gt;
+<RelatedProblems problems="climbing-stairs::Climbing Stairs|longest-increasing-subsequence::Longest Increasing Subsequence|partition-equal-subset-sum::Partition Equal Subset Sum" />

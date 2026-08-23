@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Sort List](https://leetcode.com/problems/sort-list/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/divide-conquer)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
 
 Sort a linked list in **O(n log n)** time, O(1) extra space (constant beyond recursion stack).
 
@@ -12,16 +12,16 @@ Sort a linked list in **O(n log n)** time, O(1) extra space (constant beyond rec
 **Constraints** — `0 ≤ n ≤ 5·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
   hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."
   hint3="For count-of-X-across-boundary, two-pointer walk during the merge step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="sort-list" /&gt; &lt;Bookmark problem-slug="sort-list" /&gt;
+<MarkSolved problem-slug="sort-list" /> <Bookmark problem-slug="sort-list" />
 
-&lt;InterviewTimer problem-slug="sort-list" /&gt;
+<InterviewTimer problem-slug="sort-list" />
 
 
 
@@ -103,7 +103,7 @@ ListNode merge(ListNode a, ListNode b) {
 - **True O(1) space required** → iterative bottom-up.
 - **Doubly linked list** → merge sort still wins over quicksort due to O(1) split.
 
-&lt;AiCompanion problem-slug="sort-list" pattern-hint="divide & conquer" /&gt;
+<AiCompanion problem-slug="sort-list" pattern-hint="divide & conquer" />
 
 ## Related problems
 
@@ -111,6 +111,6 @@ ListNode merge(ListNode a, ListNode b) {
 - [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — extension
 - [Middle of the Linked List](/problems/middle-of-the-linked-list) — split primitive
 
-&lt;FeedbackWidget problem-slug="sort-list" /&gt;
+<FeedbackWidget problem-slug="sort-list" />
 
-&lt;RelatedProblems problems="count-of-range-sum::Count Of Range Sum|reverse-pairs::Reverse Pairs|global-and-local-inversions::Global And Local Inversions" /&gt;
+<RelatedProblems problems="count-of-range-sum::Count Of Range Sum|reverse-pairs::Reverse Pairs|global-and-local-inversions::Global And Local Inversions" />

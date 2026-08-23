@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Meta, Google, Microsoft, Amazon" /&gt;
+<CompanyTags companies="Meta, Google, Microsoft, Amazon" />
 
 Given `s` (uppercase A–Z) and integer `k`, return the length of the longest substring you can make of a single repeated character by replacing at most `k` other characters.
 
@@ -13,16 +13,16 @@ Given `s` (uppercase A–Z) and integer `k`, return the length of the longest su
 **Constraints** — `1 ≤ n ≤ 10⁵`, `0 ≤ k ≤ n`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="longest-repeating-character-replacement" /&gt; &lt;Bookmark problem-slug="longest-repeating-character-replacement" /&gt;
+<MarkSolved problem-slug="longest-repeating-character-replacement" /> <Bookmark problem-slug="longest-repeating-character-replacement" />
 
-&lt;InterviewTimer problem-slug="longest-repeating-character-replacement" /&gt;
+<InterviewTimer problem-slug="longest-repeating-character-replacement" />
 
 
 
@@ -129,7 +129,7 @@ int characterReplacement(String s, int k) {
 - **"What if alphabet is Unicode?"** → replace `int[26]` with `HashMap<Character,Integer>`; recomputing max on every shrink is O(σ) — slower but still correct.
 - **Follow-up: return the actual substring** → track `(bestL, bestLen)` and slice.
 
-&lt;AiCompanion problem-slug="longest-repeating-character-replacement" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="longest-repeating-character-replacement" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -138,6 +138,6 @@ int characterReplacement(String s, int k) {
 - [Replace the Substring for Balanced String](/problems/replace-the-substring-for-balanced-string) — window on outside counts
 - [Longest Substring Without Repeating Characters](/problems/sliding-window-longest-substring) — the seed
 
-&lt;FeedbackWidget problem-slug="longest-repeating-character-replacement" /&gt;
+<FeedbackWidget problem-slug="longest-repeating-character-replacement" />
 
-&lt;RelatedProblems problems="permutation-in-string::Permutation In String|longest-palindromic-substring::Longest Palindromic Substring|fruit-into-baskets::Fruit Into Baskets" /&gt;
+<RelatedProblems problems="permutation-in-string::Permutation In String|longest-palindromic-substring::Longest Palindromic Substring|fruit-into-baskets::Fruit Into Baskets" />

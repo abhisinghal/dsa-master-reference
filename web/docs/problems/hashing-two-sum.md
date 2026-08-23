@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Two Sum](https://leetcode.com/problems/two-sum/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Adobe, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Adobe, Bloomberg" />
 
 Given `nums` and `target`, return indices `[i, j]` such that `nums[i] + nums[j] == target`. Every input has exactly one solution and you may not use the same element twice.
 
@@ -13,16 +13,16 @@ Given `nums` and `target`, return indices `[i, j]` such that `nums[i] + nums[j] 
 **Constraints** — `2 ≤ n ≤ 10⁴`, `-10⁹ ≤ nums[i], target ≤ 10⁹`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="hashing-two-sum" /&gt; &lt;Bookmark problem-slug="hashing-two-sum" /&gt;
+<MarkSolved problem-slug="hashing-two-sum" /> <Bookmark problem-slug="hashing-two-sum" />
 
-&lt;InterviewTimer problem-slug="hashing-two-sum" /&gt;
+<InterviewTimer problem-slug="hashing-two-sum" />
 
 
 
@@ -169,7 +169,7 @@ Optimal. Single scan, O(1) lookup, no sort.
 - **Interviewer probes "what if it's a stream?"** → hash map wins hands-down; two pointers can't handle streaming.
 - **Interviewer probes "what if we need all pairs?"** → sort + two pointers; the map only finds the first match.
 
-&lt;AiCompanion problem-slug="hashing-two-sum" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="hashing-two-sum" pattern-hint="hashing" />
 
 ## Related problems (same ladder applies)
 
@@ -179,6 +179,6 @@ Optimal. Single scan, O(1) lookup, no sort.
 - [Two Sum III — Design](https://leetcode.com/problems/two-sum-iii-data-structure-design/) — hash map with counts for the streaming variant
 - [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) — same idea, but hash **prefix sums** instead of raw values
 
-&lt;FeedbackWidget problem-slug="hashing-two-sum" /&gt;
+<FeedbackWidget problem-slug="hashing-two-sum" />
 
-&lt;RelatedProblems problems="group-shifted-strings::Group Shifted Strings|longest-consecutive-sequence::Longest Consecutive Sequence|3sum::3sum" /&gt;
+<RelatedProblems problems="group-shifted-strings::Group Shifted Strings|longest-consecutive-sequence::Longest Consecutive Sequence|3sum::3sum" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, LinkedIn" /&gt;
+<CompanyTags companies="Meta, Amazon, LinkedIn" />
 
 Return max product of a contiguous subarray.
 
@@ -12,16 +12,16 @@ Return max product of a contiguous subarray.
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximum-product-subarray" /&gt; &lt;Bookmark problem-slug="maximum-product-subarray" /&gt;
+<MarkSolved problem-slug="maximum-product-subarray" /> <Bookmark problem-slug="maximum-product-subarray" />
 
-&lt;InterviewTimer problem-slug="maximum-product-subarray" /&gt;
+<InterviewTimer problem-slug="maximum-product-subarray" />
 
 
 
@@ -85,11 +85,11 @@ int maxProduct(int[] nums) {
 - **"Only positives"** → simple running product.
 - **"Return the subarray"** → track indices.
 
-&lt;AiCompanion problem-slug="maximum-product-subarray" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="maximum-product-subarray" pattern-hint="hashing" />
 
 ## Related problems
 
 - [Maximum Subarray (Kadane)](/problems/maximum-subarray)
 - [Maximum Sum Circular Subarray](/problems/maximum-sum-circular-subarray)
 
-&lt;FeedbackWidget problem-slug="maximum-product-subarray" /&gt;
+<FeedbackWidget problem-slug="maximum-product-subarray" />

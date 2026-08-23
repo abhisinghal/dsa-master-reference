@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Count Number of Nice Subarrays](https://leetcode.com/problems/count-number-of-nice-subarrays/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Given an array `nums` and integer `k`, return the number of contiguous subarrays containing exactly `k` odd numbers.
 
@@ -13,16 +13,16 @@ Given an array `nums` and integer `k`, return the number of contiguous subarrays
 **Constraints** — `1 ≤ n ≤ 5 · 10⁴`; `1 ≤ nums[i] ≤ 10⁵`; `1 ≤ k ≤ n`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="count-number-of-nice-subarrays" /&gt; &lt;Bookmark problem-slug="count-number-of-nice-subarrays" /&gt;
+<MarkSolved problem-slug="count-number-of-nice-subarrays" /> <Bookmark problem-slug="count-number-of-nice-subarrays" />
 
-&lt;InterviewTimer problem-slug="count-number-of-nice-subarrays" /&gt;
+<InterviewTimer problem-slug="count-number-of-nice-subarrays" />
 
 
 
@@ -141,7 +141,7 @@ int numberOfSubarraysPS(int[] nums, int k) {
 - **"At most k"** → single sliding window.
 - **"Return the subarrays"** → prefix + indices; loses O(1) space.
 
-&lt;AiCompanion problem-slug="count-number-of-nice-subarrays" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="count-number-of-nice-subarrays" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -149,6 +149,6 @@ int numberOfSubarraysPS(int[] nums, int k) {
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers) — same atMost pattern for distinct count
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — hash-map sibling
 
-&lt;FeedbackWidget problem-slug="count-number-of-nice-subarrays" /&gt;
+<FeedbackWidget problem-slug="count-number-of-nice-subarrays" />
 
-&lt;RelatedProblems problems="subarray-product-less-than-k::Subarray Product Less Than K|minimum-window-substring::Minimum Window Substring|find-all-anagrams-in-a-string::Find All Anagrams In A String" /&gt;
+<RelatedProblems problems="subarray-product-less-than-k::Subarray Product Less Than K|minimum-window-substring::Minimum Window Substring|find-all-anagrams-in-a-string::Find All Anagrams In A String" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Given sorted station positions and integer `k`, add `k` new stations to minimize the max distance between adjacent stations. Return that distance (real number).
 
@@ -11,16 +11,16 @@ Given sorted station positions and integer `k`, add `k` new stations to minimize
 **Constraints** — `10 ≤ stations.length ≤ 2000`; `0 ≤ stations[i] ≤ 10⁸`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
   hint3="The feasibility check is O(n); total complexity is O(n log range)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="minimize-max-distance-to-gas-station" /&gt; &lt;Bookmark problem-slug="minimize-max-distance-to-gas-station" /&gt;
+<MarkSolved problem-slug="minimize-max-distance-to-gas-station" /> <Bookmark problem-slug="minimize-max-distance-to-gas-station" />
 
-&lt;InterviewTimer problem-slug="minimize-max-distance-to-gas-station" /&gt;
+<InterviewTimer problem-slug="minimize-max-distance-to-gas-station" />
 
 
 
@@ -83,7 +83,7 @@ double minmaxGasDist(int[] s, int k) {
 - **Discrete answer** → integer BS.
 - **Precision** → iterate until `hi - lo < 1e-6`.
 
-&lt;AiCompanion problem-slug="minimize-max-distance-to-gas-station" pattern-hint="binary search on answer" /&gt;
+<AiCompanion problem-slug="minimize-max-distance-to-gas-station" pattern-hint="binary search on answer" />
 
 ## Related problems
 
@@ -91,4 +91,4 @@ double minmaxGasDist(int[] s, int k) {
 - [Divide Chocolate](/problems/divide-chocolate) — maximize-min
 - [Path With Minimum Effort](/problems/path-with-minimum-effort)
 
-&lt;FeedbackWidget problem-slug="minimize-max-distance-to-gas-station" /&gt;
+<FeedbackWidget problem-slug="minimize-max-distance-to-gas-station" />

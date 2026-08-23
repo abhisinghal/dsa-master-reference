@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Split nums into k subsets each summing to `total/k`.
 
@@ -12,16 +12,16 @@ Split nums into k subsets each summing to `total/k`.
 **Constraints** — `1 ≤ n ≤ 16`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="partition-to-k-equal-sum-subsets" /&gt; &lt;Bookmark problem-slug="partition-to-k-equal-sum-subsets" /&gt;
+<MarkSolved problem-slug="partition-to-k-equal-sum-subsets" /> <Bookmark problem-slug="partition-to-k-equal-sum-subsets" />
 
-&lt;InterviewTimer problem-slug="partition-to-k-equal-sum-subsets" /&gt;
+<InterviewTimer problem-slug="partition-to-k-equal-sum-subsets" />
 
 
 
@@ -91,7 +91,7 @@ boolean canPartitionKSubsets(int[] nums, int k) {
 - **Larger n** → backtracking with heavy pruning.
 - **k=2** → simpler [Partition Equal Subset Sum](/problems/partition-equal-subset-sum).
 
-&lt;AiCompanion problem-slug="partition-to-k-equal-sum-subsets" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="partition-to-k-equal-sum-subsets" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -99,4 +99,4 @@ boolean canPartitionKSubsets(int[] nums, int k) {
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other)
 - [Beautiful Arrangement](/problems/beautiful-arrangement)
 
-&lt;FeedbackWidget problem-slug="partition-to-k-equal-sum-subsets" /&gt;
+<FeedbackWidget problem-slug="partition-to-k-equal-sum-subsets" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sweep-line)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
 
 Given meeting intervals `[[start, end)]`, return the minimum number of rooms required.
 
@@ -12,16 +12,16 @@ Given meeting intervals `[[start, end)]`, return the minimum number of rooms req
 **Constraints** — `1 ≤ n ≤ 10⁴`; `0 ≤ start < end ≤ 10⁶`.
 
 
-&lt;Hints
+<Hints
   hint1="Turn events into `(time, +1/-1)` pairs. What’s the ’active count’ or ’max concurrent’?"
   hint2="Sort events by time; break ties consistently (end before start for ’meetings’, or vice versa)."
   hint3="Sweep; maintain a running count/set. Max active gives room count; drops give free slots."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="sweep-line-meeting-rooms-ii" /&gt; &lt;Bookmark problem-slug="sweep-line-meeting-rooms-ii" /&gt;
+<MarkSolved problem-slug="sweep-line-meeting-rooms-ii" /> <Bookmark problem-slug="sweep-line-meeting-rooms-ii" />
 
-&lt;InterviewTimer problem-slug="sweep-line-meeting-rooms-ii" /&gt;
+<InterviewTimer problem-slug="sweep-line-meeting-rooms-ii" />
 
 
 
@@ -132,7 +132,7 @@ int minMeetingRooms(int[][] meetings) {
 - **Cold interview** → walk brute → heap → two-array. Show the "we only care about events" reframing.
 - **Tie at `start == end`** → decide with the interviewer: touching = one room or two?
 
-&lt;AiCompanion problem-slug="sweep-line-meeting-rooms-ii" pattern-hint="sweep line" /&gt;
+<AiCompanion problem-slug="sweep-line-meeting-rooms-ii" pattern-hint="sweep line" />
 
 ## Related problems (same ladder applies)
 
@@ -141,4 +141,4 @@ int minMeetingRooms(int[][] meetings) {
 - [My Calendar II](https://leetcode.com/problems/my-calendar-ii/) — sweep with 2-limit constraint
 - [Employee Free Time](https://leetcode.com/problems/employee-free-time/) — flatten schedules, then find gaps
 
-&lt;FeedbackWidget problem-slug="sweep-line-meeting-rooms-ii" /&gt;
+<FeedbackWidget problem-slug="sweep-line-meeting-rooms-ii" />

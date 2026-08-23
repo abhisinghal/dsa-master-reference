@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 In a 2D grid of heights, an "effort" of a path is the max abs-diff between consecutive cells. Return the min effort from top-left to bottom-right (4-connected).
 
@@ -11,16 +11,16 @@ In a 2D grid of heights, an "effort" of a path is the max abs-diff between conse
 **Constraints** — `1 ≤ m, n ≤ 100`; `0 ≤ height[i][j] ≤ 10⁶`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
   hint3="The feasibility check is O(n); total complexity is O(n log range)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="path-with-minimum-effort" /&gt; &lt;Bookmark problem-slug="path-with-minimum-effort" /&gt;
+<MarkSolved problem-slug="path-with-minimum-effort" /> <Bookmark problem-slug="path-with-minimum-effort" />
 
-&lt;InterviewTimer problem-slug="path-with-minimum-effort" /&gt;
+<InterviewTimer problem-slug="path-with-minimum-effort" />
 
 
 
@@ -93,11 +93,11 @@ int minimumEffortPath(int[][] h) {
 - **Dijkstra variant** — replace sum with max in relaxation.
 - **Streaming edge addition** → Union-Find with sorted edges.
 
-&lt;AiCompanion problem-slug="path-with-minimum-effort" pattern-hint="binary search on answer" /&gt;
+<AiCompanion problem-slug="path-with-minimum-effort" pattern-hint="binary search on answer" />
 
 ## Related problems
 
 - [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/) — same idea, sea level = effort
 - [Path With Maximum Minimum Value](https://leetcode.com/problems/path-with-maximum-minimum-value/) — dual (maximize min)
 
-&lt;FeedbackWidget problem-slug="path-with-minimum-effort" /&gt;
+<FeedbackWidget problem-slug="path-with-minimum-effort" />

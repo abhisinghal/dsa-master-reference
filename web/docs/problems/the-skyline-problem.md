@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: The Skyline Problem](https://leetcode.com/problems/the-skyline-problem/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sweep-line)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
 
 Given buildings `[left, right, height]`, return the skyline as key points `[x, y]` where the height changes.
 
@@ -11,16 +11,16 @@ Given buildings `[left, right, height]`, return the skyline as key points `[x, y
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Turn events into `(time, +1/-1)` pairs. What’s the ’active count’ or ’max concurrent’?"
   hint2="Sort events by time; break ties consistently (end before start for ’meetings’, or vice versa)."
   hint3="Sweep; maintain a running count/set. Max active gives room count; drops give free slots."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="the-skyline-problem" /&gt; &lt;Bookmark problem-slug="the-skyline-problem" /&gt;
+<MarkSolved problem-slug="the-skyline-problem" /> <Bookmark problem-slug="the-skyline-problem" />
 
-&lt;InterviewTimer problem-slug="the-skyline-problem" /&gt;
+<InterviewTimer problem-slug="the-skyline-problem" />
 
 
 
@@ -96,7 +96,7 @@ List<List<Integer>> getSkyline(int[][] buildings) {
 - **Divide & conquer alternative** → merge two half-skylines in O(n log n).
 - **Segment tree with range max** → same complexity, different mental model.
 
-&lt;AiCompanion problem-slug="the-skyline-problem" pattern-hint="sweep line" /&gt;
+<AiCompanion problem-slug="the-skyline-problem" pattern-hint="sweep line" />
 
 ## Related problems
 
@@ -104,6 +104,6 @@ List<List<Integer>> getSkyline(int[][] buildings) {
 - [Falling Squares](https://leetcode.com/problems/falling-squares/)
 - [Rectangle Area II](https://leetcode.com/problems/rectangle-area-ii/)
 
-&lt;FeedbackWidget problem-slug="the-skyline-problem" /&gt;
+<FeedbackWidget problem-slug="the-skyline-problem" />
 
-&lt;RelatedProblems problems="my-calendar-ii::My Calendar II|insert-interval::Insert Interval|employee-free-time::Employee Free Time" /&gt;
+<RelatedProblems problems="my-calendar-ii::My Calendar II|insert-interval::Insert Interval|employee-free-time::Employee Free Time" />

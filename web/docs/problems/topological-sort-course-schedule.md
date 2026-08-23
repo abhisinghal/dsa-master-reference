@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" />
 
 Given `numCourses` and `prerequisites[i] = [a, b]` meaning "to take `a` you must first take `b`", return an ordering, or `[]` if impossible (cycle).
 
@@ -13,16 +13,16 @@ Given `numCourses` and `prerequisites[i] = [a, b]` meaning "to take `a` you must
 **Constraints** — `1 ≤ n ≤ 2000`; `0 ≤ #prereqs ≤ n·(n−1)/2`.
 
 
-&lt;Hints
+<Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
   hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="topological-sort-course-schedule" /&gt; &lt;Bookmark problem-slug="topological-sort-course-schedule" /&gt;
+<MarkSolved problem-slug="topological-sort-course-schedule" /> <Bookmark problem-slug="topological-sort-course-schedule" />
 
-&lt;InterviewTimer problem-slug="topological-sort-course-schedule" /&gt;
+<InterviewTimer problem-slug="topological-sort-course-schedule" />
 
 
 
@@ -140,7 +140,7 @@ int[] findOrder(int n, int[][] prereqs) {
 - **DFS variant** → useful when you also need SCC or bridges.
 - **Cycle detection is the primary need** → either works; DFS with color is cleaner.
 
-&lt;AiCompanion problem-slug="topological-sort-course-schedule" pattern-hint="topological sort" /&gt;
+<AiCompanion problem-slug="topological-sort-course-schedule" pattern-hint="topological sort" />
 
 ## Related problems (same ladder applies)
 
@@ -149,4 +149,4 @@ int[] findOrder(int n, int[][] prereqs) {
 - [Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/) — peel leaves iteratively (topo-sort variant)
 - [Parallel Courses](https://leetcode.com/problems/parallel-courses/) — Kahn tracking levels (semesters)
 
-&lt;FeedbackWidget problem-slug="topological-sort-course-schedule" /&gt;
+<FeedbackWidget problem-slug="topological-sort-course-schedule" />

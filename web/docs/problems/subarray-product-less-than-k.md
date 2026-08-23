@@ -11,16 +11,16 @@ Given a positive-int array `nums` and integer `k`, return the number of contiguo
 **Constraints** — `1 ≤ n ≤ 3 · 10⁴`; `1 ≤ nums[i] ≤ 1000`; `0 ≤ k ≤ 10⁶`. **All values positive.**
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="subarray-product-less-than-k" /&gt; &lt;Bookmark problem-slug="subarray-product-less-than-k" /&gt;
+<MarkSolved problem-slug="subarray-product-less-than-k" /> <Bookmark problem-slug="subarray-product-less-than-k" />
 
-&lt;InterviewTimer problem-slug="subarray-product-less-than-k" /&gt;
+<InterviewTimer problem-slug="subarray-product-less-than-k" />
 
 
 
@@ -119,7 +119,7 @@ int numSubarrayProductLessThanK(int[] nums, int k) {
 - **"What if nums[i] can be negative?"** → both products and logs break; needs sign-tracking (see [Maximum Product Subarray](/problems/maximum-product-subarray)).
 - **"Return the subarrays themselves"** → enumerate during the slide; loses the compact O(n) counting.
 
-&lt;AiCompanion problem-slug="subarray-product-less-than-k" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="subarray-product-less-than-k" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -128,6 +128,6 @@ int numSubarrayProductLessThanK(int[] nums, int k) {
 - [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays) — sibling
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)
 
-&lt;FeedbackWidget problem-slug="subarray-product-less-than-k" /&gt;
+<FeedbackWidget problem-slug="subarray-product-less-than-k" />
 
-&lt;RelatedProblems problems="max-consecutive-ones-iii::Max Consecutive Ones III|longest-repeating-character-replacement::Longest Repeating Character Replacement|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K" /&gt;
+<RelatedProblems problems="max-consecutive-ones-iii::Max Consecutive Ones III|longest-repeating-character-replacement::Longest Repeating Character Replacement|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 Given a target permutation `nums` and a list of subsequences `sequences`, return `true` iff `nums` is the **unique** permutation reconstructible from the sequences.
 
@@ -13,16 +13,16 @@ Given a target permutation `nums` and a list of subsequences `sequences`, return
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
   hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="sequence-reconstruction" /&gt; &lt;Bookmark problem-slug="sequence-reconstruction" /&gt;
+<MarkSolved problem-slug="sequence-reconstruction" /> <Bookmark problem-slug="sequence-reconstruction" />
 
-&lt;InterviewTimer problem-slug="sequence-reconstruction" /&gt;
+<InterviewTimer problem-slug="sequence-reconstruction" />
 
 
 
@@ -97,7 +97,7 @@ boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
 - **"Number of topological orders"** → DP on states (bitmask if n ≤ 20).
 - **"Restore from partial orderings"** → same graph build + Kahn's.
 
-&lt;AiCompanion problem-slug="sequence-reconstruction" pattern-hint="topological sort" /&gt;
+<AiCompanion problem-slug="sequence-reconstruction" pattern-hint="topological sort" />
 
 ## Related problems
 
@@ -105,6 +105,6 @@ boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
 - [Alien Dictionary](/problems/alien-dictionary)
 - [Parallel Courses](/problems/parallel-courses)
 
-&lt;FeedbackWidget problem-slug="sequence-reconstruction" /&gt;
+<FeedbackWidget problem-slug="sequence-reconstruction" />
 
-&lt;RelatedProblems problems="alien-dictionary::Alien Dictionary|minimum-height-trees::Minimum Height Trees|course-schedule::Course Schedule" /&gt;
+<RelatedProblems problems="alien-dictionary::Alien Dictionary|minimum-height-trees::Minimum Height Trees|course-schedule::Course Schedule" />

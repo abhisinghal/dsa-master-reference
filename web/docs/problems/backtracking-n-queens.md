@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: N-Queens](https://leetcode.com/problems/n-queens/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple" />
 
 Place `n` queens on an `n × n` board so no two attack each other. Return all distinct solutions.
 
@@ -11,16 +11,16 @@ Place `n` queens on an `n × n` board so no two attack each other. Return all di
 **Constraints** — `1 ≤ n ≤ 9`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="backtracking-n-queens" /&gt; &lt;Bookmark problem-slug="backtracking-n-queens" /&gt;
+<MarkSolved problem-slug="backtracking-n-queens" /> <Bookmark problem-slug="backtracking-n-queens" />
 
-&lt;InterviewTimer problem-slug="backtracking-n-queens" /&gt;
+<InterviewTimer problem-slug="backtracking-n-queens" />
 
 
 
@@ -130,7 +130,7 @@ void solve(int r, int n, int[] queens, boolean[] cols, boolean[] main, boolean[]
 - **Just needs solutions** → bitset backtracking.
 - **Interviewer probes memoization** → NP-complete; no polynomial memo exists (state = full board history).
 
-&lt;AiCompanion problem-slug="backtracking-n-queens" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="backtracking-n-queens" pattern-hint="backtracking" />
 
 ## Related problems (same ladder applies)
 
@@ -139,4 +139,4 @@ void solve(int r, int n, int[] queens, boolean[] cols, boolean[] main, boolean[]
 - [Permutations](https://leetcode.com/problems/permutations/) — swap-in-place backtracking
 - [Subsets](https://leetcode.com/problems/subsets/) — start-index backtracking
 
-&lt;FeedbackWidget problem-slug="backtracking-n-queens" /&gt;
+<FeedbackWidget problem-slug="backtracking-n-queens" />

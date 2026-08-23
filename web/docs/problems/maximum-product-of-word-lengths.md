@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Maximum Product of Word Lengths](https://leetcode.com/problems/maximum-product-of-word-lengths/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 Return `max(len(a) * len(b))` over pairs whose character sets are disjoint (no shared letter).
 
@@ -12,16 +12,16 @@ Return `max(len(a) * len(b))` over pairs whose character sets are disjoint (no s
 **Constraints** — `2 ≤ n ≤ 1000`; lowercase.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximum-product-of-word-lengths" /&gt; &lt;Bookmark problem-slug="maximum-product-of-word-lengths" /&gt;
+<MarkSolved problem-slug="maximum-product-of-word-lengths" /> <Bookmark problem-slug="maximum-product-of-word-lengths" />
 
-&lt;InterviewTimer problem-slug="maximum-product-of-word-lengths" /&gt;
+<InterviewTimer problem-slug="maximum-product-of-word-lengths" />
 
 
 
@@ -85,13 +85,13 @@ int maxProduct(String[] words) {
 - **Larger alphabet** → hashed signatures + fingerprint check.
 - **"Return the pair"** → track indices.
 
-&lt;AiCompanion problem-slug="maximum-product-of-word-lengths" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="maximum-product-of-word-lengths" pattern-hint="bit manipulation" />
 
 ## Related problems
 
 - [Design Bit Set](https://leetcode.com/problems/design-bitset/)
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other) — bitmask DP
 
-&lt;FeedbackWidget problem-slug="maximum-product-of-word-lengths" /&gt;
+<FeedbackWidget problem-slug="maximum-product-of-word-lengths" />
 
-&lt;RelatedProblems problems="hamming-distance::Hamming Distance|find-the-difference::Find The Difference|power-of-two::Power Of Two" /&gt;
+<RelatedProblems problems="hamming-distance::Hamming Distance|find-the-difference::Find The Difference|power-of-two::Power Of Two" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/fast-slow)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" />
 
 Given the head of a linked list, return the node where the cycle begins, or `null` if no cycle.
 
@@ -13,16 +13,16 @@ Given the head of a linked list, return the node where the cycle begins, or `nul
 **Constraints** — `0 ≤ n ≤ 10⁴`; O(1) extra space required for the follow-up.
 
 
-&lt;Hints
+<Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
   hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="fast-slow-linked-list-cycle-ii" /&gt; &lt;Bookmark problem-slug="fast-slow-linked-list-cycle-ii" /&gt;
+<MarkSolved problem-slug="fast-slow-linked-list-cycle-ii" /> <Bookmark problem-slug="fast-slow-linked-list-cycle-ii" />
 
-&lt;InterviewTimer problem-slug="fast-slow-linked-list-cycle-ii" /&gt;
+<InterviewTimer problem-slug="fast-slow-linked-list-cycle-ii" />
 
 
 
@@ -127,7 +127,7 @@ ListNode detectCycle(ListNode head) {
 - **Cold interview** → state hash-set, then Floyd for the O(1) space follow-up.
 - **Interviewer probes "why reset works"** → the `A = kC − B` derivation.
 
-&lt;AiCompanion problem-slug="fast-slow-linked-list-cycle-ii" pattern-hint="fast/slow pointers" /&gt;
+<AiCompanion problem-slug="fast-slow-linked-list-cycle-ii" pattern-hint="fast/slow pointers" />
 
 ## Related problems (same ladder applies)
 
@@ -136,6 +136,6 @@ ListNode detectCycle(ListNode head) {
 - [Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/) — Floyd on `next = nums[i]`
 - [Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/) — Floyd to find middle, reverse second half, compare
 
-&lt;FeedbackWidget problem-slug="fast-slow-linked-list-cycle-ii" /&gt;
+<FeedbackWidget problem-slug="fast-slow-linked-list-cycle-ii" />
 
-&lt;RelatedProblems problems="palindrome-linked-list::Palindrome Linked List|linked-list-cycle::Linked List Cycle|find-the-duplicate-number::Find The Duplicate Number" /&gt;
+<RelatedProblems problems="palindrome-linked-list::Palindrome Linked List|linked-list-cycle::Linked List Cycle|find-the-duplicate-number::Find The Duplicate Number" />

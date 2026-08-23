@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn" />
 
 Return the length of the **longest strictly increasing subsequence** of `nums`.
 
@@ -13,16 +13,16 @@ Return the length of the **longest strictly increasing subsequence** of `nums`.
 **Constraints** — `1 ≤ n ≤ 2500`; `-10⁴ ≤ nums[i] ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="longest-increasing-subsequence" /&gt; &lt;Bookmark problem-slug="longest-increasing-subsequence" /&gt;
+<MarkSolved problem-slug="longest-increasing-subsequence" /> <Bookmark problem-slug="longest-increasing-subsequence" />
 
-&lt;InterviewTimer problem-slug="longest-increasing-subsequence" /&gt;
+<InterviewTimer problem-slug="longest-increasing-subsequence" />
 
 
 
@@ -122,7 +122,7 @@ int lengthOfLIS(int[] a) {
 - **Need to reconstruct the subsequence** → O(n²) DP with `prev[i]` traceback.
 - **Non-strict (≤)** → binary search for first `> x` instead of `>= x`.
 
-&lt;AiCompanion problem-slug="longest-increasing-subsequence" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="longest-increasing-subsequence" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -131,6 +131,6 @@ int lengthOfLIS(int[] a) {
 - [Russian Doll Envelopes](https://leetcode.com/problems/russian-doll-envelopes/) — sort by width, LIS on heights
 - [Number of Longest Increasing Subsequence](https://leetcode.com/problems/number-of-longest-increasing-subsequence/) — track count alongside length
 
-&lt;FeedbackWidget problem-slug="longest-increasing-subsequence" /&gt;
+<FeedbackWidget problem-slug="longest-increasing-subsequence" />
 
-&lt;RelatedProblems problems="burst-balloons::Burst Balloons|coin-change::Coin Change|unique-paths-ii::Unique Paths II" /&gt;
+<RelatedProblems problems="burst-balloons::Burst Balloons|coin-change::Coin Change|unique-paths-ii::Unique Paths II" />

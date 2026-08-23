@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Bloomberg, Apple" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Bloomberg, Apple" />
 
 Max sum of a contiguous non-empty subarray.
 
@@ -13,16 +13,16 @@ Max sum of a contiguous non-empty subarray.
 **Constraints** — `1 ≤ n ≤ 10⁵`; `-10⁴ ≤ nums[i] ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximum-subarray" /&gt; &lt;Bookmark problem-slug="maximum-subarray" /&gt;
+<MarkSolved problem-slug="maximum-subarray" /> <Bookmark problem-slug="maximum-subarray" />
 
-&lt;InterviewTimer problem-slug="maximum-subarray" /&gt;
+<InterviewTimer problem-slug="maximum-subarray" />
 
 
 
@@ -87,7 +87,7 @@ int maxSubArray(int[] nums) {
 - **"Return the subarray"** → track `(bestStart, bestEnd)` alongside sums.
 - **Circular array** → [Maximum Sum Circular Subarray](/problems/maximum-sum-circular-subarray) — Kadane + reverse.
 
-&lt;AiCompanion problem-slug="maximum-subarray" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="maximum-subarray" pattern-hint="greedy" />
 
 ## Related problems
 
@@ -95,6 +95,6 @@ int maxSubArray(int[] nums) {
 - [Maximum Sum Circular Subarray](/problems/maximum-sum-circular-subarray)
 - [Best Time to Buy and Sell Stock](/problems/best-time-to-buy-and-sell-stock)
 
-&lt;FeedbackWidget problem-slug="maximum-subarray" /&gt;
+<FeedbackWidget problem-slug="maximum-subarray" />
 
-&lt;RelatedProblems problems="jump-game-ii::Jump Game II|jump-game::Jump Game|non-overlapping-intervals::Non Overlapping Intervals" /&gt;
+<RelatedProblems problems="jump-game-ii::Jump Game II|jump-game::Jump Game|non-overlapping-intervals::Non Overlapping Intervals" />

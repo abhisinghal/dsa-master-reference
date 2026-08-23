@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Amazon, Microsoft, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Microsoft, Google, Bloomberg" />
 
 Merge `nums2` into `nums1` in-place; `nums1` has size `m+n` with last `n` slots empty.
 
@@ -12,16 +12,16 @@ Merge `nums2` into `nums1` in-place; `nums1` has size `m+n` with last `n` slots 
 **Constraints** — `nums1.length == m + n`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="merge-sorted-array" /&gt; &lt;Bookmark problem-slug="merge-sorted-array" /&gt;
+<MarkSolved problem-slug="merge-sorted-array" /> <Bookmark problem-slug="merge-sorted-array" />
 
-&lt;InterviewTimer problem-slug="merge-sorted-array" /&gt;
+<InterviewTimer problem-slug="merge-sorted-array" />
 
 
 
@@ -80,7 +80,7 @@ void merge(int[] nums1, int m, int[] nums2, int n) {
 - **No buffer** → allocate new array.
 - **Linked lists** → same idea; see [Merge Two Sorted Lists](/problems/merge-two-sorted-lists).
 
-&lt;AiCompanion problem-slug="merge-sorted-array" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="merge-sorted-array" pattern-hint="two pointers" />
 
 ## Related problems
 
@@ -88,6 +88,6 @@ void merge(int[] nums1, int m, int[] nums2, int n) {
 - [Squares of a Sorted Array](/problems/squares-of-a-sorted-array)
 - [Sort Colors](https://leetcode.com/problems/sort-colors/)
 
-&lt;FeedbackWidget problem-slug="merge-sorted-array" /&gt;
+<FeedbackWidget problem-slug="merge-sorted-array" />
 
-&lt;RelatedProblems problems="4sum::4sum|squares-of-a-sorted-array::Squares Of A Sorted Array|move-zeroes::Move Zeroes" /&gt;
+<RelatedProblems problems="4sum::4sum|squares-of-a-sorted-array::Squares Of A Sorted Array|move-zeroes::Move Zeroes" />

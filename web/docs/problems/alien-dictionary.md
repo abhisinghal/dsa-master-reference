@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Alien Dictionary](https://leetcode.com/problems/alien-dictionary/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/topological-sort)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, LinkedIn, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, LinkedIn, Uber" />
 
 Given words sorted alphabetically in an alien language, return the character order. Return `""` if impossible.
 
@@ -13,16 +13,16 @@ Given words sorted alphabetically in an alien language, return the character ord
 **Constraints** — `1 ≤ words.length ≤ 100`; `1 ≤ words[i].length ≤ 100`; lowercase English.
 
 
-&lt;Hints
+<Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
   hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="alien-dictionary" /&gt; &lt;Bookmark problem-slug="alien-dictionary" /&gt;
+<MarkSolved problem-slug="alien-dictionary" /> <Bookmark problem-slug="alien-dictionary" />
 
-&lt;InterviewTimer problem-slug="alien-dictionary" /&gt;
+<InterviewTimer problem-slug="alien-dictionary" />
 
 
 
@@ -100,7 +100,7 @@ String alienOrder(String[] words) {
 - **"Lex-smallest topological order"** → replace queue with min-heap.
 - **DFS-based alternative** → recursion + reverse post-order; same complexity.
 
-&lt;AiCompanion problem-slug="alien-dictionary" pattern-hint="topological sort" /&gt;
+<AiCompanion problem-slug="alien-dictionary" pattern-hint="topological sort" />
 
 ## Related problems
 
@@ -108,6 +108,6 @@ String alienOrder(String[] words) {
 - [Sequence Reconstruction](/problems/sequence-reconstruction)
 - [Parallel Courses](/problems/parallel-courses)
 
-&lt;FeedbackWidget problem-slug="alien-dictionary" /&gt;
+<FeedbackWidget problem-slug="alien-dictionary" />
 
-&lt;RelatedProblems problems="course-schedule::Course Schedule|sequence-reconstruction::Sequence Reconstruction|parallel-courses::Parallel Courses" /&gt;
+<RelatedProblems problems="course-schedule::Course Schedule|sequence-reconstruction::Sequence Reconstruction|parallel-courses::Parallel Courses" />

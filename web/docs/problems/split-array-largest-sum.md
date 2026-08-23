@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-&lt;CompanyTags companies="Meta, Google, Amazon, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Google, Amazon, Bloomberg" />
 
 Split `nums` into `m` non-empty contiguous subarrays to minimize the largest sum among the subarrays. Return that min largest sum.
 
@@ -11,16 +11,16 @@ Split `nums` into `m` non-empty contiguous subarrays to minimize the largest sum
 **Constraints** — `1 ≤ m ≤ n ≤ 1000`; `0 ≤ nums[i] ≤ 10⁶`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
   hint3="The feasibility check is O(n); total complexity is O(n log range)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="split-array-largest-sum" /&gt; &lt;Bookmark problem-slug="split-array-largest-sum" /&gt;
+<MarkSolved problem-slug="split-array-largest-sum" /> <Bookmark problem-slug="split-array-largest-sum" />
 
-&lt;InterviewTimer problem-slug="split-array-largest-sum" /&gt;
+<InterviewTimer problem-slug="split-array-largest-sum" />
 
 
 
@@ -87,7 +87,7 @@ int splitArray(int[] nums, int m) {
 - **DP alternative** → interval DP; slower but returns actual partition.
 - **Related: max smallest chunk** → similar BS with `≥` predicate.
 
-&lt;AiCompanion problem-slug="split-array-largest-sum" pattern-hint="binary search on answer" /&gt;
+<AiCompanion problem-slug="split-array-largest-sum" pattern-hint="binary search on answer" />
 
 ## Related problems
 
@@ -95,6 +95,6 @@ int splitArray(int[] nums, int m) {
 - [Divide Chocolate](/problems/divide-chocolate) — maximize the minimum
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)
 
-&lt;FeedbackWidget problem-slug="split-array-largest-sum" /&gt;
+<FeedbackWidget problem-slug="split-array-largest-sum" />
 
-&lt;RelatedProblems problems="binary-search-rotated-sorted::Binary Search Rotated Sorted|find-peak-element::Find Peak Element|koko-bananas::Koko Bananas" /&gt;
+<RelatedProblems problems="binary-search-rotated-sorted::Binary Search Rotated Sorted|find-peak-element::Find Peak Element|koko-bananas::Koko Bananas" />

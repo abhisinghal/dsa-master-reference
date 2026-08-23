@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Group Shifted Strings](https://leetcode.com/problems/group-shifted-strings/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-&lt;CompanyTags companies="Meta, Google, Uber" /&gt;
+<CompanyTags companies="Meta, Google, Uber" />
 
 Group strings that are cyclic shifts of each other.
 
@@ -11,16 +11,16 @@ Group strings that are cyclic shifts of each other.
 **Constraints** — `1 ≤ #strings ≤ 200`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="group-shifted-strings" /&gt; &lt;Bookmark problem-slug="group-shifted-strings" /&gt;
+<MarkSolved problem-slug="group-shifted-strings" /> <Bookmark problem-slug="group-shifted-strings" />
 
-&lt;InterviewTimer problem-slug="group-shifted-strings" /&gt;
+<InterviewTimer problem-slug="group-shifted-strings" />
 
 
 
@@ -81,13 +81,13 @@ List<List<String>> groupStrings(String[] strings) {
 - **Group anagrams** → sort key.
 - **Group similar words** → similar canonical hash.
 
-&lt;AiCompanion problem-slug="group-shifted-strings" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="group-shifted-strings" pattern-hint="hashing" />
 
 ## Related problems
 
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/)
 - [Isomorphic Strings](/problems/isomorphic-strings)
 
-&lt;FeedbackWidget problem-slug="group-shifted-strings" /&gt;
+<FeedbackWidget problem-slug="group-shifted-strings" />
 
-&lt;RelatedProblems problems="hashing-two-sum::Hashing Two Sum|longest-consecutive-sequence::Longest Consecutive Sequence|3sum::3sum" /&gt;
+<RelatedProblems problems="hashing-two-sum::Hashing Two Sum|longest-consecutive-sequence::Longest Consecutive Sequence|3sum::3sum" />

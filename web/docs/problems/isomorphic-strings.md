@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
-&lt;CompanyTags companies="LinkedIn, Meta, Amazon, Google" /&gt;
+<CompanyTags companies="LinkedIn, Meta, Amazon, Google" />
 
 Return true iff there's a **bijection** of characters mapping `s → t`.
 
@@ -13,16 +13,16 @@ Return true iff there's a **bijection** of characters mapping `s → t`.
 **Constraints** — `1 ≤ n ≤ 5·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="isomorphic-strings" /&gt; &lt;Bookmark problem-slug="isomorphic-strings" /&gt;
+<MarkSolved problem-slug="isomorphic-strings" /> <Bookmark problem-slug="isomorphic-strings" />
 
-&lt;InterviewTimer problem-slug="isomorphic-strings" /&gt;
+<InterviewTimer problem-slug="isomorphic-strings" />
 
 
 
@@ -82,7 +82,7 @@ boolean isIsomorphic(String s, String t) {
 - **Bijection check** → two maps.
 - **Word pattern** — similar bijection with words.
 
-&lt;AiCompanion problem-slug="isomorphic-strings" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="isomorphic-strings" pattern-hint="hashing" />
 
 ## Related problems
 
@@ -90,6 +90,6 @@ boolean isIsomorphic(String s, String t) {
 - [Group Shifted Strings](/problems/group-shifted-strings)
 - [Valid Anagram](/problems/valid-anagram)
 
-&lt;FeedbackWidget problem-slug="isomorphic-strings" /&gt;
+<FeedbackWidget problem-slug="isomorphic-strings" />
 
-&lt;RelatedProblems problems="group-shifted-strings::Group Shifted Strings|3sum::3sum|valid-anagram::Valid Anagram" /&gt;
+<RelatedProblems problems="group-shifted-strings::Group Shifted Strings|3sum::3sum|valid-anagram::Valid Anagram" />

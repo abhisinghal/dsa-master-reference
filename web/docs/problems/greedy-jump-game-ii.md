@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Jump Game II](https://leetcode.com/problems/jump-game-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
 
 Given `nums[i]` = max jump length from index `i`, return the **minimum jumps** to reach the last index. Guaranteed reachable.
 
@@ -12,16 +12,16 @@ Given `nums[i]` = max jump length from index `i`, return the **minimum jumps** t
 **Constraints** — `1 ≤ n ≤ 10⁴`; `0 ≤ nums[i] ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="greedy-jump-game-ii" /&gt; &lt;Bookmark problem-slug="greedy-jump-game-ii" /&gt;
+<MarkSolved problem-slug="greedy-jump-game-ii" /> <Bookmark problem-slug="greedy-jump-game-ii" />
 
-&lt;InterviewTimer problem-slug="greedy-jump-game-ii" /&gt;
+<InterviewTimer problem-slug="greedy-jump-game-ii" />
 
 
 
@@ -139,7 +139,7 @@ int jump(int[] a) {
 - **Cold interview** → walk BFS → greedy. Show the "levels shape enables O(1)" insight.
 - **Interviewer wants a proof** → BFS gives you the shortest-path guarantee; greedy is a tighter special case.
 
-&lt;AiCompanion problem-slug="greedy-jump-game-ii" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="greedy-jump-game-ii" pattern-hint="greedy" />
 
 ## Related problems (same ladder applies)
 
@@ -148,4 +148,4 @@ int jump(int[] a) {
 - [Video Stitching](https://leetcode.com/problems/video-stitching/) — same greedy frontier expansion
 - [Minimum Number of Taps to Open](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/) — reframe intervals → same greedy
 
-&lt;FeedbackWidget problem-slug="greedy-jump-game-ii" /&gt;
+<FeedbackWidget problem-slug="greedy-jump-game-ii" />

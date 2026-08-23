@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Amazon, Google, Microsoft, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Microsoft, Meta" />
 
 Given a positive-int array `nums` and target `target`, return the minimal length of a contiguous subarray whose sum is at least `target`. Return `0` if none.
 
@@ -13,16 +13,16 @@ Given a positive-int array `nums` and target `target`, return the minimal length
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ nums[i], target ≤ 10⁴`. **All values positive.**
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="minimum-size-subarray-sum" /&gt; &lt;Bookmark problem-slug="minimum-size-subarray-sum" /&gt;
+<MarkSolved problem-slug="minimum-size-subarray-sum" /> <Bookmark problem-slug="minimum-size-subarray-sum" />
 
-&lt;InterviewTimer problem-slug="minimum-size-subarray-sum" /&gt;
+<InterviewTimer problem-slug="minimum-size-subarray-sum" />
 
 
 
@@ -151,7 +151,7 @@ int minSubArrayLenBS(int target, int[] nums) {
 - **"Return the subarray itself"** → track `(bestL, bestLen)` and slice.
 - **"Sum exactly equal to target"** → different problem — needs prefix-sum + hash-map (see [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)).
 
-&lt;AiCompanion problem-slug="minimum-size-subarray-sum" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="minimum-size-subarray-sum" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -160,6 +160,6 @@ int minSubArrayLenBS(int target, int[] nums) {
 - [Maximum Subarray](/problems/maximum-subarray) — Kadane
 - [Minimum Window Substring](/problems/minimum-window-substring) — same shrinking template
 
-&lt;FeedbackWidget problem-slug="minimum-size-subarray-sum" /&gt;
+<FeedbackWidget problem-slug="minimum-size-subarray-sum" />
 
-&lt;RelatedProblems problems="count-number-of-nice-subarrays::Count Number Of Nice Subarrays|max-consecutive-ones-iii::Max Consecutive Ones III|subarray-product-less-than-k::Subarray Product Less Than K" /&gt;
+<RelatedProblems problems="count-number-of-nice-subarrays::Count Number Of Nice Subarrays|max-consecutive-ones-iii::Max Consecutive Ones III|subarray-product-less-than-k::Subarray Product Less Than K" />

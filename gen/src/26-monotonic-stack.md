@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Monotonic Stack" duration="8–12 min" />
+
 <PatternProgress pattern-id="monotonic-stack" problems="monotonic-stack-daily-temperatures, next-greater-element-ii, online-stock-span, remove-k-digits, sum-of-subarray-minimums" />
 
 

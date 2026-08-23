@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Meta, Amazon, Apple, Google, Microsoft" /&gt;
+<CompanyTags companies="Meta, Amazon, Apple, Google, Microsoft" />
 
 Return the popcount (number of set bits) of an unsigned 32-bit integer.
 
@@ -12,16 +12,16 @@ Return the popcount (number of set bits) of an unsigned 32-bit integer.
 **Constraints** — 32-bit unsigned.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="number-of-1-bits" /&gt; &lt;Bookmark problem-slug="number-of-1-bits" /&gt;
+<MarkSolved problem-slug="number-of-1-bits" /> <Bookmark problem-slug="number-of-1-bits" />
 
-&lt;InterviewTimer problem-slug="number-of-1-bits" /&gt;
+<InterviewTimer problem-slug="number-of-1-bits" />
 
 
 
@@ -91,7 +91,7 @@ Uses hardware popcount when available.
 - **Production** → `Integer.bitCount`.
 - **Popcount many ints** → SWAR parallel popcount for batches.
 
-&lt;AiCompanion problem-slug="number-of-1-bits" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="number-of-1-bits" pattern-hint="bit manipulation" />
 
 ## Related problems
 
@@ -99,6 +99,6 @@ Uses hardware popcount when available.
 - [Hamming Distance](/problems/hamming-distance)
 - [Reverse Bits](/problems/reverse-bits)
 
-&lt;FeedbackWidget problem-slug="number-of-1-bits" /&gt;
+<FeedbackWidget problem-slug="number-of-1-bits" />
 
-&lt;RelatedProblems problems="hamming-distance::Hamming Distance|find-the-difference::Find The Difference|single-number::Single Number" /&gt;
+<RelatedProblems problems="hamming-distance::Hamming Distance|find-the-difference::Find The Difference|single-number::Single Number" />

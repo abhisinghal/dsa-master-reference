@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
 
 Given an unsorted integer array `nums`, return the length of the longest **consecutive** elements sequence. Must run in **O(n)** time.
 
@@ -13,16 +13,16 @@ Given an unsorted integer array `nums`, return the length of the longest **conse
 **Constraints** — `0 ≤ n ≤ 10⁵`; `-10⁹ ≤ nums[i] ≤ 10⁹`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="longest-consecutive-sequence" /&gt; &lt;Bookmark problem-slug="longest-consecutive-sequence" /&gt;
+<MarkSolved problem-slug="longest-consecutive-sequence" /> <Bookmark problem-slug="longest-consecutive-sequence" />
 
-&lt;InterviewTimer problem-slug="longest-consecutive-sequence" /&gt;
+<InterviewTimer problem-slug="longest-consecutive-sequence" />
 
 
 
@@ -146,7 +146,7 @@ void union(Map<Integer,Integer> p, Map<Integer,Integer> r, int a, int b) {
 - **"Return the actual sequence"** → track the head and length of the best run; slice.
 - **"Longest arithmetic progression"** — different problem (DP).
 
-&lt;AiCompanion problem-slug="longest-consecutive-sequence" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="longest-consecutive-sequence" pattern-hint="hashing" />
 
 ## Related problems
 
@@ -154,6 +154,6 @@ void union(Map<Integer,Integer> p, Map<Integer,Integer> r, int a, int b) {
 - [Longest Substring Without Repeating Characters](/problems/sliding-window-longest-substring) — sliding-window sibling
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — hash-key grouping
 
-&lt;FeedbackWidget problem-slug="longest-consecutive-sequence" /&gt;
+<FeedbackWidget problem-slug="longest-consecutive-sequence" />
 
-&lt;RelatedProblems problems="group-shifted-strings::Group Shifted Strings|hashing-two-sum::Hashing Two Sum|3sum::3sum" /&gt;
+<RelatedProblems problems="group-shifted-strings::Group Shifted Strings|hashing-two-sum::Hashing Two Sum|3sum::3sum" />

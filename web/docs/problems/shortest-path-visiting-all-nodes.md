@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Shortest Path Visiting All Nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 Undirected graph. Shortest length path visiting every node (may reuse).
 
@@ -12,16 +12,16 @@ Undirected graph. Shortest length path visiting every node (may reuse).
 **Example 2** — `graph=[[1],[0,2,4],[1,3,4],[2],[1,2]]` → `4`
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="shortest-path-visiting-all-nodes" /&gt; &lt;Bookmark problem-slug="shortest-path-visiting-all-nodes" /&gt;
+<MarkSolved problem-slug="shortest-path-visiting-all-nodes" /> <Bookmark problem-slug="shortest-path-visiting-all-nodes" />
 
-&lt;InterviewTimer problem-slug="shortest-path-visiting-all-nodes" /&gt;
+<InterviewTimer problem-slug="shortest-path-visiting-all-nodes" />
 
 
 
@@ -90,11 +90,11 @@ int shortestPathLength(int[][] graph) {
 - **Exact TSP** → same DP.
 - **k people delivery** → k-source BFS extension.
 
-&lt;AiCompanion problem-slug="shortest-path-visiting-all-nodes" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="shortest-path-visiting-all-nodes" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other)
 - [Find the Shortest Superstring](/problems/find-the-shortest-superstring)
 
-&lt;FeedbackWidget problem-slug="shortest-path-visiting-all-nodes" /&gt;
+<FeedbackWidget problem-slug="shortest-path-visiting-all-nodes" />

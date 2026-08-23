@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Missing Number](https://leetcode.com/problems/missing-number/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
 
 Given `nums` containing `n` distinct integers in `[0, n]`, return the missing one.
 
@@ -13,16 +13,16 @@ Given `nums` containing `n` distinct integers in `[0, n]`, return the missing on
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="missing-number" /&gt; &lt;Bookmark problem-slug="missing-number" /&gt;
+<MarkSolved problem-slug="missing-number" /> <Bookmark problem-slug="missing-number" />
 
-&lt;InterviewTimer problem-slug="missing-number" /&gt;
+<InterviewTimer problem-slug="missing-number" />
 
 
 
@@ -89,7 +89,7 @@ int missingNumber(int[] nums) {
 - **"Multiple missing"** → set difference or sort.
 - **"Overflow-sensitive"** → XOR beats sum.
 
-&lt;AiCompanion problem-slug="missing-number" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="missing-number" pattern-hint="bit manipulation" />
 
 ## Related problems
 
@@ -97,6 +97,6 @@ int missingNumber(int[] nums) {
 - [Find the Difference](/problems/find-the-difference)
 - [Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)
 
-&lt;FeedbackWidget problem-slug="missing-number" /&gt;
+<FeedbackWidget problem-slug="missing-number" />
 
-&lt;RelatedProblems problems="number-of-1-bits::Number Of 1 Bits|maximum-product-of-word-lengths::Maximum Product Of Word Lengths|find-the-difference::Find The Difference" /&gt;
+<RelatedProblems problems="number-of-1-bits::Number Of 1 Bits|maximum-product-of-word-lengths::Maximum Product Of Word Lengths|find-the-difference::Find The Difference" />

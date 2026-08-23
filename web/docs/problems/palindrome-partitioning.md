@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
 
 All partitions of `s` where every part is a palindrome.
 
@@ -12,16 +12,16 @@ All partitions of `s` where every part is a palindrome.
 **Constraints** — `1 ≤ n ≤ 16`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="palindrome-partitioning" /&gt; &lt;Bookmark problem-slug="palindrome-partitioning" /&gt;
+<MarkSolved problem-slug="palindrome-partitioning" /> <Bookmark problem-slug="palindrome-partitioning" />
 
-&lt;InterviewTimer problem-slug="palindrome-partitioning" /&gt;
+<InterviewTimer problem-slug="palindrome-partitioning" />
 
 
 
@@ -89,7 +89,7 @@ O(n²) precompute; O(1) checks during recursion.
 - **Min cuts** → different problem (see [II](/problems/palindrome-partitioning-ii)).
 - **Count partitions** → same skeleton; replace add with count.
 
-&lt;AiCompanion problem-slug="palindrome-partitioning" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="palindrome-partitioning" pattern-hint="backtracking" />
 
 ## Related problems
 
@@ -97,6 +97,6 @@ O(n²) precompute; O(1) checks during recursion.
 - [Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses/)
 - [Word Break II](https://leetcode.com/problems/word-break-ii/)
 
-&lt;FeedbackWidget problem-slug="palindrome-partitioning" /&gt;
+<FeedbackWidget problem-slug="palindrome-partitioning" />
 
-&lt;RelatedProblems problems="n-queens-ii::N Queens II|sudoku-solver::Sudoku Solver|combination-sum-iii::Combination Sum III" /&gt;
+<RelatedProblems problems="n-queens-ii::N Queens II|sudoku-solver::Sudoku Solver|combination-sum-iii::Combination Sum III" />

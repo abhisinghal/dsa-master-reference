@@ -1,9 +1,9 @@
 # Zero-to-Hero Roadmap
 
 
-&lt;RoadmapChecklist /&gt;
+<RoadmapChecklist />
 
-&lt;StorageManager /&gt;
+<StorageManager />
 
 *A concrete, day-by-day plan a working engineer can actually follow. The book will not teach you if you read it front-to-back like a novel — patterns stick only through **spaced practice** on canonical problems. This chapter tells you exactly what to do on Monday morning.*
 

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Happy Number](https://leetcode.com/problems/happy-number/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 A "happy number" transformation repeatedly replaces `n` by the sum of the squares of its digits. `n` is happy iff this sequence eventually reaches `1`. Return `true` if `n` is happy.
 
@@ -13,16 +13,16 @@ A "happy number" transformation repeatedly replaces `n` by the sum of the square
 **Constraints** — `1 ≤ n ≤ 2³¹ − 1`.
 
 
-&lt;Hints
+<Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
   hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="happy-number" /&gt; &lt;Bookmark problem-slug="happy-number" /&gt;
+<MarkSolved problem-slug="happy-number" /> <Bookmark problem-slug="happy-number" />
 
-&lt;InterviewTimer problem-slug="happy-number" /&gt;
+<InterviewTimer problem-slug="happy-number" />
 
 
 
@@ -134,7 +134,7 @@ Small proof: iterate 1..810; every trajectory either reaches 1 or hits `4 → 16
 - **"Return the cycle values"** → hash-set version already records them.
 - **Generalization** ("happy in base b") → Floyd's still applies; the "4" trick doesn't.
 
-&lt;AiCompanion problem-slug="happy-number" pattern-hint="fast/slow pointers" /&gt;
+<AiCompanion problem-slug="happy-number" pattern-hint="fast/slow pointers" />
 
 ## Related problems
 
@@ -142,6 +142,6 @@ Small proof: iterate 1..810; every trajectory either reaches 1 or hits `4 → 16
 - [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — same on lists
 - [Find the Duplicate Number](/problems/find-the-duplicate-number) — cycle on implicit function
 
-&lt;FeedbackWidget problem-slug="happy-number" /&gt;
+<FeedbackWidget problem-slug="happy-number" />
 
-&lt;RelatedProblems problems="linked-list-cycle::Linked List Cycle|middle-of-the-linked-list::Middle Of The Linked List|find-the-duplicate-number::Find The Duplicate Number" /&gt;
+<RelatedProblems problems="linked-list-cycle::Linked List Cycle|middle-of-the-linked-list::Middle Of The Linked List|find-the-duplicate-number::Find The Duplicate Number" />

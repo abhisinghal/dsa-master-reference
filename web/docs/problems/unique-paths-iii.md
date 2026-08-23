@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Unique Paths III](https://leetcode.com/problems/unique-paths-iii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Amazon, Meta, Google" /&gt;
+<CompanyTags companies="Amazon, Meta, Google" />
 
 Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cell exactly once.
 
@@ -13,16 +13,16 @@ Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cel
 **Example 3** — `grid=[[0,1],[2,0]]` → `0`
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="unique-paths-iii" /&gt; &lt;Bookmark problem-slug="unique-paths-iii" /&gt;
+<MarkSolved problem-slug="unique-paths-iii" /> <Bookmark problem-slug="unique-paths-iii" />
 
-&lt;InterviewTimer problem-slug="unique-paths-iii" /&gt;
+<InterviewTimer problem-slug="unique-paths-iii" />
 
 
 
@@ -87,11 +87,11 @@ int dfs(int[][] g, int r, int c, int rem) {
 - **Larger grids** → bitmask DP if ≤ 20 cells.
 - **Shortest / longest** → BFS layers.
 
-&lt;AiCompanion problem-slug="unique-paths-iii" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="unique-paths-iii" pattern-hint="backtracking" />
 
 ## Related problems
 
 - [Robot Room Cleaner](/problems/robot-room-cleaner)
 - [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes)
 
-&lt;FeedbackWidget problem-slug="unique-paths-iii" /&gt;
+<FeedbackWidget problem-slug="unique-paths-iii" />

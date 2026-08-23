@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Smallest Range Covering Elements from K Lists](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/k-way-merge)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Given `k` sorted lists of integers, find the smallest range `[a, b]` that contains **at least one element from each list**. If multiple, return the one with smaller `a`; if still tied, smaller `b`.
 
@@ -12,16 +12,16 @@ Given `k` sorted lists of integers, find the smallest range `[a, b]` that contai
 **Constraints** — `1 ≤ k ≤ 3500`; total elements ≤ 5·10⁴.
 
 
-&lt;Hints
+<Hints
   hint1="You have k sorted sequences. Which element is globally next?"
   hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."
   hint3="For ’smallest range covering k lists’, track max-in-heap; window is [minInHeap, maxSeen]."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="smallest-range-covering-elements-from-k-lists" /&gt; &lt;Bookmark problem-slug="smallest-range-covering-elements-from-k-lists" /&gt;
+<MarkSolved problem-slug="smallest-range-covering-elements-from-k-lists" /> <Bookmark problem-slug="smallest-range-covering-elements-from-k-lists" />
 
-&lt;InterviewTimer problem-slug="smallest-range-covering-elements-from-k-lists" /&gt;
+<InterviewTimer problem-slug="smallest-range-covering-elements-from-k-lists" />
 
 
 
@@ -103,7 +103,7 @@ int[] smallestRange(List<List<Integer>> lists) {
 - **"Range covering ≥ m of k lists"** → generalize; needs a multi-set or ordered map.
 - **Instead of range: find k-th smallest overall** → still min-heap sweep, just count pops.
 
-&lt;AiCompanion problem-slug="smallest-range-covering-elements-from-k-lists" pattern-hint="k-way merge" /&gt;
+<AiCompanion problem-slug="smallest-range-covering-elements-from-k-lists" pattern-hint="k-way merge" />
 
 ## Related problems
 
@@ -111,6 +111,6 @@ int[] smallestRange(List<List<Integer>> lists) {
 - [Ugly Number II](/problems/ugly-number-ii) — heap merges 3 streams
 - [Median of Two Sorted Arrays](/problems/median-of-two-sorted-arrays) — 2-list balance BS
 
-&lt;FeedbackWidget problem-slug="smallest-range-covering-elements-from-k-lists" /&gt;
+<FeedbackWidget problem-slug="smallest-range-covering-elements-from-k-lists" />
 
-&lt;RelatedProblems problems="k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists|top-k-frequent-elements::Top K Frequent Elements|merge-two-sorted-lists::Merge Two Sorted Lists" /&gt;
+<RelatedProblems problems="k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists|top-k-frequent-elements::Top K Frequent Elements|merge-two-sorted-lists::Merge Two Sorted Lists" />

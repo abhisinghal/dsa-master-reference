@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Number of Ways to Wear Different Hats to Each Other](https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 person; each person wears one. Count assignments (mod 1e9+7).
 
@@ -13,16 +13,16 @@ n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 
 **Example 3** — `hats=[[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4]]` → `24`
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt; &lt;Bookmark problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt;
+<MarkSolved problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /> <Bookmark problem-slug="number-of-ways-to-wear-different-hats-to-each-other" />
 
-&lt;InterviewTimer problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt;
+<InterviewTimer problem-slug="number-of-ways-to-wear-different-hats-to-each-other" />
 
 
 
@@ -86,11 +86,11 @@ int numberWays(List<List<Integer>> hats) {
 - **Small n (≤ 10), large "items" domain** → iterate items, mask people.
 - **Small items, large people** → reverse.
 
-&lt;AiCompanion problem-slug="number-of-ways-to-wear-different-hats-to-each-other" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="number-of-ways-to-wear-different-hats-to-each-other" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Beautiful Arrangement](/problems/beautiful-arrangement)
 - [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)
 
-&lt;FeedbackWidget problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt;
+<FeedbackWidget problem-slug="number-of-ways-to-wear-different-hats-to-each-other" />

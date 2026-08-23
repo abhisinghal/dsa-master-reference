@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Backtracking" duration="8–12 min" />
+
 <PatternProgress pattern-id="backtracking" problems="n-queens, permutations, permutations-ii, subsets-ii, combination-sum-ii, combination-sum-iii, combination-sum-iv, letter-combinations-of-a-phone-number, palindrome-partitioning, n-queens-ii, sudoku-solver, valid-sudoku, beautiful-arrangement, unique-paths-iii, robot-room-cleaner, next-permutation, letter-case-permutation" />
 
 

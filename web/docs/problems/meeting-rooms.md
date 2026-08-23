@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Meeting Rooms](https://leetcode.com/problems/meeting-rooms/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/merge-intervals)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
 
 Given meeting time intervals, return `true` iff a person can attend all.
 
@@ -13,16 +13,16 @@ Given meeting time intervals, return `true` iff a person can attend all.
 **Constraints** — `0 ≤ intervals.length ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
   hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="meeting-rooms" /&gt; &lt;Bookmark problem-slug="meeting-rooms" /&gt;
+<MarkSolved problem-slug="meeting-rooms" /> <Bookmark problem-slug="meeting-rooms" />
 
-&lt;InterviewTimer problem-slug="meeting-rooms" /&gt;
+<InterviewTimer problem-slug="meeting-rooms" />
 
 
 
@@ -78,7 +78,7 @@ boolean canAttendMeetings(int[][] intervals) {
 - **Count rooms needed** → [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii) — heap or sweep line.
 - **Return conflict pairs** → keep sorted; walk once collecting pairs.
 
-&lt;AiCompanion problem-slug="meeting-rooms" pattern-hint="merge intervals" /&gt;
+<AiCompanion problem-slug="meeting-rooms" pattern-hint="merge intervals" />
 
 ## Related problems
 
@@ -86,6 +86,6 @@ boolean canAttendMeetings(int[][] intervals) {
 - [Merge Intervals](/problems/merge-intervals-classic)
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)
 
-&lt;FeedbackWidget problem-slug="meeting-rooms" /&gt;
+<FeedbackWidget problem-slug="meeting-rooms" />
 
-&lt;RelatedProblems problems="meeting-rooms-ii::Meeting Rooms II|insert-interval::Insert Interval|remove-covered-intervals::Remove Covered Intervals" /&gt;
+<RelatedProblems problems="meeting-rooms-ii::Meeting Rooms II|insert-interval::Insert Interval|remove-covered-intervals::Remove Covered Intervals" />

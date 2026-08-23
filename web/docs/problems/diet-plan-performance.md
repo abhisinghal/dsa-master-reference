@@ -11,16 +11,16 @@ Fixed window of size `k` over calories. For each window: +1 if sum &gt; upper; �
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="diet-plan-performance" /&gt; &lt;Bookmark problem-slug="diet-plan-performance" /&gt;
+<MarkSolved problem-slug="diet-plan-performance" /> <Bookmark problem-slug="diet-plan-performance" />
 
-&lt;InterviewTimer problem-slug="diet-plan-performance" /&gt;
+<InterviewTimer problem-slug="diet-plan-performance" />
 
 
 
@@ -80,7 +80,7 @@ int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
 - **Variable window** → shrink/extend on validity.
 - **Return per-window score list** → append instead of accumulating.
 
-&lt;AiCompanion problem-slug="diet-plan-performance" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="diet-plan-performance" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -88,4 +88,4 @@ int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
 - [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum)
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
 
-&lt;FeedbackWidget problem-slug="diet-plan-performance" /&gt;
+<FeedbackWidget problem-slug="diet-plan-performance" />

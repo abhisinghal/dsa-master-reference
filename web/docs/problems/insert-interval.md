@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Insert Interval](https://leetcode.com/problems/insert-interval/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, LinkedIn" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, LinkedIn" />
 
 Given sorted, non-overlapping `intervals` and a `newInterval`, insert it and merge if needed.
 
@@ -13,16 +13,16 @@ Given sorted, non-overlapping `intervals` and a `newInterval`, insert it and mer
 **Constraints** — `0 ≤ intervals.length ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
   hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="insert-interval" /&gt; &lt;Bookmark problem-slug="insert-interval" /&gt;
+<MarkSolved problem-slug="insert-interval" /> <Bookmark problem-slug="insert-interval" />
 
-&lt;InterviewTimer problem-slug="insert-interval" /&gt;
+<InterviewTimer problem-slug="insert-interval" />
 
 
 
@@ -91,7 +91,7 @@ int[][] insert(int[][] intervals, int[] newInterval) {
 - **Batch merges** → sort once, then O(n) merge.
 - **Return "would this overlap?" boolean** → binary-search for first `end ≥ new.start`.
 
-&lt;AiCompanion problem-slug="insert-interval" pattern-hint="merge intervals" /&gt;
+<AiCompanion problem-slug="insert-interval" pattern-hint="merge intervals" />
 
 ## Related problems
 
@@ -99,6 +99,6 @@ int[][] insert(int[][] intervals, int[] newInterval) {
 - [Interval List Intersections](/problems/interval-list-intersections)
 - [Remove Covered Intervals](/problems/remove-covered-intervals)
 
-&lt;FeedbackWidget problem-slug="insert-interval" /&gt;
+<FeedbackWidget problem-slug="insert-interval" />
 
-&lt;RelatedProblems problems="remove-covered-intervals::Remove Covered Intervals|my-calendar-ii::My Calendar II|meeting-rooms-ii::Meeting Rooms II" /&gt;
+<RelatedProblems problems="remove-covered-intervals::Remove Covered Intervals|my-calendar-ii::My Calendar II|meeting-rooms-ii::Meeting Rooms II" />

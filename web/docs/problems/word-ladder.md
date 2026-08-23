@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Word Ladder](https://leetcode.com/problems/word-ladder/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bfs)
 
-&lt;CompanyTags companies="Amazon, Meta, Google" /&gt;
+<CompanyTags companies="Amazon, Meta, Google" />
 
 Transform `beginWord` → `endWord` by changing one letter at a time; each intermediate must be in dict. Return length.
 
@@ -12,16 +12,16 @@ Transform `beginWord` → `endWord` by changing one letter at a time; each inter
 **Constraints** — `1 ≤ L ≤ 10`; `1 ≤ #words ≤ 5000`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="word-ladder" /&gt; &lt;Bookmark problem-slug="word-ladder" /&gt;
+<MarkSolved problem-slug="word-ladder" /> <Bookmark problem-slug="word-ladder" />
 
-&lt;InterviewTimer problem-slug="word-ladder" /&gt;
+<InterviewTimer problem-slug="word-ladder" />
 
 
 
@@ -104,7 +104,7 @@ Expand from both ends until frontiers meet. ~O(2 · b^(d/2)).
 - **All paths** → [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) — parent map + DFS.
 - **Very deep search** → bidirectional.
 
-&lt;AiCompanion problem-slug="word-ladder" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="word-ladder" pattern-hint="hashing" />
 
 ## Related problems
 
@@ -112,4 +112,4 @@ Expand from both ends until frontiers meet. ~O(2 · b^(d/2)).
 - [Minimum Genetic Mutation](https://leetcode.com/problems/minimum-genetic-mutation/)
 - [Open the Lock](https://leetcode.com/problems/open-the-lock/)
 
-&lt;FeedbackWidget problem-slug="word-ladder" /&gt;
+<FeedbackWidget problem-slug="word-ladder" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Unlimited transactions; each sell pays `fee`. Max profit.
 
@@ -11,16 +11,16 @@ Unlimited transactions; each sell pays `fee`. Max profit.
 **Constraints** — `1 ≤ n ≤ 5·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" /&gt; &lt;Bookmark problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" /&gt;
+<MarkSolved problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" /> <Bookmark problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" />
 
-&lt;InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" /&gt;
+<InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" />
 
 
 
@@ -77,11 +77,11 @@ int maxProfit(int[] prices, int fee) {
 - **Fee on transaction** → 2 states.
 - **Cooldown** → 3 states.
 
-&lt;AiCompanion problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [With Cooldown](/problems/best-time-to-buy-and-sell-stock-with-cooldown)
 - [Best Time to Buy and Sell Stock IV](/problems/best-time-to-buy-and-sell-stock-iv)
 
-&lt;FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" /&gt;
+<FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" />

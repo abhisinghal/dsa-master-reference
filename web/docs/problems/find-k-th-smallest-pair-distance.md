@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Find K-th Smallest Pair Distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Given `nums` and integer `k`, return the k-th smallest **absolute** distance among all pairs.
 
@@ -11,16 +11,16 @@ Given `nums` and integer `k`, return the k-th smallest **absolute** distance amo
 **Constraints** — `n·(n-1)/2 ≥ k ≥ 1`; `2 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
   hint3="The feasibility check is O(n); total complexity is O(n log range)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="find-k-th-smallest-pair-distance" /&gt; &lt;Bookmark problem-slug="find-k-th-smallest-pair-distance" /&gt;
+<MarkSolved problem-slug="find-k-th-smallest-pair-distance" /> <Bookmark problem-slug="find-k-th-smallest-pair-distance" />
 
-&lt;InterviewTimer problem-slug="find-k-th-smallest-pair-distance" /&gt;
+<InterviewTimer problem-slug="find-k-th-smallest-pair-distance" />
 
 
 
@@ -88,7 +88,7 @@ int smallestDistancePair(int[] nums, int k) {
 - **All-pair distinct sums** → same idea.
 - **Streaming** → not directly applicable — need offline.
 
-&lt;AiCompanion problem-slug="find-k-th-smallest-pair-distance" pattern-hint="binary search on answer" /&gt;
+<AiCompanion problem-slug="find-k-th-smallest-pair-distance" pattern-hint="binary search on answer" />
 
 ## Related problems
 
@@ -96,4 +96,4 @@ int smallestDistancePair(int[] nums, int k) {
 - [Find K Closest Elements](https://leetcode.com/problems/find-k-closest-elements/)
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)
 
-&lt;FeedbackWidget problem-slug="find-k-th-smallest-pair-distance" /&gt;
+<FeedbackWidget problem-slug="find-k-th-smallest-pair-distance" />

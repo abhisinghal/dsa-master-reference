@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Longest Substring with At Most K Distinct Characters](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Meta, Google, Amazon, LinkedIn" /&gt;
+<CompanyTags companies="Meta, Google, Amazon, LinkedIn" />
 
 Given a string `s` and integer `k`, return the length of the longest substring containing at most `k` distinct characters.
 
@@ -13,16 +13,16 @@ Given a string `s` and integer `k`, return the length of the longest substring c
 **Constraints** — `1 ≤ n ≤ 5 · 10⁴`; `0 ≤ k ≤ 50`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="longest-substring-with-at-most-k-distinct-characters" /&gt; &lt;Bookmark problem-slug="longest-substring-with-at-most-k-distinct-characters" /&gt;
+<MarkSolved problem-slug="longest-substring-with-at-most-k-distinct-characters" /> <Bookmark problem-slug="longest-substring-with-at-most-k-distinct-characters" />
 
-&lt;InterviewTimer problem-slug="longest-substring-with-at-most-k-distinct-characters" /&gt;
+<InterviewTimer problem-slug="longest-substring-with-at-most-k-distinct-characters" />
 
 
 
@@ -144,7 +144,7 @@ int lengthOfLongestSubstringKDistinctLRU(String s, int k) {
 - **k = size(alphabet)** → answer is trivially `n`.
 - **Return the substring** → track `(bestL, bestLen)` and slice.
 
-&lt;AiCompanion problem-slug="longest-substring-with-at-most-k-distinct-characters" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="longest-substring-with-at-most-k-distinct-characters" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -153,6 +153,6 @@ int lengthOfLongestSubstringKDistinctLRU(String s, int k) {
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers) — count, not length
 - [Longest Substring with At Most Two Distinct Characters](https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/)
 
-&lt;FeedbackWidget problem-slug="longest-substring-with-at-most-k-distinct-characters" /&gt;
+<FeedbackWidget problem-slug="longest-substring-with-at-most-k-distinct-characters" />
 
-&lt;RelatedProblems problems="number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters|minimum-window-substring::Minimum Window Substring|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K" /&gt;
+<RelatedProblems problems="number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters|minimum-window-substring::Minimum Window Substring|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K" />

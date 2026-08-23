@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Uber" />
 
 Given strings `s` and `t`, return the smallest substring of `s` that contains every character of `t` (with multiplicity). Return `""` if impossible.
 
@@ -13,16 +13,16 @@ Given strings `s` and `t`, return the smallest substring of `s` that contains ev
 **Constraints** — `1 ≤ m, n ≤ 10⁵`. Uppercase + lowercase ASCII.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="minimum-window-substring" /&gt; &lt;Bookmark problem-slug="minimum-window-substring" /&gt;
+<MarkSolved problem-slug="minimum-window-substring" /> <Bookmark problem-slug="minimum-window-substring" />
 
-&lt;InterviewTimer problem-slug="minimum-window-substring" /&gt;
+<InterviewTimer problem-slug="minimum-window-substring" />
 
 
 
@@ -138,7 +138,7 @@ String minWindow(String s, String t) {
 - **"What if t may repeat characters?"** → the need[] array handles it because you compare counts, not presence.
 - **Follow-up: return all min windows** → track ties, or convert to two-pointer with restart.
 
-&lt;AiCompanion problem-slug="minimum-window-substring" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="minimum-window-substring" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -147,6 +147,6 @@ String minWindow(String s, String t) {
 - [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words) — window on word offsets
 - [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string) — return all indices
 
-&lt;FeedbackWidget problem-slug="minimum-window-substring" /&gt;
+<FeedbackWidget problem-slug="minimum-window-substring" />
 
-&lt;RelatedProblems problems="binary-subarrays-with-sum::Binary Subarrays With Sum|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|longest-palindromic-substring::Longest Palindromic Substring" /&gt;
+<RelatedProblems problems="binary-subarrays-with-sum::Binary Subarrays With Sum|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|longest-palindromic-substring::Longest Palindromic Substring" />

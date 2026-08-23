@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Bit Manipulation" duration="8–12 min" />
+
 <PatternProgress pattern-id="bit-manip" problems="single-number, missing-number, find-the-difference, number-of-1-bits, hamming-distance, power-of-two, reverse-bits, maximum-product-of-word-lengths, sum-of-all-subset-xor-totals, subsets" />
 
 

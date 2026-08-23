@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" />
 
 Match `s` against `p` with `.` (any char) and `*` (0+ of prev char).
 
@@ -13,16 +13,16 @@ Match `s` against `p` with `.` (any char) and `*` (0+ of prev char).
 **Constraints** — `1 ≤ |s|, |p| ≤ 20`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="regular-expression-matching" /&gt; &lt;Bookmark problem-slug="regular-expression-matching" /&gt;
+<MarkSolved problem-slug="regular-expression-matching" /> <Bookmark problem-slug="regular-expression-matching" />
 
-&lt;InterviewTimer problem-slug="regular-expression-matching" /&gt;
+<InterviewTimer problem-slug="regular-expression-matching" />
 
 
 
@@ -92,13 +92,13 @@ boolean matches(String s, String p, int i, int j) {
 - **`?` and `*`** → [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/).
 - **Full regex** → NFA/DFA.
 
-&lt;AiCompanion problem-slug="regular-expression-matching" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="regular-expression-matching" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)
 - [Edit Distance](/problems/edit-distance)
 
-&lt;FeedbackWidget problem-slug="regular-expression-matching" /&gt;
+<FeedbackWidget problem-slug="regular-expression-matching" />
 
-&lt;RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|maximal-square::Maximal Square|longest-palindromic-subsequence::Longest Palindromic Subsequence" /&gt;
+<RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|maximal-square::Maximal Square|longest-palindromic-subsequence::Longest Palindromic Subsequence" />

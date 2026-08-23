@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Trapping Rain Water II](https://leetcode.com/problems/trapping-rain-water-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 2D grid of heights; compute total water trapped.
 
@@ -11,16 +11,16 @@
 **Constraints** — `1 ≤ m, n ≤ 200`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="trapping-rain-water-ii" /&gt; &lt;Bookmark problem-slug="trapping-rain-water-ii" /&gt;
+<MarkSolved problem-slug="trapping-rain-water-ii" /> <Bookmark problem-slug="trapping-rain-water-ii" />
 
-&lt;InterviewTimer problem-slug="trapping-rain-water-ii" /&gt;
+<InterviewTimer problem-slug="trapping-rain-water-ii" />
 
 
 
@@ -90,7 +90,7 @@ int trapRainWater(int[][] h) {
 - **"Process lowest reachable first"** — same idea in path-with-min-effort, swim-in-water.
 - **1D** — see [Trapping Rain Water](/problems/trapping-rain-water) — opposing pointers.
 
-&lt;AiCompanion problem-slug="trapping-rain-water-ii" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="trapping-rain-water-ii" pattern-hint="two pointers" />
 
 ## Related problems
 
@@ -98,4 +98,4 @@ int trapRainWater(int[][] h) {
 - [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/)
 - [Path With Minimum Effort](/problems/path-with-minimum-effort)
 
-&lt;FeedbackWidget problem-slug="trapping-rain-water-ii" /&gt;
+<FeedbackWidget problem-slug="trapping-rain-water-ii" />

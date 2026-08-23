@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Combination Sum II](https://leetcode.com/problems/combination-sum-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Combinations summing to target, each candidate used at most once; candidates may repeat.
 
@@ -11,16 +11,16 @@ Combinations summing to target, each candidate used at most once; candidates may
 **Constraints** — `1 ≤ n ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="combination-sum-ii" /&gt; &lt;Bookmark problem-slug="combination-sum-ii" /&gt;
+<MarkSolved problem-slug="combination-sum-ii" /> <Bookmark problem-slug="combination-sum-ii" />
 
-&lt;InterviewTimer problem-slug="combination-sum-ii" /&gt;
+<InterviewTimer problem-slug="combination-sum-ii" />
 
 
 
@@ -68,7 +68,7 @@ void dfs(int[] a, int start, int rem, List<Integer> path, List<List<Integer>> ou
 - **Reuse allowed** → [Combination Sum](https://leetcode.com/problems/combination-sum/).
 - **Fixed k, digits 1-9** → [Combination Sum III](/problems/combination-sum-iii).
 
-&lt;AiCompanion problem-slug="combination-sum-ii" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="combination-sum-ii" pattern-hint="backtracking" />
 
 ## Related problems
 
@@ -76,6 +76,6 @@ void dfs(int[] a, int start, int rem, List<Integer> path, List<List<Integer>> ou
 - [Combination Sum III](/problems/combination-sum-iii)
 - [Combination Sum IV](/problems/combination-sum-iv) — DP
 
-&lt;FeedbackWidget problem-slug="combination-sum-ii" /&gt;
+<FeedbackWidget problem-slug="combination-sum-ii" />
 
-&lt;RelatedProblems problems="n-queens-ii::N Queens II|permutations-ii::Permutations II|subsets-ii::Subsets II" /&gt;
+<RelatedProblems problems="n-queens-ii::N Queens II|permutations-ii::Permutations II|subsets-ii::Subsets II" />

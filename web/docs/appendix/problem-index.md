@@ -1,6 +1,6 @@
 # Master Problem Index &amp; Tracker
 
-&lt;ProblemStats :total="205" /&gt;
+<ProblemStats :total="205" />
 
 <p class="secgoal"><b>What &amp; why:</b> every canonical problem in this book, in one checkable list — grouped by pattern/chapter, with difficulty and a direct LeetCode link. Use it as a coverage map and a progress tracker: tick the box each time you can reproduce a solution <b>cold</b>. Chapter titles link back to the full write-up.</p>
 

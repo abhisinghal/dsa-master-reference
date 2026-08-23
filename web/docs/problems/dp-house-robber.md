@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: House Robber](https://leetcode.com/problems/house-robber/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Bloomberg" />
 
 Given `nums[i]` = value at house `i`, return the max total value you can rob given you can't rob two adjacent houses.
 
@@ -12,16 +12,16 @@ Given `nums[i]` = value at house `i`, return the max total value you can rob giv
 **Constraints** — `1 ≤ n ≤ 100`; `0 ≤ nums[i] ≤ 400`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="dp-house-robber" /&gt; &lt;Bookmark problem-slug="dp-house-robber" /&gt;
+<MarkSolved problem-slug="dp-house-robber" /> <Bookmark problem-slug="dp-house-robber" />
 
-&lt;InterviewTimer problem-slug="dp-house-robber" /&gt;
+<InterviewTimer problem-slug="dp-house-robber" />
 
 
 
@@ -149,7 +149,7 @@ int rob(int[] a) {
 - **Cold interview** → walk brute → memo → table → rolled. This ladder shows the full DP thought process.
 - **Interviewer probes "why rolled?"** → we only need dp[i-1] and dp[i-2].
 
-&lt;AiCompanion problem-slug="dp-house-robber" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="dp-house-robber" pattern-hint="dynamic programming" />
 
 ## Related problems (same ladder applies)
 
@@ -158,4 +158,4 @@ int rob(int[] a) {
 - [Paint House](https://leetcode.com/problems/paint-house/) — 3-state variant
 - [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) — same recurrence shape (Fibonacci)
 
-&lt;FeedbackWidget problem-slug="dp-house-robber" /&gt;
+<FeedbackWidget problem-slug="dp-house-robber" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Uber" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Uber" />
 
 Design `WordDictionary` with `addWord(word)` and `search(word)`. `search` may contain `.` which matches any letter.
 
@@ -23,16 +23,16 @@ w.search("b.."); // true
 **Constraints** — ≤ 25 chars/word; up to 10⁴ ops.
 
 
-&lt;Hints
+<Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
   hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="design-add-and-search-words-data-structure" /&gt; &lt;Bookmark problem-slug="design-add-and-search-words-data-structure" /&gt;
+<MarkSolved problem-slug="design-add-and-search-words-data-structure" /> <Bookmark problem-slug="design-add-and-search-words-data-structure" />
 
-&lt;InterviewTimer problem-slug="design-add-and-search-words-data-structure" /&gt;
+<InterviewTimer problem-slug="design-add-and-search-words-data-structure" />
 
 
 
@@ -108,7 +108,7 @@ class WordDictionary {
 - **Long words** → limit early via length check per branch.
 - **Regex support** → NFA / recursive descent.
 
-&lt;AiCompanion problem-slug="design-add-and-search-words-data-structure" pattern-hint="trie" /&gt;
+<AiCompanion problem-slug="design-add-and-search-words-data-structure" pattern-hint="trie" />
 
 ## Related problems
 
@@ -116,6 +116,6 @@ class WordDictionary {
 - [Word Search II](/problems/trie-word-search-ii)
 - [Stream of Characters](/problems/stream-of-characters)
 
-&lt;FeedbackWidget problem-slug="design-add-and-search-words-data-structure" /&gt;
+<FeedbackWidget problem-slug="design-add-and-search-words-data-structure" />
 
-&lt;RelatedProblems problems="word-search-ii::Word Search II|trie-word-search-ii::Trie Word Search II|stream-of-characters::Stream Of Characters" /&gt;
+<RelatedProblems problems="word-search-ii::Word Search II|trie-word-search-ii::Trie Word Search II|stream-of-characters::Stream Of Characters" />

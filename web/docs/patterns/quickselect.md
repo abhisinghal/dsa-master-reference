@@ -1,8 +1,9 @@
 # Quickselect
 
 
-&lt;PatternVideo pattern-name="Quickselect" duration="8–12 min" /&gt;
-&lt;PatternProgress pattern-id="quickselect" problems="kth-largest" /&gt;
+<PatternVideo pattern-name="Quickselect" duration="8–12 min" />
+
+<PatternProgress pattern-id="quickselect" problems="kth-largest" />
 
 
 
@@ -326,6 +327,6 @@ O(1) extra because the selection loop partitions in place.
   :questions='[{"q": "Average complexity of Quickselect for k-th element?", "choices": [{"text": "O(n)", "correct": true, "explanation": "Each partition eliminates a constant fraction of remaining candidates on average."}, {"text": "O(n log n)", "correct": false, "explanation": "That is full quicksort."}, {"text": "O(log n)", "correct": false}, {"text": "O(k)", "correct": false}]}, {"q": "Worst-case complexity of Quickselect (without randomization)?", "choices": [{"text": "O(n²)", "correct": true, "explanation": "On adversarial inputs / sorted-with-first-pivot."}, {"text": "O(n log n)", "correct": false}, {"text": "O(n)", "correct": false, "explanation": "Only with median-of-medians pivot."}, {"text": "O(log n)", "correct": false}]}, {"q": "For k-th LARGEST via Quickselect, how do you compute the index?", "choices": [{"text": "Look for index n - k in ascending-sorted order", "correct": true, "explanation": "k-th largest = element at position n-k when sorted ascending."}, {"text": "Look for index k", "correct": false, "explanation": "That is k-th smallest."}, {"text": "Random", "correct": false}, {"text": "Nothing; use max-heap", "correct": false, "explanation": "Works but heavier."}]}, {"q": "What is Wiggle Sort II’s O(n) trick using Quickselect?", "choices": [{"text": "Quickselect median, then Dutch flag partition using virtual index mapping", "correct": true, "explanation": "Virtual index `(2i+1) % (n|1)` interleaves ranks correctly."}, {"text": "Just sort", "correct": false, "explanation": "That is O(n log n)."}, {"text": "Random shuffle", "correct": false}, {"text": "BFS", "correct": false}]}, {"q": "What guarantees Quickselect terminates?", "choices": [{"text": "The partition strictly reduces the search size by at least 1 each step", "correct": true, "explanation": "The pivot itself is placed correctly and excluded."}, {"text": "Random luck", "correct": false}, {"text": "Recursion depth bound", "correct": false}, {"text": "Sorted input", "correct": false}]}]'
 />
 
-&lt;PrintButton /&gt;
+<PrintButton />
 
-&lt;RelatedPatterns pattern-id="quickselect" /&gt;
+<RelatedPatterns pattern-id="quickselect" />

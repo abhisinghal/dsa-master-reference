@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Move Zeroes](https://leetcode.com/problems/move-zeroes/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple" />
 
 Move all zeros to end preserving order of non-zeros. In-place.
 
@@ -12,16 +12,16 @@ Move all zeros to end preserving order of non-zeros. In-place.
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="move-zeroes" /&gt; &lt;Bookmark problem-slug="move-zeroes" /&gt;
+<MarkSolved problem-slug="move-zeroes" /> <Bookmark problem-slug="move-zeroes" />
 
-&lt;InterviewTimer problem-slug="move-zeroes" /&gt;
+<InterviewTimer problem-slug="move-zeroes" />
 
 
 
@@ -96,13 +96,13 @@ void moveZeroesSwap(int[] nums) {
 - **Minimize writes** (SSD wear, etc.) → swap variant.
 - **Removes / partition** → same template family.
 
-&lt;AiCompanion problem-slug="move-zeroes" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="move-zeroes" pattern-hint="two pointers" />
 
 ## Related problems
 
 - [Remove Element](https://leetcode.com/problems/remove-element/)
 - [Sort Array By Parity](/problems/sort-array-by-parity)
 
-&lt;FeedbackWidget problem-slug="move-zeroes" /&gt;
+<FeedbackWidget problem-slug="move-zeroes" />
 
-&lt;RelatedProblems problems="4sum::4sum|container-with-most-water::Container With Most Water|squares-of-a-sorted-array::Squares Of A Sorted Array" /&gt;
+<RelatedProblems problems="4sum::4sum|container-with-most-water::Container With Most Water|squares-of-a-sorted-array::Squares Of A Sorted Array" />

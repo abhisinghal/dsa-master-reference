@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Remove K Digits](https://leetcode.com/problems/remove-k-digits/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Given a numeric string `num` (no leading zeros unless it's `"0"`) and integer `k`, remove `k` digits to yield the **smallest possible** number. Return as a string; strip leading zeros.
 
@@ -13,16 +13,16 @@ Given a numeric string `num` (no leading zeros unless it's `"0"`) and integer `k
 **Constraints** — `1 ≤ k ≤ n ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
   hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
   hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="remove-k-digits" /&gt; &lt;Bookmark problem-slug="remove-k-digits" /&gt;
+<MarkSolved problem-slug="remove-k-digits" /> <Bookmark problem-slug="remove-k-digits" />
 
-&lt;InterviewTimer problem-slug="remove-k-digits" /&gt;
+<InterviewTimer problem-slug="remove-k-digits" />
 
 
 
@@ -111,7 +111,7 @@ So the correct trace at i=5 (digit 1): after previous [1, 2, 2], seeing 1: pop 2
 - **"Remove exactly k characters to make lex smallest string"** → same greedy.
 - **"Keep at most k digits"** → cap stack size to k.
 
-&lt;AiCompanion problem-slug="remove-k-digits" pattern-hint="monotonic stack" /&gt;
+<AiCompanion problem-slug="remove-k-digits" pattern-hint="monotonic stack" />
 
 ## Related problems
 
@@ -119,6 +119,6 @@ So the correct trace at i=5 (digit 1): after previous [1, 2, 2], seeing 1: pop 2
 - [Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/) — same greedy with counts
 - [Create Maximum Number](https://leetcode.com/problems/create-maximum-number/) — two-array variant
 
-&lt;FeedbackWidget problem-slug="remove-k-digits" /&gt;
+<FeedbackWidget problem-slug="remove-k-digits" />
 
-&lt;RelatedProblems problems="next-greater-element-ii::Next Greater Element II|monotonic-stack-daily-temperatures::Monotonic Stack Daily Temperatures|online-stock-span::Online Stock Span" /&gt;
+<RelatedProblems problems="next-greater-element-ii::Next Greater Element II|monotonic-stack-daily-temperatures::Monotonic Stack Daily Temperatures|online-stock-span::Online Stock Span" />

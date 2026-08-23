@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Binary Search](https://leetcode.com/problems/binary-search/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/binary-search)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
 
 Given a sorted array `nums` and an integer `target`, return the index of `target`, or `-1` if not present. Must run in **O(log n)** time.
 
@@ -13,16 +13,16 @@ Given a sorted array `nums` and an integer `target`, return the index of `target
 **Constraints** — `1 ≤ n ≤ 10⁴`; all distinct; sorted ascending.
 
 
-&lt;Hints
+<Hints
   hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
   hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."
   hint3="For rotated arrays: one half is always sorted — compare mid with lo (or hi) to detect which side."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="binary-search" /&gt; &lt;Bookmark problem-slug="binary-search" /&gt;
+<MarkSolved problem-slug="binary-search" /> <Bookmark problem-slug="binary-search" />
 
-&lt;InterviewTimer problem-slug="binary-search" /&gt;
+<InterviewTimer problem-slug="binary-search" />
 
 
 
@@ -113,7 +113,7 @@ int searchHO(int[] nums, int target) {
 - **Rotated sorted array** → see [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted).
 - **Binary search on the answer** → apply the same template with a feasibility predicate; see [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas).
 
-&lt;AiCompanion problem-slug="binary-search" pattern-hint="binary search" /&gt;
+<AiCompanion problem-slug="binary-search" pattern-hint="binary search" />
 
 ## Related problems
 
@@ -122,6 +122,6 @@ int searchHO(int[] nums, int target) {
 - [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted) — piecewise-sorted
 - [Find Peak Element](/problems/find-peak-element) — BS on non-monotone
 
-&lt;FeedbackWidget problem-slug="binary-search" /&gt;
+<FeedbackWidget problem-slug="binary-search" />
 
-&lt;RelatedProblems problems="koko-bananas::Koko Bananas|search-in-rotated-sorted-array-ii::Search In Rotated Sorted Array II|binary-search-rotated-sorted::Binary Search Rotated Sorted" /&gt;
+<RelatedProblems problems="koko-bananas::Koko Bananas|search-in-rotated-sorted-array-ii::Search In Rotated Sorted Array II|binary-search-rotated-sorted::Binary Search Rotated Sorted" />

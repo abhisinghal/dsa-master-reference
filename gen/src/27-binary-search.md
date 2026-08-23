@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Binary Search" duration="8–12 min" />
+
 <PatternProgress pattern-id="binary-search" problems="binary-search-rotated-sorted, binary-search, find-minimum-in-rotated-sorted-array, find-peak-element, search-in-rotated-sorted-array-ii" />
 
 

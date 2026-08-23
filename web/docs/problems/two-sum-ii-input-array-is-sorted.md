@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Sorted array; return 1-indexed pair summing to target.
 
@@ -13,16 +13,16 @@ Sorted array; return 1-indexed pair summing to target.
 **Constraints** — `2 ≤ n ≤ 3·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="two-sum-ii-input-array-is-sorted" /&gt; &lt;Bookmark problem-slug="two-sum-ii-input-array-is-sorted" /&gt;
+<MarkSolved problem-slug="two-sum-ii-input-array-is-sorted" /> <Bookmark problem-slug="two-sum-ii-input-array-is-sorted" />
 
-&lt;InterviewTimer problem-slug="two-sum-ii-input-array-is-sorted" /&gt;
+<InterviewTimer problem-slug="two-sum-ii-input-array-is-sorted" />
 
 
 
@@ -83,13 +83,13 @@ int[] twoSum(int[] nums, int target) {
 - **Not sorted** → hash.
 - **k-Sum on sorted** → recursion with 2p base.
 
-&lt;AiCompanion problem-slug="two-sum-ii-input-array-is-sorted" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="two-sum-ii-input-array-is-sorted" pattern-hint="hashing" />
 
 ## Related problems
 
 - [Two Sum](/problems/hashing-two-sum)
 - [3Sum](/problems/3sum)
 
-&lt;FeedbackWidget problem-slug="two-sum-ii-input-array-is-sorted" /&gt;
+<FeedbackWidget problem-slug="two-sum-ii-input-array-is-sorted" />
 
-&lt;RelatedProblems problems="hashing-two-sum::Hashing Two Sum|3sum::3sum|valid-anagram::Valid Anagram" /&gt;
+<RelatedProblems problems="hashing-two-sum::Hashing Two Sum|3sum::3sum|valid-anagram::Valid Anagram" />

@@ -135,7 +135,7 @@ Use this version when the alphabet is unknown or sparse. The algorithmic idea is
 
 <ProgressCheck id="implement-trie" />
 
-&lt;TrieOps /&gt;
+<TrieOps />
 
 
 

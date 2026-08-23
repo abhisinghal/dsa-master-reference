@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Subarrays with K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Given an integer array `nums` and integer `k`, return the number of contiguous subarrays containing **exactly** `k` distinct integers.
 
@@ -13,16 +13,16 @@ Given an integer array `nums` and integer `k`, return the number of contiguous s
 **Constraints** — `1 ≤ n ≤ 2 · 10⁴`; `1 ≤ nums[i] ≤ n`; `1 ≤ k ≤ n`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="subarrays-with-k-different-integers" /&gt; &lt;Bookmark problem-slug="subarrays-with-k-different-integers" /&gt;
+<MarkSolved problem-slug="subarrays-with-k-different-integers" /> <Bookmark problem-slug="subarrays-with-k-different-integers" />
 
-&lt;InterviewTimer problem-slug="subarrays-with-k-different-integers" /&gt;
+<InterviewTimer problem-slug="subarrays-with-k-different-integers" />
 
 
 
@@ -122,7 +122,7 @@ Then `atMost(2) - atMost(1) = 12 - 5 = 7`.
 - **"At least k"** → count total `n·(n+1)/2` minus `atMost(k-1)`.
 - **"Return the subarrays themselves"** → change the counting to enumeration; loses O(n).
 
-&lt;AiCompanion problem-slug="subarrays-with-k-different-integers" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="subarrays-with-k-different-integers" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -131,6 +131,6 @@ Then `atMost(2) - atMost(1) = 12 - 5 = 7`.
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters) — length variant
 - [Subarray Product Less Than K](/problems/subarray-product-less-than-k)
 
-&lt;FeedbackWidget problem-slug="subarrays-with-k-different-integers" /&gt;
+<FeedbackWidget problem-slug="subarrays-with-k-different-integers" />
 
-&lt;RelatedProblems problems="number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters|minimum-window-substring::Minimum Window Substring|count-number-of-nice-subarrays::Count Number Of Nice Subarrays" /&gt;
+<RelatedProblems problems="number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters|minimum-window-substring::Minimum Window Substring|count-number-of-nice-subarrays::Count Number Of Nice Subarrays" />

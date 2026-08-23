@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Candy](https://leetcode.com/problems/candy/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Amazon, Meta, Bloomberg" /&gt;
+<CompanyTags companies="Amazon, Meta, Bloomberg" />
 
 Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly more. Minimize total.
 
@@ -12,16 +12,16 @@ Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="candy" /&gt; &lt;Bookmark problem-slug="candy" /&gt;
+<MarkSolved problem-slug="candy" /> <Bookmark problem-slug="candy" />
 
-&lt;InterviewTimer problem-slug="candy" /&gt;
+<InterviewTimer problem-slug="candy" />
 
 
 
@@ -82,11 +82,11 @@ Track up-slope and down-slope lengths + current peak. Trickier but O(1) extra sp
 - **O(1) space required** → one-pass slope.
 - **Non-strict inequality** → different logic.
 
-&lt;AiCompanion problem-slug="candy" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="candy" pattern-hint="hashing" />
 
 ## Related problems
 
 - [Trapping Rain Water](/problems/trapping-rain-water)
 - [Gas Station](/problems/gas-station)
 
-&lt;FeedbackWidget problem-slug="candy" /&gt;
+<FeedbackWidget problem-slug="candy" />

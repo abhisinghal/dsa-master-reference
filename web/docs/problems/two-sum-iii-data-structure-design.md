@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Two Sum III - Data Structure Design](https://leetcode.com/problems/two-sum-iii-data-structure-design/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
-&lt;CompanyTags companies="LinkedIn, Meta, Google" /&gt;
+<CompanyTags companies="LinkedIn, Meta, Google" />
 
 Design `TwoSum` supporting `add(x)` and `find(t)`.
 
@@ -21,16 +21,16 @@ ts.find(7);  // false
 **Constraints** — up to 10⁴ ops.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="two-sum-iii-data-structure-design" /&gt; &lt;Bookmark problem-slug="two-sum-iii-data-structure-design" /&gt;
+<MarkSolved problem-slug="two-sum-iii-data-structure-design" /> <Bookmark problem-slug="two-sum-iii-data-structure-design" />
 
-&lt;InterviewTimer problem-slug="two-sum-iii-data-structure-design" /&gt;
+<InterviewTimer problem-slug="two-sum-iii-data-structure-design" />
 
 
 
@@ -82,10 +82,10 @@ Precompute all pairwise sums into a set on `add`. `find` = O(1). `add` = O(n).
 - **Balanced** → hybrid or ordered TreeSet.
 - **"Stream infinite"** → fast add.
 
-&lt;AiCompanion problem-slug="two-sum-iii-data-structure-design" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="two-sum-iii-data-structure-design" pattern-hint="hashing" />
 
 ## Related problems
 
 - [Two Sum](/problems/hashing-two-sum)
 
-&lt;FeedbackWidget problem-slug="two-sum-iii-data-structure-design" /&gt;
+<FeedbackWidget problem-slug="two-sum-iii-data-structure-design" />

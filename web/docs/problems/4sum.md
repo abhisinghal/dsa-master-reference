@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: 4Sum](https://leetcode.com/problems/4sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Adobe" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Adobe" />
 
 Given an integer array `nums` and integer `target`, return all unique quadruplets `[a, b, c, d]` with `a + b + c + d == target`.
 
@@ -13,16 +13,16 @@ Given an integer array `nums` and integer `target`, return all unique quadruplet
 **Constraints** — `1 ≤ n ≤ 200`; `-10⁹ ≤ nums[i], target ≤ 10⁹`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="4sum" /&gt; &lt;Bookmark problem-slug="4sum" /&gt;
+<MarkSolved problem-slug="4sum" /> <Bookmark problem-slug="4sum" />
 
-&lt;InterviewTimer problem-slug="4sum" /&gt;
+<InterviewTimer problem-slug="4sum" />
 
 
 
@@ -166,7 +166,7 @@ List<List<Integer>> kSum(int[] nums, long target, int start, int k) {
 - **4Sum II** ("`a[i] + b[j] + c[k] + d[l] == 0` from four arrays") → hash-map on `(a+b)` vs `-(c+d)` — different technique, O(n²).
 - **Overflow** — always cast to `long` when values can be `±10⁹`.
 
-&lt;AiCompanion problem-slug="4sum" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="4sum" pattern-hint="two pointers" />
 
 ## Related problems
 
@@ -175,6 +175,6 @@ List<List<Integer>> kSum(int[] nums, long target, int start, int k) {
 - [4Sum II](https://leetcode.com/problems/4sum-ii/) — hash-based, splits into halves
 - [Two Sum](/problems/hashing-two-sum)
 
-&lt;FeedbackWidget problem-slug="4sum" /&gt;
+<FeedbackWidget problem-slug="4sum" />
 
-&lt;RelatedProblems problems="valid-palindrome-ii::Valid Palindrome II|container-with-most-water::Container With Most Water|merge-sorted-array::Merge Sorted Array" /&gt;
+<RelatedProblems problems="valid-palindrome-ii::Valid Palindrome II|container-with-most-water::Container With Most Water|merge-sorted-array::Merge Sorted Array" />

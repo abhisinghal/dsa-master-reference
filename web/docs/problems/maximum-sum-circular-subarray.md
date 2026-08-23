@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Max subarray sum in a **circular** array.
 
@@ -13,16 +13,16 @@ Max subarray sum in a **circular** array.
 **Constraints** — `1 ≤ n ≤ 3·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximum-sum-circular-subarray" /&gt; &lt;Bookmark problem-slug="maximum-sum-circular-subarray" /&gt;
+<MarkSolved problem-slug="maximum-sum-circular-subarray" /> <Bookmark problem-slug="maximum-sum-circular-subarray" />
 
-&lt;InterviewTimer problem-slug="maximum-sum-circular-subarray" /&gt;
+<InterviewTimer problem-slug="maximum-sum-circular-subarray" />
 
 
 
@@ -84,11 +84,11 @@ int maxSubarraySumCircular(int[] nums) {
 - **Linear** → standard Kadane.
 - **"Return the subarray"** → track indices.
 
-&lt;AiCompanion problem-slug="maximum-sum-circular-subarray" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="maximum-sum-circular-subarray" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Maximum Subarray](/problems/maximum-subarray)
 - [Maximum Product Subarray](/problems/maximum-product-subarray)
 
-&lt;FeedbackWidget problem-slug="maximum-sum-circular-subarray" /&gt;
+<FeedbackWidget problem-slug="maximum-sum-circular-subarray" />

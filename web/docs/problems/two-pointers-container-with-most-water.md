@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Container With Most Water](https://leetcode.com/problems/container-with-most-water/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
 
 Given `n` non-negative integer heights, find two vertical lines that form a container holding the maximum amount of water. Water volume = `min(h[i], h[j]) × (j − i)`.
 
@@ -11,16 +11,16 @@ Given `n` non-negative integer heights, find two vertical lines that form a cont
 **Constraints** — `2 ≤ n ≤ 10⁵`, `0 ≤ h[i] ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="two-pointers-container-with-most-water" /&gt; &lt;Bookmark problem-slug="two-pointers-container-with-most-water" /&gt;
+<MarkSolved problem-slug="two-pointers-container-with-most-water" /> <Bookmark problem-slug="two-pointers-container-with-most-water" />
 
-&lt;InterviewTimer problem-slug="two-pointers-container-with-most-water" /&gt;
+<InterviewTimer problem-slug="two-pointers-container-with-most-water" />
 
 
 
@@ -117,7 +117,7 @@ int maxArea(int[] h) {
 - **Interviewer opens cold** → state brute, then jump to two-pointer with the correctness argument.
 - **Interviewer asks "why not move the taller wall?"** → the exchange argument above.
 
-&lt;AiCompanion problem-slug="two-pointers-container-with-most-water" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="two-pointers-container-with-most-water" pattern-hint="two pointers" />
 
 ## Related problems (same ladder applies)
 
@@ -126,4 +126,4 @@ int maxArea(int[] h) {
 - [Sort Colors](https://leetcode.com/problems/sort-colors/) — three-way partition (Dutch flag)
 - [Squares of a Sorted Array](https://leetcode.com/problems/squares-of-a-sorted-array/) — two pointers from ends, fill back-to-front
 
-&lt;FeedbackWidget problem-slug="two-pointers-container-with-most-water" /&gt;
+<FeedbackWidget problem-slug="two-pointers-container-with-most-water" />

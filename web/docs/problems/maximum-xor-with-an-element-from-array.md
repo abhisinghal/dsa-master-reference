@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Maximum XOR With an Element From Array](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Given `nums` and queries `[query_val, max_allowed]`. For each query return the max XOR of `query_val` with any `x ∈ nums` where `x ≤ max_allowed`. Return -1 if no such x.
 
@@ -11,16 +11,16 @@ Given `nums` and queries `[query_val, max_allowed]`. For each query return the m
 **Constraints** — `1 ≤ n ≤ 10⁵`; nums, queries ≤ 10⁵.
 
 
-&lt;Hints
+<Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
   hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximum-xor-with-an-element-from-array" /&gt; &lt;Bookmark problem-slug="maximum-xor-with-an-element-from-array" /&gt;
+<MarkSolved problem-slug="maximum-xor-with-an-element-from-array" /> <Bookmark problem-slug="maximum-xor-with-an-element-from-array" />
 
-&lt;InterviewTimer problem-slug="maximum-xor-with-an-element-from-array" /&gt;
+<InterviewTimer problem-slug="maximum-xor-with-an-element-from-array" />
 
 
 
@@ -105,7 +105,7 @@ int maxXor(Node root, int v) {
 - **Constraint on element** → offline sort processes queries in order of constraint.
 - **Streaming** → online trie without deletion; harder with `≤ max` constraint.
 
-&lt;AiCompanion problem-slug="maximum-xor-with-an-element-from-array" pattern-hint="trie" /&gt;
+<AiCompanion problem-slug="maximum-xor-with-an-element-from-array" pattern-hint="trie" />
 
 ## Related problems
 
@@ -113,4 +113,4 @@ int maxXor(Node root, int v) {
 - [Count Pairs With XOR in Range](/problems/count-pairs-with-xor-in-a-range)
 - [Maximum Genetic Difference Query](/problems/maximum-genetic-difference-query)
 
-&lt;FeedbackWidget problem-slug="maximum-xor-with-an-element-from-array" /&gt;
+<FeedbackWidget problem-slug="maximum-xor-with-an-element-from-array" />

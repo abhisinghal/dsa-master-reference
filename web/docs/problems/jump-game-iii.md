@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Jump Game III](https://leetcode.com/problems/jump-game-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bfs)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 From index `start`, you may jump `i ± arr[i]`. Return true iff you can reach any zero.
 
@@ -13,16 +13,16 @@ From index `start`, you may jump `i ± arr[i]`. Return true iff you can reach an
 **Constraints** — `1 ≤ n ≤ 5·10⁴`; `0 ≤ arr[i] < n`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="jump-game-iii" /&gt; &lt;Bookmark problem-slug="jump-game-iii" /&gt;
+<MarkSolved problem-slug="jump-game-iii" /> <Bookmark problem-slug="jump-game-iii" />
 
-&lt;InterviewTimer problem-slug="jump-game-iii" /&gt;
+<InterviewTimer problem-slug="jump-game-iii" />
 
 
 
@@ -81,7 +81,7 @@ boolean canReach(int[] arr, int start) {
 - **Min steps to zero** → same BFS, count layers.
 - **"Same-value edges"** → [Jump Game IV](https://leetcode.com/problems/jump-game-iv/).
 
-&lt;AiCompanion problem-slug="jump-game-iii" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="jump-game-iii" pattern-hint="greedy" />
 
 ## Related problems
 
@@ -89,4 +89,4 @@ boolean canReach(int[] arr, int start) {
 - [Jump Game IV](https://leetcode.com/problems/jump-game-iv/)
 - [Minimum Jumps to Reach Home](https://leetcode.com/problems/minimum-jumps-to-reach-home/)
 
-&lt;FeedbackWidget problem-slug="jump-game-iii" /&gt;
+<FeedbackWidget problem-slug="jump-game-iii" />

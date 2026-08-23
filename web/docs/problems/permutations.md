@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Permutations](https://leetcode.com/problems/permutations/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple" />
 
 Return all permutations of distinct integers.
 
@@ -12,16 +12,16 @@ Return all permutations of distinct integers.
 **Constraints** — `1 ≤ n ≤ 6`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="permutations" /&gt; &lt;Bookmark problem-slug="permutations" /&gt;
+<MarkSolved problem-slug="permutations" /> <Bookmark problem-slug="permutations" />
 
-&lt;InterviewTimer problem-slug="permutations" /&gt;
+<InterviewTimer problem-slug="permutations" />
 
 
 
@@ -96,7 +96,7 @@ Cleaner when duplicates exist — see [Permutations II](/problems/permutations-i
 - **Duplicates** → used-set variant.
 - **Kth permutation** → factorial-number system, no enumeration.
 
-&lt;AiCompanion problem-slug="permutations" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="permutations" pattern-hint="backtracking" />
 
 ## Related problems
 
@@ -104,6 +104,6 @@ Cleaner when duplicates exist — see [Permutations II](/problems/permutations-i
 - [Next Permutation](/problems/next-permutation)
 - [Letter Case Permutation](/problems/letter-case-permutation)
 
-&lt;FeedbackWidget problem-slug="permutations" /&gt;
+<FeedbackWidget problem-slug="permutations" />
 
-&lt;RelatedProblems problems="beautiful-arrangement::Beautiful Arrangement|subsets-ii::Subsets II|n-queens-ii::N Queens II" /&gt;
+<RelatedProblems problems="beautiful-arrangement::Beautiful Arrangement|subsets-ii::Subsets II|n-queens-ii::N Queens II" />

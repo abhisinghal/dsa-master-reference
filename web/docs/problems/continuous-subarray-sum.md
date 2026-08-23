@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Continuous Subarray Sum](https://leetcode.com/problems/continuous-subarray-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Return true iff there is a subarray of length **≥ 2** whose sum is a multiple of `k`.
 
@@ -13,16 +13,16 @@ Return true iff there is a subarray of length **≥ 2** whose sum is a multiple 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ nums[i] ≤ 10⁹`; `1 ≤ k ≤ 2³¹−1`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="continuous-subarray-sum" /&gt; &lt;Bookmark problem-slug="continuous-subarray-sum" /&gt;
+<MarkSolved problem-slug="continuous-subarray-sum" /> <Bookmark problem-slug="continuous-subarray-sum" />
 
-&lt;InterviewTimer problem-slug="continuous-subarray-sum" /&gt;
+<InterviewTimer problem-slug="continuous-subarray-sum" />
 
 
 
@@ -89,7 +89,7 @@ boolean checkSubarraySum(int[] nums, int k) {
 - **"Length ≥ L"** → same, check `i - first ≥ L`.
 - **"Any sum divisible by k" (no length)** → simpler [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k).
 
-&lt;AiCompanion problem-slug="continuous-subarray-sum" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="continuous-subarray-sum" pattern-hint="prefix sum" />
 
 ## Related problems
 
@@ -97,6 +97,6 @@ boolean checkSubarraySum(int[] nums, int k) {
 - [Contiguous Array](/problems/contiguous-array)
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
 
-&lt;FeedbackWidget problem-slug="continuous-subarray-sum" /&gt;
+<FeedbackWidget problem-slug="continuous-subarray-sum" />
 
-&lt;RelatedProblems problems="contiguous-array::Contiguous Array|car-pooling::Car Pooling|range-addition::Range Addition" /&gt;
+<RelatedProblems problems="contiguous-array::Contiguous Array|car-pooling::Car Pooling|range-addition::Range Addition" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" />
 
 Given the head of a linked list, return `true` iff the list contains a cycle.
 
@@ -13,16 +13,16 @@ Given the head of a linked list, return `true` iff the list contains a cycle.
 **Constraints** — `0 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
   hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="linked-list-cycle" /&gt; &lt;Bookmark problem-slug="linked-list-cycle" /&gt;
+<MarkSolved problem-slug="linked-list-cycle" /> <Bookmark problem-slug="linked-list-cycle" />
 
-&lt;InterviewTimer problem-slug="linked-list-cycle" /&gt;
+<InterviewTimer problem-slug="linked-list-cycle" />
 
 
 
@@ -106,7 +106,7 @@ boolean hasCycle(ListNode head) {
 - **"Return cycle length"** → after `slow == fast`, walk `fast` around the loop until it meets `slow` again — length = steps taken.
 - **Modifying list allowed?** → some variants mark visited nodes; not standard.
 
-&lt;AiCompanion problem-slug="linked-list-cycle" pattern-hint="fast/slow pointers" /&gt;
+<AiCompanion problem-slug="linked-list-cycle" pattern-hint="fast/slow pointers" />
 
 ## Related problems
 
@@ -114,6 +114,6 @@ boolean hasCycle(ListNode head) {
 - [Happy Number](/problems/happy-number) — cycle detection on integer sequence
 - [Find the Duplicate Number](/problems/find-the-duplicate-number) — cycle detection on array as implicit list
 
-&lt;FeedbackWidget problem-slug="linked-list-cycle" /&gt;
+<FeedbackWidget problem-slug="linked-list-cycle" />
 
-&lt;RelatedProblems problems="fast-slow-linked-list-cycle-ii::Fast Slow Linked List Cycle II|find-the-duplicate-number::Find The Duplicate Number|happy-number::Happy Number" /&gt;
+<RelatedProblems problems="fast-slow-linked-list-cycle-ii::Fast Slow Linked List Cycle II|find-the-duplicate-number::Find The Duplicate Number|happy-number::Happy Number" />

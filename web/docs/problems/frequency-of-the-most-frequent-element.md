@@ -10,16 +10,16 @@ Given nums and budget `k` (increments allowed), max frequency of any single valu
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="frequency-of-the-most-frequent-element" /&gt; &lt;Bookmark problem-slug="frequency-of-the-most-frequent-element" /&gt;
+<MarkSolved problem-slug="frequency-of-the-most-frequent-element" /> <Bookmark problem-slug="frequency-of-the-most-frequent-element" />
 
-&lt;InterviewTimer problem-slug="frequency-of-the-most-frequent-element" /&gt;
+<InterviewTimer problem-slug="frequency-of-the-most-frequent-element" />
 
 
 
@@ -76,7 +76,7 @@ int maxFrequency(int[] nums, int k) {
 - **Decrement instead of increment** → symmetric; sort and use different cost formula.
 - **Multiple target values** → try each value as target with 2p.
 
-&lt;AiCompanion problem-slug="frequency-of-the-most-frequent-element" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="frequency-of-the-most-frequent-element" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -84,4 +84,4 @@ int maxFrequency(int[] nums, int k) {
 - [Minimum Operations to Reduce X to Zero](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/)
 - [Max Consecutive Ones III](/problems/max-consecutive-ones-iii)
 
-&lt;FeedbackWidget problem-slug="frequency-of-the-most-frequent-element" /&gt;
+<FeedbackWidget problem-slug="frequency-of-the-most-frequent-element" />

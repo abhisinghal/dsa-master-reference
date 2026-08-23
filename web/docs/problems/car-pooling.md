@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Car Pooling](https://leetcode.com/problems/car-pooling/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-&lt;CompanyTags companies="Meta, Amazon, Uber, Lyft" /&gt;
+<CompanyTags companies="Meta, Amazon, Uber, Lyft" />
 
 Given trips `[numPassengers, from, to]` and car `capacity`, return `true` iff you can carry all passengers without exceeding capacity.
 
@@ -13,16 +13,16 @@ Given trips `[numPassengers, from, to]` and car `capacity`, return `true` iff yo
 **Constraints** — `1 ≤ trips.length ≤ 1000`; `0 ≤ from < to ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="car-pooling" /&gt; &lt;Bookmark problem-slug="car-pooling" /&gt;
+<MarkSolved problem-slug="car-pooling" /> <Bookmark problem-slug="car-pooling" />
 
-&lt;InterviewTimer problem-slug="car-pooling" /&gt;
+<InterviewTimer problem-slug="car-pooling" />
 
 
 
@@ -86,7 +86,7 @@ boolean carPooling(int[][] trips, int capacity) {
 - **Unbounded / very large coords** → coordinate compress + diff array, or event sweep.
 - **Multi-resource capacity** → per-resource diff arrays.
 
-&lt;AiCompanion problem-slug="car-pooling" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="car-pooling" pattern-hint="prefix sum" />
 
 ## Related problems
 
@@ -94,6 +94,6 @@ boolean carPooling(int[][] trips, int capacity) {
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
 - [Range Addition](/problems/range-addition)
 
-&lt;FeedbackWidget problem-slug="car-pooling" /&gt;
+<FeedbackWidget problem-slug="car-pooling" />
 
-&lt;RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|contiguous-array::Contiguous Array|continuous-subarray-sum::Continuous Subarray Sum" /&gt;
+<RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|contiguous-array::Contiguous Array|continuous-subarray-sum::Continuous Subarray Sum" />

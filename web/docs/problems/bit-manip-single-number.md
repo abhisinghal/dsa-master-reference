@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Single Number](https://leetcode.com/problems/single-number/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Adobe" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Adobe" />
 
 Every element appears twice except one. Return that one, in **O(n)** time and **O(1)** space.
 
@@ -12,16 +12,16 @@ Every element appears twice except one. Return that one, in **O(n)** time and **
 **Constraints** — `1 ≤ n ≤ 3·10⁴`; all fit in `int`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="bit-manip-single-number" /&gt; &lt;Bookmark problem-slug="bit-manip-single-number" /&gt;
+<MarkSolved problem-slug="bit-manip-single-number" /> <Bookmark problem-slug="bit-manip-single-number" />
 
-&lt;InterviewTimer problem-slug="bit-manip-single-number" /&gt;
+<InterviewTimer problem-slug="bit-manip-single-number" />
 
 
 
@@ -117,7 +117,7 @@ int singleNumber(int[] nums) {
 - **Cold interview** → walk hash set → XOR. The XOR is the "aha" moment interviewers grade for.
 - **Interviewer probes correctness** → state associativity + commutativity of XOR aloud.
 
-&lt;AiCompanion problem-slug="bit-manip-single-number" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="bit-manip-single-number" pattern-hint="bit manipulation" />
 
 ## Related problems (same ladder applies)
 
@@ -126,4 +126,4 @@ int singleNumber(int[] nums) {
 - [Single Number II](https://leetcode.com/problems/single-number-ii/) — every element thrice except one; bit-count mod 3
 - [Single Number III](https://leetcode.com/problems/single-number-iii/) — two loners; XOR gives their xor, then split by any set bit
 
-&lt;FeedbackWidget problem-slug="bit-manip-single-number" /&gt;
+<FeedbackWidget problem-slug="bit-manip-single-number" />

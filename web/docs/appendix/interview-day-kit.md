@@ -2,7 +2,7 @@
 
 *The 24 hours before your interview matter more than the previous 3 weeks combined. Use this as a checklist.*
 
-&lt;StreakTracker /&gt;
+<StreakTracker />
 
 ## The night before
 
@@ -57,8 +57,8 @@ Interviewers don't want to compile it — they want to see YOU trace it. Walk th
 2. Ask: "Is there a specific pattern you'd like me to try?"
 3. Don't apologize excessively. Move on with dignity.
 
-&lt;SocialProof /&gt;
+<SocialProof />
 
-&lt;EmailCapture /&gt;
+<EmailCapture />
 
 Good luck. You've done the work. Now execute.

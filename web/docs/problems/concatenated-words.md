@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Concatenated Words](https://leetcode.com/problems/concatenated-words/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Given a list of distinct words, return all words that can be built as a concatenation of **at least two** shorter words from the same list.
 
@@ -11,16 +11,16 @@ Given a list of distinct words, return all words that can be built as a concaten
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
   hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="concatenated-words" /&gt; &lt;Bookmark problem-slug="concatenated-words" /&gt;
+<MarkSolved problem-slug="concatenated-words" /> <Bookmark problem-slug="concatenated-words" />
 
-&lt;InterviewTimer problem-slug="concatenated-words" /&gt;
+<InterviewTimer problem-slug="concatenated-words" />
 
 
 
@@ -90,7 +90,7 @@ boolean canFormFromOthers(String w, Set<String> dict, int start, int count) {
 - **Trie** wins when dict lookups dominate.
 - **"Return the segmentations"** → recurse and collect paths.
 
-&lt;AiCompanion problem-slug="concatenated-words" pattern-hint="trie" /&gt;
+<AiCompanion problem-slug="concatenated-words" pattern-hint="trie" />
 
 ## Related problems
 
@@ -98,6 +98,6 @@ boolean canFormFromOthers(String w, Set<String> dict, int start, int count) {
 - [Word Break II](https://leetcode.com/problems/word-break-ii/)
 - [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/)
 
-&lt;FeedbackWidget problem-slug="concatenated-words" /&gt;
+<FeedbackWidget problem-slug="concatenated-words" />
 
-&lt;RelatedProblems problems="word-search-ii::Word Search II|design-add-and-search-words-data-structure::Design Add And Search Words Data Structure|trie-word-search-ii::Trie Word Search II" /&gt;
+<RelatedProblems problems="word-search-ii::Word Search II|design-add-and-search-words-data-structure::Design Add And Search Words Data Structure|trie-word-search-ii::Trie Word Search II" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Paint House II](https://leetcode.com/problems/paint-house-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="LinkedIn, Facebook, Meta, Google" /&gt;
+<CompanyTags companies="LinkedIn, Facebook, Meta, Google" />
 
 `n` houses, `k` colors. cost to paint. No two adjacent same color. Min total.
 
@@ -12,16 +12,16 @@
 **Example 2** — `costs=[[1,3],[2,4]]` → `5`
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="paint-house-ii" /&gt; &lt;Bookmark problem-slug="paint-house-ii" /&gt;
+<MarkSolved problem-slug="paint-house-ii" /> <Bookmark problem-slug="paint-house-ii" />
 
-&lt;InterviewTimer problem-slug="paint-house-ii" /&gt;
+<InterviewTimer problem-slug="paint-house-ii" />
 
 
 
@@ -86,11 +86,11 @@ int minCostII(int[][] costs) {
 - **Only 3 colors** → O(n) with 3-way check.
 - **Return coloring** → track color chosen.
 
-&lt;AiCompanion problem-slug="paint-house-ii" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="paint-house-ii" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Paint House](https://leetcode.com/problems/paint-house/)
 - [Paint Fence](https://leetcode.com/problems/paint-fence/)
 
-&lt;FeedbackWidget problem-slug="paint-house-ii" /&gt;
+<FeedbackWidget problem-slug="paint-house-ii" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: 3Sum Smaller](https://leetcode.com/problems/3sum-smaller/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Count triplets `(i, j, k)` with `i < j < k` and `nums[i] + nums[j] + nums[k] < target`.
 
@@ -12,16 +12,16 @@ Count triplets `(i, j, k)` with `i < j < k` and `nums[i] + nums[j] + nums[k] < t
 **Constraints** — `0 ≤ n ≤ 3500`.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="3sum-smaller" /&gt; &lt;Bookmark problem-slug="3sum-smaller" /&gt;
+<MarkSolved problem-slug="3sum-smaller" /> <Bookmark problem-slug="3sum-smaller" />
 
-&lt;InterviewTimer problem-slug="3sum-smaller" /&gt;
+<InterviewTimer problem-slug="3sum-smaller" />
 
 
 
@@ -84,13 +84,13 @@ int threeSumSmaller(int[] nums, int target) {
 - **"Count triplets &lt; target"** → sort + counting shortcut.
 - **"Return the triplets"** → enumerate; loses O(1).
 
-&lt;AiCompanion problem-slug="3sum-smaller" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="3sum-smaller" pattern-hint="two pointers" />
 
 ## Related problems
 
 - [3Sum](/problems/3sum)
 - [3Sum Closest](/problems/3sum-closest)
 
-&lt;FeedbackWidget problem-slug="3sum-smaller" /&gt;
+<FeedbackWidget problem-slug="3sum-smaller" />
 
-&lt;RelatedProblems problems="container-with-most-water::Container With Most Water|3sum-closest::3sum Closest|move-zeroes::Move Zeroes" /&gt;
+<RelatedProblems problems="container-with-most-water::Container With Most Water|3sum-closest::3sum Closest|move-zeroes::Move Zeroes" />

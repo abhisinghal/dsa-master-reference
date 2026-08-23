@@ -10,16 +10,16 @@ Return the max average of any contiguous subarray of length exactly `k`.
 **Constraints** — `1 ≤ k ≤ n ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximum-average-subarray-i" /&gt; &lt;Bookmark problem-slug="maximum-average-subarray-i" /&gt;
+<MarkSolved problem-slug="maximum-average-subarray-i" /> <Bookmark problem-slug="maximum-average-subarray-i" />
 
-&lt;InterviewTimer problem-slug="maximum-average-subarray-i" /&gt;
+<InterviewTimer problem-slug="maximum-average-subarray-i" />
 
 
 
@@ -76,7 +76,7 @@ double findMaxAverage(int[] nums, int k) {
 - **Variable size** → constrained window (see [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum)).
 - **Max avg with size ≥ k** → binary search on answer.
 
-&lt;AiCompanion problem-slug="maximum-average-subarray-i" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="maximum-average-subarray-i" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -84,4 +84,4 @@ double findMaxAverage(int[] nums, int k) {
 - [Maximum Average Subarray II](https://leetcode.com/problems/maximum-average-subarray-ii/)
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
 
-&lt;FeedbackWidget problem-slug="maximum-average-subarray-i" /&gt;
+<FeedbackWidget problem-slug="maximum-average-subarray-i" />

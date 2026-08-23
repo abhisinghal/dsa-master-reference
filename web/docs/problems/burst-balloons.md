@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Burst Balloons](https://leetcode.com/problems/burst-balloons/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r are alive neighbors. Max coins.
 
@@ -11,16 +11,16 @@ Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r
 **Constraints** — `1 ≤ n ≤ 300`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="burst-balloons" /&gt; &lt;Bookmark problem-slug="burst-balloons" /&gt;
+<MarkSolved problem-slug="burst-balloons" /> <Bookmark problem-slug="burst-balloons" />
 
-&lt;InterviewTimer problem-slug="burst-balloons" /&gt;
+<InterviewTimer problem-slug="burst-balloons" />
 
 
 
@@ -82,13 +82,13 @@ int maxCoins(int[] nums) {
 - **"Optimize over splits with fixed boundary contribution"** → interval DP.
 - **"Reverse (last first) trick"** → also works in Matrix Chain, Merge Stones.
 
-&lt;AiCompanion problem-slug="burst-balloons" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="burst-balloons" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Minimum Cost to Merge Stones](/problems/minimum-cost-to-merge-stones)
 - [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)
 
-&lt;FeedbackWidget problem-slug="burst-balloons" /&gt;
+<FeedbackWidget problem-slug="burst-balloons" />
 
-&lt;RelatedProblems problems="palindrome-partitioning-ii::Palindrome Partitioning II|delete-and-earn::Delete And Earn|unique-paths-ii::Unique Paths II" /&gt;
+<RelatedProblems problems="palindrome-partitioning-ii::Palindrome Partitioning II|delete-and-earn::Delete And Earn|unique-paths-ii::Unique Paths II" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-&lt;CompanyTags companies="Amazon, Meta" /&gt;
+<CompanyTags companies="Amazon, Meta" />
 
 Given 2D `points`, connect all with min total Manhattan distance.
 
@@ -12,16 +12,16 @@ Given 2D `points`, connect all with min total Manhattan distance.
 **Constraints** — `1 ≤ n ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
   hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="min-cost-to-connect-all-points" /&gt; &lt;Bookmark problem-slug="min-cost-to-connect-all-points" /&gt;
+<MarkSolved problem-slug="min-cost-to-connect-all-points" /> <Bookmark problem-slug="min-cost-to-connect-all-points" />
 
-&lt;InterviewTimer problem-slug="min-cost-to-connect-all-points" /&gt;
+<InterviewTimer problem-slug="min-cost-to-connect-all-points" />
 
 
 
@@ -93,7 +93,7 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - **Sparse edges** → Kruskal.
 - **"Second best MST"** → replace each edge with next-cheapest non-MST option.
 
-&lt;AiCompanion problem-slug="min-cost-to-connect-all-points" pattern-hint="union-find" /&gt;
+<AiCompanion problem-slug="min-cost-to-connect-all-points" pattern-hint="union-find" />
 
 ## Related problems
 
@@ -101,6 +101,6 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village)
 - [Find Critical/Pseudo-Critical MST Edges](/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree)
 
-&lt;FeedbackWidget problem-slug="min-cost-to-connect-all-points" /&gt;
+<FeedbackWidget problem-slug="min-cost-to-connect-all-points" />
 
-&lt;RelatedProblems problems="redundant-connection::Redundant Connection|number-of-provinces::Number Of Provinces|most-stones-removed-with-same-row-or-column::Most Stones Removed With Same Row Or Column" /&gt;
+<RelatedProblems problems="redundant-connection::Redundant Connection|number-of-provinces::Number Of Provinces|most-stones-removed-with-same-row-or-column::Most Stones Removed With Same Row Or Column" />

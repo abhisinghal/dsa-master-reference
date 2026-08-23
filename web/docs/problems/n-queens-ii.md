@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: N-Queens II](https://leetcode.com/problems/n-queens-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
 
 Return **count** of distinct N-Queens solutions.
 
@@ -11,16 +11,16 @@ Return **count** of distinct N-Queens solutions.
 **Constraints** — `1 ≤ n ≤ 9`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="n-queens-ii" /&gt; &lt;Bookmark problem-slug="n-queens-ii" /&gt;
+<MarkSolved problem-slug="n-queens-ii" /> <Bookmark problem-slug="n-queens-ii" />
 
-&lt;InterviewTimer problem-slug="n-queens-ii" /&gt;
+<InterviewTimer problem-slug="n-queens-ii" />
 
 
 
@@ -70,13 +70,13 @@ void dfs(int n, int row, int cols, int d1, int d2, int[] count) {
 - **Return boards** → [N-Queens](/problems/backtracking-n-queens).
 - **Very large n** — no known polynomial algorithm.
 
-&lt;AiCompanion problem-slug="n-queens-ii" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="n-queens-ii" pattern-hint="backtracking" />
 
 ## Related problems
 
 - [N-Queens](/problems/backtracking-n-queens)
 - [Sudoku Solver](/problems/sudoku-solver)
 
-&lt;FeedbackWidget problem-slug="n-queens-ii" /&gt;
+<FeedbackWidget problem-slug="n-queens-ii" />
 
-&lt;RelatedProblems problems="permutations::Permutations|sudoku-solver::Sudoku Solver|beautiful-arrangement::Beautiful Arrangement" /&gt;
+<RelatedProblems problems="permutations::Permutations|sudoku-solver::Sudoku Solver|beautiful-arrangement::Beautiful Arrangement" />

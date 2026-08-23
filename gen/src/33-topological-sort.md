@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Topological Sort" duration="8–12 min" />
+
 <PatternProgress pattern-id="topological-sort" problems="course-schedule, alien-dictionary, minimum-height-trees, parallel-courses, sequence-reconstruction" />
 
 

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Coin Change II](https://leetcode.com/problems/coin-change-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Count ways to make `amount` from `coins` (unlimited each, **unordered**).
 
@@ -13,16 +13,16 @@ Count ways to make `amount` from `coins` (unlimited each, **unordered**).
 **Constraints** — `1 ≤ #coins ≤ 300`; `1 ≤ amount ≤ 5000`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="coin-change-ii" /&gt; &lt;Bookmark problem-slug="coin-change-ii" /&gt;
+<MarkSolved problem-slug="coin-change-ii" /> <Bookmark problem-slug="coin-change-ii" />
 
-&lt;InterviewTimer problem-slug="coin-change-ii" /&gt;
+<InterviewTimer problem-slug="coin-change-ii" />
 
 
 
@@ -79,7 +79,7 @@ int change(int amount, int[] coins) {
 - **Ordered** → outer amount.
 - **Min coins** → different — see [Coin Change](/problems/coin-change).
 
-&lt;AiCompanion problem-slug="coin-change-ii" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="coin-change-ii" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -87,6 +87,6 @@ int change(int amount, int[] coins) {
 - [Combination Sum IV](/problems/combination-sum-iv)
 - [Perfect Squares](/problems/perfect-squares)
 
-&lt;FeedbackWidget problem-slug="coin-change-ii" /&gt;
+<FeedbackWidget problem-slug="coin-change-ii" />
 
-&lt;RelatedProblems problems="longest-increasing-subsequence::Longest Increasing Subsequence|climbing-stairs::Climbing Stairs|min-cost-climbing-stairs::Min Cost Climbing Stairs" /&gt;
+<RelatedProblems problems="longest-increasing-subsequence::Longest Increasing Subsequence|climbing-stairs::Climbing Stairs|min-cost-climbing-stairs::Min Cost Climbing Stairs" />

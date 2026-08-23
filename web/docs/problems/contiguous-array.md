@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Contiguous Array](https://leetcode.com/problems/contiguous-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Given binary array `nums`, return the length of the longest subarray with equal numbers of 0s and 1s.
 
@@ -13,16 +13,16 @@ Given binary array `nums`, return the length of the longest subarray with equal 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `nums[i] ∈ {0,1}`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="contiguous-array" /&gt; &lt;Bookmark problem-slug="contiguous-array" /&gt;
+<MarkSolved problem-slug="contiguous-array" /> <Bookmark problem-slug="contiguous-array" />
 
-&lt;InterviewTimer problem-slug="contiguous-array" /&gt;
+<InterviewTimer problem-slug="contiguous-array" />
 
 
 
@@ -86,7 +86,7 @@ int findMaxLength(int[] nums) {
 - **Longest subarray with sum S** → same skeleton, store first prefix by value.
 - **k different labels equal counts** → k-dimensional signature as hash key.
 
-&lt;AiCompanion problem-slug="contiguous-array" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="contiguous-array" pattern-hint="prefix sum" />
 
 ## Related problems
 
@@ -94,6 +94,6 @@ int findMaxLength(int[] nums) {
 - [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k)
 - [Continuous Subarray Sum](/problems/continuous-subarray-sum)
 
-&lt;FeedbackWidget problem-slug="contiguous-array" /&gt;
+<FeedbackWidget problem-slug="contiguous-array" />
 
-&lt;RelatedProblems problems="subarray-sums-divisible-by-k::Subarray Sums Divisible By K|range-addition::Range Addition|prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K" /&gt;
+<RelatedProblems problems="subarray-sums-divisible-by-k::Subarray Sums Divisible By K|range-addition::Range Addition|prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K" />

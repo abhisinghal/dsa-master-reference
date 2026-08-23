@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 Given a string `s`, return `true` if it can become a palindrome by deleting **at most one** character.
 
@@ -13,16 +13,16 @@ Given a string `s`, return `true` if it can become a palindrome by deleting **at
 **Constraints** — `1 ≤ n ≤ 10⁵`. Lowercase ASCII.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="valid-palindrome-ii" /&gt; &lt;Bookmark problem-slug="valid-palindrome-ii" /&gt;
+<MarkSolved problem-slug="valid-palindrome-ii" /> <Bookmark problem-slug="valid-palindrome-ii" />
 
-&lt;InterviewTimer problem-slug="valid-palindrome-ii" /&gt;
+<InterviewTimer problem-slug="valid-palindrome-ii" />
 
 
 
@@ -132,7 +132,7 @@ boolean validPalindromeK(String s, int k) {
 - **"Return the resulting palindrome"** → trace the branch that succeeded and construct the string.
 - **Case-insensitive / alphanumeric-only** — see [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) for the parsing rules.
 
-&lt;AiCompanion problem-slug="valid-palindrome-ii" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="valid-palindrome-ii" pattern-hint="two pointers" />
 
 ## Related problems
 
@@ -140,6 +140,6 @@ boolean validPalindromeK(String s, int k) {
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence) — LPS DP
 - [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
 
-&lt;FeedbackWidget problem-slug="valid-palindrome-ii" /&gt;
+<FeedbackWidget problem-slug="valid-palindrome-ii" />
 
-&lt;RelatedProblems problems="sort-array-by-parity::Sort Array By Parity|boats-to-save-people::Boats To Save People|merge-sorted-array::Merge Sorted Array" /&gt;
+<RelatedProblems problems="sort-array-by-parity::Sort Array By Parity|boats-to-save-people::Boats To Save People|merge-sorted-array::Merge Sorted Array" />

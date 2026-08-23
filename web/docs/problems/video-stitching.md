@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Video Stitching](https://leetcode.com/problems/video-stitching/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
 
@@ -12,16 +12,16 @@ Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
 **Constraints** — `1 ≤ n ≤ 100`; `0 ≤ T ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="video-stitching" /&gt; &lt;Bookmark problem-slug="video-stitching" /&gt;
+<MarkSolved problem-slug="video-stitching" /> <Bookmark problem-slug="video-stitching" />
 
-&lt;InterviewTimer problem-slug="video-stitching" /&gt;
+<InterviewTimer problem-slug="video-stitching" />
 
 
 
@@ -78,11 +78,11 @@ int videoStitching(int[][] clips, int T) {
 - **Min intervals covering [0,T]** → farthest reach.
 - **Same-start bucket by max-end** → O(T) without sort.
 
-&lt;AiCompanion problem-slug="video-stitching" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="video-stitching" pattern-hint="greedy" />
 
 ## Related problems
 
 - [Jump Game II](/problems/greedy-jump-game-ii)
 - [Minimum Number of Taps](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/)
 
-&lt;FeedbackWidget problem-slug="video-stitching" /&gt;
+<FeedbackWidget problem-slug="video-stitching" />

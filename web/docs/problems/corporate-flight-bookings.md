@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-&lt;CompanyTags companies="Amazon, Meta" /&gt;
+<CompanyTags companies="Amazon, Meta" />
 
 Given `n` flights and bookings `[first, last, seats]`, return an array where index `i` = total seats booked on flight `i+1`.
 
@@ -13,16 +13,16 @@ Given `n` flights and bookings `[first, last, seats]`, return an array where ind
 **Constraints** — `1 ≤ n ≤ 2·10⁴`; `1 ≤ bookings.length ≤ 2·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="corporate-flight-bookings" /&gt; &lt;Bookmark problem-slug="corporate-flight-bookings" /&gt;
+<MarkSolved problem-slug="corporate-flight-bookings" /> <Bookmark problem-slug="corporate-flight-bookings" />
 
-&lt;InterviewTimer problem-slug="corporate-flight-bookings" /&gt;
+<InterviewTimer problem-slug="corporate-flight-bookings" />
 
 
 
@@ -82,7 +82,7 @@ int[] corpFlightBookings(int[][] bookings, int n) {
 - **Queries interleaved with reads** → segment tree with lazy propagation.
 - **Range assignment (not add)** → different structure — sweep line or seg tree.
 
-&lt;AiCompanion problem-slug="corporate-flight-bookings" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="corporate-flight-bookings" pattern-hint="prefix sum" />
 
 ## Related problems
 
@@ -90,6 +90,6 @@ int[] corpFlightBookings(int[][] bookings, int n) {
 - [Range Addition](/problems/range-addition) — the primitive
 - [Range Addition II](/problems/range-addition-ii)
 
-&lt;FeedbackWidget problem-slug="corporate-flight-bookings" /&gt;
+<FeedbackWidget problem-slug="corporate-flight-bookings" />
 
-&lt;RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|continuous-subarray-sum::Continuous Subarray Sum|range-addition::Range Addition" /&gt;
+<RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|continuous-subarray-sum::Continuous Subarray Sum|range-addition::Range Addition" />

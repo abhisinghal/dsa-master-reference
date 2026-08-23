@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Minimum Falling Path Sum](https://leetcode.com/problems/minimum-falling-path-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Grid; falling path picks one cell per row; next row's cell must be in `[j-1, j, j+1]`. Min sum from top to bottom.
 
@@ -11,16 +11,16 @@ Grid; falling path picks one cell per row; next row's cell must be in `[j-1, j, 
 **Constraints** — `1 ≤ n ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="minimum-falling-path-sum" /&gt; &lt;Bookmark problem-slug="minimum-falling-path-sum" /&gt;
+<MarkSolved problem-slug="minimum-falling-path-sum" /> <Bookmark problem-slug="minimum-falling-path-sum" />
 
-&lt;InterviewTimer problem-slug="minimum-falling-path-sum" /&gt;
+<InterviewTimer problem-slug="minimum-falling-path-sum" />
 
 
 
@@ -83,7 +83,7 @@ int minFallingPathSum(int[][] grid) {
 - **Row-only transitions** → 1D rolling.
 - **Diagonal-only transitions** → [Triangle](https://leetcode.com/problems/triangle/).
 
-&lt;AiCompanion problem-slug="minimum-falling-path-sum" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="minimum-falling-path-sum" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -91,4 +91,4 @@ int minFallingPathSum(int[][] grid) {
 - [Triangle](https://leetcode.com/problems/triangle/)
 - [Dungeon Game](/problems/dungeon-game)
 
-&lt;FeedbackWidget problem-slug="minimum-falling-path-sum" /&gt;
+<FeedbackWidget problem-slug="minimum-falling-path-sum" />

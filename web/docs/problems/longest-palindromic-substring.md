@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Amazon, Meta, Google, Microsoft, Bloomberg, Adobe" /&gt;
+<CompanyTags companies="Amazon, Meta, Google, Microsoft, Bloomberg, Adobe" />
 
 Return the longest palindromic substring of `s`.
 
@@ -13,16 +13,16 @@ Return the longest palindromic substring of `s`.
 **Constraints** — `1 ≤ n ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="longest-palindromic-substring" /&gt; &lt;Bookmark problem-slug="longest-palindromic-substring" /&gt;
+<MarkSolved problem-slug="longest-palindromic-substring" /> <Bookmark problem-slug="longest-palindromic-substring" />
 
-&lt;InterviewTimer problem-slug="longest-palindromic-substring" /&gt;
+<InterviewTimer problem-slug="longest-palindromic-substring" />
 
 
 
@@ -99,7 +99,7 @@ Sentinels + palindrome-radius array with reuse across mirrored centers.
 - **Very large n** → Manacher.
 - **Return count of palindromic substrings** → same expand, just count.
 
-&lt;AiCompanion problem-slug="longest-palindromic-substring" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="longest-palindromic-substring" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -107,6 +107,6 @@ Sentinels + palindrome-radius array with reuse across mirrored centers.
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence)
 - [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)
 
-&lt;FeedbackWidget problem-slug="longest-palindromic-substring" /&gt;
+<FeedbackWidget problem-slug="longest-palindromic-substring" />
 
-&lt;RelatedProblems problems="find-all-anagrams-in-a-string::Find All Anagrams In A String|sliding-window-longest-substring::Sliding Window Longest Substring|subarrays-with-k-different-integers::Subarrays With K Different Integers" /&gt;
+<RelatedProblems problems="find-all-anagrams-in-a-string::Find All Anagrams In A String|sliding-window-longest-substring::Sliding Window Longest Substring|subarrays-with-k-different-integers::Subarrays With K Different Integers" />

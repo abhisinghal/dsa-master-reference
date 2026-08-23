@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
 
 At most `k` transactions. Max profit.
 
@@ -12,16 +12,16 @@ At most `k` transactions. Max profit.
 **Example 2** — `k=2, prices=[3,2,6,5,0,3]` → `7`
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock-iv" /&gt; &lt;Bookmark problem-slug="best-time-to-buy-and-sell-stock-iv" /&gt;
+<MarkSolved problem-slug="best-time-to-buy-and-sell-stock-iv" /> <Bookmark problem-slug="best-time-to-buy-and-sell-stock-iv" />
 
-&lt;InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-iv" /&gt;
+<InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-iv" />
 
 
 
@@ -83,7 +83,7 @@ int maxProfit(int k, int[] prices) {
 - **Fixed k** → 2k states.
 - **k unlimited** → sum positive diffs.
 
-&lt;AiCompanion problem-slug="best-time-to-buy-and-sell-stock-iv" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="best-time-to-buy-and-sell-stock-iv" pattern-hint="dynamic programming" />
 
 ## Related problems
 
@@ -91,4 +91,4 @@ int maxProfit(int k, int[] prices) {
 - [With Transaction Fee](/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
 - [Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
 
-&lt;FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock-iv" /&gt;
+<FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock-iv" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Meta, Google, Amazon, Microsoft, Apple, Bloomberg, Uber" /&gt;
+<CompanyTags companies="Meta, Google, Amazon, Microsoft, Apple, Bloomberg, Uber" />
 
 Given `n` non-negative integers representing an elevation map, compute how much water it traps after raining.
 
@@ -12,16 +12,16 @@ Given `n` non-negative integers representing an elevation map, compute how much 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="trapping-rain-water" /&gt; &lt;Bookmark problem-slug="trapping-rain-water" /&gt;
+<MarkSolved problem-slug="trapping-rain-water" /> <Bookmark problem-slug="trapping-rain-water" />
 
-&lt;InterviewTimer problem-slug="trapping-rain-water" /&gt;
+<InterviewTimer problem-slug="trapping-rain-water" />
 
 
 
@@ -93,7 +93,7 @@ Push indices while heights decrease; on rise, pop the "bottom" and compute water
 - **Interviewer wants explicit reasoning** → precompute arrays.
 - **2D grid** → [Trapping Rain Water II](/problems/trapping-rain-water-ii) — min-heap.
 
-&lt;AiCompanion problem-slug="trapping-rain-water" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="trapping-rain-water" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -101,6 +101,6 @@ Push indices while heights decrease; on rise, pop the "bottom" and compute water
 - [Container With Most Water](/problems/two-pointers-container-with-most-water)
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram)
 
-&lt;FeedbackWidget problem-slug="trapping-rain-water" /&gt;
+<FeedbackWidget problem-slug="trapping-rain-water" />
 
-&lt;RelatedProblems problems="subarrays-with-k-different-integers::Subarrays With K Different Integers|max-consecutive-ones-iii::Max Consecutive Ones III|number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters" /&gt;
+<RelatedProblems problems="subarrays-with-k-different-integers::Subarrays With K Different Integers|max-consecutive-ones-iii::Max Consecutive Ones III|number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters" />

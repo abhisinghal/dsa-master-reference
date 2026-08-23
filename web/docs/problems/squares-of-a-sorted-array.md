@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Squares of a Sorted Array](https://leetcode.com/problems/squares-of-a-sorted-array/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Return squares of a sorted (possibly-negative) array, sorted.
 
@@ -12,16 +12,16 @@ Return squares of a sorted (possibly-negative) array, sorted.
 **Constraints** — `1 ≤ n ≤ 10⁴`; sorted ascending.
 
 
-&lt;Hints
+<Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="squares-of-a-sorted-array" /&gt; &lt;Bookmark problem-slug="squares-of-a-sorted-array" /&gt;
+<MarkSolved problem-slug="squares-of-a-sorted-array" /> <Bookmark problem-slug="squares-of-a-sorted-array" />
 
-&lt;InterviewTimer problem-slug="squares-of-a-sorted-array" /&gt;
+<InterviewTimer problem-slug="squares-of-a-sorted-array" />
 
 
 
@@ -82,13 +82,13 @@ int[] sortedSquares(int[] nums) {
 - **"Sorted array with monotone-transform"** → fill-from-ends technique.
 - **In-place mutation** → different — see [Merge Sorted Array](/problems/merge-sorted-array).
 
-&lt;AiCompanion problem-slug="squares-of-a-sorted-array" pattern-hint="two pointers" /&gt;
+<AiCompanion problem-slug="squares-of-a-sorted-array" pattern-hint="two pointers" />
 
 ## Related problems
 
 - [Merge Sorted Array](/problems/merge-sorted-array)
 - [Sort Colors](https://leetcode.com/problems/sort-colors/)
 
-&lt;FeedbackWidget problem-slug="squares-of-a-sorted-array" /&gt;
+<FeedbackWidget problem-slug="squares-of-a-sorted-array" />
 
-&lt;RelatedProblems problems="3sum-closest::3sum Closest|move-zeroes::Move Zeroes|container-with-most-water::Container With Most Water" /&gt;
+<RelatedProblems problems="3sum-closest::3sum Closest|move-zeroes::Move Zeroes|container-with-most-water::Container With Most Water" />

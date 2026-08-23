@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Count pairs `(i, j)` with `i < j` and `low ≤ nums[i] XOR nums[j] ≤ high`.
 
@@ -12,16 +12,16 @@ Count pairs `(i, j)` with `i < j` and `low ≤ nums[i] XOR nums[j] ≤ high`.
 **Constraints** — `1 ≤ n ≤ 2·10⁴`; `0 ≤ nums[i] ≤ 2·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
   hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="count-pairs-with-xor-in-a-range" /&gt; &lt;Bookmark problem-slug="count-pairs-with-xor-in-a-range" /&gt;
+<MarkSolved problem-slug="count-pairs-with-xor-in-a-range" /> <Bookmark problem-slug="count-pairs-with-xor-in-a-range" />
 
-&lt;InterviewTimer problem-slug="count-pairs-with-xor-in-a-range" /&gt;
+<InterviewTimer problem-slug="count-pairs-with-xor-in-a-range" />
 
 
 
@@ -104,7 +104,7 @@ int queryLE(Node root, int x, int t) {
 - **Fixed range not variable** → single sweep suffices.
 - **Streaming** → same trie, insert online.
 
-&lt;AiCompanion problem-slug="count-pairs-with-xor-in-a-range" pattern-hint="trie" /&gt;
+<AiCompanion problem-slug="count-pairs-with-xor-in-a-range" pattern-hint="trie" />
 
 ## Related problems
 
@@ -112,4 +112,4 @@ int queryLE(Node root, int x, int t) {
 - [Maximum XOR With an Element From Array](/problems/maximum-xor-with-an-element-from-array)
 - [Maximum Genetic Difference](/problems/maximum-genetic-difference-query)
 
-&lt;FeedbackWidget problem-slug="count-pairs-with-xor-in-a-range" /&gt;
+<FeedbackWidget problem-slug="count-pairs-with-xor-in-a-range" />

@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Count Submatrices with Target Sum](https://leetcode.com/problems/count-submatrices-that-sum-to-target/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/prefix-sum)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Given matrix and integer `target`, count submatrices whose sum equals `target`.
 
@@ -13,16 +13,16 @@ Given matrix and integer `target`, count submatrices whose sum equals `target`.
 **Constraints** — `1 ≤ m, n ≤ 100`; `-1000 ≤ mat[i][j] ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="count-submatrices-with-target-sum" /&gt; &lt;Bookmark problem-slug="count-submatrices-with-target-sum" /&gt;
+<MarkSolved problem-slug="count-submatrices-with-target-sum" /> <Bookmark problem-slug="count-submatrices-with-target-sum" />
 
-&lt;InterviewTimer problem-slug="count-submatrices-with-target-sum" /&gt;
+<InterviewTimer problem-slug="count-submatrices-with-target-sum" />
 
 
 
@@ -93,7 +93,7 @@ int numSubmatrixSumTarget(int[][] mat, int target) {
 - **Faster on `m > n`** → transpose and collapse the smaller dimension outer.
 - **"Max sum submatrix ≤ K"** → similar collapse + Kadane variant with TreeSet.
 
-&lt;AiCompanion problem-slug="count-submatrices-with-target-sum" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="count-submatrices-with-target-sum" pattern-hint="prefix sum" />
 
 ## Related problems
 
@@ -101,4 +101,4 @@ int numSubmatrixSumTarget(int[][] mat, int target) {
 - [Max Sum of Rectangle No Larger Than K](https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/)
 - [Maximum Sum Rectangle](/problems/maximum-subarray) — 1D Kadane sibling
 
-&lt;FeedbackWidget problem-slug="count-submatrices-with-target-sum" /&gt;
+<FeedbackWidget problem-slug="count-submatrices-with-target-sum" />

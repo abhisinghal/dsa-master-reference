@@ -10,16 +10,16 @@ Find the min window in `s1` such that `s2` is a subsequence.
 **Constraints** — `1 ≤ |s1| ≤ 2·10⁴`; `1 ≤ |s2| ≤ 100`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="minimum-window-subsequence" /&gt; &lt;Bookmark problem-slug="minimum-window-subsequence" /&gt;
+<MarkSolved problem-slug="minimum-window-subsequence" /> <Bookmark problem-slug="minimum-window-subsequence" />
 
-&lt;InterviewTimer problem-slug="minimum-window-subsequence" /&gt;
+<InterviewTimer problem-slug="minimum-window-subsequence" />
 
 
 
@@ -97,7 +97,7 @@ String minWindow(String s1, String s2) {
 - **Substring** (set membership) → [Minimum Window Substring](/problems/minimum-window-substring).
 - **"Any window containing s2"** → forward sweep only.
 
-&lt;AiCompanion problem-slug="minimum-window-subsequence" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="minimum-window-subsequence" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -105,4 +105,4 @@ String minWindow(String s1, String s2) {
 - [Is Subsequence](https://leetcode.com/problems/is-subsequence/)
 - [Longest Common Subsequence](/problems/longest-common-subsequence)
 
-&lt;FeedbackWidget problem-slug="minimum-window-subsequence" /&gt;
+<FeedbackWidget problem-slug="minimum-window-subsequence" />

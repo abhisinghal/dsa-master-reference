@@ -455,7 +455,7 @@ O(h) recursion stack, O(n) worst case.
 
 <ProgressCheck id="validate-bst-amp-bst-operations" />
 
-&lt;BstOps /&gt;
+<BstOps />
 
 ### Problem
 

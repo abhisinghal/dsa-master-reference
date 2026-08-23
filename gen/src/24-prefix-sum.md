@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Prefix Sum" duration="8–12 min" />
+
 <PatternProgress pattern-id="prefix-sum" problems="prefix-sum-subarray-sum-equals-k, subarray-sums-divisible-by-k, contiguous-array, continuous-subarray-sum, corporate-flight-bookings, car-pooling, range-addition, matrix-block-sum, count-submatrices-with-target-sum, maximal-rectangle" />
 
 

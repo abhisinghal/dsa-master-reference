@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Find Duplicate File in System](https://leetcode.com/problems/find-duplicate-file-in-system/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-&lt;CompanyTags companies="Google, Amazon, Dropbox" /&gt;
+<CompanyTags companies="Google, Amazon, Dropbox" />
 
 Given `"dir file1.ext(content) file2.ext(content) …"` strings, group files with identical content.
 
@@ -11,16 +11,16 @@ Given `"dir file1.ext(content) file2.ext(content) …"` strings, group files wit
 **Constraints** — total input ≤ 2·10⁷.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="find-duplicate-file-in-system" /&gt; &lt;Bookmark problem-slug="find-duplicate-file-in-system" /&gt;
+<MarkSolved problem-slug="find-duplicate-file-in-system" /> <Bookmark problem-slug="find-duplicate-file-in-system" />
 
-&lt;InterviewTimer problem-slug="find-duplicate-file-in-system" /&gt;
+<InterviewTimer problem-slug="find-duplicate-file-in-system" />
 
 
 
@@ -74,10 +74,10 @@ List<List<String>> findDuplicate(String[] paths) {
 - **Small files, batch mode** → full content hash.
 - **Huge files** → chunked hash + verify collisions.
 
-&lt;AiCompanion problem-slug="find-duplicate-file-in-system" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="find-duplicate-file-in-system" pattern-hint="hashing" />
 
 ## Related problems
 
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — canonical-key style
 
-&lt;FeedbackWidget problem-slug="find-duplicate-file-in-system" /&gt;
+<FeedbackWidget problem-slug="find-duplicate-file-in-system" />

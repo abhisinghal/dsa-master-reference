@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Number of Provinces](https://leetcode.com/problems/number-of-provinces/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-&lt;CompanyTags companies="Amazon, Google, Meta, LinkedIn" /&gt;
+<CompanyTags companies="Amazon, Google, Meta, LinkedIn" />
 
 Given `isConnected[n][n]` (adjacency matrix; `1` if direct road), return the number of connected components.
 
@@ -12,16 +12,16 @@ Given `isConnected[n][n]` (adjacency matrix; `1` if direct road), return the num
 **Constraints** — `1 ≤ n ≤ 200`.
 
 
-&lt;Hints
+<Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
   hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="union-find-number-of-provinces" /&gt; &lt;Bookmark problem-slug="union-find-number-of-provinces" /&gt;
+<MarkSolved problem-slug="union-find-number-of-provinces" /> <Bookmark problem-slug="union-find-number-of-provinces" />
 
-&lt;InterviewTimer problem-slug="union-find-number-of-provinces" /&gt;
+<InterviewTimer problem-slug="union-find-number-of-provinces" />
 
 
 
@@ -126,7 +126,7 @@ boolean union(int[] parent, int[] size, int a, int b) {
 - **Dynamic edges (streaming)** → Union-Find (only structure that supports incremental unions).
 - **Also need "are these two nodes connected?"** → Union-Find with path compression gives O(1) queries.
 
-&lt;AiCompanion problem-slug="union-find-number-of-provinces" pattern-hint="union-find" /&gt;
+<AiCompanion problem-slug="union-find-number-of-provinces" pattern-hint="union-find" />
 
 ## Related problems (same ladder applies)
 
@@ -135,4 +135,4 @@ boolean union(int[] parent, int[] size, int a, int b) {
 - [Number of Islands II](https://leetcode.com/problems/number-of-islands-ii/) — streaming version of Number of Islands
 - [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/) — Kruskal's MST via Union-Find
 
-&lt;FeedbackWidget problem-slug="union-find-number-of-provinces" /&gt;
+<FeedbackWidget problem-slug="union-find-number-of-provinces" />

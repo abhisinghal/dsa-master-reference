@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Min intervals to remove so the rest are non-overlapping.
 
@@ -13,16 +13,16 @@ Min intervals to remove so the rest are non-overlapping.
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="non-overlapping-intervals" /&gt; &lt;Bookmark problem-slug="non-overlapping-intervals" /&gt;
+<MarkSolved problem-slug="non-overlapping-intervals" /> <Bookmark problem-slug="non-overlapping-intervals" />
 
-&lt;InterviewTimer problem-slug="non-overlapping-intervals" /&gt;
+<InterviewTimer problem-slug="non-overlapping-intervals" />
 
 
 
@@ -75,7 +75,7 @@ int eraseOverlapIntervals(int[][] intervals) {
 - **"Max keep"** → same skeleton, return count.
 - **"Weighted intervals"** → interval scheduling DP.
 
-&lt;AiCompanion problem-slug="non-overlapping-intervals" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="non-overlapping-intervals" pattern-hint="greedy" />
 
 ## Related problems
 
@@ -83,6 +83,6 @@ int eraseOverlapIntervals(int[][] intervals) {
 - [Minimum Arrows](/problems/minimum-number-of-arrows-to-burst-balloons)
 - [Meeting Rooms](/problems/meeting-rooms)
 
-&lt;FeedbackWidget problem-slug="non-overlapping-intervals" /&gt;
+<FeedbackWidget problem-slug="non-overlapping-intervals" />
 
-&lt;RelatedProblems problems="best-time-to-buy-and-sell-stock::Best Time To Buy And Sell Stock|course-schedule-iii::Course Schedule III|jump-game::Jump Game" /&gt;
+<RelatedProblems problems="best-time-to-buy-and-sell-stock::Best Time To Buy And Sell Stock|course-schedule-iii::Course Schedule III|jump-game::Jump Game" />

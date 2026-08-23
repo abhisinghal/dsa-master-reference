@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Valid Anagram](https://leetcode.com/problems/valid-anagram/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
 
 Given two strings `s` and `t`, return `true` iff `t` is an anagram of `s`.
 
@@ -13,16 +13,16 @@ Given two strings `s` and `t`, return `true` iff `t` is an anagram of `s`.
 **Constraints** — `1 ≤ n ≤ 5 · 10⁴`. Lowercase English.
 
 
-&lt;Hints
+<Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
   hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="valid-anagram" /&gt; &lt;Bookmark problem-slug="valid-anagram" /&gt;
+<MarkSolved problem-slug="valid-anagram" /> <Bookmark problem-slug="valid-anagram" />
 
-&lt;InterviewTimer problem-slug="valid-anagram" /&gt;
+<InterviewTimer problem-slug="valid-anagram" />
 
 
 
@@ -127,7 +127,7 @@ boolean isAnagramUnicode(String s, String t) {
 - **Unicode / emoji** → HashMap over code points.
 - **Stream / can't materialize `t`** → maintain running count of `s` first, then decrement as `t` arrives; return false early on any negative overshoot.
 
-&lt;AiCompanion problem-slug="valid-anagram" pattern-hint="hashing" /&gt;
+<AiCompanion problem-slug="valid-anagram" pattern-hint="hashing" />
 
 ## Related problems
 
@@ -135,6 +135,6 @@ boolean isAnagramUnicode(String s, String t) {
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — canonical-key hashing
 - [Permutation in String](/problems/permutation-in-string) — sliding boolean version
 
-&lt;FeedbackWidget problem-slug="valid-anagram" /&gt;
+<FeedbackWidget problem-slug="valid-anagram" />
 
-&lt;RelatedProblems problems="isomorphic-strings::Isomorphic Strings|group-shifted-strings::Group Shifted Strings|hashing-two-sum::Hashing Two Sum" /&gt;
+<RelatedProblems problems="isomorphic-strings::Isomorphic Strings|group-shifted-strings::Group Shifted Strings|hashing-two-sum::Hashing Two Sum" />

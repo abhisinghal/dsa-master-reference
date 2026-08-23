@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/fast-slow)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
 
 Given an array `nums` of `n + 1` integers where each is in `[1, n]`, there is exactly one duplicate. Return it. **Constraints**: don't modify `nums`; use **O(1)** extra space.
 
@@ -13,16 +13,16 @@ Given an array `nums` of `n + 1` integers where each is in `[1, n]`, there is ex
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ nums[i] ≤ n`.
 
 
-&lt;Hints
+<Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
   hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="find-the-duplicate-number" /&gt; &lt;Bookmark problem-slug="find-the-duplicate-number" /&gt;
+<MarkSolved problem-slug="find-the-duplicate-number" /> <Bookmark problem-slug="find-the-duplicate-number" />
 
-&lt;InterviewTimer problem-slug="find-the-duplicate-number" /&gt;
+<InterviewTimer problem-slug="find-the-duplicate-number" />
 
 
 
@@ -120,7 +120,7 @@ int findDuplicate(int[] nums) {
 - **"Return every duplicate"** → mark visited via `nums[abs(v)-1] *= -1` (modifies input).
 - **Generalization: "smallest missing positive"** → different problem (in-place index marking).
 
-&lt;AiCompanion problem-slug="find-the-duplicate-number" pattern-hint="fast/slow pointers" /&gt;
+<AiCompanion problem-slug="find-the-duplicate-number" pattern-hint="fast/slow pointers" />
 
 ## Related problems
 
@@ -128,6 +128,6 @@ int findDuplicate(int[] nums) {
 - [Missing Number](/problems/missing-number) — one missing, all distinct — XOR trick
 - [First Missing Positive](https://leetcode.com/problems/first-missing-positive/) — index-marking
 
-&lt;FeedbackWidget problem-slug="find-the-duplicate-number" /&gt;
+<FeedbackWidget problem-slug="find-the-duplicate-number" />
 
-&lt;RelatedProblems problems="middle-of-the-linked-list::Middle Of The Linked List|palindrome-linked-list::Palindrome Linked List|happy-number::Happy Number" /&gt;
+<RelatedProblems problems="middle-of-the-linked-list::Middle Of The Linked List|palindrome-linked-list::Palindrome Linked List|happy-number::Happy Number" />

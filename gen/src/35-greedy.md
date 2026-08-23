@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Greedy" duration="8–12 min" />
+
 <PatternProgress pattern-id="greedy" problems="jump-game-ii, jump-game, gas-station, best-time-to-buy-and-sell-stock, maximum-subarray, non-overlapping-intervals, minimum-number-of-arrows-to-burst-balloons, course-schedule-iii, maximum-length-of-pair-chain, video-stitching, jump-game-iii" />
 
 

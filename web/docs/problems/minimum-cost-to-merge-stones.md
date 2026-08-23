@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Minimum Cost to Merge Stones](https://leetcode.com/problems/minimum-cost-to-merge-stones/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Merge exactly k consecutive piles at a time; cost = sum. Min total to merge all into one. `-1` if impossible.
 
@@ -11,16 +11,16 @@ Merge exactly k consecutive piles at a time; cost = sum. Min total to merge all 
 **Constraints** — `1 ≤ n ≤ 30`; `2 ≤ k ≤ 30`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="minimum-cost-to-merge-stones" /&gt; &lt;Bookmark problem-slug="minimum-cost-to-merge-stones" /&gt;
+<MarkSolved problem-slug="minimum-cost-to-merge-stones" /> <Bookmark problem-slug="minimum-cost-to-merge-stones" />
 
-&lt;InterviewTimer problem-slug="minimum-cost-to-merge-stones" /&gt;
+<InterviewTimer problem-slug="minimum-cost-to-merge-stones" />
 
 
 
@@ -83,10 +83,10 @@ int mergeStones(int[] stones, int k) {
 - **k=2** → merge sort merging pattern.
 - **Optimal binary search tree** — similar interval DP.
 
-&lt;AiCompanion problem-slug="minimum-cost-to-merge-stones" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="minimum-cost-to-merge-stones" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Burst Balloons](/problems/burst-balloons)
 
-&lt;FeedbackWidget problem-slug="minimum-cost-to-merge-stones" /&gt;
+<FeedbackWidget problem-slug="minimum-cost-to-merge-stones" />

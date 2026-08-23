@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Range Addition](https://leetcode.com/problems/range-addition/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Given length `n` and updates `[start, end, val]`, return the array after applying all updates.
 
@@ -12,16 +12,16 @@ Given length `n` and updates `[start, end, val]`, return the array after applyin
 **Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ updates.length ≤ 10⁴`; inclusive ranges.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="range-addition" /&gt; &lt;Bookmark problem-slug="range-addition" /&gt;
+<MarkSolved problem-slug="range-addition" /> <Bookmark problem-slug="range-addition" />
 
-&lt;InterviewTimer problem-slug="range-addition" /&gt;
+<InterviewTimer problem-slug="range-addition" />
 
 
 
@@ -81,7 +81,7 @@ int[] getModifiedArray(int n, int[][] updates) {
 - **Interleaved add + read** → segment tree with lazy propagation.
 - **Multi-dim range add** → 2D diff array (see Matrix Block Sum).
 
-&lt;AiCompanion problem-slug="range-addition" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="range-addition" pattern-hint="prefix sum" />
 
 ## Related problems
 
@@ -89,6 +89,6 @@ int[] getModifiedArray(int n, int[][] updates) {
 - [Car Pooling](/problems/car-pooling)
 - [Range Addition II](/problems/range-addition-ii)
 
-&lt;FeedbackWidget problem-slug="range-addition" /&gt;
+<FeedbackWidget problem-slug="range-addition" />
 
-&lt;RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|continuous-subarray-sum::Continuous Subarray Sum|car-pooling::Car Pooling" /&gt;
+<RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|continuous-subarray-sum::Continuous Subarray Sum|car-pooling::Car Pooling" />

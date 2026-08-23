@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Ugly Number II](https://leetcode.com/problems/ugly-number-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/k-way-merge)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 An **ugly number** has only 2, 3, or 5 as prime factors. `1` is ugly by convention. Return the `n`-th ugly number.
 
@@ -13,16 +13,16 @@ An **ugly number** has only 2, 3, or 5 as prime factors. `1` is ugly by conventi
 **Constraints** — `1 ≤ n ≤ 1690`.
 
 
-&lt;Hints
+<Hints
   hint1="You have k sorted sequences. Which element is globally next?"
   hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."
   hint3="For ’smallest range covering k lists’, track max-in-heap; window is [minInHeap, maxSeen]."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="ugly-number-ii" /&gt; &lt;Bookmark problem-slug="ugly-number-ii" /&gt;
+<MarkSolved problem-slug="ugly-number-ii" /> <Bookmark problem-slug="ugly-number-ii" />
 
-&lt;InterviewTimer problem-slug="ugly-number-ii" /&gt;
+<InterviewTimer problem-slug="ugly-number-ii" />
 
 
 
@@ -129,7 +129,7 @@ int nthUglyNumber(int n) {
 - **"Super ugly numbers"** → same, with `primes[]` given; min-heap gets simpler than k pointers.
 - **"nth prime" or "smallest k of type X"** → same merge template if `x` is a closed set.
 
-&lt;AiCompanion problem-slug="ugly-number-ii" pattern-hint="k-way merge" /&gt;
+<AiCompanion problem-slug="ugly-number-ii" pattern-hint="k-way merge" />
 
 ## Related problems
 
@@ -137,6 +137,6 @@ int nthUglyNumber(int n) {
 - [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — the pattern seed
 - [Perfect Squares](/problems/perfect-squares) — DP alternative
 
-&lt;FeedbackWidget problem-slug="ugly-number-ii" /&gt;
+<FeedbackWidget problem-slug="ugly-number-ii" />
 
-&lt;RelatedProblems problems="reorganize-string::Reorganize String|kth-largest-element-in-a-stream::Kth Largest Element In A Stream|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists" /&gt;
+<RelatedProblems problems="reorganize-string::Reorganize String|kth-largest-element-in-a-stream::Kth Largest Element In A Stream|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists" />

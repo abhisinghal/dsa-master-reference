@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Permutations II](https://leetcode.com/problems/permutations-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
 
 All **unique** permutations of nums (may contain duplicates).
 
@@ -11,16 +11,16 @@ All **unique** permutations of nums (may contain duplicates).
 **Constraints** — `1 ≤ n ≤ 8`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="permutations-ii" /&gt; &lt;Bookmark problem-slug="permutations-ii" /&gt;
+<MarkSolved problem-slug="permutations-ii" /> <Bookmark problem-slug="permutations-ii" />
 
-&lt;InterviewTimer problem-slug="permutations-ii" /&gt;
+<InterviewTimer problem-slug="permutations-ii" />
 
 
 
@@ -74,7 +74,7 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> out) {
 - **Distinct** → simpler swap-in-place.
 - **Return count only** → multinomial `n! / Π(k_i!)`.
 
-&lt;AiCompanion problem-slug="permutations-ii" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="permutations-ii" pattern-hint="backtracking" />
 
 ## Related problems
 
@@ -82,6 +82,6 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> out) {
 - [Subsets II](/problems/subsets-ii)
 - [Combination Sum II](/problems/combination-sum-ii)
 
-&lt;FeedbackWidget problem-slug="permutations-ii" /&gt;
+<FeedbackWidget problem-slug="permutations-ii" />
 
-&lt;RelatedProblems problems="letter-combinations-of-a-phone-number::Letter Combinations Of A Phone Number|combination-sum-iv::Combination Sum IV|n-queens::N Queens" /&gt;
+<RelatedProblems problems="letter-combinations-of-a-phone-number::Letter Combinations Of A Phone Number|combination-sum-iv::Combination Sum IV|n-queens::N Queens" />

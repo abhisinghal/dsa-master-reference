@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Length of longest palindromic subsequence.
 
@@ -12,16 +12,16 @@ Length of longest palindromic subsequence.
 **Constraints** — `1 ≤ n ≤ 1000`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="longest-palindromic-subsequence" /&gt; &lt;Bookmark problem-slug="longest-palindromic-subsequence" /&gt;
+<MarkSolved problem-slug="longest-palindromic-subsequence" /> <Bookmark problem-slug="longest-palindromic-subsequence" />
 
-&lt;InterviewTimer problem-slug="longest-palindromic-subsequence" /&gt;
+<InterviewTimer problem-slug="longest-palindromic-subsequence" />
 
 
 
@@ -88,13 +88,13 @@ int longestPalindromeSubseq(String s) {
 - **Min insertions to palindrome** → same DP.
 - **Longest palindromic *substring*** → different — see [Longest Palindromic Substring](/problems/longest-palindromic-substring).
 
-&lt;AiCompanion problem-slug="longest-palindromic-subsequence" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="longest-palindromic-subsequence" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Longest Common Subsequence](/problems/longest-common-subsequence)
 - [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)
 
-&lt;FeedbackWidget problem-slug="longest-palindromic-subsequence" /&gt;
+<FeedbackWidget problem-slug="longest-palindromic-subsequence" />
 
-&lt;RelatedProblems problems="maximal-square::Maximal Square|delete-and-earn::Delete And Earn|climbing-stairs::Climbing Stairs" /&gt;
+<RelatedProblems problems="maximal-square::Maximal Square|delete-and-earn::Delete And Earn|climbing-stairs::Climbing Stairs" />

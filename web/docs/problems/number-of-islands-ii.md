@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Number of Islands II](https://leetcode.com/problems/number-of-islands-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
 
-&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+<CompanyTags companies="Google, Amazon, Meta" />
 
 You have an `m × n` grid of water. Given `positions` where each `(r, c)` becomes land, return count of islands after each addition.
 
@@ -11,16 +11,16 @@ You have an `m × n` grid of water. Given `positions` where each `(r, c)` become
 **Constraints** — `1 ≤ m·n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
   hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="number-of-islands-ii" /&gt; &lt;Bookmark problem-slug="number-of-islands-ii" /&gt;
+<MarkSolved problem-slug="number-of-islands-ii" /> <Bookmark problem-slug="number-of-islands-ii" />
 
-&lt;InterviewTimer problem-slug="number-of-islands-ii" /&gt;
+<InterviewTimer problem-slug="number-of-islands-ii" />
 
 
 
@@ -100,7 +100,7 @@ boolean union(int[] p, int a, int b) {
 - **Static** → DFS/BFS flood fill.
 - **Deletion of land** → offline reverse: process removals as additions.
 
-&lt;AiCompanion problem-slug="number-of-islands-ii" pattern-hint="union-find" /&gt;
+<AiCompanion problem-slug="number-of-islands-ii" pattern-hint="union-find" />
 
 ## Related problems
 
@@ -108,6 +108,6 @@ boolean union(int[] p, int a, int b) {
 - [Number of Provinces](/problems/union-find-number-of-provinces)
 - [Making a Large Island](https://leetcode.com/problems/making-a-large-island/)
 
-&lt;FeedbackWidget problem-slug="number-of-islands-ii" /&gt;
+<FeedbackWidget problem-slug="number-of-islands-ii" />
 
-&lt;RelatedProblems problems="connecting-cities-with-minimum-cost::Connecting Cities With Minimum Cost|number-of-provinces::Number Of Provinces|most-stones-removed-with-same-row-or-column::Most Stones Removed With Same Row Or Column" /&gt;
+<RelatedProblems problems="connecting-cities-with-minimum-cost::Connecting Cities With Minimum Cost|number-of-provinces::Number Of Provinces|most-stones-removed-with-same-row-or-column::Most Stones Removed With Same Row Or Column" />

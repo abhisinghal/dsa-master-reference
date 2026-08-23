@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-&lt;CompanyTags companies="Amazon, Google, Meta, Microsoft" /&gt;
+<CompanyTags companies="Amazon, Google, Meta, Microsoft" />
 
 Given a binary matrix, find the largest rectangle containing only `1`s.
 
@@ -13,16 +13,16 @@ Given a binary matrix, find the largest rectangle containing only `1`s.
 **Constraints** — `1 ≤ m, n ≤ 200`; entries `'0'`/`'1'`.
 
 
-&lt;Hints
+<Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
   hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="maximal-rectangle" /&gt; &lt;Bookmark problem-slug="maximal-rectangle" /&gt;
+<MarkSolved problem-slug="maximal-rectangle" /> <Bookmark problem-slug="maximal-rectangle" />
 
-&lt;InterviewTimer problem-slug="maximal-rectangle" /&gt;
+<InterviewTimer problem-slug="maximal-rectangle" />
 
 
 
@@ -97,7 +97,7 @@ int largestRect(int[] h) {
 - **Only squares** → simpler DP (see [Maximal Square](/problems/maximal-square)).
 - **"Count submatrices with X"** → row-collapse + 1D template.
 
-&lt;AiCompanion problem-slug="maximal-rectangle" pattern-hint="prefix sum" /&gt;
+<AiCompanion problem-slug="maximal-rectangle" pattern-hint="prefix sum" />
 
 ## Related problems
 
@@ -105,4 +105,4 @@ int largestRect(int[] h) {
 - [Maximal Square](/problems/maximal-square)
 - [Count Submatrices with Target Sum](/problems/count-submatrices-with-target-sum)
 
-&lt;FeedbackWidget problem-slug="maximal-rectangle" /&gt;
+<FeedbackWidget problem-slug="maximal-rectangle" />

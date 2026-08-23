@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Constrained Subsequence Sum](https://leetcode.com/problems/constrained-subsequence-sum/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Max sum of a subsequence where every two consecutive chosen indices differ by at most `k`.
 
@@ -13,16 +13,16 @@ Max sum of a subsequence where every two consecutive chosen indices differ by at
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="constrained-subsequence-sum" /&gt; &lt;Bookmark problem-slug="constrained-subsequence-sum" /&gt;
+<MarkSolved problem-slug="constrained-subsequence-sum" /> <Bookmark problem-slug="constrained-subsequence-sum" />
 
-&lt;InterviewTimer problem-slug="constrained-subsequence-sum" /&gt;
+<InterviewTimer problem-slug="constrained-subsequence-sum" />
 
 
 
@@ -84,7 +84,7 @@ int constrainedSubsetSum(int[] nums, int k) {
 - **Jump-game family** → same template.
 - **k = 1** → same skeleton, deque may be size 1.
 
-&lt;AiCompanion problem-slug="constrained-subsequence-sum" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="constrained-subsequence-sum" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -92,4 +92,4 @@ int constrainedSubsetSum(int[] nums, int k) {
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
 - [Shortest Subarray with Sum at Least K](/problems/shortest-subarray-with-sum-at-least-k)
 
-&lt;FeedbackWidget problem-slug="constrained-subsequence-sum" /&gt;
+<FeedbackWidget problem-slug="constrained-subsequence-sum" />

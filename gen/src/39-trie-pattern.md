@@ -2,6 +2,7 @@
 
 
 <PatternVideo pattern-name="Trie" duration="8–12 min" />
+
 <PatternProgress pattern-id="trie" problems="word-search-ii, design-add-and-search-words-data-structure, replace-words, concatenated-words, stream-of-characters, maximum-xor-with-an-element-from-array, count-pairs-with-xor-in-a-range, maximum-genetic-difference-query" />
 
 

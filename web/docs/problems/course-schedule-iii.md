@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Course Schedule III](https://leetcode.com/problems/course-schedule-iii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/greedy)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Each course `[duration, lastDay]`. Take max number of courses (one at a time). Each must finish by lastDay.
 
@@ -11,16 +11,16 @@ Each course `[duration, lastDay]`. Take max number of courses (one at a time). E
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
   hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="course-schedule-iii" /&gt; &lt;Bookmark problem-slug="course-schedule-iii" /&gt;
+<MarkSolved problem-slug="course-schedule-iii" /> <Bookmark problem-slug="course-schedule-iii" />
 
-&lt;InterviewTimer problem-slug="course-schedule-iii" /&gt;
+<InterviewTimer problem-slug="course-schedule-iii" />
 
 
 
@@ -78,13 +78,13 @@ int scheduleCourse(int[][] courses) {
 - **"Max count with deadlines and swap-out"** → regret heap.
 - **"Max value"** → weighted variant → DP or different greedy.
 
-&lt;AiCompanion problem-slug="course-schedule-iii" pattern-hint="greedy" /&gt;
+<AiCompanion problem-slug="course-schedule-iii" pattern-hint="greedy" />
 
 ## Related problems
 
 - [Maximum Events Attended](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/)
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/)
 
-&lt;FeedbackWidget problem-slug="course-schedule-iii" /&gt;
+<FeedbackWidget problem-slug="course-schedule-iii" />
 
-&lt;RelatedProblems problems="jump-game-ii::Jump Game II|jump-game::Jump Game|minimum-number-of-arrows-to-burst-balloons::Minimum Number Of Arrows To Burst Balloons" /&gt;
+<RelatedProblems problems="jump-game-ii::Jump Game II|jump-game::Jump Game|minimum-number-of-arrows-to-burst-balloons::Minimum Number Of Arrows To Burst Balloons" />

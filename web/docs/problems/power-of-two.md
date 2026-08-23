@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Power of Two](https://leetcode.com/problems/power-of-two/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
 
 Return true iff `n` is a positive power of two.
 
@@ -13,16 +13,16 @@ Return true iff `n` is a positive power of two.
 **Constraints** — `-2³¹ ≤ n ≤ 2³¹−1`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="power-of-two" /&gt; &lt;Bookmark problem-slug="power-of-two" /&gt;
+<MarkSolved problem-slug="power-of-two" /> <Bookmark problem-slug="power-of-two" />
 
-&lt;InterviewTimer problem-slug="power-of-two" /&gt;
+<InterviewTimer problem-slug="power-of-two" />
 
 
 
@@ -67,7 +67,7 @@ boolean isPowerOfTwo(int n) {
 - **"Power of 4"** → also check `n & 0x55555555 != 0` (bit at even position).
 - **"Power of 3"** → no clean bit trick — `1162261467 % n == 0` (largest power of 3 ≤ INT_MAX).
 
-&lt;AiCompanion problem-slug="power-of-two" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="power-of-two" pattern-hint="bit manipulation" />
 
 ## Related problems
 
@@ -75,6 +75,6 @@ boolean isPowerOfTwo(int n) {
 - [Power of Four](https://leetcode.com/problems/power-of-four/)
 - [Number of 1 Bits](/problems/number-of-1-bits)
 
-&lt;FeedbackWidget problem-slug="power-of-two" /&gt;
+<FeedbackWidget problem-slug="power-of-two" />
 
-&lt;RelatedProblems problems="single-number::Single Number|hamming-distance::Hamming Distance|find-the-difference::Find The Difference" /&gt;
+<RelatedProblems problems="single-number::Single Number|hamming-distance::Hamming Distance|find-the-difference::Find The Difference" />

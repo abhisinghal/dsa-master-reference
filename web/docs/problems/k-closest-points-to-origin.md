@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/top-k-heap)
 
-&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber, Bloomberg, LinkedIn" /&gt;
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber, Bloomberg, LinkedIn" />
 
 Given `points[][2]` and integer `k`, return the `k` points closest to origin `(0, 0)` (Euclidean).
 
@@ -13,16 +13,16 @@ Given `points[][2]` and integer `k`, return the `k` points closest to origin `(0
 **Constraints** — `1 ≤ k ≤ n ≤ 10⁴`; `-10⁴ ≤ x, y ≤ 10⁴`. Any order accepted.
 
 
-&lt;Hints
+<Hints
   hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
   hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."
   hint3="For ’k closest’ or ’k most frequent’, the heap’s comparator holds the distance/frequency metric."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="k-closest-points-to-origin" /&gt; &lt;Bookmark problem-slug="k-closest-points-to-origin" /&gt;
+<MarkSolved problem-slug="k-closest-points-to-origin" /> <Bookmark problem-slug="k-closest-points-to-origin" />
 
-&lt;InterviewTimer problem-slug="k-closest-points-to-origin" /&gt;
+<InterviewTimer problem-slug="k-closest-points-to-origin" />
 
 
 
@@ -139,7 +139,7 @@ void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
 - **Streaming (points arrive one by one)** → max-heap.
 - **k close to n** → sort or min-heap of size (n-k).
 
-&lt;AiCompanion problem-slug="k-closest-points-to-origin" pattern-hint="top-K / heap" /&gt;
+<AiCompanion problem-slug="k-closest-points-to-origin" pattern-hint="top-K / heap" />
 
 ## Related problems
 
@@ -148,6 +148,6 @@ void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
 - [Kth Largest Element in a Stream](/problems/kth-largest-element-in-a-stream) — streaming
 - [Kth Smallest Element in a Sorted Matrix](/problems/kth-smallest-element-in-a-sorted-matrix) — BS-on-answer alternative
 
-&lt;FeedbackWidget problem-slug="k-closest-points-to-origin" /&gt;
+<FeedbackWidget problem-slug="k-closest-points-to-origin" />
 
-&lt;RelatedProblems problems="ugly-number-ii::Ugly Number II|k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists" /&gt;
+<RelatedProblems problems="ugly-number-ii::Ugly Number II|k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists" />

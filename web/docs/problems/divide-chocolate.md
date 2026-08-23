@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Divide Chocolate](https://leetcode.com/problems/divide-chocolate/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the smallest sum). Maximize your piece's sweetness.
 
@@ -11,16 +11,16 @@ Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the s
 **Constraints** — `1 ≤ k+1 ≤ n ≤ 10⁴`; `1 ≤ sweetness[i] ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
   hint3="The feasibility check is O(n); total complexity is O(n log range)."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="divide-chocolate" /&gt; &lt;Bookmark problem-slug="divide-chocolate" /&gt;
+<MarkSolved problem-slug="divide-chocolate" /> <Bookmark problem-slug="divide-chocolate" />
 
-&lt;InterviewTimer problem-slug="divide-chocolate" /&gt;
+<InterviewTimer problem-slug="divide-chocolate" />
 
 
 
@@ -85,7 +85,7 @@ int maximizeSweetness(int[] sweetness, int k) {
 - **Return the splits** → re-simulate after convergence.
 - **Bounded values** → tight `[lo, hi]` speeds up.
 
-&lt;AiCompanion problem-slug="divide-chocolate" pattern-hint="binary search on answer" /&gt;
+<AiCompanion problem-slug="divide-chocolate" pattern-hint="binary search on answer" />
 
 ## Related problems
 
@@ -93,4 +93,4 @@ int maximizeSweetness(int[] sweetness, int k) {
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)
 - [Minimize Max Distance to Gas Station](/problems/minimize-max-distance-to-gas-station)
 
-&lt;FeedbackWidget problem-slug="divide-chocolate" /&gt;
+<FeedbackWidget problem-slug="divide-chocolate" />

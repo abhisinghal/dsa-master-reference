@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Shortest Subarray with Sum at Least K](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 
@@ -13,16 +13,16 @@ Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 **Constraints** — `1 ≤ n ≤ 10⁵`; `-10⁵ ≤ nums[i] ≤ 10⁵`.
 
 
-&lt;Hints
+<Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="shortest-subarray-with-sum-at-least-k" /&gt; &lt;Bookmark problem-slug="shortest-subarray-with-sum-at-least-k" /&gt;
+<MarkSolved problem-slug="shortest-subarray-with-sum-at-least-k" /> <Bookmark problem-slug="shortest-subarray-with-sum-at-least-k" />
 
-&lt;InterviewTimer problem-slug="shortest-subarray-with-sum-at-least-k" /&gt;
+<InterviewTimer problem-slug="shortest-subarray-with-sum-at-least-k" />
 
 
 
@@ -92,7 +92,7 @@ int shortestSubarray(int[] nums, int k) {
 - **Negatives allowed** → monotonic deque on prefix sums.
 - **"Longest" instead** → different template — deque with reverse condition.
 
-&lt;AiCompanion problem-slug="shortest-subarray-with-sum-at-least-k" pattern-hint="sliding window" /&gt;
+<AiCompanion problem-slug="shortest-subarray-with-sum-at-least-k" pattern-hint="sliding window" />
 
 ## Related problems
 
@@ -100,6 +100,6 @@ int shortestSubarray(int[] nums, int k) {
 - [Constrained Subsequence Sum](/problems/constrained-subsequence-sum)
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
 
-&lt;FeedbackWidget problem-slug="shortest-subarray-with-sum-at-least-k" /&gt;
+<FeedbackWidget problem-slug="shortest-subarray-with-sum-at-least-k" />
 
-&lt;RelatedProblems problems="binary-subarrays-with-sum::Binary Subarrays With Sum|trapping-rain-water::Trapping Rain Water|fruit-into-baskets::Fruit Into Baskets" /&gt;
+<RelatedProblems problems="binary-subarrays-with-sum::Binary Subarrays With Sum|trapping-rain-water::Trapping Rain Water|fruit-into-baskets::Fruit Into Baskets" />

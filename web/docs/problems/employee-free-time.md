@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Employee Free Time](https://leetcode.com/problems/employee-free-time/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/merge-intervals)
 
-&lt;CompanyTags companies="Meta, Google, Amazon, LinkedIn" /&gt;
+<CompanyTags companies="Meta, Google, Amazon, LinkedIn" />
 
 Given schedules (each a list of disjoint intervals), return the intersection of all employees' free time.
 
@@ -12,16 +12,16 @@ Given schedules (each a list of disjoint intervals), return the intersection of 
 **Constraints** — `1 ≤ #employees ≤ 50`; total intervals ≤ 10⁴.
 
 
-&lt;Hints
+<Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
   hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="employee-free-time" /&gt; &lt;Bookmark problem-slug="employee-free-time" /&gt;
+<MarkSolved problem-slug="employee-free-time" /> <Bookmark problem-slug="employee-free-time" />
 
-&lt;InterviewTimer problem-slug="employee-free-time" /&gt;
+<InterviewTimer problem-slug="employee-free-time" />
 
 
 
@@ -93,7 +93,7 @@ Better when k is much smaller than N.
 - **Balanced input** → flatten + merge is simpler.
 - **"Find first common free slot ≥ duration D"** → augment sweep with duration check.
 
-&lt;AiCompanion problem-slug="employee-free-time" pattern-hint="merge intervals" /&gt;
+<AiCompanion problem-slug="employee-free-time" pattern-hint="merge intervals" />
 
 ## Related problems
 
@@ -102,6 +102,6 @@ Better when k is much smaller than N.
 - [Interval List Intersections](/problems/interval-list-intersections)
 - [Smallest Range Covering k Lists](/problems/smallest-range-covering-elements-from-k-lists)
 
-&lt;FeedbackWidget problem-slug="employee-free-time" /&gt;
+<FeedbackWidget problem-slug="employee-free-time" />
 
-&lt;RelatedProblems problems="meeting-rooms::Meeting Rooms|meeting-rooms-ii::Meeting Rooms II|the-skyline-problem::The Skyline Problem" /&gt;
+<RelatedProblems problems="meeting-rooms::Meeting Rooms|meeting-rooms-ii::Meeting Rooms II|the-skyline-problem::The Skyline Problem" />

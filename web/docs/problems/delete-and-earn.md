@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Delete and Earn](https://leetcode.com/problems/delete-and-earn/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Delete `x` to earn `x` points; also removes all `x-1` and `x+1`. Max points.
 
@@ -12,16 +12,16 @@ Delete `x` to earn `x` points; also removes all `x-1` and `x+1`. Max points.
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="delete-and-earn" /&gt; &lt;Bookmark problem-slug="delete-and-earn" /&gt;
+<MarkSolved problem-slug="delete-and-earn" /> <Bookmark problem-slug="delete-and-earn" />
 
-&lt;InterviewTimer problem-slug="delete-and-earn" /&gt;
+<InterviewTimer problem-slug="delete-and-earn" />
 
 
 
@@ -79,13 +79,13 @@ int deleteAndEarn(int[] nums) {
 - **"Adjacent-value taboo"** → reduce to House Robber.
 - **Sparse values** → skip zeros; use TreeMap.
 
-&lt;AiCompanion problem-slug="delete-and-earn" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="delete-and-earn" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [House Robber](/problems/dp-house-robber)
 - [House Robber II](/problems/house-robber-ii)
 
-&lt;FeedbackWidget problem-slug="delete-and-earn" /&gt;
+<FeedbackWidget problem-slug="delete-and-earn" />
 
-&lt;RelatedProblems problems="coin-change-ii::Coin Change II|min-cost-climbing-stairs::Min Cost Climbing Stairs|unique-paths-ii::Unique Paths II" /&gt;
+<RelatedProblems problems="coin-change-ii::Coin Change II|min-cost-climbing-stairs::Min Cost Climbing Stairs|unique-paths-ii::Unique Paths II" />

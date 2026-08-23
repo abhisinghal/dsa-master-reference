@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Combination Sum III](https://leetcode.com/problems/combination-sum-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+<CompanyTags companies="Meta, Amazon, Google" />
 
 `k` distinct digits from 1..9 summing to `n`.
 
@@ -12,16 +12,16 @@
 **Constraints** — `2 ≤ k ≤ 9`; `1 ≤ n ≤ 60`.
 
 
-&lt;Hints
+<Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="combination-sum-iii" /&gt; &lt;Bookmark problem-slug="combination-sum-iii" /&gt;
+<MarkSolved problem-slug="combination-sum-iii" /> <Bookmark problem-slug="combination-sum-iii" />
 
-&lt;InterviewTimer problem-slug="combination-sum-iii" /&gt;
+<InterviewTimer problem-slug="combination-sum-iii" />
 
 
 
@@ -69,7 +69,7 @@ void dfs(int start, int k, int rem, List<Integer> path, List<List<Integer>> out)
 - **Larger alphabet** → same skeleton.
 - **Count only** → replace `add(path)` with `count++`.
 
-&lt;AiCompanion problem-slug="combination-sum-iii" pattern-hint="backtracking" /&gt;
+<AiCompanion problem-slug="combination-sum-iii" pattern-hint="backtracking" />
 
 ## Related problems
 
@@ -77,6 +77,6 @@ void dfs(int start, int k, int rem, List<Integer> path, List<List<Integer>> out)
 - [Combination Sum II](/problems/combination-sum-ii)
 - [Combination Sum IV](/problems/combination-sum-iv)
 
-&lt;FeedbackWidget problem-slug="combination-sum-iii" /&gt;
+<FeedbackWidget problem-slug="combination-sum-iii" />
 
-&lt;RelatedProblems problems="subsets-ii::Subsets II|beautiful-arrangement::Beautiful Arrangement|sudoku-solver::Sudoku Solver" /&gt;
+<RelatedProblems problems="subsets-ii::Subsets II|beautiful-arrangement::Beautiful Arrangement|sudoku-solver::Sudoku Solver" />

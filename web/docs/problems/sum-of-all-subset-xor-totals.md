@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Sum of All Subset XOR Totals](https://leetcode.com/problems/sum-of-all-subset-xor-totals/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
-&lt;CompanyTags companies="Amazon, Google" /&gt;
+<CompanyTags companies="Amazon, Google" />
 
 Return the sum of XOR of every subset of `nums` (including empty).
 
@@ -12,16 +12,16 @@ Return the sum of XOR of every subset of `nums` (including empty).
 **Constraints** — `1 ≤ n ≤ 12`.
 
 
-&lt;Hints
+<Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
   hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="sum-of-all-subset-xor-totals" /&gt; &lt;Bookmark problem-slug="sum-of-all-subset-xor-totals" /&gt;
+<MarkSolved problem-slug="sum-of-all-subset-xor-totals" /> <Bookmark problem-slug="sum-of-all-subset-xor-totals" />
 
-&lt;InterviewTimer problem-slug="sum-of-all-subset-xor-totals" /&gt;
+<InterviewTimer problem-slug="sum-of-all-subset-xor-totals" />
 
 
 
@@ -79,11 +79,11 @@ int subsetXORSum(int[] nums) {
 - **Sum over all subsets of X** → contribution per element or per bit.
 - **AND / SUM over subsets** — similar bit-contribution insights.
 
-&lt;AiCompanion problem-slug="sum-of-all-subset-xor-totals" pattern-hint="bit manipulation" /&gt;
+<AiCompanion problem-slug="sum-of-all-subset-xor-totals" pattern-hint="bit manipulation" />
 
 ## Related problems
 
 - [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums) — contribution counting
 - [Subsets](/problems/bit-manip-subsets)
 
-&lt;FeedbackWidget problem-slug="sum-of-all-subset-xor-totals" /&gt;
+<FeedbackWidget problem-slug="sum-of-all-subset-xor-totals" />

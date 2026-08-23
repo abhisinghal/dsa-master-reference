@@ -1,6 +1,6 @@
 # Amazon Interview Kit
 
-&lt;PatternVideo pattern-name="Amazon Interview Kit" duration="prep video coming soon" /&gt;
+<PatternVideo pattern-name="Amazon Interview Kit" duration="prep video coming soon" />
 
 Amazon's SDE II / SDE III / Principal loops emphasize **Trees**, **Graphs**, **Sliding Window**, and **DP** — with a **strong Leadership Principles component** that requires you to weave "customer obsession" or "ownership" narratives into your solution walkthrough.
 
@@ -45,9 +45,9 @@ Amazon's SDE II / SDE III / Principal loops emphasize **Trees**, **Graphs**, **S
 - **Handle production concerns.** What if input is empty? What if two things fail concurrently?
 - **Bar Raiser round.** One interviewer will be from a different org — expect a hard behavioral + algorithmic mix.
 
-&lt;SocialProof /&gt;
+<SocialProof />
 
-&lt;EmailCapture /&gt;
+<EmailCapture />
 
 <Callout kind="pat" title="Data disclaimer">
 Amazon interview kits are curated from public interview reports. Not from Amazon insider knowledge.

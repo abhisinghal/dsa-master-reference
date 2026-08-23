@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
 
-&lt;CompanyTags companies="Google, Amazon" /&gt;
+<CompanyTags companies="Google, Amazon" />
 
 Given a graph, classify each edge:
 - **Critical** — removing it makes MST cost strictly larger (or disconnects).
@@ -13,16 +13,16 @@ Given a graph, classify each edge:
 **Constraints** — `2 ≤ n ≤ 100`; `1 ≤ E ≤ min(200, C(n,2))`.
 
 
-&lt;Hints
+<Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
   hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" /&gt; &lt;Bookmark problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" /&gt;
+<MarkSolved problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" /> <Bookmark problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />
 
-&lt;InterviewTimer problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" /&gt;
+<InterviewTimer problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />
 
 
 
@@ -91,7 +91,7 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - **Large E** → Tarjan bridge algorithm on MST after computing baseline.
 - **"Count MSTs"** → matrix-tree theorem (Kirchhoff).
 
-&lt;AiCompanion problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" pattern-hint="union-find" /&gt;
+<AiCompanion problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" pattern-hint="union-find" />
 
 ## Related problems
 
@@ -99,4 +99,4 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points)
 - [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village)
 
-&lt;FeedbackWidget problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" /&gt;
+<FeedbackWidget problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />

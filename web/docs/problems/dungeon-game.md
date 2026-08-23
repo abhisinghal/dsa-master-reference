@@ -2,7 +2,7 @@
 
 *[↗ LeetCode: Dungeon Game](https://leetcode.com/problems/dungeon-game/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+<CompanyTags companies="Amazon, Google, Meta" />
 
 Knight from top-left to bottom-right; each cell gives/takes HP; HP ≥ 1 always. Find min initial HP.
 
@@ -12,16 +12,16 @@ Knight from top-left to bottom-right; each cell gives/takes HP; HP ≥ 1 always.
 **Example 2** — `dungeon=[[0]]` → `1`
 
 
-&lt;Hints
+<Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
-/&gt;
+/>
 ---
 
-&lt;MarkSolved problem-slug="dungeon-game" /&gt; &lt;Bookmark problem-slug="dungeon-game" /&gt;
+<MarkSolved problem-slug="dungeon-game" /> <Bookmark problem-slug="dungeon-game" />
 
-&lt;InterviewTimer problem-slug="dungeon-game" /&gt;
+<InterviewTimer problem-slug="dungeon-game" />
 
 
 
@@ -79,11 +79,11 @@ int calculateMinimumHP(int[][] room) {
 - **"Min initial resource to survive path"** → reverse DP.
 - **"Max resource collectible"** → forward DP.
 
-&lt;AiCompanion problem-slug="dungeon-game" pattern-hint="dynamic programming" /&gt;
+<AiCompanion problem-slug="dungeon-game" pattern-hint="dynamic programming" />
 
 ## Related problems
 
 - [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
 - [Cherry Pickup](https://leetcode.com/problems/cherry-pickup/)
 
-&lt;FeedbackWidget problem-slug="dungeon-game" /&gt;
+<FeedbackWidget problem-slug="dungeon-game" />
