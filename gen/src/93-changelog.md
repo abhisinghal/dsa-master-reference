@@ -6,6 +6,47 @@ This changelog is curated from the `gen/src/` git history plus recent reader-fac
 
 ## November 2026 — CEO plan execution
 
+### 2026-11 — Round 20: Behavioral Interview Crash Course
+- New Behavioral Crash Course appendix chapter (STAR + 6 archetypes + 15 canonical questions).
+- Appendix sidebar now surfaces Interview Day Kit and Behavioral Crash Course explicitly.
+
+### 2026-11 — Round 19: Personalized Study Plan Generator
+- Landing has a Study Plan Generator: pick 1/2/4/8/12 weeks and target level (mid/senior/staff) → get a curated week-by-week plan referencing book chapters.
+
+### 2026-11 — Round 18: Interactive Roadmap checklist
+- Roadmap chapter now has clickable weekly checkboxes with a live progress bar (locally persisted).
+
+### 2026-11 — Round 17: Bookmarks
+- Bookmark button on every problem page (amber pill next to Mark Solved).
+- Landing shows your top 10 bookmarks, sorted newest-first.
+
+### 2026-11 — Round 16: Interview Timer
+- Interview Timer collapsible panel on all 205 problem pages — start/pause/reset and save your best time per problem.
+- Target-time hints for Medium (20-25 min) and Hard (30-40 min).
+
+### 2026-11 — Round 15: Streak notification bell + print button
+- Bottom-left notification bell nudges you to solve today when your streak is at risk (per-day dismiss).
+- Every pattern chapter has a "Print chapter" button for offline reference.
+
+### 2026-11 — Round 14: Custom 404 + Problem Stats
+- Dedicated 404 page with 6 suggested links (patterns / roadmap / all problems / Meta track / traps / day kit) instead of the default VitePress 404.
+- Problem index shows your solved / total / percentage with a live progress bar.
+
+### 2026-11 — Round 13: Reading progress + Back to top
+- Fixed gradient progress bar at the top of every page tracking scroll position.
+- Floating back-to-top button appears after 400px of scroll.
+
+### 2026-11 — Round 12: Related Problems widget
+- Each problem page now recommends 3 sibling problems from the same pattern for lateral browsing.
+
+### 2026-11 — Round 11: Spaced repetition (Due For Review)
+- Landing surfaces up to 5 problems you last solved 7+ days ago — a targeted spaced-repetition list.
+- Mark Solved now stores solve timestamps (backward-compatible with older `'true'` values).
+
+### 2026-11 — Round 10: Related Patterns + RSS refresh
+- Every pattern chapter now recommends 3 conceptually related patterns.
+- RSS feed refreshed with entries for all recent releases.
+
 ### 2026-11 — Round 9: Interview Day Kit + print-friendly styles
 - New Interview Day Kit page — 24-hour countdown checklist with emergency mode.
 - Landing gained two new feature cards: Company Tracks (Meta / Google / Amazon) and Interview Day Kit.
