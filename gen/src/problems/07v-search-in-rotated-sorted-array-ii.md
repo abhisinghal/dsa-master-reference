@@ -93,6 +93,8 @@ For `target = 3`:
 - **Duplicates possible** → this problem — accept O(n) worst case.
 - **"Return the index, not boolean"** → same skeleton; `return mid` on match, `return -1` at end.
 
+<AiCompanion problem-slug="search-in-rotated-sorted-array-ii" pattern-hint="binary search" />
+
 ## Related problems
 
 - [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted) — no duplicates

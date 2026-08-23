@@ -86,6 +86,8 @@ List<List<Integer>> getSkyline(int[][] buildings) {
 - **Divide & conquer alternative** → merge two half-skylines in O(n log n).
 - **Segment tree with range max** → same complexity, different mental model.
 
+<AiCompanion problem-slug="the-skyline-problem" pattern-hint="sweep line" />
+
 ## Related problems
 
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)

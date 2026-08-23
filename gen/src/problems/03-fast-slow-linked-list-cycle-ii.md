@@ -113,6 +113,8 @@ ListNode detectCycle(ListNode head) {
 - **Cold interview** → state hash-set, then Floyd for the O(1) space follow-up.
 - **Interviewer probes "why reset works"** → the `A = kC − B` derivation.
 
+<AiCompanion problem-slug="fast-slow-linked-list-cycle-ii" pattern-hint="fast/slow pointers" />
+
 ## Related problems (same ladder applies)
 
 - [Linked List Cycle (I)](https://leetcode.com/problems/linked-list-cycle/) — return true/false, no entry needed

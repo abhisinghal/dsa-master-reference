@@ -74,6 +74,8 @@ Pick cell with **fewest legal digits** each step — typical hard puzzles solve 
 - **Hard puzzles fast** → add MRV.
 - **Uniqueness check** → count solutions, stop at 2.
 
+<AiCompanion problem-slug="sudoku-solver" pattern-hint="backtracking" />
+
 ## Related problems
 
 - [Valid Sudoku](/problems/valid-sudoku)

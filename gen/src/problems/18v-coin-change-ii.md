@@ -69,6 +69,8 @@ int change(int amount, int[] coins) {
 - **Ordered** → outer amount.
 - **Min coins** → different — see [Coin Change](/problems/coin-change).
 
+<AiCompanion problem-slug="coin-change-ii" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Coin Change](/problems/coin-change)

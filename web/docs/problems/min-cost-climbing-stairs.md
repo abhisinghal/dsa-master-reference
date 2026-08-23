@@ -70,6 +70,8 @@ int minCostClimbingStairs(int[] cost) {
 - **Return steps taken** → track predecessors.
 - **k-step variants** → same skeleton with min over last k.
 
+&lt;AiCompanion problem-slug="min-cost-climbing-stairs" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Climbing Stairs](/problems/climbing-stairs)

@@ -69,6 +69,8 @@ int findLongestChain(int[][] pairs) {
 - **"Return the chain"** → track predecessor indices.
 - **"Weighted chain"** → DP required.
 
+<AiCompanion problem-slug="maximum-length-of-pair-chain" pattern-hint="greedy" />
+
 ## Related problems
 
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)

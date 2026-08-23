@@ -70,6 +70,8 @@ int findMinArrowShots(int[][] points) {
 - **"Min points to hit all intervals"** → sort by end + greedy.
 - **"Which balloons burst by each arrow"** → track intervals per arrow.
 
+&lt;AiCompanion problem-slug="minimum-number-of-arrows-to-burst-balloons" pattern-hint="greedy" /&gt;
+
 ## Related problems
 
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)

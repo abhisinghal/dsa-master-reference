@@ -90,6 +90,8 @@ class StockSpanner {
 - **Offline max — no streaming** → non-streaming variant is [Daily Temperatures](/problems/monotonic-stack-daily-temperatures).
 - **"Span with equality reversed (strictly less)"** → change the pop condition to `< price`.
 
+<AiCompanion problem-slug="online-stock-span" pattern-hint="monotonic stack" />
+
 ## Related problems
 
 - [Daily Temperatures](/problems/monotonic-stack-daily-temperatures)

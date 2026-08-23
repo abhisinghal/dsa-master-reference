@@ -76,6 +76,8 @@ Count L letters; for mask 0..2^L-1 flip corresponding cases.
 - **Small L** → either.
 - **Case with constraints** → DFS + prune.
 
+&lt;AiCompanion problem-slug="letter-case-permutation" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Subsets](/problems/bit-manip-subsets)

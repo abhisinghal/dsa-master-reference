@@ -86,6 +86,8 @@ int mergeCount(long[] p, int lo, int hi, int lower, int upper) {
 - **Fenwick/BIT alternative** → compress prefix values; count during single sweep.
 - **Segment tree** → same asymptotics; different implementation.
 
+<AiCompanion problem-slug="count-of-range-sum" pattern-hint="divide & conquer" />
+
 ## Related problems
 
 - [Reverse Pairs](/problems/reverse-pairs)

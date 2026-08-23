@@ -65,6 +65,8 @@ boolean isValidSudoku(char[][] board) {
 - **Speed** → bitmasks.
 - **Solve, not validate** → see [Sudoku Solver](/problems/sudoku-solver).
 
+<AiCompanion problem-slug="valid-sudoku" pattern-hint="backtracking" />
+
 ## Related problems
 
 - [Sudoku Solver](/problems/sudoku-solver)

@@ -97,6 +97,8 @@ ListNode mergeTwoListsRec(ListNode l1, ListNode l2) {
 - **Sorted arrays instead of lists** → same skeleton (see [Merge Sorted Array](/problems/merge-sorted-array)).
 - **k lists** → use min-heap (see [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists)).
 
+<AiCompanion problem-slug="merge-two-sorted-lists" pattern-hint="k-way merge" />
+
 ## Related problems
 
 - [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — k lists, min-heap

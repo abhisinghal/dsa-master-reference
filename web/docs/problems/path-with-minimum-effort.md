@@ -87,6 +87,8 @@ int minimumEffortPath(int[][] h) {
 - **Dijkstra variant** — replace sum with max in relaxation.
 - **Streaming edge addition** → Union-Find with sorted edges.
 
+&lt;AiCompanion problem-slug="path-with-minimum-effort" pattern-hint="binary search on answer" /&gt;
+
 ## Related problems
 
 - [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/) — same idea, sea level = effort

@@ -127,6 +127,8 @@ Most DSA references are one of two things: **a textbook** (dense theory, no inte
 
 For flights, whiteboarding, or interview eve without WiFi. Same content as the website. [Download from Releases](https://github.com/abhisinghal/dsa-master-reference/releases).
 
+<EmailCapture />
+
 <style scoped>
 .stats-strip {
   display: grid;

@@ -39,6 +39,10 @@ import UnionFindOps from './UnionFindOps.vue'
 import ExamplePreview from './ExamplePreview.vue'
 import Hints from './Hints.vue'
 import CompanyTags from './CompanyTags.vue'
+import EmailCapture from './EmailCapture.vue'
+import UserProfile from './UserProfile.vue'
+import PatternVideo from './PatternVideo.vue'
+import AiCompanion from './AiCompanion.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -89,6 +93,10 @@ export default {
     app.component('ExamplePreview', ExamplePreview)
     app.component('Hints', Hints)
     app.component('CompanyTags', CompanyTags)
+    app.component('EmailCapture', EmailCapture)
+    app.component('UserProfile', UserProfile)
+    app.component('PatternVideo', PatternVideo)
+    app.component('AiCompanion', AiCompanion)
     installSolvedCountBadges(router)
   }
 }

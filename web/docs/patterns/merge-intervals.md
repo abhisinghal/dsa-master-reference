@@ -1,5 +1,8 @@
 # Merge Intervals
 
+
+&lt;PatternVideo pattern-name="Merge Intervals" duration="8–12 min" /&gt;
+
 ## Why merge intervals exists — the story
 
 An interval is a promise about a stretch of time or space: a meeting from 9 to 10, a reservation from 4 to 7, a closed range `[1, 3]` on a number line. The hard part is not understanding one interval. The hard part is what happens when you receive a messy pile of them: `[8,10]`, `[1,3]`, `[2,6]`, `[15,18]`. At first glance, any interval could overlap any other interval, so the brute-force instinct is to compare every pair. The merge-intervals pattern exists because sorting turns the pile into a line.

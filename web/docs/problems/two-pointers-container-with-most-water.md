@@ -111,6 +111,8 @@ int maxArea(int[] h) {
 - **Interviewer opens cold** → state brute, then jump to two-pointer with the correctness argument.
 - **Interviewer asks "why not move the taller wall?"** → the exchange argument above.
 
+&lt;AiCompanion problem-slug="two-pointers-container-with-most-water" pattern-hint="two pointers" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) — two pointers + per-side max

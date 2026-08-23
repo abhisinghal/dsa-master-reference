@@ -76,6 +76,8 @@ boolean carPooling(int[][] trips, int capacity) {
 - **Unbounded / very large coords** → coordinate compress + diff array, or event sweep.
 - **Multi-resource capacity** → per-resource diff arrays.
 
+<AiCompanion problem-slug="car-pooling" pattern-hint="prefix sum" />
+
 ## Related problems
 
 - [Corporate Flight Bookings](/problems/corporate-flight-bookings)

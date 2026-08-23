@@ -73,6 +73,8 @@ boolean canJump(int[] nums) {
 - **Min jumps** → [Jump Game II](/problems/greedy-jump-game-ii) — BFS layers.
 - **Arbitrary graph jumps** → [Jump Game III](/problems/jump-game-iii) — BFS.
 
+<AiCompanion problem-slug="jump-game" pattern-hint="greedy" />
+
 ## Related problems
 
 - [Jump Game II](/problems/greedy-jump-game-ii)

@@ -64,6 +64,8 @@ List<List<String>> findDuplicate(String[] paths) {
 - **Small files, batch mode** → full content hash.
 - **Huge files** → chunked hash + verify collisions.
 
+<AiCompanion problem-slug="find-duplicate-file-in-system" pattern-hint="hashing" />
+
 ## Related problems
 
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — canonical-key style

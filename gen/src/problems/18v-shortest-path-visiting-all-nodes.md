@@ -80,6 +80,8 @@ int shortestPathLength(int[][] graph) {
 - **Exact TSP** → same DP.
 - **k people delivery** → k-source BFS extension.
 
+<AiCompanion problem-slug="shortest-path-visiting-all-nodes" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other)

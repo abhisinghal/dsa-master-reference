@@ -71,6 +71,8 @@ int longestCommonSubsequence(String s1, String s2) {
 - **Return the subsequence** → track predecessors.
 - **LCS of 3+ strings** → nD DP.
 
+<AiCompanion problem-slug="longest-common-subsequence" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Edit Distance](/problems/edit-distance)

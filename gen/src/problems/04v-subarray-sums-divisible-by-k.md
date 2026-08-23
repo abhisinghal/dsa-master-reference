@@ -79,6 +79,8 @@ int subarraysDivByK(int[] nums, int k) {
 - **Negatives possible** → the `((% + k) % k)` normalization is required.
 - **"Longest / shortest such subarray"** → change map to store first-index; take max/min index difference.
 
+<AiCompanion problem-slug="subarray-sums-divisible-by-k" pattern-hint="prefix sum" />
+
 ## Related problems
 
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)

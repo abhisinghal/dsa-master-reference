@@ -83,6 +83,8 @@ boolean checkSubarraySum(int[] nums, int k) {
 - **"Length ≥ L"** → same, check `i - first ≥ L`.
 - **"Any sum divisible by k" (no length)** → simpler [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k).
 
+&lt;AiCompanion problem-slug="continuous-subarray-sum" pattern-hint="prefix sum" /&gt;
+
 ## Related problems
 
 - [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k)

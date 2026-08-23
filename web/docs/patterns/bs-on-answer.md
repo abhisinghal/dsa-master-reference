@@ -1,5 +1,8 @@
 # Binary Search on the Answer
 
+
+&lt;PatternVideo pattern-name="Binary Search on the Answer" duration="8–12 min" /&gt;
+
 The motivating problem is usually something like: "What is the minimum speed/capacity/threshold that works?" Brute force tries every possible answer and runs the checker each time, which becomes impossible when the answer range goes up to `10⁹`.
 
 Can we do better? If a candidate answer works, every larger candidate usually works too. That one-way yes/no behavior gives you a sorted boolean array over the answer space: `false, false, true, true`.

@@ -98,6 +98,8 @@ ListNode middleNode(ListNode head) {
 - **"Return both middles for even n"** → `slow` is second; `slow.prev` (if doubly-linked) is first.
 - **Splitting into halves** → fast/slow gives O(1) space split; use for [Sort List](/problems/sort-list).
 
+&lt;AiCompanion problem-slug="middle-of-the-linked-list" pattern-hint="fast/slow pointers" /&gt;
+
 ## Related problems
 
 - [Linked List Cycle](/problems/linked-list-cycle) — same technique for detection

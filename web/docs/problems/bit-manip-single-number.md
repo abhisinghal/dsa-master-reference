@@ -111,6 +111,8 @@ int singleNumber(int[] nums) {
 - **Cold interview** → walk hash set → XOR. The XOR is the "aha" moment interviewers grade for.
 - **Interviewer probes correctness** → state associativity + commutativity of XOR aloud.
 
+&lt;AiCompanion problem-slug="bit-manip-single-number" pattern-hint="bit manipulation" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [Missing Number](https://leetcode.com/problems/missing-number/) — XOR nums with indices; the survivor is the missing index

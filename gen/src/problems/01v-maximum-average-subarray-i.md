@@ -66,6 +66,8 @@ double findMaxAverage(int[] nums, int k) {
 - **Variable size** → constrained window (see [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum)).
 - **Max avg with size ≥ k** → binary search on answer.
 
+<AiCompanion problem-slug="maximum-average-subarray-i" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Diet Plan Performance](/problems/diet-plan-performance)

@@ -69,6 +69,8 @@ int[] sortArrayByParity(int[] nums) {
 - **"Stable ordering"** → slow/fast writer + zero-fill (order-preserving).
 - **Three-way partition** → Dutch national flag.
 
+<AiCompanion problem-slug="sort-array-by-parity" pattern-hint="two pointers" />
+
 ## Related problems
 
 - [Sort Colors](https://leetcode.com/problems/sort-colors/) — 3-way

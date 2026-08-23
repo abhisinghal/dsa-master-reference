@@ -86,6 +86,8 @@ double findMedianSortedArrays(int[] A, int[] B) {
 - **"Median of k sorted"** → heap or divide-and-conquer.
 - **"kth of two sorted"** → same BS with different partition target.
 
+&lt;AiCompanion problem-slug="median-of-two-sorted-arrays" pattern-hint="binary search on answer" /&gt;
+
 ## Related problems
 
 - [Kth Smallest in Two Sorted Arrays](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)

@@ -77,6 +77,8 @@ int minFallingPathSum(int[][] grid) {
 - **Row-only transitions** → 1D rolling.
 - **Diagonal-only transitions** → [Triangle](https://leetcode.com/problems/triangle/).
 
+&lt;AiCompanion problem-slug="minimum-falling-path-sum" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)

@@ -80,6 +80,8 @@ int trapRainWater(int[][] h) {
 - **"Process lowest reachable first"** — same idea in path-with-min-effort, swim-in-water.
 - **1D** — see [Trapping Rain Water](/problems/trapping-rain-water) — opposing pointers.
 
+<AiCompanion problem-slug="trapping-rain-water-ii" pattern-hint="two pointers" />
+
 ## Related problems
 
 - [Trapping Rain Water](/problems/trapping-rain-water)

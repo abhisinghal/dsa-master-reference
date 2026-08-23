@@ -69,6 +69,8 @@ int eraseOverlapIntervals(int[][] intervals) {
 - **"Max keep"** → same skeleton, return count.
 - **"Weighted intervals"** → interval scheduling DP.
 
+&lt;AiCompanion problem-slug="non-overlapping-intervals" pattern-hint="greedy" /&gt;
+
 ## Related problems
 
 - [Maximum Length of Pair Chain](/problems/maximum-length-of-pair-chain)

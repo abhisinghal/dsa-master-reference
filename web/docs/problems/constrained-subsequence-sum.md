@@ -78,6 +78,8 @@ int constrainedSubsetSum(int[] nums, int k) {
 - **Jump-game family** → same template.
 - **k = 1** → same skeleton, deque may be size 1.
 
+&lt;AiCompanion problem-slug="constrained-subsequence-sum" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Jump Game VI](/problems/jump-game-vi)

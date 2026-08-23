@@ -126,6 +126,8 @@ int lengthOfLongestSubstringKDistinctLRU(String s, int k) {
 - **k = size(alphabet)** → answer is trivially `n`.
 - **Return the substring** → track `(bestL, bestLen)` and slice.
 
+<AiCompanion problem-slug="longest-substring-with-at-most-k-distinct-characters" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Longest Substring Without Repeating Characters](/problems/sliding-window-longest-substring) — k = ∞

@@ -145,6 +145,8 @@ List<Integer> findAnagrams(String s, String p) {
 - **Unicode alphabet** → running match with `HashMap` — same structure.
 - **Return count only, not indices** → same skeleton; increment a counter instead of appending.
 
+&lt;AiCompanion problem-slug="find-all-anagrams-in-a-string" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Permutation in String](/problems/permutation-in-string) — boolean sibling

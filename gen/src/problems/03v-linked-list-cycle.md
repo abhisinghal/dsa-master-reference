@@ -92,6 +92,8 @@ boolean hasCycle(ListNode head) {
 - **"Return cycle length"** → after `slow == fast`, walk `fast` around the loop until it meets `slow` again — length = steps taken.
 - **Modifying list allowed?** → some variants mark visited nodes; not standard.
 
+<AiCompanion problem-slug="linked-list-cycle" pattern-hint="fast/slow pointers" />
+
 ## Related problems
 
 - [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — return entry node

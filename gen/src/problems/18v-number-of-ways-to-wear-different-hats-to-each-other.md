@@ -76,6 +76,8 @@ int numberWays(List<List<Integer>> hats) {
 - **Small n (≤ 10), large "items" domain** → iterate items, mask people.
 - **Small items, large people** → reverse.
 
+<AiCompanion problem-slug="number-of-ways-to-wear-different-hats-to-each-other" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Beautiful Arrangement](/problems/beautiful-arrangement)

@@ -48,6 +48,8 @@ int hammingDistance(int x, int y) {
 - **"Sum of pairwise Hamming distances"** → per-bit counting; see [Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/).
 - **Manhattan-like "min flips to reach y"** → same popcount.
 
+<AiCompanion problem-slug="hamming-distance" pattern-hint="bit manipulation" />
+
 ## Related problems
 
 - [Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/)

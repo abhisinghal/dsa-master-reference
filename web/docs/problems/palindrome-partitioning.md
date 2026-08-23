@@ -83,6 +83,8 @@ O(n²) precompute; O(1) checks during recursion.
 - **Min cuts** → different problem (see [II](/problems/palindrome-partitioning-ii)).
 - **Count partitions** → same skeleton; replace add with count.
 
+&lt;AiCompanion problem-slug="palindrome-partitioning" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)

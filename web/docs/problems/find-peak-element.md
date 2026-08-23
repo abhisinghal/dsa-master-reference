@@ -89,6 +89,8 @@ O(n) linear pass; rejected.
 - **"Peak in 2D matrix"** → recurse on rows/cols, similar BS idea (LC 1901).
 - **"Peak with plateau"** → strict inequality assumption fails; problem becomes harder.
 
+&lt;AiCompanion problem-slug="find-peak-element" pattern-hint="binary search" /&gt;
+
 ## Related problems
 
 - [Find Minimum in Rotated Sorted Array](/problems/find-minimum-in-rotated-sorted-array) — similar BS on non-monotone

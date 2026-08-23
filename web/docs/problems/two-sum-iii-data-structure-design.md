@@ -76,6 +76,8 @@ Precompute all pairwise sums into a set on `add`. `find` = O(1). `add` = O(n).
 - **Balanced** → hybrid or ordered TreeSet.
 - **"Stream infinite"** → fast add.
 
+&lt;AiCompanion problem-slug="two-sum-iii-data-structure-design" pattern-hint="hashing" /&gt;
+
 ## Related problems
 
 - [Two Sum](/problems/hashing-two-sum)

@@ -73,6 +73,8 @@ int numRescueBoats(int[] people, int limit) {
 - **"Pair heaviest + lightest greedy"** → applies to boats, task scheduling, item packing.
 - **"3+ per boat"** → generalizes with DP or different greedy.
 
+&lt;AiCompanion problem-slug="boats-to-save-people" pattern-hint="two pointers" /&gt;
+
 ## Related problems
 
 - [Two Sum II](/problems/two-sum-ii-input-array-is-sorted)

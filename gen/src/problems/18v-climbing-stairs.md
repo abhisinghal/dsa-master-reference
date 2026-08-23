@@ -59,6 +59,8 @@ int climbStairs(int n) {
 - **Very large n** → matrix expo or closed-form Binet.
 - **Steps of {1..k}** → same recurrence extended.
 
+<AiCompanion problem-slug="climbing-stairs" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Min Cost Climbing Stairs](/problems/min-cost-climbing-stairs)

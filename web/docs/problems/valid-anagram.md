@@ -121,6 +121,8 @@ boolean isAnagramUnicode(String s, String t) {
 - **Unicode / emoji** → HashMap over code points.
 - **Stream / can't materialize `t`** → maintain running count of `s` first, then decrement as `t` arrives; return false early on any negative overshoot.
 
+&lt;AiCompanion problem-slug="valid-anagram" pattern-hint="hashing" /&gt;
+
 ## Related problems
 
 - [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string) — sliding window

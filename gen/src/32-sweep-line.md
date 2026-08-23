@@ -1,5 +1,8 @@
 # Sweep Line
 
+
+<PatternVideo pattern-name="Sweep Line" duration="8–12 min" />
+
 ## Why sweep line exists — the story
 
 Suppose you are watching a hallway with meetings scheduled as intervals: `[0,30]`, `[5,10]`, and `[15,20]`. A direct question like "how many rooms do I need?" sounds like it asks about pairs of meetings: compare every meeting to every other meeting and see what overlaps. That works, but it is the wrong lens. You do not really care which pair overlaps; you care how many meetings are active as time moves forward.

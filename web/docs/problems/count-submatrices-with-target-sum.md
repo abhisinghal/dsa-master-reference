@@ -87,6 +87,8 @@ int numSubmatrixSumTarget(int[][] mat, int target) {
 - **Faster on `m > n`** → transpose and collapse the smaller dimension outer.
 - **"Max sum submatrix ≤ K"** → similar collapse + Kadane variant with TreeSet.
 
+&lt;AiCompanion problem-slug="count-submatrices-with-target-sum" pattern-hint="prefix sum" /&gt;
+
 ## Related problems
 
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)

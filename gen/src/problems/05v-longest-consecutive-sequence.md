@@ -128,6 +128,8 @@ void union(Map<Integer,Integer> p, Map<Integer,Integer> r, int a, int b) {
 - **"Return the actual sequence"** → track the head and length of the best run; slice.
 - **"Longest arithmetic progression"** — different problem (DP).
 
+<AiCompanion problem-slug="longest-consecutive-sequence" pattern-hint="hashing" />
+
 ## Related problems
 
 - [Number of Islands](/problems/number-of-islands) — same "connected component" mindset

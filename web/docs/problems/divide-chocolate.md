@@ -79,6 +79,8 @@ int maximizeSweetness(int[] sweetness, int k) {
 - **Return the splits** → re-simulate after convergence.
 - **Bounded values** → tight `[lo, hi]` speeds up.
 
+&lt;AiCompanion problem-slug="divide-chocolate" pattern-hint="binary search on answer" /&gt;
+
 ## Related problems
 
 - [Split Array Largest Sum](/problems/split-array-largest-sum) — minimize the maximum (sibling)

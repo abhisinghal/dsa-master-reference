@@ -84,6 +84,8 @@ int mergeSort(int[] a, int lo, int hi) {
 - **BIT alternative** → compress values; sweep left-to-right; BIT counts smaller / larger.
 - **k times threshold** → same skeleton with different pointer logic.
 
+<AiCompanion problem-slug="reverse-pairs" pattern-hint="divide & conquer" />
+
 ## Related problems
 
 - [Count of Range Sum](/problems/count-of-range-sum)

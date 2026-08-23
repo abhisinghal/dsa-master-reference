@@ -93,6 +93,8 @@ int computeOverlap(String a, String b) {
 - **Small n TSP-style** → bitmask DP.
 - **Approximation** → greedy longest-overlap merge.
 
+<AiCompanion problem-slug="find-the-shortest-superstring" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes)

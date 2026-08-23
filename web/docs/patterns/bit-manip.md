@@ -1,5 +1,8 @@
 # Bit Manipulation
 
+
+&lt;PatternVideo pattern-name="Bit Manipulation" duration="8–12 min" /&gt;
+
 **Grokking arc:** The motivating problem is representing tiny sets, parity, or binary properties without bulky data structures. Brute force counts, scans, or stores everything. **Can we do better?** Treat bits as flags and use identities like XOR cancellation or lowest-set-bit removal to collapse work into O(1) operations per element.
 
 Bits let you treat an integer as a tiny array of on/off switches you can flip in O(1). That unlocks three things interviewers love: fast **set operations** (union, intersection, membership on up to ~30 elements with a single number), **parity/XOR tricks** (where duplicates cancel out to zero), and **compact state** for bitmask DP. A handful of identities do most of the heavy lifting — memorize them and a lot of "hard" bit problems collapse into one line. One Java landmine to internalize: `int` is 32-bit **signed**, so use `>>>` (not `>>`) when you want a logical shift, and switch to `1L << k` once `k` climbs past 30.

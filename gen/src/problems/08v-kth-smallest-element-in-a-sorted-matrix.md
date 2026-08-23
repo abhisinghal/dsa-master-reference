@@ -82,6 +82,8 @@ int kthSmallest(int[][] m, int k) {
 - **BS on value** is cleaner for max n; heap wins for small n.
 - **Kth in unsorted** → Quickselect or heap.
 
+<AiCompanion problem-slug="kth-smallest-element-in-a-sorted-matrix" pattern-hint="binary search on answer" />
+
 ## Related problems
 
 - [Find K-th Smallest Pair Distance](/problems/find-k-th-smallest-pair-distance)

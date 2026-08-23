@@ -68,6 +68,8 @@ int scheduleCourse(int[][] courses) {
 - **"Max count with deadlines and swap-out"** → regret heap.
 - **"Max value"** → weighted variant → DP or different greedy.
 
+<AiCompanion problem-slug="course-schedule-iii" pattern-hint="greedy" />
+
 ## Related problems
 
 - [Maximum Events Attended](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/)

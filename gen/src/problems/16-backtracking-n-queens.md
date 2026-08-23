@@ -116,6 +116,8 @@ void solve(int r, int n, int[] queens, boolean[] cols, boolean[] main, boolean[]
 - **Just needs solutions** → bitset backtracking.
 - **Interviewer probes memoization** → NP-complete; no polynomial memo exists (state = full board history).
 
+<AiCompanion problem-slug="backtracking-n-queens" pattern-hint="backtracking" />
+
 ## Related problems (same ladder applies)
 
 - [N-Queens II](https://leetcode.com/problems/n-queens-ii/) — count solutions only

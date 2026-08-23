@@ -86,6 +86,8 @@ int shortestSubarray(int[] nums, int k) {
 - **Negatives allowed** → monotonic deque on prefix sums.
 - **"Longest" instead** → different template — deque with reverse condition.
 
+&lt;AiCompanion problem-slug="shortest-subarray-with-sum-at-least-k" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum) — positives only

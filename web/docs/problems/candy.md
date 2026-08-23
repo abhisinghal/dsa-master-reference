@@ -76,6 +76,8 @@ Track up-slope and down-slope lengths + current peak. Trickier but O(1) extra sp
 - **O(1) space required** → one-pass slope.
 - **Non-strict inequality** → different logic.
 
+&lt;AiCompanion problem-slug="candy" pattern-hint="hashing" /&gt;
+
 ## Related problems
 
 - [Trapping Rain Water](/problems/trapping-rain-water)

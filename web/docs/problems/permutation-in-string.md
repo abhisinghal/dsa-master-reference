@@ -167,6 +167,8 @@ boolean checkInclusion(String s1, String s2) {
 - **Unicode alphabet** → use `HashMap<Character,Integer>`; running-match trick still applies with slightly more bookkeeping.
 - **Return all match indices** → this is [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string).
 
+&lt;AiCompanion problem-slug="permutation-in-string" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string) — return all match positions

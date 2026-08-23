@@ -1,5 +1,8 @@
 # Trie (pattern)
 
+
+<PatternVideo pattern-name="Trie" duration="8–12 min" />
+
 **Grokking arc:** The motivating problem is repeated prefix checking against many words or many bit strings. Brute force scans every candidate. **Can we do better?** Share prefixes in a trie so each next character or bit decides whether a whole branch remains possible.
 
 ## Why trie patterns exist — the story

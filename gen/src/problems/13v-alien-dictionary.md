@@ -90,6 +90,8 @@ String alienOrder(String[] words) {
 - **"Lex-smallest topological order"** → replace queue with min-heap.
 - **DFS-based alternative** → recursion + reverse post-order; same complexity.
 
+<AiCompanion problem-slug="alien-dictionary" pattern-hint="topological sort" />
+
 ## Related problems
 
 - [Course Schedule](/problems/topological-sort-course-schedule)

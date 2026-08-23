@@ -118,6 +118,8 @@ int numberOfSubstringsLast(String s) {
 - **Generalize to k distinct required chars** → last-seen extends to `min(lastX) + 1`.
 - **"Contains at least K of each char"** → this becomes a `need[]/have[]` problem — see [Minimum Window Substring](/problems/minimum-window-substring).
 
+<AiCompanion problem-slug="number-of-substrings-containing-all-three-characters" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Minimum Window Substring](/problems/minimum-window-substring) — need/have generalization

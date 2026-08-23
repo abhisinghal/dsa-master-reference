@@ -80,6 +80,8 @@ int minDistance(String a, String b) {
 - **Only insertions allowed** → LCS variant.
 - **Return the operations** → track parent choices during DP.
 
+&lt;AiCompanion problem-slug="edit-distance" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) — same shape, different recurrence

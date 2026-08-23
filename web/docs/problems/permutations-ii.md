@@ -68,6 +68,8 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> out) {
 - **Distinct** → simpler swap-in-place.
 - **Return count only** → multinomial `n! / Π(k_i!)`.
 
+&lt;AiCompanion problem-slug="permutations-ii" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Permutations](/problems/permutations)

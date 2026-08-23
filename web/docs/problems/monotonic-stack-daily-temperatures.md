@@ -139,6 +139,8 @@ int[] dailyTemperatures(int[] t) {
 - **Cold interview** → brute → stack. RTL is smart but hard to explain fast.
 - **"Next greater element" family** → always monotonic stack. Once you see the pattern (`while stack.top < current: pop and record`), the whole family is solved by adjusting the comparator.
 
+&lt;AiCompanion problem-slug="monotonic-stack-daily-temperatures" pattern-hint="monotonic stack" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/) — circular array; walk 2n times, `i%n`

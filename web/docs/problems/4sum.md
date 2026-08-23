@@ -160,6 +160,8 @@ List<List<Integer>> kSum(int[] nums, long target, int start, int k) {
 - **4Sum II** ("`a[i] + b[j] + c[k] + d[l] == 0` from four arrays") → hash-map on `(a+b)` vs `-(c+d)` — different technique, O(n²).
 - **Overflow** — always cast to `long` when values can be `±10⁹`.
 
+&lt;AiCompanion problem-slug="4sum" pattern-hint="two pointers" /&gt;
+
 ## Related problems
 
 - [3Sum](/problems/3sum) — one fewer nested loop

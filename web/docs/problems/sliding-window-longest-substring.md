@@ -175,6 +175,8 @@ Optimal. One pass, O(1) work per index.
 - **"Return the substring itself, not just length"** → track the best `(start, length)` pair.
 - **"What if the alphabet is Unicode?"** → HashMap works unchanged; a `char[128]` array works for ASCII only.
 
+&lt;AiCompanion problem-slug="sliding-window-longest-substring" pattern-hint="sliding window" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) — same window skeleton, `need`/`have` counter for the validity check

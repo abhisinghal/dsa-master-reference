@@ -121,6 +121,8 @@ int atMost(int[] nums, int goal) {
 - **Longest / shortest subarray with sum X (not count)** → different template — see [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum).
 - **Return subarrays themselves** → prefix-sum + track indices, or DP; loses O(n).
 
+<AiCompanion problem-slug="binary-subarrays-with-sum" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — arbitrary integers

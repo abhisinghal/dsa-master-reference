@@ -124,6 +124,8 @@ String minWindow(String s, String t) {
 - **"What if t may repeat characters?"** → the need[] array handles it because you compare counts, not presence.
 - **Follow-up: return all min windows** → track ties, or convert to two-pointer with restart.
 
+<AiCompanion problem-slug="minimum-window-substring" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Minimum Window Subsequence](/problems/minimum-window-subsequence) — order matters, DP or two-pointer forward/backward

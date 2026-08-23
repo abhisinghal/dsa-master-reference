@@ -77,6 +77,8 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - **Dense graph** → Prim + heap: O(E + V log V).
 - **"Second-best MST"** → replace each MST edge with best non-MST alternative.
 
+<AiCompanion problem-slug="connecting-cities-with-minimum-cost" pattern-hint="union-find" />
+
 ## Related problems
 
 - [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points)

@@ -97,6 +97,8 @@ int[] smallestRange(List<List<Integer>> lists) {
 - **"Range covering ≥ m of k lists"** → generalize; needs a multi-set or ordered map.
 - **Instead of range: find k-th smallest overall** → still min-heap sweep, just count pops.
 
+&lt;AiCompanion problem-slug="smallest-range-covering-elements-from-k-lists" pattern-hint="k-way merge" /&gt;
+
 ## Related problems
 
 - [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — same heap-sweep

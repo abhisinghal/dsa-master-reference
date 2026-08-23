@@ -76,6 +76,8 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 - **Distinct** → simpler subsets bitmask.
 - **Fixed size k** → cut early when `path.size() == k`.
 
+&lt;AiCompanion problem-slug="subsets-ii" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Subsets](/problems/bit-manip-subsets)

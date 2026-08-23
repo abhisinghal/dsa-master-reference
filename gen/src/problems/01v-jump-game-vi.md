@@ -72,6 +72,8 @@ int maxResult(int[] nums, int k) {
 - **"Min steps"** → BFS layers instead.
 - **k=∞ (unbounded)** → prefix max is enough.
 
+<AiCompanion problem-slug="jump-game-vi" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Constrained Subsequence Sum](/problems/constrained-subsequence-sum)

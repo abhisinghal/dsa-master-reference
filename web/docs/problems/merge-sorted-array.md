@@ -74,6 +74,8 @@ void merge(int[] nums1, int m, int[] nums2, int n) {
 - **No buffer** → allocate new array.
 - **Linked lists** → same idea; see [Merge Two Sorted Lists](/problems/merge-two-sorted-lists).
 
+&lt;AiCompanion problem-slug="merge-sorted-array" pattern-hint="two pointers" /&gt;
+
 ## Related problems
 
 - [Merge Two Sorted Lists](/problems/merge-two-sorted-lists)

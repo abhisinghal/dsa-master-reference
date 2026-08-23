@@ -83,6 +83,8 @@ int missingNumber(int[] nums) {
 - **"Multiple missing"** → set difference or sort.
 - **"Overflow-sensitive"** → XOR beats sum.
 
+&lt;AiCompanion problem-slug="missing-number" pattern-hint="bit manipulation" /&gt;
+
 ## Related problems
 
 - [Single Number](/problems/bit-manip-single-number)

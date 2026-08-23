@@ -77,6 +77,8 @@ int canCompleteCircuit(int[] gas, int[] cost) {
 - **Multiple valid starts** → all indices past all resets are valid.
 - **Two-direction travel** → separate check for each.
 
+&lt;AiCompanion problem-slug="gas-station" pattern-hint="greedy" /&gt;
+
 ## Related problems
 
 - [Candy](/problems/candy) — two-sweep sibling

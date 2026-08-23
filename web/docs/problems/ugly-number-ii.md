@@ -123,6 +123,8 @@ int nthUglyNumber(int n) {
 - **"Super ugly numbers"** → same, with `primes[]` given; min-heap gets simpler than k pointers.
 - **"nth prime" or "smallest k of type X"** → same merge template if `x` is a closed set.
 
+&lt;AiCompanion problem-slug="ugly-number-ii" pattern-hint="k-way merge" /&gt;
+
 ## Related problems
 
 - [Super Ugly Number](https://leetcode.com/problems/super-ugly-number/) — k-primes generalization

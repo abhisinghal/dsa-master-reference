@@ -75,6 +75,8 @@ int[] getModifiedArray(int n, int[][] updates) {
 - **Interleaved add + read** → segment tree with lazy propagation.
 - **Multi-dim range add** → 2D diff array (see Matrix Block Sum).
 
+&lt;AiCompanion problem-slug="range-addition" pattern-hint="prefix sum" /&gt;
+
 ## Related problems
 
 - [Corporate Flight Bookings](/problems/corporate-flight-bookings)

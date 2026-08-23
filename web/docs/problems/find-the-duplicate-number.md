@@ -114,6 +114,8 @@ int findDuplicate(int[] nums) {
 - **"Return every duplicate"** → mark visited via `nums[abs(v)-1] *= -1` (modifies input).
 - **Generalization: "smallest missing positive"** → different problem (in-place index marking).
 
+&lt;AiCompanion problem-slug="find-the-duplicate-number" pattern-hint="fast/slow pointers" /&gt;
+
 ## Related problems
 
 - [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — same Floyd's algorithm

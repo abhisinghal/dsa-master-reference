@@ -78,6 +78,8 @@ int smallestDistancePair(int[] nums, int k) {
 - **All-pair distinct sums** → same idea.
 - **Streaming** → not directly applicable — need offline.
 
+<AiCompanion problem-slug="find-k-th-smallest-pair-distance" pattern-hint="binary search on answer" />
+
 ## Related problems
 
 - [Kth Smallest Element in a Sorted Matrix](/problems/kth-smallest-element-in-a-sorted-matrix)

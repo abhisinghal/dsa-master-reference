@@ -114,6 +114,8 @@ int minMeetingRooms(int[][] meetings) {
 - **Cold interview** → walk brute → heap → two-array. Show the "we only care about events" reframing.
 - **Tie at `start == end`** → decide with the interviewer: touching = one room or two?
 
+<AiCompanion problem-slug="sweep-line-meeting-rooms-ii" pattern-hint="sweep line" />
+
 ## Related problems (same ladder applies)
 
 - [Car Pooling](https://leetcode.com/problems/car-pooling/) — same shape with capacity checks

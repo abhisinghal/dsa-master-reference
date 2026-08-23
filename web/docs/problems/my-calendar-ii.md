@@ -111,6 +111,8 @@ class MyCalendarTwo2 {
 - **"My Calendar k"** (no k-th overlap) → delta map + threshold.
 - **Streaming with heavy queries** → segment tree with lazy prop.
 
+&lt;AiCompanion problem-slug="my-calendar-ii" pattern-hint="sweep line" /&gt;
+
 ## Related problems
 
 - [My Calendar I](https://leetcode.com/problems/my-calendar-i/) — no double

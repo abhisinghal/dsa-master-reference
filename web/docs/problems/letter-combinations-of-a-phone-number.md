@@ -79,6 +79,8 @@ Extend all combinations by next digit's letters; same complexity, no recursion.
 - **Very deep** → BFS to avoid stack.
 - **First combination only** → early return in DFS.
 
+&lt;AiCompanion problem-slug="letter-combinations-of-a-phone-number" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)

@@ -94,6 +94,8 @@ boolean union(int[] p, int a, int b) {
 - **Static** → DFS/BFS flood fill.
 - **Deletion of land** → offline reverse: process removals as additions.
 
+&lt;AiCompanion problem-slug="number-of-islands-ii" pattern-hint="union-find" /&gt;
+
 ## Related problems
 
 - [Number of Islands](/problems/number-of-islands)

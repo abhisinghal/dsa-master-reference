@@ -1,5 +1,8 @@
 # Hashing
 
+
+&lt;PatternVideo pattern-name="Hashing" duration="8–12 min" /&gt;
+
 Almost every problem starts life as an array, and the single most useful upgrade you can make to an array algorithm is a **hash map**. Here's the pattern to watch for: a brute-force solution says *"for each element, look through all the others"* — that's the O(n²) nested loop. A hash map lets you **remember what you've already seen**, so instead of re-scanning you just ask "have I seen the thing I need?" in O(1). That one swap collapses a whole class of problems from O(n²) down to O(n).
 
 Throughout this chapter you'll meet the same few moves: **complement lookup** (remember values, then ask for the partner), **frequency signatures** (turn a group into a canonical key so equal things land together), and **prefix/suffix products** (carry a running result in from each side).

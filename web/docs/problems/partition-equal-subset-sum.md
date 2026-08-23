@@ -79,6 +79,8 @@ boolean canPartition(int[] nums) {
 - **k subsets** → [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets).
 - **Return the partition** → track parent choices.
 
+&lt;AiCompanion problem-slug="partition-equal-subset-sum" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Target Sum](/problems/target-sum)

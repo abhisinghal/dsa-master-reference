@@ -99,6 +99,8 @@ int maxXor(Node root, int v) {
 - **Constraint on element** → offline sort processes queries in order of constraint.
 - **Streaming** → online trie without deletion; harder with `≤ max` constraint.
 
+&lt;AiCompanion problem-slug="maximum-xor-with-an-element-from-array" pattern-hint="trie" /&gt;
+
 ## Related problems
 
 - [Maximum XOR of Two Numbers](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) — offline sibling

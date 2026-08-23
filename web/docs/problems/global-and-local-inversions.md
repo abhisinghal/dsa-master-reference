@@ -80,6 +80,8 @@ boolean isIdealPermutation(int[] nums) {
 - **"Count both separately"** → merge sort for global; O(n) for local.
 - **"Are they within k?"** → merge sort remains most general.
 
+&lt;AiCompanion problem-slug="global-and-local-inversions" pattern-hint="divide & conquer" /&gt;
+
 ## Related problems
 
 - [Reverse Pairs](/problems/reverse-pairs)

@@ -116,6 +116,8 @@ int lengthOfLIS(int[] a) {
 - **Need to reconstruct the subsequence** → O(n²) DP with `prev[i]` traceback.
 - **Non-strict (≤)** → binary search for first `> x` instead of `>= x`.
 
+&lt;AiCompanion problem-slug="longest-increasing-subsequence" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) — 2D DP

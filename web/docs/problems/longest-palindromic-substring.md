@@ -93,6 +93,8 @@ Sentinels + palindrome-radius array with reuse across mirrored centers.
 - **Very large n** → Manacher.
 - **Return count of palindromic substrings** → same expand, just count.
 
+&lt;AiCompanion problem-slug="longest-palindromic-substring" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)

@@ -60,6 +60,8 @@ void dfs(int n, int row, int cols, int d1, int d2, int[] count) {
 - **Return boards** → [N-Queens](/problems/backtracking-n-queens).
 - **Very large n** — no known polynomial algorithm.
 
+<AiCompanion problem-slug="n-queens-ii" pattern-hint="backtracking" />
+
 ## Related problems
 
 - [N-Queens](/problems/backtracking-n-queens)

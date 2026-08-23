@@ -90,6 +90,8 @@ String replaceWords(List<String> dict, String sentence) {
 - **Longest prefix instead** → don't break early; track deepest `end`.
 - **"Any prefix in dict"** → return boolean at first end.
 
+<AiCompanion problem-slug="replace-words" pattern-hint="trie" />
+
 ## Related problems
 
 - [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/)

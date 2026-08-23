@@ -127,6 +127,8 @@ boolean check(ListNode node) {
 - **"Restore list at end"** → always mention; some interviewers require it.
 - **Doubly linked list** → true two-pointer O(1) space and no reversal.
 
+<AiCompanion problem-slug="palindrome-linked-list" pattern-hint="fast/slow pointers" />
+
 ## Related problems
 
 - [Middle of the Linked List](/problems/middle-of-the-linked-list) — the split primitive

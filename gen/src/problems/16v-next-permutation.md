@@ -73,6 +73,8 @@ void reverse(int[] a, int l, int r) { while (l < r) swap(a, l++, r--); }
 - **Previous permutation** → mirror the steps (scan for decreasing gap, etc).
 - **Kth permutation** → factorial-number system.
 
+<AiCompanion problem-slug="next-permutation" pattern-hint="backtracking" />
+
 ## Related problems
 
 - [Permutations](/problems/permutations)

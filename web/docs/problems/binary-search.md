@@ -107,6 +107,8 @@ int searchHO(int[] nums, int target) {
 - **Rotated sorted array** → see [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted).
 - **Binary search on the answer** → apply the same template with a feasibility predicate; see [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas).
 
+&lt;AiCompanion problem-slug="binary-search" pattern-hint="binary search" /&gt;
+
 ## Related problems
 
 - [Search Insert Position](https://leetcode.com/problems/search-insert-position/) — lower_bound

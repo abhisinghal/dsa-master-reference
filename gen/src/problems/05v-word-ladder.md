@@ -94,6 +94,8 @@ Expand from both ends until frontiers meet. ~O(2 · b^(d/2)).
 - **All paths** → [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) — parent map + DFS.
 - **Very deep search** → bidirectional.
 
+<AiCompanion problem-slug="word-ladder" pattern-hint="hashing" />
+
 ## Related problems
 
 - [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/)

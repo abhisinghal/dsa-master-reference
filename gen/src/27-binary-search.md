@@ -1,5 +1,8 @@
 # Binary Search &amp; Search-on-Answer
 
+
+<PatternVideo pattern-name="Binary Search" duration="8–12 min" />
+
 Start with the motivating problem: find one target in a sorted list. Brute force checks every element from left to right, which is O(n) even though the ordering is screaming useful information at you.
 
 Can we do better? Yes — one comparison at the middle tells you that half the search space is impossible. Repeat that discard-half move until the answer is forced.

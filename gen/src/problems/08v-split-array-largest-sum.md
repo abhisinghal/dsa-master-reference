@@ -77,6 +77,8 @@ int splitArray(int[] nums, int m) {
 - **DP alternative** → interval DP; slower but returns actual partition.
 - **Related: max smallest chunk** → similar BS with `≥` predicate.
 
+<AiCompanion problem-slug="split-array-largest-sum" pattern-hint="binary search on answer" />
+
 ## Related problems
 
 - [Capacity To Ship Packages](/problems/capacity-to-ship-packages-within-d-days) — same skeleton

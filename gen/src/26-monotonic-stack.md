@@ -1,5 +1,8 @@
 # Monotonic Stack
 
+
+<PatternVideo pattern-name="Monotonic Stack" duration="8–12 min" />
+
 Imagine a brute-force solution for "next warmer day": for each day, scan every day to its right until you find a warmer one. That is simple, but it re-checks the same unresolved days again and again — O(n²) in the worst case.
 
 Can we do better? Yes: keep only the days that are still waiting for an answer. When a warmer day arrives, it resolves all colder days sitting on top of that waiting pile. That pile is the pattern.

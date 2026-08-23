@@ -70,6 +70,8 @@ int maxProfit(int[] prices) {
 - **Unlimited transactions** → sum positive diffs (see [Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)).
 - **k transactions** → DP (see [Stock IV](/problems/best-time-to-buy-and-sell-stock-iv)).
 
+<AiCompanion problem-slug="best-time-to-buy-and-sell-stock" pattern-hint="greedy" />
+
 ## Related problems
 
 - [Best Time to Buy and Sell Stock IV](/problems/best-time-to-buy-and-sell-stock-iv)

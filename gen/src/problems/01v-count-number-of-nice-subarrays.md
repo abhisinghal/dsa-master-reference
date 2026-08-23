@@ -123,6 +123,8 @@ int numberOfSubarraysPS(int[] nums, int k) {
 - **"At most k"** → single sliding window.
 - **"Return the subarrays"** → prefix + indices; loses O(1) space.
 
+<AiCompanion problem-slug="count-number-of-nice-subarrays" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Binary Subarrays With Sum](/problems/binary-subarrays-with-sum) — identical mechanics

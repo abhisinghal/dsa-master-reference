@@ -127,6 +127,8 @@ int search(int[] a, int target) {
 - **Cold interview** → walk linear → one-pass BS. Two-pass is only worth mentioning if the interviewer wants to see you break the problem into "find rotation, then search."
 - **Duplicates allowed?** → Approach 3 doesn't work; you have to shrink `lo`/`hi` by 1 when `nums[lo] == nums[mid] == nums[hi]`, giving worst-case O(n).
 
+<AiCompanion problem-slug="binary-search-rotated-sorted" pattern-hint="binary search" />
+
 ## Related problems (same ladder applies)
 
 - [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) — Approach 2's pivot-finding step alone

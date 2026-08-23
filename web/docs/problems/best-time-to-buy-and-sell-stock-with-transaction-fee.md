@@ -71,6 +71,8 @@ int maxProfit(int[] prices, int fee) {
 - **Fee on transaction** → 2 states.
 - **Cooldown** → 3 states.
 
+&lt;AiCompanion problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [With Cooldown](/problems/best-time-to-buy-and-sell-stock-with-cooldown)

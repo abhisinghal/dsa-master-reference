@@ -78,6 +78,8 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - **"Free option per subset"** → generalizes with more virtual nodes.
 - **Dense pipes** → Prim + heap.
 
+&lt;AiCompanion problem-slug="optimize-water-distribution-in-a-village" pattern-hint="union-find" /&gt;
+
 ## Related problems
 
 - [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points)

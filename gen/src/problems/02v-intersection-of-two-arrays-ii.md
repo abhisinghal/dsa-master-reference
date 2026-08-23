@@ -74,6 +74,8 @@ int[] intersect(int[] nums1, int[] nums2) {
 - **One huge / one small** → hash on smaller.
 - **Streamed** → hash on materialized side.
 
+<AiCompanion problem-slug="intersection-of-two-arrays-ii" pattern-hint="two pointers" />
+
 ## Related problems
 
 - [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/) — set version

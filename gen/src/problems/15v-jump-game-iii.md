@@ -71,6 +71,8 @@ boolean canReach(int[] arr, int start) {
 - **Min steps to zero** → same BFS, count layers.
 - **"Same-value edges"** → [Jump Game IV](https://leetcode.com/problems/jump-game-iv/).
 
+<AiCompanion problem-slug="jump-game-iii" pattern-hint="greedy" />
+
 ## Related problems
 
 - [Jump Game](/problems/jump-game)

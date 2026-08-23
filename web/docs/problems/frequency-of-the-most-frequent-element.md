@@ -70,6 +70,8 @@ int maxFrequency(int[] nums, int k) {
 - **Decrement instead of increment** → symmetric; sort and use different cost formula.
 - **Multiple target values** → try each value as target with 2p.
 
+&lt;AiCompanion problem-slug="frequency-of-the-most-frequent-element" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Longest Repeating Character Replacement](/problems/longest-repeating-character-replacement)

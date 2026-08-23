@@ -102,6 +102,8 @@ List<List<Integer>> subsetsBM(int[] nums) {
 - **All subsets with duplicate elements** → sort + skip; see [Subsets II](/problems/subsets-ii).
 - **Only subsets of size k** → recurse with size arg; or DP.
 
+&lt;AiCompanion problem-slug="subsets" pattern-hint="bit manipulation" /&gt;
+
 ## Related problems
 
 - [Subsets II](/problems/subsets-ii) — with duplicates

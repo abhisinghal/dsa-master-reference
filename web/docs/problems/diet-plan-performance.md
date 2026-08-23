@@ -74,6 +74,8 @@ int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
 - **Variable window** → shrink/extend on validity.
 - **Return per-window score list** → append instead of accumulating.
 
+&lt;AiCompanion problem-slug="diet-plan-performance" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Maximum Average Subarray I](/problems/maximum-average-subarray-i)

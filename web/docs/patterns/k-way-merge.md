@@ -1,5 +1,8 @@
 # K-way Merge
 
+
+&lt;PatternVideo pattern-name="K-way Merge" duration="8–12 min" /&gt;
+
 ## Why k-way merge exists — the story
 
 Imagine you have three sorted logs coming from three servers:

@@ -85,6 +85,8 @@ int[][] insert(int[][] intervals, int[] newInterval) {
 - **Batch merges** → sort once, then O(n) merge.
 - **Return "would this overlap?" boolean** → binary-search for first `end ≥ new.start`.
 
+&lt;AiCompanion problem-slug="insert-interval" pattern-hint="merge intervals" /&gt;
+
 ## Related problems
 
 - [Merge Intervals](/problems/merge-intervals-classic)

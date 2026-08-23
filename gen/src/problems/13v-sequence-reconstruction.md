@@ -87,6 +87,8 @@ boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
 - **"Number of topological orders"** → DP on states (bitmask if n ≤ 20).
 - **"Restore from partial orderings"** → same graph build + Kahn's.
 
+<AiCompanion problem-slug="sequence-reconstruction" pattern-hint="topological sort" />
+
 ## Related problems
 
 - [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)

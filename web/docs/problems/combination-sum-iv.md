@@ -79,6 +79,8 @@ int combinationSum4(int[] nums, int target) {
 - **Unordered** → outer nums, inner target.
 - **"Enumerate sequences"** → backtracking, not DP.
 
+&lt;AiCompanion problem-slug="combination-sum-iv" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Coin Change](/problems/coin-change)

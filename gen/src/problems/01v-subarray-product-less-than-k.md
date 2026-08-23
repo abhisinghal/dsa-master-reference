@@ -105,6 +105,8 @@ int numSubarrayProductLessThanK(int[] nums, int k) {
 - **"What if nums[i] can be negative?"** → both products and logs break; needs sign-tracking (see [Maximum Product Subarray](/problems/maximum-product-subarray)).
 - **"Return the subarrays themselves"** → enumerate during the slide; loses the compact O(n) counting.
 
+<AiCompanion problem-slug="subarray-product-less-than-k" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Maximum Product Subarray](/problems/maximum-product-subarray) — signed variant

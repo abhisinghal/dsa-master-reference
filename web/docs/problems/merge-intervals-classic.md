@@ -109,6 +109,8 @@ int[][] merge(int[][] intervals) {
 - **Cold interview** → jump straight to sort+sweep (brute is only worth stating).
 - **Touching vs strict overlap** — clarify with the interviewer. `cur[0] <= last[1]` merges touching; `cur[0] < last[1]` keeps them separate.
 
+&lt;AiCompanion problem-slug="merge-intervals-classic" pattern-hint="merge intervals" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [Insert Interval](https://leetcode.com/problems/insert-interval/) — insert one, then merge locally

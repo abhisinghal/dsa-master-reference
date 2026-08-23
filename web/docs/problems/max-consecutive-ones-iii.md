@@ -152,6 +152,8 @@ int longestOnes(int[] nums, int k) {
 - **"Return the window itself"** → keep the shrinking version and track `(bestL, bestLen)`.
 - **"Flip 1s to 0s instead"** → complementary problem — swap semantics.
 
+&lt;AiCompanion problem-slug="max-consecutive-ones-iii" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Longest Subarray of 1s After Deleting One Element](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) — `k=1` with deletion

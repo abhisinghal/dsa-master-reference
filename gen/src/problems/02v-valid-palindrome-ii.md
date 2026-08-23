@@ -114,6 +114,8 @@ boolean validPalindromeK(String s, int k) {
 - **"Return the resulting palindrome"** → trace the branch that succeeded and construct the string.
 - **Case-insensitive / alphanumeric-only** — see [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) for the parsing rules.
 
+<AiCompanion problem-slug="valid-palindrome-ii" pattern-hint="two pointers" />
+
 ## Related problems
 
 - [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) — zero deletions

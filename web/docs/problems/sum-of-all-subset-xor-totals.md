@@ -73,6 +73,8 @@ int subsetXORSum(int[] nums) {
 - **Sum over all subsets of X** → contribution per element or per bit.
 - **AND / SUM over subsets** — similar bit-contribution insights.
 
+&lt;AiCompanion problem-slug="sum-of-all-subset-xor-totals" pattern-hint="bit manipulation" /&gt;
+
 ## Related problems
 
 - [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums) — contribution counting

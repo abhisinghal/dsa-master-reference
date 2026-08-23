@@ -1,5 +1,8 @@
 # Greedy
 
+
+<PatternVideo pattern-name="Greedy" duration="8–12 min" />
+
 ## Why greedy exists — the story
 
 Greedy is the "grab the best-looking option right now and never look back" strategy. When it works it's beautiful — usually just *sort, then sweep once*. The catch is that "best right now" isn't always "best overall," so a greedy algorithm is only correct when two properties hold: the **greedy-choice property** (a locally optimal pick is safe to commit to) and **optimal substructure** (what's left is a smaller version of the same problem). In an interview the code is the easy part; the points come from *proving* it — most often with an **exchange argument**, where you show that any optimal solution can be nudged, one swap at a time, into the greedy one without ever getting worse.

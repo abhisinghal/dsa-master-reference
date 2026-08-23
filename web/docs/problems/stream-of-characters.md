@@ -91,6 +91,8 @@ class StreamChecker {
 - **"Prefix" instead** → normal trie + walk forward.
 - **Aho-Corasick** → optimal for very many patterns, streaming.
 
+&lt;AiCompanion problem-slug="stream-of-characters" pattern-hint="trie" /&gt;
+
 ## Related problems
 
 - [Implement Trie](/problems/implement-trie)

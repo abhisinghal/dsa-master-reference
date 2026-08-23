@@ -78,6 +78,8 @@ char findTheDifference(String s, String t) {
 - **"Multiple extra chars"** → count map.
 - **"Which position was added"** → walk both with two pointers.
 
+&lt;AiCompanion problem-slug="find-the-difference" pattern-hint="bit manipulation" /&gt;
+
 ## Related problems
 
 - [Missing Number](/problems/missing-number)

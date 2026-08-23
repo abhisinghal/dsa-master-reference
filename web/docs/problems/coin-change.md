@@ -138,6 +138,8 @@ int coinChange(int[] coins, int amount) {
 - **Cold interview** → brute → memo → table.
 - **BFS variant** → BFS layer = fewest coins; also O(amount · k). Sometimes faster in practice.
 
+&lt;AiCompanion problem-slug="coin-change" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Coin Change II](https://leetcode.com/problems/coin-change-ii/) — **count** the ways, not the min

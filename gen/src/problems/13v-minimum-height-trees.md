@@ -82,6 +82,8 @@ List<Integer> findMinHeightTrees(int n, int[][] edges) {
 - **General graph center** → different — use eccentricity / all-pairs BFS.
 - **"Return the actual height"** → 2-BFS: BFS from any node to find farthest u; BFS from u to find diameter.
 
+<AiCompanion problem-slug="minimum-height-trees" pattern-hint="topological sort" />
+
 ## Related problems
 
 - [Course Schedule](/problems/topological-sort-course-schedule) — general graph toposort

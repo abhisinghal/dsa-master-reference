@@ -1,5 +1,8 @@
 # Topological Sort
 
+
+&lt;PatternVideo pattern-name="Topological Sort" duration="8–12 min" /&gt;
+
 ## Why topological sort exists — the story
 
 Some tasks are not about shortest paths or reachability. They are about order. You cannot take Algorithms before Data Structures, cannot deploy before tests pass, and cannot compile a file before its dependencies compile. When the rules are directed prerequisites — "B must happen before A" — you are looking for a topological ordering.

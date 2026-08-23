@@ -121,6 +121,8 @@ int[] topKFrequentBucket(int[] nums, int k) {
 - **k tiny compared to m** → heap is idiomatic and easy to defend.
 - **Interviewer probes "beat log k"** → bucket sort. Trades a bit of space for O(n).
 
+<AiCompanion problem-slug="top-k-frequent-elements" pattern-hint="top-K / heap" />
+
 ## Related problems (same ladder applies)
 
 - [K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) — same shape with distance instead of freq

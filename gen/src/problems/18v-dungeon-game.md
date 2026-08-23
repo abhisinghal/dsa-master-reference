@@ -69,6 +69,8 @@ int calculateMinimumHP(int[][] room) {
 - **"Min initial resource to survive path"** → reverse DP.
 - **"Max resource collectible"** → forward DP.
 
+<AiCompanion problem-slug="dungeon-game" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)

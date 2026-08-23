@@ -1,5 +1,8 @@
 # Two Pointers
 
+
+<PatternVideo pattern-name="Two Pointers" duration="8–12 min" />
+
 Instead of checking every pair with two nested loops (that's O(n²)), you keep **two indices** and move them cleverly so each step rules out a whole batch of pairs at once. The trick almost always leans on the array being **sorted** — that order is what tells you *which* pointer to move.
 
 <TwoPointersAnim />

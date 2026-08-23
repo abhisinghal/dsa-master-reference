@@ -87,6 +87,8 @@ Push indices while heights decrease; on rise, pop the "bottom" and compute water
 - **Interviewer wants explicit reasoning** → precompute arrays.
 - **2D grid** → [Trapping Rain Water II](/problems/trapping-rain-water-ii) — min-heap.
 
+&lt;AiCompanion problem-slug="trapping-rain-water" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Trapping Rain Water II](/problems/trapping-rain-water-ii)

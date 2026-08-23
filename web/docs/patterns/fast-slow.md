@@ -1,5 +1,8 @@
 # Fast / Slow Pointers (Floyd)
 
+
+&lt;PatternVideo pattern-name="Fast & Slow Pointers" duration="8–12 min" /&gt;
+
 ## Why fast / slow exists — the story
 
 Imagine walking through a linked list where each node only tells you one thing: "go to my next node." There is no index, no length you can trust, and no way to jump backward. If the list is clean, eventually you hit `null`. If the list loops, you can walk forever and never know whether you are just on a long list or trapped in a cycle. The fast/slow pattern exists for exactly this kind of one-way maze. Instead of remembering every room you have visited, you send two walkers through the maze: one moves one step at a time, the other moves two. If there is a loop, the faster walker eventually laps the slower one like runners on a track.

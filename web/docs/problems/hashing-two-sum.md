@@ -163,6 +163,8 @@ Optimal. Single scan, O(1) lookup, no sort.
 - **Interviewer probes "what if it's a stream?"** → hash map wins hands-down; two pointers can't handle streaming.
 - **Interviewer probes "what if we need all pairs?"** → sort + two pointers; the map only finds the first match.
 
+&lt;AiCompanion problem-slug="hashing-two-sum" pattern-hint="hashing" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [Two Sum II — Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) — drop the map, use two pointers on already-sorted input (O(1) space)

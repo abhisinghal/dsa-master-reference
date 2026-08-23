@@ -71,6 +71,8 @@ int balancedString(String s) {
 - **Any character allowed as replacement** → this template.
 - **Fixed replacement char** → different constraint.
 
+<AiCompanion problem-slug="replace-the-substring-for-balanced-string" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Longest Repeating Character Replacement](/problems/longest-repeating-character-replacement)

@@ -61,6 +61,8 @@ boolean isPowerOfTwo(int n) {
 - **"Power of 4"** → also check `n & 0x55555555 != 0` (bit at even position).
 - **"Power of 3"** → no clean bit trick — `1162261467 % n == 0` (largest power of 3 ≤ INT_MAX).
 
+&lt;AiCompanion problem-slug="power-of-two" pattern-hint="bit manipulation" /&gt;
+
 ## Related problems
 
 - [Power of Three](https://leetcode.com/problems/power-of-three/)

@@ -134,6 +134,8 @@ int[] findOrder(int n, int[][] prereqs) {
 - **DFS variant** → useful when you also need SCC or bridges.
 - **Cycle detection is the primary need** → either works; DFS with color is cleaner.
 
+&lt;AiCompanion problem-slug="topological-sort-course-schedule" pattern-hint="topological sort" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [Course Schedule I](https://leetcode.com/problems/course-schedule/) — Kahn returns just "can we finish?"

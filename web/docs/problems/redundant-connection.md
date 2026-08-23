@@ -79,6 +79,8 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - **Directed variant (LC 685)** → more complex — need to handle 2-parent + cycle cases.
 - **"Return all redundant edges"** → skip returning early; collect all matches.
 
+&lt;AiCompanion problem-slug="redundant-connection" pattern-hint="union-find" /&gt;
+
 ## Related problems
 
 - [Number of Provinces](/problems/union-find-number-of-provinces)

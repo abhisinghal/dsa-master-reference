@@ -1,5 +1,8 @@
 # Dynamic Programming
 
+
+&lt;PatternVideo pattern-name="Dynamic Programming" duration="8–12 min" /&gt;
+
 **Grokking arc:** The motivating problem is recursion that asks the same smaller question again and again. Brute force branches over choices. **Can we do better?** Name the repeated state, cache or tabulate it once, then choose an order where dependencies are already known.
 
 DP is what you use when brute-force recursion keeps solving the *same* smaller problem over and over — you compute each little answer once, write it down, and reuse it. Two conditions have to hold for it to apply: **overlapping subproblems** (the same smaller question keeps recurring) and **optimal substructure** (a best overall answer is assembled from best sub-answers). The scary part is really just bookkeeping, and it always comes down to the same four decisions:

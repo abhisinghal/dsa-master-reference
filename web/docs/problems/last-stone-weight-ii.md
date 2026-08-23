@@ -72,6 +72,8 @@ int lastStoneWeightII(int[] stones) {
 - **Minimize sum diff** → subset-sum close to half.
 - **Return which stones on each side** → track parent choices.
 
+&lt;AiCompanion problem-slug="last-stone-weight-ii" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)

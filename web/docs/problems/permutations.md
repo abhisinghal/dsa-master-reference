@@ -90,6 +90,8 @@ Cleaner when duplicates exist — see [Permutations II](/problems/permutations-i
 - **Duplicates** → used-set variant.
 - **Kth permutation** → factorial-number system, no enumeration.
 
+&lt;AiCompanion problem-slug="permutations" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Permutations II](/problems/permutations-ii)

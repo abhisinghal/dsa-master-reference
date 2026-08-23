@@ -83,6 +83,8 @@ Better when k is much smaller than N.
 - **Balanced input** → flatten + merge is simpler.
 - **"Find first common free slot ≥ duration D"** → augment sweep with duration check.
 
+<AiCompanion problem-slug="employee-free-time" pattern-hint="merge intervals" />
+
 ## Related problems
 
 - [Merge Intervals](/problems/merge-intervals-classic)

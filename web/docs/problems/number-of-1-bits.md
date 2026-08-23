@@ -85,6 +85,8 @@ Uses hardware popcount when available.
 - **Production** → `Integer.bitCount`.
 - **Popcount many ints** → SWAR parallel popcount for batches.
 
+&lt;AiCompanion problem-slug="number-of-1-bits" pattern-hint="bit manipulation" /&gt;
+
 ## Related problems
 
 - [Counting Bits](/problems/counting-bits) — 0..n via Kernighan DP

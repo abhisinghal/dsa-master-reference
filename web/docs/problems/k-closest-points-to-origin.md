@@ -133,6 +133,8 @@ void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
 - **Streaming (points arrive one by one)** → max-heap.
 - **k close to n** → sort or min-heap of size (n-k).
 
+&lt;AiCompanion problem-slug="k-closest-points-to-origin" pattern-hint="top-K / heap" /&gt;
+
 ## Related problems
 
 - [Top K Frequent Elements](/problems/top-k-frequent-elements) — canonical Top-K

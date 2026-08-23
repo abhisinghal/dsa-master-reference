@@ -76,6 +76,8 @@ int[] sortedSquares(int[] nums) {
 - **"Sorted array with monotone-transform"** → fill-from-ends technique.
 - **In-place mutation** → different — see [Merge Sorted Array](/problems/merge-sorted-array).
 
+&lt;AiCompanion problem-slug="squares-of-a-sorted-array" pattern-hint="two pointers" /&gt;
+
 ## Related problems
 
 - [Merge Sorted Array](/problems/merge-sorted-array)

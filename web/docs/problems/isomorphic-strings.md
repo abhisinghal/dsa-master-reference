@@ -76,6 +76,8 @@ boolean isIsomorphic(String s, String t) {
 - **Bijection check** → two maps.
 - **Word pattern** — similar bijection with words.
 
+&lt;AiCompanion problem-slug="isomorphic-strings" pattern-hint="hashing" /&gt;
+
 ## Related problems
 
 - [Word Pattern](https://leetcode.com/problems/word-pattern/)

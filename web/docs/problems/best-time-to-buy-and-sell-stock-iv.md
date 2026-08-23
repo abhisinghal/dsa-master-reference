@@ -77,6 +77,8 @@ int maxProfit(int k, int[] prices) {
 - **Fixed k** → 2k states.
 - **k unlimited** → sum positive diffs.
 
+&lt;AiCompanion problem-slug="best-time-to-buy-and-sell-stock-iv" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [With Cooldown](/problems/best-time-to-buy-and-sell-stock-with-cooldown)

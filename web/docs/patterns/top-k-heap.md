@@ -1,5 +1,8 @@
 # Top-K / Heap
 
+
+&lt;PatternVideo pattern-name="Top-K / Heap" duration="8–12 min" /&gt;
+
 ## Why top-k heaps exist — the story
 
 Imagine you are watching a live scoreboard with millions of scores, but the product manager only cares about the top 10. Sorting every score every time would be silly: rank 11 through rank 1,000,000 do not matter. The Top-K heap pattern exists because you can keep a tiny "VIP room" of size `k` instead of arranging the whole crowd. Every new candidate enters the room briefly; if the room is too full, you kick out the worst person currently inside. At the end, the room contains exactly the best `k` candidates.

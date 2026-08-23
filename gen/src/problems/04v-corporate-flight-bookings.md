@@ -72,6 +72,8 @@ int[] corpFlightBookings(int[][] bookings, int n) {
 - **Queries interleaved with reads** → segment tree with lazy propagation.
 - **Range assignment (not add)** → different structure — sweep line or seg tree.
 
+<AiCompanion problem-slug="corporate-flight-bookings" pattern-hint="prefix sum" />
+
 ## Related problems
 
 - [Car Pooling](/problems/car-pooling) — identical idea with capacity check

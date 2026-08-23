@@ -58,6 +58,8 @@ void dfs(int[] a, int start, int rem, List<Integer> path, List<List<Integer>> ou
 - **Reuse allowed** → [Combination Sum](https://leetcode.com/problems/combination-sum/).
 - **Fixed k, digits 1-9** → [Combination Sum III](/problems/combination-sum-iii).
 
+<AiCompanion problem-slug="combination-sum-ii" pattern-hint="backtracking" />
+
 ## Related problems
 
 - [Combination Sum](https://leetcode.com/problems/combination-sum/)

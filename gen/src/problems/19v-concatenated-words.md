@@ -80,6 +80,8 @@ boolean canFormFromOthers(String w, Set<String> dict, int start, int count) {
 - **Trie** wins when dict lookups dominate.
 - **"Return the segmentations"** → recurse and collect paths.
 
+<AiCompanion problem-slug="concatenated-words" pattern-hint="trie" />
+
 ## Related problems
 
 - [Word Break](https://leetcode.com/problems/word-break/)

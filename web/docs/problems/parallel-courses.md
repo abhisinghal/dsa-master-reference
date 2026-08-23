@@ -85,6 +85,8 @@ int minimumSemesters(int n, int[][] relations) {
 - **"Order courses list"** → flat toposort.
 - **Course capacity ≤ k per semester** → see [Parallel Courses III](https://leetcode.com/problems/parallel-courses-iii/) — DP on levels.
 
+&lt;AiCompanion problem-slug="parallel-courses" pattern-hint="topological sort" /&gt;
+
 ## Related problems
 
 - [Course Schedule](/problems/topological-sort-course-schedule)

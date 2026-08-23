@@ -75,6 +75,8 @@ int linear(int[] nums, int lo, int hi) {
 - **Linear** → [House Robber](/problems/dp-house-robber).
 - **Tree** → [House Robber III](https://leetcode.com/problems/house-robber-iii/).
 
+&lt;AiCompanion problem-slug="house-robber-ii" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [House Robber](/problems/dp-house-robber)

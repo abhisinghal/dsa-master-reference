@@ -77,6 +77,8 @@ int maxSubArray(int[] nums) {
 - **"Return the subarray"** → track `(bestStart, bestEnd)` alongside sums.
 - **Circular array** → [Maximum Sum Circular Subarray](/problems/maximum-sum-circular-subarray) — Kadane + reverse.
 
+<AiCompanion problem-slug="maximum-subarray" pattern-hint="greedy" />
+
 ## Related problems
 
 - [Maximum Product Subarray](/problems/maximum-product-subarray) — min/max dual tracking

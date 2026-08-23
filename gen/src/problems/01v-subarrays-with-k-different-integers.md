@@ -108,6 +108,8 @@ Then `atMost(2) - atMost(1) = 12 - 5 = 7`.
 - **"At least k"** → count total `n·(n+1)/2` minus `atMost(k-1)`.
 - **"Return the subarrays themselves"** → change the counting to enumeration; loses O(n).
 
+<AiCompanion problem-slug="subarrays-with-k-different-integers" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Binary Subarrays With Sum](/problems/binary-subarrays-with-sum) — same at-most trick with sums

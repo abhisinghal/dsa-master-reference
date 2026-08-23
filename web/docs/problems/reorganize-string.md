@@ -131,6 +131,8 @@ String reorganizeBucket(String s) {
 - **"K-length gap between duplicates"** → this generalizes: [Rearrange String k Distance Apart](https://leetcode.com/problems/rearrange-string-k-distance-apart/).
 - **"Task scheduling with cooldown"** → same skeleton; see [Task Scheduler](https://leetcode.com/problems/task-scheduler/).
 
+&lt;AiCompanion problem-slug="reorganize-string" pattern-hint="top-K / heap" /&gt;
+
 ## Related problems
 
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/) — same greedy

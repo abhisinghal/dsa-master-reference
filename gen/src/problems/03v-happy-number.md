@@ -116,6 +116,8 @@ Small proof: iterate 1..810; every trajectory either reaches 1 or hits `4 → 16
 - **"Return the cycle values"** → hash-set version already records them.
 - **Generalization** ("happy in base b") → Floyd's still applies; the "4" trick doesn't.
 
+<AiCompanion problem-slug="happy-number" pattern-hint="fast/slow pointers" />
+
 ## Related problems
 
 - [Linked List Cycle](/problems/linked-list-cycle) — same detection

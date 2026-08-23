@@ -112,6 +112,8 @@ boolean union(int[] parent, int[] size, int a, int b) {
 - **Dynamic edges (streaming)** → Union-Find (only structure that supports incremental unions).
 - **Also need "are these two nodes connected?"** → Union-Find with path compression gives O(1) queries.
 
+<AiCompanion problem-slug="union-find-number-of-provinces" pattern-hint="union-find" />
+
 ## Related problems (same ladder applies)
 
 - [Accounts Merge](https://leetcode.com/problems/accounts-merge/) — union emails belonging to the same person

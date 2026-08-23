@@ -1,5 +1,8 @@
 # Sliding Window
 
+
+&lt;PatternVideo pattern-name="Sliding Window" duration="8–12 min" /&gt;
+
 ## Why sliding window exists — the story
 
 Imagine you're asked to look at every *contiguous* stretch of an array — every block of `k` numbers in a row, or every run that satisfies some rule — and compute something about each one. The obvious-but-slow way is to re-scan each block from scratch: **O(n·k)** if there are n windows of length k. The sliding-window trick starts from one simple observation: **consecutive blocks overlap almost entirely.** As the window slides one step to the right, only *one* element enters on the right and *one* leaves on the left. So instead of recomputing the whole block, we just **add the newcomer and subtract the leaver**. That little bit of reuse turns an O(n·k) grind into a single O(n) pass.

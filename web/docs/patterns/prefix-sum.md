@@ -1,5 +1,8 @@
 # Prefix Sum &amp; Difference Arrays
 
+
+&lt;PatternVideo pattern-name="Prefix Sum" duration="8–12 min" /&gt;
+
 Suppose someone keeps asking you *"what's the sum of the array between index i and j?"* — over and over, for different ranges. Re-adding the elements every time is wasteful. So precompute a **running total**: let `pre[k]` be the sum of everything *before* index k. Now **any** range sum is a single subtraction, `pre[j+1] − pre[i]` — O(1) per query instead of O(n).
 
 That's the **prefix sum**: it makes range *queries* cheap. Its mirror image, the **difference array**, makes range *updates* cheap. And the real party trick — pairing prefix sums with a hash map — lets you count subarrays with a target sum even when the numbers go negative (where a sliding window would fail).

@@ -73,6 +73,8 @@ int[] twoSum(int[] nums, int target) {
 - **Not sorted** → hash.
 - **k-Sum on sorted** → recursion with 2p base.
 
+<AiCompanion problem-slug="two-sum-ii-input-array-is-sorted" pattern-hint="hashing" />
+
 ## Related problems
 
 - [Two Sum](/problems/hashing-two-sum)

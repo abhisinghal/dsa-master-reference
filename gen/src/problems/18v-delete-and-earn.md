@@ -69,6 +69,8 @@ int deleteAndEarn(int[] nums) {
 - **"Adjacent-value taboo"** → reduce to House Robber.
 - **Sparse values** → skip zeros; use TreeMap.
 
+<AiCompanion problem-slug="delete-and-earn" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [House Robber](/problems/dp-house-robber)

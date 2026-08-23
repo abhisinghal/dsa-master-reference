@@ -140,6 +140,8 @@ int totalFruitTwoTypes(int[] fruits) {
 - **"k ≠ 2" generalization** → see [Longest Substring with At Most K Distinct](/problems/longest-substring-with-at-most-k-distinct-characters).
 - **"Exactly 2 types, not at most"** → `exactly(2) = atMost(2) - atMost(1)`.
 
+&lt;AiCompanion problem-slug="fruit-into-baskets" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters) — generalization

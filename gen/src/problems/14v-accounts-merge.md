@@ -81,6 +81,8 @@ void union(int[] p, int a, int b) { p[find(p, a)] = find(p, b); }
 - **Static / one-shot** → DFS is fine.
 - **"Return count of merged accounts"** → count distinct roots.
 
+<AiCompanion problem-slug="accounts-merge" pattern-hint="union-find" />
+
 ## Related problems
 
 - [Number of Provinces](/problems/union-find-number-of-provinces)

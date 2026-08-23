@@ -100,6 +100,8 @@ int[] nextGreaterElements(int[] nums) {
 - **Return indices, not values** → push indices instead of values.
 - **Nearest greater in a **stream** ** → maintain the stack incrementally; answer only for finalized items.
 
+<AiCompanion problem-slug="next-greater-element-ii" pattern-hint="monotonic stack" />
+
 ## Related problems
 
 - [Daily Temperatures](/problems/monotonic-stack-daily-temperatures) — non-circular sibling

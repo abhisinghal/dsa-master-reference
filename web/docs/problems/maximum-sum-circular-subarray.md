@@ -78,6 +78,8 @@ int maxSubarraySumCircular(int[] nums) {
 - **Linear** → standard Kadane.
 - **"Return the subarray"** → track indices.
 
+&lt;AiCompanion problem-slug="maximum-sum-circular-subarray" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Maximum Subarray](/problems/maximum-subarray)

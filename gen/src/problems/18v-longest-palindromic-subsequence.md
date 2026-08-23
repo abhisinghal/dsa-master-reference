@@ -78,6 +78,8 @@ int longestPalindromeSubseq(String s) {
 - **Min insertions to palindrome** → same DP.
 - **Longest palindromic *substring*** → different — see [Longest Palindromic Substring](/problems/longest-palindromic-substring).
 
+<AiCompanion problem-slug="longest-palindromic-subsequence" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Longest Common Subsequence](/problems/longest-common-subsequence)

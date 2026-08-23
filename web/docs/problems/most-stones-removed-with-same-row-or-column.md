@@ -89,6 +89,8 @@ void union(Map<Integer, Integer> p, int a, int b) {
 - **"Fewest to keep"** → same result (`#components`).
 - **"Sharing row OR col OR diagonal"** → add diagonals as a 3rd entity type.
 
+&lt;AiCompanion problem-slug="most-stones-removed-with-same-row-or-column" pattern-hint="union-find" /&gt;
+
 ## Related problems
 
 - [Number of Provinces](/problems/union-find-number-of-provinces)

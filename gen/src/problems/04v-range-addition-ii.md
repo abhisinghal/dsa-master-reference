@@ -65,6 +65,8 @@ int maxCount(int m, int n, int[][] ops) {
 - **All rectangles anchored at corner** → intersection min trick.
 - **Arbitrary rectangle positions** → 2D difference array.
 
+<AiCompanion problem-slug="range-addition-ii" pattern-hint="prefix sum" />
+
 ## Related problems
 
 - [Range Addition](/problems/range-addition)

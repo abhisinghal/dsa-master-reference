@@ -77,6 +77,8 @@ int mergeStones(int[] stones, int k) {
 - **k=2** → merge sort merging pattern.
 - **Optimal binary search tree** — similar interval DP.
 
+&lt;AiCompanion problem-slug="minimum-cost-to-merge-stones" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Burst Balloons](/problems/burst-balloons)

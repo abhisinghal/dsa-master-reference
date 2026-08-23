@@ -102,6 +102,8 @@ class WordDictionary {
 - **Long words** → limit early via length check per branch.
 - **Regex support** → NFA / recursive descent.
 
+&lt;AiCompanion problem-slug="design-add-and-search-words-data-structure" pattern-hint="trie" /&gt;
+
 ## Related problems
 
 - [Implement Trie](/problems/implement-trie) — the base

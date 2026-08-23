@@ -75,6 +75,8 @@ int twoSumLessThanK(int[] nums, int k) {
 - **Bounded values** → bucket count for O(n).
 - **"≤ k" or "≥ k"** → symmetric variants.
 
+&lt;AiCompanion problem-slug="two-sum-less-than-k" pattern-hint="hashing" /&gt;
+
 ## Related problems
 
 - [Two Sum II](/problems/two-sum-ii-input-array-is-sorted)

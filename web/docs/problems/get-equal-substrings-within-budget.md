@@ -69,6 +69,8 @@ int equalSubstring(String s, String t, int maxCost) {
 - **Multi-alphabet Unicode** → codePoints instead of chars.
 - **"Return the substring"** → track `(bestL, bestLen)` and slice.
 
+&lt;AiCompanion problem-slug="get-equal-substrings-within-budget" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)

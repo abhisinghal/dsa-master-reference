@@ -75,6 +75,8 @@ List<List<String>> groupStrings(String[] strings) {
 - **Group anagrams** → sort key.
 - **Group similar words** → similar canonical hash.
 
+&lt;AiCompanion problem-slug="group-shifted-strings" pattern-hint="hashing" /&gt;
+
 ## Related problems
 
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/)

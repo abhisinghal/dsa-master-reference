@@ -87,6 +87,8 @@ String minWindow(String s1, String s2) {
 - **Substring** (set membership) → [Minimum Window Substring](/problems/minimum-window-substring).
 - **"Any window containing s2"** → forward sweep only.
 
+<AiCompanion problem-slug="minimum-window-subsequence" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Minimum Window Substring](/problems/minimum-window-substring)

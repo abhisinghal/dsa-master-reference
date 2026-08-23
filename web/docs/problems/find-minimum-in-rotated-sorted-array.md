@@ -111,6 +111,8 @@ int findMinDup(int[] nums) {
 - **"Find max instead of min"** → symmetric — compare with `lo`.
 - **"Return the pivot index"** → same algorithm; return `lo`.
 
+&lt;AiCompanion problem-slug="find-minimum-in-rotated-sorted-array" pattern-hint="binary search" /&gt;
+
 ## Related problems
 
 - [Find Minimum in Rotated Sorted Array II](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/) — duplicates

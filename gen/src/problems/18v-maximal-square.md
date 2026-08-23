@@ -62,6 +62,8 @@ int maximalSquare(char[][] mat) {
 - **Rectangles** → [Maximal Rectangle](/problems/maximal-rectangle) — row heights + stack.
 - **Count all squares** → sum of `side[i][j]`.
 
+<AiCompanion problem-slug="maximal-square" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Maximal Rectangle](/problems/maximal-rectangle)

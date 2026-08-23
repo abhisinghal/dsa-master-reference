@@ -97,6 +97,8 @@ ListNode merge(ListNode a, ListNode b) {
 - **True O(1) space required** → iterative bottom-up.
 - **Doubly linked list** → merge sort still wins over quicksort due to O(1) split.
 
+&lt;AiCompanion problem-slug="sort-list" pattern-hint="divide & conquer" /&gt;
+
 ## Related problems
 
 - [Merge Two Sorted Lists](/problems/merge-two-sorted-lists) — the merge primitive

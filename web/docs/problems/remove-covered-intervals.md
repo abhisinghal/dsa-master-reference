@@ -74,6 +74,8 @@ int removeCoveredIntervals(int[][] intervals) {
 - **"Count covered instead"** → total − remaining.
 - **"Which intervals covered"** → track indices before sort, mark during walk.
 
+&lt;AiCompanion problem-slug="remove-covered-intervals" pattern-hint="merge intervals" /&gt;
+
 ## Related problems
 
 - [Merge Intervals](/problems/merge-intervals-classic)

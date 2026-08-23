@@ -136,6 +136,8 @@ void mergeSort(int[] nums, Integer[] idx, int lo, int hi) {
 - **You know BIT well** → shorter code, easier to explain.
 - **You want to reuse merge sort** → same skeleton solves Reverse Pairs, Count of Range Sum, Global-and-Local Inversions.
 
+<AiCompanion problem-slug="divide-conquer-inversions" pattern-hint="divide & conquer" />
+
 ## Related problems (same ladder applies)
 
 - [Reverse Pairs](https://leetcode.com/problems/reverse-pairs/) — `nums[i] > 2 * nums[j]` condition

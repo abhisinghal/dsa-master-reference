@@ -69,6 +69,8 @@ int uniquePathsWithObstacles(int[][] grid) {
 - **Return path** → track predecessors.
 - **Min sum instead** → same shape, min not add.
 
+<AiCompanion problem-slug="unique-paths-ii" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Unique Paths](https://leetcode.com/problems/unique-paths/)

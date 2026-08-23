@@ -94,6 +94,8 @@ int queryLE(Node root, int x, int t) {
 - **Fixed range not variable** → single sweep suffices.
 - **Streaming** → same trie, insert online.
 
+<AiCompanion problem-slug="count-pairs-with-xor-in-a-range" pattern-hint="trie" />
+
 ## Related problems
 
 - [Maximum XOR of Two Numbers](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)

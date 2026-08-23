@@ -81,6 +81,8 @@ int dfs(int[][] g, int r, int c, int rem) {
 - **Larger grids** → bitmask DP if ≤ 20 cells.
 - **Shortest / longest** → BFS layers.
 
+&lt;AiCompanion problem-slug="unique-paths-iii" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Robot Room Cleaner](/problems/robot-room-cleaner)

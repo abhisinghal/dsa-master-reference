@@ -80,6 +80,8 @@ int minCostII(int[][] costs) {
 - **Only 3 colors** → O(n) with 3-way check.
 - **Return coloring** → track color chosen.
 
+&lt;AiCompanion problem-slug="paint-house-ii" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Paint House](https://leetcode.com/problems/paint-house/)

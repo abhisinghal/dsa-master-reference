@@ -143,6 +143,8 @@ int rob(int[] a) {
 - **Cold interview** → walk brute → memo → table → rolled. This ladder shows the full DP thought process.
 - **Interviewer probes "why rolled?"** → we only need dp[i-1] and dp[i-2].
 
+&lt;AiCompanion problem-slug="dp-house-robber" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [House Robber II](https://leetcode.com/problems/house-robber-ii/) — circle: run twice, exclude first vs exclude last

@@ -82,6 +82,8 @@ void moveZeroesSwap(int[] nums) {
 - **Minimize writes** (SSD wear, etc.) → swap variant.
 - **Removes / partition** → same template family.
 
+<AiCompanion problem-slug="move-zeroes" pattern-hint="two pointers" />
+
 ## Related problems
 
 - [Remove Element](https://leetcode.com/problems/remove-element/)

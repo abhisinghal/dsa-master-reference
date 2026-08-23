@@ -110,6 +110,8 @@ int sumSubarrayMins(int[] arr) {
 - **"Sum of (max − min) over subarrays"** → do both, subtract.
 - **Handling duplicates** — asymmetric strict/non-strict boundaries prevent double-counting.
 
+<AiCompanion problem-slug="sum-of-subarray-minimums" pattern-hint="monotonic stack" />
+
 ## Related problems
 
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram) — same L/R spanning trick

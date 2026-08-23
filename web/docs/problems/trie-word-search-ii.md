@@ -127,6 +127,8 @@ void dfs(char[][] b, int r, int c, TrieNode node, List<String> out) {
 - **One word, big board** → plain DFS is fine.
 - **Interviewer probes "any way to prune early?"** → the trie IS the pruner.
 
+&lt;AiCompanion problem-slug="trie-word-search-ii" pattern-hint="trie" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [Word Search I](https://leetcode.com/problems/word-search/) — one word, DFS only

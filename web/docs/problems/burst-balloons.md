@@ -76,6 +76,8 @@ int maxCoins(int[] nums) {
 - **"Optimize over splits with fixed boundary contribution"** → interval DP.
 - **"Reverse (last first) trick"** → also works in Matrix Chain, Merge Stones.
 
+&lt;AiCompanion problem-slug="burst-balloons" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Minimum Cost to Merge Stones](/problems/minimum-cost-to-merge-stones)

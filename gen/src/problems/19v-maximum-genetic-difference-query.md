@@ -96,6 +96,8 @@ int queryMax(Node root, int v) {
 - **Adjacent-subtree queries** → Euler tour + Fenwick / mo's algorithm.
 - **Static path** (no ancestor constraint) → offline sort on max_allowed.
 
+<AiCompanion problem-slug="maximum-genetic-difference-query" pattern-hint="trie" />
+
 ## Related problems
 
 - [Maximum XOR With an Element From Array](/problems/maximum-xor-with-an-element-from-array)

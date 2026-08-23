@@ -123,6 +123,8 @@ int characterReplacement(String s, int k) {
 - **"What if alphabet is Unicode?"** → replace `int[26]` with `HashMap<Character,Integer>`; recomputing max on every shrink is O(σ) — slower but still correct.
 - **Follow-up: return the actual substring** → track `(bestL, bestLen)` and slice.
 
+&lt;AiCompanion problem-slug="longest-repeating-character-replacement" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters) — sibling `≤ k distinct` variant

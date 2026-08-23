@@ -101,6 +101,8 @@ So the correct trace at i=5 (digit 1): after previous [1, 2, 2], seeing 1: pop 2
 - **"Remove exactly k characters to make lex smallest string"** → same greedy.
 - **"Keep at most k digits"** → cap stack size to k.
 
+<AiCompanion problem-slug="remove-k-digits" pattern-hint="monotonic stack" />
+
 ## Related problems
 
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram) — pop-when-shrinking stack

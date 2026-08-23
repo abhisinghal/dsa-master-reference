@@ -91,6 +91,8 @@ int largestRect(int[] h) {
 - **Only squares** → simpler DP (see [Maximal Square](/problems/maximal-square)).
 - **"Count submatrices with X"** → row-collapse + 1D template.
 
+&lt;AiCompanion problem-slug="maximal-rectangle" pattern-hint="prefix sum" /&gt;
+
 ## Related problems
 
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram) — the primitive

@@ -80,6 +80,8 @@ For repeated calls, precompute an int[256] table of reversed bytes.
 - **Interview** — SWAR shows constant-time mastery.
 - **Production** — table cache if called in tight loop.
 
+&lt;AiCompanion problem-slug="reverse-bits" pattern-hint="bit manipulation" /&gt;
+
 ## Related problems
 
 - [Number of 1 Bits](/problems/number-of-1-bits) — SWAR popcount

@@ -131,6 +131,8 @@ int subarraySum(int[] nums, int k) {
 - **Cold interview** → walk brute → prefix reframing → hash map.
 - **Interviewer probes "what if all values are positive?"** → sliding window would work in O(n), O(1) space. But **negatives break sliding window** — this is why hash-map prefix is the general answer.
 
+<AiCompanion problem-slug="prefix-sum-subarray-sum-equals-k" pattern-hint="prefix sum" />
+
 ## Related problems (same ladder applies)
 
 - [Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/) — hash `prefix % k`

@@ -63,6 +63,8 @@ void dfs(int start, int k, int rem, List<Integer> path, List<List<Integer>> out)
 - **Larger alphabet** → same skeleton.
 - **Count only** → replace `add(path)` with `count++`.
 
+&lt;AiCompanion problem-slug="combination-sum-iii" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Combination Sum](https://leetcode.com/problems/combination-sum/)

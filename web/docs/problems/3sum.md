@@ -149,6 +149,8 @@ List<List<Integer>> threeSum(int[] nums) {
 - **"Return count only, not triplets"** → same skeleton, replace list with counter.
 - **"Sum to arbitrary target t, not 0"** → same algorithm; replace `-nums[i]` with `t - nums[i]`.
 
+&lt;AiCompanion problem-slug="3sum" pattern-hint="hashing" /&gt;
+
 ## Related problems
 
 - [3Sum Closest](/problems/3sum-closest) — minimize `|sum - target|`

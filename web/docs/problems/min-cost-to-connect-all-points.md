@@ -87,6 +87,8 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - **Sparse edges** → Kruskal.
 - **"Second best MST"** → replace each edge with next-cheapest non-MST option.
 
+&lt;AiCompanion problem-slug="min-cost-to-connect-all-points" pattern-hint="union-find" /&gt;
+
 ## Related problems
 
 - [Connecting Cities With Minimum Cost](/problems/connecting-cities-with-minimum-cost)

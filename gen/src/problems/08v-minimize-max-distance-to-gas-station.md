@@ -73,6 +73,8 @@ double minmaxGasDist(int[] s, int k) {
 - **Discrete answer** → integer BS.
 - **Precision** → iterate until `hi - lo < 1e-6`.
 
+<AiCompanion problem-slug="minimize-max-distance-to-gas-station" pattern-hint="binary search on answer" />
+
 ## Related problems
 
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas) — integer BS

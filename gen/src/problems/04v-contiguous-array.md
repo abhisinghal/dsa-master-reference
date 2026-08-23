@@ -76,6 +76,8 @@ int findMaxLength(int[] nums) {
 - **Longest subarray with sum S** → same skeleton, store first prefix by value.
 - **k different labels equal counts** → k-dimensional signature as hash key.
 
+<AiCompanion problem-slug="contiguous-array" pattern-hint="prefix sum" />
+
 ## Related problems
 
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)

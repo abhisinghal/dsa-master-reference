@@ -98,6 +98,8 @@ private boolean feasible(int[] piles, int k, int h) {
 - **"Minimum X such that … works"** or **"maximum X such that … works"** → BS on answer.
 - **Sanity-check the feasibility direction**: `feasible(minSpeed)` should be `false`, `feasible(maxSpeed)` should be `true`. If not, you have the polarity wrong.
 
+<AiCompanion problem-slug="bs-on-answer-koko-bananas" pattern-hint="binary search on answer" />
+
 ## Related problems (same ladder applies)
 
 - [Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) — same skeleton with capacity as the answer

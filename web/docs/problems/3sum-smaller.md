@@ -78,6 +78,8 @@ int threeSumSmaller(int[] nums, int target) {
 - **"Count triplets &lt; target"** → sort + counting shortcut.
 - **"Return the triplets"** → enumerate; loses O(1).
 
+&lt;AiCompanion problem-slug="3sum-smaller" pattern-hint="two pointers" /&gt;
+
 ## Related problems
 
 - [3Sum](/problems/3sum)

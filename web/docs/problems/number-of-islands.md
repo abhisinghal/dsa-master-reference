@@ -69,6 +69,8 @@ Union adjacent `'1'`s; count components at end. Useful for streaming (Islands II
 - **Deep recursion risk** → BFS.
 - **Streaming land additions** → UF (see [Number of Islands II](/problems/number-of-islands-ii)).
 
+&lt;AiCompanion problem-slug="number-of-islands" pattern-hint="hashing" /&gt;
+
 ## Related problems
 
 - [Number of Islands II](/problems/number-of-islands-ii)

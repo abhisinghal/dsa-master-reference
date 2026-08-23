@@ -133,6 +133,8 @@ int minSubArrayLenBS(int target, int[] nums) {
 - **"Return the subarray itself"** → track `(bestL, bestLen)` and slice.
 - **"Sum exactly equal to target"** → different problem — needs prefix-sum + hash-map (see [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)).
 
+<AiCompanion problem-slug="minimum-size-subarray-sum" pattern-hint="sliding window" />
+
 ## Related problems
 
 - [Shortest Subarray with Sum at Least K](/problems/shortest-subarray-with-sum-at-least-k) — with negatives, monotonic deque

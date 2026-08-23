@@ -134,6 +134,8 @@ ListNode mergeKListsHeap(ListNode[] lists) {
 - **Streaming or k unknown at start** → min-heap.
 - **k = 2 special case** → dummy-head splice (see Merge Two Sorted Lists).
 
+<AiCompanion problem-slug="k-way-merge-k-sorted-lists" pattern-hint="k-way merge" />
+
 ## Related problems (same ladder applies)
 
 - [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/) — k=2 special case

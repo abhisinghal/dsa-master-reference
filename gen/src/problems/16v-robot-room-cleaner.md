@@ -62,6 +62,8 @@ void dfs(Robot r, int x, int y, int d, Set<String> seen) {
 - **Known grid** → simpler DFS/BFS.
 - **Multi-agent** → parallel exploration primitives.
 
+<AiCompanion problem-slug="robot-room-cleaner" pattern-hint="backtracking" />
+
 ## Related problems
 
 - [Number of Islands](/problems/number-of-islands)

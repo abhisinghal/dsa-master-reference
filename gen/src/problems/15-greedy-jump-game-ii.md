@@ -121,6 +121,8 @@ int jump(int[] a) {
 - **Cold interview** → walk BFS → greedy. Show the "levels shape enables O(1)" insight.
 - **Interviewer wants a proof** → BFS gives you the shortest-path guarantee; greedy is a tighter special case.
 
+<AiCompanion problem-slug="greedy-jump-game-ii" pattern-hint="greedy" />
+
 ## Related problems (same ladder applies)
 
 - [Jump Game I](https://leetcode.com/problems/jump-game/) — reachability instead of min jumps

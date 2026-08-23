@@ -109,6 +109,8 @@ int threeSumClosest(int[] nums, int target) {
 - **"kSum closest"** → recurse: fix (k-2) values, close with 2-pointer.
 - **Skip duplicates** — not required for closeness (any triplet is fine), but if asked to return the *first* found or all tying triplets, add dedup skips.
 
+&lt;AiCompanion problem-slug="3sum-closest" pattern-hint="two pointers" /&gt;
+
 ## Related problems
 
 - [3Sum](/problems/3sum) — exact zero

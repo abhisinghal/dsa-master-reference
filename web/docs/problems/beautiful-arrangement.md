@@ -88,6 +88,8 @@ int countArrangementBM(int n) {
 - **n ≤ 15** → bitmask DP is clean.
 - **Larger n** → no polynomial algo.
 
+&lt;AiCompanion problem-slug="beautiful-arrangement" pattern-hint="backtracking" /&gt;
+
 ## Related problems
 
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other)

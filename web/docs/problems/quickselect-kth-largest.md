@@ -127,6 +127,8 @@ void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 - **Streaming input** → min-heap size k (quickselect needs the whole array).
 - **k = 1** → linear scan is enough.
 
+&lt;AiCompanion problem-slug="quickselect-kth-largest" pattern-hint="quickselect" /&gt;
+
 ## Related problems (same ladder applies)
 
 - [K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) — quickselect by distance

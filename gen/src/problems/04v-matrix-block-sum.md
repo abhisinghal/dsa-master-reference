@@ -77,6 +77,8 @@ int[][] matrixBlockSum(int[][] mat, int k) {
 - **Updates + queries** → 2D Fenwick / BIT.
 - **1D version** → same technique on a 1D prefix array.
 
+<AiCompanion problem-slug="matrix-block-sum" pattern-hint="prefix sum" />
+
 ## Related problems
 
 - [Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/) — same technique

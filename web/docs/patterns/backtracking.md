@@ -1,5 +1,8 @@
 # Recursion &amp; Backtracking
 
+
+&lt;PatternVideo pattern-name="Backtracking" duration="8–12 min" /&gt;
+
 **Grokking arc:** The motivating problem is generating all valid choices without state bleeding between siblings. Brute force tries every branch. **Can we do better?** We still explore an exponential tree, but we prune impossible branches early and use `choose → recurse → undo` so one shared path/board stays correct.
 
 Backtracking is how you say *"try everything — but be smart about it."* Picture a tree of decisions: at each step you pick an option, dive deeper, and when you come back up you **undo** that pick before trying the next one — leaving the world exactly as you found it. That undo is the whole trick; it's what lets a single piece of code walk every combination, permutation, or board layout without them bleeding into each other. Left unchecked this is exponential, so the real skill is **pruning**: the instant a partial choice can't possibly lead to a valid answer, you abandon that branch instead of exploring it all the way down.

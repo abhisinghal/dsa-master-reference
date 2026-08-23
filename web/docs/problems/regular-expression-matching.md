@@ -86,6 +86,8 @@ boolean matches(String s, String p, int i, int j) {
 - **`?` and `*`** → [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/).
 - **Full regex** → NFA/DFA.
 
+&lt;AiCompanion problem-slug="regular-expression-matching" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)

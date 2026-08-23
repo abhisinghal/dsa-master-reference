@@ -75,6 +75,8 @@ int maxProduct(int[] nums) {
 - **"Only positives"** → simple running product.
 - **"Return the subarray"** → track indices.
 
+<AiCompanion problem-slug="maximum-product-subarray" pattern-hint="hashing" />
+
 ## Related problems
 
 - [Maximum Subarray (Kadane)](/problems/maximum-subarray)

@@ -78,6 +78,8 @@ int shipWithinDays(int[] w, int days) {
 - **Return the split itself** → after BS converges, re-simulate to record boundaries.
 - **Very large sums** → use `long` for hi bound.
 
+<AiCompanion problem-slug="capacity-to-ship-packages-within-d-days" pattern-hint="binary search on answer" />
+
 ## Related problems
 
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)

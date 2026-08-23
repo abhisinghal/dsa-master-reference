@@ -70,6 +70,8 @@ int maxProfit(int[] prices) {
 - **Fee** → 2 states.
 - **k transactions** → 2k states.
 
+<AiCompanion problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Best Time to Buy and Sell Stock IV](/problems/best-time-to-buy-and-sell-stock-iv)

@@ -69,6 +69,8 @@ Every positive integer = sum of ≤ 4 squares. Result ∈ {1,2,3,4}.
 - **"Fast bound"** → Lagrange trick.
 - **Return the squares** → DP with parent pointers.
 
+&lt;AiCompanion problem-slug="perfect-squares" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Coin Change](/problems/coin-change)

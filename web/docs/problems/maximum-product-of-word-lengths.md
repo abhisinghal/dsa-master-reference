@@ -79,6 +79,8 @@ int maxProduct(String[] words) {
 - **Larger alphabet** → hashed signatures + fingerprint check.
 - **"Return the pair"** → track indices.
 
+&lt;AiCompanion problem-slug="maximum-product-of-word-lengths" pattern-hint="bit manipulation" /&gt;
+
 ## Related problems
 
 - [Design Bit Set](https://leetcode.com/problems/design-bitset/)

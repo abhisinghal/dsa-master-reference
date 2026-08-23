@@ -78,6 +78,8 @@ Code is subtle — study the classic writeup before an interview.
 - **Best asymptotic + O(1) space** → Quickselect + virtual index.
 - **Wiggle non-strict** → simple pairwise swaps.
 
+&lt;AiCompanion problem-slug="wiggle-sort-ii" pattern-hint="two pointers" /&gt;
+
 ## Related problems
 
 - [Wiggle Sort I](https://leetcode.com/problems/wiggle-sort/)

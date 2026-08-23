@@ -79,6 +79,8 @@ int largestRectangleArea(int[] h) {
 - **2D binary matrix** → row heights + this template (see [Maximal Rectangle](/problems/maximal-rectangle)).
 - **"Range max/min queries"** → sparse table or seg tree.
 
+<AiCompanion problem-slug="largest-rectangle-in-histogram" pattern-hint="two pointers" />
+
 ## Related problems
 
 - [Maximal Rectangle](/problems/maximal-rectangle)

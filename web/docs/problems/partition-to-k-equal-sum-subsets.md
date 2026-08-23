@@ -85,6 +85,8 @@ boolean canPartitionKSubsets(int[] nums, int k) {
 - **Larger n** → backtracking with heavy pruning.
 - **k=2** → simpler [Partition Equal Subset Sum](/problems/partition-equal-subset-sum).
 
+&lt;AiCompanion problem-slug="partition-to-k-equal-sum-subsets" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)

@@ -68,6 +68,8 @@ int videoStitching(int[][] clips, int T) {
 - **Min intervals covering [0,T]** → farthest reach.
 - **Same-start bucket by max-end** → O(T) without sort.
 
+<AiCompanion problem-slug="video-stitching" pattern-hint="greedy" />
+
 ## Related problems
 
 - [Jump Game II](/problems/greedy-jump-game-ii)

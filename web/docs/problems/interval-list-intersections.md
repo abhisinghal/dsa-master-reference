@@ -80,6 +80,8 @@ int[][] intervalIntersection(int[][] A, int[][] B) {
 - **k lists intersection** → generalize with k pointers; complexity O(N·k).
 - **"Union of intervals"** → merge intervals template instead.
 
+&lt;AiCompanion problem-slug="interval-list-intersections" pattern-hint="merge intervals" /&gt;
+
 ## Related problems
 
 - [Merge Intervals](/problems/merge-intervals-classic)

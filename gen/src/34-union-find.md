@@ -1,5 +1,8 @@
 # Union-Find (Disjoint Set Union)
 
+
+<PatternVideo pattern-name="Union-Find" duration="8–12 min" />
+
 ## Why union-find exists — the story
 
 Imagine edges arriving one at a time: city 0 connects to city 1, account A shares an email with account B, stone x shares a row with stone y. The brute-force instinct is to rebuild the connected components with DFS/BFS after every new edge. That works for one static graph, but it repeats old work when all you need is “are these two already in the same group?”

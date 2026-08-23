@@ -91,6 +91,8 @@ List<Integer> findSubstring(String s, String[] words) {
 - **Variable-length words** → totally different — DP on word breaks.
 - **Return only count** → same skeleton, count instead of appending.
 
+&lt;AiCompanion problem-slug="substring-with-concatenation-of-all-words" pattern-hint="sliding window" /&gt;
+
 ## Related problems
 
 - [Minimum Window Substring](/problems/minimum-window-substring)

@@ -72,6 +72,8 @@ int findTargetSumWays(int[] nums, int target) {
 - **± assignment counting** → reduce to subset-sum.
 - **Return the assignment** → track parent choices.
 
+<AiCompanion problem-slug="target-sum" pattern-hint="dynamic programming" />
+
 ## Related problems
 
 - [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)

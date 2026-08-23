@@ -72,6 +72,8 @@ boolean canAttendMeetings(int[][] intervals) {
 - **Count rooms needed** → [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii) — heap or sweep line.
 - **Return conflict pairs** → keep sorted; walk once collecting pairs.
 
+&lt;AiCompanion problem-slug="meeting-rooms" pattern-hint="merge intervals" /&gt;
+
 ## Related problems
 
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)

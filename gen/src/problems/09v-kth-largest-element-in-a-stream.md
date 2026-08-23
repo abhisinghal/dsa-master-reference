@@ -101,6 +101,8 @@ class KthLargest {
 - **Both k-th largest AND range queries** → TreeMap.
 - **`k` very large (close to n)** → maintain running sort; heap advantage vanishes.
 
+<AiCompanion problem-slug="kth-largest-element-in-a-stream" pattern-hint="top-K / heap" />
+
 ## Related problems
 
 - [Top K Frequent Elements](/problems/top-k-frequent-elements)

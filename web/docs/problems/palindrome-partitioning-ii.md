@@ -81,6 +81,8 @@ int minCut(String s) {
 - **Enumerate partitions** → [Palindrome Partitioning I](/problems/palindrome-partitioning).
 - **Longest palindrome** → LPS DP.
 
+&lt;AiCompanion problem-slug="palindrome-partitioning-ii" pattern-hint="dynamic programming" /&gt;
+
 ## Related problems
 
 - [Palindrome Partitioning](/problems/palindrome-partitioning)
