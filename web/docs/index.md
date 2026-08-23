@@ -58,6 +58,16 @@ features:
     details: Side-by-side vs Grokking, NeetCode, TakeUForward, LeetCode Premium. Where this book wins and where it doesn't.
     link: /foundations/vs-competitors
     linkText: See the comparison
+  - icon: /dsa-master-reference/icons/patterns.svg
+    title: Company Tracks — Meta / Google / Amazon
+    details: 4-week curated problem sequence per company, calibrated to level. What each company actually asks and how to answer their way.
+    link: /tracks/meta
+    linkText: Meta interview kit
+  - icon: /dsa-master-reference/icons/mocks.svg
+    title: 🎯 Interview Day Kit
+    details: The 24-hour checklist. Night before + morning of + in-interview + emergency mode. Pin this the day before your loop.
+    link: /appendix/interview-day-kit
+    linkText: See the checklist
 ---
 
 <div class="screenshot-strip">

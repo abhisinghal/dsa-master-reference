@@ -268,3 +268,58 @@ h3 {
     -webkit-box-decoration-break: clone;
   }
 }
+
+/* ==============================================
+   Round 9: Print-friendly polish for new components
+   ============================================== */
+@media print {
+  /* Hide utility overlays and interactive-only components */
+  .dbar,
+  .tour-overlay,
+  .ai-panel,
+  .share-row,
+  .support-panel,
+  .ec-panel,
+  .fb-panel,
+  .up-empty,
+  .streak-panel,
+  .company-tags,
+  .ct-row,
+  .mark-panel,
+  .sm-panel {
+    display: none !important;
+  }
+  /* Preserve solved status inline */
+  .mark-btn.solved::before {
+    content: "[✓ SOLVED] ";
+    font-weight: 700;
+  }
+  /* Force hints to be shown when printing */
+  .hint-panel {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+  .hint-panel .hint-item {
+    display: block !important;
+  }
+  /* CodeTrace: show all steps */
+  .codetrace-panel {
+    page-break-inside: avoid;
+  }
+  /* Ensure code blocks fit page */
+  pre {
+    page-break-inside: avoid;
+    font-size: 10pt;
+  }
+  /* Company tags: force-print inline text */
+  .ct-tag {
+    display: inline !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 4px !important;
+    color: #000 !important;
+    font-weight: normal !important;
+  }
+  .ct-tag::after { content: ", "; }
+  .ct-tag:last-child::after { content: ""; }
+}
