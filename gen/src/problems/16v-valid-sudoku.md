@@ -6,6 +6,9 @@ Check partial Sudoku validity (no duplicates within row/col/box among filled cel
 
 **Constraints** — 9×9 board.
 
+**Example 1** — Standard partially-filled 9×9 board → `true`
+**Example 2** — Same as 1 but with two `8`s in same column → `false`
+
 ---
 
 ## Approach 1 — Three passes

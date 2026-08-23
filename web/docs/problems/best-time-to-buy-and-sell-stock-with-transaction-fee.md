@@ -4,10 +4,15 @@
 
 Unlimited transactions; each sell pays `fee`. Max profit.
 
+**Example 1** — `prices=[1,3,2,8,4,9], fee=2` → `8`
+
+**Constraints** — `1 ≤ n ≤ 5·10⁴`.
+
 ---
 
-## Approach 1 — State-machine DP (two states)
-**Insight.** Two states: `hold` (own stock), `cash` (no stock).
+## Approach — State-machine DP (canonical)
+
+**States.** `hold`, `cash`.
 - `hold = max(hold, cash - price)`
 - `cash = max(cash, hold + price - fee)`
 
@@ -33,16 +38,16 @@ int maxProfit(int[] prices, int fee) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| State-machine DP (two states) | O(n) | O(1) | primary |
+| State machine DP | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → State-machine DP (two states) (O(n), O(1)). The pattern's standard solution.
+- **Fee on transaction** → 2 states.
+- **Cooldown** → 3 states.
 
 ## Related problems
 
 - [With Cooldown](/problems/best-time-to-buy-and-sell-stock-with-cooldown)
-- [At Most K Transactions (IV)](/problems/best-time-to-buy-and-sell-stock-iv)
-- [Single Transaction](/problems/best-time-to-buy-and-sell-stock)
+- [Best Time to Buy and Sell Stock IV](/problems/best-time-to-buy-and-sell-stock-iv)

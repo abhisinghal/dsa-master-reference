@@ -7,6 +7,8 @@ Given `nums[i]` = value at house `i`, return the max total value you can rob giv
 **Example 1** — `[2,7,9,3,1]` → `12` (rob 2 + 9 + 1)
 **Example 2** — `[2,1,1,2]` → `4` (rob 2 + 2)
 
+**Constraints** — `1 ≤ n ≤ 100`; `0 ≤ nums[i] ≤ 400`.
+
 ---
 
 ## Approach 1 — Brute force recursion

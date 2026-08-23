@@ -1,31 +1,36 @@
-# Backtracking — Subsets
+# Bit Manipulation — Subsets
 
-*[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
+*[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
 
-Return **all** subsets of `nums` (the power set). Each distinct set once.
+Given distinct integers `nums`, return all possible subsets (the power set).
 
-**Example** — `nums=[1,2,3]` → `[[], [1], [1,2], [1,2,3], [1,3], [2], [2,3], [3]]` (8 subsets).
+**Example 1** — `nums=[1,2,3]` → `[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]`
+**Example 2** — `nums=[0]` → `[[],[0]]`
 
 **Constraints** — `1 ≤ n ≤ 10`.
 
 ---
 
-## Approach 1 — Iterative expansion
+## Approach 1 — Backtracking
 
-**Intuition.** Start with `[[]]`. For each new element `x`, append `x` to every existing subset.
+Standard include/exclude recursion. O(2ⁿ · n).
+
+## Approach 2 — Iterative expansion
+
+For each element, double the current answer by appending it to every existing subset.
 
 
 
 ```java
-List<List<Integer>> subsetsIter(int[] nums) {
+List<List<Integer>> subsets(int[] nums) {
     List<List<Integer>> out = new ArrayList<>();
     out.add(new ArrayList<>());
     for (int x : nums) {
-        int size = out.size();
-        for (int i = 0; i < size; i++) {
-            List<Integer> copy = new ArrayList<>(out.get(i));
-            copy.add(x);
-            out.add(copy);
+        int sz = out.size();
+        for (int i = 0; i < sz; i++) {
+            List<Integer> next = new ArrayList<>(out.get(i));
+            next.add(x);
+            out.add(next);
         }
     }
     return out;
@@ -34,99 +39,59 @@ List<List<Integer>> subsetsIter(int[] nums) {
 
 
 
-**Complexity** — Time **O(n · 2ⁿ)**; Space **O(n · 2ⁿ)** output.
+## Approach 3 — Bitmask enumeration (canonical)
 
----
-
-## Approach 2 — Backtracking with start index
-
-**Insight.** For each position, decide "include current then advance" or "skip and advance." Post-recurse, un-choose. Emit at every node (not just leaves).
-
-**Trap.** `remove(path.size()-1)` after every recurse. Otherwise sibling branches inherit stale state.
+**Insight.** Each subset corresponds to a bit pattern of length n. Iterate `mask` from 0 to 2ⁿ-1.
 
 
 
 ```java
-List<List<Integer>> subsets(int[] nums) {
+List<List<Integer>> subsetsBM(int[] nums) {
+    int n = nums.length;
     List<List<Integer>> out = new ArrayList<>();
-    dfs(nums, 0, new ArrayList<>(), out);
-    return out;
-}
-void dfs(int[] nums, int start, List<Integer> path, List<List<Integer>> out) {
-    out.add(new ArrayList<>(path));                       // emit current
-    for (int i = start; i < nums.length; i++) {
-        path.add(nums[i]);                                 // choose
-        dfs(nums, i + 1, path, out);                       // explore
-        path.remove(path.size() - 1);                      // un-choose
+    for (int mask = 0; mask < 1 << n; mask++) {
+        List<Integer> sub = new ArrayList<>();
+        for (int i = 0; i < n; i++) if ((mask >> i & 1) == 1) sub.add(nums[i]);
+        out.add(sub);
     }
+    return out;
 }
 ```
 
 
 
 <CodeTrace
-  title="Backtracking — nums=[1,2,3]"
-  :values="[1,2,3]"
-  :windowKeys="['start']"
-  :cellWidth="46"
+  title="Bitmask — nums=[1,2,3]"
+  :values="['1','2','3']"
+  :windowKeys="['mask']"
+  :cellWidth="34"
   :steps='[
-    { pointers: { start: 0 }, vars: { path: "[]", found: 1 }, note: "emit []" },
-    { pointers: { start: 1 }, vars: { path: "[1]", found: 2 }, note: "pick 1", added: [0] },
-    { pointers: { start: 2 }, vars: { path: "[1,2]", found: 3 }, note: "pick 2", added: [0,1] },
-    { pointers: { start: 3 }, vars: { path: "[1,2,3]", found: 4 }, note: "pick 3", added: [0,1,2] },
-    { pointers: { start: 3 }, vars: { path: "[1,3]", found: 5 }, note: "backtrack; pick 3", added: [0,2] },
-    { pointers: { start: 2 }, vars: { path: "[2]", found: 6 }, note: "new branch from idx 1", added: [1] },
-    { pointers: { start: 3 }, vars: { path: "[3]", found: 8 }, note: "total 8", added: [2] }
+    { pointers: { mask: 0 }, vars: { bin: "000", subset: "[]" }, note: "" },
+    { pointers: { mask: 5 }, vars: { bin: "101", subset: "[1,3]" }, note: "" },
+    { pointers: { mask: 7 }, vars: { bin: "111", subset: "[1,2,3]" }, note: "" }
   ]'
 />
 
-**Complexity** — Time **O(n · 2ⁿ)**; Space **O(n)** stack + output.
-
----
-
-## Approach 3 — Bitmask enumeration
-
-**Insight from backtracking.** Every subset is a bitmask in `[0, 2ⁿ)`. Bit `k` set → include `nums[k]`.
-
-
-
-```java
-List<List<Integer>> subsetsBit(int[] nums) {
-    int n = nums.length;
-    List<List<Integer>> out = new ArrayList<>();
-    for (int mask = 0; mask < (1 << n); mask++) {
-        List<Integer> s = new ArrayList<>();
-        for (int i = 0; i < n; i++)
-            if ((mask & (1 << i)) != 0) s.add(nums[i]);
-        out.add(s);
-    }
-    return out;
-}
-```
-
-
-
-**Complexity** — Same. Cleaner code, harder to modify (e.g. deduping).
+**Complexity** — Time **O(2ⁿ · n)**; Space **O(2ⁿ · n)** for output.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Iterative expansion | O(n · 2ⁿ) | O(n · 2ⁿ) |
-| Backtracking | O(n · 2ⁿ) | O(n) + output |
-| Bitmask enumeration | O(n · 2ⁿ) | O(n) + output |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| Backtracking | O(2ⁿ · n) | O(n) recursion | canonical |
+| Iterative expansion | O(2ⁿ · n) | O(2ⁿ · n) | elegant |
+| Bitmask | **O(2ⁿ · n)** | O(2ⁿ · n) | polish |
 
 ## When to use which
 
-- **Cold interview** → iterative or backtracking. Bitmask if you're comfortable with bits.
-- **Subsets with duplicates** → backtracking with `sort + skip while nums[i]==nums[i-1] && !used[i-1]`.
-- **k-length subsets** → same skeleton, emit only when `path.size() == k`.
+- **All subsets** → any of the three.
+- **All subsets with duplicate elements** → sort + skip; see [Subsets II](/problems/subsets-ii).
+- **Only subsets of size k** → recurse with size arg; or DP.
 
 ## Related problems
 
-- [Subsets II (with duplicates)](https://leetcode.com/problems/subsets-ii/)
-- [Combinations](https://leetcode.com/problems/combinations/) — fixed-size subsets
-- [Permutations](https://leetcode.com/problems/permutations/) — all orderings, not subsets
-- [Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/) — same enumeration, additional constraint
+- [Subsets II](/problems/subsets-ii) — with duplicates
+- [Combination Sum](https://leetcode.com/problems/combination-sum/)
+- [Permutations](/problems/permutations)

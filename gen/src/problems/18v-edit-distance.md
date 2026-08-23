@@ -7,6 +7,8 @@ Given two strings `word1` and `word2`, return the minimum number of edits (inser
 **Example 1** — `word1="horse", word2="ros"` → `3`
 **Example 2** — `word1="intention", word2="execution"` → `5`
 
+**Constraints** — `0 ≤ m, n ≤ 500`.
+
 ---
 
 ## Approach 1 — Brute recursion → Approach 2 — Memoized
@@ -55,6 +57,12 @@ int minDistance(String a, String b) {
 | Memoized | O(m·n) | O(m·n) |
 | Tabulated | **O(m·n)** | O(m·n) |
 | Rolling row | O(m·n) | **O(min(m,n))** |
+
+## When to use which
+
+- **Standard edit distance** → 2D DP.
+- **Only insertions allowed** → LCS variant.
+- **Return the operations** → track parent choices during DP.
 
 ## Related problems
 

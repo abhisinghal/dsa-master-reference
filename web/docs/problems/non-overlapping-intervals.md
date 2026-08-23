@@ -2,14 +2,19 @@
 
 *[↗ LeetCode: Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-Minimum intervals to remove so the rest are non-overlapping.
+Min intervals to remove so the rest are non-overlapping.
+
+**Example 1** — `intervals=[[1,2],[2,3],[3,4],[1,3]]` → `1`
+**Example 2** — `intervals=[[1,2],[1,2],[1,2]]` → `2`
+**Example 3** — `intervals=[[1,2],[2,3]]` → `0`
+
+**Constraints** — `1 ≤ n ≤ 10⁵`.
 
 ---
 
-## Approach 1 — Sort by end + activity selection
-**Insight.** Equivalent to maximizing non-overlapping intervals; the count to remove is `n - maxKept`. Sort by end, greedily keep intervals whose start ≥ previous end.
+## Approach — Sort by end + activity selection (canonical)
 
-**Why sort by end.** Choosing the earliest ending interval leaves maximal room for the rest — classic exchange argument.
+**Insight.** Equivalent to maximizing non-overlapping intervals; count to remove = n - maxKept. Sort by end; greedily keep intervals with start ≥ prev end.
 
 
 
@@ -17,8 +22,7 @@ Minimum intervals to remove so the rest are non-overlapping.
 int eraseOverlapIntervals(int[][] intervals) {
     Arrays.sort(intervals, (a, b) -> a[1] - b[1]);
     int kept = 0, end = Integer.MIN_VALUE;
-    for (int[] it : intervals)
-        if (it[0] >= end) { end = it[1]; kept++; }
+    for (int[] iv : intervals) if (iv[0] >= end) { end = iv[1]; kept++; }
     return intervals.length - kept;
 }
 ```
@@ -31,16 +35,18 @@ int eraseOverlapIntervals(int[][] intervals) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort by end + activity selection | O(n log n) | O(1) | primary |
+| Sort + activity | **O(n log n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → Sort by end + activity selection (O(n log n), O(1)). The pattern's standard solution.
+- **"Min remove"** → n − maxKept.
+- **"Max keep"** → same skeleton, return count.
+- **"Weighted intervals"** → interval scheduling DP.
 
 ## Related problems
 
-- [Minimum Arrows](/problems/minimum-number-of-arrows-to-burst-balloons) — sibling with weak inequality
 - [Maximum Length of Pair Chain](/problems/maximum-length-of-pair-chain)
+- [Minimum Arrows](/problems/minimum-number-of-arrows-to-burst-balloons)
 - [Meeting Rooms](/problems/meeting-rooms)

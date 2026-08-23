@@ -2,12 +2,19 @@
 
 *[↗ LeetCode: Get Equal Substrings Within Budget](https://leetcode.com/problems/get-equal-substrings-within-budget/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-Given `s`, `t`, `maxCost`. Convert `s[i]` → `t[i]` costs `|s[i] - t[i]|`. Return the longest substring convertible within `maxCost`.
+Given `s`, `t`, `maxCost`. Convert `s[i]` → `t[i]` costs `|s[i] - t[i]|`. Return longest substring convertible within budget.
+
+**Example 1** — `s="abcd", t="bcdf", maxCost=3` → `3`
+**Example 2** — `s="abcd", t="cdef", maxCost=3` → `1`
+**Example 3** — `s="abcd", t="acde", maxCost=0` → `1`
+
+**Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ maxCost ≤ 10⁶`.
 
 ---
 
-## Approach 1 — Sliding window on the cost array
-**Insight.** Compute `diff[i] = |s[i] - t[i]|`. Now: longest subarray with sum ≤ maxCost — classic positive-only sliding window.
+## Approach — Sliding window on the diff array (canonical)
+
+**Insight.** Compute `diff[i] = |s[i] - t[i]|`. Now: longest subarray with sum ≤ maxCost.
 
 ```java
 int equalSubstring(String s, String t, int maxCost) {
@@ -21,21 +28,35 @@ int equalSubstring(String s, String t, int maxCost) {
 }
 ```
 
+<CodeTrace
+  title="Budget window — s='abcd', t='bcdf', maxCost=3"
+  :values="['1','1','1','2']"
+  :windowKeys="['l','r']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { l: 0, r: 2 }, vars: { cost: 3, best: 3 }, note: "1+1+1=3 ≤ 3 → best=3" },
+    { pointers: { l: 3, r: 3 }, vars: { cost: 2, best: 3 }, note: "shrink after 4th elem" }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sliding window on the cost array | O(n) | O(1) | primary |
+| Sliding budget | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → Sliding window on the cost array (O(n), O(1)). The pattern's standard solution.
+- **"Convert within budget"** → diff array + sliding window.
+- **Multi-alphabet Unicode** → codePoints instead of chars.
+- **"Return the substring"** → track `(bestL, bestLen)` and slice.
 
 ## Related problems
 
-- [Longest Substring With At Most K Distinct](/problems/longest-substring-with-at-most-k-distinct)
+- [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)
 - [Max Consecutive Ones III](/problems/max-consecutive-ones-iii)
+- [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum)

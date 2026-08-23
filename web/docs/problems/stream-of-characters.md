@@ -2,33 +2,47 @@
 
 *[↗ LeetCode: Stream of Characters](https://leetcode.com/problems/stream-of-characters/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-Streaming interface: after each `query(c)`, return true iff any word in the dictionary matches a **suffix** of the stream so far.
+Design `StreamChecker`. `query(c)` returns true iff the last k chars form a word in the dictionary (for any k).
+
+**Example** — with `dict = ["cd","f","kl"]`, streaming `a,b,c,d,e,f,g,h,i,j,k,l` returns `[F,F,F,T,F,T,F,F,F,F,F,T]`.
+
+**Constraints** — dict ≤ 2000 words, each ≤ 200 chars; up to 4·10⁴ queries.
 
 ---
 
-## Approach 1 — Trie of REVERSED words, walk stream in reverse
-**Insight.** Checking "does any word end at position i in the stream?" = "does any *reversed word* start at position i and read backwards?". Insert reversed words into the trie; on each query, walk backward through the buffered stream.
+## Approach 1 — Materialize stream, check every suffix
+
+O(k · #dict) per query. Baseline.
+
+## Approach 2 — Reverse trie + suffix walk (canonical)
+
+**Insight.** Insert each word **reversed** into a trie. Maintain running stream in a buffer. On each query, walk from newest char backward through the trie; if we hit an `end` node, return true.
 
 
 
 ```java
+class Node { Node[] c = new Node[26]; boolean end; }
 class StreamChecker {
-    static class Node { Map<Character, Node> ch = new HashMap<>(); boolean end; }
     Node root = new Node();
     StringBuilder stream = new StringBuilder();
     public StreamChecker(String[] words) {
         for (String w : words) {
             Node cur = root;
-            for (int i = w.length() - 1; i >= 0; i--) cur = cur.ch.computeIfAbsent(w.charAt(i), k -> new Node());
+            for (int i = w.length() - 1; i >= 0; i--) {
+                int idx = w.charAt(i) - 'a';
+                if (cur.c[idx] == null) cur.c[idx] = new Node();
+                cur = cur.c[idx];
+            }
             cur.end = true;
         }
     }
-    public boolean query(char c) {
-        stream.append(c);
+    public boolean query(char letter) {
+        stream.append(letter);
         Node cur = root;
         for (int i = stream.length() - 1; i >= 0; i--) {
-            cur = cur.ch.get(stream.charAt(i));
-            if (cur == null) return false;
+            int idx = stream.charAt(i) - 'a';
+            if (cur.c[idx] == null) return false;
+            cur = cur.c[idx];
             if (cur.end) return true;
         }
         return false;
@@ -38,21 +52,35 @@ class StreamChecker {
 
 
 
-**Complexity** — Time **O(max_word_len)** per query; Space **O(D)** for dictionary.
+<CodeTrace
+  title="Reverse trie — dict [cd, f, kl]"
+  :values="['a','b','c','d']"
+  :windowKeys="['q']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { q: 3 }, vars: { stream: "abcd", walk: "d→c", end: true }, note: "matches cd" }
+  ]'
+/>
+
+**Complexity** — `query` **O(L_max)**; Space **O(D)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time / query | Space | Grade |
 |---|---|---|---|
-| Trie of REVERSED words, walk stream in rev… | O(max_word_len) | O(D) | primary |
+| Naive suffix check | O(k · #dict) | O(D) | baseline |
+| Reverse trie + suffix walk | **O(L_max)** | O(D) | canonical |
 
 ## When to use which
 
-- **Ship this** → Trie of REVERSED words, walk stream in reverse (O(max_word_len), O(D)). The pattern's standard solution.
+- **"Last-k suffix matching"** in streams → reverse trie.
+- **"Prefix" instead** → normal trie + walk forward.
+- **Aho-Corasick** → optimal for very many patterns, streaming.
 
 ## Related problems
 
+- [Implement Trie](/problems/implement-trie)
 - [Word Search II](/problems/trie-word-search-ii)
-- [Design Add and Search Words](/problems/design-add-and-search-words-data-structure)
+- [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/)

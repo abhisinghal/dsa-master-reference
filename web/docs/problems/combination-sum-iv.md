@@ -2,19 +2,22 @@
 
 *[↗ LeetCode: Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-Count of ordered combinations of `nums` summing to `target`. `[1,2]` and `[2,1]` are distinct.
+Count ordered sequences of `nums` summing to `target`. `[1,2]` and `[2,1]` are distinct.
 
-&gt; Filed under Backtracking but the intended solution is **DP** — order matters, so we count sequences, not subsets.
+**Example 1** — `nums=[1,2,3], target=4` → `7`
+**Example 2** — `nums=[9], target=3` → `0`
+
+**Constraints** — `1 ≤ n ≤ 200`.
 
 ---
 
 ## Approach 1 — Backtracking
-Enumerate all sequences. Blows up: for target=1000 and nums=[1,2,3], count is astronomical → TLE.
 
----
+Exponential. TLE.
 
-## Approach 2 — DP (coin-change permutations)
-**Insight.** `dp[t] = Σ dp[t - x]` for each `x ∈ nums`. Outer loop is target; inner is nums — this counts ordered sequences.
+## Approach 2 — DP (coin-change permutations, canonical)
+
+**Insight.** `dp[t] = Σ dp[t - x]` for `x ∈ nums`. Outer loop is target; inner is nums — this counts **ordered** sequences.
 
 
 
@@ -31,27 +34,29 @@ int combinationSum4(int[] nums, int target) {
 
 
 
-**Trap.** Java `int` may overflow — problem guarantees fits, but if unsure use `long` and check.
+**Contrast.** Loop order swap counts **unordered** (see [Coin Change II](/problems/coin-change-ii)).
+
+**Trap** — may overflow — problem guarantees fits in int; if unsure use `long`.
 
 **Complexity** — Time **O(target · n)**; Space **O(target)**.
-
-**Follow-up.** If we wanted unordered (like [Coin Change II](/problems/coin-change-ii)), swap loop order: outer nums, inner target.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Backtracking | — | — | baseline |
-| DP (coin-change permutations) | O(target · n) | O(target) | optimum |
+| Backtracking | exponential | O(target) | baseline |
+| DP | **O(target · n)** | O(target) | canonical |
 
 ## When to use which
 
-- **State it for signal** → Backtracking (—). Correct baseline; call it out then move on.
-- **Ship this** → DP (coin-change permutations) (O(target · n), O(target)). Expected optimum in interview.
+- **Ordered** → outer target, inner nums.
+- **Unordered** → outer nums, inner target.
+- **"Enumerate sequences"** → backtracking, not DP.
 
 ## Related problems
 
-- [Coin Change II](/problems/coin-change-ii) — unordered
-- [Combination Sum](https://leetcode.com/problems/combination-sum/) — subsets, unbounded
+- [Coin Change](/problems/coin-change)
+- [Coin Change II](/problems/coin-change-ii)
+- [Combination Sum](https://leetcode.com/problems/combination-sum/)

@@ -2,16 +2,25 @@
 
 *[↗ LeetCode: Continuous Subarray Sum](https://leetcode.com/problems/continuous-subarray-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-Return `true` iff there's a subarray of size ≥ 2 with sum divisible by `k`.
+Return true iff there is a subarray of length **≥ 2** whose sum is a multiple of `k`.
 
-**Example** — `nums=[23,2,4,6,7], k=6` → `true` (`[2,4]`)
+**Example 1** — `nums = [23,2,4,6,7], k = 6` → `true` (subarray `[2,4]`)
+**Example 2** — `nums = [23,2,6,4,7], k = 6` → `true`
+**Example 3** — `nums = [1,0], k = 2` → `false`
+
+**Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ nums[i] ≤ 10⁹`; `1 ≤ k ≤ 2³¹−1`.
 
 ---
 
-## Approach 1 — Prefix mod, track FIRST index
-**Insight.** `sum(i..j) % k == 0 ↔ prefix[j] ≡ prefix[i-1] (mod k)`. Store the first index a remainder appeared; if seen again with `j - i ≥ 2`, return true.
+## Approach 1 — Every subarray
 
-**Trap.** Store index of FIRST occurrence (not last) so subarray length is maximized.
+O(n²). Baseline.
+
+## Approach 2 — Prefix mod + first-index map (with length guard)
+
+**Insight.** If two prefix sums have same remainder mod k AND the distance is ≥ 2, we win. Store first index of each remainder.
+
+**Trap** — treat prefix at index `-1` as `0` (multiple of k). Also handle `k = 0` (subarray must sum to 0).
 
 
 
@@ -19,12 +28,13 @@ Return `true` iff there's a subarray of size ≥ 2 with sum divisible by `k`.
 boolean checkSubarraySum(int[] nums, int k) {
     Map<Integer, Integer> first = new HashMap<>();
     first.put(0, -1);
-    int prefix = 0;
+    int pref = 0;
     for (int i = 0; i < nums.length; i++) {
-        prefix = (prefix + nums[i]) % k;
-        if (first.containsKey(prefix)) {
-            if (i - first.get(prefix) >= 2) return true;
-        } else first.put(prefix, i);
+        pref += nums[i];
+        int m = k == 0 ? pref : pref % k;
+        if (first.containsKey(m)) {
+            if (i - first.get(m) >= 2) return true;
+        } else first.put(m, i);
     }
     return false;
 }
@@ -32,19 +42,17 @@ boolean checkSubarraySum(int[] nums, int k) {
 
 
 
-
 <CodeTrace
-  title="Prefix mod, track FIRST index"
-  :values="['23', '2', '4', '6', '7']"
+  title="Prefix mod — nums=[23,2,4,6,7], k=6"
+  :values="['23','2','4','6','7']"
   :windowKeys="['i']"
-  :cellWidth="34"
+  :cellWidth="30"
   :steps='[
-    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
-    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through the scan." },
-    { pointers: { i: 4 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+    { pointers: { i: 0 }, vars: { pref: 23, m: 5, first: "{5:0}" }, note: "" },
+    { pointers: { i: 1 }, vars: { pref: 25, m: 1, first: "{5:0,1:1}" }, note: "new remainder" },
+    { pointers: { i: 2 }, vars: { pref: 29, m: 5 }, note: "m=5 first at 0; distance=2 → return true" }
   ]'
 />
-
 
 **Complexity** — Time **O(n)**; Space **O(k)**.
 
@@ -52,16 +60,19 @@ boolean checkSubarraySum(int[] nums, int k) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Prefix mod, track FIRST index | O(n) | O(k) | primary |
+| Brute | O(n²) | O(1) | baseline |
+| Prefix mod + first-index | **O(n)** | O(k) | optimum |
 
 ## When to use which
 
-- **Ship this** → Prefix mod, track FIRST index (O(n), O(k)). The pattern's standard solution.
+- **"Length ≥ 2" constraint** → keep **first** index (not most recent) to maximize gap.
+- **"Length ≥ L"** → same, check `i - first ≥ L`.
+- **"Any sum divisible by k" (no length)** → simpler [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k).
 
 ## Related problems
 
-- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
 - [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k)
 - [Contiguous Array](/problems/contiguous-array)
+- [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)

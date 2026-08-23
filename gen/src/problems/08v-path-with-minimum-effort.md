@@ -6,6 +6,8 @@ In a 2D grid of heights, an "effort" of a path is the max abs-diff between conse
 
 **Example** — `heights=[[1,2,2],[3,8,2],[5,3,5]]` → `2`
 
+**Constraints** — `1 ≤ m, n ≤ 100`; `0 ≤ height[i][j] ≤ 10⁶`.
+
 ---
 
 ## Approach 1 — Dijkstra with edge weight = max-so-far
@@ -50,6 +52,12 @@ int minimumEffortPath(int[][] h) {
 |---|---|---|
 | Dijkstra | O(mn log mn) | O(mn) |
 | BS + BFS | **O(mn log(max))** | O(mn) |
+
+## When to use which
+
+- **"Min max edge on path"** → BS on answer OR Dijkstra with max-of-path metric OR MST.
+- **Dijkstra variant** — replace sum with max in relaxation.
+- **Streaming edge addition** → Union-Find with sorted edges.
 
 ## Related problems
 

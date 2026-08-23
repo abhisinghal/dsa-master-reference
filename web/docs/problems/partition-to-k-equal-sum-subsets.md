@@ -2,24 +2,27 @@
 
 *[↗ LeetCode: Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-Can we split nums into k non-empty subsets each summing to `total/k`?
+Split nums into k subsets each summing to `total/k`.
+
+**Example 1** — `nums=[4,3,2,3,5,2,1], k=4` → `true`
+**Example 2** — `nums=[1,2,3,4], k=3` → `false`
+
+**Constraints** — `1 ≤ n ≤ 16`.
 
 ---
 
 ## Approach 1 — Backtracking with sort-desc + pruning
-Sort desc; try to place each number into one of k buckets; skip mirrored empty buckets to avoid re-exploring.
+Sort desc; place each into buckets; skip mirrored-empty.
 
----
+## Approach 2 — Bitmask DP (canonical for n ≤ 16)
 
-## Approach 2 — Bitmask DP
-**Insight.** `dp[mask]` = min "leftover" sum of the current partially-filled bucket after using elements in mask. Transition: for each unused element `i`, add it to the current bucket if it fits (leftover + nums[i] ≤ target). When a bucket fills, reset leftover to 0.
+**Insight.** `dp[mask]` = min "leftover" sum of current bucket after using mask elements. Transition: try adding each unused element if it fits.
 
 
 
 ```java
 boolean canPartitionKSubsets(int[] nums, int k) {
-    int total = 0;
-    for (int x : nums) total += x;
+    int total = 0; for (int x : nums) total += x;
     if (total % k != 0) return false;
     int target = total / k;
     int n = nums.length, full = 1 << n;
@@ -41,24 +44,25 @@ boolean canPartitionKSubsets(int[] nums, int k) {
 
 
 
-**Complexity** — Time **O(n · 2ⁿ)**; Space **O(2ⁿ)** — n ≤ 16.
+**Complexity** — Time **O(n · 2ⁿ)**; Space **O(2ⁿ)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Backtracking with sort-desc + pruning | — | — | baseline |
-| Bitmask DP | O(n · 2ⁿ) | O(2ⁿ) | optimum |
+| Backtracking + sort desc | worst exp | O(k) | works |
+| Bitmask DP | **O(n · 2ⁿ)** | O(2ⁿ) | canonical for n ≤ 16 |
 
 ## When to use which
 
-- **State it for signal** → Backtracking with sort-desc + pruning (—). Correct baseline; call it out then move on.
-- **Ship this** → Bitmask DP (O(n · 2ⁿ), O(2ⁿ)). Expected optimum in interview.
+- **n ≤ 16** → bitmask DP.
+- **Larger n** → backtracking with heavy pruning.
+- **k=2** → simpler [Partition Equal Subset Sum](/problems/partition-equal-subset-sum).
 
 ## Related problems
 
-- [Partition Equal Subset Sum](/problems/partition-equal-subset-sum) — k=2
-- [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats) — bitmask DP
+- [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)
+- [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other)
 - [Beautiful Arrangement](/problems/beautiful-arrangement)

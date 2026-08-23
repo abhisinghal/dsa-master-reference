@@ -2,14 +2,19 @@
 
 *[↗ LeetCode: Replace the Substring for Balanced String](https://leetcode.com/problems/replace-the-substring-for-balanced-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-String of Q,W,E,R (length n divisible by 4). Return length of the smallest substring to replace so each letter appears n/4 times.
+String of Q,W,E,R (length n divisible by 4). Return length of smallest substring to replace so each letter appears n/4 times.
+
+**Example 1** — `s="QWER"` → `0`
+**Example 2** — `s="QQWE"` → `1`
+**Example 3** — `s="QQQW"` → `2`
+
+**Constraints** — `1 ≤ n ≤ 10⁵`.
 
 ---
 
-## Approach 1 — Sliding window over "outside" counts
-**Insight.** A substring `[l, r]` is a valid replacement window iff **outside** it, no letter exceeds `n/4`. Equivalently, `outsideCount[x] ≤ n/4` for all x.
+## Approach — Sliding window over "outside" counts (canonical)
 
-Sweep r, decrement inside-window-adjusted counts implicitly; shrink l while the outside-condition still holds; track min window length.
+**Insight.** Substring `[l, r]` is a valid replacement window iff **outside** it, no letter exceeds `n/4`. Shrink l while condition holds; track min length.
 
 
 
@@ -20,7 +25,7 @@ int balancedString(String s) {
     for (char c : s.toCharArray()) cnt[c]++;
     int l = 0, best = n;
     for (int r = 0; r < n; r++) {
-        cnt[s.charAt(r)]--; // temporarily "remove" s[r] from outside
+        cnt[s.charAt(r)]--;
         while (l < n && cnt['Q'] <= k && cnt['W'] <= k && cnt['E'] <= k && cnt['R'] <= k) {
             best = Math.min(best, r - l + 1);
             cnt[s.charAt(l++)]++;
@@ -32,21 +37,36 @@ int balancedString(String s) {
 
 
 
+<CodeTrace
+  title="Sliding — s='QQWE', k=1"
+  :values="['Q','Q','W','E']"
+  :windowKeys="['l','r']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { l: 0, r: 0 }, vars: { outside: "{Q:1,W:1,E:1,R:0}" }, note: "outside has Q=1 ≤ k, but missing R... wait Q count is 1 outside includes 1 Q at idx 1" },
+    { pointers: { l: 0, r: 1 }, vars: { best: 2 }, note: "" },
+    { pointers: { l: 1, r: 1 }, vars: { best: 1 }, note: "smaller window found" }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sliding window over "outside" counts | O(n) | O(1) | primary |
+| Outside-count sliding | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → Sliding window over "outside" counts (O(n), O(1)). The pattern's standard solution.
+- **Balance target on fixed alphabet** → outside counts.
+- **Any character allowed as replacement** → this template.
+- **Fixed replacement char** → different constraint.
 
 ## Related problems
 
 - [Longest Repeating Character Replacement](/problems/longest-repeating-character-replacement)
-- [Minimum Operations to Make All Array Elements Equal](https://leetcode.com/problems/minimum-operations-to-make-array-equal/)
+- [Minimum Window Substring](/problems/minimum-window-substring)
+- [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)

@@ -6,6 +6,9 @@
 
 **Constraints** — `1 ≤ n·k ≤ 5000`.
 
+**Example 1** — `costs=[[1,5,3],[2,9,4]]` → `5`
+**Example 2** — `costs=[[1,3],[2,4]]` → `5`
+
 ---
 
 ## Approach 1 — O(n · k²) DP

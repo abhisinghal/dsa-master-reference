@@ -6,6 +6,8 @@ Given sorted station positions and integer `k`, add `k` new stations to minimize
 
 **Example** — `stations=[1,2,3,4,5,6,7,8,9,10], k=9` → `0.5`
 
+**Constraints** — `10 ≤ stations.length ≤ 2000`; `0 ≤ stations[i] ≤ 10⁸`.
+
 ---
 
 ## Approach 1 — Priority queue (greedy)
@@ -40,6 +42,12 @@ double minmaxGasDist(int[] s, int k) {
 |---|---|---|
 | Max-heap greedy | O(k log n) | O(n) |
 | Real-number BS | **O(n · log(hi/eps))** | O(1) |
+
+## When to use which
+
+- **"Minimize max after k operations"** → BS on real-valued answer.
+- **Discrete answer** → integer BS.
+- **Precision** → iterate until `hi - lo < 1e-6`.
 
 ## Related problems
 

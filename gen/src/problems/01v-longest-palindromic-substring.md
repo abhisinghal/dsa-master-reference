@@ -2,23 +2,25 @@
 
 *[↗ LeetCode: Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
-Longest palindromic substring of `s`.
+Return the longest palindromic substring of `s`.
 
-> Filed under Sliding Window in the curriculum, but the O(n²) solution is "expand around center" (two pointers), and the O(n) solution is Manacher's.
+**Example 1** — `s="babad"` → `"bab"` or `"aba"`
+**Example 2** — `s="cbbd"` → `"bb"`
+**Example 3** — `s="a"` → `"a"`
+
+**Constraints** — `1 ≤ n ≤ 1000`.
 
 ---
 
-## Approach 1 — Try every substring O(n³)
-
----
+## Approach 1 — Every substring O(n³)
 
 ## Approach 2 — DP `pal[i][j]`
+
 O(n²) time and space.
 
----
+## Approach 3 — Expand around each center (canonical)
 
-## Approach 3 — Expand around each center
-**Insight.** A palindrome has either an odd (single) center or an even (double) center — 2n-1 centers total.
+**Insight.** A palindrome has an odd or even center — 2n-1 centers total. Expand outward while chars match.
 
 ```java
 String longestPalindrome(String s) {
@@ -40,32 +42,43 @@ int expand(String s, int l, int r) {
 }
 ```
 
-**Complexity** — Time **O(n²)**; Space **O(1)**.
+<CodeTrace
+  title="Expand around center — s='babad'"
+  :values="['b','a','b','a','d']"
+  :windowKeys="['l','r']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { l: 0, r: 2 }, vars: { center: 1, len: 3, best: "bab" }, note: "center=1 (a), expand to bab" },
+    { pointers: { l: 1, r: 3 }, vars: { center: 2, len: 3, best: "bab or aba" }, note: "center=2 (b), aba tied" },
+    { pointers: { l: 3, r: 4 }, vars: { center: 3.5, len: 0 }, note: "no even palindrome" }
+  ]'
+/>
 
----
+## Approach 4 — Manacher's O(n)
 
-## Approach 4 — Manacher's algorithm
-Insert sentinels; maintain palindrome-radius array with reuse across mirrored centers. **O(n)**. Beautiful but rarely required in interviews unless asked "can you go faster than n²".
+Sentinels + palindrome-radius array with reuse across mirrored centers.
+
+**Complexity** — Time **O(n²)** expand; **O(n)** Manacher; Space **O(1)** expand.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Try every substring O(n³) | — | — | baseline |
-| DP `pal[i][j]` | O(n²) | — | improved |
-| Expand around each center | O(n²) | O(1) | improved |
-| Manacher's algorithm | O(n) | — | optimum |
+| Every substring | O(n³) | O(1) | baseline |
+| DP `pal[i][j]` | O(n²) | O(n²) | works |
+| Expand around center | **O(n²)** | **O(1)** | canonical |
+| Manacher | O(n) | O(n) | polish |
 
 ## When to use which
 
-- **State it for signal** → Try every substring O(n³) (—). Correct baseline; call it out then move on.
-- **Intermediate refinement** → DP `pal[i][j]` (O(n²)).
-- **Intermediate refinement** → Expand around each center (O(n²)).
-- **Ship this** → Manacher's algorithm (O(n), —). Expected optimum in interview.
+- **Standard interview** → expand around center.
+- **Very large n** → Manacher.
+- **Return count of palindromic substrings** → same expand, just count.
 
 ## Related problems
 
-- [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/) — count all
-- [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence) — DP
+- [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
+- [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence)
+- [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)

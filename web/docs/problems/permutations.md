@@ -4,14 +4,19 @@
 
 Return all permutations of distinct integers.
 
+**Example 1** — `nums=[1,2,3]` → 6 permutations
+**Example 2** — `nums=[1]` → `[[1]]`
+
+**Constraints** — `1 ≤ n ≤ 6`.
+
 ---
 
-## Approach 1 — Insert into every position
-Recursively insert `nums[i]` into every position of every partial permutation of `nums[0..i-1]`. O(n! · n).
+## Approach 1 — Insert-at-every-position recursion
 
----
+Build permutations of length k+1 by inserting the (k+1)-th element into every position of length-k perms.
 
-## Approach 2 — Swap-in-place
+## Approach 2 — Swap-in-place (canonical)
+
 **Insight.** At depth `k`, swap each remaining candidate into position `k`, recurse, swap back.
 
 
@@ -24,10 +29,9 @@ List<List<Integer>> permute(int[] nums) {
 }
 void dfs(int[] a, int k, List<List<Integer>> out) {
     if (k == a.length) {
-        List<Integer> perm = new ArrayList<>();
-        for (int x : a) perm.add(x);
-        out.add(perm);
-        return;
+        List<Integer> p = new ArrayList<>();
+        for (int x : a) p.add(x);
+        out.add(p); return;
     }
     for (int i = k; i < a.length; i++) {
         swap(a, k, i);
@@ -40,31 +44,30 @@ void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 
 
 
-**Complexity** — Time **O(n · n!)**; Space **O(n)** recursion.
+**Complexity** — Time **O(n · n!)**; Space **O(n)**.
 
----
+## Approach 3 — Used-set + build (extensible to duplicates)
 
-## Approach 3 — Used-set + build
-Cleaner when duplicates exist (see Permutations II).
+Cleaner when duplicates exist — see [Permutations II](/problems/permutations-ii).
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Insert into every position | O(n! · n) | — | baseline |
-| Swap-in-place | O(n · n!) | O(n) | improved |
-| Used-set + build | — | — | optimum |
+| Insert-at-position | O(n · n!) | O(n · n!) | works |
+| Swap-in-place | **O(n · n!)** | O(n) | canonical |
+| Used set | O(n · n!) | O(n) | dup-friendly |
 
 ## When to use which
 
-- **State it for signal** → Insert into every position (O(n! · n)). Correct baseline; call it out then move on.
-- **Intermediate refinement** → Swap-in-place (O(n · n!)).
-- **Ship this** → Used-set + build (—, —). Expected optimum in interview.
+- **Standard interview** → swap-in-place.
+- **Duplicates** → used-set variant.
+- **Kth permutation** → factorial-number system, no enumeration.
 
 ## Related problems
 
-- [Permutations II](/problems/permutations-ii) — duplicate handling
+- [Permutations II](/problems/permutations-ii)
 - [Next Permutation](/problems/next-permutation)
 - [Letter Case Permutation](/problems/letter-case-permutation)

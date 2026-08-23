@@ -6,6 +6,8 @@ Given two sorted arrays, return the median in **O(log(min(m,n)))**.
 
 **Example** — `A=[1,3], B=[2]` → `2.0`
 
+**Constraints** — `0 ≤ n, m ≤ 1000`; total ≥ 1.
+
 ---
 
 ## Approach 1 — Merge sort halves
@@ -49,6 +51,12 @@ double findMedianSortedArrays(int[] A, int[] B) {
 |---|---|---|
 | Merge halves | O(m + n) | O(1) |
 | BS on partition | **O(log min(m,n))** | O(1) |
+
+## When to use which
+
+- **"Median of two sorted"** → BS on smaller array (O(log min)).
+- **"Median of k sorted"** → heap or divide-and-conquer.
+- **"kth of two sorted"** → same BS with different partition target.
 
 ## Related problems
 

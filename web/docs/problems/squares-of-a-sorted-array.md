@@ -4,15 +4,20 @@
 
 Return squares of a sorted (possibly-negative) array, sorted.
 
+**Example 1** — `nums=[-4,-1,0,3,10]` → `[0,1,9,16,100]`
+**Example 2** — `nums=[-7,-3,2,3,11]` → `[4,9,9,49,121]`
+
+**Constraints** — `1 ≤ n ≤ 10⁴`; sorted ascending.
+
 ---
 
 ## Approach 1 — Square then sort
+
 O(n log n).
 
----
+## Approach 2 — Two pointers filling from back (canonical)
 
-## Approach 2 — Two pointers filling from back
-**Insight.** Largest square is at one of the two ends (most negative or most positive). Compare, place at `k = n-1`, decrement, repeat.
+**Insight.** Largest square is at one of the two ends. Compare, place at `k = n-1`, decrement, repeat.
 
 
 
@@ -37,16 +42,17 @@ int[] sortedSquares(int[] nums) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Square then sort | O(n log n) | — | baseline |
-| Two pointers filling from back | O(n) | O(n) | optimum |
+| Sort | O(n log n) | O(n) | baseline |
+| Fill from back | **O(n)** | O(n) | canonical |
 
 ## When to use which
 
-- **State it for signal** → Square then sort (O(n log n)). Correct baseline; call it out then move on.
-- **Ship this** → Two pointers filling from back (O(n), O(n)). Expected optimum in interview.
+- **"Sorted array with monotone-transform"** → fill-from-ends technique.
+- **In-place mutation** → different — see [Merge Sorted Array](/problems/merge-sorted-array).
 
 ## Related problems
 
-- [Merge Sorted Array](/problems/merge-sorted-array) — same fill-from-back
+- [Merge Sorted Array](/problems/merge-sorted-array)
+- [Sort Colors](https://leetcode.com/problems/sort-colors/)

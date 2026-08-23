@@ -6,6 +6,8 @@ Given package weights and `days`, find the minimum ship capacity that ships all 
 
 **Example** — `weights=[1,2,3,4,5,6,7,8,9,10], days=5` → `15`
 
+**Constraints** — `1 ≤ days ≤ n ≤ 5·10⁴`; `1 ≤ weights[i] ≤ 500`.
+
 ---
 
 ## Approach 1 — Try every capacity
@@ -61,6 +63,12 @@ int shipWithinDays(int[] w, int days) {
 |---|---|---|
 | Linear scan on cap | O(max · n) | O(1) |
 | BS on answer | **O(n log sum)** | O(1) |
+
+## When to use which
+
+- **"Min feasible X with monotone predicate"** → BS on answer.
+- **Return the split itself** → after BS converges, re-simulate to record boundaries.
+- **Very large sums** → use `long` for hi bound.
 
 ## Related problems
 

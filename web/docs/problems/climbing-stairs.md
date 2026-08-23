@@ -2,16 +2,21 @@
 
 *[↗ LeetCode: Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/dp)
 
-Steps of 1 or 2. Number of ways to reach step n.
+Steps of 1 or 2. Number of ways to reach step `n`.
+
+**Example 1** — `n=2` → `2`
+**Example 2** — `n=3` → `3`
+
+**Constraints** — `1 ≤ n ≤ 45`.
 
 ---
 
 ## Approach 1 — Recursion + memo
+O(n).
 
----
+## Approach 2 — Bottom-up DP O(1) space (canonical)
 
-## Approach 2 — Bottom-up DP, O(1) space
-**Insight.** `dp[i] = dp[i-1] + dp[i-2]` (Fibonacci).
+**Insight.** `dp[i] = dp[i-1] + dp[i-2]` — Fibonacci.
 
 
 
@@ -25,31 +30,29 @@ int climbStairs(int n) {
 
 
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
-
----
-
 ## Approach 3 — Matrix exponentiation
-`[[1,1],[1,0]]^n` gives Fibonacci in **O(log n)**. Interview curiosity when asked "can it be sublinear".
+`[[1,1],[1,0]]^n` → **O(log n)**. Interview curiosity.
+
+**Complexity** — Time **O(n)** DP; Space **O(1)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Recursion + memo | — | — | baseline |
-| Bottom-up DP, O(1) space | O(n) | O(1) | improved |
-| Matrix exponentiation | O(log n) | — | optimum |
+| Memo | O(n) | O(n) | correct |
+| Rolling DP | **O(n)** | **O(1)** | canonical |
+| Matrix expo | O(log n) | O(1) | polish |
 
 ## When to use which
 
-- **State it for signal** → Recursion + memo (—). Correct baseline; call it out then move on.
-- **Intermediate refinement** → Bottom-up DP, O(1) space (O(n)).
-- **Ship this** → Matrix exponentiation (O(log n), —). Expected optimum in interview.
+- **Standard** → rolling DP.
+- **Very large n** → matrix expo or closed-form Binet.
+- **Steps of {1..k}** → same recurrence extended.
 
 ## Related problems
 
-- [Min Cost Climbing Stairs](/problems/min-cost-climbing-stairs) — cost variant
-- [House Robber](/problems/dp-house-robber) — same recurrence with pick/skip
+- [Min Cost Climbing Stairs](/problems/min-cost-climbing-stairs)
+- [House Robber](/problems/dp-house-robber)
 - [Fibonacci Number](https://leetcode.com/problems/fibonacci-number/)

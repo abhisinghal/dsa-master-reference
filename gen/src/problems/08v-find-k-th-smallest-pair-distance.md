@@ -6,6 +6,8 @@ Given `nums` and integer `k`, return the k-th smallest **absolute** distance amo
 
 **Example** — `nums=[1,3,1], k=1` → `0` (pair (1,1) has distance 0)
 
+**Constraints** — `n·(n-1)/2 ≥ k ≥ 1`; `2 ≤ n ≤ 10⁴`.
+
 ---
 
 ## Approach 1 — Enumerate all pairs, sort
@@ -45,6 +47,12 @@ int smallestDistancePair(int[] nums, int k) {
 |---|---|---|
 | Enumerate all pairs | O(n²) | O(n²) |
 | BS on distance | **O(n log(max-min))** | O(1) |
+
+## When to use which
+
+- **"kth-smallest of computable pair metric"** → BS on answer + count-≤ function.
+- **All-pair distinct sums** → same idea.
+- **Streaming** → not directly applicable — need offline.
 
 ## Related problems
 

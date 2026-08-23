@@ -6,6 +6,9 @@ At most `k` transactions. Max profit.
 
 **Constraints** — `1 ≤ k ≤ 100`; `1 ≤ n ≤ 1000`.
 
+**Example 1** — `k=2, prices=[2,4,1]` → `2`
+**Example 2** — `k=2, prices=[3,2,6,5,0,3]` → `7`
+
 ---
 
 ## Approach — 2k states DP with unlimited-k shortcut (canonical)

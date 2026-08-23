@@ -2,22 +2,26 @@
 
 *[↗ LeetCode: Insert Interval](https://leetcode.com/problems/insert-interval/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
-Given a sorted list of non-overlapping intervals and a new interval, insert and merge.
+Given sorted, non-overlapping `intervals` and a `newInterval`, insert it and merge if needed.
 
-**Example** — `intervals=[[1,3],[6,9]], newInterval=[2,5]` → `[[1,5],[6,9]]`
+**Example 1** — `intervals=[[1,3],[6,9]], newInterval=[2,5]` → `[[1,5],[6,9]]`
+**Example 2** — `intervals=[[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval=[4,8]` → `[[1,2],[3,10],[12,16]]`
+**Example 3** — `intervals=[], newInterval=[5,7]` → `[[5,7]]`
+
+**Constraints** — `0 ≤ intervals.length ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Insert + full merge
+## Approach 1 — Append + full merge
 
-Add the new interval; sort; run Merge Intervals. O(n log n).
+Insert then run [Merge Intervals](/problems/merge-intervals-classic) O(n log n).
 
-## Approach 2 — One-pass three-phase
+## Approach 2 — Single-pass three-phase (canonical)
 
-**Insight.** Because input is sorted, walk once:
-1. **Before overlap.** Add intervals that end before newInterval.start.
-2. **Overlap.** Expand newInterval to swallow all intervals whose start ≤ newInterval.end.
-3. **After.** Add remaining intervals as-is.
+**Insight.** Since intervals are pre-sorted, walk once:
+1. Copy intervals ending before `newInterval` starts.
+2. Merge all intervals overlapping `newInterval`.
+3. Copy intervals starting after `newInterval` ends.
 
 
 
@@ -40,27 +44,37 @@ int[][] insert(int[][] intervals, int[] newInterval) {
 
 
 <CodeTrace
-  title="Three-phase — intervals=[[1,3],[6,9]], newInterval=[2,5]"
-  :values="['[1,3]','[6,9]']"
+  title="3-phase — intervals=[[1,2],[3,5],[6,7],[8,10],[12,16]], new=[4,8]"
+  :values="['[1,2]','[3,5]','[6,7]','[8,10]','[12,16]']"
   :windowKeys="['i']"
-  :cellWidth="60"
+  :cellWidth="42"
   :steps='[
-    { pointers: { i: 0 }, vars: { newInterval: "[2,5]", phase: "overlap" }, note: "[1,3] overlaps → merge → [1,5]", added: [0] },
-    { pointers: { i: 1 }, vars: { newInterval: "[1,5]", phase: "after" }, note: "[6,9] after → append. done", added: [1] }
+    { pointers: { i: 0 }, vars: { phase: "copy" }, note: "[1,2] ends before 4" },
+    { pointers: { i: 1 }, vars: { phase: "merge", new: "[3,8]" }, note: "[3,5] overlaps → extend" },
+    { pointers: { i: 3 }, vars: { phase: "merge", new: "[3,10]" }, note: "[6,7],[8,10] overlap" },
+    { pointers: { i: 4 }, vars: { phase: "tail" }, note: "[12,16] after end → copy" }
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(n)** output.
+**Complexity** — Time **O(n)**; Space **O(n)**.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Insert + full merge | O(n log n) | O(n) |
-| One-pass three-phase | **O(n)** | O(n) |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| Append + merge | O(n log n) | O(n) | baseline |
+| Three-phase single pass | **O(n)** | O(n) | canonical |
+
+## When to use which
+
+- **Streaming inserts into sorted list** → repeated three-phase.
+- **Batch merges** → sort once, then O(n) merge.
+- **Return "would this overlap?" boolean** → binary-search for first `end ≥ new.start`.
 
 ## Related problems
 
-- [Merge Intervals](/problems/merge-intervals-classic) — full merge, sorted-by-start
-- [Interval List Intersections](/problems/interval-list-intersections) — two sorted interval lists
-- [Non-overlapping Intervals](/problems/non-overlapping-intervals) — remove min count
+- [Merge Intervals](/problems/merge-intervals-classic)
+- [Interval List Intersections](/problems/interval-list-intersections)
+- [Remove Covered Intervals](/problems/remove-covered-intervals)

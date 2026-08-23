@@ -1,75 +1,80 @@
 # Union-Find — Find Critical and Pseudo-Critical Edges in MST
 
-*[↗ LeetCode: Find Critical and Pseudo-Critical Edges in MST](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
+*[↗ LeetCode: Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
 
-Given `n` and weighted edges, classify each edge:
-- **Critical** — appears in EVERY MST.
-- **Pseudo-critical** — appears in SOME but not all MSTs.
+Given a graph, classify each edge:
+- **Critical** — removing it makes MST cost strictly larger (or disconnects).
+- **Pseudo-critical** — appears in at least one MST but is not critical.
 
-**Example** — return `[criticals, pseudo]`.
+**Example 1** — Return `[criticalEdges, pseudoCriticalEdges]`.
+
+**Constraints** — `2 ≤ n ≤ 100`; `1 ≤ E ≤ min(200, C(n,2))`.
 
 ---
 
----
+## Approach — Kruskal with per-edge experiments (canonical)
 
-## Approach 1 — Try each edge with Kruskal
-**Insight.** Compute the standard MST cost. For each edge `e`:
-1. **Force-exclude** `e`, run Kruskal. If MST cost differs → `e` is *critical*.
-2. If not critical, **force-include** `e`, run Kruskal. If cost matches standard MST cost → *pseudo-critical*.
+**Insight.** Compute MST cost baseline.
+- **Critical:** Skip edge `e`; compute MST cost. If larger (or spanning fails) → critical.
+- **Pseudo-critical:** Force `e` in first; compute MST. If cost equals baseline → pseudo-critical.
 
 
 
 ```java
 List<List<Integer>> findCriticalAndPseudoCriticalEdges(int n, int[][] edges) {
-    int m = edges.length;
-    int[][] indexed = new int[m][4];
-    for (int i = 0; i < m; i++) indexed[i] = new int[]{edges[i][0], edges[i][1], edges[i][2], i};
-    Arrays.sort(indexed, (a, b) -> a[2] - b[2]);
-    int mstCost = kruskal(n, indexed, -1, -1);
-    List<Integer> critical = new ArrayList<>();
-    List<Integer> pseudo = new ArrayList<>();
-    for (int i = 0; i < m; i++) {
-        if (kruskal(n, indexed, i, -1) > mstCost)      critical.add(indexed[i][3]);
-        else if (kruskal(n, indexed, -1, i) == mstCost) pseudo.add(indexed[i][3]);
+    int E = edges.length;
+    int[][] tagged = new int[E][4];
+    for (int i = 0; i < E; i++) {
+        tagged[i][0] = edges[i][0]; tagged[i][1] = edges[i][1];
+        tagged[i][2] = edges[i][2]; tagged[i][3] = i;
     }
-    return List.of(critical, pseudo);
+    Arrays.sort(tagged, (a, b) -> a[2] - b[2]);
+    int baseline = kruskal(n, tagged, -1, -1);
+    List<Integer> crit = new ArrayList<>(), pseudo = new ArrayList<>();
+    for (int i = 0; i < E; i++) {
+        if (kruskal(n, tagged, i, -1) > baseline) crit.add(tagged[i][3]);
+        else if (kruskal(n, tagged, -1, i) == baseline) pseudo.add(tagged[i][3]);
+    }
+    return List.of(crit, pseudo);
 }
-// kruskal builds MST; excludeIdx = skip this edge; includeIdx = start by taking this edge
-int kruskal(int n, int[][] edges, int excludeIdx, int includeIdx) {
-    int[] parent = new int[n]; for (int i = 0; i < n; i++) parent[i] = i;
-    int cost = 0, added = 0;
-    if (includeIdx != -1) {
-        int[] e = edges[includeIdx];
-        parent[find(parent, e[0])] = find(parent, e[1]);
-        cost += e[2]; added++;
-    }
+int kruskal(int n, int[][] edges, int skip, int force) {
+    int[] parent = new int[n];
+    for (int i = 0; i < n; i++) parent[i] = i;
+    int cost = 0, cnt = 0;
+    if (force >= 0) { parent[find(parent, edges[force][0])] = find(parent, edges[force][1]); cost += edges[force][2]; cnt++; }
     for (int i = 0; i < edges.length; i++) {
-        if (i == excludeIdx || i == includeIdx) continue;
-        int a = find(parent, edges[i][0]), b = find(parent, edges[i][1]);
-        if (a != b) { parent[a] = b; cost += edges[i][2]; added++; }
+        if (i == skip || i == force) continue;
+        int ra = find(parent, edges[i][0]), rb = find(parent, edges[i][1]);
+        if (ra == rb) continue;
+        parent[ra] = rb;
+        cost += edges[i][2];
+        if (++cnt == n - 1) return cost;
     }
-    return added == n - 1 ? cost : Integer.MAX_VALUE;
+    return Integer.MAX_VALUE;
 }
-int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }
+int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 ```
 
 
 
-**Complexity** — Time **O(E² α(V))**; Space **O(V)**.
+**Complexity** — Time **O(E² · α)**; Space **O(n + E)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Try each edge with Kruskal | O(E² α(V)) | O(V) | primary |
+| Per-edge skip/force MST | **O(E² · α)** | O(n + E) | canonical |
 
 ## When to use which
 
-- **Ship this** → Try each edge with Kruskal (O(E² α(V)), O(V)). The pattern's standard solution.
+- **Small E (≤ 200)** → per-edge experiments.
+- **Large E** → Tarjan bridge algorithm on MST after computing baseline.
+- **"Count MSTs"** → matrix-tree theorem (Kirchhoff).
 
 ## Related problems
 
-- [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points) — plain MST
-- [Kruskal's canonical](/problems/union-find-number-of-provinces) — Union-Find basics
+- [Connecting Cities With Minimum Cost](/problems/connecting-cities-with-minimum-cost)
+- [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points)
+- [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village)

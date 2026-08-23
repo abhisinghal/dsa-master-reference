@@ -2,12 +2,19 @@
 
 *[↗ LeetCode: Diet Plan Performance](https://leetcode.com/problems/diet-plan-performance/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/sliding-window)
 
-Fixed window of size `k` over calories. For each window: +1 if sum > upper; −1 if sum < lower; 0 otherwise. Return total.
+Fixed window of size `k` over calories. For each window: +1 if sum > upper; −1 if sum < lower; 0 otherwise. Return total score.
+
+**Example 1** — `calories=[1,2,3,4,5], k=1, lower=3, upper=3` → `0`
+**Example 2** — `calories=[3,2], k=2, lower=0, upper=1` → `1`
+**Example 3** — `calories=[6,5,0,0], k=2, lower=1, upper=5` → `0`
+
+**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`.
 
 ---
 
-## Approach 1 — Fixed-size window
-**Insight.** Standard fixed-size sum window: pre-sum first k, then slide adding right and subtracting left.
+## Approach — Fixed-window running sum (canonical)
+
+**Insight.** Pre-sum first `k`; slide by adding right and subtracting left.
 
 ```java
 int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
@@ -25,21 +32,36 @@ int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
 }
 ```
 
+<CodeTrace
+  title="Fixed window — calories=[6,5,0,0], k=2, lower=1, upper=5"
+  :values="['6','5','0','0']"
+  :windowKeys="['left','right']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { left: 0, right: 1 }, vars: { sum: 11, score: 1 }, note: "sum > upper → +1" },
+    { pointers: { left: 1, right: 2 }, vars: { sum: 5, score: 1 }, note: "in range" },
+    { pointers: { left: 2, right: 3 }, vars: { sum: 0, score: 0 }, note: "sum < lower → -1" }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Fixed-size window | O(n) | O(1) | primary |
+| Fixed window slide | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → Fixed-size window (O(n), O(1)). The pattern's standard solution.
+- **Fixed window size + accumulator** → this template.
+- **Variable window** → shrink/extend on validity.
+- **Return per-window score list** → append instead of accumulating.
 
 ## Related problems
 
 - [Maximum Average Subarray I](/problems/maximum-average-subarray-i)
-- [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum) — variable window
+- [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum)
+- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)

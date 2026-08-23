@@ -2,27 +2,32 @@
 
 *[↗ LeetCode: Minimum Window Subsequence](https://leetcode.com/problems/minimum-window-subsequence/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
-Smallest window in `s` such that `t` is a **subsequence** (order matters).
+Find the min window in `s1` such that `s2` is a subsequence.
+
+**Example 1** — `s1="abcdebdde", s2="bde"` → `"bcde"`
+**Example 2** — `s1="jmeqksfrsdcmsiwvaovztaqenprpvnbstl", s2="k"` → `"k"`
+
+**Constraints** — `1 ≤ |s1| ≤ 2·10⁴`; `1 ≤ |s2| ≤ 100`.
 
 ---
 
-## Approach 1 — DP `dp[i][j] = latest start of match in s[..i] using t[..j]`
+## Approach 1 — DP `dp[i][j]` = latest start of match
+
 O(m·n) time and space.
 
----
+## Approach 2 — Two-pointer forward + backward (canonical)
 
-## Approach 2 — Two-pointer forward + backward
-**Insight.** Advance `i` in `s` matching `t` chars in order; when full match found at end index `iEnd`, walk **backward** from `iEnd` to shrink to minimal window that still contains `t` as subsequence. Repeat starting after the previous match's start.
+**Insight.** Advance `i` in `s1` matching `s2` chars in order. On full match, walk backward from end index to shrink to minimal window that still contains `s2` as subsequence. Repeat.
 
 ```java
-String minWindow(String s, String t) {
-    int m = s.length(), n = t.length();
+String minWindow(String s1, String s2) {
+    int m = s1.length(), n = s2.length();
     int bestLen = Integer.MAX_VALUE, bestStart = -1;
     int i = 0;
     while (i < m) {
         int j = 0;
         while (i < m) {
-            if (s.charAt(i) == t.charAt(j)) {
+            if (s1.charAt(i) == s2.charAt(j)) {
                 j++;
                 if (j == n) break;
             }
@@ -32,34 +37,48 @@ String minWindow(String s, String t) {
         int end = i;
         j = n - 1;
         while (j >= 0) {
-            if (s.charAt(i) == t.charAt(j)) j--;
+            if (s1.charAt(i) == s2.charAt(j)) j--;
             i--;
         }
-        i += 2; // start = i+1 after loop overshoot; adjust
+        i += 2;
         int start = i - 1;
         if (end - start + 1 < bestLen) { bestLen = end - start + 1; bestStart = start; }
     }
-    return bestStart < 0 ? "" : s.substring(bestStart, bestStart + bestLen);
+    return bestStart < 0 ? "" : s1.substring(bestStart, bestStart + bestLen);
 }
 ```
 
-**Complexity** — Time **O(m · n)** worst case; often much faster.
+<CodeTrace
+  title="Forward + backward — s1='abcdebdde', s2='bde'"
+  :values="['a','b','c','d','e','b','d','d','e']"
+  :windowKeys="['i','j']"
+  :cellWidth="26"
+  :steps='[
+    { pointers: { i: 4, j: 3 }, vars: { end: 4 }, note: "forward: full match at idx 4 (a-b-c-d-e)" },
+    { pointers: { i: 1, j: -1 }, vars: { start: 1 }, note: "backward: minimal start at idx 1" },
+    { pointers: {}, vars: { window: "bcde", len: 4 }, note: "record best; continue" }
+  ]'
+/>
+
+**Complexity** — Time **O(m · n)** worst; often much faster.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| DP `dp[i][j] = latest start of match in s[… | O(m·n) | — | baseline |
-| Two-pointer forward + backward | O(m · n) | — | optimum |
+| DP | O(m·n) | O(m·n) | works |
+| 2p forward+backward | **O(m·n)** worst | O(1) | canonical |
 
 ## When to use which
 
-- **State it for signal** → DP `dp[i][j] = latest start of match in s[..i] using t[..j]` (O(m·n)). Correct baseline; call it out then move on.
-- **Ship this** → Two-pointer forward + backward (O(m · n), —). Expected optimum in interview.
+- **Subsequence** (order matters) → this pattern.
+- **Substring** (set membership) → [Minimum Window Substring](/problems/minimum-window-substring).
+- **"Any window containing s2"** → forward sweep only.
 
 ## Related problems
 
-- [Minimum Window Substring](/problems/minimum-window-substring) — set membership, not subsequence
-- [Is Subsequence](https://leetcode.com/problems/is-subsequence/) — the primitive
+- [Minimum Window Substring](/problems/minimum-window-substring)
+- [Is Subsequence](https://leetcode.com/problems/is-subsequence/)
+- [Longest Common Subsequence](/problems/longest-common-subsequence)

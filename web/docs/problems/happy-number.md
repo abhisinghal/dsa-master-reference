@@ -1,15 +1,20 @@
-# Fast/Slow — Happy Number
+# Fast &amp; Slow — Happy Number
 
 *[↗ LeetCode: Happy Number](https://leetcode.com/problems/happy-number/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
-Starting from `n`, repeatedly replace with the sum of squares of its digits. Return `true` if it reaches `1`; otherwise it enters a cycle → `false`.
+A "happy number" transformation repeatedly replaces `n` by the sum of the squares of its digits. `n` is happy iff this sequence eventually reaches `1`. Return `true` if `n` is happy.
 
-**Example 1** — `n=19` → `true` (`19→82→68→100→1`)
-**Example 2** — `n=2` → `false` (loops)
+**Example 1** — `n = 19` → `true` (`1² + 9² = 82 → 8² + 2² = 68 → … → 1`)
+**Example 2** — `n = 2` → `false` (enters a cycle `4 → 16 → 37 → …`)
+**Example 3** — `n = 1` → `true`
+
+**Constraints** — `1 ≤ n ≤ 2³¹ − 1`.
 
 ---
 
-## Approach 1 — Hash set
+## Approach 1 — Hash set of seen values
+
+**Intuition.** Iterate transformation; if we revisit a value, we're in a cycle → not happy. If we hit 1, happy.
 
 
 
@@ -19,16 +24,24 @@ boolean isHappyHash(int n) {
     while (n != 1 && seen.add(n)) n = next(n);
     return n == 1;
 }
-int next(int n) { int s = 0; while (n > 0) { int d = n % 10; s += d * d; n /= 10; } return s; }
+int next(int n) {
+    int s = 0;
+    while (n > 0) { int d = n % 10; s += d * d; n /= 10; }
+    return s;
+}
 ```
 
 
 
-**Complexity** — Time **O(log n)** per step, converges quickly; Space **O(k)** for seen values.
+**Complexity** — Time **O(log n · k)** where k = # iterations (bounded — see below); Space **O(k)**.
 
-## Approach 2 — Floyd on the digit-square sequence
+---
 
-**Insight.** The sequence `n → next(n) → next(next(n)) → …` is a functional graph. A non-happy number lands in a cycle; a happy number lands at `1` (a fixed point). Floyd detects both — cycle means unhappy, meeting at `1` means happy.
+## Approach 2 — Floyd's tortoise/hare
+
+**Insight from hash.** The sequence is a functional graph — it must eventually cycle. Detect cycles with two pointers moving at different speeds. If `slow` ever equals `fast` at value `1`, happy; otherwise cycle.
+
+**Why bounded.** For 32-bit ints, the max digit-square-sum is `9² · 10 = 810` — the sequence stays under a few hundred within a couple of steps.
 
 
 
@@ -41,33 +54,70 @@ boolean isHappy(int n) {
     } while (slow != fast);
     return slow == 1;
 }
+int next(int n) {
+    int s = 0;
+    while (n > 0) { int d = n % 10; s += d * d; n /= 10; }
+    return s;
+}
 ```
 
 
 
 <CodeTrace
-  title="Floyd on happy sequence — n=19 → 82 → 68 → 100 → 1"
-  :values="[19,82,68,100,1]"
+  title="Floyd — n=19"
+  :values="['19','82','68','100','1']"
   :windowKeys="['slow','fast']"
-  :cellWidth="46"
+  :cellWidth="34"
   :steps='[
-    { pointers: { slow: 0, fast: 0 }, vars: { }, note: "start at 19" },
-    { pointers: { slow: 1, fast: 2 }, vars: { }, note: "slow=82, fast=68" },
-    { pointers: { slow: 2, fast: 4 }, vars: { }, note: "slow=68, fast=1" },
-    { pointers: { slow: 4, fast: 4 }, vars: { }, note: "meet at 1 → happy!", added: [4] }
+    { pointers: { slow: 0, fast: 0 }, vars: { slowVal: 19, fastVal: 19 }, note: "start" },
+    { pointers: { slow: 1, fast: 2 }, vars: { slowVal: 82, fastVal: 68 }, note: "slow next=82; fast next.next=68" },
+    { pointers: { slow: 2, fast: 4 }, vars: { slowVal: 68, fastVal: 1 }, note: "fast reaches 1" },
+    { pointers: { slow: 4, fast: 4 }, vars: { slowVal: 1, fastVal: 1 }, note: "slow catches up; both=1 → happy" }
   ]'
 />
 
-**Complexity** — Time **O(log n)** per next; Space **O(1)**.
+**Complexity** — Time **O(log n · k)**; Space **O(1)**.
+
+---
+
+## Approach 3 — Known unhappy cycle short-circuit (interview trick)
+
+**Insight from Floyd.** Every unhappy number's cycle contains `4`. Just check `n == 1 || n == 4`.
+
+
+
+```java
+boolean isHappyCycle(int n) {
+    while (n != 1 && n != 4) n = next(n);
+    return n == 1;
+}
+```
+
+
+
+Small proof: iterate 1..810; every trajectory either reaches 1 or hits `4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4`.
+
+**Complexity** — Time **O(log n · k)**; Space **O(1)**.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Hash set | O(log n) per step | O(k) |
-| Floyd | O(log n) per step | **O(1)** |
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Hash set | O(log n · k) | O(k) | correct baseline |
+| Floyd's cycle detection | **O(log n · k)** | **O(1)** | pattern-recognition win |
+| "Contains 4" short-circuit | O(log n · k) | O(1) | trivia; skip in interview |
+
+## When to use which
+
+- **Interview** → Floyd's — teaches the pattern.
+- **Production** → hash set is cleaner, memory bounded by ~250 states.
+- **"Return the cycle values"** → hash-set version already records them.
+- **Generalization** ("happy in base b") → Floyd's still applies; the "4" trick doesn't.
 
 ## Related problems
 
-- [Linked List Cycle](/problems/linked-list-cycle) — same technique on linked list
-- [Find the Duplicate Number](/problems/find-the-duplicate-number) — Floyd on `next = nums[i]`
+- [Linked List Cycle](/problems/linked-list-cycle) — same detection
+- [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — same on lists
+- [Find the Duplicate Number](/problems/find-the-duplicate-number) — cycle on implicit function

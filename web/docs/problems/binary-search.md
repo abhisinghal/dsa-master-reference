@@ -1,29 +1,37 @@
-# Binary Search — Standard (Order-agnostic)
+# Binary Search — Binary Search
 
 *[↗ LeetCode: Binary Search](https://leetcode.com/problems/binary-search/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/binary-search)
 
-Given a sorted array and target, return the index or `-1`. O(log n).
+Given a sorted array `nums` and an integer `target`, return the index of `target`, or `-1` if not present. Must run in **O(log n)** time.
 
-**Example** — `nums=[-1,0,3,5,9,12], target=9` → `4`
+**Example 1** — `nums = [-1,0,3,5,9,12], target = 9` → `4`
+**Example 2** — `nums = [-1,0,3,5,9,12], target = 2` → `-1`
+**Example 3** — `nums = [5], target = 5` → `0`
+
+**Constraints** — `1 ≤ n ≤ 10⁴`; all distinct; sorted ascending.
 
 ---
 
 ## Approach 1 — Linear scan
 
-O(n). Trivial baseline.
+O(n) time. Rejected by spec.
 
-## Approach 2 — Classic binary search (closed interval)
+## Approach 2 — Standard binary search (closed interval)
+
+**Intuition.** Maintain `[lo, hi]` as the still-possible range. Look at `mid`; discard one half.
+
+**Trap** — use `lo + (hi - lo) / 2` to avoid integer overflow when `lo + hi` overflows.
 
 
 
 ```java
-int search(int[] a, int t) {
-    int lo = 0, hi = a.length - 1;
+int search(int[] nums, int target) {
+    int lo = 0, hi = nums.length - 1;
     while (lo <= hi) {
         int mid = lo + (hi - lo) / 2;
-        if (a[mid] == t) return mid;
-        else if (a[mid] < t) lo = mid + 1;
-        else                 hi = mid - 1;
+        if (nums[mid] == target) return mid;
+        if (nums[mid] < target) lo = mid + 1;
+        else hi = mid - 1;
     }
     return -1;
 }
@@ -32,27 +40,64 @@ int search(int[] a, int t) {
 
 
 <CodeTrace
-  title="Binary search — target=9 in [-1,0,3,5,9,12]"
-  :values="[-1,0,3,5,9,12]"
-  :windowKeys="['lo','hi']"
-  :cellWidth="42"
+  title="Standard — nums=[-1,0,3,5,9,12], target=9"
+  :values="['-1','0','3','5','9','12']"
+  :windowKeys="['lo','hi','mid']"
+  :cellWidth="34"
   :steps='[
-    { pointers: { lo: 0, hi: 5, mid: 2 }, vars: { "a[mid]": 3 }, note: "3 lt 9 → lo = mid+1 = 3" },
-    { pointers: { lo: 3, hi: 5, mid: 4 }, vars: { "a[mid]": 9 }, note: "match → return 4", added: [4] }
+    { pointers: { lo: 0, hi: 5, mid: 2 }, vars: { midVal: 3 }, note: "3 < 9 → lo=3" },
+    { pointers: { lo: 3, hi: 5, mid: 4 }, vars: { midVal: 9 }, note: "found — return 4" }
   ]'
 />
 
 **Complexity** — Time **O(log n)**; Space **O(1)**.
 
+---
+
+## Approach 3 — Half-open convention (`[lo, hi)`) — safer for boundary problems
+
+**Insight.** Using `hi = nums.length` (one past the end) and `lo < hi` avoids off-by-one errors when generalizing to "first true" / "last false" problems.
+
+
+
+```java
+int searchHO(int[] nums, int target) {
+    int lo = 0, hi = nums.length;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (nums[mid] < target) lo = mid + 1;
+        else hi = mid;
+    }
+    return (lo < nums.length && nums[lo] == target) ? lo : -1;
+}
+```
+
+
+
+**Why this template.** After the loop, `lo` is the smallest index with `nums[lo] ≥ target` (lower_bound). Widely reusable for [Search Insert Position](https://leetcode.com/problems/search-insert-position/), first-occurrence, etc.
+
+**Complexity** — Time **O(log n)**; Space **O(1)**.
+
+---
+
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Linear scan | O(n) | O(1) |
-| Binary search | **O(log n)** | **O(1)** |
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Linear scan | O(n) | O(1) | rejected |
+| Closed-interval BS | **O(log n)** | O(1) | expected |
+| Half-open BS | O(log n) | O(1) | polish — extensible template |
+
+## When to use which
+
+- **Presence check on sorted array** → either template works.
+- **Search-insert / lower_bound / upper_bound** → half-open template is cleaner.
+- **Rotated sorted array** → see [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted).
+- **Binary search on the answer** → apply the same template with a feasibility predicate; see [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas).
 
 ## Related problems
 
-- [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted)
-- [Find First and Last Position of Element](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) — two binary searches
-- [Guess Number Higher or Lower](https://leetcode.com/problems/guess-number-higher-or-lower/) — interactive
+- [Search Insert Position](https://leetcode.com/problems/search-insert-position/) — lower_bound
+- [First Bad Version](https://leetcode.com/problems/first-bad-version/) — "first true"
+- [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted) — piecewise-sorted
+- [Find Peak Element](/problems/find-peak-element) — BS on non-monotone

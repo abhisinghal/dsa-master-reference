@@ -1,54 +1,97 @@
 # Trie — Design Add and Search Words Data Structure
 
-*[↗ LeetCode: Design Add and Search Words](https://leetcode.com/problems/design-add-and-search-words-data-structure/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
+*[↗ LeetCode: Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
 
-Support `addWord(w)` and `search(w)` where `w` may contain `'.'` matching any single letter.
+Design `WordDictionary` with `addWord(word)` and `search(word)`. `search` may contain `.` which matches any letter.
+
+**Example** —
+
+
+```
+WordDictionary w = new WordDictionary();
+w.addWord("bad"); w.addWord("dad"); w.addWord("mad");
+w.search("pad"); // false
+w.search("bad"); // true
+w.search(".ad"); // true
+w.search("b.."); // true
+```
+
+
+
+**Constraints** — ≤ 25 chars/word; up to 10⁴ ops.
 
 ---
 
-## Approach 1 — Trie + wildcard-aware DFS
-**Insight.** Standard trie for adds. Search recursively; when hitting `'.'`, try every child.
+## Approach 1 — HashSet + linear scan
+
+`search` is O(N · L) worst — too slow with wildcards.
+
+## Approach 2 — Trie with DFS branching on `.` (canonical)
+
+**Insight.** Standard trie for `addWord`. For `search`, DFS: at `.`, try all 26 children; else follow the single edge.
 
 
 
 ```java
 class WordDictionary {
-    static class Node { Map<Character, Node> ch = new HashMap<>(); boolean end; }
+    class Node { Node[] c = new Node[26]; boolean end; }
     Node root = new Node();
     public void addWord(String w) {
         Node cur = root;
-        for (char c : w.toCharArray()) cur = cur.ch.computeIfAbsent(c, k -> new Node());
+        for (char ch : w.toCharArray()) {
+            int i = ch - 'a';
+            if (cur.c[i] == null) cur.c[i] = new Node();
+            cur = cur.c[i];
+        }
         cur.end = true;
     }
     public boolean search(String w) { return dfs(root, w, 0); }
-    boolean dfs(Node node, String w, int i) {
-        if (i == w.length()) return node.end;
-        char c = w.charAt(i);
-        if (c != '.') return node.ch.containsKey(c) && dfs(node.ch.get(c), w, i + 1);
-        for (Node child : node.ch.values()) if (dfs(child, w, i + 1)) return true;
-        return false;
+    boolean dfs(Node cur, String w, int idx) {
+        if (idx == w.length()) return cur.end;
+        char ch = w.charAt(idx);
+        if (ch == '.') {
+            for (Node child : cur.c) if (child != null && dfs(child, w, idx + 1)) return true;
+            return false;
+        }
+        int i = ch - 'a';
+        return cur.c[i] != null && dfs(cur.c[i], w, idx + 1);
     }
 }
 ```
 
 
 
-**Complexity** — addWord: **O(L)**; search: **O(L)** avg, **O(26^L)** worst-case with all dots.
+<CodeTrace
+  title="Trie search '.ad'"
+  :values="['.','a','d']"
+  :windowKeys="['idx']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { idx: 0 }, vars: { branch: "all 26" }, note: "" },
+    { pointers: { idx: 1 }, vars: { children: "b→a, d→a, m→a" }, note: "" },
+    { pointers: { idx: 2 }, vars: { found: true }, note: "e.g. bad exists" }
+  ]'
+/>
+
+**Complexity** — `addWord` **O(L)**; `search` **O(26^k · L)** worst where k = # dots; usually much less.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | add | search | Grade |
 |---|---|---|---|
-| Trie + wildcard-aware DFS | O(L) | O(L) | primary |
+| HashSet + scan | O(L) | O(N · L) | rejected |
+| Trie + DFS | **O(L)** | **O(26^k · L)** | canonical |
 
 ## When to use which
 
-- **Ship this** → Trie + wildcard-aware DFS (O(L), O(L)). The pattern's standard solution.
+- **Fixed alphabet + wildcards** → trie + DFS branching.
+- **Long words** → limit early via length check per branch.
+- **Regex support** → NFA / recursive descent.
 
 ## Related problems
 
-- [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/) — no wildcards
+- [Implement Trie](/problems/implement-trie) — the base
 - [Word Search II](/problems/trie-word-search-ii)
-- [Replace Words](/problems/replace-words)
+- [Stream of Characters](/problems/stream-of-characters)

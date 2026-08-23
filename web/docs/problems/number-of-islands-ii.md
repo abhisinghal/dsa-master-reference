@@ -2,55 +2,88 @@
 
 *[↗ LeetCode: Number of Islands II](https://leetcode.com/problems/number-of-islands-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
 
-Given `m×n` grid initially all water, add land at positions one at a time. After each add, return the current island count.
+You have an `m × n` grid of water. Given `positions` where each `(r, c)` becomes land, return count of islands after each addition.
 
-**Example** — `m=3, n=3, positions=[[0,0],[0,1],[1,2],[2,1]]` → `[1,1,2,3]`
+**Example 1** — `m=3, n=3, positions=[[0,0],[0,1],[1,2],[2,1]]` → `[1,1,2,3]`
+
+**Constraints** — `1 ≤ m·n ≤ 10⁴`.
 
 ---
 
-## Approach — Union-Find streaming (add-only, so it works)
+## Approach 1 — DFS after each addition
 
-**Insight.** Sibling of Number of Provinces, but streaming. Each `add(r, c)` becomes: create component, then try to union with each of the 4 already-existing neighbours. Track a running `count`.
+O(k · m·n). Too slow for streaming.
+
+## Approach 2 — Streaming Union-Find (canonical)
+
+**Insight.** Each new land cell either starts a new island or merges into existing neighbors. Union-Find handles both:
+- Mark cell as land; count++.
+- For each of 4 neighbors that is land AND has a different root: union; count--.
 
 
 
 ```java
 List<Integer> numIslands2(int m, int n, int[][] positions) {
     int[] parent = new int[m * n];
-    boolean[] land = new boolean[m * n];
     Arrays.fill(parent, -1);
-    int count = 0;
+    int[][] D = {{1,0},{-1,0},{0,1},{0,-1}};
     List<Integer> out = new ArrayList<>();
-    int[][] DIR = {{1,0},{-1,0},{0,1},{0,-1}};
+    int count = 0;
     for (int[] p : positions) {
-        int r = p[0], c = p[1], idx = r * n + c;
-        if (land[idx]) { out.add(count); continue; }
-        land[idx] = true; parent[idx] = idx; count++;
-        for (int[] d : DIR) {
-            int nr = r + d[0], nc = c + d[1], ni = nr * n + nc;
-            if (nr < 0 || nr >= m || nc < 0 || nc >= n || !land[ni]) continue;
-            int a = find(parent, idx), b = find(parent, ni);
-            if (a != b) { parent[a] = b; count--; }
+        int r = p[0], c = p[1], id = r * n + c;
+        if (parent[id] != -1) { out.add(count); continue; }
+        parent[id] = id; count++;
+        for (int[] d : D) {
+            int nr = r + d[0], nc = c + d[1], nid = nr * n + nc;
+            if (nr < 0 || nc < 0 || nr >= m || nc >= n || parent[nid] == -1) continue;
+            if (union(parent, id, nid)) count--;
         }
         out.add(count);
     }
     return out;
 }
-int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }
+int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
+boolean union(int[] p, int a, int b) {
+    int ra = find(p, a), rb = find(p, b);
+    if (ra == rb) return false;
+    p[ra] = rb; return true;
+}
 ```
 
 
 
-**Complexity** — Time **O(k α(mn))** per add; Space **O(mn)**.
+<CodeTrace
+  title="UF stream — positions=[[0,0],[0,1],[1,2],[2,1]]"
+  :values="['(0,0)','(0,1)','(1,2)','(2,1)']"
+  :windowKeys="['step']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { step: 0 }, vars: { count: 1 }, note: "" },
+    { pointers: { step: 1 }, vars: { count: 1 }, note: "merged with (0,0)" },
+    { pointers: { step: 2 }, vars: { count: 2 }, note: "new island" },
+    { pointers: { step: 3 }, vars: { count: 3 }, note: "" }
+  ]'
+/>
+
+**Complexity** — Time **O(k · α(m·n))**; Space **O(m·n)**.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Union-Find | **O(k α(mn))** | O(mn) |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| DFS per add | O(k · m·n) | O(m·n) | too slow streaming |
+| Union-Find streaming | **O(k · α(m·n))** | O(m·n) | canonical |
+
+## When to use which
+
+- **Streaming connectivity** → Union-Find.
+- **Static** → DFS/BFS flood fill.
+- **Deletion of land** → offline reverse: process removals as additions.
 
 ## Related problems
 
-- [Number of Islands](/problems/hashing-number-of-islands) — static
+- [Number of Islands](/problems/number-of-islands)
 - [Number of Provinces](/problems/union-find-number-of-provinces)
-- [Making A Large Island](https://leetcode.com/problems/making-a-large-island/) — flip one 0 to 1
+- [Making a Large Island](https://leetcode.com/problems/making-a-large-island/)

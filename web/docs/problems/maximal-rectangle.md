@@ -1,41 +1,49 @@
 # Prefix Sum — Maximal Rectangle
 
-*[↗ LeetCode: Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/prefix-sum)
+*[↗ LeetCode: Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
-Given a binary matrix, find the largest all-1s axis-aligned rectangle.
+Given a binary matrix, find the largest rectangle containing only `1`s.
 
-**Example** — `matrix=[[1,0,1,0,0],[1,0,1,1,1],[1,1,1,1,1],[1,0,0,1,0]]` → `6`
+**Example 1** — `mat=[["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]` → `6`
+**Example 2** — `mat=[["0"]]` → `0`
+**Example 3** — `mat=[["1"]]` → `1`
+
+**Constraints** — `1 ≤ m, n ≤ 200`; entries `'0'`/`'1'`.
 
 ---
 
-## Approach 1 — Per-row histogram + Largest Rectangle in Histogram
-**Insight.** For each row, compute the running "height" of consecutive 1s above each column. That row of heights = a histogram. The answer is `max` over each row's LRH.
+## Approach 1 — Every submatrix
+
+O(m³·n³). TLE.
+
+## Approach 2 — Row heights + Largest Rectangle in Histogram (canonical)
+
+**Insight.** For each row `i`, build heights[j] = number of consecutive 1s ending at `mat[i][j]`. Then apply [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram) to that heights array. Max across all rows.
 
 
 
 ```java
 int maximalRectangle(char[][] mat) {
     if (mat.length == 0) return 0;
-    int m = mat.length, n = mat[0].length;
+    int m = mat.length, n = mat[0].length, best = 0;
     int[] h = new int[n];
-    int best = 0;
-    for (int r = 0; r < m; r++) {
-        for (int c = 0; c < n; c++) h[c] = mat[r][c] == '1' ? h[c] + 1 : 0;
-        best = Math.max(best, largestRectangle(h));
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) h[j] = mat[i][j] == '1' ? h[j] + 1 : 0;
+        best = Math.max(best, largestRect(h));
     }
     return best;
 }
-int largestRectangle(int[] h) {
-    Deque<Integer> stack = new ArrayDeque<>();
-    int best = 0;
-    for (int i = 0; i <= h.length; i++) {
-        int cur = i == h.length ? 0 : h[i];
-        while (!stack.isEmpty() && h[stack.peek()] > cur) {
-            int height = h[stack.pop()];
-            int left = stack.isEmpty() ? -1 : stack.peek();
-            best = Math.max(best, height * (i - left - 1));
+int largestRect(int[] h) {
+    Deque<Integer> st = new ArrayDeque<>();
+    int best = 0, n = h.length;
+    for (int i = 0; i <= n; i++) {
+        int val = i == n ? 0 : h[i];
+        while (!st.isEmpty() && h[st.peek()] > val) {
+            int t = st.pop();
+            int w = st.isEmpty() ? i : i - st.peek() - 1;
+            best = Math.max(best, h[t] * w);
         }
-        stack.push(i);
+        st.push(i);
     }
     return best;
 }
@@ -43,19 +51,16 @@ int largestRectangle(int[] h) {
 
 
 
-
 <CodeTrace
-  title="Per-row histogram + Largest Rectangle in Histogram"
-  :values="['1', '0', '1', '0', '0']"
-  :windowKeys="['i']"
-  :cellWidth="34"
+  title="Row heights sweep"
+  :values="['1','0','1','0','0']"
+  :windowKeys="['row']"
+  :cellWidth="30"
   :steps='[
-    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
-    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through the scan." },
-    { pointers: { i: 4 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+    { pointers: { row: 0 }, vars: { h: "[1,0,1,0,0]", rectMax: 1 }, note: "" },
+    { pointers: { row: 2 }, vars: { h: "[3,1,3,2,2]", rectMax: 6 }, note: "widest at row 2" }
   ]'
 />
-
 
 **Complexity** — Time **O(m·n)**; Space **O(n)**.
 
@@ -63,16 +68,19 @@ int largestRectangle(int[] h) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Per-row histogram + Largest Rectangle in H… | O(m·n) | O(n) | primary |
+| Enumerate submatrices | O(m³·n³) | O(1) | baseline |
+| Rows + histogram stack | **O(m·n)** | O(n) | canonical |
 
 ## When to use which
 
-- **Ship this** → Per-row histogram + Largest Rectangle in Histogram (O(m·n), O(n)). The pattern's standard solution.
+- **Binary matrix, largest rectangle of 1s** → row-height + histogram stack.
+- **Only squares** → simpler DP (see [Maximal Square](/problems/maximal-square)).
+- **"Count submatrices with X"** → row-collapse + 1D template.
 
 ## Related problems
 
-- [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram)
-- [Maximal Square](https://leetcode.com/problems/maximal-square/) — sibling DP
-- [Count Submatrices With Target Sum](/problems/count-submatrices-with-target-sum)
+- [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram) — the primitive
+- [Maximal Square](/problems/maximal-square)
+- [Count Submatrices with Target Sum](/problems/count-submatrices-with-target-sum)

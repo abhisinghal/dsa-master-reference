@@ -4,10 +4,15 @@
 
 Fill the 9×9 board so every row/col/box contains 1..9.
 
+**Example 1** — Standard Sudoku puzzle.
+
+**Constraints** — 9×9 board, `.` for empty.
+
 ---
 
-## Approach 1 — Backtracking + constraint tracking
-**Insight.** Maintain 9-bit masks for each row, col, and box. Try each digit at each empty cell. Backtrack on dead ends.
+## Approach — Backtracking + constraint bitmasks (canonical)
+
+**Insight.** Maintain 9-bit masks for each row, col, box. Try each digit at each empty cell.
 
 
 
@@ -41,25 +46,27 @@ void unset(int r, int c, int d) { int bit = 1 << d; rows[r] ^= bit; cols[c] ^= b
 
 
 
-## Interview extension — MRV heuristic
+## MRV heuristic
+Pick cell with **fewest legal digits** each step — typical hard puzzles solve in microseconds.
 
-Pick the empty cell with the **fewest legal digits** each step (Minimum Remaining Values). Typical hard puzzles solve in microseconds.
-
-**Complexity** — Time worst case exponential; MRV makes real Sudokus near instant.
+**Complexity** — Worst-case exponential; MRV makes real Sudokus near-instant.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Backtracking + constraint tracking | — | — | primary |
+| Backtracking + bitmasks | **exponential worst** | O(1) | canonical |
+| + MRV | practically fast | O(1) | polish |
 
 ## When to use which
 
-- **Ship this** → Backtracking + constraint tracking (—, —). The pattern's standard solution.
+- **Standard** → bitmask backtracking.
+- **Hard puzzles fast** → add MRV.
+- **Uniqueness check** → count solutions, stop at 2.
 
 ## Related problems
 
-- [Valid Sudoku](/problems/valid-sudoku) — validation only
-- [N-Queens](/problems/backtracking-n-queens) — same constraint-tracking style
+- [Valid Sudoku](/problems/valid-sudoku)
+- [N-Queens](/problems/backtracking-n-queens)

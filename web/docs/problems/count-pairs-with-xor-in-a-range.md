@@ -2,53 +2,56 @@
 
 *[↗ LeetCode: Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
-Count pairs `(i, j)` with `low ≤ nums[i] XOR nums[j] ≤ high`.
+Count pairs `(i, j)` with `i < j` and `low ≤ nums[i] XOR nums[j] ≤ high`.
+
+**Example 1** — `nums=[1,4,2,7], low=2, high=6` → `6`
+**Example 2** — `nums=[9,8,4,2,1], low=5, high=14` → `8`
+
+**Constraints** — `1 ≤ n ≤ 2·10⁴`; `0 ≤ nums[i] ≤ 2·10⁴`.
 
 ---
 
-## Approach 1 — Binary trie counting
-**Insight.** `count(≤ high) - count(≤ low - 1)`. For each nums[i], walk the trie counting how many previously-inserted nums produce `XOR ≤ threshold` using bit-by-bit analysis. Trie stores subtree counts.
+## Approach 1 — All pairs
+
+O(n²). Baseline; borderline TLE.
+
+## Approach 2 — Binary trie with subtree counts (canonical)
+
+**Insight.** `count(≤ high) - count(≤ low - 1)`. For each `nums[i]`, count how many previously-inserted values yield XOR ≤ threshold via a per-bit analysis.
 
 
 
 ```java
-class Node { Node[] ch = new Node[2]; int cnt; }
+class Node { Node[] c = new Node[2]; int cnt; }
 int countPairs(int[] nums, int low, int high) {
     return countLE(nums, high) - countLE(nums, low - 1);
 }
-int countLE(int[] nums, int threshold) {
+int countLE(int[] nums, int t) {
     Node root = new Node();
     int total = 0;
-    for (int x : nums) {
-        total += queryLE(root, x, threshold);
-        insert(root, x);
-    }
+    for (int x : nums) { total += queryLE(root, x, t); insert(root, x); }
     return total;
 }
 void insert(Node root, int x) {
     Node cur = root;
     for (int i = 15; i >= 0; i--) {
         int b = (x >> i) & 1;
-        if (cur.ch[b] == null) cur.ch[b] = new Node();
-        cur = cur.ch[b];
-        cur.cnt++;
+        if (cur.c[b] == null) cur.c[b] = new Node();
+        cur = cur.c[b]; cur.cnt++;
     }
 }
 int queryLE(Node root, int x, int t) {
-    Node cur = root;
-    int result = 0;
+    Node cur = root; int r = 0;
     for (int i = 15; i >= 0; i--) {
-        if (cur == null) return result;
+        if (cur == null) return r;
         int xb = (x >> i) & 1, tb = (t >> i) & 1;
         if (tb == 1) {
-            if (cur.ch[xb] != null) result += cur.ch[xb].cnt;
-            cur = cur.ch[1 - xb];
-        } else {
-            cur = cur.ch[xb];
-        }
+            if (cur.c[xb] != null) r += cur.c[xb].cnt;
+            cur = cur.c[1 - xb];
+        } else cur = cur.c[xb];
     }
-    if (cur != null) result += cur.cnt;
-    return result;
+    if (cur != null) r += cur.cnt;
+    return r;
 }
 ```
 
@@ -60,15 +63,19 @@ int queryLE(Node root, int x, int t) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Binary trie counting | O(n · 16) | O(n · 16) | primary |
+| All pairs | O(n²) | O(1) | baseline |
+| Binary trie counting | **O(n · 16)** | O(n · 16) | canonical |
 
 ## When to use which
 
-- **Ship this** → Binary trie counting (O(n · 16), O(n · 16)). The pattern's standard solution.
+- **XOR count in a range** → binary trie with subtree counts.
+- **Fixed range not variable** → single sweep suffices.
+- **Streaming** → same trie, insert online.
 
 ## Related problems
 
 - [Maximum XOR of Two Numbers](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
 - [Maximum XOR With an Element From Array](/problems/maximum-xor-with-an-element-from-array)
+- [Maximum Genetic Difference](/problems/maximum-genetic-difference-query)

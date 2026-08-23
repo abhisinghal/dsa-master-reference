@@ -6,6 +6,9 @@ Return shortest string containing every given word as substring.
 
 **Constraints** — `1 ≤ n ≤ 12`.
 
+**Example 1** — `words=["alex","loves","leetcode"]` → `"alexlovesleetcode"`
+**Example 2** — `words=["catg","ctaagt","gcta","ttca","atgcatc"]` → `"gctaagttcatgcatc"`
+
 ---
 
 ## Approach — Bitmask TSP-style DP + overlap precompute (canonical)

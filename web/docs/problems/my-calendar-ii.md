@@ -2,15 +2,32 @@
 
 *[↗ LeetCode: My Calendar II](https://leetcode.com/problems/my-calendar-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sweep-line)
 
-Implement `book(start, end)` that returns `true` if adding the event `[start, end)` never causes **triple** booking (i.e. no point in time is covered by 3+ events).
+Design `MyCalendarTwo`. `book(start, end)` returns `true` iff the new event can be added without causing a **triple** overlap.
 
-**Example** — Series: `book(10,20)=true`, `book(50,60)=true`, `book(10,40)=true`, `book(5,15)=false`, `book(5,10)=true`.
+**Example 1** —
+
+
+```
+MyCalendarTwo c = new MyCalendarTwo();
+c.book(10, 20); // true
+c.book(50, 60); // true
+c.book(10, 40); // true (double, allowed)
+c.book(5, 15);  // false (would make triple at [10,15))
+c.book(5, 10);  // true
+c.book(25, 55); // true
+```
+
+
+
+**Constraints** — `≤ 1000` `book` calls; `0 ≤ start < end ≤ 10⁹`.
 
 ---
 
-## Approach 1 — Track singles + doubles explicitly
+## Approach 1 — Track singles + doubles
 
-**Intuition.** Maintain two lists: intervals covered once, intervals covered twice (double-booked). A new interval fails only if it overlaps any double-booked one. Otherwise, add its intersection with singles → doubles; then add the whole thing to singles.
+**Insight.** Maintain a list of single-booked intervals and double-booked intervals. On `book`:
+- If overlap with **doubles** → triple → return false.
+- Else compute overlaps with singles and add them as new doubles; add new event to singles.
 
 
 
@@ -20,9 +37,9 @@ class MyCalendarTwo {
     List<int[]> doubles = new ArrayList<>();
     public boolean book(int s, int e) {
         for (int[] d : doubles) if (s < d[1] && d[0] < e) return false;
-        for (int[] one : singles)
-            if (s < one[1] && one[0] < e)
-                doubles.add(new int[]{Math.max(s, one[0]), Math.min(e, one[1])});
+        for (int[] sg : singles)
+            if (s < sg[1] && sg[0] < e)
+                doubles.add(new int[]{Math.max(s, sg[0]), Math.min(e, sg[1])});
         singles.add(new int[]{s, e});
         return true;
     }
@@ -31,26 +48,30 @@ class MyCalendarTwo {
 
 
 
-**Complexity** — Time **O(n)** per booking; Space **O(n)** for both lists.
+**Complexity** — Time **O(n)** per `book`; Space **O(n)**.
 
-## Approach 2 — Sweep line via TreeMap of delta counts
+---
 
-**Insight.** Represent every booking as `+1` at start, `-1` at end. Any prefix sum &gt; 2 means a triple booking exists. Try adding the event; if the prefix count breaches 3, roll back.
+## Approach 2 — Difference-map sweep
+
+**Insight.** Maintain a `TreeMap<Integer, Integer>` of deltas. `book(s, e)` tentatively `+1` at s, `-1` at e; sweep to find running count; if any &gt; 2, rollback.
 
 
 
 ```java
-class MyCalendarTwoSweep {
-    TreeMap<Integer, Integer> delta = new TreeMap<>();
+class MyCalendarTwo2 {
+    TreeMap<Integer, Integer> map = new TreeMap<>();
     public boolean book(int s, int e) {
-        delta.merge(s, 1, Integer::sum);
-        delta.merge(e, -1, Integer::sum);
+        map.merge(s, 1, Integer::sum);
+        map.merge(e, -1, Integer::sum);
         int active = 0;
-        for (int c : delta.values()) {
-            active += c;
+        for (int d : map.values()) {
+            active += d;
             if (active >= 3) {
-                delta.merge(s, -1, Integer::sum);
-                delta.merge(e, 1, Integer::sum);
+                map.merge(s, -1, Integer::sum);
+                map.merge(e, 1, Integer::sum);
+                if (map.get(s) == 0) map.remove(s);
+                if (map.get(e) == 0) map.remove(e);
                 return false;
             }
         }
@@ -61,31 +82,25 @@ class MyCalendarTwoSweep {
 
 
 
-<CodeTrace
-  title="Sweep — book series"
-  :values="['book(10,20)','book(50,60)','book(10,40)','book(5,15)','book(5,10)']"
-  :windowKeys="['op']"
-  :cellWidth="72"
-  :steps='[
-    { pointers: { op: 0 }, vars: { delta: "{10:+1,20:-1}", max: 1 }, note: "book 10-20 → OK", added: [0] },
-    { pointers: { op: 1 }, vars: { delta: "+50:+1, 60:-1", max: 1 }, note: "book 50-60 → OK", added: [1] },
-    { pointers: { op: 2 }, vars: { delta: "+10:+1, 40:-1", max: 2 }, note: "book 10-40 → double at [10,20), OK", added: [2] },
-    { pointers: { op: 3 }, vars: { max: 3, rollback: true }, note: "book 5-15 → triple at [10,15) → REJECT", removed: [3] },
-    { pointers: { op: 4 }, vars: { max: 2 }, note: "book 5-10 → OK (touches, doesn`t triple)", added: [4] }
-  ]'
-/>
+**Complexity** — Time **O(n log n)** per `book`; Space **O(n)**.
 
-**Complexity** — Time **O(n)** per booking (sweep the map); Space **O(n)**.
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Singles + doubles lists | O(n) per op | O(n) |
-| TreeMap sweep of deltas | **O(n)** per op | **O(n)** |
+| Approach | Time / book | Space | Grade |
+|---|---|---|---|
+| Two-list tracking | O(n) | O(n) | canonical |
+| Delta-map sweep | O(n log n) | O(n) | generalizes to k-book |
+
+## When to use which
+
+- **My Calendar II specifically** → two-list.
+- **"My Calendar k"** (no k-th overlap) → delta map + threshold.
+- **Streaming with heavy queries** → segment tree with lazy prop.
 
 ## Related problems
 
-- [My Calendar I](https://leetcode.com/problems/my-calendar-i/) — reject even *double* booking
-- [My Calendar III](https://leetcode.com/problems/my-calendar-iii/) — return max concurrent bookings so far
-- [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii) — offline max concurrency
+- [My Calendar I](https://leetcode.com/problems/my-calendar-i/) — no double
+- [My Calendar III](https://leetcode.com/problems/my-calendar-iii/) — return current max concurrency
+- [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)

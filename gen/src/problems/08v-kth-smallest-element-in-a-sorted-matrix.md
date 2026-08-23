@@ -6,6 +6,8 @@ Given `n×n` matrix sorted row and column, return the k-th smallest element.
 
 **Example** — `matrix=[[1,5,9],[10,11,13],[12,13,15]], k=8` → `13`
 
+**Constraints** — `1 ≤ n ≤ 300`; `1 ≤ k ≤ n²`.
+
 ---
 
 ## Approach 1 — Flatten + sort
@@ -61,6 +63,12 @@ int kthSmallest(int[][] m, int k) {
 | Flatten + sort | O(n² log n) | O(n²) |
 | Heap of rows | O((n+k) log n) | O(n) |
 | BS on value | **O(n log(max-min))** | O(1) |
+
+## When to use which
+
+- **Sorted matrix kth** → BS on value or min-heap merge.
+- **BS on value** is cleaner for max n; heap wins for small n.
+- **Kth in unsorted** → Quickselect or heap.
 
 ## Related problems
 

@@ -6,6 +6,8 @@ Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the s
 
 **Example** — `sweetness=[1,2,3,4,5,6,7,8,9], k=5` → `6`
 
+**Constraints** — `1 ≤ k+1 ≤ n ≤ 10⁴`; `1 ≤ sweetness[i] ≤ 10⁵`.
+
 ---
 
 ## Approach — Binary search on the minimum
@@ -58,6 +60,12 @@ int maximizeSweetness(int[] sweetness, int k) {
 | BS on min | **O(n log sum)** | O(1) |
 
 **Watch the mid formula.** For *maximize-feasible* BS, use `lo + (hi - lo + 1) / 2` (upper mid) to avoid infinite loops.
+
+## When to use which
+
+- **"Max feasible X with monotone predicate"** → BS on answer with `≥ target` check.
+- **Return the splits** → re-simulate after convergence.
+- **Bounded values** → tight `[lo, hi]` speeds up.
 
 ## Related problems
 

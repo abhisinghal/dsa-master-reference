@@ -4,9 +4,15 @@
 
 Rearrange so all even values come before all odd. Any valid partition accepted.
 
+**Example 1** — `nums=[3,1,2,4]` → `[2,4,3,1]` or `[4,2,3,1]` etc.
+**Example 2** — `nums=[0]` → `[0]`
+
+**Constraints** — `1 ≤ n ≤ 5000`.
+
 ---
 
-## Approach 1 — Opposing pointers, swap on mismatch
+## Approach — Opposing pointers + swap (canonical)
+
 **Insight.** `l` from left seeks first odd; `r` from right seeks first even; swap; repeat.
 
 
@@ -27,21 +33,23 @@ int[] sortArrayByParity(int[] nums) {
 
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
-**Trap.** For stable ordering (preserve original relative order within each group) → use a slow/fast writer, not opposing pointers.
+**Trap** — for stable ordering (preserving relative order), use slow/fast writer instead.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Opposing pointers, swap on mismatch | O(n) | O(1) | primary |
+| Opposing 2p | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → Opposing pointers, swap on mismatch (O(n), O(1)). The pattern's standard solution.
+- **"Any valid partition"** → opposing 2p.
+- **"Stable ordering"** → slow/fast writer + zero-fill (order-preserving).
+- **Three-way partition** → Dutch national flag.
 
 ## Related problems
 
-- [Sort Colors (Dutch flag)](https://leetcode.com/problems/sort-colors/) — 3-way partition
+- [Sort Colors](https://leetcode.com/problems/sort-colors/) — 3-way
 - [Move Zeroes](/problems/move-zeroes)

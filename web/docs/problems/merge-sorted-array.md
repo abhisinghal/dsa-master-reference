@@ -2,16 +2,21 @@
 
 *[↗ LeetCode: Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-Merge `nums2` into `nums1` in-place; `nums1` has `m + n` slots (last `n` empty).
+Merge `nums2` into `nums1` in-place; `nums1` has size `m+n` with last `n` slots empty.
+
+**Example 1** — `nums1=[1,2,3,0,0,0], m=3, nums2=[2,5,6], n=3` → `[1,2,2,3,5,6]`
+**Example 2** — `nums1=[1], m=1, nums2=[], n=0` → `[1]`
+
+**Constraints** — `nums1.length == m + n`.
 
 ---
 
-## Approach 1 — Naïve merge into buffer
-Copy nums1 first m into a temp, then two-pointer merge into nums1. O(m+n) time, O(m) space.
+## Approach 1 — Copy then sort
 
----
+O((m+n) log(m+n)). Baseline.
 
-## Approach 2 — Backward two-pointer
+## Approach 2 — Backward two-pointer (canonical)
+
 **Insight.** Fill from the back so we never overwrite an unread element.
 
 
@@ -28,7 +33,17 @@ void merge(int[] nums1, int m, int[] nums2, int n) {
 
 
 
-**Why safe.** Any element we overwrite at index `k` has already been read (its original position `≤ k` was consumed earlier).
+<CodeTrace
+  title="Fill-from-back — nums1=[1,2,3,0,0,0], nums2=[2,5,6]"
+  :values="['1','2','3','·','·','·']"
+  :windowKeys="['i','j','k']"
+  :cellWidth="30"
+  :steps='[
+    { pointers: { i: 2, j: 2, k: 5 }, vars: { pick: 6 }, note: "" },
+    { pointers: { i: 2, j: 1, k: 4 }, vars: { pick: 5 }, note: "" },
+    { pointers: { i: 1, j: 0, k: 2 }, vars: { done: true }, note: "" }
+  ]'
+/>
 
 **Complexity** — Time **O(m+n)**; Space **O(1)**.
 
@@ -36,17 +51,19 @@ void merge(int[] nums1, int m, int[] nums2, int n) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Naïve merge into buffer | O(m+n) | O(m) | baseline |
-| Backward two-pointer | O(m+n) | O(1) | optimum |
+| Copy + sort | O((m+n) log) | O(m+n) | baseline |
+| Fill from back | **O(m+n)** | O(1) | canonical |
 
 ## When to use which
 
-- **State it for signal** → Naïve merge into buffer (O(m+n)). Correct baseline; call it out then move on.
-- **Ship this** → Backward two-pointer (O(m+n), O(1)). Expected optimum in interview.
+- **In-place merge with buffer at back** → fill from back.
+- **No buffer** → allocate new array.
+- **Linked lists** → same idea; see [Merge Two Sorted Lists](/problems/merge-two-sorted-lists).
 
 ## Related problems
 
-- [Merge Two Sorted Lists](/problems/merge-two-sorted-lists) — linked-list variant
-- [Squares of a Sorted Array](/problems/squares-of-a-sorted-array) — fill-from-back
+- [Merge Two Sorted Lists](/problems/merge-two-sorted-lists)
+- [Squares of a Sorted Array](/problems/squares-of-a-sorted-array)
+- [Sort Colors](https://leetcode.com/problems/sort-colors/)

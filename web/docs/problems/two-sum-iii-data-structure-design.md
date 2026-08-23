@@ -2,12 +2,27 @@
 
 *[↗ LeetCode: Two Sum III - Data Structure Design](https://leetcode.com/problems/two-sum-iii-data-structure-design/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
-Design `TwoSum` supporting `add(x)` and `find(target)` (any pair summing to target).
+Design `TwoSum` supporting `add(x)` and `find(t)`.
+
+**Example** —
+
+
+```
+TwoSum ts = new TwoSum();
+ts.add(1); ts.add(3); ts.add(5);
+ts.find(4);  // true
+ts.find(7);  // false
+```
+
+
+
+**Constraints** — up to 10⁴ ops.
 
 ---
 
-## Approach 1 — Fast add, slow find
-Store a count map. `find(t)` iterates keys, checks `t - k`. Handles duplicates via `count[k] > 1` for `k == t/2`.
+## Approach 1 — Fast add, slow find (canonical if adds dominate)
+
+Store counts; on `find`, iterate keys checking `t - k`. Handle duplicates.
 
 
 
@@ -28,29 +43,27 @@ class TwoSum {
 
 
 
-**add O(1)**, **find O(n)**.
-
----
+**add O(1); find O(n).**
 
 ## Approach 2 — Fast find, slow add
-Precompute all pair sums into a set on `add`. `find` = O(1). `add` becomes O(n). Use when find ≫ add.
 
-**Interview reasoning.** Ask about frequency of ops. If adds dominate, choose Approach 1; if finds dominate, choose Approach 2.
+Precompute all pairwise sums into a set on `add`. `find` = O(1). `add` = O(n).
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | add | find | Grade |
 |---|---|---|---|
-| Fast add, slow find | O(1) | O(n) | baseline |
-| Fast find, slow add | O(1) | O(n) | optimum |
+| Fast add | O(1) | O(n) | adds dominate |
+| Fast find | O(n) | O(1) | finds dominate |
 
 ## When to use which
 
-- **State it for signal** → Fast add, slow find (O(1)). Correct baseline; call it out then move on.
-- **Ship this** → Fast find, slow add (O(1), O(n)). Expected optimum in interview.
+- **Ask the interviewer about ratio** — pick the matching design.
+- **Balanced** → hybrid or ordered TreeSet.
+- **"Stream infinite"** → fast add.
 
 ## Related problems
 
-- [Two Sum](/problems/hashing-two-sum) — offline sibling
+- [Two Sum](/problems/hashing-two-sum)

@@ -2,12 +2,18 @@
 
 *[↗ LeetCode: Two Sum Less Than K](https://leetcode.com/problems/two-sum-less-than-k/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
-Return the max sum `< k` from any pair, or `-1`.
+Return max sum `< k` from any pair, or `-1`.
+
+**Example 1** — `nums=[34,23,1,24,75,33,54,8], k=60` → `58`
+**Example 2** — `nums=[10,20,30], k=15` → `-1`
+
+**Constraints** — `1 ≤ n ≤ 100`.
 
 ---
 
-## Approach 1 — Sort + two pointer
-**Insight.** Sort. `l` and `r` from ends: if `sum < k`, record and advance `l`; else retreat `r`.
+## Approach — Sort + two pointer (canonical)
+
+**Insight.** Sort. `l`, `r` from ends: if `sum < k`, record and advance `l`; else retreat `r`.
 
 
 
@@ -28,19 +34,22 @@ int twoSumLessThanK(int[] nums, int k) {
 
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
-**Bucket alternative.** Since values are bounded (1..1000), we can bucket-count then two-pointer over buckets → O(n + max) time.
+**Bucket variant** — since values ≤ 1000, bucket-count then two-pointer over buckets → O(n + 1000) time.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + two pointer | O(n log n) | O(1) | primary |
+| Sort + 2p | **O(n log n)** | O(1) | canonical |
+| Bucket count | O(n + V) | O(V) | best if V small |
 
 ## When to use which
 
-- **Ship this** → Sort + two pointer (O(n log n), O(1)). The pattern's standard solution.
+- **Standard** → sort + 2p.
+- **Bounded values** → bucket count for O(n).
+- **"≤ k" or "≥ k"** → symmetric variants.
 
 ## Related problems
 

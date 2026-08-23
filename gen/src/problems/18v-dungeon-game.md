@@ -6,6 +6,9 @@ Knight from top-left to bottom-right; each cell gives/takes HP; HP ≥ 1 always.
 
 **Constraints** — `1 ≤ m, n ≤ 200`.
 
+**Example 1** — `dungeon=[[-2,-3,3],[-5,-10,1],[10,30,-5]]` → `7`
+**Example 2** — `dungeon=[[0]]` → `1`
+
 ---
 
 ## Approach — Reverse DP from bottom-right (canonical)

@@ -7,6 +7,8 @@ Given meeting intervals `[[start, end)]`, return the minimum number of rooms req
 **Example 1** — `[[0,30],[5,10],[15,20]]` → `2`
 **Example 2** — `[[7,10],[2,4]]` → `1`
 
+**Constraints** — `1 ≤ n ≤ 10⁴`; `0 ≤ start < end ≤ 10⁶`.
+
 ---
 
 ## Approach 1 — Brute force (per-minute counter)

@@ -2,55 +2,66 @@
 
 *[↗ LeetCode: Range Addition](https://leetcode.com/problems/range-addition/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-Given array size `n` and `updates=[start, end, val]`, apply all as range add and return final array.
+Given length `n` and updates `[start, end, val]`, return the array after applying all updates.
 
-**Example** — `n=5, [[1,3,2],[2,4,3],[0,2,-2]]` → `[-2,0,3,5,3]`
+**Example 1** — `n=5, updates=[[1,3,2],[2,4,3],[0,2,-2]]` → `[-2,0,3,5,3]`
+**Example 2** — `n=1, updates=[[0,0,5]]` → `[5]`
+
+**Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ updates.length ≤ 10⁴`; inclusive ranges.
 
 ---
 
-## Approach 1 — Difference array + one prefix pass
+## Approach 1 — Direct fill
+
+O(n · m). Baseline.
+
+## Approach 2 — Difference array (canonical)
+
+**Insight.** Each range update `+val`, `-val` at endpoints; single prefix scan recovers totals.
+
 
 
 ```java
 int[] getModifiedArray(int n, int[][] updates) {
     int[] diff = new int[n + 1];
-    for (int[] u : updates) { diff[u[0]] += u[2]; diff[u[1] + 1] -= u[2]; }
-    int[] out = new int[n];
-    int run = 0;
-    for (int i = 0; i < n; i++) { run += diff[i]; out[i] = run; }
-    return out;
+    for (int[] u : updates) {
+        diff[u[0]] += u[2];
+        diff[u[1] + 1] -= u[2];
+    }
+    for (int i = 1; i < n; i++) diff[i] += diff[i - 1];
+    return Arrays.copyOf(diff, n);
 }
 ```
 
 
 
-
 <CodeTrace
-  title="Difference array + one prefix pass"
-  :values="['1', '3', '2']"
+  title="Diff — n=5, updates=[[1,3,2],[2,4,3],[0,2,-2]]"
+  :values="['-2','2+-2','3','5','3']"
   :windowKeys="['i']"
   :cellWidth="34"
   :steps='[
-    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
-    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
-    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+    { pointers: { i: 0 }, vars: { deltas: "[-2, 2, 3, -2, 0, -3]" }, note: "sum of endpoint deltas" },
+    { pointers: { i: 4 }, vars: { pref: "[-2,0,3,5,3]" }, note: "prefix sum" }
   ]'
 />
 
-
-**Complexity** — Time **O(n + updates)**; Space **O(n)**.
+**Complexity** — Time **O(n + m)**; Space **O(n)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Difference array + one prefix pass | O(n + updates) | O(n) | primary |
+| Direct fill | O(n·m) | O(n) | baseline |
+| Diff array | **O(n+m)** | O(n) | optimum |
 
 ## When to use which
 
-- **Ship this** → Difference array + one prefix pass (O(n + updates), O(n)). The pattern's standard solution.
+- **Static "many adds, one read"** → diff array.
+- **Interleaved add + read** → segment tree with lazy propagation.
+- **Multi-dim range add** → 2D diff array (see Matrix Block Sum).
 
 ## Related problems
 

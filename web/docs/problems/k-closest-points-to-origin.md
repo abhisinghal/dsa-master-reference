@@ -2,104 +2,128 @@
 
 *[↗ LeetCode: K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/top-k-heap)
 
-Given `points[][2]` and `k`, return the `k` closest to origin (by Euclidean distance).
+Given `points[][2]` and integer `k`, return the `k` points closest to origin `(0, 0)` (Euclidean).
 
-**Example** — `points=[[1,3],[-2,2]], k=1` → `[[-2,2]]`
+**Example 1** — `points = [[1,3],[-2,2]], k = 1` → `[[-2,2]]`
+**Example 2** — `points = [[3,3],[5,-1],[-2,4]], k = 2` → `[[3,3],[-2,4]]`
+**Example 3** — `points = [[0,0],[1,1]], k = 1` → `[[0,0]]`
+
+**Constraints** — `1 ≤ k ≤ n ≤ 10⁴`; `-10⁴ ≤ x, y ≤ 10⁴`. Any order accepted.
 
 ---
 
 ## Approach 1 — Sort by distance
 
+**Intuition.** Sort all points by squared distance; take first k.
+
+**Trap** — use squared distance `x² + y²`, not `sqrt` (avoid FP and unnecessary cost).
+
 
 
 ```java
-int[][] kClosestSort(int[][] p, int k) {
-    Arrays.sort(p, (a, b) -> (a[0]*a[0]+a[1]*a[1]) - (b[0]*b[0]+b[1]*b[1]));
-    return Arrays.copyOfRange(p, 0, k);
+int[][] kClosestSort(int[][] points, int k) {
+    Arrays.sort(points, (a, b) -> (a[0]*a[0] + a[1]*a[1]) - (b[0]*b[0] + b[1]*b[1]));
+    return Arrays.copyOfRange(points, 0, k);
 }
 ```
 
 
 
-**Complexity** — Time **O(n log n)**; Space **O(1)**.
+**Complexity** — Time **O(n log n)**; Space **O(1)** in-place sort.
+
+---
 
 ## Approach 2 — Max-heap of size k
 
-**Insight.** Only the top-k closest matter. Keep a *max*-heap of size k (evict the farthest each insert). Root is the k-th closest at the end; heap contents are the answer.
+**Insight from sort.** We don't need to sort everything — maintain a **max-heap** of size `k` on distance. Push each point; if size exceeds k, pop the farthest. The heap always holds the k closest seen so far.
 
 
 
 ```java
-int[][] kClosestHeap(int[][] p, int k) {
-    PriorityQueue<int[]> heap = new PriorityQueue<>(
-        (a, b) -> (b[0]*b[0]+b[1]*b[1]) - (a[0]*a[0]+a[1]*a[1])
-    );
-    for (int[] pt : p) {
-        heap.offer(pt);
-        if (heap.size() > k) heap.poll();
+int[][] kClosest(int[][] points, int k) {
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) ->
+        (b[0]*b[0] + b[1]*b[1]) - (a[0]*a[0] + a[1]*a[1]));
+    for (int[] p : points) {
+        pq.offer(p);
+        if (pq.size() > k) pq.poll();
     }
-    return heap.toArray(new int[0][]);
+    return pq.toArray(new int[0][]);
 }
-```
-
-
-
-**Complexity** — Time **O(n log k)**; Space **O(k)**. Good when k &lt;&lt; n.
-
-## Approach 3 — Quickselect
-
-**Insight.** Partition around a random pivot's distance; recurse into only the half containing the k-th closest boundary. O(n) expected.
-
-
-
-```java
-int[][] kClosest(int[][] p, int k) {
-    quickSelect(p, 0, p.length - 1, k);
-    return Arrays.copyOfRange(p, 0, k);
-}
-int dist(int[] pt) { return pt[0]*pt[0] + pt[1]*pt[1]; }
-void quickSelect(int[][] p, int lo, int hi, int k) {
-    while (lo < hi) {
-        int pi = partition(p, lo, hi);
-        if (pi + 1 == k) return;
-        else if (pi + 1 < k) lo = pi + 1;
-        else                 hi = pi - 1;
-    }
-}
-int partition(int[][] p, int lo, int hi) {
-    int pivot = dist(p[hi]), store = lo;
-    for (int i = lo; i < hi; i++) if (dist(p[i]) < pivot) swap(p, store++, i);
-    swap(p, store, hi); return store;
-}
-void swap(int[][] p, int i, int j) { int[] t = p[i]; p[i] = p[j]; p[j] = t; }
 ```
 
 
 
 <CodeTrace
-  title="Quickselect by distance — points, k=2"
-  :values="['(1,3)','(-2,2)','(2,-2)','(5,8)']"
-  :windowKeys="['lo','hi']"
-  :cellWidth="52"
+  title="Max-heap k=2 — points=[[3,3],[5,-1],[-2,4]]"
+  :values="['[3,3]','[5,-1]','[-2,4]']"
+  :windowKeys="['i']"
+  :cellWidth="46"
   :steps='[
-    { pointers: { lo: 0, hi: 3, pivot: 3 }, vars: { distances: "[10,8,8,89]", pivotDist: 89 }, note: "pivot 89 → partition → store=3" },
-    { pointers: { lo: 0, hi: 2, pivot: 2 }, vars: { pivotDist: 8 }, note: "search left; pivot 8 → store=2" },
-    { pointers: { lo: 0, hi: 1 }, vars: { answer: "(-2,2), (2,-2)" }, note: "converged at k=2", added: [1,2] }
+    { pointers: { i: 0 }, vars: { heap: "[(3,3):d=18]" }, note: "insert (3,3)" },
+    { pointers: { i: 1 }, vars: { heap: "[(5,-1):d=26,(3,3):d=18]" }, note: "insert (5,-1); size=2 ≤ k" },
+    { pointers: { i: 2 }, vars: { heap: "[(5,-1):26,(3,3):18,(-2,4):20]" }, note: "size 3 > k → pop max=(5,-1)" },
+    { pointers: { i: 3 }, vars: { heap: "[(-2,4):20,(3,3):18]" }, note: "final k closest" }
   ]'
 />
 
-**Complexity** — Time **O(n)** expected; Space **O(1)**. Optimal.
+**Complexity** — Time **O(n log k)**; Space **O(k)**.
+
+---
+
+## Approach 3 — Quickselect (avg O(n))
+
+**Insight from heap.** Since we don't need the k closest *in order*, we can partition around the k-th smallest — like Quickselect. Pick pivot; partition; recurse on the side containing the boundary.
+
+
+
+```java
+int[][] kClosestQS(int[][] points, int k) {
+    quickselect(points, 0, points.length - 1, k);
+    return Arrays.copyOfRange(points, 0, k);
+}
+void quickselect(int[][] a, int lo, int hi, int k) {
+    if (lo >= hi) return;
+    int p = partition(a, lo, hi);
+    if (p == k) return;
+    if (p < k) quickselect(a, p + 1, hi, k);
+    else quickselect(a, lo, p - 1, k);
+}
+int partition(int[][] a, int lo, int hi) {
+    int pivotDist = dist(a[hi]);
+    int i = lo;
+    for (int j = lo; j < hi; j++)
+        if (dist(a[j]) < pivotDist) swap(a, i++, j);
+    swap(a, i, hi);
+    return i;
+}
+int dist(int[] p) { return p[0]*p[0] + p[1]*p[1]; }
+void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
+```
+
+
+
+**Complexity** — Time **O(n)** average; **O(n²)** worst; Space **O(1)** in place (recursion O(log n) avg).
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Sort | O(n log n) | O(1) |
-| Max-heap size k | O(n log k) | O(k) |
-| Quickselect | **O(n) avg** | **O(1)** |
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Sort by distance | O(n log n) | O(1) | baseline; simplest |
+| Max-heap of size k | **O(n log k)** | O(k) | canonical Top-K answer |
+| Quickselect | O(n) avg | O(1) | best asymptotic when order doesn't matter |
+
+## When to use which
+
+- **Order matters within top-k** → max-heap or sort.
+- **Order doesn't matter, best avg time** → Quickselect.
+- **Streaming (points arrive one by one)** → max-heap.
+- **k close to n** → sort or min-heap of size (n-k).
 
 ## Related problems
 
-- [Kth Largest Element](/problems/quickselect-kth-largest) — quickselect prototype
-- [Top K Frequent](/problems/top-k-frequent-elements) — heap or bucket sort
-- [Kth Smallest in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) — heap on rows
+- [Top K Frequent Elements](/problems/top-k-frequent-elements) — canonical Top-K
+- [Kth Largest Element in an Array](/problems/quickselect-kth-largest) — Quickselect archetype
+- [Kth Largest Element in a Stream](/problems/kth-largest-element-in-a-stream) — streaming
+- [Kth Smallest Element in a Sorted Matrix](/problems/kth-smallest-element-in-a-sorted-matrix) — BS-on-answer alternative

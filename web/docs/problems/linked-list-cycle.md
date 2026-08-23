@@ -1,22 +1,30 @@
-# Fast/Slow — Linked List Cycle
+# Fast &amp; Slow — Linked List Cycle
 
 *[↗ LeetCode: Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
-Return `true` if the linked list has a cycle.
+Given the head of a linked list, return `true` iff the list contains a cycle.
 
-**Example** — `head=[3,2,0,-4]` with `-4.next=2` → `true`.
+**Example 1** — `head = [3,2,0,-4]`, tail connects to index `1` → `true`
+**Example 2** — `head = [1,2]`, tail connects to index `0` → `true`
+**Example 3** — `head = [1]`, tail = null → `false`
+
+**Constraints** — `0 ≤ n ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Hash-set of visited nodes
+## Approach 1 — Hash set of visited nodes
+
+**Intuition.** Walk the list; if a node reference reappears in the set, cycle found.
 
 
 
 ```java
-boolean hasCycleHash(ListNode h) {
+boolean hasCycleHash(ListNode head) {
     Set<ListNode> seen = new HashSet<>();
-    for (ListNode c = h; c != null; c = c.next)
-        if (!seen.add(c)) return true;
+    while (head != null) {
+        if (!seen.add(head)) return true;
+        head = head.next;
+    }
     return false;
 }
 ```
@@ -25,13 +33,19 @@ boolean hasCycleHash(ListNode h) {
 
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
-## Approach 2 — Floyd tortoise & hare (O(1) space)
+---
+
+## Approach 2 — Floyd's tortoise and hare (canonical)
+
+**Insight from hash.** We don't need to store visited nodes; two pointers at different speeds will meet inside a cycle. `slow` advances 1; `fast` advances 2. If they ever meet, cycle exists. If `fast` hits null, no cycle.
+
+**Why they meet.** Once both pointers are in the cycle, `fast` gains 1 step per iteration on `slow`. In a cycle of length `L`, `fast` catches up in ≤ L steps.
 
 
 
 ```java
-boolean hasCycle(ListNode h) {
-    ListNode slow = h, fast = h;
+boolean hasCycle(ListNode head) {
+    ListNode slow = head, fast = head;
     while (fast != null && fast.next != null) {
         slow = slow.next;
         fast = fast.next.next;
@@ -44,29 +58,38 @@ boolean hasCycle(ListNode h) {
 
 
 <CodeTrace
-  title="Floyd — 3→2→0→-4 with -4.next=2"
-  :values="[3,2,0,-4]"
+  title="Floyd — 3→2→0→-4→(back to 2)"
+  :values="['3','2','0','-4']"
   :windowKeys="['slow','fast']"
-  :cellWidth="42"
+  :cellWidth="38"
   :steps='[
-    { pointers: { slow: 0, fast: 0 }, vars: { }, note: "both at head" },
-    { pointers: { slow: 1, fast: 2 }, vars: { }, note: "slow +1, fast +2" },
-    { pointers: { slow: 2, fast: 1 }, vars: { }, note: "fast wraps -4→2" },
-    { pointers: { slow: 3, fast: 3 }, vars: { }, note: "meeting → cycle proven", added: [3] }
+    { pointers: { slow: 0, fast: 0 }, vars: { step: 0 }, note: "both at head" },
+    { pointers: { slow: 1, fast: 2 }, vars: { step: 1 }, note: "slow=2, fast=0" },
+    { pointers: { slow: 2, fast: 1 }, vars: { step: 2 }, note: "fast wrapped: -4→2" },
+    { pointers: { slow: 3, fast: 3 }, vars: { step: 3, met: true }, note: "both at -4 → cycle detected" }
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(1)**. Optimal.
+**Complexity** — Time **O(n)**; Space **O(1)**.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Hash set | O(n) | O(n) |
-| Floyd | **O(n)** | **O(1)** |
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Hash set | O(n) | O(n) | acceptable |
+| Floyd's tortoise/hare | **O(n)** | **O(1)** | expected optimum |
+
+## When to use which
+
+- **Ship this** → Floyd's algorithm.
+- **"Return the cycle entry node"** → Floyd + reset one pointer to head (see [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii)).
+- **"Return cycle length"** → after `slow == fast`, walk `fast` around the loop until it meets `slow` again — length = steps taken.
+- **Modifying list allowed?** → some variants mark visited nodes; not standard.
 
 ## Related problems
 
-- [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — return the cycle *entry* node
-- [Happy Number](/problems/happy-number) — Floyd on the digit-square-sum sequence
-- [Find the Duplicate Number](/problems/find-the-duplicate-number) — Floyd on `next = nums[i]`
+- [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — return entry node
+- [Happy Number](/problems/happy-number) — cycle detection on integer sequence
+- [Find the Duplicate Number](/problems/find-the-duplicate-number) — cycle detection on array as implicit list

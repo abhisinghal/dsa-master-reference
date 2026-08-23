@@ -6,6 +6,10 @@ n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 
 
 **Constraints** — `1 ≤ n ≤ 10`.
 
+**Example 1** — `hats=[[3,4],[4,5],[5]]` → `1`
+**Example 2** — `hats=[[3,5,1],[3,5]]` → `4`
+**Example 3** — `hats=[[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4]]` → `24`
+
 ---
 
 ## Approach — Bitmask DP iterating hats (canonical)

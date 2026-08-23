@@ -2,25 +2,37 @@
 
 *[↗ LeetCode: Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/k-way-merge)
 
-Merge two sorted lists into one sorted list.
+Given the heads of two sorted linked lists, merge them into one sorted list.
 
-**Example** — `l1=[1,2,4], l2=[1,3,4]` → `[1,1,2,3,4,4]`
+**Example 1** — `l1 = 1→2→4, l2 = 1→3→4` → `1→1→2→3→4→4`
+**Example 2** — `l1 = [], l2 = []` → `[]`
+**Example 3** — `l1 = [], l2 = 0` → `0`
+
+**Constraints** — `0 ≤ len ≤ 50`; values in `[-100, 100]`; both sorted ascending.
 
 ---
 
-## Approach 1 — Dummy-head splice (iterative)
+## Approach 1 — Materialize and re-sort
+
+O((m+n) log (m+n)). Baseline; wastes existing sortedness.
+
+## Approach 2 — Iterative two-pointer merge with dummy
+
+**Intuition.** Walk both lists in tandem; append the smaller current node. Use a **dummy head** to avoid special-casing the first append.
+
+**Trap** — always maintain `tail.next = null` semantics; if you re-link into an existing tail, the appended sublist keeps its rest.
 
 
 
 ```java
-ListNode mergeTwoLists(ListNode a, ListNode b) {
+ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     ListNode dummy = new ListNode(0), tail = dummy;
-    while (a != null && b != null) {
-        if (a.val <= b.val) { tail.next = a; a = a.next; }
-        else                { tail.next = b; b = b.next; }
+    while (l1 != null && l2 != null) {
+        if (l1.val <= l2.val) { tail.next = l1; l1 = l1.next; }
+        else { tail.next = l2; l2 = l2.next; }
         tail = tail.next;
     }
-    tail.next = a != null ? a : b;
+    tail.next = (l1 != null) ? l1 : l2;
     return dummy.next;
 }
 ```
@@ -28,47 +40,61 @@ ListNode mergeTwoLists(ListNode a, ListNode b) {
 
 
 <CodeTrace
-  title="Two-pointer splice — [1,2,4] + [1,3,4]"
-  :values="[1,2,4]"
-  :windowKeys="['step']"
-  :cellWidth="42"
+  title="Merge — l1=1→2→4, l2=1→3→4"
+  :values="['1','2','4','|','1','3','4']"
+  :windowKeys="['p1','p2']"
+  :cellWidth="30"
   :steps='[
-    { pointers: { step: 0 }, vars: { a: 1, b: 1, out: "" }, note: "tie → take a" },
-    { pointers: { step: 1 }, vars: { a: 2, b: 1, out: "1" }, note: "1 lt 2 → take b" },
-    { pointers: { step: 2 }, vars: { a: 2, b: 3, out: "1,1" }, note: "take a" },
-    { pointers: { step: 3 }, vars: { a: 4, b: 3, out: "1,1,2" }, note: "take b" },
-    { pointers: { step: 4 }, vars: { a: 4, b: 4, out: "1,1,2,3,4,4" }, note: "drain → final" }
+    { pointers: { p1: 0, p2: 4 }, vars: { out: "dummy" }, note: "1 == 1 → take l1" },
+    { pointers: { p1: 1, p2: 4 }, vars: { out: "→1" }, note: "next tail" },
+    { pointers: { p1: 1, p2: 5 }, vars: { out: "→1→1" }, note: "l1=2 > l2=1 → take l2 (1)" },
+    { pointers: { p1: 2, p2: 6 }, vars: { out: "→1→1→2→3" }, note: "walk through" },
+    { pointers: {}, vars: { out: "1→1→2→3→4→4" }, note: "attach tail; done" }
   ]'
 />
 
-**Complexity** — Time **O(n + m)**; Space **O(1)** (in-place link splice).
+**Complexity** — Time **O(m + n)**; Space **O(1)** (nodes reused).
 
-## Approach 2 — Recursive
+---
+
+## Approach 3 — Recursive
+
+**Insight from iterative.** The recursive form is cleaner: pick smaller head; recursively merge the rest.
 
 
 
 ```java
-ListNode mergeRec(ListNode a, ListNode b) {
-    if (a == null) return b;
-    if (b == null) return a;
-    if (a.val <= b.val) { a.next = mergeRec(a.next, b); return a; }
-    else                { b.next = mergeRec(a, b.next); return b; }
+ListNode mergeTwoListsRec(ListNode l1, ListNode l2) {
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    if (l1.val <= l2.val) { l1.next = mergeTwoListsRec(l1.next, l2); return l1; }
+    else { l2.next = mergeTwoListsRec(l1, l2.next); return l2; }
 }
 ```
 
 
 
-**Complexity** — Time **O(n + m)**; Space **O(n + m)** stack.
+**Complexity** — Time **O(m + n)**; Space **O(m + n)** stack — watch stack overflow on long lists.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Iterative splice | O(n + m) | O(1) |
-| Recursive | O(n + m) | O(n + m) stack |
+| Approach | Time | Space | Interview grade |
+|---|---|---|---|
+| Materialize + sort | O((m+n) log(m+n)) | O(m+n) | baseline |
+| Iterative + dummy | **O(m + n)** | **O(1)** | canonical |
+| Recursive | O(m + n) | O(m + n) stack | elegant but risky |
+
+## When to use which
+
+- **Standard answer** → iterative + dummy head.
+- **"No dummy allowed"** → track head via `if (dummy.next == null) dummy.next = ...` — messier.
+- **Sorted arrays instead of lists** → same skeleton (see [Merge Sorted Array](/problems/merge-sorted-array)).
+- **k lists** → use min-heap (see [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists)).
 
 ## Related problems
 
-- [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — same, generalized to k
-- [Sort List](https://leetcode.com/problems/sort-list/) — merge sort on linked list uses this as merge step
-- [Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/) — array version, merge from the back
+- [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — k lists, min-heap
+- [Merge Sorted Array](/problems/merge-sorted-array) — sorted arrays, fill from back
+- [Sort List](/problems/sort-list) — mergesort using merge as primitive

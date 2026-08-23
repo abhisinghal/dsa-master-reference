@@ -1,18 +1,23 @@
-# Sliding Window — Substring With Concatenation of All Words
+# Sliding Window — Substring with Concatenation of All Words
 
 *[↗ LeetCode: Substring with Concatenation of All Words](https://leetcode.com/problems/substring-with-concatenation-of-all-words/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
-Find start indices of substrings that are concatenations of every word in `words` (each used exactly once, any order). All words same length `L`.
+Find starting indices of substrings that are concatenations of every word in `words` (each used exactly once, any order). All words same length `L`.
+
+**Example 1** — `s="barfoothefoobarman", words=["foo","bar"]` → `[0, 9]`
+**Example 2** — `s="wordgoodgoodgoodbestword", words=["word","good","best","word"]` → `[]`
+
+**Constraints** — `1 ≤ |s| ≤ 10⁴`; each word ≤ 30 chars.
 
 ---
 
 ## Approach 1 — Try every start
-O(n · k · L). Too slow for large.
 
----
+O(n · k · L). Baseline.
 
-## Approach 2 — Sliding window on word-aligned offsets
-**Insight.** Iterate `offset ∈ [0, L)`. For each offset, walk `s` in chunks of L. Maintain a `have` count; if a word not in `words`, reset window; if a word over-count, shrink from left until fine. Emit start when `have == k` words.
+## Approach 2 — Sliding window on word-aligned offsets (canonical)
+
+**Insight.** Iterate `offset ∈ [0, L)`. Walk `s` in chunks of L. Maintain `have` count; on unknown word, reset window; on over-count, shrink from left.
 
 
 
@@ -47,23 +52,25 @@ List<Integer> findSubstring(String s, String[] words) {
 
 
 
-**Complexity** — Time **O(n · L)** total across offsets; Space **O(k · L)**.
+**Complexity** — Time **O(n · L)**; Space **O(k · L)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Try every start | O(n · k · L) | — | baseline |
-| Sliding window on word-aligned offsets | O(n · L) | O(k · L) | optimum |
+| Every start | O(n · k · L) | O(k) | baseline |
+| Aligned sliding | **O(n · L)** | O(k · L) | canonical |
 
 ## When to use which
 
-- **State it for signal** → Try every start (O(n · k · L)). Correct baseline; call it out then move on.
-- **Ship this** → Sliding window on word-aligned offsets (O(n · L), O(k · L)). Expected optimum in interview.
+- **Fixed-length words concat** → offset-aligned sliding.
+- **Variable-length words** → totally different — DP on word breaks.
+- **Return only count** → same skeleton, count instead of appending.
 
 ## Related problems
 
 - [Minimum Window Substring](/problems/minimum-window-substring)
 - [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string)
+- [Permutation in String](/problems/permutation-in-string)

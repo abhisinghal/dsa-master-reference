@@ -4,10 +4,17 @@
 
 Return true iff there's a **bijection** of characters mapping `s → t`.
 
+**Example 1** — `s="egg", t="add"` → `true`
+**Example 2** — `s="foo", t="bar"` → `false`
+**Example 3** — `s="paper", t="title"` → `true`
+
+**Constraints** — `1 ≤ n ≤ 5·10⁴`.
+
 ---
 
-## Approach 1 — Two maps (or two arrays)
-**Insight.** One-way map is insufficient — need to forbid two source chars mapping to the same target. Track both `s→t` and `t→s`.
+## Approach — Two maps (canonical)
+
+**Insight.** One-way map is insufficient — two source chars must not map to the same target. Track both `s→t` and `t→s`.
 
 
 
@@ -27,21 +34,26 @@ boolean isIsomorphic(String s, String t) {
 
 **Complexity** — Time **O(n)**; Space **O(σ)**.
 
-**Alternative "first-index" trick.** Two strings are isomorphic iff `firstIndex(s[i]) == firstIndex(t[i])` for all i. One pass.
+## Alternative — first-index trick
+
+`s` and `t` isomorphic iff `firstIndex(s[i]) == firstIndex(t[i])` for all `i`.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Two maps (or two arrays) | O(n) | O(σ) | primary |
+| Two maps | **O(n)** | O(σ) | canonical |
+| First-index | O(n) | O(σ) | elegant |
 
 ## When to use which
 
-- **Ship this** → Two maps (or two arrays) (O(n), O(σ)). The pattern's standard solution.
+- **Bijection check** → two maps.
+- **Word pattern** — similar bijection with words.
 
 ## Related problems
 
-- [Word Pattern](https://leetcode.com/problems/word-pattern/) — same bijection with words
-- [Group Shifted Strings](/problems/group-shifted-strings) — canonical-key variant
+- [Word Pattern](https://leetcode.com/problems/word-pattern/)
+- [Group Shifted Strings](/problems/group-shifted-strings)
+- [Valid Anagram](/problems/valid-anagram)

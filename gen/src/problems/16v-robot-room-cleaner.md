@@ -6,6 +6,8 @@ Robot API: `move()`, `turnLeft()`, `turnRight()`, `clean()`. No coordinates. Cle
 
 **Constraints** — grid unknown; obstacles hidden.
 
+**Example 1** — Room modeled as grid with obstacles; robot at `(row, col)`. Robot cleans every reachable cell.
+
 ---
 
 ## Approach — DFS with relative coords + backtrack move (canonical)

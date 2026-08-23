@@ -2,17 +2,22 @@
 
 *[↗ LeetCode: Word Ladder](https://leetcode.com/problems/word-ladder/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bfs)
 
-Transform `beginWord` → `endWord` by changing one letter at a time; each intermediate must be in dict. Return length (or 0).
+Transform `beginWord` → `endWord` by changing one letter at a time; each intermediate must be in dict. Return length.
+
+**Example 1** — `beginWord="hit", endWord="cog", wordList=["hot","dot","dog","lot","log","cog"]` → `5`
+**Example 2** — Same words minus "cog" → `0`
+
+**Constraints** — `1 ≤ L ≤ 10`; `1 ≤ #words ≤ 5000`.
 
 ---
 
-## Approach 1 — BFS over full word graph
-Naïvely, edges are all word pairs differing in 1 char → **O(N² · L)** to build.
+## Approach 1 — BFS over all pairs
 
----
+Build edges by comparing every pair. O(N² · L). TLE.
 
-## Approach 2 — BFS via wildcard-key hashing
-**Insight.** For each word, generate `L` patterns like `"h*t"`, `"*ot"` and bucket words by pattern. Two words are neighbors iff they share a wildcard bucket. Traversal touches each pattern once.
+## Approach 2 — Wildcard buckets + BFS (canonical)
+
+**Insight.** For each word, generate patterns like `"h*t"`, `"*ot"`. Words share a bucket iff neighbors. BFS traverses via buckets.
 
 
 
@@ -48,30 +53,29 @@ int ladderLength(String beginWord, String endWord, List<String> wordList) {
 
 
 
----
-
 ## Approach 3 — Bidirectional BFS
-Expand from both ends; stop when frontiers meet. Roughly halves the exponent → O(2 · b^(d/2)).
+Expand from both ends until frontiers meet. ~O(2 · b^(d/2)).
 
-**Complexity** — Time **O(N · L²)**; Space **O(N · L²)** for buckets.
+**Complexity** — Time **O(N · L²)**; Space **O(N · L²)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| BFS over full word graph | O(N² · L) | — | baseline |
-| BFS via wildcard-key hashing | — | — | improved |
-| Bidirectional BFS | O(N · L²) | O(N · L²) | optimum |
+| All-pair edges | O(N²·L) | O(N²) | TLE |
+| Wildcard buckets | **O(N · L²)** | O(N · L²) | canonical |
+| Bidirectional | O(√ of above) | same | polish |
 
 ## When to use which
 
-- **State it for signal** → BFS over full word graph (O(N² · L)). Correct baseline; call it out then move on.
-- **Intermediate refinement** → BFS via wildcard-key hashing (—).
-- **Ship this** → Bidirectional BFS (O(N · L²), O(N · L²)). Expected optimum in interview.
+- **Shortest transformation** → BFS + wildcards.
+- **All paths** → [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) — parent map + DFS.
+- **Very deep search** → bidirectional.
 
 ## Related problems
 
-- [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) — return all paths, needs parent map + DFS reconstruct
-- [Minimum Genetic Mutation](https://leetcode.com/problems/minimum-genetic-mutation/) — same pattern
+- [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/)
+- [Minimum Genetic Mutation](https://leetcode.com/problems/minimum-genetic-mutation/)
+- [Open the Lock](https://leetcode.com/problems/open-the-lock/)

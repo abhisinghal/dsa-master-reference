@@ -6,6 +6,8 @@ Given a rooted tree of gene values `parents[]` and queries `[node, val]`, for ea
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; queries ≤ 3·10⁴.
 
+**Example 1** — `parents=[-1,0,1,1], queries=[[0,2],[3,2],[2,5]]` → `[2,3,7]`
+
 ---
 
 ## Approach — Offline DFS + binary trie with subtree insert/erase (canonical)

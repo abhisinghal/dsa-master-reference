@@ -6,6 +6,9 @@ Undirected graph. Shortest length path visiting every node (may reuse).
 
 **Constraints** — `1 ≤ n ≤ 12`.
 
+**Example 1** — `graph=[[1,2,3],[0],[0],[0]]` → `4`
+**Example 2** — `graph=[[1],[0,2,4],[1,3,4],[2],[1,2]]` → `4`
+
 ---
 
 ## Approach — Bitmask BFS (canonical)

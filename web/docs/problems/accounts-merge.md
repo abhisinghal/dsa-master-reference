@@ -2,63 +2,79 @@
 
 *[↗ LeetCode: Accounts Merge](https://leetcode.com/problems/accounts-merge/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-Given accounts `[name, e1, e2, …]`, merge accounts sharing at least one email. Return merged accounts with emails sorted.
+Given accounts `[name, email1, email2, …]`, merge accounts sharing any email into one. Return merged accounts with emails sorted.
 
-**Example** — `[["John","a@","b@"],["John","c@"],["John","a@","d@"]]` → John merged for emails `[a@, b@, d@]`; separate John for `[c@]`.
+**Example 1** — Given John/Mary accounts with overlapping emails → merged into deduplicated groups.
+**Example 2** — All distinct → unchanged.
+
+**Constraints** — total emails ≤ 30·10³.
 
 ---
 
-## Approach 1 — BFS/DFS on the email graph
+## Approach 1 — DFS on email graph
 
-Build undirected graph on emails; each account contributes a fully-connected clique. Traverse components. O(N α(N)).
+Build graph with emails as nodes, connect emails within the same account. DFS to find components. O(N·α).
 
-## Approach 2 — Union-Find on emails (canonical)
+## Approach 2 — Union-Find on email index (canonical)
 
-**Insight.** Union all emails within each account. After the pass, group emails by root.
+**Insight.** Assign each email an index; union all emails within each account. Group emails by root; attach owner's name.
 
 
 
 ```java
-Map<String, String> parent = new HashMap<>();
-String find(String x) { while (!x.equals(parent.get(x))) { parent.put(x, parent.get(parent.get(x))); x = parent.get(x); } return x; }
-void union(String a, String b) { parent.put(find(a), find(b)); }
-
 List<List<String>> accountsMerge(List<List<String>> accounts) {
-    Map<String, String> owner = new HashMap<>();
-    for (List<String> acc : accounts) {
+    Map<String, Integer> emailIdx = new HashMap<>();
+    Map<String, String> emailName = new HashMap<>();
+    int idx = 0;
+    for (List<String> acc : accounts)
         for (int i = 1; i < acc.size(); i++) {
-            parent.putIfAbsent(acc.get(i), acc.get(i));
-            owner.put(acc.get(i), acc.get(0));
-            if (i > 1) union(acc.get(1), acc.get(i));
+            if (!emailIdx.containsKey(acc.get(i))) emailIdx.put(acc.get(i), idx++);
+            emailName.put(acc.get(i), acc.get(0));
         }
+    int[] parent = new int[idx];
+    for (int i = 0; i < idx; i++) parent[i] = i;
+    for (List<String> acc : accounts)
+        for (int i = 2; i < acc.size(); i++)
+            union(parent, emailIdx.get(acc.get(1)), emailIdx.get(acc.get(i)));
+    Map<Integer, TreeSet<String>> groups = new HashMap<>();
+    for (var e : emailIdx.entrySet()) {
+        int r = find(parent, e.getValue());
+        groups.computeIfAbsent(r, k -> new TreeSet<>()).add(e.getKey());
     }
-    Map<String, TreeSet<String>> groups = new HashMap<>();
-    for (String email : parent.keySet())
-        groups.computeIfAbsent(find(email), k -> new TreeSet<>()).add(email);
     List<List<String>> out = new ArrayList<>();
     for (var e : groups.entrySet()) {
         List<String> row = new ArrayList<>();
-        row.add(owner.get(e.getKey()));
+        row.add(emailName.get(e.getValue().first()));
         row.addAll(e.getValue());
         out.add(row);
     }
     return out;
 }
+int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
+void union(int[] p, int a, int b) { p[find(p, a)] = find(p, b); }
 ```
 
 
 
-**Complexity** — Time **O(N α(N) + N log N)** (sort); Space **O(N)**.
+**Complexity** — Time **O(N · α(N) · log N)** (sort within group); Space **O(N)**.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| BFS/DFS | O(N α(N)) | O(N) |
-| Union-Find | **O(N α(N) + N log N)** | O(N) |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| DFS components | O(N·α) | O(N) | acceptable |
+| Union-Find | **O(N·α·log N)** | O(N) | canonical |
+
+## When to use which
+
+- **Dynamic merging of sets by shared attribute** → Union-Find.
+- **Static / one-shot** → DFS is fine.
+- **"Return count of merged accounts"** → count distinct roots.
 
 ## Related problems
 
 - [Number of Provinces](/problems/union-find-number-of-provinces)
-- [Redundant Connection](/problems/redundant-connection) — first edge causing cycle
-- [Most Stones Removed](/problems/most-stones-removed-with-same-row-or-column)
+- [Redundant Connection](/problems/redundant-connection)
+- [Most Stones Removed with Same Row or Column](/problems/most-stones-removed-with-same-row-or-column)

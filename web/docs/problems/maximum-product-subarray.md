@@ -2,17 +2,22 @@
 
 *[↗ LeetCode: Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-Return max product of a contiguous subarray. (Filed near hashing/DP.)
+Return max product of a contiguous subarray.
+
+**Example 1** — `nums=[2,3,-2,4]` → `6`
+**Example 2** — `nums=[-2,0,-1]` → `0`
+
+**Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
 ---
 
 ## Approach 1 — Try every subarray
-O(n²).
 
----
+O(n²). Baseline.
 
-## Approach 2 — Track min and max ending at i
-**Insight.** A negative number flips min ↔ max on the next step. Maintain both.
+## Approach 2 — Track min and max ending at i (canonical)
+
+**Insight.** A negative flips min ↔ max on the next step. Maintain both.
 
 
 
@@ -32,32 +37,37 @@ int maxProduct(int[] nums) {
 
 
 
+<CodeTrace
+  title="Min/Max — nums=[2,3,-2,4]"
+  :values="['2','3','-2','4']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { maxE: 2, minE: 2 }, note: "" },
+    { pointers: { i: 1 }, vars: { maxE: 6, minE: 3, best: 6 }, note: "" },
+    { pointers: { i: 2 }, vars: { maxE: -2, minE: -12 }, note: "flip" },
+    { pointers: { i: 3 }, vars: { maxE: 4, best: 6 }, note: "" }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(1)**.
-
-**Trap.** Reset both to `nums[i]` when a zero appears (implicitly handled by the `max(x, …)`/`min(x, …)`).
-
----
-
-## Approach 3 — Prefix + suffix product sweep
-Two passes: multiply running prefix; on zero reset to 1. Repeat right-to-left. Answer = max over both sweeps. Elegant on paper; slower to explain.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Try every subarray | O(n²) | — | baseline |
-| Track min and max ending at i | O(n) | O(1) | improved |
-| Prefix + suffix product sweep | — | — | optimum |
+| All subarrays | O(n²) | O(1) | baseline |
+| Min/Max tracking | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **State it for signal** → Try every subarray (O(n²)). Correct baseline; call it out then move on.
-- **Intermediate refinement** → Track min and max ending at i (O(n)).
-- **Ship this** → Prefix + suffix product sweep (—, —). Expected optimum in interview.
+- **"Product with negatives"** → track both.
+- **"Only positives"** → simple running product.
+- **"Return the subarray"** → track indices.
 
 ## Related problems
 
-- [Maximum Subarray (Kadane)](/problems/maximum-subarray) — sum sibling
+- [Maximum Subarray (Kadane)](/problems/maximum-subarray)
 - [Maximum Sum Circular Subarray](/problems/maximum-sum-circular-subarray)

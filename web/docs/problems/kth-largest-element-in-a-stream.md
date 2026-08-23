@@ -2,34 +2,55 @@
 
 *[↗ LeetCode: Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/top-k-heap)
 
-Implement `add(x)` that returns the k-th largest element among all values seen so far.
+Design a class `KthLargest`. Constructor takes `k` and an initial array; `add(val)` returns the k-th largest element after inserting `val` into the stream.
 
-**Example** — `k=3, init=[4,5,8,2]`; `add(3)=4, add(5)=5, add(10)=5, add(9)=8, add(4)=8`.
+**Example 1** —
+
+
+```
+KthLargest kthLargest = new KthLargest(3, [4,5,8,2]);
+kthLargest.add(3);   // returns 4
+kthLargest.add(5);   // returns 5
+kthLargest.add(10);  // returns 5
+kthLargest.add(9);   // returns 8
+kthLargest.add(4);   // returns 8
+```
+
+
+
+**Constraints** — `1 ≤ k ≤ 10⁴`; `0 ≤ nums.length ≤ 10⁴`; `-10⁴ ≤ vals ≤ 10⁴`; at most `10⁴` `add` calls.
 
 ---
 
-## Approach 1 — Sort every call
+## Approach 1 — Re-sort on every add
 
-Trivially correct but O(n log n) per call.
+**Intuition.** Store all values; sort on each `add`; return `arr[n - k]`.
+
+**Complexity** — Time **O(n log n)** per add; too slow.
+
+---
 
 ## Approach 2 — Min-heap of size k
 
-**Insight.** The k-th largest = smallest of the top-k. Keep a min-heap capped at k. On `add`: offer + evict if oversize; `peek()` is the answer.
+**Insight from re-sort.** We only ever care about the k largest values seen so far. A **min-heap of size k** whose root is the k-th largest.
+
+- On `add(val)`: push. If heap size &gt; k, poll the smallest. The root is now the k-th largest.
 
 
 
 ```java
 class KthLargest {
-    PriorityQueue<Integer> heap = new PriorityQueue<>();
+    PriorityQueue<Integer> pq;
     int k;
-    public KthLargest(int k, int[] nums) {
+    KthLargest(int k, int[] nums) {
         this.k = k;
+        pq = new PriorityQueue<>();
         for (int x : nums) add(x);
     }
-    public int add(int x) {
-        heap.offer(x);
-        if (heap.size() > k) heap.poll();
-        return heap.peek();
+    public int add(int val) {
+        pq.offer(val);
+        if (pq.size() > k) pq.poll();
+        return pq.peek();
     }
 }
 ```
@@ -37,28 +58,48 @@ class KthLargest {
 
 
 <CodeTrace
-  title="Stream — k=3, init=[4,5,8,2], add(3), add(5)"
-  :values="[4,5,8,2,3,5]"
-  :windowKeys="['op']"
-  :cellWidth="42"
+  title="Min-heap k=3, init=[4,5,8,2]"
+  :values="['4','5','8','2','3','5','10','9','4']"
+  :windowKeys="['idx']"
+  :cellWidth="30"
   :steps='[
-    { pointers: { op: 3 }, vars: { heap: "[4,5,8]", peek: 4 }, note: "after init: top-3 = {4,5,8}" },
-    { pointers: { op: 4 }, vars: { heap: "[4,5,8]", peek: 4 }, note: "add 3: offered but 3 lt 4 → evicted. peek stays 4", added: [4] },
-    { pointers: { op: 5 }, vars: { heap: "[5,5,8]", peek: 5 }, note: "add 5: replaces 4 → new peek = 5", added: [5] }
+    { pointers: { idx: 3 }, vars: { heap: "[4,5,8]" }, note: "init: after 4 vals size>k, dropped smallest(2)" },
+    { pointers: { idx: 4 }, vars: { heap: "[4,5,8]", ret: 4 }, note: "add(3): push, size=4, poll 3 → heap [4,5,8], root=4" },
+    { pointers: { idx: 6 }, vars: { heap: "[5,8,10]", ret: 5 }, note: "add(5) → [5,4,5,8]→pop 4 → [5,5,8]; add(10) → drop 5 → [5,8,10]; root=5" },
+    { pointers: { idx: 8 }, vars: { heap: "[8,9,10]", ret: 8 }, note: "add(9): drop 5; add(4): push then drop 4; root=8" }
   ]'
 />
 
-**Complexity** — Time **O(log k)** per add; Space **O(k)**. Optimal.
+**Complexity** — Time **O(log k)** per `add`; Space **O(k)**.
+
+---
+
+## Approach 3 — Sorted TreeMap (with counts if duplicates allowed)
+
+**Insight from heap.** A `TreeMap<Integer, Integer>` (value → count) also supports "kth largest" in O(log k). Not simpler than a heap, but useful if you need range queries too.
+
+**Complexity** — Same as heap.
+
+---
 
 ## Complexity summary
 
-| Approach | Time (per add) | Space |
-|---|---|---|
-| Sort | O(n log n) | O(n) |
-| Min-heap size k | **O(log k)** | O(k) |
+| Approach | Time per add | Space | Interview grade |
+|---|---|---|---|
+| Re-sort | O(n log n) | O(n) | baseline; TLE at 10⁴ adds |
+| Min-heap of size k | **O(log k)** | **O(k)** | canonical |
+| TreeMap | O(log k) | O(n) | overkill unless range queries needed |
+
+## When to use which
+
+- **Streaming k-th largest** → min-heap of size k.
+- **Streaming k-th smallest** → max-heap of size k.
+- **Both k-th largest AND range queries** → TreeMap.
+- **`k` very large (close to n)** → maintain running sort; heap advantage vanishes.
 
 ## Related problems
 
-- [Kth Largest Element in an Array](/problems/quickselect-kth-largest) — offline version
-- [Top K Frequent Elements](/problems/top-k-frequent-elements) — heap or bucket
-- [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) — two heaps
+- [Top K Frequent Elements](/problems/top-k-frequent-elements)
+- [K Closest Points to Origin](/problems/k-closest-points-to-origin)
+- [Kth Largest Element in an Array](/problems/quickselect-kth-largest) — offline sibling
+- [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) — two-heap for streaming median

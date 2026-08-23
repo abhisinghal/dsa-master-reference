@@ -2,60 +2,70 @@
 
 *[↗ LeetCode: Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
-Given `n` flights and bookings `[first, last, seats]` (1-indexed inclusive), return per-flight seat totals.
+Given `n` flights and bookings `[first, last, seats]`, return an array where index `i` = total seats booked on flight `i+1`.
 
-**Example** — `n=5, [[1,2,10],[2,3,20],[2,5,25]]` → `[10,55,45,25,25]`
+**Example 1** — `bookings=[[1,2,10],[2,3,20],[2,5,25]], n=5` → `[10,55,45,25,25]`
+**Example 2** — `bookings=[[1,2,10],[2,2,15]], n=2` → `[10,25]`
+**Example 3** — `bookings=[[1,1,5]], n=3` → `[5,0,0]`
+
+**Constraints** — `1 ≤ n ≤ 2·10⁴`; `1 ≤ bookings.length ≤ 2·10⁴`.
 
 ---
 
-## Approach 1 — Difference array + prefix pass
-**Insight.** Range add `[l, r] += x` via `diff[l] += x, diff[r+1] -= x`. One prefix pass reconstructs per-position totals.
+## Approach 1 — Direct fill
+
+For each booking, add `seats` to every index in `[first-1, last-1]`. **O(n · m)**.
+
+## Approach 2 — Difference array (canonical)
+
+**Insight.** Range-add on many disjoint queries is O(1) per query on a **difference array**: `+seats` at `first-1`, `-seats` at `last`. Prefix sum recovers the totals.
 
 
 
 ```java
 int[] corpFlightBookings(int[][] bookings, int n) {
     int[] diff = new int[n + 1];
-    for (int[] b : bookings) { diff[b[0] - 1] += b[2]; diff[b[1]] -= b[2]; }
-    int[] out = new int[n];
-    int run = 0;
-    for (int i = 0; i < n; i++) { run += diff[i]; out[i] = run; }
-    return out;
+    for (int[] b : bookings) {
+        diff[b[0] - 1] += b[2];
+        diff[b[1]] -= b[2];
+    }
+    for (int i = 1; i < n; i++) diff[i] += diff[i - 1];
+    return Arrays.copyOf(diff, n);
 }
 ```
 
 
 
-
 <CodeTrace
-  title="Difference array + prefix pass"
-  :values="['1', '2', '10']"
+  title="Diff array — bookings=[[1,2,10],[2,3,20],[2,5,25]], n=5"
+  :values="['0','0','0','0','0']"
   :windowKeys="['i']"
   :cellWidth="34"
   :steps='[
-    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
-    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
-    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+    { pointers: { i: 0 }, vars: { diff: "[10,20+25,-10,-20,25,-25]" }, note: "record deltas" },
+    { pointers: { i: 1 }, vars: { pref: "[10,55,45,25,25]" }, note: "prefix sum reveals totals" }
   ]'
 />
 
-
-**Complexity** — Time **O(n + b)**; Space **O(n)**.
+**Complexity** — Time **O(n + m)**; Space **O(n)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Difference array + prefix pass | O(n + b) | O(n) | primary |
+| Direct fill | O(n·m) | O(n) | baseline |
+| Difference array | **O(n+m)** | O(n) | optimum |
 
 ## When to use which
 
-- **Ship this** → Difference array + prefix pass (O(n + b), O(n)). The pattern's standard solution.
+- **Many range-add queries, one final read** → difference array + one prefix sum.
+- **Queries interleaved with reads** → segment tree with lazy propagation.
+- **Range assignment (not add)** → different structure — sweep line or seg tree.
 
 ## Related problems
 
-- [Car Pooling](/problems/car-pooling) — same idea, capacity check
-- [Range Addition](/problems/range-addition)
+- [Car Pooling](/problems/car-pooling) — identical idea with capacity check
+- [Range Addition](/problems/range-addition) — the primitive
 - [Range Addition II](/problems/range-addition-ii)

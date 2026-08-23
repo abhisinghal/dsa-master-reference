@@ -2,12 +2,19 @@
 
 *[↗ LeetCode: Group Shifted Strings](https://leetcode.com/problems/group-shifted-strings/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
-Group strings that are cyclic shifts of each other ("abc","bcd","xyz" all shift by 1 pattern).
+Group strings that are cyclic shifts of each other.
+
+**Example 1** — `strings=["abc","bcd","acef","xyz","az","ba","a","z"]` → `[["abc","bcd","xyz"],["acef"],["az","ba"],["a","z"]]`
+
+**Constraints** — `1 ≤ #strings ≤ 200`.
 
 ---
 
-## Approach 1 — Canonical key = diff pattern
-**Insight.** Two strings are shifts iff their consecutive character-difference sequence (mod 26) matches.
+## Approach — Canonical key = diff pattern (canonical)
+
+**Insight.** Two strings are shifts iff their consecutive char-diffs (mod 26) match.
+
+**Trap** — Java `%` can be negative. Use `+ 26) % 26`. Delimit numbers so `"11"` doesn't collide with `"1,1"`.
 
 
 
@@ -28,23 +35,23 @@ List<List<String>> groupStrings(String[] strings) {
 
 
 
-**Complexity** — Time **O(∑ length)**; Space **O(∑ length)**.
-
-**Trap.** Modulo `+ 26` before `% 26` to avoid negative Java `%`. Delimiter (`.`) between numbers prevents `"11"` colliding with `"1,1"`.
+**Complexity** — Time **O(Σ length)**; Space **O(Σ length)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Canonical key = diff pattern | O(∑ length) | O(∑ length) | primary |
+| Canonical key | **O(Σ length)** | O(Σ length) | canonical |
 
 ## When to use which
 
-- **Ship this** → Canonical key = diff pattern (O(∑ length), O(∑ length)). The pattern's standard solution.
+- **Any "group by equivalence class"** → canonical key.
+- **Group anagrams** → sort key.
+- **Group similar words** → similar canonical hash.
 
 ## Related problems
 
-- [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — canonical key = sorted string
+- [Group Anagrams](https://leetcode.com/problems/group-anagrams/)
 - [Isomorphic Strings](/problems/isomorphic-strings)

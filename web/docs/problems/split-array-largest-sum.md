@@ -6,6 +6,8 @@ Split `nums` into `m` non-empty contiguous subarrays to minimize the largest sum
 
 **Example** — `nums=[7,2,5,10,8], m=2` → `18`
 
+**Constraints** — `1 ≤ m ≤ n ≤ 1000`; `0 ≤ nums[i] ≤ 10⁶`.
+
 ---
 
 ## Approach 1 — Interval DP
@@ -60,6 +62,12 @@ int splitArray(int[] nums, int m) {
 |---|---|---|
 | Interval DP | O(n²·m) | O(n·m) |
 | BS on answer | **O(n log sum)** | O(1) |
+
+## When to use which
+
+- **"Min largest chunk after splitting"** → BS on answer.
+- **DP alternative** → interval DP; slower but returns actual partition.
+- **Related: max smallest chunk** → similar BS with `≥` predicate.
 
 ## Related problems
 

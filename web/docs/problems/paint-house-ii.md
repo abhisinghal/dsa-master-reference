@@ -2,17 +2,21 @@
 
 *[↗ LeetCode: Paint House II](https://leetcode.com/problems/paint-house-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
-`n` houses, `k` colors. Cost to paint house i color j. Adjacent houses must differ in color. Min total.
+`n` houses, `k` colors. cost to paint. No two adjacent same color. Min total.
+
+**Constraints** — `1 ≤ n·k ≤ 5000`.
+
+**Example 1** — `costs=[[1,5,3],[2,9,4]]` → `5`
+**Example 2** — `costs=[[1,3],[2,4]]` → `5`
 
 ---
 
-## Approach 1 — DP O(n · k²)
-`dp[i][j] = cost[i][j] + min(dp[i-1][j'])` over j' ≠ j.
+## Approach 1 — O(n · k²) DP
+`dp[i][j] = cost[i][j] + min(dp[i-1][j'])` over `j' ≠ j`.
 
----
+## Approach 2 — Track min & second-min per row → O(n · k) (canonical)
 
-## Approach 2 — Track min & second-min per row → O(n · k)
-**Insight.** From the previous row, the only info needed is the two smallest DP values (and which color the min belongs to). This lets each new cell pick its best predecessor in O(1).
+**Insight.** Only need two smallest values from previous row + which index was min.
 
 
 
@@ -41,17 +45,18 @@ int minCostII(int[][] costs) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| DP O(n · k²) | — | — | baseline |
-| Track min & second-min per row → O(n · k) | O(n · k) | O(1) | optimum |
+| O(n·k²) DP | O(n·k²) | O(k) | baseline |
+| Min+second min | **O(n·k)** | O(1) | canonical |
 
 ## When to use which
 
-- **State it for signal** → DP O(n · k²) (—). Correct baseline; call it out then move on.
-- **Ship this** → Track min & second-min per row → O(n · k) (O(n · k), O(1)). Expected optimum in interview.
+- **Standard** → min + second-min trick.
+- **Only 3 colors** → O(n) with 3-way check.
+- **Return coloring** → track color chosen.
 
 ## Related problems
 
-- [Paint House](https://leetcode.com/problems/paint-house/) — k = 3
-- [Paint Fence](https://leetcode.com/problems/paint-fence/) — different adjacency rule
+- [Paint House](https://leetcode.com/problems/paint-house/)
+- [Paint Fence](https://leetcode.com/problems/paint-fence/)

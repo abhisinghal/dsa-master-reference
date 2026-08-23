@@ -2,73 +2,70 @@
 
 *[↗ LeetCode: Employee Free Time](https://leetcode.com/problems/employee-free-time/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/merge-intervals)
 
-Given `k` employees' sorted schedule intervals, return the intervals where **all** are simultaneously free.
+Given schedules (each a list of disjoint intervals), return the intersection of all employees' free time.
 
-**Example** — `[[[1,2],[5,6]],[[1,3]],[[4,10]]]` → `[[3,4]]`
+**Example 1** — `schedule=[[[1,2],[5,6]],[[1,3]],[[4,10]]]` → `[[3,4]]`
+**Example 2** — `schedule=[[[1,3],[6,7]],[[2,4]],[[2,5],[9,12]]]` → `[[5,6],[7,9]]`
+
+**Constraints** — `1 ≤ #employees ≤ 50`; total intervals ≤ 10⁴.
 
 ---
 
-## Approach 1 — Flatten + sort + merge, then gaps
+## Approach 1 — Flatten + merge + gaps
 
-Merge every employee's intervals into one flat sorted list; then the gaps between merged intervals are free times.
-
-**Complexity** — Time **O(N log N)**; Space **O(N)** where N = total intervals.
-
-## Approach 2 — Min-heap k-way merge
-
-**Insight.** Same as merging k sorted lists (each employee's schedule). Track the running max end; when a new interval's start &gt; running max, that gap is a free time.
+**Intuition.** Collect all intervals; merge overlapping; consecutive gaps are common free time.
 
 
 
 ```java
-List<int[]> employeeFreeTime(List<List<int[]>> schedule) {
-    PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-    for (int i = 0; i < schedule.size(); i++) {
-        int[] intv = schedule.get(i).get(0);
-        heap.offer(new int[]{intv[0], intv[1], i, 0});
+List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
+    List<Interval> all = new ArrayList<>();
+    for (List<Interval> emp : schedule) all.addAll(emp);
+    all.sort((a, b) -> a.start - b.start);
+    List<Interval> merged = new ArrayList<>();
+    for (Interval iv : all) {
+        if (merged.isEmpty() || merged.get(merged.size()-1).end < iv.start) merged.add(iv);
+        else merged.get(merged.size()-1).end = Math.max(merged.get(merged.size()-1).end, iv.end);
     }
-    List<int[]> out = new ArrayList<>();
-    int prevEnd = heap.peek()[1];
-    while (!heap.isEmpty()) {
-        int[] top = heap.poll();
-        if (top[0] > prevEnd) out.add(new int[]{prevEnd, top[0]});
-        prevEnd = Math.max(prevEnd, top[1]);
-        int nextIdx = top[3] + 1;
-        if (nextIdx < schedule.get(top[2]).size()) {
-            int[] intv = schedule.get(top[2]).get(nextIdx);
-            heap.offer(new int[]{intv[0], intv[1], top[2], nextIdx});
-        }
-    }
-    return out;
+    List<Interval> free = new ArrayList<>();
+    for (int i = 1; i < merged.size(); i++)
+        free.add(new Interval(merged.get(i-1).end, merged.get(i).start));
+    return free;
 }
 ```
 
 
 
-<CodeTrace
-  title="k-way merge — 3 employees"
-  :values="['[1,2]','[5,6]','[1,3]','[4,10]']"
-  :windowKeys="['step']"
-  :cellWidth="52"
-  :steps='[
-    { pointers: { step: 0 }, vars: { heap: "[[1,2],[1,3],[4,10]]", prevEnd: 2 }, note: "seed with each employee`s first" },
-    { pointers: { step: 1 }, vars: { heap: "[[1,3],[4,10]]", prevEnd: 3 }, note: "pop [1,2]; no gap" },
-    { pointers: { step: 2 }, vars: { heap: "[[4,10],[5,6]]", prevEnd: 3, out: "[[3,4]]" }, note: "pop [1,3]; then advance emp0 to [5,6]. next=[4,10] → gap [3,4]", added: [0] },
-    { pointers: { step: 4 }, vars: { heap: "[]", prevEnd: 10 }, note: "drain; no more gaps" }
-  ]'
-/>
+**Complexity** — Time **O(N log N)**; Space **O(N)** where N = total intervals.
+
+---
+
+## Approach 2 — Min-heap sweep (canonical for k-way)
+
+**Insight.** Use min-heap of `(interval, empIndex, listIndex)` — pop earliest start; if it starts after current-max-end, we've found a gap. Advance pointer within employee.
 
 **Complexity** — Time **O(N log k)**; Space **O(k)**.
 
+Better when k is much smaller than N.
+
+---
+
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Flatten + merge | O(N log N) | O(N) |
-| k-way heap merge | **O(N log k)** | **O(k)** |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| Flatten + merge | O(N log N) | O(N) | baseline |
+| Min-heap sweep | **O(N log k)** | **O(k)** | canonical for k-way |
+
+## When to use which
+
+- **Small k, many intervals per employee** → heap sweep.
+- **Balanced input** → flatten + merge is simpler.
+- **"Find first common free slot ≥ duration D"** → augment sweep with duration check.
 
 ## Related problems
 
-- [Merge Intervals](/problems/merge-intervals-classic) — flat variant
-- [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii) — max concurrency
-- [Interval List Intersections](/problems/interval-list-intersections) — two sorted lists
+- [Merge Intervals](/problems/merge-intervals-classic)
+- [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
+- [Interval List Intersections](/problems/interval-list-intersections)
+- [Smallest Range Covering k Lists](/problems/smallest-range-covering-elements-from-k-lists)

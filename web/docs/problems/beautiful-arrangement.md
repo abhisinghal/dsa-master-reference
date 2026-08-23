@@ -2,11 +2,17 @@
 
 *[↗ LeetCode: Beautiful Arrangement](https://leetcode.com/problems/beautiful-arrangement/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
-Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i == 0` or `i % a[i] == 0`.
+Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i == 0` OR `i % a[i] == 0`.
+
+**Example 1** — `n=2` → `2`
+**Example 2** — `n=1` → `1`
+
+**Constraints** — `1 ≤ n ≤ 15`.
 
 ---
 
 ## Approach 1 — Backtracking with used-mask
+
 
 
 ```java
@@ -15,22 +21,21 @@ int countArrangement(int n) {
 }
 int dfs(int n, int pos, boolean[] used) {
     if (pos > n) return 1;
-    int count = 0;
+    int c = 0;
     for (int v = 1; v <= n; v++)
         if (!used[v] && (v % pos == 0 || pos % v == 0)) {
             used[v] = true;
-            count += dfs(n, pos + 1, used);
+            c += dfs(n, pos + 1, used);
             used[v] = false;
         }
-    return count;
+    return c;
 }
 ```
 
 
 
----
-
 ## Approach 2 — Bitmask DP (n ≤ 15)
+
 `dp[mask]` = # ways to fill first `popcount(mask)` positions using selected numbers.
 
 
@@ -54,23 +59,24 @@ int countArrangementBM(int n) {
 
 
 
-**Complexity** — Both **O(n · 2ⁿ)** ish; DP is iterative and cleaner for n ≤ 15.
+**Complexity** — Both **O(n · 2ⁿ)**; DP cleaner for n ≤ 15.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Backtracking with used-mask | — | — | baseline |
-| Bitmask DP (n ≤ 15) | O(n · 2ⁿ) | — | optimum |
+| Backtracking | O(n · 2ⁿ) | O(n) | canonical |
+| Bitmask DP | **O(n · 2ⁿ)** | O(2ⁿ) | iterative |
 
 ## When to use which
 
-- **State it for signal** → Backtracking with used-mask (—). Correct baseline; call it out then move on.
-- **Ship this** → Bitmask DP (n ≤ 15) (O(n · 2ⁿ), —). Expected optimum in interview.
+- **Small n** → either.
+- **n ≤ 15** → bitmask DP is clean.
+- **Larger n** → no polynomial algo.
 
 ## Related problems
 
-- [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats) — bitmask DP
+- [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other)
 - [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)

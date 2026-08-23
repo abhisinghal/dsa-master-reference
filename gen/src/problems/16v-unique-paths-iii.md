@@ -6,6 +6,10 @@ Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cel
 
 **Constraints** — grid ≤ 20 cells (n·m ≤ 20).
 
+**Example 1** — `grid=[[1,0,0,0],[0,0,0,0],[0,0,2,-1]]` → `2`
+**Example 2** — `grid=[[1,0,0,0],[0,0,0,0],[0,0,0,2]]` → `4`
+**Example 3** — `grid=[[0,1],[2,0]]` → `0`
+
 ---
 
 ## Approach — Hamiltonian-path DFS with in-place marking (canonical)

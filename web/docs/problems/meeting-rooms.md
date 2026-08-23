@@ -2,27 +2,31 @@
 
 *[↗ LeetCode: Meeting Rooms](https://leetcode.com/problems/meeting-rooms/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/merge-intervals)
 
-Given meetings `[start, end]`, return `true` if a single person can attend all (no overlaps).
+Given meeting time intervals, return `true` iff a person can attend all.
 
-**Example** — `[[0,30],[5,10],[15,20]]` → `false`
+**Example 1** — `intervals=[[0,30],[5,10],[15,20]]` → `false`
+**Example 2** — `intervals=[[7,10],[2,4]]` → `true`
+**Example 3** — `intervals=[]` → `true`
+
+**Constraints** — `0 ≤ intervals.length ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Brute nested pair
+## Approach 1 — Every pair
 
 O(n²). Baseline.
 
-## Approach 2 — Sort by start, check adjacent
+## Approach 2 — Sort by start; adjacent overlap check
 
-**Insight.** After sorting by start, an overlap only exists if any adjacent pair has `next.start < prev.end`.
+**Insight.** After sorting by start, only adjacent intervals can conflict. Walk once.
 
 
 
 ```java
-boolean canAttendMeetings(int[][] meetings) {
-    Arrays.sort(meetings, (a, b) -> a[0] - b[0]);
-    for (int i = 1; i < meetings.length; i++)
-        if (meetings[i][0] < meetings[i - 1][1]) return false;
+boolean canAttendMeetings(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+    for (int i = 1; i < intervals.length; i++)
+        if (intervals[i][0] < intervals[i-1][1]) return false;
     return true;
 }
 ```
@@ -30,25 +34,34 @@ boolean canAttendMeetings(int[][] meetings) {
 
 
 <CodeTrace
-  title="Sort + adjacent check — [[0,30],[5,10],[15,20]]"
+  title="Sort + adjacent — [[0,30],[5,10],[15,20]]"
   :values="['[0,30]','[5,10]','[15,20]']"
   :windowKeys="['i']"
-  :cellWidth="60"
+  :cellWidth="42"
   :steps='[
-    { pointers: { i: 1 }, vars: { prev_end: 30, cur_start: 5 }, note: "5 lt 30 → overlap → return false", removed: [1] }
+    { pointers: { i: 1 }, vars: { prevEnd: 30, currStart: 5 }, note: "5 < 30 → overlap → false" }
   ]'
 />
 
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
+---
+
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Brute nested | O(n²) | O(1) |
-| Sort + scan | **O(n log n)** | **O(1)** |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| Every pair | O(n²) | O(1) | baseline |
+| Sort + walk | **O(n log n)** | O(1) | optimum |
+
+## When to use which
+
+- **Boolean feasibility** → sort + walk.
+- **Count rooms needed** → [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii) — heap or sweep line.
+- **Return conflict pairs** → keep sorted; walk once collecting pairs.
 
 ## Related problems
 
-- [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii) — return the room count
-- [Non-overlapping Intervals](/problems/non-overlapping-intervals) — remove min count
+- [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
+- [Merge Intervals](/problems/merge-intervals-classic)
+- [Non-overlapping Intervals](/problems/non-overlapping-intervals)

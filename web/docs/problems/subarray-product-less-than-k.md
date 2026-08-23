@@ -2,24 +2,32 @@
 
 *[↗ LeetCode: Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
-Count contiguous subarrays whose product is strictly less than `k`. **Positive values only.**
+Given a positive-int array `nums` and integer `k`, return the number of contiguous subarrays whose product is strictly less than `k`.
+
+**Example 1** — `nums = [10,5,2,6], k = 100` → `8` (subarrays: `[10], [5], [2], [6], [10,5], [5,2], [2,6], [5,2,6]`)
+**Example 2** — `nums = [1,2,3], k = 0` → `0` (no positive product can be `< 0`)
+**Example 3** — `nums = [1,1,1], k = 2` → `6`
+
+**Constraints** — `1 ≤ n ≤ 3 · 10⁴`; `1 ≤ nums[i] ≤ 1000`; `0 ≤ k ≤ 10⁶`. **All values positive.**
 
 ---
 
-## Approach 1 — Sliding window with product
-**Insight.** Fix `r`. Shrink `l` while product ≥ k. Every subarray ending at `r` with left ≥ current `l` is valid → contributes `r - l + 1` new subarrays.
+## Approach 1 — Every subarray
+
+**Intuition.** For each `[i, j]`, compute product; if `< k`, increment.
 
 
 
 ```java
-int numSubarrayProductLessThanK(int[] nums, int k) {
-    if (k <= 1) return 0;
-    long prod = 1;
-    int count = 0, l = 0;
-    for (int r = 0; r < nums.length; r++) {
-        prod *= nums[r];
-        while (prod >= k) prod /= nums[l++];
-        count += r - l + 1;
+int numSubarrayProductLessThanKBrute(int[] nums, int k) {
+    int n = nums.length, count = 0;
+    for (int i = 0; i < n; i++) {
+        long prod = 1;
+        for (int j = i; j < n; j++) {
+            prod *= nums[j];
+            if (prod < k) count++;
+            else break;
+        }
     }
     return count;
 }
@@ -27,9 +35,56 @@ int numSubarrayProductLessThanK(int[] nums, int k) {
 
 
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
+**Complexity** — Time **O(n²)**; Space **O(1)**.
 
-**Trap.** `k <= 1` — no product of positives is &lt; 1, return 0 early. Guard against integer overflow with `long prod`.
+---
+
+## Approach 2 — Sliding window with running product
+
+**Insight from brute.** Products are monotone with positive values. Extend `right`; shrink `left` while `prod ≥ k`. Every subarray ending at `right` with left ∈ `[currLeft, right]` contributes `(right - left + 1)` new subarrays.
+
+**Trap** — Early-return `k ≤ 1`: no product of positives is `< 1`.
+
+
+
+```java
+int numSubarrayProductLessThanK(int[] nums, int k) {
+    if (k <= 1) return 0;
+    long prod = 1;
+    int count = 0, left = 0;
+    for (int right = 0; right < nums.length; right++) {
+        prod *= nums[right];
+        while (prod >= k) prod /= nums[left++];
+        count += right - left + 1;
+    }
+    return count;
+}
+```
+
+
+
+<CodeTrace
+  title="Sliding — nums=[10,5,2,6], k=100"
+  :values="['10','5','2','6']"
+  :windowKeys="['left','right']"
+  :cellWidth="36"
+  :steps='[
+    { pointers: { left: 0, right: 1 }, vars: { prod: 50, count: 3 }, note: "[10], [5], [10,5]" },
+    { pointers: { left: 0, right: 2 }, vars: { prod: 100 }, note: "prod=100 ≥ 100 → shrink" },
+    { pointers: { left: 1, right: 2 }, vars: { prod: 10, count: 5 }, note: "[5], [2], [5,2] added — count=5" },
+    { pointers: { left: 1, right: 3 }, vars: { prod: 60, count: 8 }, note: "[6], [2,6], [5,2,6] — count=8" }
+  ]'
+/>
+
+**Complexity** — Time **O(n)** — each index enters/leaves once; Space **O(1)**.
+
+---
+
+## Approach 3 — Prefix log-sum + binary search (interview polish)
+
+**Insight from sliding.** Log-transforms products into sums: `log(prod) = Σ log(nums[i])`. Now the problem becomes "count sublists with prefix-log-sum difference &lt; log k" — solvable via binary search on the prefix array. Rarely needed in practice, but shows the sum-log-product bridge.
+
+**Complexity** — Time **O(n log n)**; Space **O(n)**. Suboptimal — the sliding window wins.
 
 ---
 
@@ -37,14 +92,20 @@ int numSubarrayProductLessThanK(int[] nums, int k) {
 
 | Approach | Time | Space | Interview grade |
 |---|---|---|---|
-| Sliding window with product | O(n) | O(1) | primary |
+| Every subarray | O(n²) | O(1) | baseline |
+| Sliding window | **O(n)** | O(1) | expected optimum |
+| Log + prefix + BS | O(n log n) | O(n) | curiosity — sum-log-product bridge |
 
 ## When to use which
 
-- **Ship this** → Sliding window with product (O(n), O(1)). The pattern's standard solution.
+- **Standard answer** → sliding window.
+- **"What if nums[i] can be 0?"** → sliding breaks (0 zeros the product); split by zeros or use the log-sum + BS approach with `log(0) = -∞`.
+- **"What if nums[i] can be negative?"** → both products and logs break; needs sign-tracking (see [Maximum Product Subarray](/problems/maximum-product-subarray)).
+- **"Return the subarrays themselves"** → enumerate during the slide; loses the compact O(n) counting.
 
 ## Related problems
 
-- [Binary Subarrays With Sum](/problems/binary-subarrays-with-sum) — count = f(≤ goal) - f(≤ goal-1)
-- [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays)
-- [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers) — same "≤ K minus ≤ K-1" trick
+- [Maximum Product Subarray](/problems/maximum-product-subarray) — signed variant
+- [Binary Subarrays With Sum](/problems/binary-subarrays-with-sum) — sibling with `atMost` trick
+- [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays) — sibling
+- [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)

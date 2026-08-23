@@ -2,74 +2,76 @@
 
 *[↗ LeetCode: Replace Words](https://leetcode.com/problems/replace-words/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
 
-Given roots and a sentence, replace each word with its shortest root prefix (if any).
+Given a dictionary of roots and a `sentence`, replace each word with its **shortest** root that is a prefix. If no root, keep the word.
 
-**Example** — `dict=["cat","bat","rat"], s="the cattle was rattled by the battery"` → `"the cat was rat by the bat"`
+**Example 1** — `dict=["cat","bat","rat"], sentence="the cattle was rattled by the battery"` → `"the cat was rat by the bat"`
+
+**Constraints** — dict ≤ 1000 roots; sentence words ≤ 1000.
 
 ---
 
-## Approach 1 — Trie of roots + prefix walk per word
+## Approach 1 — HashSet + prefix scan
+
+For each word, try prefixes of length 1..L; first match wins. O(word · L²) per word.
+
+## Approach 2 — Trie (canonical)
+
+**Insight.** Insert all roots into a trie. For each word, walk the trie char-by-char; stop at first `end` node — that's the shortest prefix.
+
 
 
 ```java
-class Node { Map<Character, Node> ch = new HashMap<>(); String word; }
-public String replaceWords(List<String> dict, String s) {
+class Node { Node[] c = new Node[26]; String word; }
+
+String replaceWords(List<String> dict, String sentence) {
     Node root = new Node();
     for (String r : dict) {
         Node cur = root;
-        for (char c : r.toCharArray()) cur = cur.ch.computeIfAbsent(c, k -> new Node());
+        for (char ch : r.toCharArray()) {
+            int i = ch - 'a';
+            if (cur.c[i] == null) cur.c[i] = new Node();
+            cur = cur.c[i];
+        }
         cur.word = r;
     }
-    StringBuilder out = new StringBuilder();
-    for (String w : s.split(" ")) {
-        if (out.length() > 0) out.append(' ');
+    StringBuilder sb = new StringBuilder();
+    for (String w : sentence.split(" ")) {
+        if (sb.length() > 0) sb.append(' ');
         Node cur = root;
-        StringBuilder replaced = new StringBuilder();
-        for (char c : w.toCharArray()) {
-            if (cur.word != null) { replaced.setLength(0); replaced.append(cur.word); break; }
-            if (!cur.ch.containsKey(c)) { replaced.setLength(0); replaced.append(w); break; }
-            cur = cur.ch.get(c);
-            replaced.append(c);
+        String replacement = w;
+        for (char ch : w.toCharArray()) {
+            int i = ch - 'a';
+            if (cur.c[i] == null) break;
+            cur = cur.c[i];
+            if (cur.word != null) { replacement = cur.word; break; }
         }
-        if (cur.word != null) { replaced.setLength(0); replaced.append(cur.word); }
-        else if (replaced.length() == w.length()) { replaced.setLength(0); replaced.append(w); }
-        out.append(replaced);
+        sb.append(replacement);
     }
-    return out.toString();
+    return sb.toString();
 }
 ```
 
 
 
-
-<CodeTrace
-  title="Trie of roots + prefix walk per word"
-  :values="['cat', 'bat', 'rat']"
-  :windowKeys="['i']"
-  :cellWidth="34"
-  :steps='[
-    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
-    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
-    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
-  ]'
-/>
-
-
-**Complexity** — Time **O(D + S)**; Space **O(D)** where D = total chars in dict.
+**Complexity** — Time **O(D + S)** where D = total root chars, S = sentence chars; Space **O(D)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Trie of roots + prefix walk per word | O(D + S) | O(D) | primary |
+| HashSet + prefix scan | O(S · L²) | O(D) | works but wasteful |
+| Trie | **O(D + S)** | O(D) | canonical |
 
 ## When to use which
 
-- **Ship this** → Trie of roots + prefix walk per word (O(D + S), O(D)). The pattern's standard solution.
+- **Many words, many prefix lookups** → trie.
+- **Longest prefix instead** → don't break early; track deepest `end`.
+- **"Any prefix in dict"** → return boolean at first end.
 
 ## Related problems
 
-- [Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/) — basic trie
-- [Word Search II](/problems/trie-word-search-ii)
+- [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/)
+- [Implement Trie](/problems/implement-trie)
+- [Word Break](https://leetcode.com/problems/word-break/) — DP with trie option

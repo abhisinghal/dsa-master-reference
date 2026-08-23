@@ -2,17 +2,22 @@
 
 *[↗ LeetCode: Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/two-pointers)
 
-Given heights, compute total water trapped.
+Given `n` non-negative integers representing an elevation map, compute how much water it traps after raining.
+
+**Example 1** — `height=[0,1,0,2,1,0,1,3,2,1,2,1]` → `6`
+**Example 2** — `height=[4,2,0,3,2,5]` → `9`
+
+**Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
 ---
 
 ## Approach 1 — Precompute leftMax, rightMax
-For each i, water = min(leftMax[i], rightMax[i]) - h[i]. **O(n)** time, **O(n)** space.
 
----
+For each i, water = `min(leftMax[i], rightMax[i]) - h[i]`. **O(n)** time, **O(n)** space.
 
-## Approach 2 — Opposing two-pointer, no arrays
-**Insight.** Move whichever pointer has the smaller wall — the water level at that pointer is bounded by whichever *known* max is smaller.
+## Approach 2 — Opposing two-pointer (canonical)
+
+**Insight.** Move whichever pointer has the smaller wall — the water level there is bounded by the smaller *known* max.
 
 
 
@@ -36,31 +41,42 @@ int trap(int[] h) {
 
 
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
-
----
+<CodeTrace
+  title="Two-pointer — height=[0,1,0,2,1,0,1,3,2,1,2,1]"
+  :values="['0','1','0','2','1','0','1','3','2','1','2','1']"
+  :windowKeys="['l','r']"
+  :cellWidth="26"
+  :steps='[
+    { pointers: { l: 2, r: 11 }, vars: { lMax: 1, water: 1 }, note: "trapped 1 at idx 2" },
+    { pointers: { l: 5, r: 11 }, vars: { lMax: 2, water: 4 }, note: "accumulating" },
+    { pointers: { l: 7, r: 11 }, vars: { lMax: 3, water: 6 }, note: "final = 6" }
+  ]'
+/>
 
 ## Approach 3 — Monotonic decreasing stack
-Push indices while heights decrease; on rise, pop the "bottom" and compute water in the pocket bounded by new top and current bar. Same **O(n)**, different mental model — useful teaching link to Largest Rectangle.
+
+Push indices while heights decrease; on rise, pop the "bottom" and compute water in the pocket. Same O(n).
+
+**Complexity** — Time **O(n)**; Space **O(1)** for 2p, **O(n)** for arrays/stack.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Precompute leftMax, rightMax | O(n) | O(n) | baseline |
-| Opposing two-pointer, no arrays | O(n) | O(1) | improved |
-| Monotonic decreasing stack | O(n) | — | optimum |
+| leftMax + rightMax arrays | O(n) | O(n) | first-pass answer |
+| Opposing 2p | **O(n)** | **O(1)** | canonical |
+| Monotonic stack | O(n) | O(n) | teaching link |
 
 ## When to use which
 
-- **State it for signal** → Precompute leftMax, rightMax (O(n)). Correct baseline; call it out then move on.
-- **Intermediate refinement** → Opposing two-pointer, no arrays (O(n)).
-- **Ship this** → Monotonic decreasing stack (O(n), —). Expected optimum in interview.
+- **Standard** → opposing 2p (elegant, O(1) space).
+- **Interviewer wants explicit reasoning** → precompute arrays.
+- **2D grid** → [Trapping Rain Water II](/problems/trapping-rain-water-ii) — min-heap.
 
 ## Related problems
 
-- [Trapping Rain Water II](/problems/trapping-rain-water-ii) — 2D min-heap
+- [Trapping Rain Water II](/problems/trapping-rain-water-ii)
 - [Container With Most Water](/problems/two-pointers-container-with-most-water)
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram)

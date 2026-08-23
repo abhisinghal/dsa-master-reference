@@ -2,22 +2,20 @@
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
-Unlimited transactions, but you must skip one day between sell and next buy.
+Unlimited transactions; must skip one day between sell and next buy.
+
+**Example 1** — `prices=[1,2,3,0,2]` → `3`
+
+**Constraints** — `1 ≤ n ≤ 5000`.
 
 ---
 
-## Approach 1 — State-machine DP
-**Insight.** Three states each day:
-- `hold[i]` = max profit holding a stock at end of day i
-- `sold[i]` = max profit just sold today
-- `rest[i]` = max profit not holding, not just sold (cooldown or idle)
+## Approach — State-machine DP (canonical)
 
-Transitions:
-- `hold[i] = max(hold[i-1], rest[i-1] - price[i])`
-- `sold[i] = hold[i-1] + price[i]`
-- `rest[i] = max(rest[i-1], sold[i-1])`
-
-Answer: `max(sold[n-1], rest[n-1])`.
+**States.** `hold`, `sold`, `rest`.
+- `hold = max(hold, rest - price)`
+- `sold = hold + price`
+- `rest = max(rest, sold)`
 
 
 
@@ -42,16 +40,17 @@ int maxProfit(int[] prices) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| State-machine DP | O(n) | O(1) | primary |
+| State machine DP | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → State-machine DP (O(n), O(1)). The pattern's standard solution.
+- **Cooldown** → 3 states.
+- **Fee** → 2 states.
+- **k transactions** → 2k states.
 
 ## Related problems
 
-- [Best Time to Buy and Sell Stock IV](/problems/best-time-to-buy-and-sell-stock-iv) — at most k transactions
-- [Best Time to Buy and Sell Stock with Transaction Fee](/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
-- [Best Time to Buy and Sell Stock](/problems/best-time-to-buy-and-sell-stock) — single transaction
+- [Best Time to Buy and Sell Stock IV](/problems/best-time-to-buy-and-sell-stock-iv)
+- [With Transaction Fee](/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)

@@ -4,28 +4,35 @@
 
 Max subarray sum in a **circular** array.
 
+**Example 1** — `nums=[1,-2,3,-2]` → `3`
+**Example 2** — `nums=[5,-3,5]` → `10`
+**Example 3** — `nums=[-3,-2,-3]` → `-2`
+
+**Constraints** — `1 ≤ n ≤ 3·10⁴`.
+
 ---
 
-## Approach 1 — Kadane on both max and min
+## Approach — Kadane on both max and min (canonical)
+
 **Insight.** Answer is either:
 - **Non-wrapping**: standard Kadane max.
-- **Wrapping**: `totalSum - minSubarraySum` (subtract out the "middle").
+- **Wrapping**: `totalSum - minSubarraySum`.
 
-Return `max(kadaneMax, total - kadaneMin)`. **Edge case:** if all numbers are negative, `total - kadaneMin` computes to 0 (empty subarray) — return `kadaneMax` instead.
+**Edge case.** If all negative, `total - minSubSum = 0` (empty) → return kadaneMax instead.
 
 
 
 ```java
 int maxSubarraySumCircular(int[] nums) {
-    int total = 0, curMax = 0, curMin = 0, maxSum = nums[0], minSum = nums[0];
+    int total = 0, curMax = 0, curMin = 0, maxS = nums[0], minS = nums[0];
     for (int x : nums) {
         total += x;
         curMax = Math.max(curMax + x, x);
-        maxSum = Math.max(maxSum, curMax);
+        maxS = Math.max(maxS, curMax);
         curMin = Math.min(curMin + x, x);
-        minSum = Math.min(minSum, curMin);
+        minS = Math.min(minS, curMin);
     }
-    return maxSum > 0 ? Math.max(maxSum, total - minSum) : maxSum;
+    return maxS > 0 ? Math.max(maxS, total - minS) : maxS;
 }
 ```
 
@@ -37,15 +44,17 @@ int maxSubarraySumCircular(int[] nums) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Kadane on both max and min | O(n) | O(1) | primary |
+| Kadane × 2 + edge | **O(n)** | O(1) | canonical |
 
 ## When to use which
 
-- **Ship this** → Kadane on both max and min (O(n), O(1)). The pattern's standard solution.
+- **Circular** → dual Kadane.
+- **Linear** → standard Kadane.
+- **"Return the subarray"** → track indices.
 
 ## Related problems
 
-- [Maximum Subarray](/problems/maximum-subarray) — Kadane
+- [Maximum Subarray](/problems/maximum-subarray)
 - [Maximum Product Subarray](/problems/maximum-product-subarray)

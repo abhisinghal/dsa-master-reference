@@ -2,17 +2,22 @@
 
 *[↗ LeetCode: Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
-Pairs `[a, b]` chain if next pair `[c, d]` has `c > b`. Max chain length.
+Pair `[a,b]` chains with next `[c,d]` iff `c > b`. Return longest chain length.
+
+**Example 1** — `pairs=[[1,2],[2,3],[3,4]]` → `2`
+**Example 2** — `pairs=[[1,2],[7,8],[4,5]]` → `3`
+
+**Constraints** — `1 ≤ n ≤ 1000`.
 
 ---
 
-## Approach 1 — DP (LIS style)
-Sort by first; `dp[i] = 1 + max(dp[j])` over `j` with `pair[j].b < pair[i].a`. O(n²).
+## Approach 1 — DP (LIS-style)
 
----
+Sort by first; O(n²) DP.
 
-## Approach 2 — Greedy (activity selection)
-**Insight.** Sort by **second** value. Greedily pick every pair whose start &gt; last picked end. Same as interval scheduling.
+## Approach 2 — Sort by second + greedy (canonical)
+
+**Insight.** Activity selection: sort by second value; greedily pick every pair whose start &gt; last picked end.
 
 
 
@@ -20,8 +25,7 @@ Sort by first; `dp[i] = 1 + max(dp[j])` over `j` with `pair[j].b < pair[i].a`. O
 int findLongestChain(int[][] pairs) {
     Arrays.sort(pairs, (a, b) -> a[1] - b[1]);
     int end = Integer.MIN_VALUE, count = 0;
-    for (int[] p : pairs)
-        if (p[0] > end) { end = p[1]; count++; }
+    for (int[] p : pairs) if (p[0] > end) { end = p[1]; count++; }
     return count;
 }
 ```
@@ -34,17 +38,19 @@ int findLongestChain(int[][] pairs) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| DP (LIS style) | O(n²) | — | baseline |
-| Greedy (activity selection) | O(n log n) | O(1) | optimum |
+| DP | O(n²) | O(n) | baseline |
+| Sort + greedy | **O(n log n)** | O(1) | canonical |
 
 ## When to use which
 
-- **State it for signal** → DP (LIS style) (O(n²)). Correct baseline; call it out then move on.
-- **Ship this** → Greedy (activity selection) (O(n log n), O(1)). Expected optimum in interview.
+- **Chain length** → sort by end + greedy.
+- **"Return the chain"** → track predecessor indices.
+- **"Weighted chain"** → DP required.
 
 ## Related problems
 
-- [Non-overlapping Intervals](/problems/non-overlapping-intervals) — identical algorithm
+- [Non-overlapping Intervals](/problems/non-overlapping-intervals)
 - [Minimum Number of Arrows](/problems/minimum-number-of-arrows-to-burst-balloons)
+- [Longest Increasing Subsequence](/problems/longest-increasing-subsequence)

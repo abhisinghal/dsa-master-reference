@@ -1,22 +1,28 @@
-# Sliding Window — Shortest Subarray With Sum at Least K
+# Sliding Window — Shortest Subarray with Sum at Least K
 
 *[↗ LeetCode: Shortest Subarray with Sum at Least K](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
 Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 
+**Example 1** — `nums=[1], k=1` → `1`
+**Example 2** — `nums=[1,2], k=4` → `-1`
+**Example 3** — `nums=[2,-1,2], k=3` → `3`
+
+**Constraints** — `1 ≤ n ≤ 10⁵`; `-10⁵ ≤ nums[i] ≤ 10⁵`.
+
 ---
 
 ## Approach 1 — Sliding window fails
-With negatives, sum is not monotone in window size — can't shrink safely.
 
----
+With negatives, sum isn't monotone in window size — can't shrink safely.
 
-## Approach 2 — Prefix sums + monotonic deque
-**Insight.** Define `P[i]` = prefix sum. Answer = min `j - i` with `P[j] - P[i] ≥ k`. For each `j`, we want the earliest `i < j` with `P[i] ≤ P[j] - k`.
+## Approach 2 — Prefix sums + monotonic deque (canonical)
 
-Maintain a deque of candidate `i` indices where `P` is **increasing**. On processing `j`:
-- **Pop front** while `P[deque.front] ≤ P[j] - k` — those `i` yield candidates (record length) and can be discarded (any later `j'` picking them would give a longer subarray).
-- **Pop back** while `P[deque.back] ≥ P[j]` — a smaller-or-equal prefix at later index dominates.
+**Insight.** Define `P[i]` = prefix sum. Answer = min `j - i` with `P[j] - P[i] ≥ k`. For each `j`, find earliest `i < j` with `P[i] ≤ P[j] - k`.
+
+Maintain a deque of candidate `i` where `P` is increasing:
+- **Pop front** while `P[deque.front] ≤ P[j] - k` — record candidate and discard.
+- **Pop back** while `P[deque.back] ≥ P[j]` — later smaller prefix dominates.
 
 ```java
 int shortestSubarray(int[] nums, int k) {
@@ -35,24 +41,37 @@ int shortestSubarray(int[] nums, int k) {
 }
 ```
 
+<CodeTrace
+  title="Deque on prefix — nums=[2,-1,2], k=3"
+  :values="['0','2','1','3']"
+  :windowKeys="['j']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { j: 1 }, vars: { deque: "[0,1]" }, note: "P=[0,2]" },
+    { pointers: { j: 2 }, vars: { deque: "[0,2]", pop: 1 }, note: "P[2]=1 < P[1]=2 → pop back" },
+    { pointers: { j: 3 }, vars: { deque: "[3]", best: 3 }, note: "P[3]=3, P[3]-P[0]=3 ≥ k → best=3" }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sliding window fails | — | — | baseline |
-| Prefix sums + monotonic deque | O(n) | O(n) | optimum |
+| Sliding window | fails | — | rejected (negatives) |
+| Monotonic deque | **O(n)** | O(n) | canonical |
 
 ## When to use which
 
-- **State it for signal** → Sliding window fails (—). Correct baseline; call it out then move on.
-- **Ship this** → Prefix sums + monotonic deque (O(n), O(n)). Expected optimum in interview.
+- **Positives only** → sliding window fine.
+- **Negatives allowed** → monotonic deque on prefix sums.
+- **"Longest" instead** → different template — deque with reverse condition.
 
 ## Related problems
 
-- [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum) — positives only, plain window
-- [Constrained Subsequence Sum](/problems/constrained-subsequence-sum) — DP with monotonic deque
-- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) — deque template
+- [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum) — positives only
+- [Constrained Subsequence Sum](/problems/constrained-subsequence-sum)
+- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)

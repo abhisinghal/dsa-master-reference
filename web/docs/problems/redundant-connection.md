@@ -2,15 +2,22 @@
 
 *[↗ LeetCode: Redundant Connection](https://leetcode.com/problems/redundant-connection/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-Given `n` edges forming a graph with exactly one extra edge causing a cycle, return that edge (last one appearing in input if multiple candidates).
+Given an undirected graph that starts as a tree with `n` nodes and has **one** extra edge added, return that redundant edge.
 
-**Example** — `[[1,2],[1,3],[2,3]]` → `[2,3]`
+**Example 1** — `edges=[[1,2],[1,3],[2,3]]` → `[2,3]`
+**Example 2** — `edges=[[1,2],[2,3],[3,4],[1,4],[1,5]]` → `[1,4]`
+
+**Constraints** — `3 ≤ n ≤ 1000`; `edges.length == n`.
 
 ---
 
-## Approach — Union-Find, detect cycle on-the-fly
+## Approach 1 — DFS to detect cycle for each edge
 
-**Insight.** Union each edge's endpoints. The first edge whose two endpoints are already in the same set IS the redundant one.
+Try removing each edge; DFS to check connectivity. O(n²).
+
+## Approach 2 — Union-Find (canonical)
+
+**Insight.** Process edges in order. First edge whose endpoints already share a root would create a cycle — that's the redundant one.
 
 
 
@@ -20,39 +27,48 @@ int[] findRedundantConnection(int[][] edges) {
     int[] parent = new int[n + 1];
     for (int i = 0; i <= n; i++) parent[i] = i;
     for (int[] e : edges) {
-        int a = find(parent, e[0]), b = find(parent, e[1]);
-        if (a == b) return e;
-        parent[a] = b;
+        int ra = find(parent, e[0]), rb = find(parent, e[1]);
+        if (ra == rb) return e;
+        parent[ra] = rb;
     }
     return new int[0];
 }
-int find(int[] parent, int x) { while (parent[x] != x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; }
+int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 ```
 
 
 
 <CodeTrace
-  title="DSU cycle detection — [[1,2],[1,3],[2,3]]"
-  :values="['[1,2]','[1,3]','[2,3]']"
-  :windowKeys="['i']"
-  :cellWidth="52"
+  title="UF — edges=[[1,2],[1,3],[2,3]]"
+  :values="['1','2','3']"
+  :windowKeys="['e']"
+  :cellWidth="34"
   :steps='[
-    { pointers: { i: 0 }, vars: { parent: "[0,1,2,3]" }, note: "union(1,2)", added: [0] },
-    { pointers: { i: 1 }, vars: { parent: "[0,2,3,3]" }, note: "union(1,3) — path compression" },
-    { pointers: { i: 2 }, vars: { "find(2)": 3, "find(3)": 3 }, note: "both roots = 3 → cycle! return [2,3]", added: [2] }
+    { pointers: { e: 0 }, vars: { union: "1-2" }, note: "" },
+    { pointers: { e: 1 }, vars: { union: "1-3" }, note: "" },
+    { pointers: { e: 2 }, vars: { conflict: "2-3 already connected" }, note: "return [2,3]" }
   ]'
 />
 
-**Complexity** — Time **O(n α(n))**; Space **O(n)**.
+**Complexity** — Time **O(n · α(n))**; Space **O(n)**.
+
+---
 
 ## Complexity summary
 
-| Approach | Time | Space |
-|---|---|---|
-| Union-Find | **O(n α(n))** | O(n) |
+| Approach | Time | Space | Grade |
+|---|---|---|---|
+| DFS check per edge | O(n²) | O(n) | baseline |
+| Union-Find | **O(n · α(n))** | O(n) | canonical |
+
+## When to use which
+
+- **Undirected cycle detection with edges processed in order** → Union-Find.
+- **Directed variant (LC 685)** → more complex — need to handle 2-parent + cycle cases.
+- **"Return all redundant edges"** → skip returning early; collect all matches.
 
 ## Related problems
 
-- [Redundant Connection II](https://leetcode.com/problems/redundant-connection-ii/) — directed variant
-- [Number of Connected Components](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/)
 - [Number of Provinces](/problems/union-find-number-of-provinces)
+- [Redundant Connection II](https://leetcode.com/problems/redundant-connection-ii/) — directed
+- [Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/)

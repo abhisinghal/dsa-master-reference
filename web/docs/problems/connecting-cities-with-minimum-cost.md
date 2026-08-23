@@ -2,14 +2,22 @@
 
 *[↗ LeetCode: Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
-Given `n` cities and `connections=[city1, city2, cost]`, return min cost to connect all cities, or `-1` if impossible.
+Given `n` cities and `connections[i] = [a, b, cost]`, return the minimum cost to make all connected. `-1` if impossible.
 
-**Example** — `n=3, [[1,2,5],[1,3,6],[2,3,1]]` → `6` (edges [2,3,1] + [1,2,5])
+**Example 1** — `n=3, connections=[[1,2,5],[1,3,6],[2,3,1]]` → `6` (pick [2,3,1] and [1,2,5])
+**Example 2** — `n=4, connections=[[1,2,3],[3,4,4]]` → `-1`
+
+**Constraints** — `1 ≤ n ≤ 10⁴`.
 
 ---
 
-## Approach 1 — Kruskal's MST
-Same skeleton as Min Cost to Connect All Points, but edges are given rather than computed.
+## Approach 1 — Try all spanning trees
+
+Exponential. Baseline.
+
+## Approach 2 — Kruskal MST (canonical)
+
+**Insight.** Sort edges by cost; process ascending. Add if it unions two components; skip otherwise. Stop when we have n-1 edges. If fewer, return -1.
 
 
 
@@ -18,31 +26,31 @@ int minimumCost(int n, int[][] connections) {
     Arrays.sort(connections, (a, b) -> a[2] - b[2]);
     int[] parent = new int[n + 1];
     for (int i = 0; i <= n; i++) parent[i] = i;
-    int cost = 0, added = 0;
+    int cost = 0, edges = 0;
     for (int[] e : connections) {
-        int a = find(parent, e[0]), b = find(parent, e[1]);
-        if (a != b) { parent[a] = b; cost += e[2]; added++; }
+        int ra = find(parent, e[0]), rb = find(parent, e[1]);
+        if (ra == rb) continue;
+        parent[ra] = rb;
+        cost += e[2];
+        if (++edges == n - 1) return cost;
     }
-    return added == n - 1 ? cost : -1;
+    return -1;
 }
-int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }
+int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 ```
 
 
 
-
 <CodeTrace
-  title="Kruskal's MST"
-  :values="['1', '2', '5']"
+  title="Kruskal — n=3, sorted [[2,3,1],[1,2,5],[1,3,6]]"
+  :values="['[2,3,1]','[1,2,5]','[1,3,6]']"
   :windowKeys="['i']"
-  :cellWidth="34"
+  :cellWidth="42"
   :steps='[
-    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize; scan begins." },
-    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through the scan." },
-    { pointers: { i: 2 }, vars: { phase: "done" }, note: "All positions considered — return the answer." }
+    { pointers: { i: 0 }, vars: { cost: 1, edges: 1 }, note: "" },
+    { pointers: { i: 1 }, vars: { cost: 6, edges: 2 }, note: "n-1 reached → return 6" }
   ]'
 />
-
 
 **Complexity** — Time **O(E log E)**; Space **O(n)**.
 
@@ -50,16 +58,19 @@ int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } retur
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Kruskal's MST | O(E log E) | O(n) | primary |
+| Enumerate ST | exponential | O(n) | baseline |
+| Kruskal + UF | **O(E log E)** | O(n) | canonical |
 
 ## When to use which
 
-- **Ship this** → Kruskal's MST (O(E log E), O(n)). The pattern's standard solution.
+- **Sparse graph** → Kruskal.
+- **Dense graph** → Prim + heap: O(E + V log V).
+- **"Second-best MST"** → replace each MST edge with best non-MST alternative.
 
 ## Related problems
 
-- [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points) — coordinates → distances
-- [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village) — MST with virtual source
-- [Find Critical and Pseudo-Critical Edges](/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree)
+- [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points)
+- [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village)
+- [Find Critical/Pseudo-Critical MST Edges](/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree)

@@ -4,15 +4,21 @@
 
 Sorted array; return 1-indexed pair summing to target.
 
+**Example 1** — `numbers=[2,7,11,15], target=9` → `[1,2]`
+**Example 2** — `numbers=[2,3,4], target=6` → `[1,3]`
+**Example 3** — `numbers=[-1,0], target=-1` → `[1,2]`
+
+**Constraints** — `2 ≤ n ≤ 3·10⁴`.
+
 ---
 
-## Approach 1 — Hash map (ignores sort)
-Uses O(n) extra space. Works but wastes the sort.
+## Approach 1 — Hash-map
 
----
+Ignores sortedness. O(n) time O(n) space.
 
-## Approach 2 — Opposing two-pointer
-**Insight.** With a sorted array, the sum monotonically increases when `l` advances or `r` retreats. So we can move deterministically without storing anything.
+## Approach 2 — Opposing two-pointer (canonical)
+
+**Insight.** Sum monotone in pointer movement — deterministic.
 
 
 
@@ -36,17 +42,18 @@ int[] twoSum(int[] nums, int target) {
 
 ## Complexity summary
 
-| Approach | Time | Space | Interview grade |
+| Approach | Time | Space | Grade |
 |---|---|---|---|
-| Hash map (ignores sort) | O(n) | — | baseline |
-| Opposing two-pointer | O(n) | O(1) | optimum |
+| Hash map | O(n) | O(n) | works but wastes sort |
+| Opposing 2p | **O(n)** | **O(1)** | canonical |
 
 ## When to use which
 
-- **State it for signal** → Hash map (ignores sort) (O(n)). Correct baseline; call it out then move on.
-- **Ship this** → Opposing two-pointer (O(n), O(1)). Expected optimum in interview.
+- **Sorted input** → 2p every time.
+- **Not sorted** → hash.
+- **k-Sum on sorted** → recursion with 2p base.
 
 ## Related problems
 
-- [Two Sum](/problems/hashing-two-sum) — unsorted
-- [3Sum](/problems/3sum) — outer loop + two-pointer
+- [Two Sum](/problems/hashing-two-sum)
+- [3Sum](/problems/3sum)
