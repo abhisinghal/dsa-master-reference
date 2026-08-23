@@ -2,6 +2,9 @@
 
 
 <PatternVideo pattern-name="Top-K / Heap" duration="8–12 min" />
+<PatternProgress pattern-id="top-k-heap" problems="top-k-frequent-elements, k-closest-points-to-origin, kth-largest-element-in-a-stream, reorganize-string" />
+
+
 
 ## Why top-k heaps exist — the story
 

@@ -2,6 +2,9 @@
 
 
 &lt;PatternVideo pattern-name="Prefix Sum" duration="8–12 min" /&gt;
+&lt;PatternProgress pattern-id="prefix-sum" problems="prefix-sum-subarray-sum-equals-k, subarray-sums-divisible-by-k, contiguous-array, continuous-subarray-sum, corporate-flight-bookings, car-pooling, range-addition, matrix-block-sum, count-submatrices-with-target-sum, maximal-rectangle" /&gt;
+
+
 
 Suppose someone keeps asking you *"what's the sum of the array between index i and j?"* — over and over, for different ranges. Re-adding the elements every time is wasteful. So precompute a **running total**: let `pre[k]` be the sum of everything *before* index k. Now **any** range sum is a single subtraction, `pre[j+1] − pre[i]` — O(1) per query instead of O(n).
 

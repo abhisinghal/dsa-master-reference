@@ -2,6 +2,9 @@
 
 
 <PatternVideo pattern-name="Sliding Window" duration="8–12 min" />
+<PatternProgress pattern-id="sliding-window" problems="sliding-window-longest-substring, minimum-window-substring, longest-repeating-character-replacement, max-consecutive-ones-iii, minimum-size-subarray-sum, permutation-in-string, find-all-anagrams-in-a-string, longest-substring-with-at-most-k-distinct-characters, fruit-into-baskets, subarrays-with-k-different-integers, binary-subarrays-with-sum, count-number-of-nice-subarrays, subarray-product-less-than-k, number-of-substrings-containing-all-three-characters, longest-palindromic-substring, trapping-rain-water, shortest-subarray-with-sum-at-least-k, jump-game-vi, constrained-subsequence-sum, diet-plan-performance, maximum-average-subarray-i, minimum-window-subsequence, replace-the-substring-for-balanced-string, get-equal-substrings-within-budget, substring-with-concatenation-of-all-words, frequency-of-the-most-frequent-element" />
+
+
 
 ## Why sliding window exists — the story
 

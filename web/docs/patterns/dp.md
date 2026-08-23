@@ -2,6 +2,9 @@
 
 
 &lt;PatternVideo pattern-name="Dynamic Programming" duration="8–12 min" /&gt;
+&lt;PatternProgress pattern-id="dp" problems="house-robber, climbing-stairs, house-robber-ii, delete-and-earn, min-cost-climbing-stairs, coin-change, coin-change-ii, longest-increasing-subsequence, longest-common-subsequence, edit-distance, longest-palindromic-subsequence, partition-equal-subset-sum, target-sum, unique-paths-ii, maximal-square, burst-balloons, regular-expression-matching, palindrome-partitioning-ii, best-time-to-buy-and-sell-stock-with-cooldown, best-time-to-buy-and-sell-stock-with-transaction-fee, best-time-to-buy-and-sell-stock-iv, partition-to-k-equal-sum-subsets, perfect-squares, maximum-sum-circular-subarray, dungeon-game, paint-house-ii, minimum-falling-path-sum, shortest-path-visiting-all-nodes, find-the-shortest-superstring, number-of-ways-to-wear-different-hats-to-each-other, last-stone-weight-ii, minimum-cost-to-merge-stones" /&gt;
+
+
 
 **Grokking arc:** The motivating problem is recursion that asks the same smaller question again and again. Brute force branches over choices. **Can we do better?** Name the repeated state, cache or tabulate it once, then choose an order where dependencies are already known.
 

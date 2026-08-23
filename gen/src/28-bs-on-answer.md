@@ -2,6 +2,9 @@
 
 
 <PatternVideo pattern-name="Binary Search on the Answer" duration="8–12 min" />
+<PatternProgress pattern-id="bs-on-answer" problems="koko-bananas, capacity-to-ship-packages-within-d-days, split-array-largest-sum, median-of-two-sorted-arrays, kth-smallest-element-in-a-sorted-matrix, find-k-th-smallest-pair-distance, minimize-max-distance-to-gas-station, path-with-minimum-effort, divide-chocolate" />
+
+
 
 The motivating problem is usually something like: "What is the minimum speed/capacity/threshold that works?" Brute force tries every possible answer and runs the checker each time, which becomes impossible when the answer range goes up to `10⁹`.
 

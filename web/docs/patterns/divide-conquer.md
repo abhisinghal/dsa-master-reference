@@ -2,6 +2,9 @@
 
 
 &lt;PatternVideo pattern-name="Divide & Conquer" duration="8–12 min" /&gt;
+&lt;PatternProgress pattern-id="divide-conquer" problems="inversions, count-of-range-sum, reverse-pairs, global-and-local-inversions, sort-list" /&gt;
+
+
 
 **Grokking arc:** The motivating problem is counting cross-boundary relationships that brute force checks pair by pair. Brute force compares every pair. **Can we do better?** Split the input, solve organized halves, then let the combine step count many relationships at once.
 

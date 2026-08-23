@@ -43,6 +43,7 @@ import EmailCapture from './EmailCapture.vue'
 import UserProfile from './UserProfile.vue'
 import PatternVideo from './PatternVideo.vue'
 import AiCompanion from './AiCompanion.vue'
+import PatternProgress from './PatternProgress.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -97,6 +98,7 @@ export default {
     app.component('UserProfile', UserProfile)
     app.component('PatternVideo', PatternVideo)
     app.component('AiCompanion', AiCompanion)
+    app.component('PatternProgress', PatternProgress)
     installSolvedCountBadges(router)
   }
 }

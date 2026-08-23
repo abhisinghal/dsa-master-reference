@@ -2,6 +2,9 @@
 
 
 <PatternVideo pattern-name="Fast & Slow Pointers" duration="8–12 min" />
+<PatternProgress pattern-id="fast-slow" problems="fast-slow-linked-list-cycle-ii, linked-list-cycle, middle-of-the-linked-list, happy-number, find-the-duplicate-number, palindrome-linked-list" />
+
+
 
 ## Why fast / slow exists — the story
 

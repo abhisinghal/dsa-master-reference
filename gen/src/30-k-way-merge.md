@@ -2,6 +2,9 @@
 
 
 <PatternVideo pattern-name="K-way Merge" duration="8–12 min" />
+<PatternProgress pattern-id="k-way-merge" problems="k-way-merge-k-sorted-lists, merge-two-sorted-lists, smallest-range-covering-elements-from-k-lists, ugly-number-ii" />
+
+
 
 ## Why k-way merge exists — the story
 

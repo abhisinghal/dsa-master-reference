@@ -2,6 +2,9 @@
 
 
 <PatternVideo pattern-name="Monotonic Stack" duration="8–12 min" />
+<PatternProgress pattern-id="monotonic-stack" problems="monotonic-stack-daily-temperatures, next-greater-element-ii, online-stock-span, remove-k-digits, sum-of-subarray-minimums" />
+
+
 
 Imagine a brute-force solution for "next warmer day": for each day, scan every day to its right until you find a warmer one. That is simple, but it re-checks the same unresolved days again and again — O(n²) in the worst case.
 

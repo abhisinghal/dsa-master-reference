@@ -2,6 +2,9 @@
 
 
 <PatternVideo pattern-name="Quickselect" duration="8–12 min" />
+<PatternProgress pattern-id="quickselect" problems="kth-largest" />
+
+
 
 **Grokking arc:** The motivating problem is finding one rank without needing the whole sorted order. Brute force sorts everything. **Can we do better?** Partition once, compare the pivot's final index with the target rank, and discard the side that cannot contain the answer.
 

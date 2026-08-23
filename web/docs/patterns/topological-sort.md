@@ -2,6 +2,9 @@
 
 
 &lt;PatternVideo pattern-name="Topological Sort" duration="8–12 min" /&gt;
+&lt;PatternProgress pattern-id="topological-sort" problems="course-schedule, alien-dictionary, minimum-height-trees, parallel-courses, sequence-reconstruction" /&gt;
+
+
 
 ## Why topological sort exists — the story
 

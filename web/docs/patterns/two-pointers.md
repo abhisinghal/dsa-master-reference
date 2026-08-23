@@ -2,6 +2,9 @@
 
 
 &lt;PatternVideo pattern-name="Two Pointers" duration="8–12 min" /&gt;
+&lt;PatternProgress pattern-id="two-pointers" problems="container-with-most-water, 3sum-closest, 3sum-smaller, 4sum, valid-palindrome-ii, boats-to-save-people, merge-sorted-array, move-zeroes, sort-array-by-parity, squares-of-a-sorted-array, trapping-rain-water-ii, largest-rectangle-in-histogram, intersection-of-two-arrays-ii, wiggle-sort-ii" /&gt;
+
+
 
 Instead of checking every pair with two nested loops (that's O(n²)), you keep **two indices** and move them cleverly so each step rules out a whole batch of pairs at once. The trick almost always leans on the array being **sorted** — that order is what tells you *which* pointer to move.
 

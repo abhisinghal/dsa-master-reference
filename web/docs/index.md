@@ -39,18 +39,18 @@ features:
     link: /foundations/roadmap
     linkText: See the plan
   - icon: /dsa-master-reference/icons/gotchas.svg
-    title: 20 Java Gotchas
-    details: <code>Integer.MIN_VALUE</code> overflow, autoboxing cost, ArrayDeque vs Stack, TreeMap floor/ceiling — the pitfalls that cost interviews.
-    link: /foundations/java-gotchas
-    linkText: Read gotchas
+    title: 205 Interactive Problems
+    details: Every problem has a Java runner (CheerpJ WASM), progressive hints, company tags, and an AI companion for stuck-on-a-problem help.
+    link: /problems/
+    linkText: Start solving
   - icon: /dsa-master-reference/icons/mocks.svg
-    title: Mock Interview Transcripts
-    details: Easy (Two Sum), Medium (LRU Cache), Hard (Sliding Window Maximum) — verbatim what a senior candidate says.
-    link: /appendix/mock-transcripts
-    linkText: Read transcripts
+    title: Progressive Hints + AI Companion
+    details: 3-level reveal on every problem; AI chat that answers "explain differently", "give me a nudge", "what edge cases?" — never spoils the solution.
+    link: /problems/hashing-two-sum
+    linkText: Try on Two Sum
   - icon: /dsa-master-reference/icons/traps.svg
-    title: 109 Traps Catalog
-    details: Every trap callout consolidated in one place for interview-eve revision.
+    title: 109 Traps + 105 Quiz Questions
+    details: Every trap callout in one appendix. 5-question quiz at the end of every pattern chapter — score is saved locally.
     link: /appendix/traps-catalog
     linkText: Skim traps
   - icon: /dsa-master-reference/icons/comparison.svg

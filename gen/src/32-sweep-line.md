@@ -2,6 +2,9 @@
 
 
 <PatternVideo pattern-name="Sweep Line" duration="8–12 min" />
+<PatternProgress pattern-id="sweep-line" problems="meeting-rooms-ii, my-calendar-ii, the-skyline-problem" />
+
+
 
 ## Why sweep line exists — the story
 

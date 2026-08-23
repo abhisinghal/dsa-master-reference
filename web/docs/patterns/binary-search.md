@@ -2,6 +2,9 @@
 
 
 &lt;PatternVideo pattern-name="Binary Search" duration="8–12 min" /&gt;
+&lt;PatternProgress pattern-id="binary-search" problems="binary-search-rotated-sorted, binary-search, find-minimum-in-rotated-sorted-array, find-peak-element, search-in-rotated-sorted-array-ii" /&gt;
+
+
 
 Start with the motivating problem: find one target in a sorted list. Brute force checks every element from left to right, which is O(n) even though the ordering is screaming useful information at you.
 

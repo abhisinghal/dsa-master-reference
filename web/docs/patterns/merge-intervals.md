@@ -2,6 +2,9 @@
 
 
 &lt;PatternVideo pattern-name="Merge Intervals" duration="8–12 min" /&gt;
+&lt;PatternProgress pattern-id="merge-intervals" problems="merge-intervals-classic, insert-interval, meeting-rooms, interval-list-intersections, employee-free-time, remove-covered-intervals" /&gt;
+
+
 
 ## Why merge intervals exists — the story
 

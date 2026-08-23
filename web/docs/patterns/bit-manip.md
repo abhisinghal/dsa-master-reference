@@ -2,6 +2,9 @@
 
 
 &lt;PatternVideo pattern-name="Bit Manipulation" duration="8–12 min" /&gt;
+&lt;PatternProgress pattern-id="bit-manip" problems="single-number, missing-number, find-the-difference, number-of-1-bits, hamming-distance, power-of-two, reverse-bits, maximum-product-of-word-lengths, sum-of-all-subset-xor-totals, subsets" /&gt;
+
+
 
 **Grokking arc:** The motivating problem is representing tiny sets, parity, or binary properties without bulky data structures. Brute force counts, scans, or stores everything. **Can we do better?** Treat bits as flags and use identities like XOR cancellation or lowest-set-bit removal to collapse work into O(1) operations per element.
 
