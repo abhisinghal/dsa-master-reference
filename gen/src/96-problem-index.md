@@ -1,4 +1,7 @@
 # Master Problem Index &amp; Tracker
+
+<ProblemStats :total="205" />
+
 <p class="secgoal"><b>What &amp; why:</b> every canonical problem in this book, in one checkable list — grouped by pattern/chapter, with difficulty and a direct LeetCode link. Use it as a coverage map and a progress tracker: tick the box each time you can reproduce a solution <b>cold</b>. Chapter titles link back to the full write-up.</p>
 
 > [key] **How to use this tracker** — don't grind top-to-bottom. Follow the [study plan](#study-plans-revision-cadence): learn a pattern's card, then drill its rows here. Re-touch on the [spaced-repetition schedule](#study-plans-revision-cadence). A row isn't "done" when you've *seen* it — it's done when you can **re-derive the invariant and code the template from the name alone**.

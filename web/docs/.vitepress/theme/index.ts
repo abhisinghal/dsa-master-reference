@@ -59,11 +59,14 @@ import StreakTracker from './StreakTracker.vue'
 import ShareButtons from './ShareButtons.vue'
 import ReadingProgressBar from './ReadingProgressBar.vue'
 import BackToTop from './BackToTop.vue'
+import NotFound from './NotFound.vue'
+import ProblemStats from './ProblemStats.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
 export default {
   extends: DefaultTheme,
+  NotFound,
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
       'doc-before': () => h(Breadcrumbs),
@@ -129,6 +132,10 @@ export default {
     app.component('SupportPanel', SupportPanel)
     app.component('StreakTracker', StreakTracker)
     app.component('ShareButtons', ShareButtons)
+    app.component('ReadingProgressBar', ReadingProgressBar)
+    app.component('BackToTop', BackToTop)
+    app.component('NotFound', NotFound)
+    app.component('ProblemStats', ProblemStats)
     installSolvedCountBadges(router)
   }
 }
