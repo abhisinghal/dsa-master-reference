@@ -19,6 +19,9 @@ Smash pairs (larger becomes diff). Minimize final remaining weight.
 />
 ---
 
+<MarkSolved problem-slug="last-stone-weight-ii" />
+
+
 ## Approach — Reduce to subset-sum closest to total/2 (canonical)
 
 **Insight.** Result = `|sum(+) - sum(-)| = |total - 2·subsetSum|`. Pick subset closest to `total/2`.

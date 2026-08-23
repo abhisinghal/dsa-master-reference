@@ -19,6 +19,9 @@ Return all permutations of distinct integers.
 />
 ---
 
+<MarkSolved problem-slug="permutations" />
+
+
 ## Approach 1 — Insert-at-every-position recursion
 
 Build permutations of length k+1 by inserting the (k+1)-th element into every position of length-k perms.

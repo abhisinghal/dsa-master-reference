@@ -18,6 +18,9 @@ Return **count** of distinct N-Queens solutions.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="n-queens-ii" /&gt;
+
+
 ## Approach — Bitmask backtracking (canonical)
 
 **Insight.** Track `cols`, `d1`, `d2` bitmasks. Each row: `avail = ~(cols | d1 | d2) & fullMask`; iterate free positions via `avail & -avail` (lowest set bit). Shift diagonals per row.

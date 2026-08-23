@@ -20,6 +20,9 @@ An **ugly number** has only 2, 3, or 5 as prime factors. `1` is ugly by conventi
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="ugly-number-ii" /&gt;
+
+
 ## Approach 1 — Test each candidate
 
 **Intuition.** For each integer, divide by 2, 3, 5 repeatedly; if it reduces to 1, it's ugly.

@@ -18,6 +18,9 @@ Group strings that are cyclic shifts of each other.
 />
 ---
 
+<MarkSolved problem-slug="group-shifted-strings" />
+
+
 ## Approach — Canonical key = diff pattern (canonical)
 
 **Insight.** Two strings are shifts iff their consecutive char-diffs (mod 26) match.

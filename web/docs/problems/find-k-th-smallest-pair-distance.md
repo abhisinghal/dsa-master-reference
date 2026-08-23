@@ -18,6 +18,9 @@ Given `nums` and integer `k`, return the k-th smallest **absolute** distance amo
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="find-k-th-smallest-pair-distance" /&gt;
+
+
 ## Approach 1 — Enumerate all pairs, sort
 
 O(n²) pairs, O(n² log n²) sort. TLE at n=10⁴.

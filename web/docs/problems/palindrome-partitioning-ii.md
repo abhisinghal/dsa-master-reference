@@ -20,6 +20,9 @@ Min cuts so every part of `s` is palindrome.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="palindrome-partitioning-ii" /&gt;
+
+
 ## Approach — Two DPs (canonical)
 
 **Insight.**

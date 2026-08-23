@@ -19,6 +19,9 @@ Count pairs `(i, j)` with `i < j` and `low ≤ nums[i] XOR nums[j] ≤ high`.
 />
 ---
 
+<MarkSolved problem-slug="count-pairs-with-xor-in-a-range" />
+
+
 ## Approach 1 — All pairs
 
 O(n²). Baseline; borderline TLE.

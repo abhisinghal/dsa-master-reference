@@ -18,6 +18,9 @@ Given a dictionary of roots and a `sentence`, replace each word with its **short
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="replace-words" /&gt;
+
+
 ## Approach 1 — HashSet + prefix scan
 
 For each word, try prefixes of length 1..L; first match wins. O(word · L²) per word.

@@ -20,6 +20,9 @@
 />
 ---
 
+<MarkSolved problem-slug="jump-game" />
+
+
 ## Approach 1 — DP `reachable[i]`
 
 O(n²). Baseline.

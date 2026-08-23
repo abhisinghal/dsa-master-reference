@@ -18,6 +18,9 @@ Given buildings `[left, right, height]`, return the skyline as key points `[x, y
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="the-skyline-problem" /&gt;
+
+
 ## Approach 1 — Every x
 
 For each x, scan all buildings. O(n·max). TLE.

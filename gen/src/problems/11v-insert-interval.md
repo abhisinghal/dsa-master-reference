@@ -20,6 +20,9 @@ Given sorted, non-overlapping `intervals` and a `newInterval`, insert it and mer
 />
 ---
 
+<MarkSolved problem-slug="insert-interval" />
+
+
 ## Approach 1 — Append + full merge
 
 Insert then run [Merge Intervals](/problems/merge-intervals-classic) O(n log n).

@@ -20,6 +20,9 @@ Return the length of the **longest strictly increasing subsequence** of `nums`.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="longest-increasing-subsequence" /&gt;
+
+
 ## Approach 1 — Brute force recursion
 
 **Intuition.** For each `i`, either include or exclude — `2^n` subsets.

@@ -20,6 +20,9 @@ Sorted array rotated at unknown pivot, **may contain duplicates**. Return true i
 />
 ---
 
+<MarkSolved problem-slug="search-in-rotated-sorted-array-ii" />
+
+
 ## Approach 1 — Linear scan
 
 O(n). Correct baseline; interviewer may accept if worst-case duplicates force it anyway.

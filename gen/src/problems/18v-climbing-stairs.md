@@ -19,6 +19,9 @@ Steps of 1 or 2. Number of ways to reach step `n`.
 />
 ---
 
+<MarkSolved problem-slug="climbing-stairs" />
+
+
 ## Approach 1 — Recursion + memo
 O(n).
 

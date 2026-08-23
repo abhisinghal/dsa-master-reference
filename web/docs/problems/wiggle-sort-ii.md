@@ -19,6 +19,9 @@ Reorder `nums` so `a[0] < a[1] > a[2] < a[3] …` (strict inequality).
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="wiggle-sort-ii" /&gt;
+
+
 ## Approach 1 — Sort + interleave (canonical simple)
 
 Sort. Place larger half at odd indices in reverse; smaller half at even indices in reverse. Reverse order avoids adjacent duplicates on boundaries.

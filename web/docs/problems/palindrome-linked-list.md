@@ -20,6 +20,9 @@ Given the head of a singly linked list, return `true` iff it's a palindrome.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="palindrome-linked-list" /&gt;
+
+
 ## Approach 1 — Copy to array, two-pointer
 
 **Intuition.** Materialize into `int[]`, then classic two-pointer palindrome check.

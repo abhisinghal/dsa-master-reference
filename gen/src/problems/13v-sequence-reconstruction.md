@@ -20,6 +20,9 @@ Given a target permutation `nums` and a list of subsequences `sequences`, return
 />
 ---
 
+<MarkSolved problem-slug="sequence-reconstruction" />
+
+
 ## Approach 1 — Try every topological order
 
 Explode to O(n!) — baseline only.

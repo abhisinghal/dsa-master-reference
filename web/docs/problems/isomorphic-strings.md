@@ -20,6 +20,9 @@ Return true iff there's a **bijection** of characters mapping `s → t`.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="isomorphic-strings" /&gt;
+
+
 ## Approach — Two maps (canonical)
 
 **Insight.** One-way map is insufficient — two source chars must not map to the same target. Track both `s→t` and `t→s`.

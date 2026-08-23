@@ -19,6 +19,9 @@ Min count of perfect squares summing to `n`.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="perfect-squares" /&gt;
+
+
 ## Approach 1 — DP (min coin change with square coins)
 
 `dp[i] = 1 + min(dp[i - k²])` over `k² ≤ i`.

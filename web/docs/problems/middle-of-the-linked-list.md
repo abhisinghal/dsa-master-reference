@@ -20,6 +20,9 @@ Given the head of a singly linked list, return the middle node. If there are two
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="middle-of-the-linked-list" /&gt;
+
+
 ## Approach 1 — Two passes: count then jump
 
 **Intuition.** Walk once to get length `n`; walk again `n/2` steps.

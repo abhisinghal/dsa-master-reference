@@ -20,6 +20,9 @@ Min intervals to remove so the rest are non-overlapping.
 />
 ---
 
+<MarkSolved problem-slug="non-overlapping-intervals" />
+
+
 ## Approach — Sort by end + activity selection (canonical)
 
 **Insight.** Equivalent to maximizing non-overlapping intervals; count to remove = n - maxKept. Sort by end; greedily keep intervals with start ≥ prev end.

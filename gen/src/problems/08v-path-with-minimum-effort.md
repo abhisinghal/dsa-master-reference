@@ -18,6 +18,9 @@ In a 2D grid of heights, an "effort" of a path is the max abs-diff between conse
 />
 ---
 
+<MarkSolved problem-slug="path-with-minimum-effort" />
+
+
 ## Approach 1 — Dijkstra with edge weight = max-so-far
 
 O(mn log mn).

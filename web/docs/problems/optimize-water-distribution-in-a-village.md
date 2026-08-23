@@ -18,6 +18,9 @@ Given `n` houses, `wells[i]` = cost to dig a well at house `i`, and `pipes[i] = 
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="optimize-water-distribution-in-a-village" /&gt;
+
+
 ## Approach — Add virtual node + MST (canonical)
 
 **Insight.** Model wells as **virtual pipes from node 0** to each house. Now the problem is a standard MST over `n+1` nodes.

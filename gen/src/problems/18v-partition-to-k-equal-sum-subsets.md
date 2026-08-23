@@ -19,6 +19,9 @@ Split nums into k subsets each summing to `total/k`.
 />
 ---
 
+<MarkSolved problem-slug="partition-to-k-equal-sum-subsets" />
+
+
 ## Approach 1 — Backtracking with sort-desc + pruning
 Sort desc; place each into buckets; skip mirrored-empty.
 

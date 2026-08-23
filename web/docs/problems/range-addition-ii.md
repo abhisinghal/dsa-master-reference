@@ -18,6 +18,9 @@ Given matrix of zeros `m × n` and operations `[a, b]` that add 1 to every cell 
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="range-addition-ii" /&gt;
+
+
 ## Approach 1 — Actually apply operations
 
 O(#ops · m·n). Baseline.

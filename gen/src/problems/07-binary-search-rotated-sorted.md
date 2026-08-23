@@ -20,6 +20,9 @@ Given a rotated ascending array `nums` and `target`, return its index or `-1`. T
 />
 ---
 
+<MarkSolved problem-slug="binary-search-rotated-sorted" />
+
+
 ## Approach 1 — Brute force (linear scan)
 
 **Intuition.** Ignore the rotation; scan.

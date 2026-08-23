@@ -20,6 +20,9 @@ Koko has `n` piles of bananas, `piles[i]` in each. She can eat at speed `k` bana
 />
 ---
 
+<MarkSolved problem-slug="bs-on-answer-koko-bananas" />
+
+
 ## Approach 1 — Brute force (try every speed)
 
 **Intuition.** Try `k = 1, 2, 3, …` in order; return the first `k` that finishes on time.

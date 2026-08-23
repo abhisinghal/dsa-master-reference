@@ -19,6 +19,9 @@ Return the sum of XOR of every subset of `nums` (including empty).
 />
 ---
 
+<MarkSolved problem-slug="sum-of-all-subset-xor-totals" />
+
+
 ## Approach 1 — Enumerate all 2ⁿ subsets
 
 O(2ⁿ · n). Works for n ≤ 20.

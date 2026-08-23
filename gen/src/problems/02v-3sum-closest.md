@@ -20,6 +20,9 @@ Given an integer array `nums` of length `n` and integer `target`, return the sum
 />
 ---
 
+<MarkSolved problem-slug="3sum-closest" />
+
+
 ## Approach 1 — Triple nested loop
 
 **Intuition.** Enumerate every triplet; keep the sum with smallest `|sum - target|`.

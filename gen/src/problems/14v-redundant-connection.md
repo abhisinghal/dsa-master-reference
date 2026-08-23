@@ -19,6 +19,9 @@ Given an undirected graph that starts as a tree with `n` nodes and has **one** e
 />
 ---
 
+<MarkSolved problem-slug="redundant-connection" />
+
+
 ## Approach 1 — DFS to detect cycle for each edge
 
 Try removing each edge; DFS to check connectivity. O(n²).

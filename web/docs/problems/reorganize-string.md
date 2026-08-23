@@ -20,6 +20,9 @@ Given string `s`, rearrange characters so no two adjacent characters are the sam
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="reorganize-string" /&gt;
+
+
 ## Approach 1 — Try all permutations (backtracking)
 
 O(n!). Baseline; only correct for tiny n.

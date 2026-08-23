@@ -19,6 +19,9 @@
 />
 ---
 
+<MarkSolved problem-slug="combination-sum-iii" />
+
+
 ## Approach — Backtracking with pruning (canonical)
 
 **Prunes:** `path.size() == k`, `rem < 0`, `i > rem`.

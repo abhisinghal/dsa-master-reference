@@ -18,6 +18,9 @@ Largest square of `1`s in binary matrix. Return area.
 />
 ---
 
+<MarkSolved problem-slug="maximal-square" />
+
+
 ## Approach — DP `side[i][j]` = largest square ending at (i, j) (canonical)
 
 **Insight.** `mat[i][j] == '1'` → `side[i][j] = 1 + min(side[i-1][j], side[i][j-1], side[i-1][j-1])`.

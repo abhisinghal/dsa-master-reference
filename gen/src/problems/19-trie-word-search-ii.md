@@ -18,6 +18,9 @@ Given `board[m][n]` of letters and a dictionary `words`, return all words in `wo
 />
 ---
 
+<MarkSolved problem-slug="trie-word-search-ii" />
+
+
 ## Approach 1 — DFS per word
 
 **Intuition.** For each word, DFS from every cell; return true if the whole word can be traced.

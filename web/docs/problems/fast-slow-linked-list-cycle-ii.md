@@ -20,6 +20,9 @@ Given the head of a linked list, return the node where the cycle begins, or `nul
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="fast-slow-linked-list-cycle-ii" /&gt;
+
+
 ## Approach 1 — Brute force (hash-set of visited nodes)
 
 **Intuition.** Walk the list; store each node reference in a set; the first re-encountered node is the cycle entry.

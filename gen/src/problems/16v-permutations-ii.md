@@ -18,6 +18,9 @@ All **unique** permutations of nums (may contain duplicates).
 />
 ---
 
+<MarkSolved problem-slug="permutations-ii" />
+
+
 ## Approach — Sort + used[] + skip equal-and-unused (canonical)
 
 **Insight.** Sort. Skip `nums[i]` iff `nums[i] == nums[i-1] AND !used[i-1]` — enforces canonical order among duplicates.

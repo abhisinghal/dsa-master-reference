@@ -19,6 +19,9 @@ Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly 
 />
 ---
 
+<MarkSolved problem-slug="candy" />
+
+
 ## Approach — Two-pass sweep (canonical)
 
 **Insight.** Left→right: enforce "left neighbor". Right→left: enforce "right neighbor". Take max at each position.

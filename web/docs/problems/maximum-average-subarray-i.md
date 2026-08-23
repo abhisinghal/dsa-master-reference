@@ -17,6 +17,9 @@ Return the max average of any contiguous subarray of length exactly `k`.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="maximum-average-subarray-i" /&gt;
+
+
 ## Approach — Fixed-window running sum (canonical)
 
 **Insight.** Max avg = max sum ÷ k over any size-k window.

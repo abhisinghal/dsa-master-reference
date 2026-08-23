@@ -19,6 +19,9 @@ Return max product of a contiguous subarray.
 />
 ---
 
+<MarkSolved problem-slug="maximum-product-subarray" />
+
+
 ## Approach 1 — Try every subarray
 
 O(n²). Baseline.

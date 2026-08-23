@@ -19,6 +19,9 @@ Undirected graph. Shortest length path visiting every node (may reuse).
 />
 ---
 
+<MarkSolved problem-slug="shortest-path-visiting-all-nodes" />
+
+
 ## Approach — Bitmask BFS (canonical)
 
 **Insight.** State = `(node, visitedMask)`. BFS from all `(i, 1 << i)` starts.

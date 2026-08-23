@@ -17,6 +17,9 @@ Given nums and budget `k` (increments allowed), max frequency of any single valu
 />
 ---
 
+<MarkSolved problem-slug="frequency-of-the-most-frequent-element" />
+
+
 ## Approach — Sort + sliding window with sum budget (canonical)
 
 **Insight.** Sort. In window `[l, r]` of sorted nums, raising every value to `nums[r]` costs `nums[r] * (r-l+1) - windowSum`. Extend r; while cost > k, shrink l.

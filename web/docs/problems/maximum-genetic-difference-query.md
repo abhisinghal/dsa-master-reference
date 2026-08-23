@@ -18,6 +18,9 @@ Given a rooted tree of gene values `parents[]` and queries `[node, val]`, for ea
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="maximum-genetic-difference-query" /&gt;
+
+
 ## Approach — Offline DFS + binary trie with subtree insert/erase (canonical)
 
 **Insight.** Group queries by node. DFS from root; on entering a node, insert its value into a shared binary trie; on leaving, remove it. Answer each node's queries when the trie contains exactly the ancestor path.

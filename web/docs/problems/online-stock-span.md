@@ -32,6 +32,9 @@ S.next(85);    // 6
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="online-stock-span" /&gt;
+
+
 ## Approach 1 — Store all prices, scan on each `next`
 
 **Intuition.** Keep list of all prices; on each call, walk backward counting.

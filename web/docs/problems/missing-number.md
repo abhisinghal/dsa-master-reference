@@ -20,6 +20,9 @@ Given `nums` containing `n` distinct integers in `[0, n]`, return the missing on
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="missing-number" /&gt;
+
+
 ## Approach 1 — Sort, find gap
 
 O(n log n). Baseline.

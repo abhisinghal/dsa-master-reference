@@ -19,6 +19,9 @@ Given bar heights, return the largest rectangle contained.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="largest-rectangle-in-histogram" /&gt;
+
+
 ## Approach 1 — For each bar expand outward
 
 O(n²). Baseline.

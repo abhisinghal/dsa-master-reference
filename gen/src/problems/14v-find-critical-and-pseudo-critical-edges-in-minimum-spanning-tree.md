@@ -20,6 +20,9 @@ Given a graph, classify each edge:
 />
 ---
 
+<MarkSolved problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />
+
+
 ## Approach — Kruskal with per-edge experiments (canonical)
 
 **Insight.** Compute MST cost baseline.

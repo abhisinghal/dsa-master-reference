@@ -18,6 +18,9 @@ Given sorted station positions and integer `k`, add `k` new stations to minimize
 />
 ---
 
+<MarkSolved problem-slug="minimize-max-distance-to-gas-station" />
+
+
 ## Approach 1 — Priority queue (greedy)
 
 Track each gap's current "sub-gap size after splits"; repeatedly split the largest. O(k log n).

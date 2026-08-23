@@ -20,6 +20,9 @@ Count subarrays whose sum is divisible by `k`.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="subarray-sums-divisible-by-k" /&gt;
+
+
 ## Approach 1 — Every subarray
 
 O(n²) sums. Baseline.

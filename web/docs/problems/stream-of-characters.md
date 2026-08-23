@@ -18,6 +18,9 @@ Design `StreamChecker`. `query(c)` returns true iff the last k chars form a word
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="stream-of-characters" /&gt;
+
+
 ## Approach 1 — Materialize stream, check every suffix
 
 O(k · #dict) per query. Baseline.

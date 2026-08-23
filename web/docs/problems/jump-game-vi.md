@@ -19,6 +19,9 @@ Start at 0. At index `i`, jump 1..k steps. Max total score reaching last index.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="jump-game-vi" /&gt;
+
+
 ## Approach — DP + monotonic deque (canonical)
 
 **Insight.** `dp[i] = nums[i] + max(dp[i-k..i-1])`. Window max via deque of indices with decreasing dp.

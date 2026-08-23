@@ -20,6 +20,9 @@ Given matrix and integer `target`, count submatrices whose sum equals `target`.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="count-submatrices-with-target-sum" /&gt;
+
+
 ## Approach 1 — Enumerate every submatrix
 
 O(m²·n²·mn). TLE.

@@ -20,6 +20,9 @@ Given a binary array `nums` and integer `k`, return the maximum length of a suba
 />
 ---
 
+<MarkSolved problem-slug="max-consecutive-ones-iii" />
+
+
 ## Approach 1 — Try every subarray
 
 **Intuition.** For each `[i, j]`, count zeros; if `zeros ≤ k`, track length.

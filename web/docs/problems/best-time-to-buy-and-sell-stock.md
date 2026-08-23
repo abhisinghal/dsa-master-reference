@@ -19,6 +19,9 @@ At most one buy + one sell. Max profit.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock" /&gt;
+
+
 ## Approach 1 — Compare every pair
 
 O(n²). Baseline.

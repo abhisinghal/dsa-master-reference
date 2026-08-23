@@ -19,6 +19,9 @@ Given `nums` and integer `k`, return the k-th **largest** element (1-indexed). O
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="quickselect-kth-largest" /&gt;
+
+
 ## Approach 1 — Sort + index
 
 **Intuition.** Sort ascending; return `nums[n - k]`.

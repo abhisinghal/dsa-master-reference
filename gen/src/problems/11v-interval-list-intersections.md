@@ -19,6 +19,9 @@ Two lists of **sorted, disjoint** intervals. Return their intersection.
 />
 ---
 
+<MarkSolved problem-slug="interval-list-intersections" />
+
+
 ## Approach 1 — All pairs
 
 O(n·m). Baseline.

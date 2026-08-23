@@ -20,6 +20,9 @@ Given a string `s` and integer `k`, return the length of the longest substring c
 />
 ---
 
+<MarkSolved problem-slug="longest-substring-with-at-most-k-distinct-characters" />
+
+
 ## Approach 1 — Try every substring
 
 **Intuition.** For each `s[i..j]`, count distinct characters; track the longest window with ≤ `k` distinct.

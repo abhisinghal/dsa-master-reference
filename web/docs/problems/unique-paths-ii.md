@@ -19,6 +19,9 @@ Grid with obstacles. Count paths from top-left to bottom-right (right/down).
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="unique-paths-ii" /&gt;
+
+
 ## Approach — Grid DP with obstacle guard (canonical)
 
 **Insight.** `dp[i][j] = 0` if obstacle; else `dp[i-1][j] + dp[i][j-1]`.

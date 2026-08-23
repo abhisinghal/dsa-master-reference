@@ -20,6 +20,9 @@ Sorted array; return 1-indexed pair summing to target.
 />
 ---
 
+<MarkSolved problem-slug="two-sum-ii-input-array-is-sorted" />
+
+
 ## Approach 1 — Hash-map
 
 Ignores sortedness. O(n) time O(n) space.

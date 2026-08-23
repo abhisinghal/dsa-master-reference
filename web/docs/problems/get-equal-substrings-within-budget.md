@@ -18,6 +18,9 @@ Given `s`, `t`, `maxCost`. Convert `s[i]` → `t[i]` costs `|s[i] - t[i]|`. Retu
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="get-equal-substrings-within-budget" /&gt;
+
+
 ## Approach — Sliding window on the diff array (canonical)
 
 **Insight.** Compute `diff[i] = |s[i] - t[i]|`. Now: longest subarray with sum ≤ maxCost.

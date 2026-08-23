@@ -19,6 +19,9 @@ Given length `n` and updates `[start, end, val]`, return the array after applyin
 />
 ---
 
+<MarkSolved problem-slug="range-addition" />
+
+
 ## Approach 1 — Direct fill
 
 O(n · m). Baseline.

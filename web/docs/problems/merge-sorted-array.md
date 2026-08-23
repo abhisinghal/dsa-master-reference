@@ -19,6 +19,9 @@ Merge `nums2` into `nums1` in-place; `nums1` has size `m+n` with last `n` slots 
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="merge-sorted-array" /&gt;
+
+
 ## Approach 1 — Copy then sort
 
 O((m+n) log(m+n)). Baseline.

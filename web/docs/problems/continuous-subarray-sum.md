@@ -20,6 +20,9 @@ Return true iff there is a subarray of length **≥ 2** whose sum is a multiple 
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="continuous-subarray-sum" /&gt;
+
+
 ## Approach 1 — Every subarray
 
 O(n²). Baseline.

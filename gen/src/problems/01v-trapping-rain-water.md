@@ -19,6 +19,9 @@ Given `n` non-negative integers representing an elevation map, compute how much 
 />
 ---
 
+<MarkSolved problem-slug="trapping-rain-water" />
+
+
 ## Approach 1 — Precompute leftMax, rightMax
 
 For each i, water = `min(leftMax[i], rightMax[i]) - h[i]`. **O(n)** time, **O(n)** space.

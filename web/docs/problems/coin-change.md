@@ -20,6 +20,9 @@ Given `coins` (unbounded supply of each) and `amount`, return the **minimum** nu
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="coin-change" /&gt;
+
+
 ## Approach 1 — Brute force recursion
 
 **Intuition.** `f(rem) = 1 + min(f(rem - c))` over all coins. Base: `f(0) = 0`; `f(<0) = ∞`.

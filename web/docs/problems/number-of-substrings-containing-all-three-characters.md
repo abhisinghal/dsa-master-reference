@@ -18,6 +18,9 @@ Given a string `s` over `{a, b, c}`, return the number of substrings containing 
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="number-of-substrings-containing-all-three-characters" /&gt;
+
+
 ## Approach 1 — Every substring
 
 **Intuition.** For each `[i, j]`, count occurrences of `a`, `b`, `c`; increment if all ≥ 1.

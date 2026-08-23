@@ -19,6 +19,9 @@ Return max sum `< k` from any pair, or `-1`.
 />
 ---
 
+<MarkSolved problem-slug="two-sum-less-than-k" />
+
+
 ## Approach — Sort + two pointer (canonical)
 
 **Insight.** Sort. `l`, `r` from ends: if `sum < k`, record and advance `l`; else retreat `r`.

@@ -19,6 +19,9 @@ Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i =
 />
 ---
 
+<MarkSolved problem-slug="beautiful-arrangement" />
+
+
 ## Approach 1 — Backtracking with used-mask
 
 ```java

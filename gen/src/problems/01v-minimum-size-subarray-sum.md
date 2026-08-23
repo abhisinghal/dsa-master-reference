@@ -20,6 +20,9 @@ Given a positive-int array `nums` and target `target`, return the minimal length
 />
 ---
 
+<MarkSolved problem-slug="minimum-size-subarray-sum" />
+
+
 ## Approach 1 — All subarrays
 
 **Intuition.** For each `i`, expand `j` and accumulate the sum. On first `sum ≥ target`, record length and break the inner loop (extending further only lengthens).

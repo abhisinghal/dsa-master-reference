@@ -18,6 +18,9 @@ String of Q,W,E,R (length n divisible by 4). Return length of smallest substring
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="replace-the-substring-for-balanced-string" /&gt;
+
+
 ## Approach — Sliding window over "outside" counts (canonical)
 
 **Insight.** Substring `[l, r]` is a valid replacement window iff **outside** it, no letter exceeds `n/4`. Shrink l while condition holds; track min length.

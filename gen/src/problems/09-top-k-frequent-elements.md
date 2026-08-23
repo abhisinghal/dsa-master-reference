@@ -19,6 +19,9 @@ Given `nums` and integer `k`, return the `k` most frequent elements (any order).
 />
 ---
 
+<MarkSolved problem-slug="top-k-frequent-elements" />
+
+
 ## Approach 1 — Sort by frequency
 
 **Intuition.** Count frequencies. Sort entries by frequency desc. Take the top `k`.

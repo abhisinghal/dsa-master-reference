@@ -19,6 +19,9 @@ Given a list of intervals, merge all overlapping ones and return the result.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="merge-intervals-classic" /&gt;
+
+
 ## Approach 1 — Brute force (compare every pair)
 
 **Intuition.** For each pair, if they overlap, merge and restart.

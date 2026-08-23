@@ -20,6 +20,9 @@ Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="shortest-subarray-with-sum-at-least-k" /&gt;
+
+
 ## Approach 1 — Sliding window fails
 
 With negatives, sum isn't monotone in window size — can't shrink safely.

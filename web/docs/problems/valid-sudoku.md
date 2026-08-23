@@ -19,6 +19,9 @@ Check partial Sudoku validity (no duplicates within row/col/box among filled cel
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="valid-sudoku" /&gt;
+
+
 ## Approach 1 — Three passes
 
 Rows, columns, boxes — separate scans.

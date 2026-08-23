@@ -20,6 +20,9 @@ Given a sorted array rotated at some unknown pivot, return the minimum. All valu
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="find-minimum-in-rotated-sorted-array" /&gt;
+
+
 ## Approach 1 — Linear scan
 
 O(n). Rejected.

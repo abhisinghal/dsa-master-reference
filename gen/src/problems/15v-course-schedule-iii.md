@@ -18,6 +18,9 @@ Each course `[duration, lastDay]`. Take max number of courses (one at a time). E
 />
 ---
 
+<MarkSolved problem-slug="course-schedule-iii" />
+
+
 ## Approach — Sort by deadline + max-heap regret (canonical)
 
 **Insight.** Sort by deadline ascending. Iterate; always take the course; push duration into max-heap. If total time exceeds current deadline, **swap out** the previously-taken course with the largest duration.

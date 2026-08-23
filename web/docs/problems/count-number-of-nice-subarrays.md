@@ -20,6 +20,9 @@ Given an array `nums` and integer `k`, return the number of contiguous subarrays
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="count-number-of-nice-subarrays" /&gt;
+
+
 ## Approach 1 — Every subarray
 
 **Intuition.** For each `[i, j]`, count odd numbers.

@@ -19,6 +19,9 @@ Transform `beginWord` → `endWord` by changing one letter at a time; each inter
 />
 ---
 
+<MarkSolved problem-slug="word-ladder" />
+
+
 ## Approach 1 — BFS over all pairs
 
 Build edges by comparing every pair. O(N² · L). TLE.

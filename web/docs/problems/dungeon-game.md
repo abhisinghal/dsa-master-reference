@@ -19,6 +19,9 @@ Knight from top-left to bottom-right; each cell gives/takes HP; HP ≥ 1 always.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="dungeon-game" /&gt;
+
+
 ## Approach — Reverse DP from bottom-right (canonical)
 
 **Insight.** Forward fails: HP need depends on future losses. Instead DP backward: `need[i][j]` = min HP required to survive starting here.

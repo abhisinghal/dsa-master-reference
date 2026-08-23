@@ -48,6 +48,8 @@ import FeedbackWidget from './FeedbackWidget.vue'
 import ShortcutHint from './ShortcutHint.vue'
 import OnboardingTour from './OnboardingTour.vue'
 import PageAnalytics from './PageAnalytics.vue'
+import MarkSolved from './MarkSolved.vue'
+import StorageManager from './StorageManager.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -108,6 +110,8 @@ export default {
     app.component('ShortcutHint', ShortcutHint)
     app.component('OnboardingTour', OnboardingTour)
     app.component('PageAnalytics', PageAnalytics)
+    app.component('MarkSolved', MarkSolved)
+    app.component('StorageManager', StorageManager)
     installSolvedCountBadges(router)
   }
 }

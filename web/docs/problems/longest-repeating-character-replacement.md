@@ -20,6 +20,9 @@ Given `s` (uppercase A–Z) and integer `k`, return the length of the longest su
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="longest-repeating-character-replacement" /&gt;
+
+
 ## Approach 1 — Try every substring
 
 **Intuition.** For each `s[i..j]`, count the most frequent letter `maxFreq`; the window is valid iff `(j - i + 1) - maxFreq ≤ k`. Track the longest.

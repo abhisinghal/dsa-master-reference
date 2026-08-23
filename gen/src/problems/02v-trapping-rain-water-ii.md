@@ -18,6 +18,9 @@
 />
 ---
 
+<MarkSolved problem-slug="trapping-rain-water-ii" />
+
+
 ## Approach — Min-heap Dijkstra-style border expansion (canonical)
 
 **Insight.** Water at any cell is bounded by the shortest wall on ANY path to the boundary. Grow a "reached" set from all border cells; always process the **lowest wall reachable** first. When we enter a lower neighbor, water = `current wall - height`; that neighbor becomes a wall at the higher level.

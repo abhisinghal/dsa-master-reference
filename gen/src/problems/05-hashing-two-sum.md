@@ -20,6 +20,9 @@ Given `nums` and `target`, return indices `[i, j]` such that `nums[i] + nums[j] 
 />
 ---
 
+<MarkSolved problem-slug="hashing-two-sum" />
+
+
 ## Approach 1 — Brute force (nested loops)
 
 **Intuition.** Check every pair `(i, j)` with `j > i`. If they sum to target, return them.

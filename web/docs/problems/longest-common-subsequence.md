@@ -20,6 +20,9 @@ Length of longest subsequence appearing in both strings.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="longest-common-subsequence" /&gt;
+
+
 ## Approach — 2D DP (canonical)
 
 **Insight.** `dp[i][j]` = LCS of prefixes.

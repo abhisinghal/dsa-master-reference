@@ -17,6 +17,9 @@ Return `true` iff **number of global inversions == number of local inversions**.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="global-and-local-inversions" /&gt;
+
+
 ## Approach 1 — Count both explicitly
 
 O(n²) for global. Baseline.

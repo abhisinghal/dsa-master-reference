@@ -19,6 +19,9 @@ Count subarrays whose sum lies in `[lower, upper]` (inclusive).
 />
 ---
 
+<MarkSolved problem-slug="count-of-range-sum" />
+
+
 ## Approach 1 — All subarrays
 
 O(n²). Baseline.

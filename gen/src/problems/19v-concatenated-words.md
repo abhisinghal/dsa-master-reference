@@ -18,6 +18,9 @@ Given a list of distinct words, return all words that can be built as a concaten
 />
 ---
 
+<MarkSolved problem-slug="concatenated-words" />
+
+
 ## Approach 1 — Brute force per word
 
 For each word, try all splits recursively; check dict membership. Exponential.

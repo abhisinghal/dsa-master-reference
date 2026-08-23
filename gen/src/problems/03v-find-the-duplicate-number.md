@@ -20,6 +20,9 @@ Given an array `nums` of `n + 1` integers where each is in `[1, n]`, there is ex
 />
 ---
 
+<MarkSolved problem-slug="find-the-duplicate-number" />
+
+
 ## Approach 1 — Sort
 
 O(n log n) time, O(1) if sort in place — but modifies input (disallowed).

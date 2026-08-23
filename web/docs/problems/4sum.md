@@ -20,6 +20,9 @@ Given an integer array `nums` and integer `target`, return all unique quadruplet
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="4sum" /&gt;
+
+
 ## Approach 1 — Quadruple loop + set for dedup
 
 **Intuition.** Enumerate every `(i, j, k, l)`; check sum; sort quadruplet, put in set.

@@ -20,6 +20,9 @@ Given the heads of two sorted linked lists, merge them into one sorted list.
 />
 ---
 
+<MarkSolved problem-slug="merge-two-sorted-lists" />
+
+
 ## Approach 1 — Materialize and re-sort
 
 O((m+n) log (m+n)). Baseline; wastes existing sortedness.

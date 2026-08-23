@@ -20,6 +20,9 @@ Given an integer array `nums` (may contain negatives) and integer `k`, return th
 />
 ---
 
+<MarkSolved problem-slug="prefix-sum-subarray-sum-equals-k" />
+
+
 ## Approach 1 — Brute force (all subarrays)
 
 **Intuition.** Enumerate every subarray `[i..j]`; sum it; count those equal to `k`.

@@ -18,6 +18,9 @@ Given a positive-int array `nums` and integer `k`, return the number of contiguo
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="subarray-product-less-than-k" /&gt;
+
+
 ## Approach 1 — Every subarray
 
 **Intuition.** For each `[i, j]`, compute product; if `< k`, increment.

@@ -20,6 +20,9 @@ Max subarray sum in a **circular** array.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="maximum-sum-circular-subarray" /&gt;
+
+
 ## Approach — Kadane on both max and min (canonical)
 
 **Insight.** Answer is either:

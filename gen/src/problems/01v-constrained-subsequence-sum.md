@@ -20,6 +20,9 @@ Max sum of a subsequence where every two consecutive chosen indices differ by at
 />
 ---
 
+<MarkSolved problem-slug="constrained-subsequence-sum" />
+
+
 ## Approach — DP with monotonic deque (canonical)
 
 **Insight.** `dp[i] = nums[i] + max(0, max(dp[i-k..i-1]))`. Window-max via deque of indices with **decreasing** `dp` values → front is window max.

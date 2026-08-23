@@ -19,6 +19,9 @@ Assign + or − to each `nums[i]`; count ways to reach `target`.
 />
 ---
 
+<MarkSolved problem-slug="target-sum" />
+
+
 ## Approach 1 — Backtracking
 O(2ⁿ). Baseline.
 

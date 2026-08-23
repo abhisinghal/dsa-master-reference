@@ -19,6 +19,9 @@ Given `nums[i]` = max jump length from index `i`, return the **minimum jumps** t
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="greedy-jump-game-ii" /&gt;
+
+
 ## Approach 1 — BFS (level = jump count)
 
 **Intuition.** Model the problem as BFS: each index is a node with edges to `[i+1, i+nums[i]]`. Level of last index = min jumps.

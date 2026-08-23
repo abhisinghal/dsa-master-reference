@@ -18,6 +18,9 @@ Reverse the bits of a 32-bit unsigned integer.
 />
 ---
 
+<MarkSolved problem-slug="reverse-bits" />
+
+
 ## Approach 1 — Bit-by-bit
 
 ```java

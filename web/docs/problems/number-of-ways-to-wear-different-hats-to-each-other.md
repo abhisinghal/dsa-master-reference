@@ -20,6 +20,9 @@ n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt;
+
+
 ## Approach — Bitmask DP iterating hats (canonical)
 
 **Insight.** `dp[h][mask]` = # ways to satisfy people in mask using hats 1..h. Transition: skip hat h, or give it to any person p in mask who likes it.

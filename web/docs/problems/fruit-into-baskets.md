@@ -20,6 +20,9 @@ Given an array `fruits` where `fruits[i]` is a type of fruit, and 2 baskets each
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="fruit-into-baskets" /&gt;
+
+
 ## Approach 1 — Try every subarray
 
 **Intuition.** For each `[i, j]`, count distinct fruit types; if ≤ 2, track length.

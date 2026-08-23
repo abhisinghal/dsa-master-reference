@@ -18,6 +18,9 @@ Merge `k` sorted linked lists into one sorted list.
 />
 ---
 
+<MarkSolved problem-slug="k-way-merge-k-sorted-lists" />
+
+
 ## Approach 1 — Collect + sort
 
 **Intuition.** Walk every list; collect values; sort; rebuild.

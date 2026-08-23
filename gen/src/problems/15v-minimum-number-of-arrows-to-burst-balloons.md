@@ -19,6 +19,9 @@ Balloons span `[xstart, xend]`. Arrow at x bursts every balloon whose span conta
 />
 ---
 
+<MarkSolved problem-slug="minimum-number-of-arrows-to-burst-balloons" />
+
+
 ## Approach — Sort by end + shoot at end of first alive (canonical)
 
 **Insight.** Sort by `xend`. Shoot the first balloon at its end. That arrow bursts every balloon starting ≤ end. Move to first balloon starting > end.

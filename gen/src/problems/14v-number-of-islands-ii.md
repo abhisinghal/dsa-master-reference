@@ -18,6 +18,9 @@ You have an `m × n` grid of water. Given `positions` where each `(r, c)` become
 />
 ---
 
+<MarkSolved problem-slug="number-of-islands-ii" />
+
+
 ## Approach 1 — DFS after each addition
 
 O(k · m·n). Too slow for streaming.

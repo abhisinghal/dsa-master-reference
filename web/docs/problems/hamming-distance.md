@@ -19,6 +19,9 @@ Return the number of positions where the bits of `x` and `y` differ.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="hamming-distance" /&gt;
+
+
 ## Approach — Popcount of XOR
 
 **Insight.** `x XOR y` has 1s exactly at differing positions → answer is popcount(x^y).

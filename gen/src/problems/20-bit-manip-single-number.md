@@ -19,6 +19,9 @@ Every element appears twice except one. Return that one, in **O(n)** time and **
 />
 ---
 
+<MarkSolved problem-slug="bit-manip-single-number" />
+
+
 ## Approach 1 — HashSet toggle
 
 **Intuition.** For each element, add if absent, remove if present. Last surviving element wins.

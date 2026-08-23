@@ -18,6 +18,9 @@ Reverse the bits of a 32-bit unsigned integer.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="reverse-bits" /&gt;
+
+
 ## Approach 1 — Bit-by-bit
 
 

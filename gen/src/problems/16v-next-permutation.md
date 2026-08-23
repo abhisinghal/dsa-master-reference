@@ -19,6 +19,9 @@ Rearrange nums to the next lexicographic permutation in-place. If none, sort asc
 />
 ---
 
+<MarkSolved problem-slug="next-permutation" />
+
+
 ## Approach — Classic algorithm (canonical)
 
 **Steps.**

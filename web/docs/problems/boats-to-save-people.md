@@ -20,6 +20,9 @@ Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="boats-to-save-people" /&gt;
+
+
 ## Approach — Sort + greedy two-pointer (canonical)
 
 **Insight.** Sort. Pair heaviest with lightest if possible; otherwise heaviest goes alone.

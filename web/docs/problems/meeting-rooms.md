@@ -20,6 +20,9 @@ Given meeting time intervals, return `true` iff a person can attend all.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="meeting-rooms" /&gt;
+
+
 ## Approach 1 — Every pair
 
 O(n²). Baseline.

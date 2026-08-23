@@ -27,6 +27,9 @@ c.book(25, 55); // true
 />
 ---
 
+<MarkSolved problem-slug="my-calendar-ii" />
+
+
 ## Approach 1 — Track singles + doubles
 
 **Insight.** Maintain a list of single-booked intervals and double-booked intervals. On `book`:

@@ -19,6 +19,9 @@ Given distinct integers `nums`, return all possible subsets (the power set).
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="subsets" /&gt;
+
+
 ## Approach 1 — Backtracking
 
 Standard include/exclude recursion. O(2ⁿ · n).

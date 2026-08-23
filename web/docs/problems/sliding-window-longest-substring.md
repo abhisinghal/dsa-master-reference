@@ -20,6 +20,9 @@ Given a string `s`, return the length of the longest substring with all distinct
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="sliding-window-longest-substring" /&gt;
+
+
 ## Approach 1 — Brute force (all substrings, check distinct)
 
 **Intuition.** Enumerate every substring `s[i..j]`; for each, verify all characters are distinct; track the max length.

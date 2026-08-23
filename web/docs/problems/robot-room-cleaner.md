@@ -18,6 +18,9 @@ Robot API: `move()`, `turnLeft()`, `turnRight()`, `clean()`. No coordinates. Cle
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="robot-room-cleaner" /&gt;
+
+
 ## Approach — DFS with relative coords + backtrack move (canonical)
 
 **Insight.** Assign start as `(0,0)`. Maintain direction `d ∈ {0,1,2,3}` (up/right/down/left). Recurse, marking visited. Backtrack = reverse: 180° turn, move, 180° turn.

@@ -18,6 +18,9 @@ All **unique** subsets when nums may contain duplicates.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="subsets-ii" /&gt;
+
+
 ## Approach — Sort + skip equal-at-same-depth (canonical)
 
 **Insight.** Sort. Standard subset backtracking, but skip duplicates in the outer loop: `if (i > start && nums[i] == nums[i-1]) continue`. Ensures each duplicate group contributes once per count.

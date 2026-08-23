@@ -18,6 +18,9 @@ Given package weights and `days`, find the minimum ship capacity that ships all 
 />
 ---
 
+<MarkSolved problem-slug="capacity-to-ship-packages-within-d-days" />
+
+
 ## Approach 1 — Try every capacity
 
 O(max·n). TLE.

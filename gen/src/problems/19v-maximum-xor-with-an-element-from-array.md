@@ -18,6 +18,9 @@ Given `nums` and queries `[query_val, max_allowed]`. For each query return the m
 />
 ---
 
+<MarkSolved problem-slug="maximum-xor-with-an-element-from-array" />
+
+
 ## Approach 1 — Linear per query
 
 O(n · Q). TLE.

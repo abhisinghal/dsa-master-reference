@@ -20,6 +20,9 @@ Given words sorted alphabetically in an alien language, return the character ord
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="alien-dictionary" /&gt;
+
+
 ## Approach 1 — Trial-and-error permutation
 
 Try every char ordering. O(26!). Absurd baseline.

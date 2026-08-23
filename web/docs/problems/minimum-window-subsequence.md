@@ -17,6 +17,9 @@ Find the min window in `s1` such that `s2` is a subsequence.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="minimum-window-subsequence" /&gt;
+
+
 ## Approach 1 — DP `dp[i][j]` = latest start of match
 
 O(m·n) time and space.

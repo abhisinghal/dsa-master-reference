@@ -18,6 +18,9 @@ Unlimited transactions; each sell pays `fee`. Max profit.
 />
 ---
 
+<MarkSolved problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" />
+
+
 ## Approach — State-machine DP (canonical)
 
 **States.** `hold`, `cash`.

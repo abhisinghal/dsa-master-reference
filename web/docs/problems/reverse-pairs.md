@@ -19,6 +19,9 @@ Count pairs `(i, j)` with `i < j` and `nums[i] > 2 · nums[j]`.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="reverse-pairs" /&gt;
+
+
 ## Approach 1 — All pairs
 
 O(n²). TLE.

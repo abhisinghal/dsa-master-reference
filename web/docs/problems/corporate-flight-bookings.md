@@ -20,6 +20,9 @@ Given `n` flights and bookings `[first, last, seats]`, return an array where ind
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="corporate-flight-bookings" /&gt;
+
+
 ## Approach 1 — Direct fill
 
 For each booking, add `seats` to every index in `[first-1, last-1]`. **O(n · m)**.

@@ -19,6 +19,9 @@ Given `temps`, return `answer` where `answer[i]` is the number of days until a w
 />
 ---
 
+<MarkSolved problem-slug="monotonic-stack-daily-temperatures" />
+
+
 ## Approach 1 — Brute force (nested scan)
 
 **Intuition.** For each day `i`, scan forward until a warmer day.

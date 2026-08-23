@@ -20,6 +20,9 @@ Given binary array `nums`, return the length of the longest subarray with equal 
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="contiguous-array" /&gt;
+
+
 ## Approach 1 — Every subarray
 
 O(n²). Baseline.

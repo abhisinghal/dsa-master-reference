@@ -18,6 +18,9 @@ Return every case variant of letters (digits stay).
 />
 ---
 
+<MarkSolved problem-slug="letter-case-permutation" />
+
+
 ## Approach 1 — DFS with two branches per letter (canonical)
 
 ```java

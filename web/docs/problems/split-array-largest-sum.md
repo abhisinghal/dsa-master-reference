@@ -18,6 +18,9 @@ Split `nums` into `m` non-empty contiguous subarrays to minimize the largest sum
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="split-array-largest-sum" /&gt;
+
+
 ## Approach 1 — Interval DP
 
 `dp[i][k]` = min largest sum for `nums[0..i-1]` split into k parts. O(n²·m).

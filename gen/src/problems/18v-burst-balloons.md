@@ -18,6 +18,9 @@ Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r
 />
 ---
 
+<MarkSolved problem-slug="burst-balloons" />
+
+
 ## Approach — Interval DP with "last to burst" trick (canonical)
 
 **Insight.** "First to burst" model fails — neighbors change unpredictably. Instead consider `i` as the **last** to burst in range `(l, r)`: its neighbors at that moment are fixed at `nums[l]` and `nums[r]`. Subproblems `(l, i)` and `(i, r)` are independent.

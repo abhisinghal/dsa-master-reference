@@ -20,6 +20,9 @@ Given strings `s` and `t`, return the smallest substring of `s` that contains ev
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="minimum-window-substring" /&gt;
+
+
 ## Approach 1 — Enumerate every substring
 
 **Intuition.** Try every `s[i..j]`; for each, check whether it contains all characters of `t`. Keep the shortest.

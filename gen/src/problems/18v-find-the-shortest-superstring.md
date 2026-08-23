@@ -19,6 +19,9 @@ Return shortest string containing every given word as substring.
 />
 ---
 
+<MarkSolved problem-slug="find-the-shortest-superstring" />
+
+
 ## Approach — Bitmask TSP-style DP + overlap precompute (canonical)
 
 **Insight.**

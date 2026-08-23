@@ -20,6 +20,9 @@ Given strings `s1` and `s2`, return `true` iff `s2` contains any permutation of 
 />
 ---
 
+<MarkSolved problem-slug="permutation-in-string" />
+
+
 ## Approach 1 — Sort every window
 
 **Intuition.** Slide a window of size `|s1|` over `s2`; sort each and compare to sorted `s1`.

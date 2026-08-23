@@ -19,6 +19,9 @@ Rearrange so all even values come before all odd. Any valid partition accepted.
 />
 ---
 
+<MarkSolved problem-slug="sort-array-by-parity" />
+
+
 ## Approach — Opposing pointers + swap (canonical)
 
 **Insight.** `l` from left seeks first odd; `r` from right seeks first even; swap; repeat.

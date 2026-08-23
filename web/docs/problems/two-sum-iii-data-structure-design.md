@@ -28,6 +28,9 @@ ts.find(7);  // false
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="two-sum-iii-data-structure-design" /&gt;
+
+
 ## Approach 1 — Fast add, slow find (canonical if adds dominate)
 
 Store counts; on `find`, iterate keys checking `t - k`. Handle duplicates.

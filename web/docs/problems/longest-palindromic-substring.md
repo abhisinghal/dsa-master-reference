@@ -20,6 +20,9 @@ Return the longest palindromic substring of `s`.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="longest-palindromic-substring" /&gt;
+
+
 ## Approach 1 — Every substring O(n³)
 
 ## Approach 2 — DP `pal[i][j]`

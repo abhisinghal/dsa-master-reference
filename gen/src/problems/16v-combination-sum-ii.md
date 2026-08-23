@@ -18,6 +18,9 @@ Combinations summing to target, each candidate used at most once; candidates may
 />
 ---
 
+<MarkSolved problem-slug="combination-sum-ii" />
+
+
 ## Approach — Sort + skip equal-at-same-depth + prune on sum (canonical)
 
 ```java

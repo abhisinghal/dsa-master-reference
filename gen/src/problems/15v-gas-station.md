@@ -19,6 +19,9 @@ Circular route: at station `i` you gain `gas[i]`, pay `cost[i]` to reach `i+1`. 
 />
 ---
 
+<MarkSolved problem-slug="gas-station" />
+
+
 ## Approach 1 — Try each start with simulation
 
 O(n²). TLE.

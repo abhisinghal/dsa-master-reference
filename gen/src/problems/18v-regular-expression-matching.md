@@ -20,6 +20,9 @@ Match `s` against `p` with `.` (any char) and `*` (0+ of prev char).
 />
 ---
 
+<MarkSolved problem-slug="regular-expression-matching" />
+
+
 ## Approach — 2D DP (canonical)
 
 **Insight.** `dp[i][j]` = whether `s[..i]` matches `p[..j]`.

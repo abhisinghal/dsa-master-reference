@@ -18,6 +18,9 @@ Fill the 9×9 board so every row/col/box contains 1..9.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="sudoku-solver" /&gt;
+
+
 ## Approach — Backtracking + constraint bitmasks (canonical)
 
 **Insight.** Maintain 9-bit masks for each row, col, box. Try each digit at each empty cell.

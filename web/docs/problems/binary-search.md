@@ -20,6 +20,9 @@ Given a sorted array `nums` and an integer `target`, return the index of `target
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="binary-search" /&gt;
+
+
 ## Approach 1 — Linear scan
 
 O(n) time. Rejected by spec.

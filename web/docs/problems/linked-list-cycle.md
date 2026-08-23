@@ -20,6 +20,9 @@ Given the head of a linked list, return `true` iff the list contains a cycle.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="linked-list-cycle" /&gt;
+
+
 ## Approach 1 — Hash set of visited nodes
 
 **Intuition.** Walk the list; if a node reference reappears in the set, cycle found.

@@ -20,6 +20,9 @@ Given trips `[numPassengers, from, to]` and car `capacity`, return `true` iff yo
 />
 ---
 
+<MarkSolved problem-slug="car-pooling" />
+
+
 ## Approach 1 — Sort by time + sweep
 
 Split each trip into (from, +p) and (to, -p) events. Sort. Sweep tracking load.

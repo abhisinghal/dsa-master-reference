@@ -19,6 +19,9 @@ Given two strings `word1` and `word2`, return the minimum number of edits (inser
 />
 ---
 
+<MarkSolved problem-slug="edit-distance" />
+
+
 ## Approach 1 — Brute recursion → Approach 2 — Memoized
 
 Same skeleton as Coin Change / House Robber. At `(i, j)`: if chars match, `f(i-1, j-1)`; else `1 + min(insert, delete, replace)`. Brute is exponential; memoization brings it to O(m·n).

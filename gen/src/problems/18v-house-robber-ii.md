@@ -19,6 +19,9 @@ Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 />
 ---
 
+<MarkSolved problem-slug="house-robber-ii" />
+
+
 ## Approach — Two linear runs (canonical)
 
 **Insight.** rob(first) forbids rob(last). Optimum = max of two subarrays: `[0..n-2]` and `[1..n-1]`.

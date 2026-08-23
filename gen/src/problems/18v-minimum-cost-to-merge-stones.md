@@ -18,6 +18,9 @@ Merge exactly k consecutive piles at a time; cost = sum. Min total to merge all 
 />
 ---
 
+<MarkSolved problem-slug="minimum-cost-to-merge-stones" />
+
+
 ## Approach — Interval DP with residue trick (canonical)
 
 **Insight.** Feasible iff `(n-1) % (k-1) == 0`. `dp[i][j]` = min cost to reduce to `((j-i) mod (k-1)) + 1` piles.

@@ -18,6 +18,9 @@ Place `n` queens on an `n × n` board so no two attack each other. Return all di
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="backtracking-n-queens" /&gt;
+
+
 ## Approach 1 — Brute force (all n^n placements)
 
 **Intuition.** Try every placement of `n` queens in the `n²` cells → `C(n², n)` combinations. Filter valid ones.

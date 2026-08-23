@@ -19,6 +19,9 @@ Given an undirected tree of `n` nodes, return all nodes that when picked as root
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="minimum-height-trees" /&gt;
+
+
 ## Approach 1 — Try each node as root, BFS
 
 O(n²). TLE at n=2·10⁴.

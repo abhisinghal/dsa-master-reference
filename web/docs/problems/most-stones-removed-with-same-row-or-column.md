@@ -19,6 +19,9 @@ Given stones on a 2D plane, remove a stone if it shares a row/column with anothe
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="most-stones-removed-with-same-row-or-column" /&gt;
+
+
 ## Approach 1 — Simulation
 
 Try every removal order. Exponential.

@@ -18,6 +18,9 @@ Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the s
 />
 ---
 
+<MarkSolved problem-slug="divide-chocolate" />
+
+
 ## Approach — Binary search on the minimum
 
 **Insight.** `feasible(cap)` = can we cut into ≥ k+1 pieces each with sum ≥ cap? Monotonic (bigger cap → fewer possible cuts). Range: `lo = 1`, `hi = sum / (k+1)` (or `sum`).

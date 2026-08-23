@@ -20,6 +20,9 @@ Max sum of a contiguous non-empty subarray.
 />
 ---
 
+<MarkSolved problem-slug="maximum-subarray" />
+
+
 ## Approach 1 — All subarrays
 
 O(n²). Baseline.

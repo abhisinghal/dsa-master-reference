@@ -18,6 +18,9 @@ Count connected components of `'1'`s in a binary grid.
 />
 ---
 
+<MarkSolved problem-slug="number-of-islands" />
+
+
 ## Approach 1 — DFS flood fill (canonical)
 
 Iterate cells; on unseen `'1'`, `count++`, DFS marking `'0'`.

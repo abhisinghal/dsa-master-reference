@@ -19,6 +19,9 @@ Given schedules (each a list of disjoint intervals), return the intersection of 
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="employee-free-time" /&gt;
+
+
 ## Approach 1 — Flatten + merge + gaps
 
 **Intuition.** Collect all intervals; merge overlapping; consecutive gaps are common free time.

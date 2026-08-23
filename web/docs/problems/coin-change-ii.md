@@ -20,6 +20,9 @@ Count ways to make `amount` from `coins` (unlimited each, **unordered**).
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="coin-change-ii" /&gt;
+
+
 ## Approach — Unbounded knapsack counting (canonical)
 
 **Insight.** Outer loop = coins; inner = amount. This counts **unordered** combinations.

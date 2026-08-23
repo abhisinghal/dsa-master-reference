@@ -18,6 +18,9 @@ Given `n` non-negative integer heights, find two vertical lines that form a cont
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="two-pointers-container-with-most-water" /&gt;
+
+
 ## Approach 1 — Brute force (all pairs)
 
 **Intuition.** Try every pair `(i, j)`; compute area; keep the max.

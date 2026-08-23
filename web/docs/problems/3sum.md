@@ -20,6 +20,9 @@ Given an integer array `nums`, return all **unique** triplets `[nums[i], nums[j]
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="3sum" /&gt;
+
+
 ## Approach 1 — Triple nested loop + set for dedup
 
 **Intuition.** Enumerate every `(i, j, k)`; check sum; add sorted triplet to a set to remove duplicates.

@@ -19,6 +19,9 @@ At most `k` transactions. Max profit.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock-iv" /&gt;
+
+
 ## Approach — 2k states DP with unlimited-k shortcut (canonical)
 
 **Insight.** If `k ≥ n/2`, unlimited transactions → sum of positive diffs.

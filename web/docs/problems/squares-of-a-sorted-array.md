@@ -19,6 +19,9 @@ Return squares of a sorted (possibly-negative) array, sorted.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="squares-of-a-sorted-array" /&gt;
+
+
 ## Approach 1 — Square then sort
 
 O(n log n).

@@ -19,6 +19,9 @@ Move all zeros to end preserving order of non-zeros. In-place.
 />
 ---
 
+<MarkSolved problem-slug="move-zeroes" />
+
+
 ## Approach 1 — Two-pass write
 
 Copy non-zeros forward; zero-fill tail.

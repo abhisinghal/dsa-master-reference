@@ -20,6 +20,9 @@ Given `numCourses` and `prerequisites[i] = [a, b]` meaning "to take `a` you must
 />
 ---
 
+<MarkSolved problem-slug="topological-sort-course-schedule" />
+
+
 ## Approach 1 — Brute force (try every permutation)
 
 **Intuition.** Enumerate every permutation; return the first that respects all prerequisites.

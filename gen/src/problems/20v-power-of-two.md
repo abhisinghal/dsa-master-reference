@@ -20,6 +20,9 @@ Return true iff `n` is a positive power of two.
 />
 ---
 
+<MarkSolved problem-slug="power-of-two" />
+
+
 ## Approach 1 — Divide by 2
 
 O(log n).

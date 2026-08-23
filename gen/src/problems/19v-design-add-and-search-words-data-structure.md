@@ -26,6 +26,9 @@ w.search("b.."); // true
 />
 ---
 
+<MarkSolved problem-slug="design-add-and-search-words-data-structure" />
+
+
 ## Approach 1 — HashSet + linear scan
 
 `search` is O(N · L) worst — too slow with wildcards.

@@ -20,6 +20,9 @@ A "happy number" transformation repeatedly replaces `n` by the sum of the square
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="happy-number" /&gt;
+
+
 ## Approach 1 — Hash set of seen values
 
 **Intuition.** Iterate transformation; if we revisit a value, we're in a cycle → not happy. If we hit 1, happy.

@@ -19,6 +19,9 @@ Given matrix `mat[m][n]` and integer `k`, return `answer[i][j]` = sum of all ele
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="matrix-block-sum" /&gt;
+
+
 ## Approach 1 — For each cell, sum k-neighborhood
 
 O(m·n·k²). Baseline.

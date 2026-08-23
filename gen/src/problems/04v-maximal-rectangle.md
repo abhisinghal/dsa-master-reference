@@ -20,6 +20,9 @@ Given a binary matrix, find the largest rectangle containing only `1`s.
 />
 ---
 
+<MarkSolved problem-slug="maximal-rectangle" />
+
+
 ## Approach 1 — Every submatrix
 
 O(m³·n³). TLE.

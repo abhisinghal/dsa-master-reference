@@ -19,6 +19,9 @@ Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="video-stitching" /&gt;
+
+
 ## Approach — Sort by start + farthest reach (canonical)
 
 **Insight.** Same shape as Jump Game II. Sort by start. Maintain `curEnd`; while iterating clips with `start ≤ curEnd`, extend `farReach`. When exhausted, use one clip (advance `curEnd = farReach`).

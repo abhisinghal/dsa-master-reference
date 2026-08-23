@@ -19,6 +19,9 @@ Given 2D `points`, connect all with min total Manhattan distance.
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="min-cost-to-connect-all-points" /&gt;
+
+
 ## Approach 1 — Kruskal on all pairs
 
 Build O(n²) edges; sort; UF. **O(n² log n)** time; works for n=1000.

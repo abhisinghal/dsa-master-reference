@@ -19,6 +19,9 @@
 />
 ---
 
+<MarkSolved problem-slug="find-the-difference" />
+
+
 ## Approach 1 — Sort both, walk
 
 O(n log n). Baseline.

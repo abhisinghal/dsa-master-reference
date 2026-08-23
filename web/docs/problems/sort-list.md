@@ -19,6 +19,9 @@ Sort a linked list in **O(n log n)** time, O(1) extra space (constant beyond rec
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="sort-list" /&gt;
+
+
 ## Approach 1 — Copy to array, sort, rebuild
 
 O(n log n) time, O(n) space. Rejected by spec.

@@ -19,6 +19,9 @@ Given accounts `[name, email1, email2, …]`, merge accounts sharing any email i
 /&gt;
 ---
 
+&lt;MarkSolved problem-slug="accounts-merge" /&gt;
+
+
 ## Approach 1 — DFS on email graph
 
 Build graph with emails as nodes, connect emails within the same account. DFS to find components. O(N·α).
