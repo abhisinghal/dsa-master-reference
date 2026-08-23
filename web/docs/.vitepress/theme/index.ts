@@ -69,6 +69,7 @@ import BookmarksList from './BookmarksList.vue'
 import RoadmapChecklist from './RoadmapChecklist.vue'
 import StudyPlanGenerator from './StudyPlanGenerator.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
+import { runMigrations } from './lib/storage'
 import './style.css'
 
 export default {
@@ -151,5 +152,8 @@ export default {
     app.component('RoadmapChecklist', RoadmapChecklist)
     app.component('StudyPlanGenerator', StudyPlanGenerator)
     installSolvedCountBadges(router)
+    if (typeof window !== 'undefined') {
+      try { runMigrations() } catch { /* migration never crashes app */ }
+    }
   }
 }

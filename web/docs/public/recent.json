@@ -1,5 +1,25 @@
 [
   {
+    "title": "Hashing",
+    "url": "/patterns/hashing",
+    "updated": "2026-08-23T06:20:10.000Z"
+  },
+  {
+    "title": "Greedy",
+    "url": "/patterns/greedy",
+    "updated": "2026-08-23T06:20:10.000Z"
+  },
+  {
+    "title": "Recursion & Backtracking",
+    "url": "/patterns/backtracking",
+    "updated": "2026-08-23T06:20:10.000Z"
+  },
+  {
+    "title": "Trie (pattern)",
+    "url": "/patterns/trie-pattern",
+    "updated": "2026-08-23T06:20:10.000Z"
+  },
+  {
     "title": "Sliding Window",
     "url": "/patterns/sliding-window",
     "updated": "2026-08-23T06:16:02.000Z"
@@ -7,26 +27,6 @@
   {
     "title": "Two Pointers",
     "url": "/patterns/two-pointers",
-    "updated": "2026-08-23T06:16:02.000Z"
-  },
-  {
-    "title": "Fast / Slow Pointers (Floyd)",
-    "url": "/patterns/fast-slow",
-    "updated": "2026-08-23T06:16:02.000Z"
-  },
-  {
-    "title": "Prefix Sum & Difference Arrays",
-    "url": "/patterns/prefix-sum",
-    "updated": "2026-08-23T06:16:02.000Z"
-  },
-  {
-    "title": "Hashing",
-    "url": "/patterns/hashing",
-    "updated": "2026-08-23T06:16:02.000Z"
-  },
-  {
-    "title": "Monotonic Stack",
-    "url": "/patterns/monotonic-stack",
     "updated": "2026-08-23T06:16:02.000Z"
   }
 ]

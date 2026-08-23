@@ -184,6 +184,43 @@ def transform_callouts(text: str) -> str:
     return "\n".join(out)
 
 
+def _discover_vue_components() -> set:
+    """Scan theme/index.ts for `app.component('Name', ...)` registrations.
+    Returns the set of component tag names available to markdown authors.
+    Called once at import; the result is cached in a module constant.
+    """
+    theme_index = os.path.join(_HERE, "docs", ".vitepress", "theme", "index.ts")
+    if not os.path.exists(theme_index):
+        return set()
+    with open(theme_index, encoding="utf-8") as f:
+        idx = f.read()
+    return set(re.findall(
+        r"app\.component\(\s*['\"]([A-Z][A-Za-z0-9]*)['\"]",
+        idx,
+    ))
+
+
+VUE_COMPONENTS = _discover_vue_components() or {"Callout", "CodeTrace", "Quiz", "JavaRunner"}
+
+_ATTR_PATTERN = r"(?:\s+(?:'[^']*'|\"[^\"]*\"|[^\"'/>\s])+)*"
+_BASE_TAGS_PATTERN = (
+    "a|b|i|u|em|strong|span|div|p|br|hr|img|code|pre|kbd|sub|sup|"
+    "h[1-6]|ul|ol|li|table|thead|tbody|tr|th|td|blockquote|small|"
+    "details|summary|figure|figcaption|dl|dt|dd|"
+    "ClientOnly|slot|script|style|template"
+)
+KNOWN_HTML = re.compile(
+    r"</?("
+    + _BASE_TAGS_PATTERN
+    + "|"
+    + "|".join(sorted(VUE_COMPONENTS))
+    + r")"
+    + _ATTR_PATTERN
+    + r"\s*/?>",
+    re.IGNORECASE | re.DOTALL,
+)
+
+
 def escape_lt_gt_in_prose(body: str) -> str:
     """Replace bare < and > characters with HTML entities in prose only.
     Skips: inline code (backticks) and known-good HTML/Vue tags.
@@ -195,33 +232,6 @@ def escape_lt_gt_in_prose(body: str) -> str:
         return f"\x00CODE{len(codes)-1}\x01"
     body = re.sub(r"`[^`\n]*`", stash_code, body)
 
-    # Now protect known-good HTML/Vue tags (which may span backticks; but we already stashed those)
-    # Attribute matcher allows > inside single- or double-quoted values, so multi-line Vue
-    # components with rich :prop='[...>...]' payloads survive the prose-escape pass intact.
-    ATTR = r"(?:\s+(?:'[^']*'|\"[^\"]*\"|[^\"'/>\s])+)*"
-    KNOWN_HTML = re.compile(
-        r"</?(a|b|i|u|em|strong|span|div|p|br|hr|img|code|pre|kbd|sub|sup|"
-        r"h[1-6]|ul|ol|li|table|thead|tbody|tr|th|td|blockquote|small|"
-        r"details|summary|figure|figcaption|dl|dt|dd|"
-        r"Callout|CodeTabs|ProgressCheck|JavaRunner|Breadcrumbs|ReadingTime|"
-        r"RecentUpdates|Quiz|StepStrip|TwoSumStepStrip|CodeTrace|TrapTrace|Icon|"
-        r"SlidingWindowAnim|MonoStackAnim|UnionFindAnim|SweepLineAnim|"
-        r"DivideConquerAnim|QuickselectAnim|BacktrackingAnim|"
-        r"TwoPointersAnim|FastSlowAnim|BinarySearchAnim|HeapAnim|"
-        r"BFSGridAnim|DFSGridAnim|DpFillAnim|TrieWalkAnim|"
-        r"ComplexityCurve|PlaybookPhases|DsStateMachine|"
-        r"StackQueueOps|HeapOps|BstOps|TrieOps|UnionFindOps|ExamplePreview|"
-        r"Hints|CompanyTags|EmailCapture|UserProfile|PatternVideo|AiCompanion|"
-        r"PatternProgress|RelatedPatterns|DueForReview|RelatedProblems|"
-        r"FeedbackWidget|ShortcutHint|OnboardingTour|PageAnalytics|"
-        r"MarkSolved|Bookmark|BookmarksList|StorageManager|SocialProof|"
-        r"SupportPanel|StreakTracker|ShareButtons|ReadingProgressBar|BackToTop|"
-        r"NotFound|ProblemStats|NotificationBell|PrintButton|InterviewTimer|"
-        r"RoadmapChecklist|StudyPlanGenerator|"
-        r"ClientOnly|slot|script|style|template)"
-        rf"{ATTR}\s*/?>",
-        re.IGNORECASE | re.DOTALL
-    )
     tag_slots = []
     def stash_tag(m):
         tag_slots.append(m.group(0))

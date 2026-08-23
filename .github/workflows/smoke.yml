@@ -1,0 +1,60 @@
+name: Smoke tests
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm, cache-dependency-path: web/package-lock.json }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: Install web dependencies
+        run: cd web && npm ci
+
+      - name: Install Playwright browsers
+        run: cd web && npx playwright install --with-deps chromium
+
+      - name: Migrate content
+        run: cd web && python migrate.py
+
+      - name: Build VitePress
+        run: cd web && npx vitepress build docs
+
+      - name: Start preview server
+        run: |
+          cd web
+          nohup npx vitepress preview docs --port 4173 > preview.log 2>&1 &
+          # Wait for server ready.
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:4173/ > /dev/null; then
+              echo "Preview server is up."
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Run Playwright smoke tests
+        run: cd web && SMOKE_BASE_URL=http://localhost:4173 npx playwright test --config=tests/playwright.config.ts
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: web/playwright-report
+          retention-days: 7

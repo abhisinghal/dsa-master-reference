@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { storage } from './lib/storage'
 
 const props = defineProps<{
   problemSlug: string
@@ -8,32 +9,25 @@ const props = defineProps<{
 const solved = ref(false)
 const showConfetti = ref(false)
 
+const key = () => `dsa-solved:${props.problemSlug}`
+
 onMounted(() => {
-  try {
-    const raw = localStorage.getItem(`dsa-solved:${props.problemSlug}`)
-    if (!raw) { solved.value = false; return }
-    // Backward compatibility: old format was the literal string 'true'.
-    if (raw === 'true') { solved.value = true; return }
-    try {
-      const data = JSON.parse(raw)
-      solved.value = !!(data && data.solved)
-    } catch (e) { solved.value = false }
-  } catch (e) {}
+  const data = storage.getJson<{ solved?: boolean }>(key(), { solved: false })
+  solved.value = !!(data && data.solved)
 })
 
 function toggle() {
   solved.value = !solved.value
-  try {
-    if (solved.value) {
-      localStorage.setItem(`dsa-solved:${props.problemSlug}`, JSON.stringify({ solved: true, timestamp: Date.now() }))
-      showConfetti.value = true
-      setTimeout(() => { showConfetti.value = false }, 1500)
-    } else {
-      localStorage.removeItem(`dsa-solved:${props.problemSlug}`)
-    }
-  } catch (e) {}
-  // Broadcast for other listeners (progress bars, etc.)
-  window.dispatchEvent(new CustomEvent('dsa-solved-toggled', { detail: { slug: props.problemSlug, solved: solved.value } }))
+  if (solved.value) {
+    storage.setJson(key(), { solved: true, timestamp: Date.now() })
+    showConfetti.value = true
+    setTimeout(() => { showConfetti.value = false }, 1500)
+  } else {
+    storage.remove(key())
+  }
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('dsa-solved-toggled', { detail: { slug: props.problemSlug, solved: solved.value } }))
+  }
 }
 </script>
 

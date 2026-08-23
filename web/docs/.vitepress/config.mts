@@ -55,8 +55,10 @@ export default withMermaid(defineConfig({
   head: [
     ['link', { rel: 'icon', href: '/dsa-master-reference/favicon.svg' }],
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'DSA Master Reference changelog', href: '/dsa-master-reference/rss.xml' }],
-    ['meta', { name: 'theme-color', content: '#2563eb' }],
-    ['script', { src: 'https://cjrtnc.leaningtech.com/3.0/cj3loader.js' }]
+    ['meta', { name: 'theme-color', content: '#2563eb' }]
+    // Note: CheerpJ (cj3loader.js) is NOT included globally to avoid
+    // ~15 MB of one-time client download on pages that never render <JavaRunner>.
+    // JavaRunner.vue lazy-loads the script when the component actually mounts.
   ],
   markdown: {
     lineNumbers: true,

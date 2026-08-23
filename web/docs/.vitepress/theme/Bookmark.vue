@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { storage } from './lib/storage'
 
 const props = defineProps({
   problemSlug: { type: String, required: true }
@@ -10,20 +11,18 @@ const bookmarked = ref(false)
 const KEY = () => `dsa-bookmark:${props.problemSlug}`
 
 onMounted(() => {
-  try { bookmarked.value = localStorage.getItem(KEY()) === 'true' } catch (e) {}
+  bookmarked.value = storage.get(KEY()) === 'true'
 })
 
 function toggle() {
   bookmarked.value = !bookmarked.value
-  try {
-    if (bookmarked.value) {
-      localStorage.setItem(KEY(), 'true')
-      localStorage.setItem(`${KEY()}:ts`, String(Date.now()))
-    } else {
-      localStorage.removeItem(KEY())
-      localStorage.removeItem(`${KEY()}:ts`)
-    }
-  } catch (e) {}
+  if (bookmarked.value) {
+    storage.set(KEY(), 'true')
+    storage.set(`${KEY()}:ts`, String(Date.now()))
+  } else {
+    storage.remove(KEY())
+    storage.remove(`${KEY()}:ts`)
+  }
 }
 </script>
 

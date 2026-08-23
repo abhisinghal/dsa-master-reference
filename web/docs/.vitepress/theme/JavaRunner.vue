@@ -69,13 +69,48 @@ function reset() {
 
 async function initCheerpJ() {
   if (runtimeReady.value) return
-  if (typeof window === 'undefined' || !window.cheerpjInit) {
-    throw new Error('CheerpJ runtime failed to load. Please refresh the page and try again.')
+  if (typeof window === 'undefined') {
+    throw new Error('CheerpJ requires a browser environment.')
   }
 
   isRuntimeLoading.value = true
   runtimeError.value = ''
-  output.value = 'Loading Java runtime...'
+  output.value = 'Loading Java runtime (~15 MB one-time)...'
+
+  // Lazy-load the CheerpJ loader script on first Run. This keeps every
+  // page that never shows JavaRunner ~15 MB lighter.
+  if (!window.cheerpjInit) {
+    await new Promise<void>((resolve, reject) => {
+      const existing = document.querySelector<HTMLScriptElement>(
+        'script[data-cheerpj-loader]'
+      )
+      if (existing) {
+        if (window.cheerpjInit) return resolve()
+        existing.addEventListener('load', () => resolve())
+        existing.addEventListener('error', () => reject(new Error('CheerpJ loader failed to load')))
+        return
+      }
+      const script = document.createElement('script')
+      script.src = 'https://cjrtnc.leaningtech.com/3.0/cj3loader.js'
+      script.async = true
+      script.dataset.cheerpjLoader = 'true'
+      script.onload = () => resolve()
+      script.onerror = () => reject(new Error('CheerpJ loader failed to load'))
+      document.head.appendChild(script)
+    }).catch((err) => {
+      isRuntimeLoading.value = false
+      runtimeError.value = `Runner unavailable: ${err?.message || 'CheerpJ loader network error'}. Try refreshing, or copy the code to another Java sandbox.`
+      throw err
+    })
+  }
+
+  if (!window.cheerpjInit) {
+    isRuntimeLoading.value = false
+    const msg = 'CheerpJ runtime failed to load. Please refresh the page and try again.'
+    runtimeError.value = msg
+    throw new Error(msg)
+  }
+
   try {
     cheerpjInitPromise ||= window.cheerpjInit({ status: 'none', version: 17 })
     await cheerpjInitPromise

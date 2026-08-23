@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { storage } from './lib/storage'
 
 /**
  * Anonymous, browser-local user "account" that syncs progress across tabs
@@ -54,18 +55,7 @@ function signOut() {
 const initial = computed(() => profile.value?.name?.[0]?.toUpperCase() ?? '?')
 const solvedCount = ref(0)
 function refreshSolvedCount() {
-  let n = 0
-  try {
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i) || ''
-      if (k.startsWith('dsa-solved:')) {
-        const v = localStorage.getItem(k)
-        if (v === 'true') { n++ }
-        else { try { if (JSON.parse(v).solved) n++ } catch (e) {} }
-      }
-    }
-  } catch (e) {}
-  solvedCount.value = n
+  solvedCount.value = storage.countSolved()
 }
 onMounted(refreshSolvedCount)
 </script>
