@@ -88,6 +88,14 @@ export default withMermaid(defineConfig({
       { text: 'Patterns', link: '/patterns/' },
       { text: 'Data Structures', link: '/data-structures/' },
       { text: 'Practice', link: '/problems/' },
+      {
+        text: 'Company Tracks',
+        items: [
+          { text: 'Meta', link: '/tracks/meta' },
+          { text: 'Google', link: '/tracks/google' },
+          { text: 'Amazon', link: '/tracks/amazon' },
+        ]
+      },
       { text: 'System Design', link: '/system-design/' },
       { text: 'Cheat sheets', link: '/appendix/cheatsheets' },
       { text: 'PDF', link: 'https://github.com/abhisinghal/dsa-master-reference/releases' }
