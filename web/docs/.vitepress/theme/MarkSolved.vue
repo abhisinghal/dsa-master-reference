@@ -9,14 +9,23 @@ const solved = ref(false)
 const showConfetti = ref(false)
 
 onMounted(() => {
-  try { solved.value = localStorage.getItem(`dsa-solved:${props.problemSlug}`) === 'true' } catch (e) {}
+  try {
+    const raw = localStorage.getItem(`dsa-solved:${props.problemSlug}`)
+    if (!raw) { solved.value = false; return }
+    // Backward compatibility: old format was the literal string 'true'.
+    if (raw === 'true') { solved.value = true; return }
+    try {
+      const data = JSON.parse(raw)
+      solved.value = !!(data && data.solved)
+    } catch (e) { solved.value = false }
+  } catch (e) {}
 })
 
 function toggle() {
   solved.value = !solved.value
   try {
     if (solved.value) {
-      localStorage.setItem(`dsa-solved:${props.problemSlug}`, 'true')
+      localStorage.setItem(`dsa-solved:${props.problemSlug}`, JSON.stringify({ solved: true, timestamp: Date.now() }))
       showConfetti.value = true
       setTimeout(() => { showConfetti.value = false }, 1500)
     } else {

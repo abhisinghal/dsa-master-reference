@@ -15,7 +15,11 @@ function refresh() {
     let solved = 0, quiz = 0, feedback = 0
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i) || ''
-      if (k.startsWith('dsa-solved:') && localStorage.getItem(k) === 'true') solved++
+      if (k.startsWith('dsa-solved:')) {
+        const v = localStorage.getItem(k)
+        if (v === 'true') { solved++ }
+        else { try { if (JSON.parse(v).solved) solved++ } catch (e) {} }
+      }
       else if (k.startsWith('dsa-quiz:')) quiz++
       else if (k.startsWith('dsa-feedback:')) feedback++
     }

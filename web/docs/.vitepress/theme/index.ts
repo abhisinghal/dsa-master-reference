@@ -45,6 +45,7 @@ import PatternVideo from './PatternVideo.vue'
 import AiCompanion from './AiCompanion.vue'
 import PatternProgress from './PatternProgress.vue'
 import RelatedPatterns from './RelatedPatterns.vue'
+import DueForReview from './DueForReview.vue'
 import FeedbackWidget from './FeedbackWidget.vue'
 import ShortcutHint from './ShortcutHint.vue'
 import OnboardingTour from './OnboardingTour.vue'
@@ -112,6 +113,7 @@ export default {
     app.component('AiCompanion', AiCompanion)
     app.component('PatternProgress', PatternProgress)
     app.component('RelatedPatterns', RelatedPatterns)
+    app.component('DueForReview', DueForReview)
     app.component('FeedbackWidget', FeedbackWidget)
     app.component('ShortcutHint', ShortcutHint)
     app.component('OnboardingTour', OnboardingTour)

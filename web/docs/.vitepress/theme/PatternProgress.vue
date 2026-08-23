@@ -14,7 +14,11 @@ function refresh() {
   const set = new Set<string>()
   try {
     for (const slug of props.problems.split(',').map(s => s.trim()).filter(Boolean)) {
-      if (localStorage.getItem(`dsa-solved:${slug}`) === 'true') set.add(slug)
+      if (localStorage.getItem(`dsa-solved:${slug}`)) {
+        const v = localStorage.getItem(`dsa-solved:${slug}`)
+        if (v === 'true') { set.add(slug); continue }
+        try { if (JSON.parse(v).solved) set.add(slug) } catch (e) {}
+      }
     }
     solved.value = set
     // Quiz score

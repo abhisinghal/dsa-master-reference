@@ -58,7 +58,11 @@ function refreshSolvedCount() {
   try {
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i) || ''
-      if (k.startsWith('dsa-solved:') && localStorage.getItem(k) === 'true') n++
+      if (k.startsWith('dsa-solved:')) {
+        const v = localStorage.getItem(k)
+        if (v === 'true') { n++ }
+        else { try { if (JSON.parse(v).solved) n++ } catch (e) {} }
+      }
     }
   } catch (e) {}
   solvedCount.value = n
