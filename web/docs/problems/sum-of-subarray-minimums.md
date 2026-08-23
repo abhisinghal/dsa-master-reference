@@ -19,7 +19,7 @@ Given an integer array `arr`, return the sum of `min(subarray)` over every conti
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="sum-of-subarray-minimums" /&gt;
+&lt;MarkSolved problem-slug="sum-of-subarray-minimums" /&gt; &lt;Bookmark problem-slug="sum-of-subarray-minimums" /&gt;
 
 &lt;InterviewTimer problem-slug="sum-of-subarray-minimums" /&gt;
 

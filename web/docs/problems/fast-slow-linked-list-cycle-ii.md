@@ -20,7 +20,7 @@ Given the head of a linked list, return the node where the cycle begins, or `nul
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="fast-slow-linked-list-cycle-ii" /&gt;
+&lt;MarkSolved problem-slug="fast-slow-linked-list-cycle-ii" /&gt; &lt;Bookmark problem-slug="fast-slow-linked-list-cycle-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="fast-slow-linked-list-cycle-ii" /&gt;
 

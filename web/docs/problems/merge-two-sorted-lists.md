@@ -20,7 +20,7 @@ Given the heads of two sorted linked lists, merge them into one sorted list.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="merge-two-sorted-lists" /&gt;
+&lt;MarkSolved problem-slug="merge-two-sorted-lists" /&gt; &lt;Bookmark problem-slug="merge-two-sorted-lists" /&gt;
 
 &lt;InterviewTimer problem-slug="merge-two-sorted-lists" /&gt;
 

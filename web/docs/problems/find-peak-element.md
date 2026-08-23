@@ -20,7 +20,7 @@ A peak is an element strictly greater than its neighbors. Given `nums` (with `nu
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="find-peak-element" /&gt;
+&lt;MarkSolved problem-slug="find-peak-element" /&gt; &lt;Bookmark problem-slug="find-peak-element" /&gt;
 
 &lt;InterviewTimer problem-slug="find-peak-element" /&gt;
 

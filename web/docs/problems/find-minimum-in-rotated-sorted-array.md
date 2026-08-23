@@ -20,7 +20,7 @@ Given a sorted array rotated at some unknown pivot, return the minimum. All valu
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="find-minimum-in-rotated-sorted-array" /&gt;
+&lt;MarkSolved problem-slug="find-minimum-in-rotated-sorted-array" /&gt; &lt;Bookmark problem-slug="find-minimum-in-rotated-sorted-array" /&gt;
 
 &lt;InterviewTimer problem-slug="find-minimum-in-rotated-sorted-array" /&gt;
 

@@ -20,7 +20,7 @@ Min intervals to remove so the rest are non-overlapping.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="non-overlapping-intervals" /&gt;
+&lt;MarkSolved problem-slug="non-overlapping-intervals" /&gt; &lt;Bookmark problem-slug="non-overlapping-intervals" /&gt;
 
 &lt;InterviewTimer problem-slug="non-overlapping-intervals" /&gt;
 

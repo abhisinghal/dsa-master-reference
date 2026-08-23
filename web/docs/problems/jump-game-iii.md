@@ -20,7 +20,7 @@ From index `start`, you may jump `i ± arr[i]`. Return true iff you can reach an
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="jump-game-iii" /&gt;
+&lt;MarkSolved problem-slug="jump-game-iii" /&gt; &lt;Bookmark problem-slug="jump-game-iii" /&gt;
 
 &lt;InterviewTimer problem-slug="jump-game-iii" /&gt;
 

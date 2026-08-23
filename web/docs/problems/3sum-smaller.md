@@ -19,7 +19,7 @@ Count triplets `(i, j, k)` with `i < j < k` and `nums[i] + nums[j] + nums[k] < t
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="3sum-smaller" /&gt;
+&lt;MarkSolved problem-slug="3sum-smaller" /&gt; &lt;Bookmark problem-slug="3sum-smaller" /&gt;
 
 &lt;InterviewTimer problem-slug="3sum-smaller" /&gt;
 

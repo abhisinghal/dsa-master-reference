@@ -18,7 +18,7 @@ Given a positive-int array `nums` and integer `k`, return the number of contiguo
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="subarray-product-less-than-k" /&gt;
+&lt;MarkSolved problem-slug="subarray-product-less-than-k" /&gt; &lt;Bookmark problem-slug="subarray-product-less-than-k" /&gt;
 
 &lt;InterviewTimer problem-slug="subarray-product-less-than-k" /&gt;
 

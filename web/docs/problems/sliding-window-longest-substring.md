@@ -20,7 +20,7 @@ Given a string `s`, return the length of the longest substring with all distinct
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="sliding-window-longest-substring" /&gt;
+&lt;MarkSolved problem-slug="sliding-window-longest-substring" /&gt; &lt;Bookmark problem-slug="sliding-window-longest-substring" /&gt;
 
 &lt;InterviewTimer problem-slug="sliding-window-longest-substring" /&gt;
 

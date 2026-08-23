@@ -20,7 +20,7 @@ Given an array `nums` of `n + 1` integers where each is in `[1, n]`, there is ex
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="find-the-duplicate-number" /&gt;
+&lt;MarkSolved problem-slug="find-the-duplicate-number" /&gt; &lt;Bookmark problem-slug="find-the-duplicate-number" /&gt;
 
 &lt;InterviewTimer problem-slug="find-the-duplicate-number" /&gt;
 

@@ -19,7 +19,7 @@ Assign + or − to each `nums[i]`; count ways to reach `target`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="target-sum" /&gt;
+&lt;MarkSolved problem-slug="target-sum" /&gt; &lt;Bookmark problem-slug="target-sum" /&gt;
 
 &lt;InterviewTimer problem-slug="target-sum" /&gt;
 

@@ -19,7 +19,7 @@ Return max sum `< k` from any pair, or `-1`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="two-sum-less-than-k" /&gt;
+&lt;MarkSolved problem-slug="two-sum-less-than-k" /&gt; &lt;Bookmark problem-slug="two-sum-less-than-k" /&gt;
 
 &lt;InterviewTimer problem-slug="two-sum-less-than-k" /&gt;
 

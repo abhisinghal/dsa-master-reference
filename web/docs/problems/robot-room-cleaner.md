@@ -18,7 +18,7 @@ Robot API: `move()`, `turnLeft()`, `turnRight()`, `clean()`. No coordinates. Cle
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="robot-room-cleaner" /&gt;
+&lt;MarkSolved problem-slug="robot-room-cleaner" /&gt; &lt;Bookmark problem-slug="robot-room-cleaner" /&gt;
 
 &lt;InterviewTimer problem-slug="robot-room-cleaner" /&gt;
 

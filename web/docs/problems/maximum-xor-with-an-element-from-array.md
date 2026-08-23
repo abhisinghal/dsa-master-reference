@@ -18,7 +18,7 @@ Given `nums` and queries `[query_val, max_allowed]`. For each query return the m
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="maximum-xor-with-an-element-from-array" /&gt;
+&lt;MarkSolved problem-slug="maximum-xor-with-an-element-from-array" /&gt; &lt;Bookmark problem-slug="maximum-xor-with-an-element-from-array" /&gt;
 
 &lt;InterviewTimer problem-slug="maximum-xor-with-an-element-from-array" /&gt;
 

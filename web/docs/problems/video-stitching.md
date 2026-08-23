@@ -19,7 +19,7 @@ Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="video-stitching" /&gt;
+&lt;MarkSolved problem-slug="video-stitching" /&gt; &lt;Bookmark problem-slug="video-stitching" /&gt;
 
 &lt;InterviewTimer problem-slug="video-stitching" /&gt;
 

@@ -18,7 +18,7 @@ Fill the 9×9 board so every row/col/box contains 1..9.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="sudoku-solver" /&gt;
+&lt;MarkSolved problem-slug="sudoku-solver" /&gt; &lt;Bookmark problem-slug="sudoku-solver" /&gt;
 
 &lt;InterviewTimer problem-slug="sudoku-solver" /&gt;
 

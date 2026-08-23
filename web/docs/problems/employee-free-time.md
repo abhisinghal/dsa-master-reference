@@ -19,7 +19,7 @@ Given schedules (each a list of disjoint intervals), return the intersection of 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="employee-free-time" /&gt;
+&lt;MarkSolved problem-slug="employee-free-time" /&gt; &lt;Bookmark problem-slug="employee-free-time" /&gt;
 
 &lt;InterviewTimer problem-slug="employee-free-time" /&gt;
 

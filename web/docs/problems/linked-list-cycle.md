@@ -20,7 +20,7 @@ Given the head of a linked list, return `true` iff the list contains a cycle.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="linked-list-cycle" /&gt;
+&lt;MarkSolved problem-slug="linked-list-cycle" /&gt; &lt;Bookmark problem-slug="linked-list-cycle" /&gt;
 
 &lt;InterviewTimer problem-slug="linked-list-cycle" /&gt;
 

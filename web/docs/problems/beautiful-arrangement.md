@@ -19,7 +19,7 @@ Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i =
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="beautiful-arrangement" /&gt;
+&lt;MarkSolved problem-slug="beautiful-arrangement" /&gt; &lt;Bookmark problem-slug="beautiful-arrangement" /&gt;
 
 &lt;InterviewTimer problem-slug="beautiful-arrangement" /&gt;
 

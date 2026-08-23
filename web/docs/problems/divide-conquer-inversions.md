@@ -18,7 +18,7 @@ For each index `i`, return the number of `j > i` with `nums[j] < nums[i]`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="divide-conquer-inversions" /&gt;
+&lt;MarkSolved problem-slug="divide-conquer-inversions" /&gt; &lt;Bookmark problem-slug="divide-conquer-inversions" /&gt;
 
 &lt;InterviewTimer problem-slug="divide-conquer-inversions" /&gt;
 

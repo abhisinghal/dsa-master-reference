@@ -19,7 +19,7 @@ Circular route: at station `i` you gain `gas[i]`, pay `cost[i]` to reach `i+1`. 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="gas-station" /&gt;
+&lt;MarkSolved problem-slug="gas-station" /&gt; &lt;Bookmark problem-slug="gas-station" /&gt;
 
 &lt;InterviewTimer problem-slug="gas-station" /&gt;
 

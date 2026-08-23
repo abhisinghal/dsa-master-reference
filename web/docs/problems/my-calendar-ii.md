@@ -31,7 +31,7 @@ c.book(25, 55); // true
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="my-calendar-ii" /&gt;
+&lt;MarkSolved problem-slug="my-calendar-ii" /&gt; &lt;Bookmark problem-slug="my-calendar-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="my-calendar-ii" /&gt;
 

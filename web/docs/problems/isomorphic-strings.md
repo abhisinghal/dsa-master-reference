@@ -20,7 +20,7 @@ Return true iff there's a **bijection** of characters mapping `s → t`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="isomorphic-strings" /&gt;
+&lt;MarkSolved problem-slug="isomorphic-strings" /&gt; &lt;Bookmark problem-slug="isomorphic-strings" /&gt;
 
 &lt;InterviewTimer problem-slug="isomorphic-strings" /&gt;
 

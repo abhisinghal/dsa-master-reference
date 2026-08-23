@@ -20,7 +20,7 @@ Given a binary array `nums` and integer `goal`, return the number of non-empty c
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="binary-subarrays-with-sum" /&gt;
+&lt;MarkSolved problem-slug="binary-subarrays-with-sum" /&gt; &lt;Bookmark problem-slug="binary-subarrays-with-sum" /&gt;
 
 &lt;InterviewTimer problem-slug="binary-subarrays-with-sum" /&gt;
 

@@ -18,7 +18,7 @@ Given `n` non-negative integer heights, find two vertical lines that form a cont
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="two-pointers-container-with-most-water" /&gt;
+&lt;MarkSolved problem-slug="two-pointers-container-with-most-water" /&gt; &lt;Bookmark problem-slug="two-pointers-container-with-most-water" /&gt;
 
 &lt;InterviewTimer problem-slug="two-pointers-container-with-most-water" /&gt;
 

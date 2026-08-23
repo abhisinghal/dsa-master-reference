@@ -20,7 +20,7 @@
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="jump-game" /&gt;
+&lt;MarkSolved problem-slug="jump-game" /&gt; &lt;Bookmark problem-slug="jump-game" /&gt;
 
 &lt;InterviewTimer problem-slug="jump-game" /&gt;
 

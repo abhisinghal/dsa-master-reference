@@ -17,7 +17,7 @@ Given nums and budget `k` (increments allowed), max frequency of any single valu
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="frequency-of-the-most-frequent-element" /&gt;
+&lt;MarkSolved problem-slug="frequency-of-the-most-frequent-element" /&gt; &lt;Bookmark problem-slug="frequency-of-the-most-frequent-element" /&gt;
 
 &lt;InterviewTimer problem-slug="frequency-of-the-most-frequent-element" /&gt;
 

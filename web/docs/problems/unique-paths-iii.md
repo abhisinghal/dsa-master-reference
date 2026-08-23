@@ -20,7 +20,7 @@ Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cel
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="unique-paths-iii" /&gt;
+&lt;MarkSolved problem-slug="unique-paths-iii" /&gt; &lt;Bookmark problem-slug="unique-paths-iii" /&gt;
 
 &lt;InterviewTimer problem-slug="unique-paths-iii" /&gt;
 

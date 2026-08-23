@@ -19,7 +19,7 @@ Return the multi-set intersection (each element appears `min(cnt_a, cnt_b)` time
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="intersection-of-two-arrays-ii" /&gt;
+&lt;MarkSolved problem-slug="intersection-of-two-arrays-ii" /&gt; &lt;Bookmark problem-slug="intersection-of-two-arrays-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="intersection-of-two-arrays-ii" /&gt;
 

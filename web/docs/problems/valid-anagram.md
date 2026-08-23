@@ -20,7 +20,7 @@ Given two strings `s` and `t`, return `true` iff `t` is an anagram of `s`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="valid-anagram" /&gt;
+&lt;MarkSolved problem-slug="valid-anagram" /&gt; &lt;Bookmark problem-slug="valid-anagram" /&gt;
 
 &lt;InterviewTimer problem-slug="valid-anagram" /&gt;
 

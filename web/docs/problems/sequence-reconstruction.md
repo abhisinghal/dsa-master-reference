@@ -20,7 +20,7 @@ Given a target permutation `nums` and a list of subsequences `sequences`, return
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="sequence-reconstruction" /&gt;
+&lt;MarkSolved problem-slug="sequence-reconstruction" /&gt; &lt;Bookmark problem-slug="sequence-reconstruction" /&gt;
 
 &lt;InterviewTimer problem-slug="sequence-reconstruction" /&gt;
 

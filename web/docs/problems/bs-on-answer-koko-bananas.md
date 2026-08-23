@@ -20,7 +20,7 @@ Koko has `n` piles of bananas, `piles[i]` in each. She can eat at speed `k` bana
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="bs-on-answer-koko-bananas" /&gt;
+&lt;MarkSolved problem-slug="bs-on-answer-koko-bananas" /&gt; &lt;Bookmark problem-slug="bs-on-answer-koko-bananas" /&gt;
 
 &lt;InterviewTimer problem-slug="bs-on-answer-koko-bananas" /&gt;
 

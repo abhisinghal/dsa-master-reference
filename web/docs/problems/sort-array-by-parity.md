@@ -19,7 +19,7 @@ Rearrange so all even values come before all odd. Any valid partition accepted.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="sort-array-by-parity" /&gt;
+&lt;MarkSolved problem-slug="sort-array-by-parity" /&gt; &lt;Bookmark problem-slug="sort-array-by-parity" /&gt;
 
 &lt;InterviewTimer problem-slug="sort-array-by-parity" /&gt;
 

@@ -19,7 +19,7 @@ Return max product of a contiguous subarray.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="maximum-product-subarray" /&gt;
+&lt;MarkSolved problem-slug="maximum-product-subarray" /&gt; &lt;Bookmark problem-slug="maximum-product-subarray" /&gt;
 
 &lt;InterviewTimer problem-slug="maximum-product-subarray" /&gt;
 

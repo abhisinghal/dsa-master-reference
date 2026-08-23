@@ -19,7 +19,7 @@ Move all zeros to end preserving order of non-zeros. In-place.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="move-zeroes" /&gt;
+&lt;MarkSolved problem-slug="move-zeroes" /&gt; &lt;Bookmark problem-slug="move-zeroes" /&gt;
 
 &lt;InterviewTimer problem-slug="move-zeroes" /&gt;
 

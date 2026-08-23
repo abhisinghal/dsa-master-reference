@@ -19,7 +19,7 @@ Return squares of a sorted (possibly-negative) array, sorted.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="squares-of-a-sorted-array" /&gt;
+&lt;MarkSolved problem-slug="squares-of-a-sorted-array" /&gt; &lt;Bookmark problem-slug="squares-of-a-sorted-array" /&gt;
 
 &lt;InterviewTimer problem-slug="squares-of-a-sorted-array" /&gt;
 

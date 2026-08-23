@@ -20,7 +20,7 @@ Sorted array; return 1-indexed pair summing to target.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="two-sum-ii-input-array-is-sorted" /&gt;
+&lt;MarkSolved problem-slug="two-sum-ii-input-array-is-sorted" /&gt; &lt;Bookmark problem-slug="two-sum-ii-input-array-is-sorted" /&gt;
 
 &lt;InterviewTimer problem-slug="two-sum-ii-input-array-is-sorted" /&gt;
 

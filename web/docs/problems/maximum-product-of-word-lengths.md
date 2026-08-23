@@ -19,7 +19,7 @@ Return `max(len(a) * len(b))` over pairs whose character sets are disjoint (no s
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="maximum-product-of-word-lengths" /&gt;
+&lt;MarkSolved problem-slug="maximum-product-of-word-lengths" /&gt; &lt;Bookmark problem-slug="maximum-product-of-word-lengths" /&gt;
 
 &lt;InterviewTimer problem-slug="maximum-product-of-word-lengths" /&gt;
 

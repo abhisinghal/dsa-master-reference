@@ -19,7 +19,7 @@ Given stones on a 2D plane, remove a stone if it shares a row/column with anothe
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="most-stones-removed-with-same-row-or-column" /&gt;
+&lt;MarkSolved problem-slug="most-stones-removed-with-same-row-or-column" /&gt; &lt;Bookmark problem-slug="most-stones-removed-with-same-row-or-column" /&gt;
 
 &lt;InterviewTimer problem-slug="most-stones-removed-with-same-row-or-column" /&gt;
 

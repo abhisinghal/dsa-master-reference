@@ -19,7 +19,7 @@ Split nums into k subsets each summing to `total/k`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="partition-to-k-equal-sum-subsets" /&gt;
+&lt;MarkSolved problem-slug="partition-to-k-equal-sum-subsets" /&gt; &lt;Bookmark problem-slug="partition-to-k-equal-sum-subsets" /&gt;
 
 &lt;InterviewTimer problem-slug="partition-to-k-equal-sum-subsets" /&gt;
 

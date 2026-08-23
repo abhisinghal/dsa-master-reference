@@ -18,7 +18,7 @@ Grid; falling path picks one cell per row; next row's cell must be in `[j-1, j, 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="minimum-falling-path-sum" /&gt;
+&lt;MarkSolved problem-slug="minimum-falling-path-sum" /&gt; &lt;Bookmark problem-slug="minimum-falling-path-sum" /&gt;
 
 &lt;InterviewTimer problem-slug="minimum-falling-path-sum" /&gt;
 

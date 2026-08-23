@@ -19,7 +19,7 @@ Start at 0. At index `i`, jump 1..k steps. Max total score reaching last index.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="jump-game-vi" /&gt;
+&lt;MarkSolved problem-slug="jump-game-vi" /&gt; &lt;Bookmark problem-slug="jump-game-vi" /&gt;
 
 &lt;InterviewTimer problem-slug="jump-game-vi" /&gt;
 

@@ -19,7 +19,7 @@ Undirected graph. Shortest length path visiting every node (may reuse).
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="shortest-path-visiting-all-nodes" /&gt;
+&lt;MarkSolved problem-slug="shortest-path-visiting-all-nodes" /&gt; &lt;Bookmark problem-slug="shortest-path-visiting-all-nodes" /&gt;
 
 &lt;InterviewTimer problem-slug="shortest-path-visiting-all-nodes" /&gt;
 

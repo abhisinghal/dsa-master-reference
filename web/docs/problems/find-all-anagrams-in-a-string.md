@@ -20,7 +20,7 @@ Given strings `s` and `p`, return all starting indices in `s` where a permutatio
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="find-all-anagrams-in-a-string" /&gt;
+&lt;MarkSolved problem-slug="find-all-anagrams-in-a-string" /&gt; &lt;Bookmark problem-slug="find-all-anagrams-in-a-string" /&gt;
 
 &lt;InterviewTimer problem-slug="find-all-anagrams-in-a-string" /&gt;
 

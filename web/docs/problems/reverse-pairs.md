@@ -19,7 +19,7 @@ Count pairs `(i, j)` with `i < j` and `nums[i] > 2 · nums[j]`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="reverse-pairs" /&gt;
+&lt;MarkSolved problem-slug="reverse-pairs" /&gt; &lt;Bookmark problem-slug="reverse-pairs" /&gt;
 
 &lt;InterviewTimer problem-slug="reverse-pairs" /&gt;
 

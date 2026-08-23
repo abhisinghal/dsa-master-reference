@@ -18,7 +18,7 @@ Unlimited transactions; must skip one day between sell and next buy.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" /&gt;
+&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" /&gt; &lt;Bookmark problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" /&gt;
 
 &lt;InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" /&gt;
 

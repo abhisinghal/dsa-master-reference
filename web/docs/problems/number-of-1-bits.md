@@ -19,7 +19,7 @@ Return the popcount (number of set bits) of an unsigned 32-bit integer.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="number-of-1-bits" /&gt;
+&lt;MarkSolved problem-slug="number-of-1-bits" /&gt; &lt;Bookmark problem-slug="number-of-1-bits" /&gt;
 
 &lt;InterviewTimer problem-slug="number-of-1-bits" /&gt;
 

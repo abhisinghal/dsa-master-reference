@@ -19,7 +19,7 @@ Return the sum of XOR of every subset of `nums` (including empty).
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="sum-of-all-subset-xor-totals" /&gt;
+&lt;MarkSolved problem-slug="sum-of-all-subset-xor-totals" /&gt; &lt;Bookmark problem-slug="sum-of-all-subset-xor-totals" /&gt;
 
 &lt;InterviewTimer problem-slug="sum-of-all-subset-xor-totals" /&gt;
 

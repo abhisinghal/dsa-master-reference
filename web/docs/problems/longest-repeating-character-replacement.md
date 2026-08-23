@@ -20,7 +20,7 @@ Given `s` (uppercase A–Z) and integer `k`, return the length of the longest su
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="longest-repeating-character-replacement" /&gt;
+&lt;MarkSolved problem-slug="longest-repeating-character-replacement" /&gt; &lt;Bookmark problem-slug="longest-repeating-character-replacement" /&gt;
 
 &lt;InterviewTimer problem-slug="longest-repeating-character-replacement" /&gt;
 

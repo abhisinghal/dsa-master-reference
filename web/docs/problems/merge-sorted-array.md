@@ -19,7 +19,7 @@ Merge `nums2` into `nums1` in-place; `nums1` has size `m+n` with last `n` slots 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="merge-sorted-array" /&gt;
+&lt;MarkSolved problem-slug="merge-sorted-array" /&gt; &lt;Bookmark problem-slug="merge-sorted-array" /&gt;
 
 &lt;InterviewTimer problem-slug="merge-sorted-array" /&gt;
 

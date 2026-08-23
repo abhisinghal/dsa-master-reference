@@ -19,7 +19,7 @@ Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="min-cost-climbing-stairs" /&gt;
+&lt;MarkSolved problem-slug="min-cost-climbing-stairs" /&gt; &lt;Bookmark problem-slug="min-cost-climbing-stairs" /&gt;
 
 &lt;InterviewTimer problem-slug="min-cost-climbing-stairs" /&gt;
 

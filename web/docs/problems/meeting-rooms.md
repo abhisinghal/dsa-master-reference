@@ -20,7 +20,7 @@ Given meeting time intervals, return `true` iff a person can attend all.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="meeting-rooms" /&gt;
+&lt;MarkSolved problem-slug="meeting-rooms" /&gt; &lt;Bookmark problem-slug="meeting-rooms" /&gt;
 
 &lt;InterviewTimer problem-slug="meeting-rooms" /&gt;
 

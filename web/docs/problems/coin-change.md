@@ -20,7 +20,7 @@ Given `coins` (unbounded supply of each) and `amount`, return the **minimum** nu
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="coin-change" /&gt;
+&lt;MarkSolved problem-slug="coin-change" /&gt; &lt;Bookmark problem-slug="coin-change" /&gt;
 
 &lt;InterviewTimer problem-slug="coin-change" /&gt;
 

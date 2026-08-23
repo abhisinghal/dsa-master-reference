@@ -18,7 +18,7 @@ Split `nums` into `m` non-empty contiguous subarrays to minimize the largest sum
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="split-array-largest-sum" /&gt;
+&lt;MarkSolved problem-slug="split-array-largest-sum" /&gt; &lt;Bookmark problem-slug="split-array-largest-sum" /&gt;
 
 &lt;InterviewTimer problem-slug="split-array-largest-sum" /&gt;
 

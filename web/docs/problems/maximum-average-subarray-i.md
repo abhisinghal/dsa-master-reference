@@ -17,7 +17,7 @@ Return the max average of any contiguous subarray of length exactly `k`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="maximum-average-subarray-i" /&gt;
+&lt;MarkSolved problem-slug="maximum-average-subarray-i" /&gt; &lt;Bookmark problem-slug="maximum-average-subarray-i" /&gt;
 
 &lt;InterviewTimer problem-slug="maximum-average-subarray-i" /&gt;
 

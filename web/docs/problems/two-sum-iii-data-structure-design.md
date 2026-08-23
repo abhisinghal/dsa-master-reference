@@ -28,7 +28,7 @@ ts.find(7);  // false
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="two-sum-iii-data-structure-design" /&gt;
+&lt;MarkSolved problem-slug="two-sum-iii-data-structure-design" /&gt; &lt;Bookmark problem-slug="two-sum-iii-data-structure-design" /&gt;
 
 &lt;InterviewTimer problem-slug="two-sum-iii-data-structure-design" /&gt;
 

@@ -18,7 +18,7 @@ You have an `m × n` grid of water. Given `positions` where each `(r, c)` become
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="number-of-islands-ii" /&gt;
+&lt;MarkSolved problem-slug="number-of-islands-ii" /&gt; &lt;Bookmark problem-slug="number-of-islands-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="number-of-islands-ii" /&gt;
 

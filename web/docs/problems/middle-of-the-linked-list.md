@@ -20,7 +20,7 @@ Given the head of a singly linked list, return the middle node. If there are two
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="middle-of-the-linked-list" /&gt;
+&lt;MarkSolved problem-slug="middle-of-the-linked-list" /&gt; &lt;Bookmark problem-slug="middle-of-the-linked-list" /&gt;
 
 &lt;InterviewTimer problem-slug="middle-of-the-linked-list" /&gt;
 

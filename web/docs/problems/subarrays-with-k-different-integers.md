@@ -20,7 +20,7 @@ Given an integer array `nums` and integer `k`, return the number of contiguous s
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="subarrays-with-k-different-integers" /&gt;
+&lt;MarkSolved problem-slug="subarrays-with-k-different-integers" /&gt; &lt;Bookmark problem-slug="subarrays-with-k-different-integers" /&gt;
 
 &lt;InterviewTimer problem-slug="subarrays-with-k-different-integers" /&gt;
 

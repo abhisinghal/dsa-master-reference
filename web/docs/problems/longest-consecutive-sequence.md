@@ -20,7 +20,7 @@ Given an unsorted integer array `nums`, return the length of the longest **conse
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="longest-consecutive-sequence" /&gt;
+&lt;MarkSolved problem-slug="longest-consecutive-sequence" /&gt; &lt;Bookmark problem-slug="longest-consecutive-sequence" /&gt;
 
 &lt;InterviewTimer problem-slug="longest-consecutive-sequence" /&gt;
 

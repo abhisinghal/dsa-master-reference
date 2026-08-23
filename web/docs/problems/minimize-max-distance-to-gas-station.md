@@ -18,7 +18,7 @@ Given sorted station positions and integer `k`, add `k` new stations to minimize
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="minimize-max-distance-to-gas-station" /&gt;
+&lt;MarkSolved problem-slug="minimize-max-distance-to-gas-station" /&gt; &lt;Bookmark problem-slug="minimize-max-distance-to-gas-station" /&gt;
 
 &lt;InterviewTimer problem-slug="minimize-max-distance-to-gas-station" /&gt;
 

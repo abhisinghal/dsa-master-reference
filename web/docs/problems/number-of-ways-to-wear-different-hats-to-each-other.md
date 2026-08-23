@@ -20,7 +20,7 @@ n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt;
+&lt;MarkSolved problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt; &lt;Bookmark problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt;
 
 &lt;InterviewTimer problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt;
 

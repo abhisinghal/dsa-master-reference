@@ -20,7 +20,7 @@ Given `nums` containing `n` distinct integers in `[0, n]`, return the missing on
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="missing-number" /&gt;
+&lt;MarkSolved problem-slug="missing-number" /&gt; &lt;Bookmark problem-slug="missing-number" /&gt;
 
 &lt;InterviewTimer problem-slug="missing-number" /&gt;
 

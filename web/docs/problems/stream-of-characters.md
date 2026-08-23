@@ -18,7 +18,7 @@ Design `StreamChecker`. `query(c)` returns true iff the last k chars form a word
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="stream-of-characters" /&gt;
+&lt;MarkSolved problem-slug="stream-of-characters" /&gt; &lt;Bookmark problem-slug="stream-of-characters" /&gt;
 
 &lt;InterviewTimer problem-slug="stream-of-characters" /&gt;
 

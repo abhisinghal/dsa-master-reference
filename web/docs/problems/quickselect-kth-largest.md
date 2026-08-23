@@ -19,7 +19,7 @@ Given `nums` and integer `k`, return the k-th **largest** element (1-indexed). O
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="quickselect-kth-largest" /&gt;
+&lt;MarkSolved problem-slug="quickselect-kth-largest" /&gt; &lt;Bookmark problem-slug="quickselect-kth-largest" /&gt;
 
 &lt;InterviewTimer problem-slug="quickselect-kth-largest" /&gt;
 

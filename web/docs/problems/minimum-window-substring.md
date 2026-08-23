@@ -20,7 +20,7 @@ Given strings `s` and `t`, return the smallest substring of `s` that contains ev
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="minimum-window-substring" /&gt;
+&lt;MarkSolved problem-slug="minimum-window-substring" /&gt; &lt;Bookmark problem-slug="minimum-window-substring" /&gt;
 
 &lt;InterviewTimer problem-slug="minimum-window-substring" /&gt;
 

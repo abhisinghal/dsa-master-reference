@@ -19,7 +19,7 @@ Given matrix `mat[m][n]` and integer `k`, return `answer[i][j]` = sum of all ele
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="matrix-block-sum" /&gt;
+&lt;MarkSolved problem-slug="matrix-block-sum" /&gt; &lt;Bookmark problem-slug="matrix-block-sum" /&gt;
 
 &lt;InterviewTimer problem-slug="matrix-block-sum" /&gt;
 

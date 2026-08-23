@@ -20,7 +20,7 @@ An **ugly number** has only 2, 3, or 5 as prime factors. `1` is ugly by conventi
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="ugly-number-ii" /&gt;
+&lt;MarkSolved problem-slug="ugly-number-ii" /&gt; &lt;Bookmark problem-slug="ugly-number-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="ugly-number-ii" /&gt;
 

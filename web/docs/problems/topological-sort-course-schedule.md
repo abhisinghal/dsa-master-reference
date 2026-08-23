@@ -20,7 +20,7 @@ Given `numCourses` and `prerequisites[i] = [a, b]` meaning "to take `a` you must
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="topological-sort-course-schedule" /&gt;
+&lt;MarkSolved problem-slug="topological-sort-course-schedule" /&gt; &lt;Bookmark problem-slug="topological-sort-course-schedule" /&gt;
 
 &lt;InterviewTimer problem-slug="topological-sort-course-schedule" /&gt;
 

@@ -19,7 +19,7 @@ At most `k` transactions. Max profit.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock-iv" /&gt;
+&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock-iv" /&gt; &lt;Bookmark problem-slug="best-time-to-buy-and-sell-stock-iv" /&gt;
 
 &lt;InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-iv" /&gt;
 

@@ -19,7 +19,7 @@ Given `n` non-negative integers representing an elevation map, compute how much 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="trapping-rain-water" /&gt;
+&lt;MarkSolved problem-slug="trapping-rain-water" /&gt; &lt;Bookmark problem-slug="trapping-rain-water" /&gt;
 
 &lt;InterviewTimer problem-slug="trapping-rain-water" /&gt;
 

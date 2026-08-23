@@ -19,7 +19,7 @@ Knight from top-left to bottom-right; each cell gives/takes HP; HP ≥ 1 always.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="dungeon-game" /&gt;
+&lt;MarkSolved problem-slug="dungeon-game" /&gt; &lt;Bookmark problem-slug="dungeon-game" /&gt;
 
 &lt;InterviewTimer problem-slug="dungeon-game" /&gt;
 

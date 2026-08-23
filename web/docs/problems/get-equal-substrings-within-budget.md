@@ -18,7 +18,7 @@ Given `s`, `t`, `maxCost`. Convert `s[i]` → `t[i]` costs `|s[i] - t[i]|`. Retu
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="get-equal-substrings-within-budget" /&gt;
+&lt;MarkSolved problem-slug="get-equal-substrings-within-budget" /&gt; &lt;Bookmark problem-slug="get-equal-substrings-within-budget" /&gt;
 
 &lt;InterviewTimer problem-slug="get-equal-substrings-within-budget" /&gt;
 

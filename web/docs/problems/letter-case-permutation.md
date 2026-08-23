@@ -18,7 +18,7 @@ Return every case variant of letters (digits stay).
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="letter-case-permutation" /&gt;
+&lt;MarkSolved problem-slug="letter-case-permutation" /&gt; &lt;Bookmark problem-slug="letter-case-permutation" /&gt;
 
 &lt;InterviewTimer problem-slug="letter-case-permutation" /&gt;
 

@@ -18,7 +18,7 @@ Return **count** of distinct N-Queens solutions.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="n-queens-ii" /&gt;
+&lt;MarkSolved problem-slug="n-queens-ii" /&gt; &lt;Bookmark problem-slug="n-queens-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="n-queens-ii" /&gt;
 

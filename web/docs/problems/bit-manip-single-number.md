@@ -19,7 +19,7 @@ Every element appears twice except one. Return that one, in **O(n)** time and **
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="bit-manip-single-number" /&gt;
+&lt;MarkSolved problem-slug="bit-manip-single-number" /&gt; &lt;Bookmark problem-slug="bit-manip-single-number" /&gt;
 
 &lt;InterviewTimer problem-slug="bit-manip-single-number" /&gt;
 

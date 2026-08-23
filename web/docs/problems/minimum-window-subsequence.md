@@ -17,7 +17,7 @@ Find the min window in `s1` such that `s2` is a subsequence.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="minimum-window-subsequence" /&gt;
+&lt;MarkSolved problem-slug="minimum-window-subsequence" /&gt; &lt;Bookmark problem-slug="minimum-window-subsequence" /&gt;
 
 &lt;InterviewTimer problem-slug="minimum-window-subsequence" /&gt;
 

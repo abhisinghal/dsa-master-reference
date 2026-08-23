@@ -19,7 +19,7 @@ Given `isConnected[n][n]` (adjacency matrix; `1` if direct road), return the num
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="union-find-number-of-provinces" /&gt;
+&lt;MarkSolved problem-slug="union-find-number-of-provinces" /&gt; &lt;Bookmark problem-slug="union-find-number-of-provinces" /&gt;
 
 &lt;InterviewTimer problem-slug="union-find-number-of-provinces" /&gt;
 

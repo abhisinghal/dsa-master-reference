@@ -18,7 +18,7 @@ Given matrix of zeros `m × n` and operations `[a, b]` that add 1 to every cell 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="range-addition-ii" /&gt;
+&lt;MarkSolved problem-slug="range-addition-ii" /&gt; &lt;Bookmark problem-slug="range-addition-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="range-addition-ii" /&gt;
 

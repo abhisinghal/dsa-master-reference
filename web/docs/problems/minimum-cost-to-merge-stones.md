@@ -18,7 +18,7 @@ Merge exactly k consecutive piles at a time; cost = sum. Min total to merge all 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="minimum-cost-to-merge-stones" /&gt;
+&lt;MarkSolved problem-slug="minimum-cost-to-merge-stones" /&gt; &lt;Bookmark problem-slug="minimum-cost-to-merge-stones" /&gt;
 
 &lt;InterviewTimer problem-slug="minimum-cost-to-merge-stones" /&gt;
 

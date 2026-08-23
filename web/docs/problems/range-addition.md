@@ -19,7 +19,7 @@ Given length `n` and updates `[start, end, val]`, return the array after applyin
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="range-addition" /&gt;
+&lt;MarkSolved problem-slug="range-addition" /&gt; &lt;Bookmark problem-slug="range-addition" /&gt;
 
 &lt;InterviewTimer problem-slug="range-addition" /&gt;
 

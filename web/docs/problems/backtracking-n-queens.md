@@ -18,7 +18,7 @@ Place `n` queens on an `n × n` board so no two attack each other. Return all di
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="backtracking-n-queens" /&gt;
+&lt;MarkSolved problem-slug="backtracking-n-queens" /&gt; &lt;Bookmark problem-slug="backtracking-n-queens" /&gt;
 
 &lt;InterviewTimer problem-slug="backtracking-n-queens" /&gt;
 

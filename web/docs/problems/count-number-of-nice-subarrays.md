@@ -20,7 +20,7 @@ Given an array `nums` and integer `k`, return the number of contiguous subarrays
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="count-number-of-nice-subarrays" /&gt;
+&lt;MarkSolved problem-slug="count-number-of-nice-subarrays" /&gt; &lt;Bookmark problem-slug="count-number-of-nice-subarrays" /&gt;
 
 &lt;InterviewTimer problem-slug="count-number-of-nice-subarrays" /&gt;
 

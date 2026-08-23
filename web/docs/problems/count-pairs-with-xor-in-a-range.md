@@ -19,7 +19,7 @@ Count pairs `(i, j)` with `i < j` and `low ≤ nums[i] XOR nums[j] ≤ high`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="count-pairs-with-xor-in-a-range" /&gt;
+&lt;MarkSolved problem-slug="count-pairs-with-xor-in-a-range" /&gt; &lt;Bookmark problem-slug="count-pairs-with-xor-in-a-range" /&gt;
 
 &lt;InterviewTimer problem-slug="count-pairs-with-xor-in-a-range" /&gt;
 

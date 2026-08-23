@@ -19,7 +19,7 @@ Given two strings `word1` and `word2`, return the minimum number of edits (inser
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="edit-distance" /&gt;
+&lt;MarkSolved problem-slug="edit-distance" /&gt; &lt;Bookmark problem-slug="edit-distance" /&gt;
 
 &lt;InterviewTimer problem-slug="edit-distance" /&gt;
 

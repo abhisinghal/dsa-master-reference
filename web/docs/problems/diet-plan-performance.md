@@ -18,7 +18,7 @@ Fixed window of size `k` over calories. For each window: +1 if sum &gt; upper; â
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="diet-plan-performance" /&gt;
+&lt;MarkSolved problem-slug="diet-plan-performance" /&gt; &lt;Bookmark problem-slug="diet-plan-performance" /&gt;
 
 &lt;InterviewTimer problem-slug="diet-plan-performance" /&gt;
 

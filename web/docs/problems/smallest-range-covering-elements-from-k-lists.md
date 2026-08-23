@@ -19,7 +19,7 @@ Given `k` sorted lists of integers, find the smallest range `[a, b]` that contai
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="smallest-range-covering-elements-from-k-lists" /&gt;
+&lt;MarkSolved problem-slug="smallest-range-covering-elements-from-k-lists" /&gt; &lt;Bookmark problem-slug="smallest-range-covering-elements-from-k-lists" /&gt;
 
 &lt;InterviewTimer problem-slug="smallest-range-covering-elements-from-k-lists" /&gt;
 

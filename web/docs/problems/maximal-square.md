@@ -18,7 +18,7 @@ Largest square of `1`s in binary matrix. Return area.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="maximal-square" /&gt;
+&lt;MarkSolved problem-slug="maximal-square" /&gt; &lt;Bookmark problem-slug="maximal-square" /&gt;
 
 &lt;InterviewTimer problem-slug="maximal-square" /&gt;
 

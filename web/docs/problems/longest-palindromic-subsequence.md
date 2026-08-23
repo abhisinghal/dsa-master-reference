@@ -19,7 +19,7 @@ Length of longest palindromic subsequence.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="longest-palindromic-subsequence" /&gt;
+&lt;MarkSolved problem-slug="longest-palindromic-subsequence" /&gt; &lt;Bookmark problem-slug="longest-palindromic-subsequence" /&gt;
 
 &lt;InterviewTimer problem-slug="longest-palindromic-subsequence" /&gt;
 

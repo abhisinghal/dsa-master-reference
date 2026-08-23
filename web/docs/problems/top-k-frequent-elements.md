@@ -19,7 +19,7 @@ Given `nums` and integer `k`, return the `k` most frequent elements (any order).
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="top-k-frequent-elements" /&gt;
+&lt;MarkSolved problem-slug="top-k-frequent-elements" /&gt; &lt;Bookmark problem-slug="top-k-frequent-elements" /&gt;
 
 &lt;InterviewTimer problem-slug="top-k-frequent-elements" /&gt;
 

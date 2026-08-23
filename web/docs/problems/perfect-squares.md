@@ -19,7 +19,7 @@ Min count of perfect squares summing to `n`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="perfect-squares" /&gt;
+&lt;MarkSolved problem-slug="perfect-squares" /&gt; &lt;Bookmark problem-slug="perfect-squares" /&gt;
 
 &lt;InterviewTimer problem-slug="perfect-squares" /&gt;
 

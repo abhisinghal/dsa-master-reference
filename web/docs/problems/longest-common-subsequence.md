@@ -20,7 +20,7 @@ Length of longest subsequence appearing in both strings.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="longest-common-subsequence" /&gt;
+&lt;MarkSolved problem-slug="longest-common-subsequence" /&gt; &lt;Bookmark problem-slug="longest-common-subsequence" /&gt;
 
 &lt;InterviewTimer problem-slug="longest-common-subsequence" /&gt;
 

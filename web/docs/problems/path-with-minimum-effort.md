@@ -18,7 +18,7 @@ In a 2D grid of heights, an "effort" of a path is the max abs-diff between conse
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="path-with-minimum-effort" /&gt;
+&lt;MarkSolved problem-slug="path-with-minimum-effort" /&gt; &lt;Bookmark problem-slug="path-with-minimum-effort" /&gt;
 
 &lt;InterviewTimer problem-slug="path-with-minimum-effort" /&gt;
 

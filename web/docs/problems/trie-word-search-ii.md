@@ -18,7 +18,7 @@ Given `board[m][n]` of letters and a dictionary `words`, return all words in `wo
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="trie-word-search-ii" /&gt;
+&lt;MarkSolved problem-slug="trie-word-search-ii" /&gt; &lt;Bookmark problem-slug="trie-word-search-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="trie-word-search-ii" /&gt;
 

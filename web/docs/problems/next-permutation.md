@@ -19,7 +19,7 @@ Rearrange nums to the next lexicographic permutation in-place. If none, sort asc
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="next-permutation" /&gt;
+&lt;MarkSolved problem-slug="next-permutation" /&gt; &lt;Bookmark problem-slug="next-permutation" /&gt;
 
 &lt;InterviewTimer problem-slug="next-permutation" /&gt;
 

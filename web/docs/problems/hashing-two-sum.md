@@ -20,7 +20,7 @@ Given `nums` and `target`, return indices `[i, j]` such that `nums[i] + nums[j] 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="hashing-two-sum" /&gt;
+&lt;MarkSolved problem-slug="hashing-two-sum" /&gt; &lt;Bookmark problem-slug="hashing-two-sum" /&gt;
 
 &lt;InterviewTimer problem-slug="hashing-two-sum" /&gt;
 

@@ -19,7 +19,7 @@ Given `n` cities and `connections[i] = [a, b, cost]`, return the minimum cost to
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="connecting-cities-with-minimum-cost" /&gt;
+&lt;MarkSolved problem-slug="connecting-cities-with-minimum-cost" /&gt; &lt;Bookmark problem-slug="connecting-cities-with-minimum-cost" /&gt;
 
 &lt;InterviewTimer problem-slug="connecting-cities-with-minimum-cost" /&gt;
 

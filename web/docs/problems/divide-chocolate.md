@@ -18,7 +18,7 @@ Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the s
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="divide-chocolate" /&gt;
+&lt;MarkSolved problem-slug="divide-chocolate" /&gt; &lt;Bookmark problem-slug="divide-chocolate" /&gt;
 
 &lt;InterviewTimer problem-slug="divide-chocolate" /&gt;
 

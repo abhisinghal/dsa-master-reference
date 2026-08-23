@@ -20,7 +20,7 @@ Return the longest palindromic substring of `s`.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="longest-palindromic-substring" /&gt;
+&lt;MarkSolved problem-slug="longest-palindromic-substring" /&gt; &lt;Bookmark problem-slug="longest-palindromic-substring" /&gt;
 
 &lt;InterviewTimer problem-slug="longest-palindromic-substring" /&gt;
 

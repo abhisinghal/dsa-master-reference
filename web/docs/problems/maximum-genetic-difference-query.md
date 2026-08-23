@@ -18,7 +18,7 @@ Given a rooted tree of gene values `parents[]` and queries `[node, val]`, for ea
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="maximum-genetic-difference-query" /&gt;
+&lt;MarkSolved problem-slug="maximum-genetic-difference-query" /&gt; &lt;Bookmark problem-slug="maximum-genetic-difference-query" /&gt;
 
 &lt;InterviewTimer problem-slug="maximum-genetic-difference-query" /&gt;
 

@@ -20,7 +20,7 @@ Given a string `s`, return `true` if it can become a palindrome by deleting **at
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="valid-palindrome-ii" /&gt;
+&lt;MarkSolved problem-slug="valid-palindrome-ii" /&gt; &lt;Bookmark problem-slug="valid-palindrome-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="valid-palindrome-ii" /&gt;
 

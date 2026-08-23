@@ -19,7 +19,7 @@ At most one buy + one sell. Max profit.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock" /&gt;
+&lt;MarkSolved problem-slug="best-time-to-buy-and-sell-stock" /&gt; &lt;Bookmark problem-slug="best-time-to-buy-and-sell-stock" /&gt;
 
 &lt;InterviewTimer problem-slug="best-time-to-buy-and-sell-stock" /&gt;
 

@@ -20,7 +20,7 @@ Given `points[][2]` and integer `k`, return the `k` points closest to origin `(0
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="k-closest-points-to-origin" /&gt;
+&lt;MarkSolved problem-slug="k-closest-points-to-origin" /&gt; &lt;Bookmark problem-slug="k-closest-points-to-origin" /&gt;
 
 &lt;InterviewTimer problem-slug="k-closest-points-to-origin" /&gt;
 

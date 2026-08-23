@@ -19,7 +19,7 @@
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="combination-sum-iii" /&gt;
+&lt;MarkSolved problem-slug="combination-sum-iii" /&gt; &lt;Bookmark problem-slug="combination-sum-iii" /&gt;
 
 &lt;InterviewTimer problem-slug="combination-sum-iii" /&gt;
 

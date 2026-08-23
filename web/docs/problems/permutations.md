@@ -19,7 +19,7 @@ Return all permutations of distinct integers.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="permutations" /&gt;
+&lt;MarkSolved problem-slug="permutations" /&gt; &lt;Bookmark problem-slug="permutations" /&gt;
 
 &lt;InterviewTimer problem-slug="permutations" /&gt;
 

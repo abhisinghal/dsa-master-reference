@@ -19,7 +19,7 @@ Check partial Sudoku validity (no duplicates within row/col/box among filled cel
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="valid-sudoku" /&gt;
+&lt;MarkSolved problem-slug="valid-sudoku" /&gt; &lt;Bookmark problem-slug="valid-sudoku" /&gt;
 
 &lt;InterviewTimer problem-slug="valid-sudoku" /&gt;
 

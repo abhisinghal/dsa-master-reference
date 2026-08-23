@@ -19,7 +19,7 @@
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="paint-house-ii" /&gt;
+&lt;MarkSolved problem-slug="paint-house-ii" /&gt; &lt;Bookmark problem-slug="paint-house-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="paint-house-ii" /&gt;
 

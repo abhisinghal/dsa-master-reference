@@ -18,7 +18,7 @@ Merge `k` sorted linked lists into one sorted list.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="k-way-merge-k-sorted-lists" /&gt;
+&lt;MarkSolved problem-slug="k-way-merge-k-sorted-lists" /&gt; &lt;Bookmark problem-slug="k-way-merge-k-sorted-lists" /&gt;
 
 &lt;InterviewTimer problem-slug="k-way-merge-k-sorted-lists" /&gt;
 

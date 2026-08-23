@@ -19,7 +19,7 @@ Can `nums` split into two subsets with equal sum?
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="partition-equal-subset-sum" /&gt;
+&lt;MarkSolved problem-slug="partition-equal-subset-sum" /&gt; &lt;Bookmark problem-slug="partition-equal-subset-sum" /&gt;
 
 &lt;InterviewTimer problem-slug="partition-equal-subset-sum" /&gt;
 

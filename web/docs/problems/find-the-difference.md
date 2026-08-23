@@ -19,7 +19,7 @@
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="find-the-difference" /&gt;
+&lt;MarkSolved problem-slug="find-the-difference" /&gt; &lt;Bookmark problem-slug="find-the-difference" /&gt;
 
 &lt;InterviewTimer problem-slug="find-the-difference" /&gt;
 

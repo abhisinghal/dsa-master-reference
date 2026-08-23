@@ -30,7 +30,7 @@ kthLargest.add(4);   // returns 8
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="kth-largest-element-in-a-stream" /&gt;
+&lt;MarkSolved problem-slug="kth-largest-element-in-a-stream" /&gt; &lt;Bookmark problem-slug="kth-largest-element-in-a-stream" /&gt;
 
 &lt;InterviewTimer problem-slug="kth-largest-element-in-a-stream" /&gt;
 

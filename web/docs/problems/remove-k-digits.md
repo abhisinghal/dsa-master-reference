@@ -20,7 +20,7 @@ Given a numeric string `num` (no leading zeros unless it's `"0"`) and integer `k
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="remove-k-digits" /&gt;
+&lt;MarkSolved problem-slug="remove-k-digits" /&gt; &lt;Bookmark problem-slug="remove-k-digits" /&gt;
 
 &lt;InterviewTimer problem-slug="remove-k-digits" /&gt;
 

@@ -17,7 +17,7 @@ Find starting indices of substrings that are concatenations of every word in `wo
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="substring-with-concatenation-of-all-words" /&gt;
+&lt;MarkSolved problem-slug="substring-with-concatenation-of-all-words" /&gt; &lt;Bookmark problem-slug="substring-with-concatenation-of-all-words" /&gt;
 
 &lt;InterviewTimer problem-slug="substring-with-concatenation-of-all-words" /&gt;
 

@@ -20,7 +20,7 @@ Given binary array `nums`, return the length of the longest subarray with equal 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="contiguous-array" /&gt;
+&lt;MarkSolved problem-slug="contiguous-array" /&gt; &lt;Bookmark problem-slug="contiguous-array" /&gt;
 
 &lt;InterviewTimer problem-slug="contiguous-array" /&gt;
 

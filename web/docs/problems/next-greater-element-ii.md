@@ -20,7 +20,7 @@ Given a **circular** integer array `nums`, return the next greater element for e
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="next-greater-element-ii" /&gt;
+&lt;MarkSolved problem-slug="next-greater-element-ii" /&gt; &lt;Bookmark problem-slug="next-greater-element-ii" /&gt;
 
 &lt;InterviewTimer problem-slug="next-greater-element-ii" /&gt;
 

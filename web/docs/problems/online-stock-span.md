@@ -32,7 +32,7 @@ S.next(85);    // 6
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="online-stock-span" /&gt;
+&lt;MarkSolved problem-slug="online-stock-span" /&gt; &lt;Bookmark problem-slug="online-stock-span" /&gt;
 
 &lt;InterviewTimer problem-slug="online-stock-span" /&gt;
 

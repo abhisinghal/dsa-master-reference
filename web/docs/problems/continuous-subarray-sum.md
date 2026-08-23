@@ -20,7 +20,7 @@ Return true iff there is a subarray of length **≥ 2** whose sum is a multiple 
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="continuous-subarray-sum" /&gt;
+&lt;MarkSolved problem-slug="continuous-subarray-sum" /&gt; &lt;Bookmark problem-slug="continuous-subarray-sum" /&gt;
 
 &lt;InterviewTimer problem-slug="continuous-subarray-sum" /&gt;
 

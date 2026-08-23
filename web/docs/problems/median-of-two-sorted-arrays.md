@@ -18,7 +18,7 @@ Given two sorted arrays, return the median in **O(log(min(m,n)))**.
 /&gt;
 ---
 
-&lt;MarkSolved problem-slug="median-of-two-sorted-arrays" /&gt;
+&lt;MarkSolved problem-slug="median-of-two-sorted-arrays" /&gt; &lt;Bookmark problem-slug="median-of-two-sorted-arrays" /&gt;
 
 &lt;InterviewTimer problem-slug="median-of-two-sorted-arrays" /&gt;
 
