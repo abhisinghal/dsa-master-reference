@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Find Duplicate File in System](https://leetcode.com/problems/find-duplicate-file-in-system/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
+<CompanyTags companies="Google, Amazon, Dropbox" />
+
 Given `"dir file1.ext(content) file2.ext(content) …"` strings, group files with identical content.
 
 **Example 1** — Various paths → grouped by content.
 
 **Constraints** — total input ≤ 2·10⁷.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach — Hash by content (canonical)
@@ -40,6 +48,10 @@ List<List<String>> findDuplicate(String[] paths) {
 - **Symlinks** → normalize `readlink` before grouping.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="find-duplicate-file-in-system" />
 
 ## Complexity summary
 

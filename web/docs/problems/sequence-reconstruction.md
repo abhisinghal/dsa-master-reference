@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
+&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+
 Given a target permutation `nums` and a list of subsequences `sequences`, return `true` iff `nums` is the **unique** permutation reconstructible from the sequences.
 
 **Example 1** — `nums=[1,2,3], sequences=[[1,2],[1,3]]` → `false` (also [1,3,2])
@@ -10,6 +12,12 @@ Given a target permutation `nums` and a list of subsequences `sequences`, return
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Directed graph? Prerequisites? You need topological order."
+  hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
+  hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
+/&gt;
 ---
 
 ## Approach 1 — Try every topological order
@@ -65,6 +73,10 @@ boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
 **Complexity** — Time **O(n + m)**; Space **O(n + m)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="sequence-reconstruction" />
 
 ## Complexity summary
 

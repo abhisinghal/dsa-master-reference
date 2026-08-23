@@ -469,63 +469,7 @@ The +/−/− /+ inclusion–exclusion pattern reappears in *Maximal Rectangle* 
 
 ## Check your understanding
 
-<Quiz patternId="prefix-sum" :questions='[
-  {
-    "q": "You must count subarrays with sum k, and numbers may be negative. Which pattern applies?",
-    "choices": [
-      {
-        "text": "Plain sliding window",
-        "explanation": "Negatives destroy the monotone shrink rule."
-      },
-      {
-        "text": "Prefix sum plus hash map",
-        "correct": true,
-        "explanation": "Yes. A previous prefix of current minus k identifies each valid subarray."
-      },
-      {
-        "text": "Two sorted pointers"
-      },
-      {
-        "text": "Monotonic stack"
-      }
-    ]
-  },
-  {
-    "q": "Why seed the prefix-count map with sum 0 having count 1?",
-    "choices": [
-      {
-        "text": "To handle empty input only"
-      },
-      {
-        "text": "To count subarrays starting at index zero",
-        "correct": true,
-        "explanation": "Correct. If prefix itself equals k, the missing earlier prefix is the initial zero."
-      },
-      {
-        "text": "To avoid sorting prefixes"
-      },
-      {
-        "text": "To force positive sums"
-      }
-    ]
-  },
-  {
-    "q": "Many range increments are known before any final query. What is the efficient tool?",
-    "choices": [
-      {
-        "text": "Difference array",
-        "correct": true,
-        "explanation": "Right. Each update changes two boundaries, then one prefix pass reconstructs all values."
-      },
-      {
-        "text": "Nested loop updates"
-      },
-      {
-        "text": "Kahn topological sort"
-      },
-      {
-        "text": "Quickselect partition"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="prefix-sum"
+  :questions='[{"q": "What does `count[preSum - k]` count in Subarray Sum Equals K?", "choices": [{"text": "Number of subarrays ending at current index with sum k", "correct": true, "explanation": "Every earlier prefix with value `preSum - k` gives a valid subarray."}, {"text": "Total number of elements less than k", "correct": false}, {"text": "Number of prefixes divisible by k", "correct": false}, {"text": "Number of distinct values in nums", "correct": false}]}, {"q": "When using prefix mod k, why initialize `count[0] = 1`?", "choices": [{"text": "To count subarrays starting from index 0", "correct": true, "explanation": "The \"prefix sum before index 0\" is 0; without this, subarrays sum-to-k starting at 0 are missed."}, {"text": "To handle negative numbers", "correct": false}, {"text": "It is required by Java", "correct": false}, {"text": "To avoid null exceptions", "correct": false}]}, {"q": "For range-add + point-query, what is the O(1)-per-add data structure?", "choices": [{"text": "Segment tree", "correct": false, "explanation": "Works but O(log n) per op — overkill if only one final scan."}, {"text": "Difference array (then prefix sum at the end)", "correct": true, "explanation": "O(1) per add; one O(n) prefix sweep to recover values."}, {"text": "Hash map", "correct": false}, {"text": "BIT / Fenwick tree", "correct": false, "explanation": "Works but heavier than needed."}]}, {"q": "In Contiguous Array (equal 0s and 1s), what mapping enables prefix sum?", "choices": [{"text": "Map 0 → -1 and 1 → +1; equal counts iff prefix returns to a prior value", "correct": true, "explanation": "Same prefix twice → the delta is 0 → equal 0s and 1s."}, {"text": "Sort the array", "correct": false}, {"text": "Use bitwise XOR", "correct": false}, {"text": "Impossible in O(n)", "correct": false}]}, {"q": "Time to answer any 2D rectangle-sum query after O(mn) preprocessing?", "choices": [{"text": "O(1)", "correct": true, "explanation": "Inclusion-exclusion on the 2D prefix table."}, {"text": "O(log(mn))", "correct": false}, {"text": "O(m + n)", "correct": false}, {"text": "O(mn)", "correct": false}]}]'
+/>

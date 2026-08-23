@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Sort List](https://leetcode.com/problems/sort-list/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/divide-conquer)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+
 Sort a linked list in **O(n log n)** time, O(1) extra space (constant beyond recursion stack).
 
 **Example 1** — `4→2→1→3` → `1→2→3→4`
@@ -9,6 +11,12 @@ Sort a linked list in **O(n log n)** time, O(1) extra space (constant beyond rec
 
 **Constraints** — `0 ≤ n ≤ 5·10⁴`.
 
+
+&lt;Hints
+  hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
+  hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."
+  hint3="For count-of-X-across-boundary, two-pointer walk during the merge step."
+/&gt;
 ---
 
 ## Approach 1 — Copy to array, sort, rebuild
@@ -70,6 +78,10 @@ ListNode merge(ListNode a, ListNode b) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="sort-list" />
 
 ## Complexity summary
 

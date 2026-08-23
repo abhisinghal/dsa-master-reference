@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/fast-slow)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" /&gt;
+
 Given the head of a linked list, return the node where the cycle begins, or `null` if no cycle.
 
 **Example 1** — `3→2→0→-4→(back to 2)` → returns node `2`
@@ -10,6 +12,12 @@ Given the head of a linked list, return the node where the cycle begins, or `nul
 
 **Constraints** — `0 ≤ n ≤ 10⁴`; O(1) extra space required for the follow-up.
 
+
+&lt;Hints
+  hint1="Two pointers moving at different speeds detect cycles without extra memory."
+  hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
+  hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
+/&gt;
 ---
 
 ## Approach 1 — Brute force (hash-set of visited nodes)
@@ -96,6 +104,10 @@ ListNode detectCycle(ListNode head) {
 **Trap.** `fast != null && fast.next != null` — checking only `fast != null` NPEs on even-length lists like `1→2`.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="fast-slow-linked-list-cycle-ii" />
 
 ## Complexity summary
 

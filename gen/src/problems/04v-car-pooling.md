@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Car Pooling](https://leetcode.com/problems/car-pooling/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
+<CompanyTags companies="Meta, Amazon, Uber, Lyft" />
+
 Given trips `[numPassengers, from, to]` and car `capacity`, return `true` iff you can carry all passengers without exceeding capacity.
 
 **Example 1** — `trips=[[2,1,5],[3,3,7]], capacity=4` → `false`
@@ -10,6 +12,12 @@ Given trips `[numPassengers, from, to]` and car `capacity`, return `true` iff yo
 
 **Constraints** — `1 ≤ trips.length ≤ 1000`; `0 ≤ from < to ≤ 1000`.
 
+
+<Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/>
 ---
 
 ## Approach 1 — Sort by time + sweep
@@ -50,6 +58,10 @@ boolean carPooling(int[][] trips, int capacity) {
 **Complexity** — Time **O(n + max)**; Space **O(max)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="car-pooling" />
 
 ## Complexity summary
 

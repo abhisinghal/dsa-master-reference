@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Count ordered sequences of `nums` summing to `target`. `[1,2]` and `[2,1]` are distinct.
 
 **Example 1** — `nums=[1,2,3], target=4` → `7`
@@ -9,6 +11,12 @@ Count ordered sequences of `nums` summing to `target`. `[1,2]` and `[2,1]` are d
 
 **Constraints** — `1 ≤ n ≤ 200`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach 1 — Backtracking
@@ -49,6 +57,10 @@ int combinationSum4(int[] nums, int target) {
 **Complexity** — Time **O(target · n)**; Space **O(target)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="combination-sum-iv" />
 
 ## Complexity summary
 

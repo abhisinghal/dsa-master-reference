@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Concatenated Words](https://leetcode.com/problems/concatenated-words/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Given a list of distinct words, return all words that can be built as a concatenation of **at least two** shorter words from the same list.
 
 **Example 1** — `words=["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]` → `["catsdogcats","dogcatsdog","ratcatdogcat"]`
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Prefix operations? Word set lookups? Autocomplete?"
+  hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
+  hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
+/&gt;
 ---
 
 ## Approach 1 — Brute force per word
@@ -58,6 +66,10 @@ boolean canFormFromOthers(String w, Set<String> dict, int start, int count) {
 **Complexity** — Time **O(N · L² )**; Space **O(N · L)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="concatenated-words" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Valid Sudoku](https://leetcode.com/problems/valid-sudoku/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Uber, Bloomberg" /&gt;
+
 Check partial Sudoku validity (no duplicates within row/col/box among filled cells).
 
 **Constraints** — 9×9 board.
@@ -9,6 +11,12 @@ Check partial Sudoku validity (no duplicates within row/col/box among filled cel
 **Example 1** — Standard partially-filled 9×9 board → `true`
 **Example 2** — Same as 1 but with two `8`s in same column → `false`
 
+
+&lt;Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/&gt;
 ---
 
 ## Approach 1 — Three passes
@@ -42,6 +50,10 @@ boolean isValidSudoku(char[][] board) {
 **Complexity** — Time **O(1)** (fixed 81); Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="valid-sudoku" />
 
 ## Complexity summary
 

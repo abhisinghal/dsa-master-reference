@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Ugly Number II](https://leetcode.com/problems/ugly-number-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/k-way-merge)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 An **ugly number** has only 2, 3, or 5 as prime factors. `1` is ugly by convention. Return the `n`-th ugly number.
 
 **Example 1** — `n = 10` → `12` (sequence `1, 2, 3, 4, 5, 6, 8, 9, 10, 12`)
@@ -10,6 +12,12 @@ An **ugly number** has only 2, 3, or 5 as prime factors. `1` is ugly by conventi
 
 **Constraints** — `1 ≤ n ≤ 1690`.
 
+
+&lt;Hints
+  hint1="You have k sorted sequences. Which element is globally next?"
+  hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."
+  hint3="For ’smallest range covering k lists’, track max-in-heap; window is [minInHeap, maxSeen]."
+/&gt;
 ---
 
 ## Approach 1 — Test each candidate
@@ -95,6 +103,10 @@ int nthUglyNumber(int n) {
 **Complexity** — Time **O(n)**; Space **O(n)** for the array.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="ugly-number-ii" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Merge Intervals](https://leetcode.com/problems/merge-intervals/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple, Adobe" /&gt;
+
 Given a list of intervals, merge all overlapping ones and return the result.
 
 **Example 1** — `[[1,3],[2,6],[8,10],[15,18]]` → `[[1,6],[8,10],[15,18]]`
@@ -9,6 +11,12 @@ Given a list of intervals, merge all overlapping ones and return the result.
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Sort by start (or end, depending on the question)."
+  hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
+  hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
+/&gt;
 ---
 
 ## Approach 1 — Brute force (compare every pair)
@@ -84,6 +92,10 @@ int[][] merge(int[][] intervals) {
 **Complexity** — Time **O(n log n)** (sorting dominates); Space **O(n)** for output. Optimal.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="merge-intervals-classic" />
 
 ## Complexity summary
 

@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Letter Case Permutation](https://leetcode.com/problems/letter-case-permutation/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Amazon, Google" />
+
 Return every case variant of letters (digits stay).
 
 **Example 1** — `s="a1b2"` → `["a1b2","a1B2","A1b2","A1B2"]`
 
 **Constraints** — `1 ≤ n ≤ 12`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach 1 — DFS with two branches per letter (canonical)
@@ -47,6 +55,10 @@ Count L letters; for mask 0..2^L-1 flip corresponding cases.
 **Complexity** — Time **O(n · 2^L)**; Space **O(n)** recursion.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="letter-case-permutation" />
 
 ## Complexity summary
 

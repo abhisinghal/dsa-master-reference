@@ -9,6 +9,12 @@ Find the min window in `s1` such that `s2` is a subsequence.
 
 **Constraints** — `1 ≤ |s1| ≤ 2·10⁴`; `1 ≤ |s2| ≤ 100`.
 
+
+<Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/>
 ---
 
 ## Approach 1 — DP `dp[i][j]` = latest start of match
@@ -63,6 +69,10 @@ String minWindow(String s1, String s2) {
 **Complexity** — Time **O(m · n)** worst; often much faster.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="minimum-window-subsequence" />
 
 ## Complexity summary
 

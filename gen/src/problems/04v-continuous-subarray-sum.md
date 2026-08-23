@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Continuous Subarray Sum](https://leetcode.com/problems/continuous-subarray-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
+<CompanyTags companies="Meta, Amazon, Google" />
+
 Return true iff there is a subarray of length **≥ 2** whose sum is a multiple of `k`.
 
 **Example 1** — `nums = [23,2,4,6,7], k = 6` → `true` (subarray `[2,4]`)
@@ -10,6 +12,12 @@ Return true iff there is a subarray of length **≥ 2** whose sum is a multiple 
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ nums[i] ≤ 10⁹`; `1 ≤ k ≤ 2³¹−1`.
 
+
+<Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/>
 ---
 
 ## Approach 1 — Every subarray
@@ -53,6 +61,10 @@ boolean checkSubarraySum(int[] nums, int k) {
 **Complexity** — Time **O(n)**; Space **O(k)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="continuous-subarray-sum" />
 
 ## Complexity summary
 

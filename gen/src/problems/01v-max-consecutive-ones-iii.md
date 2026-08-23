@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+<CompanyTags companies="Meta, Google, Microsoft, Amazon" />
+
 Given a binary array `nums` and integer `k`, return the maximum length of a subarray containing only 1s after flipping at most `k` zeros.
 
 **Example 1** — `nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2` → `6` (flip the two zeros in the middle group; window `[1,1,1,0,0,1,1,1,1] — no wait — final window `[1,1,1,0,0,1,1,1]` after flipping the middle 0s gives 6 in one run)
@@ -10,6 +12,12 @@ Given a binary array `nums` and integer `k`, return the maximum length of a suba
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `nums[i] ∈ {0, 1}`; `0 ≤ k ≤ n`.
 
+
+<Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/>
 ---
 
 ## Approach 1 — Try every subarray
@@ -112,6 +120,10 @@ int longestOnes(int[] nums, int k) {
 **Complexity** — Time **O(n)**; Space **O(1)**. Same asymptotics, one less inner loop.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="max-consecutive-ones-iii" />
 
 ## Complexity summary
 

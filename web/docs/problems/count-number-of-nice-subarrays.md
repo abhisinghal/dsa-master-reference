@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Count Number of Nice Subarrays](https://leetcode.com/problems/count-number-of-nice-subarrays/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Amazon, Google" /&gt;
+
 Given an array `nums` and integer `k`, return the number of contiguous subarrays containing exactly `k` odd numbers.
 
 **Example 1** — `nums = [1,1,2,1,1], k = 3` → `2`
@@ -10,6 +12,12 @@ Given an array `nums` and integer `k`, return the number of contiguous subarrays
 
 **Constraints** — `1 ≤ n ≤ 5 · 10⁴`; `1 ≤ nums[i] ≤ 10⁵`; `1 ≤ k ≤ n`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Every subarray
@@ -107,6 +115,10 @@ int numberOfSubarraysPS(int[] nums, int k) {
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="count-number-of-nice-subarrays" />
 
 ## Complexity summary
 

@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Number of Islands](https://leetcode.com/problems/number-of-islands/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dfs)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple" />
+
 Count connected components of `'1'`s in a binary grid.
 
 **Example 1** — Grid → count.
 
 **Constraints** — `1 ≤ m, n ≤ 300`.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach 1 — DFS flood fill (canonical)
@@ -38,6 +46,10 @@ Union adjacent `'1'`s; count components at end. Useful for streaming (Islands II
 **Complexity** — Time **O(mn)**; Space **O(mn)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="number-of-islands" />
 
 ## Complexity summary
 

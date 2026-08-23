@@ -415,63 +415,7 @@ Adding before union-check. *Example:* edges `[(A,B,1),(B,C,2),(A,C,3)]`. After a
 
 ## Check your understanding
 
-<Quiz patternId="union-find" :questions='[
-  {
-    "q": "You repeatedly ask whether two items are already in the same group. Which structure fits?",
-    "choices": [
-      {
-        "text": "Union-Find",
-        "correct": true,
-        "explanation": "Yes. It maintains disjoint sets with fast find and union operations."
-      },
-      {
-        "text": "Monotonic stack"
-      },
-      {
-        "text": "K-way merge"
-      },
-      {
-        "text": "Digit DP"
-      }
-    ]
-  },
-  {
-    "q": "Which two optimizations make Union-Find nearly constant amortized time?",
-    "choices": [
-      {
-        "text": "Path compression and union by rank",
-        "correct": true,
-        "explanation": "Correct. Together they keep trees shallow across many operations."
-      },
-      {
-        "text": "Sorting and binary search"
-      },
-      {
-        "text": "Memoization and tabulation"
-      },
-      {
-        "text": "Pivoting and partitioning"
-      }
-    ]
-  },
-  {
-    "q": "In Kruskal MST, when should an edge be added to the answer?",
-    "choices": [
-      {
-        "text": "Whenever it is the largest edge"
-      },
-      {
-        "text": "Only if union succeeds",
-        "correct": true,
-        "explanation": "Right. A failed union means the endpoints were already connected, so the edge would create a cycle."
-      },
-      {
-        "text": "Before checking connectivity",
-        "explanation": "That is the common cycle bug."
-      },
-      {
-        "text": "Only after all edges are scanned"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="union-find"
+  :questions='[{"q": "What is the amortized cost of Union-Find operations with path compression + union by rank?", "choices": [{"text": "O(α(n)) — effectively constant", "correct": true, "explanation": "α is inverse Ackermann; ≤ 4 for realistic n."}, {"text": "O(log n)", "correct": false, "explanation": "Without union by rank."}, {"text": "O(n)", "correct": false, "explanation": "Without compression, worst case."}, {"text": "O(1) exactly", "correct": false, "explanation": "Amortized, not worst-case exact."}]}, {"q": "Path compression during `find(x)` — what does it do?", "choices": [{"text": "Reroots every node on the path directly to the tree’s root", "correct": true, "explanation": "Flattens the tree, making future finds O(1)."}, {"text": "Deletes the path", "correct": false}, {"text": "Sorts the tree", "correct": false}, {"text": "Nothing", "correct": false}]}, {"q": "For Redundant Connection (undirected), when do you emit the answer?", "choices": [{"text": "The first edge whose endpoints already share a root", "correct": true, "explanation": "Adding it would create a cycle."}, {"text": "The last edge", "correct": false, "explanation": "Not necessarily."}, {"text": "The edge with highest weight", "correct": false, "explanation": "Weights not relevant here."}, {"text": "Any edge", "correct": false}]}, {"q": "For Kruskal MST, when do you stop?", "choices": [{"text": "After picking n-1 valid edges", "correct": true, "explanation": "That is the count in a spanning tree of n nodes."}, {"text": "After iterating all edges", "correct": false, "explanation": "Works but wasteful."}, {"text": "When the smallest edge is > threshold", "correct": false}, {"text": "Random", "correct": false}]}, {"q": "For Most Stones Removed with Same Row or Column, what does #components represent?", "choices": [{"text": "Number of stones that must remain — removable = n - #components", "correct": true, "explanation": "One stone per connected component must stay."}, {"text": "Number of rows used", "correct": false}, {"text": "Number of removable stones directly", "correct": false, "explanation": "It is n - components, not components itself."}, {"text": "Nothing", "correct": false}]}]'
+/>

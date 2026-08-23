@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" />
+
 Given the head of a linked list, return `true` iff the list contains a cycle.
 
 **Example 1** — `head = [3,2,0,-4]`, tail connects to index `1` → `true`
@@ -10,6 +12,12 @@ Given the head of a linked list, return `true` iff the list contains a cycle.
 
 **Constraints** — `0 ≤ n ≤ 10⁴`.
 
+
+<Hints
+  hint1="Two pointers moving at different speeds detect cycles without extra memory."
+  hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
+  hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
+/>
 ---
 
 ## Approach 1 — Hash set of visited nodes
@@ -65,6 +73,10 @@ boolean hasCycle(ListNode head) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="linked-list-cycle" />
 
 ## Complexity summary
 

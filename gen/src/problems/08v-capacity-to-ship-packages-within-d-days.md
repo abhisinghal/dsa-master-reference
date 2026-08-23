@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Given package weights and `days`, find the minimum ship capacity that ships all in `days` days.
 
 **Example** — `weights=[1,2,3,4,5,6,7,8,9,10], days=5` → `15`
 
 **Constraints** — `1 ≤ days ≤ n ≤ 5·10⁴`; `1 ≤ weights[i] ≤ 500`.
 
+
+<Hints
+  hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
+  hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
+  hint3="The feasibility check is O(n); total complexity is O(n log range)."
+/>
 ---
 
 ## Approach 1 — Try every capacity
@@ -52,6 +60,10 @@ int shipWithinDays(int[] w, int days) {
 />
 
 **Complexity** — Time **O(n log sum)**; Space **O(1)**.
+
+## Try it yourself
+
+<JavaRunner problem-slug="capacity-to-ship-packages-within-d-days" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Isomorphic Strings](https://leetcode.com/problems/isomorphic-strings/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
+<CompanyTags companies="LinkedIn, Meta, Amazon, Google" />
+
 Return true iff there's a **bijection** of characters mapping `s → t`.
 
 **Example 1** — `s="egg", t="add"` → `true`
@@ -10,6 +12,12 @@ Return true iff there's a **bijection** of characters mapping `s → t`.
 
 **Constraints** — `1 ≤ n ≤ 5·10⁴`.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach — Two maps (canonical)
@@ -47,6 +55,10 @@ boolean isIsomorphic(String s, String t) {
 `s` and `t` isomorphic iff `firstIndex(s[i]) == firstIndex(t[i])` for all `i`.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="isomorphic-strings" />
 
 ## Complexity summary
 

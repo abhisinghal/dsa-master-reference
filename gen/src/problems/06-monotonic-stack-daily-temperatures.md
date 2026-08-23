@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
+<CompanyTags companies="Meta, Amazon, Google" />
+
 Given `temps`, return `answer` where `answer[i]` is the number of days until a warmer temperature (or 0 if none).
 
 **Example 1** — `temps=[73,74,75,71,69,72,76,73]` → `[1,1,4,2,1,1,0,0]`
@@ -9,6 +11,12 @@ Given `temps`, return `answer` where `answer[i]` is the number of days until a w
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `30 ≤ temps[i] ≤ 100`.
 
+
+<Hints
+  hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
+  hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
+  hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
+/>
 ---
 
 ## Approach 1 — Brute force (nested scan)
@@ -101,6 +109,10 @@ int[] dailyTemperatures(int[] t) {
 **Complexity** — Time **O(n)** (each index pushed + popped at most once); Space **O(n)** for the stack.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="monotonic-stack-daily-temperatures" />
 
 ## Complexity summary
 

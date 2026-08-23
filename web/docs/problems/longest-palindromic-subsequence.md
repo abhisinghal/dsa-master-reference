@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Length of longest palindromic subsequence.
 
 **Example 1** — `s="bbbab"` → `4`
@@ -9,6 +11,12 @@ Length of longest palindromic subsequence.
 
 **Constraints** — `1 ≤ n ≤ 1000`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach 1 — LCS(s, reverse(s))
@@ -56,6 +64,10 @@ int longestPalindromeSubseq(String s) {
 **Complexity** — Time **O(n²)**; Space **O(n²)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="longest-palindromic-subsequence" />
 
 ## Complexity summary
 

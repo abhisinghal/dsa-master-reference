@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
+&lt;CompanyTags companies="Meta, Amazon, Apple, Google, Microsoft" /&gt;
+
 Return the popcount (number of set bits) of an unsigned 32-bit integer.
 
 **Example 1** — `n=00000000000000000000000000001011` → `3`
@@ -9,6 +11,12 @@ Return the popcount (number of set bits) of an unsigned 32-bit integer.
 
 **Constraints** — 32-bit unsigned.
 
+
+&lt;Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/&gt;
 ---
 
 ## Approach 1 — Loop all 32 bits
@@ -58,6 +66,10 @@ int hammingWeight3(int n) { return Integer.bitCount(n); }
 Uses hardware popcount when available.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="number-of-1-bits" />
 
 ## Complexity summary
 

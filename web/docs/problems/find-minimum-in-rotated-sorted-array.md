@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/binary-search)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft" /&gt;
+
 Given a sorted array rotated at some unknown pivot, return the minimum. All values are **unique**.
 
 **Example 1** — `nums = [3,4,5,1,2]` → `1`
@@ -10,6 +12,12 @@ Given a sorted array rotated at some unknown pivot, return the minimum. All valu
 
 **Constraints** — `1 ≤ n ≤ 5000`. Distinct values. Must run in **O(log n)**.
 
+
+&lt;Hints
+  hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
+  hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."
+  hint3="For rotated arrays: one half is always sorted — compare mid with lo (or hi) to detect which side."
+/&gt;
 ---
 
 ## Approach 1 — Linear scan
@@ -83,6 +91,10 @@ int findMinDup(int[] nums) {
 
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="find-minimum-in-rotated-sorted-array" />
 
 ## Complexity summary
 

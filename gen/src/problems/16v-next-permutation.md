@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Next Permutation](https://leetcode.com/problems/next-permutation/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
+
 Rearrange nums to the next lexicographic permutation in-place. If none, sort ascending.
 
 **Example 1** — `nums=[1,2,3]` → `[1,3,2]`
@@ -9,6 +11,12 @@ Rearrange nums to the next lexicographic permutation in-place. If none, sort asc
 
 **Constraints** — `1 ≤ n ≤ 100`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach — Classic algorithm (canonical)
@@ -48,6 +56,10 @@ void reverse(int[] a, int l, int r) { while (l < r) swap(a, l++, r--); }
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="next-permutation" />
 
 ## Complexity summary
 

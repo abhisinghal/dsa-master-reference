@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Divide Chocolate](https://leetcode.com/problems/divide-chocolate/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
+<CompanyTags companies="Google, Amazon" />
+
 Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the smallest sum). Maximize your piece's sweetness.
 
 **Example** — `sweetness=[1,2,3,4,5,6,7,8,9], k=5` → `6`
 
 **Constraints** — `1 ≤ k+1 ≤ n ≤ 10⁴`; `1 ≤ sweetness[i] ≤ 10⁵`.
 
+
+<Hints
+  hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
+  hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
+  hint3="The feasibility check is O(n); total complexity is O(n log range)."
+/>
 ---
 
 ## Approach — Binary search on the minimum
@@ -48,6 +56,10 @@ int maximizeSweetness(int[] sweetness, int k) {
 />
 
 **Complexity** — Time **O(n log sum)**; Space **O(1)**.
+
+## Try it yourself
+
+<JavaRunner problem-slug="divide-chocolate" />
 
 ## Complexity summary
 

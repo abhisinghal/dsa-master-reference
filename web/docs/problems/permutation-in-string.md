@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Permutation in String](https://leetcode.com/problems/permutation-in-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Meta, Google, Microsoft, Amazon, Apple" /&gt;
+
 Given strings `s1` and `s2`, return `true` iff `s2` contains any permutation of `s1` as a substring.
 
 **Example 1** — `s1 = "ab", s2 = "eidbaooo"` → `true` (`"ba"` is a permutation of `"ab"`)
@@ -10,6 +12,12 @@ Given strings `s1` and `s2`, return `true` iff `s2` contains any permutation of 
 
 **Constraints** — `1 ≤ |s1|, |s2| ≤ 10⁴`. Lowercase English.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Sort every window
@@ -139,6 +147,10 @@ boolean checkInclusion(String s1, String s2) {
 **Complexity** — Time **O(n)** — O(1) per position; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="permutation-in-string" />
 
 ## Complexity summary
 

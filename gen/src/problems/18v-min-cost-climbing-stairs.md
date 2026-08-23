@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Amazon, Meta, Google" />
+
 Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end.
 
 **Example 1** — `cost=[10,15,20]` → `15`
@@ -9,6 +11,12 @@ Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end
 
 **Constraints** — `2 ≤ n ≤ 1000`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — DP O(1) space (canonical)
@@ -41,6 +49,10 @@ int minCostClimbingStairs(int[] cost) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="min-cost-climbing-stairs" />
 
 ## Complexity summary
 

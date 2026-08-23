@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Find K-th Smallest Pair Distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Given `nums` and integer `k`, return the k-th smallest **absolute** distance among all pairs.
 
 **Example** — `nums=[1,3,1], k=1` → `0` (pair (1,1) has distance 0)
 
 **Constraints** — `n·(n-1)/2 ≥ k ≥ 1`; `2 ≤ n ≤ 10⁴`.
 
+
+<Hints
+  hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
+  hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
+  hint3="The feasibility check is O(n); total complexity is O(n log range)."
+/>
 ---
 
 ## Approach 1 — Enumerate all pairs, sort
@@ -52,6 +60,10 @@ int smallestDistancePair(int[] nums, int k) {
 />
 
 **Complexity** — Time **O(n log(max-min))**; Space **O(1)** aside from sort.
+
+## Try it yourself
+
+<JavaRunner problem-slug="find-k-th-smallest-pair-distance" />
 
 ## Complexity summary
 

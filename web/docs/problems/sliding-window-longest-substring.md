@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" /&gt;
+
 Given a string `s`, return the length of the longest substring with all distinct characters.
 
 **Example 1** — `s = "abcabcbb"` → `3` (the substring `"abc"`)
@@ -10,6 +12,12 @@ Given a string `s`, return the length of the longest substring with all distinct
 
 **Constraints** — `0 ≤ s.length ≤ 5·10⁴`; ASCII / extended ASCII characters.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Brute force (all substrings, check distinct)
@@ -147,6 +155,10 @@ int lengthOfLongestSubstring(String s) {
 Optimal. One pass, O(1) work per index.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="sliding-window-longest-substring" />
 
 ## Complexity summary
 

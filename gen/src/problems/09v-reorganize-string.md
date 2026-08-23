@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Reorganize String](https://leetcode.com/problems/reorganize-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/top-k-heap)
 
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
+
 Given string `s`, rearrange characters so no two adjacent characters are the same. Return the result, or `""` if impossible.
 
 **Example 1** — `s = "aab"` → `"aba"`
@@ -10,6 +12,12 @@ Given string `s`, rearrange characters so no two adjacent characters are the sam
 
 **Constraints** — `1 ≤ n ≤ 500`. Lowercase English.
 
+
+<Hints
+  hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
+  hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."
+  hint3="For ’k closest’ or ’k most frequent’, the heap’s comparator holds the distance/frequency metric."
+/>
 ---
 
 ## Approach 1 — Try all permutations (backtracking)
@@ -95,6 +103,10 @@ String reorganizeBucket(String s) {
 **Complexity** — Time **O(n + σ)**; Space **O(σ)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="reorganize-string" />
 
 ## Complexity summary
 

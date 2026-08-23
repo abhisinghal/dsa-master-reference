@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/binary-search)
 
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
+
 Sorted array rotated at unknown pivot, **may contain duplicates**. Return true iff `target` exists.
 
 **Example 1** — `nums = [2,5,6,0,0,1,2], target = 0` → `true`
@@ -10,6 +12,12 @@ Sorted array rotated at unknown pivot, **may contain duplicates**. Return true i
 
 **Constraints** — `1 ≤ n ≤ 5000`; duplicates allowed.
 
+
+<Hints
+  hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
+  hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."
+  hint3="For rotated arrays: one half is always sorted — compare mid with lo (or hi) to detect which side."
+/>
 ---
 
 ## Approach 1 — Linear scan
@@ -67,6 +75,10 @@ For `target = 3`:
 **Complexity** — Time **O(log n)** average; **O(n)** worst-case when many duplicates force `lo++`.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="search-in-rotated-sorted-array-ii" />
 
 ## Complexity summary
 

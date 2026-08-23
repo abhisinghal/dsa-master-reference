@@ -306,62 +306,7 @@ O(n) for the reusable temp array, plus O(log n) recursion stack.
 
 ## Check your understanding
 
-<Quiz patternId="divide-conquer" :questions='[
-  {
-    "q": "Which problem shape best suggests divide and conquer?",
-    "choices": [
-      {
-        "text": "Split independent halves, then combine",
-        "correct": true,
-        "explanation": "Yes. The recursion tree solves smaller independent pieces and merges their answers."
-      },
-      {
-        "text": "A single online stream"
-      },
-      {
-        "text": "Only local greedy choices"
-      },
-      {
-        "text": "A mutable connectivity set"
-      }
-    ]
-  },
-  {
-    "q": "During inversion counting, when do you add mid minus i plus one?",
-    "choices": [
-      {
-        "text": "When taking a right-half value before left",
-        "correct": true,
-        "explanation": "Correct. All remaining sorted-left values exceed that right value."
-      },
-      {
-        "text": "When taking an equal left value"
-      },
-      {
-        "text": "At every merge comparison"
-      },
-      {
-        "text": "Only after recursion finishes"
-      }
-    ]
-  },
-  {
-    "q": "Why must merge-sort based routines copy the sorted range back?",
-    "choices": [
-      {
-        "text": "Parent calls require sorted child ranges",
-        "correct": true,
-        "explanation": "Right. The combine step above assumes each child segment is already sorted."
-      },
-      {
-        "text": "To randomize future pivots"
-      },
-      {
-        "text": "To shrink recursion depth"
-      },
-      {
-        "text": "To remove duplicate numbers"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="divide-conquer"
+  :questions='[{"q": "Merge sort merges two halves in O(n). Total complexity?", "choices": [{"text": "O(n log n)", "correct": true, "explanation": "By Master Theorem: T(n) = 2T(n/2) + O(n)."}, {"text": "O(n²)", "correct": false}, {"text": "O(log n)", "correct": false}, {"text": "O(n)", "correct": false}]}, {"q": "For Count Inversions during merge sort, when is the count added?", "choices": [{"text": "When taking from the right half: add (leftRemaining) to the count", "correct": true, "explanation": "Each such take crosses `leftRemaining` inversions."}, {"text": "At start of merge", "correct": false}, {"text": "At end of merge", "correct": false, "explanation": "Batch-counting works too but the per-take is standard."}, {"text": "Never — count separately", "correct": false}]}, {"q": "For Reverse Pairs (i < j with nums[i] > 2*nums[j]), why long?", "choices": [{"text": "2 * nums[j] can overflow int", "correct": true, "explanation": "Cast to long before comparison."}, {"text": "For readability", "correct": false}, {"text": "Faster than int", "correct": false, "explanation": "Usually slower."}, {"text": "Not needed", "correct": false, "explanation": "Overflow bug otherwise."}]}, {"q": "For Sort List (linked list mergesort), how do you split in O(1) space?", "choices": [{"text": "Fast/slow pointers to find middle; cut the link", "correct": true, "explanation": "Middle split via fast/slow, then merge."}, {"text": "Copy to array", "correct": false, "explanation": "O(n) space."}, {"text": "Random split", "correct": false}, {"text": "Not possible", "correct": false}]}, {"q": "When would you NOT use divide & conquer?", "choices": [{"text": "When the subproblems aren’t independent (need shared state)", "correct": true, "explanation": "Then DP or shared-memoization is better."}, {"text": "When n is large", "correct": false, "explanation": "D&C shines for large n."}, {"text": "When recursion is banned", "correct": false, "explanation": "You can iterate; possible but ugly."}, {"text": "Never — always use D&C", "correct": false}]}]'
+/>

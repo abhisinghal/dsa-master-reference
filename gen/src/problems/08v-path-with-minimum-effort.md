@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
 
+<CompanyTags companies="Amazon, Google" />
+
 In a 2D grid of heights, an "effort" of a path is the max abs-diff between consecutive cells. Return the min effort from top-left to bottom-right (4-connected).
 
 **Example** — `heights=[[1,2,2],[3,8,2],[5,3,5]]` → `2`
 
 **Constraints** — `1 ≤ m, n ≤ 100`; `0 ≤ height[i][j] ≤ 10⁶`.
 
+
+<Hints
+  hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
+  hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
+  hint3="The feasibility check is O(n); total complexity is O(n log range)."
+/>
 ---
 
 ## Approach 1 — Dijkstra with edge weight = max-so-far
@@ -57,6 +65,10 @@ int minimumEffortPath(int[][] h) {
 />
 
 **Complexity** — Time **O(mn · log(max))**; Space **O(mn)**.
+
+## Try it yourself
+
+<JavaRunner problem-slug="path-with-minimum-effort" />
 
 ## Complexity summary
 

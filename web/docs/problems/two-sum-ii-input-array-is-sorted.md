@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
+&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+
 Sorted array; return 1-indexed pair summing to target.
 
 **Example 1** — `numbers=[2,7,11,15], target=9` → `[1,2]`
@@ -10,6 +12,12 @@ Sorted array; return 1-indexed pair summing to target.
 
 **Constraints** — `2 ≤ n ≤ 3·10⁴`.
 
+
+&lt;Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/&gt;
 ---
 
 ## Approach 1 — Hash-map
@@ -51,6 +59,10 @@ int[] twoSum(int[] nums, int target) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="two-sum-ii-input-array-is-sorted" />
 
 ## Complexity summary
 

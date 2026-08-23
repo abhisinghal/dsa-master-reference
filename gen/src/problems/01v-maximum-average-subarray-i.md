@@ -9,6 +9,12 @@ Return the max average of any contiguous subarray of length exactly `k`.
 
 **Constraints** — `1 ≤ k ≤ n ≤ 10⁵`.
 
+
+<Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/>
 ---
 
 ## Approach — Fixed-window running sum (canonical)
@@ -43,6 +49,10 @@ double findMaxAverage(int[] nums, int k) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximum-average-subarray-i" />
 
 ## Complexity summary
 

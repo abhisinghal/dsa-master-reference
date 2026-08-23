@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
+<CompanyTags companies="Amazon, Meta" />
+
 Given 2D `points`, connect all with min total Manhattan distance.
 
 **Example 1** — `points=[[0,0],[2,2],[3,10],[5,2],[7,0]]` → `20`
@@ -9,6 +11,12 @@ Given 2D `points`, connect all with min total Manhattan distance.
 
 **Constraints** — `1 ≤ n ≤ 1000`.
 
+
+<Hints
+  hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
+  hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
+  hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
+/>
 ---
 
 ## Approach 1 — Kruskal on all pairs
@@ -56,6 +64,10 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 **Complexity** — Time **O(n² log n)** heap-based; **O(n²)** without heap; Space **O(n²)** for edges.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="min-cost-to-connect-all-points" />
 
 ## Complexity summary
 

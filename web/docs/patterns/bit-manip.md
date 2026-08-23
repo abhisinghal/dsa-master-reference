@@ -457,62 +457,7 @@ O(n·2ⁿ) for output; O(n) temporary subset per mask.
 
 ## Check your understanding
 
-<Quiz patternId="bit-manip" :questions='[
-  {
-    "q": "What does x AND (x minus 1) do to a positive integer?",
-    "choices": [
-      {
-        "text": "Removes the lowest set bit",
-        "correct": true,
-        "explanation": "Yes. This is the Brian Kernighan trick for popcount and power-of-two checks."
-      },
-      {
-        "text": "Sets every bit to one"
-      },
-      {
-        "text": "Isolates the highest set bit"
-      },
-      {
-        "text": "Always returns zero"
-      }
-    ]
-  },
-  {
-    "q": "For finding two unique numbers, why split by an isolated set bit instead of the whole XOR?",
-    "choices": [
-      {
-        "text": "The bit separates the two uniques",
-        "correct": true,
-        "explanation": "Correct. The isolated differing bit puts the two unique numbers in opposite groups."
-      },
-      {
-        "text": "Whole XOR is always zero"
-      },
-      {
-        "text": "It sorts duplicates automatically"
-      },
-      {
-        "text": "It avoids reading the array"
-      }
-    ]
-  },
-  {
-    "q": "Why does subset-by-mask generation cap out around n near 20?",
-    "choices": [
-      {
-        "text": "There are 2 to the n subsets",
-        "correct": true,
-        "explanation": "Right. The output size itself explodes, so larger n becomes infeasible."
-      },
-      {
-        "text": "Masks cannot store zero"
-      },
-      {
-        "text": "Bits require a heap"
-      },
-      {
-        "text": "Java forbids shifting"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="bit-manip"
+  :questions='[{"q": "What does `n & (n-1)` do?", "choices": [{"text": "Clears the lowest set bit", "correct": true, "explanation": "Foundation for Kernighan’s popcount and power-of-2 tests."}, {"text": "Sets the lowest bit", "correct": false}, {"text": "Flips all bits", "correct": false}, {"text": "Nothing", "correct": false}]}, {"q": "How do you test if n is a power of 2?", "choices": [{"text": "n > 0 && (n & (n-1)) == 0", "correct": true, "explanation": "Exactly one bit set."}, {"text": "n % 2 == 0", "correct": false, "explanation": "Even, not power of 2."}, {"text": "n / 2 == 0", "correct": false}, {"text": "log2(n) is integer", "correct": false, "explanation": "Works but FP-risky."}]}, {"q": "XOR of all numbers 0..n missing exactly one equals:", "choices": [{"text": "The missing number", "correct": true, "explanation": "Pairs cancel; missing survives."}, {"text": "0", "correct": false}, {"text": "n", "correct": false}, {"text": "Sum(0..n) - sum(nums)", "correct": false, "explanation": "That is Gauss sum, works too but overflow risk."}]}, {"q": "For subset enumeration on n ≤ 20 items, what pattern is used?", "choices": [{"text": "Iterate mask 0..(1<<n)-1; bit i set means item i chosen", "correct": true, "explanation": "Bitmask enumeration; often paired with DP."}, {"text": "Recursion only", "correct": false, "explanation": "Works but slower."}, {"text": "Sort", "correct": false}, {"text": "HashSet", "correct": false}]}, {"q": "For Maximum Product of Word Lengths, how do you check \"no shared letter\" in O(1)?", "choices": [{"text": "26-bit mask per word; `mask[i] & mask[j] == 0`", "correct": true, "explanation": "Single AND is O(1) regardless of word length."}, {"text": "Iterate every character", "correct": false, "explanation": "O(L) per pair."}, {"text": "HashSet intersection", "correct": false, "explanation": "Works but slower."}, {"text": "Sort both words", "correct": false}]}]'
+/>

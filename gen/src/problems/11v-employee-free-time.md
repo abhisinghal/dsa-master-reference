@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Employee Free Time](https://leetcode.com/problems/employee-free-time/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/merge-intervals)
 
+<CompanyTags companies="Meta, Google, Amazon, LinkedIn" />
+
 Given schedules (each a list of disjoint intervals), return the intersection of all employees' free time.
 
 **Example 1** — `schedule=[[[1,2],[5,6]],[[1,3]],[[4,10]]]` → `[[3,4]]`
@@ -9,6 +11,12 @@ Given schedules (each a list of disjoint intervals), return the intersection of 
 
 **Constraints** — `1 ≤ #employees ≤ 50`; total intervals ≤ 10⁴.
 
+
+<Hints
+  hint1="Sort by start (or end, depending on the question)."
+  hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
+  hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
+/>
 ---
 
 ## Approach 1 — Flatten + merge + gaps
@@ -57,6 +65,10 @@ List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
 Better when k is much smaller than N.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="employee-free-time" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Delete and Earn](https://leetcode.com/problems/delete-and-earn/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Delete `x` to earn `x` points; also removes all `x-1` and `x+1`. Max points.
 
 **Example 1** — `nums=[3,4,2]` → `6`
@@ -9,6 +11,12 @@ Delete `x` to earn `x` points; also removes all `x-1` and `x+1`. Max points.
 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — Reduce to House Robber (canonical)
@@ -49,6 +57,10 @@ int deleteAndEarn(int[] nums) {
 **Complexity** — Time **O(n + max)**; Space **O(max)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="delete-and-earn" />
 
 ## Complexity summary
 

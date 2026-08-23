@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Remove K Digits](https://leetcode.com/problems/remove-k-digits/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Given a numeric string `num` (no leading zeros unless it's `"0"`) and integer `k`, remove `k` digits to yield the **smallest possible** number. Return as a string; strip leading zeros.
 
 **Example 1** — `num = "1432219", k = 3` → `"1219"`
@@ -10,6 +12,12 @@ Given a numeric string `num` (no leading zeros unless it's `"0"`) and integer `k
 
 **Constraints** — `1 ≤ k ≤ n ≤ 10⁵`.
 
+
+<Hints
+  hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
+  hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
+  hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
+/>
 ---
 
 ## Approach 1 — Try every subset of digits to remove
@@ -74,6 +82,10 @@ So the correct trace at i=5 (digit 1): after previous [1, 2, 2], seeing 1: pop 2
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="remove-k-digits" />
 
 ## Complexity summary
 

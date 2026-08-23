@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
+&lt;CompanyTags companies="Amazon, Meta, Google, Microsoft, Bloomberg, Adobe" /&gt;
+
 Return the longest palindromic substring of `s`.
 
 **Example 1** — `s="babad"` → `"bab"` or `"aba"`
@@ -10,6 +12,12 @@ Return the longest palindromic substring of `s`.
 
 **Constraints** — `1 ≤ n ≤ 1000`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Every substring O(n³)
@@ -65,6 +73,10 @@ Sentinels + palindrome-radius array with reuse across mirrored centers.
 **Complexity** — Time **O(n²)** expand; **O(n)** Manacher; Space **O(1)** expand.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="longest-palindromic-substring" />
 
 ## Complexity summary
 

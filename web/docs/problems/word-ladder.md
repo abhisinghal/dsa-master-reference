@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Word Ladder](https://leetcode.com/problems/word-ladder/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bfs)
 
+&lt;CompanyTags companies="Amazon, Meta, Google" /&gt;
+
 Transform `beginWord` → `endWord` by changing one letter at a time; each intermediate must be in dict. Return length.
 
 **Example 1** — `beginWord="hit", endWord="cog", wordList=["hot","dot","dog","lot","log","cog"]` → `5`
@@ -9,6 +11,12 @@ Transform `beginWord` → `endWord` by changing one letter at a time; each inter
 
 **Constraints** — `1 ≤ L ≤ 10`; `1 ≤ #words ≤ 5000`.
 
+
+&lt;Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/&gt;
 ---
 
 ## Approach 1 — BFS over all pairs
@@ -71,6 +79,10 @@ Expand from both ends until frontiers meet. ~O(2 · b^(d/2)).
 **Complexity** — Time **O(N · L²)**; Space **O(N · L²)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="word-ladder" />
 
 ## Complexity summary
 

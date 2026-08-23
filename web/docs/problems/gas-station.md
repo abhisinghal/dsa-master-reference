@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Gas Station](https://leetcode.com/problems/gas-station/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
+&lt;CompanyTags companies="Amazon, Google, Meta, Bloomberg" /&gt;
+
 Circular route: at station `i` you gain `gas[i]`, pay `cost[i]` to reach `i+1`. Return start index that completes the loop, or `-1`.
 
 **Example 1** — `gas=[1,2,3,4,5], cost=[3,4,5,1,2]` → `3`
@@ -9,6 +11,12 @@ Circular route: at station `i` you gain `gas[i]`, pay `cost[i]` to reach `i+1`. 
 
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
+
+&lt;Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/&gt;
 ---
 
 ## Approach 1 — Try each start with simulation
@@ -51,6 +59,10 @@ int canCompleteCircuit(int[] gas, int[] cost) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="gas-station" />
 
 ## Complexity summary
 

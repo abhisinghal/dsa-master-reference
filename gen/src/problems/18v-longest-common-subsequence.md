@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Meta, Amazon, Google, Adobe" />
+
 Length of longest subsequence appearing in both strings.
 
 **Example 1** — `text1="abcde", text2="ace"` → `3`
@@ -10,6 +12,12 @@ Length of longest subsequence appearing in both strings.
 
 **Constraints** — `1 ≤ m, n ≤ 1000`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — 2D DP (canonical)
@@ -46,6 +54,10 @@ int longestCommonSubsequence(String s1, String s2) {
 **Complexity** — Time **O(mn)**; Space **O(mn)** (compress to O(n)).
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="longest-common-subsequence" />
 
 ## Complexity summary
 

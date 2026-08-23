@@ -275,63 +275,7 @@ Two pointers at different speeds detect loops and locate structure without extra
 
 ## Check your understanding
 
-<Quiz patternId="fast-slow" :questions='[
-  {
-    "q": "A linked list may contain a cycle, and you need O(1) extra space. Which pattern fits?",
-    "choices": [
-      {
-        "text": "Prefix sum with hash map"
-      },
-      {
-        "text": "Fast and slow pointers",
-        "correct": true,
-        "explanation": "Yes. The two speeds guarantee a meeting inside a cycle without extra storage."
-      },
-      {
-        "text": "K-way merge heap"
-      },
-      {
-        "text": "Topological sort"
-      }
-    ]
-  },
-  {
-    "q": "What loop guard prevents a null-pointer bug in fast-slow linked-list code?",
-    "choices": [
-      {
-        "text": "fast is not null only",
-        "explanation": "Not enough. fast.next may be null before fast.next.next is read."
-      },
-      {
-        "text": "slow is not null only"
-      },
-      {
-        "text": "fast and fast.next are not null",
-        "correct": true,
-        "explanation": "Correct. The two-step move needs both fast and its next node to exist."
-      },
-      {
-        "text": "head equals tail"
-      }
-    ]
-  },
-  {
-    "q": "When is fast-slow the wrong tool for cycle detection?",
-    "choices": [
-      {
-        "text": "There is one deterministic next pointer"
-      },
-      {
-        "text": "The structure is a linked list"
-      },
-      {
-        "text": "The graph has arbitrary branching",
-        "correct": true,
-        "explanation": "Right. Branching graphs need visited sets, DFS, BFS, or Union-Find, not two runners on one path."
-      },
-      {
-        "text": "Extra space must be constant"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="fast-slow"
+  :questions='[{"q": "What does Floyd’s Tortoise & Hare guarantee?", "choices": [{"text": "Cycle detection in O(1) space if a cycle exists", "correct": true, "explanation": "Two pointers at different speeds always meet inside any cycle."}, {"text": "The array is sorted", "correct": false}, {"text": "Cycle length is exactly n", "correct": false}, {"text": "Constant time detection", "correct": false, "explanation": "It is O(n) time; O(1) space is the win."}]}, {"q": "After Floyd’s pointers meet in a cycle, how do you find the entry?", "choices": [{"text": "Reset one pointer to head; walk both at speed 1; they meet at entry", "correct": true, "explanation": "Classic invariant: distance from head to entry = distance from meeting point to entry."}, {"text": "Sort the linked list", "correct": false}, {"text": "The meeting point is the entry", "correct": false, "explanation": "It is inside the cycle but not necessarily the entry."}, {"text": "Cannot be found in O(1) space", "correct": false}]}, {"q": "For Middle of the Linked List with even length, how do you get the SECOND middle?", "choices": [{"text": "Loop while `fast != null && fast.next != null`", "correct": true, "explanation": "This condition places slow at the second middle for even lengths."}, {"text": "Loop while `fast.next != null && fast.next.next != null`", "correct": false, "explanation": "That gives the FIRST middle."}, {"text": "Use a queue", "correct": false}, {"text": "Two passes over the list", "correct": false}]}, {"q": "Find the Duplicate Number (array of n+1 ints in [1..n]) — why does Floyd’s work?", "choices": [{"text": "`nums[i]` treated as `next(i)` creates a functional graph; two distinct indices point to the duplicate → cycle entry = duplicate", "correct": true, "explanation": "The pigeonhole guarantees a cycle; the merge-in structure guarantees the entry is the duplicate value."}, {"text": "It is a linked list already", "correct": false}, {"text": "By sort", "correct": false, "explanation": "That modifies input, disallowed."}, {"text": "By XOR trick", "correct": false, "explanation": "That is for missing/single, not duplicate here."}]}, {"q": "Which of these is NOT a Fast/Slow pattern application?", "choices": [{"text": "Detecting cycle in linked list", "correct": false}, {"text": "Finding middle of list", "correct": false}, {"text": "Happy Number", "correct": false}, {"text": "Longest Common Subsequence", "correct": true, "explanation": "LCS is dynamic programming, not cycle detection."}]}]'
+/>

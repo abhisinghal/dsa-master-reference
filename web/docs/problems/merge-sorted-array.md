@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
+&lt;CompanyTags companies="Meta, Amazon, Microsoft, Google, Bloomberg" /&gt;
+
 Merge `nums2` into `nums1` in-place; `nums1` has size `m+n` with last `n` slots empty.
 
 **Example 1** — `nums1=[1,2,3,0,0,0], m=3, nums2=[2,5,6], n=3` → `[1,2,2,3,5,6]`
@@ -9,6 +11,12 @@ Merge `nums2` into `nums1` in-place; `nums1` has size `m+n` with last `n` slots 
 
 **Constraints** — `nums1.length == m + n`.
 
+
+&lt;Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/&gt;
 ---
 
 ## Approach 1 — Copy then sort
@@ -48,6 +56,10 @@ void merge(int[] nums1, int m, int[] nums2, int n) {
 **Complexity** — Time **O(m+n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="merge-sorted-array" />
 
 ## Complexity summary
 

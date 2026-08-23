@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Jump Game VI](https://leetcode.com/problems/jump-game-vi/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Amazon, Google" /&gt;
+
 Start at 0. At index `i`, jump 1..k steps. Max total score reaching last index.
 
 **Example 1** — `nums=[1,-1,-2,4,-7,3], k=2` → `7`
@@ -9,6 +11,12 @@ Start at 0. At index `i`, jump 1..k steps. Max total score reaching last index.
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach — DP + monotonic deque (canonical)
@@ -51,6 +59,10 @@ int maxResult(int[] nums, int k) {
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="jump-game-vi" />
 
 ## Complexity summary
 

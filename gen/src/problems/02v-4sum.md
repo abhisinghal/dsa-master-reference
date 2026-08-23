@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: 4Sum](https://leetcode.com/problems/4sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
+<CompanyTags companies="Meta, Amazon, Google, Adobe" />
+
 Given an integer array `nums` and integer `target`, return all unique quadruplets `[a, b, c, d]` with `a + b + c + d == target`.
 
 **Example 1** — `nums = [1,0,-1,0,-2,2], target = 0` → `[[-2,-1,1,2], [-2,0,0,2], [-1,0,0,1]]`
@@ -10,6 +12,12 @@ Given an integer array `nums` and integer `target`, return all unique quadruplet
 
 **Constraints** — `1 ≤ n ≤ 200`; `-10⁹ ≤ nums[i], target ≤ 10⁹`.
 
+
+<Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/>
 ---
 
 ## Approach 1 — Quadruple loop + set for dedup
@@ -120,6 +128,10 @@ List<List<Integer>> kSum(int[] nums, long target, int start, int k) {
 **Complexity** — Time **O(n^(k-1))**; Space **O(k)** recursion.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="4sum" />
 
 ## Complexity summary
 

@@ -762,63 +762,7 @@ Same skeleton — *put everything in a set, then only start work from a canonica
 
 ## Check your understanding
 
-<Quiz patternId="hashing" :questions='[
-  {
-    "q": "In Two Sum, why check the complement before inserting the current value?",
-    "choices": [
-      {
-        "text": "To keep indices sorted"
-      },
-      {
-        "text": "To avoid matching the element with itself",
-        "correct": true,
-        "explanation": "Exactly. Insert-first can falsely pair one value with its own index."
-      },
-      {
-        "text": "To reduce memory to O(1)"
-      },
-      {
-        "text": "To support duplicate targets only"
-      }
-    ]
-  },
-  {
-    "q": "For grouping lowercase anagrams, which key avoids sorting every word?",
-    "choices": [
-      {
-        "text": "Raw word length only"
-      },
-      {
-        "text": "First and last character"
-      },
-      {
-        "text": "Delimited 26-count signature",
-        "correct": true,
-        "explanation": "Yes. Fixed alphabet counts give O(L) keys, and delimiters prevent collisions."
-      },
-      {
-        "text": "Random hash seed"
-      }
-    ]
-  },
-  {
-    "q": "What guard keeps Longest Consecutive Sequence linear?",
-    "choices": [
-      {
-        "text": "Start only when x minus one is absent",
-        "correct": true,
-        "explanation": "Correct. Only run starts walk forward, so each number is visited a constant number of times."
-      },
-      {
-        "text": "Walk forward from every number",
-        "explanation": "That repeats the same run and can become O(n squared)."
-      },
-      {
-        "text": "Sort the values first"
-      },
-      {
-        "text": "Use a max heap"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="hashing"
+  :questions='[{"q": "Time complexity of Two Sum with hash map?", "choices": [{"text": "O(n²)", "correct": false}, {"text": "O(n log n)", "correct": false}, {"text": "O(n) average", "correct": true, "explanation": "Single pass with O(1) average lookups."}, {"text": "O(1)", "correct": false}]}, {"q": "Why does Longest Consecutive Sequence achieve O(n) using a HashSet?", "choices": [{"text": "Only start counting from sequence heads (x where x-1 is absent)", "correct": true, "explanation": "Each element is visited by an inner extension at most once total."}, {"text": "Because HashSet is O(1)", "correct": false, "explanation": "True but insufficient — without the head check it becomes O(n²)."}, {"text": "Because the input is sorted", "correct": false, "explanation": "It is unsorted; that’s the point."}, {"text": "Because we sort first", "correct": false, "explanation": "Sorting would violate the O(n) spec."}]}, {"q": "What is the canonical-key trick for Group Anagrams?", "choices": [{"text": "Sort each string; use the sorted form as the hash key", "correct": true, "explanation": "Anagrams share the same sorted form; O(nk log k) total."}, {"text": "Use the string itself as key", "correct": false}, {"text": "Hash all substrings", "correct": false}, {"text": "Use Trie", "correct": false, "explanation": "Possible but heavier than needed."}]}, {"q": "For Isomorphic Strings, why do you need TWO maps (s→t and t→s)?", "choices": [{"text": "To forbid two source chars mapping to the same target", "correct": true, "explanation": "A bijection requires uniqueness in both directions."}, {"text": "For performance", "correct": false}, {"text": "To handle Unicode", "correct": false}, {"text": "Because one map is not enough memory", "correct": false}]}, {"q": "What is the amortized cost of `HashMap.get()` in Java?", "choices": [{"text": "O(1)", "correct": true, "explanation": "Amortized O(1) with a good hash function; adversarial keys can degrade to O(log n) with tree bins."}, {"text": "O(log n)", "correct": false}, {"text": "O(n)", "correct": false}, {"text": "O(σ)", "correct": false}]}]'
+/>

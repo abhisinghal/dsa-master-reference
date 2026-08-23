@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
+&lt;CompanyTags companies="Meta, Amazon, Microsoft, Google" /&gt;
+
 Given the head of a singly linked list, return the middle node. If there are two middles, return the second.
 
 **Example 1** — `1 → 2 → 3 → 4 → 5` → node with value `3`
@@ -10,6 +12,12 @@ Given the head of a singly linked list, return the middle node. If there are two
 
 **Constraints** — `1 ≤ n ≤ 100`.
 
+
+&lt;Hints
+  hint1="Two pointers moving at different speeds detect cycles without extra memory."
+  hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
+  hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
+/&gt;
 ---
 
 ## Approach 1 — Two passes: count then jump
@@ -71,6 +79,10 @@ ListNode middleNode(ListNode head) {
 **Trap.** If you use `while (fast.next != null && fast.next.next != null)` you get the *first* middle instead of the second. LC spec asks for second — the loop condition matters.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="middle-of-the-linked-list" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Given an undirected tree of `n` nodes, return all nodes that when picked as root give minimum height tree. At most 2 exist.
 
 **Example 1** — `n=4, edges=[[1,0],[1,2],[1,3]]` → `[1]`
@@ -9,6 +11,12 @@ Given an undirected tree of `n` nodes, return all nodes that when picked as root
 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
+
+<Hints
+  hint1="Directed graph? Prerequisites? You need topological order."
+  hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
+  hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
+/>
 ---
 
 ## Approach 1 — Try each node as root, BFS
@@ -56,6 +64,10 @@ List<Integer> findMinHeightTrees(int n, int[][] edges) {
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="minimum-height-trees" />
 
 ## Complexity summary
 

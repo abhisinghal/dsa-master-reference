@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Meta, Amazon, LinkedIn" />
+
 Return max product of a contiguous subarray.
 
 **Example 1** — `nums=[2,3,-2,4]` → `6`
@@ -9,6 +11,12 @@ Return max product of a contiguous subarray.
 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach 1 — Try every subarray
@@ -49,6 +57,10 @@ int maxProduct(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximum-product-subarray" />
 
 ## Complexity summary
 

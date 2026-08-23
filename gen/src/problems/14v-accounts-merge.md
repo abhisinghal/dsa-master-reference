@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Accounts Merge](https://leetcode.com/problems/accounts-merge/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
+<CompanyTags companies="Meta, Amazon, Google" />
+
 Given accounts `[name, email1, email2, …]`, merge accounts sharing any email into one. Return merged accounts with emails sorted.
 
 **Example 1** — Given John/Mary accounts with overlapping emails → merged into deduplicated groups.
@@ -9,6 +11,12 @@ Given accounts `[name, email1, email2, …]`, merge accounts sharing any email i
 
 **Constraints** — total emails ≤ 30·10³.
 
+
+<Hints
+  hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
+  hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
+  hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
+/>
 ---
 
 ## Approach 1 — DFS on email graph
@@ -55,6 +63,10 @@ void union(int[] p, int a, int b) { p[find(p, a)] = find(p, b); }
 **Complexity** — Time **O(N · α(N) · log N)** (sort within group); Space **O(N)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="accounts-merge" />
 
 ## Complexity summary
 

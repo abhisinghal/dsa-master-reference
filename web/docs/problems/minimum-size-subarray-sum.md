@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Amazon, Google, Microsoft, Meta" /&gt;
+
 Given a positive-int array `nums` and target `target`, return the minimal length of a contiguous subarray whose sum is at least `target`. Return `0` if none.
 
 **Example 1** — `target = 7, nums = [2,3,1,2,4,3]` → `2` (the subarray `[4,3]` sums to 7)
@@ -10,6 +12,12 @@ Given a positive-int array `nums` and target `target`, return the minimal length
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ nums[i], target ≤ 10⁴`. **All values positive.**
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — All subarrays
@@ -117,6 +125,10 @@ int minSubArrayLenBS(int target, int[] nums) {
 **Complexity** — Time **O(n log n)**; Space **O(n)**. Loses to sliding for positives-only but sets up the generalization.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="minimum-size-subarray-sum" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Interval List Intersections](https://leetcode.com/problems/interval-list-intersections/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
+&lt;CompanyTags companies="Meta, Google, Amazon" /&gt;
+
 Two lists of **sorted, disjoint** intervals. Return their intersection.
 
 **Example 1** — `A=[[0,2],[5,10],[13,23],[24,25]], B=[[1,5],[8,12],[15,24],[25,26]]` → `[[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]`
@@ -9,6 +11,12 @@ Two lists of **sorted, disjoint** intervals. Return their intersection.
 
 **Constraints** — `0 ≤ A.length, B.length ≤ 1000`.
 
+
+&lt;Hints
+  hint1="Sort by start (or end, depending on the question)."
+  hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
+  hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
+/&gt;
 ---
 
 ## Approach 1 — All pairs
@@ -54,6 +62,10 @@ int[][] intervalIntersection(int[][] A, int[][] B) {
 **Complexity** — Time **O(n + m)**; Space **O(1)** extra.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="interval-list-intersections" />
 
 ## Complexity summary
 

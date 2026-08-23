@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Redundant Connection](https://leetcode.com/problems/redundant-connection/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
+<CompanyTags companies="Google, Amazon, Meta" />
+
 Given an undirected graph that starts as a tree with `n` nodes and has **one** extra edge added, return that redundant edge.
 
 **Example 1** — `edges=[[1,2],[1,3],[2,3]]` → `[2,3]`
@@ -9,6 +11,12 @@ Given an undirected graph that starts as a tree with `n` nodes and has **one** e
 
 **Constraints** — `3 ≤ n ≤ 1000`; `edges.length == n`.
 
+
+<Hints
+  hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
+  hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
+  hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
+/>
 ---
 
 ## Approach 1 — DFS to detect cycle for each edge
@@ -49,6 +57,10 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 **Complexity** — Time **O(n · α(n))**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="redundant-connection" />
 
 ## Complexity summary
 

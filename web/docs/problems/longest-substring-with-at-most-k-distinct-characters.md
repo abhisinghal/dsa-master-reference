@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Longest Substring with At Most K Distinct Characters](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Meta, Google, Amazon, LinkedIn" /&gt;
+
 Given a string `s` and integer `k`, return the length of the longest substring containing at most `k` distinct characters.
 
 **Example 1** — `s = "eceba", k = 2` → `3` (window `"ece"`)
@@ -10,6 +12,12 @@ Given a string `s` and integer `k`, return the length of the longest substring c
 
 **Constraints** — `1 ≤ n ≤ 5 · 10⁴`; `0 ≤ k ≤ 50`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Try every substring
@@ -110,6 +118,10 @@ int lengthOfLongestSubstringKDistinctLRU(String s, int k) {
 **Complexity** — Time **O(n)**; Space **O(k)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="longest-substring-with-at-most-k-distinct-characters" />
 
 ## Complexity summary
 

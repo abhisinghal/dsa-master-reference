@@ -9,6 +9,12 @@ Given nums and budget `k` (increments allowed), max frequency of any single valu
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ 10⁵`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach — Sort + sliding window with sum budget (canonical)
@@ -47,6 +53,10 @@ int maxFrequency(int[] nums, int k) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="frequency-of-the-most-frequent-element" />
 
 ## Complexity summary
 

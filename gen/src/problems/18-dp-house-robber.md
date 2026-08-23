@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: House Robber](https://leetcode.com/problems/house-robber/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Bloomberg" />
+
 Given `nums[i]` = value at house `i`, return the max total value you can rob given you can't rob two adjacent houses.
 
 **Example 1** — `[2,7,9,3,1]` → `12` (rob 2 + 9 + 1)
@@ -9,6 +11,12 @@ Given `nums[i]` = value at house `i`, return the max total value you can rob giv
 
 **Constraints** — `1 ≤ n ≤ 100`; `0 ≤ nums[i] ≤ 400`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach 1 — Brute force recursion
@@ -100,6 +108,10 @@ int rob(int[] a) {
 **Complexity** — Time **O(n)**; Space **O(1)**. Optimal.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="dp-house-robber" />
 
 ## Complexity summary
 

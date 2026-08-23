@@ -764,62 +764,7 @@ O(L) recursion stack; O(1) extra visited storage because the board is marked in 
 
 ## Check your understanding
 
-<Quiz patternId="backtracking" :questions='[
-  {
-    "q": "What invariant defines the standard backtracking template?",
-    "choices": [
-      {
-        "text": "Choose, recurse, then un-choose",
-        "correct": true,
-        "explanation": "Yes. Restoring state lets sibling branches start from a clean partial solution."
-      },
-      {
-        "text": "Sort, partition, then stop"
-      },
-      {
-        "text": "Push all nodes into a heap"
-      },
-      {
-        "text": "Move two pointers inward"
-      }
-    ]
-  },
-  {
-    "q": "Which signal separates combinations from permutations in the chapter template?",
-    "choices": [
-      {
-        "text": "start index versus used array",
-        "correct": true,
-        "explanation": "Correct. Order-insensitive choices advance start; order-sensitive choices track used elements."
-      },
-      {
-        "text": "min heap versus max heap"
-      },
-      {
-        "text": "prefix sum versus suffix sum"
-      },
-      {
-        "text": "lo pointer versus hi pointer"
-      }
-    ]
-  },
-  {
-    "q": "In Word Search, what happens if a marked cell is not restored on return?",
-    "choices": [
-      {
-        "text": "Sibling searches see a corrupted board",
-        "correct": true,
-        "explanation": "Right. In-place visited marks must be undone after each recursive branch."
-      },
-      {
-        "text": "The trie becomes balanced"
-      },
-      {
-        "text": "The word becomes shorter"
-      },
-      {
-        "text": "The grid sorts itself"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="backtracking"
+  :questions='[{"q": "What is the key invariant of backtracking?", "choices": [{"text": "On return, state is restored to before the call", "correct": true, "explanation": "Choose → recurse → un-choose is the discipline."}, {"text": "Global state only", "correct": false}, {"text": "No recursion allowed", "correct": false}, {"text": "Purely functional (no mutation)", "correct": false, "explanation": "Mutation is fine as long as undone."}]}, {"q": "For Permutations II (with duplicates), how do you dedup?", "choices": [{"text": "Sort; skip `nums[i]` if equal to previous AND previous not used", "correct": true, "explanation": "Enforces canonical duplicate order."}, {"text": "Use a HashSet of results", "correct": false, "explanation": "Works but wasteful."}, {"text": "Never emit", "correct": false}, {"text": "Sort output at end", "correct": false, "explanation": "Doesn’t prevent generation."}]}, {"q": "For N-Queens II (count), what state accelerates the check?", "choices": [{"text": "Three bitmasks: cols, diag1, diag2", "correct": true, "explanation": "`avail = ~(cols | d1 | d2)`; each pick uses `avail & -avail`."}, {"text": "A 2D boolean board", "correct": false, "explanation": "Works but slower per step."}, {"text": "A HashSet of coordinates", "correct": false}, {"text": "DP", "correct": false}]}, {"q": "For Sudoku Solver, what is the \"MRV\" heuristic?", "choices": [{"text": "Pick the empty cell with the fewest legal digits next", "correct": true, "explanation": "Minimum Remaining Values — prunes hardest branches first."}, {"text": "Random ordering", "correct": false}, {"text": "Top-left first", "correct": false, "explanation": "Works but slow on hard puzzles."}, {"text": "Left-to-right", "correct": false}]}, {"q": "What is a common cause of TLE in backtracking?", "choices": [{"text": "Missing pruning (input not sorted, no early-return check)", "correct": true, "explanation": "Aggressive pruning is essential."}, {"text": "Wrong programming language", "correct": false}, {"text": "Too many comments", "correct": false}, {"text": "Using recursion", "correct": false}]}]'
+/>

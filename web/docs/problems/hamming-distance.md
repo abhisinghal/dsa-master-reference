@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Hamming Distance](https://leetcode.com/problems/hamming-distance/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Adobe" /&gt;
+
 Return the number of positions where the bits of `x` and `y` differ.
 
 **Example 1** — `x=1, y=4` → `2`
@@ -9,6 +11,12 @@ Return the number of positions where the bits of `x` and `y` differ.
 
 **Constraints** — `0 ≤ x, y ≤ 2³¹−1`.
 
+
+&lt;Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/&gt;
 ---
 
 ## Approach — Popcount of XOR
@@ -28,6 +36,10 @@ int hammingDistance(int x, int y) {
 **Complexity** — Time **O(1)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="hamming-distance" />
 
 ## Complexity summary
 

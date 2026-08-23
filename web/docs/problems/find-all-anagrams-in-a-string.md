@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" /&gt;
+
 Given strings `s` and `p`, return all starting indices in `s` where a permutation of `p` occurs as a substring.
 
 **Example 1** — `s = "cbaebabacd", p = "abc"` → `[0, 6]` (windows `"cba"` and `"bac"`)
@@ -10,6 +12,12 @@ Given strings `s` and `p`, return all starting indices in `s` where a permutatio
 
 **Constraints** — `1 ≤ |s|, |p| ≤ 3 · 10⁴`. Lowercase English.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Sort every window
@@ -117,6 +125,10 @@ List<Integer> findAnagrams(String s, String p) {
 **Complexity** — Time **O(n)** — O(1) per position; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="find-all-anagrams-in-a-string" />
 
 ## Complexity summary
 

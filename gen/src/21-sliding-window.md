@@ -1215,66 +1215,7 @@ A deque that keeps only "still-useful" candidates in monotone order, dropping ex
 
 ## Check your understanding
 
-<Quiz patternId="sliding-window" :questions='[
-  {
-    "q": "In Longest Repeating Character Replacement, why can maxFreq stay stale after the window shrinks?",
-    "choices": [
-      {
-        "text": "Because stale values are always exact",
-        "explanation": "No. maxFreq can be higher than the true current count."
-      },
-      {
-        "text": "Because best only grows from valid larger windows",
-        "correct": true,
-        "explanation": "Right. A stale high value may tolerate later windows, but it cannot push best beyond a size once made valid by a real frequency."
-      },
-      {
-        "text": "Because the alphabet has 26 letters",
-        "explanation": "That affects cost, not correctness."
-      },
-      {
-        "text": "Because shrinking never changes counts",
-        "explanation": "Shrinking does change counts; the trick is about not lowering maxFreq."
-      }
-    ]
-  },
-  {
-    "q": "For the shortest positive-sum window, what should happen as soon as the window sum reaches the target?",
-    "choices": [
-      {
-        "text": "Expand one more step first",
-        "explanation": "That can miss a shorter valid window."
-      },
-      {
-        "text": "Shrink aggressively while valid",
-        "correct": true,
-        "explanation": "Yes. For shortest windows, every valid window should be tightened immediately before moving on."
-      },
-      {
-        "text": "Reset both pointers to zero"
-      },
-      {
-        "text": "Sort the array before scanning"
-      }
-    ]
-  },
-  {
-    "q": "Which input breaks the standard product-less-than-k sliding window template?",
-    "choices": [
-      {
-        "text": "All numbers are positive"
-      },
-      {
-        "text": "k is larger than one"
-      },
-      {
-        "text": "The array contains zeros or negatives",
-        "correct": true,
-        "explanation": "Correct. Zero and negative values break the monotone shrink argument for products."
-      },
-      {
-        "text": "The answer counts subarrays"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="sliding-window"
+  :questions='[{"q": "Which invariant characterizes a Sliding Window solution?", "choices": [{"text": "The array is sorted", "correct": false, "explanation": "That is Binary Search."}, {"text": "A monotone-in-window-length property holds", "correct": true, "explanation": "Sliding Window works when validity is monotone: once a window is valid, extending or shrinking preserves the invariant predictably."}, {"text": "The problem asks for shortest path", "correct": false, "explanation": "That is BFS."}, {"text": "Recursion is used", "correct": false, "explanation": "Sliding Window is iterative."}]}, {"q": "For \"exactly k distinct\" subarray count, what is the standard trick?", "choices": [{"text": "Sort and binary search", "correct": false}, {"text": "atMost(k) - atMost(k-1)", "correct": true, "explanation": "Direct \"exactly k\" is hard to slide. `atMost` slides cleanly; subtract to isolate exactly-k."}, {"text": "Brute force n²", "correct": false}, {"text": "Hash map of prefixes", "correct": false, "explanation": "That is Prefix Sum family."}]}, {"q": "Time complexity of the canonical variable-size sliding window template?", "choices": [{"text": "O(n²)", "correct": false}, {"text": "O(n log n)", "correct": false}, {"text": "O(n) amortized", "correct": true, "explanation": "Each index enters and leaves the window at most once, so total work is 2n."}, {"text": "O(σ · n)", "correct": false, "explanation": "Only if you scan the full alphabet each step; canonical uses O(1) per step."}]}, {"q": "Why does \"lazy maxCount\" work in Longest Repeating Character Replacement?", "choices": [{"text": "The window can only grow when a strictly-larger max appears — stale maxCount can never inflate the answer", "correct": true, "explanation": "Correctness is preserved because we only accept new bests when a new real max is seen."}, {"text": "It doesn’t work — you must recompute max every shrink", "correct": false}, {"text": "Character frequencies never decrease", "correct": false}, {"text": "Random luck", "correct": false}]}, {"q": "For \"shortest subarray with sum ≥ k\" WITH negatives, why does plain sliding fail?", "choices": [{"text": "Because sums are not monotone in window size once negatives are allowed", "correct": true, "explanation": "Sliding requires that shrinking left strictly decreases the running metric. Negatives break that; use monotonic deque on prefix sums."}, {"text": "Because k might be too large", "correct": false}, {"text": "Because the array might be empty", "correct": false}, {"text": "Because there might be no answer", "correct": false}]}]'
+/>

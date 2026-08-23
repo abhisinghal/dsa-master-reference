@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
+&lt;CompanyTags companies="Meta, Amazon, Microsoft, Adobe" /&gt;
+
 Given the head of a singly linked list, return `true` iff it's a palindrome.
 
 **Example 1** — `1 → 2 → 2 → 1` → `true`
@@ -10,6 +12,12 @@ Given the head of a singly linked list, return `true` iff it's a palindrome.
 
 **Constraints** — `1 ≤ n ≤ 10⁵`. Follow-up: O(n) time, O(1) space.
 
+
+&lt;Hints
+  hint1="Two pointers moving at different speeds detect cycles without extra memory."
+  hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
+  hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
+/&gt;
 ---
 
 ## Approach 1 — Copy to array, two-pointer
@@ -111,6 +119,10 @@ boolean check(ListNode node) {
 **Complexity** — Time **O(n)**; Space **O(n)** call stack. Cleaner code but same asymptotics as Approach 1.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="palindrome-linked-list" />
 
 ## Complexity summary
 

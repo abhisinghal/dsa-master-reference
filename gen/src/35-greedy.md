@@ -492,62 +492,7 @@ Sort by **end time** and greedily keep the earliest-finishing compatible interva
 
 ## Check your understanding
 
-<Quiz patternId="greedy" :questions='[
-  {
-    "q": "For interval scheduling that maximizes how many intervals you keep, which sort key is usually safe?",
-    "choices": [
-      {
-        "text": "Earliest finish time",
-        "correct": true,
-        "explanation": "Yes. Finishing earliest leaves the most room for future intervals."
-      },
-      {
-        "text": "Largest start time"
-      },
-      {
-        "text": "Longest duration first"
-      },
-      {
-        "text": "Random interval order"
-      }
-    ]
-  },
-  {
-    "q": "In Jump Game II, when should the jump count increase?",
-    "choices": [
-      {
-        "text": "At every index"
-      },
-      {
-        "text": "When the current frontier ends",
-        "correct": true,
-        "explanation": "Correct. One jump covers a whole reachable level, not one array position."
-      },
-      {
-        "text": "Only at the final index"
-      },
-      {
-        "text": "Before reading nums[0]"
-      }
-    ]
-  },
-  {
-    "q": "What check must Gas Station do before trusting a greedy restart?",
-    "choices": [
-      {
-        "text": "Total gas covers total cost",
-        "correct": true,
-        "explanation": "Right. If total gas is smaller, no local start can complete the circuit."
-      },
-      {
-        "text": "Every station has surplus"
-      },
-      {
-        "text": "Costs are sorted ascending"
-      },
-      {
-        "text": "There are exactly two stations"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="greedy"
+  :questions='[{"q": "What is the risk of a greedy algorithm?", "choices": [{"text": "Local optimum may not equal global optimum", "correct": true, "explanation": "Must prove correctness — usually via exchange argument."}, {"text": "It is always slow", "correct": false, "explanation": "Greedy is usually fastest."}, {"text": "Uses too much memory", "correct": false}, {"text": "Doesn’t terminate", "correct": false}]}, {"q": "For Jump Game (reachability), what does the greedy track?", "choices": [{"text": "Farthest index reachable so far", "correct": true, "explanation": "If i > farthest, we’re stuck."}, {"text": "Number of jumps used", "correct": false, "explanation": "That is Jump Game II."}, {"text": "Sum of nums", "correct": false}, {"text": "Min-heap of jumps", "correct": false}]}, {"q": "For Course Schedule III, what makes the \"regret\" greedy correct?", "choices": [{"text": "Sort by deadline; swap out longest past-taken course when infeasible", "correct": true, "explanation": "Preserves feasibility while maximizing count."}, {"text": "Sort by duration", "correct": false, "explanation": "Doesn’t enforce deadlines."}, {"text": "Random", "correct": false}, {"text": "DP", "correct": false, "explanation": "Works but slower."}]}, {"q": "For Non-overlapping Intervals (minimum removes), sort by:", "choices": [{"text": "End ascending", "correct": true, "explanation": "Choosing earliest end leaves maximal room — classic activity selection."}, {"text": "Start ascending", "correct": false, "explanation": "That is Merge Intervals."}, {"text": "Length descending", "correct": false}, {"text": "Random", "correct": false}]}, {"q": "For Gas Station (circular route), what allows the O(n) reset trick?", "choices": [{"text": "If tank < 0 at index i, no start in [candidateStart..i] works — reset to i+1", "correct": true, "explanation": "Any start ≤ i would have failed by i too."}, {"text": "Sort by cost", "correct": false}, {"text": "Total sum trick only", "correct": false, "explanation": "Also needed but not the reset itself."}, {"text": "DP", "correct": false}]}]'
+/>

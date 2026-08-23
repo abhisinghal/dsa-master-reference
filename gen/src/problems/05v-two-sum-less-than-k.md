@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Two Sum Less Than K](https://leetcode.com/problems/two-sum-less-than-k/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
+<CompanyTags companies="Google, Amazon" />
+
 Return max sum `< k` from any pair, or `-1`.
 
 **Example 1** — `nums=[34,23,1,24,75,33,54,8], k=60` → `58`
@@ -9,6 +11,12 @@ Return max sum `< k` from any pair, or `-1`.
 
 **Constraints** — `1 ≤ n ≤ 100`.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach — Sort + two pointer (canonical)
@@ -45,6 +53,10 @@ int twoSumLessThanK(int[] nums, int k) {
 **Bucket variant** — since values ≤ 1000, bucket-count then two-pointer over buckets → O(n + 1000) time.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="two-sum-less-than-k" />
 
 ## Complexity summary
 

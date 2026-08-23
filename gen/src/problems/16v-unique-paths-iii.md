@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Unique Paths III](https://leetcode.com/problems/unique-paths-iii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Amazon, Meta, Google" />
+
 Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cell exactly once.
 
 **Constraints** — grid ≤ 20 cells (n·m ≤ 20).
@@ -10,6 +12,12 @@ Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cel
 **Example 2** — `grid=[[1,0,0,0],[0,0,0,0],[0,0,0,2]]` → `4`
 **Example 3** — `grid=[[0,1],[2,0]]` → `0`
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach — Hamiltonian-path DFS with in-place marking (canonical)
@@ -52,6 +60,10 @@ int dfs(int[][] g, int r, int c, int rem) {
 **Complexity** — Time exponential (~4^cells); n·m ≤ 20 makes it feasible.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="unique-paths-iii" />
 
 ## Complexity summary
 

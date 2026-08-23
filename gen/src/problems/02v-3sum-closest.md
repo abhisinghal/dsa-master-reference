@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: 3Sum Closest](https://leetcode.com/problems/3sum-closest/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
+
 Given an integer array `nums` of length `n` and integer `target`, return the sum of three integers from `nums` that is closest to `target`.
 
 **Example 1** — `nums = [-1,2,1,-4], target = 1` → `2` (`-1 + 2 + 1 = 2`)
@@ -10,6 +12,12 @@ Given an integer array `nums` of length `n` and integer `target`, return the sum
 
 **Constraints** — `3 ≤ n ≤ 500`; `-10³ ≤ nums[i], target ≤ 10³`.
 
+
+<Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/>
 ---
 
 ## Approach 1 — Triple nested loop
@@ -74,6 +82,10 @@ int threeSumClosest(int[] nums, int target) {
 **Complexity** — Time **O(n²)**; Space **O(1)** extra.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="3sum-closest" />
 
 ## Complexity summary
 

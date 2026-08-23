@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Meta, Amazon, Google, Uber" />
+
 Can `nums` split into two subsets with equal sum?
 
 **Example 1** — `nums=[1,5,11,5]` → `true`
@@ -9,6 +11,12 @@ Can `nums` split into two subsets with equal sum?
 
 **Constraints** — `1 ≤ n ≤ 200`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — Subset-sum DP (0/1 knapsack, canonical)
@@ -49,6 +57,10 @@ boolean canPartition(int[] nums) {
 `dp |= dp << x` on `BitSet` — word-parallel.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="partition-equal-subset-sum" />
 
 ## Complexity summary
 

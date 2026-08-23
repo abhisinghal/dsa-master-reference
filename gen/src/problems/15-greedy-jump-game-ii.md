@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Jump Game II](https://leetcode.com/problems/jump-game-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
+
 Given `nums[i]` = max jump length from index `i`, return the **minimum jumps** to reach the last index. Guaranteed reachable.
 
 **Example 1** — `[2,3,1,1,4]` → `2` (`0 → 1 → 4`)
@@ -9,6 +11,12 @@ Given `nums[i]` = max jump length from index `i`, return the **minimum jumps** t
 
 **Constraints** — `1 ≤ n ≤ 10⁴`; `0 ≤ nums[i] ≤ 1000`.
 
+
+<Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/>
 ---
 
 ## Approach 1 — BFS (level = jump count)
@@ -95,6 +103,10 @@ int jump(int[] a) {
 **Complexity** — Time **O(n)**; Space **O(1)**. Optimal.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="greedy-jump-game-ii" />
 
 ## Complexity summary
 

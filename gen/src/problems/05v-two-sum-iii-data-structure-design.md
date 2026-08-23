@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Two Sum III - Data Structure Design](https://leetcode.com/problems/two-sum-iii-data-structure-design/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
+<CompanyTags companies="LinkedIn, Meta, Google" />
+
 Design `TwoSum` supporting `add(x)` and `find(t)`.
 
 **Example** —
@@ -14,6 +16,12 @@ ts.find(7);  // false
 
 **Constraints** — up to 10⁴ ops.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach 1 — Fast add, slow find (canonical if adds dominate)
@@ -42,6 +50,10 @@ class TwoSum {
 Precompute all pairwise sums into a set on `add`. `find` = O(1). `add` = O(n).
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="two-sum-iii-data-structure-design" />
 
 ## Complexity summary
 

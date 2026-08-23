@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple" />
+
 Given distinct integers `nums`, return all possible subsets (the power set).
 
 **Example 1** — `nums=[1,2,3]` → `[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]`
@@ -9,6 +11,12 @@ Given distinct integers `nums`, return all possible subsets (the power set).
 
 **Constraints** — `1 ≤ n ≤ 10`.
 
+
+<Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/>
 ---
 
 ## Approach 1 — Backtracking
@@ -67,6 +75,10 @@ List<List<Integer>> subsetsBM(int[] nums) {
 **Complexity** — Time **O(2ⁿ · n)**; Space **O(2ⁿ · n)** for output.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="subsets" />
 
 ## Complexity summary
 

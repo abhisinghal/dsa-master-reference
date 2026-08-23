@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/quickselect)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Bloomberg, Apple, Uber" />
+
 Given `nums` and integer `k`, return the k-th **largest** element (1-indexed). O(n) average time expected.
 
 **Example 1** — `nums=[3,2,1,5,6,4], k=2` → `5`
@@ -9,6 +11,12 @@ Given `nums` and integer `k`, return the k-th **largest** element (1-indexed). O
 
 **Constraints** — `1 ≤ k ≤ n ≤ 10⁵`; `-10⁴ ≤ nums[i] ≤ 10⁴`.
 
+
+<Hints
+  hint1="You want the k-th element but not the sorted order. Sort is O(n log n) — can you do O(n) average?"
+  hint2="Quickselect: pick a pivot, partition, recurse into the side containing index k."
+  hint3="Randomize pivot to avoid O(n²) worst case. Worst-case O(n) via median-of-medians (rarely worth it in interviews)."
+/>
 ---
 
 ## Approach 1 — Sort + index
@@ -88,6 +96,10 @@ void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 **Complexity** — Time **O(n)** expected, **O(n²)** worst; Space **O(1)**. Optimal on average.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="quickselect-kth-largest" />
 
 ## Complexity summary
 

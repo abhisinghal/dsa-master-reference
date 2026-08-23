@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Unlimited transactions; each sell pays `fee`. Max profit.
 
 **Example 1** — `prices=[1,3,2,8,4,9], fee=2` → `8`
 
 **Constraints** — `1 ≤ n ≤ 5·10⁴`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — State-machine DP (canonical)
@@ -43,6 +51,10 @@ int maxProfit(int[] prices, int fee) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" />
 
 ## Complexity summary
 

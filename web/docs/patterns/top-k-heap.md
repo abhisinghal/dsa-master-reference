@@ -317,62 +317,7 @@ Run these small cases mentally before trusting the code:
 
 ## Check your understanding
 
-<Quiz patternId="top-k-heap" :questions='[
-  {
-    "q": "For the k-th largest element in a stream, which heap should be maintained?",
-    "choices": [
-      {
-        "text": "Size-k min heap",
-        "correct": true,
-        "explanation": "Yes. The root is the worst of the best k values, so it is the running k-th largest."
-      },
-      {
-        "text": "Size-k max heap"
-      },
-      {
-        "text": "Heap containing all values"
-      },
-      {
-        "text": "No heap, only sorting"
-      }
-    ]
-  },
-  {
-    "q": "What is the usual time and space for scanning n values with a size-k heap?",
-    "choices": [
-      {
-        "text": "O(n log k) time, O(k) space",
-        "correct": true,
-        "explanation": "Correct. Each candidate costs a heap operation bounded by k."
-      },
-      {
-        "text": "O(n squared) time, O(1) space"
-      },
-      {
-        "text": "O(log n) time, O(n) space"
-      },
-      {
-        "text": "O(k log n) time, O(n) space"
-      }
-    ]
-  },
-  {
-    "q": "When is bounded top-k heap usually not the best final step?",
-    "choices": [
-      {
-        "text": "k is much smaller than n"
-      },
-      {
-        "text": "Only the threshold value matters"
-      },
-      {
-        "text": "You need the entire output globally sorted",
-        "correct": true,
-        "explanation": "Right. A bounded heap selects candidates; it does not directly produce a fully sorted list."
-      },
-      {
-        "text": "The stream arrives online"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="top-k-heap"
+  :questions='[{"q": "For \"k largest\", which heap type do you maintain?", "choices": [{"text": "Min-heap of size k", "correct": true, "explanation": "Root is the smallest of the current top-k; poll if new value > root."}, {"text": "Max-heap of size k", "correct": false, "explanation": "That gives k smallest."}, {"text": "Min-heap of size n", "correct": false, "explanation": "Wasteful."}, {"text": "BST of size n", "correct": false, "explanation": "Also works but O(n log n)."}]}, {"q": "Time complexity of maintaining top-k over n elements with a heap?", "choices": [{"text": "O(n log k)", "correct": true, "explanation": "Each of n insertions is O(log k) since heap size ≤ k."}, {"text": "O(n log n)", "correct": false, "explanation": "That is full sorting."}, {"text": "O(k log n)", "correct": false}, {"text": "O(n + k)", "correct": false}]}, {"q": "For streaming k-th largest, what is the correct API pattern?", "choices": [{"text": "add(v): pq.offer(v); if pq.size() > k: pq.poll(); return pq.peek()", "correct": true, "explanation": "Root of min-heap is the k-th largest."}, {"text": "Re-sort on every add", "correct": false, "explanation": "O(n log n) per add — too slow."}, {"text": "Keep only the max", "correct": false, "explanation": "Loses info."}, {"text": "Use a linked list", "correct": false}]}, {"q": "Quickselect vs Heap for offline top-k (order-irrelevant): which is asymptotically better on average?", "choices": [{"text": "Quickselect O(n) average", "correct": true, "explanation": "Beats O(n log k) when k is close to n."}, {"text": "Heap O(n log k)", "correct": false, "explanation": "Heap is safer worst-case but slower on average."}, {"text": "Both equal", "correct": false}, {"text": "Merge sort", "correct": false}]}, {"q": "For Reorganize String, why does the greedy max-heap approach work?", "choices": [{"text": "Always placing the most-frequent remaining character avoids getting stuck", "correct": true, "explanation": "Feasibility check: max count ≤ (n+1)/2."}, {"text": "Because all letters are unique", "correct": false}, {"text": "Randomness", "correct": false}, {"text": "Because heap is fast", "correct": false, "explanation": "Fast, but that’s not why it’s CORRECT."}]}]'
+/>

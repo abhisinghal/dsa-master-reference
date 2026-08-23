@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
+&lt;CompanyTags companies="Amazon, Google" /&gt;
+
 Given an integer array `arr`, return the sum of `min(subarray)` over every contiguous subarray. Return modulo `10⁹ + 7`.
 
 **Example 1** — `arr = [3,1,2,4]` → `17` (mins over all subarrays: 3+1+2+4 + 1+1+2 + 1+1 + 1 = 17)
@@ -9,6 +11,12 @@ Given an integer array `arr`, return the sum of `min(subarray)` over every conti
 
 **Constraints** — `1 ≤ n ≤ 3 · 10⁴`; `1 ≤ arr[i] ≤ 3 · 10⁴`.
 
+
+&lt;Hints
+  hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
+  hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
+  hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
+/&gt;
 ---
 
 ## Approach 1 — Enumerate every subarray
@@ -91,6 +99,10 @@ int sumSubarrayMins(int[] arr) {
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="sum-of-subarray-minimums" />
 
 ## Complexity summary
 

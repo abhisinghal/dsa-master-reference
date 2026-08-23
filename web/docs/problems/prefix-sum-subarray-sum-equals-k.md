@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+
 Given an integer array `nums` (may contain negatives) and integer `k`, return the number of **contiguous subarrays** whose sum equals `k`.
 
 **Example 1** — `nums = [1,1,1], k = 2` → `2` (the two `[1,1]` subarrays)
@@ -10,6 +12,12 @@ Given an integer array `nums` (may contain negatives) and integer `k`, return th
 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`; `-10³ ≤ nums[i] ≤ 10³`.
 
+
+&lt;Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/&gt;
 ---
 
 ## Approach 1 — Brute force (all subarrays)
@@ -117,6 +125,10 @@ int subarraySum(int[] nums, int k) {
 **Complexity** — Time **O(n)** amortized; Space **O(n)** for the map. Optimal.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="prefix-sum-subarray-sum-equals-k" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Video Stitching](https://leetcode.com/problems/video-stitching/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
+<CompanyTags companies="Amazon, Google" />
+
 Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
 
 **Example 1** — `clips=[[0,2],[4,6],[8,10],[1,9],[1,5],[5,9]], T=10` → `3`
@@ -9,6 +11,12 @@ Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
 
 **Constraints** — `1 ≤ n ≤ 100`; `0 ≤ T ≤ 100`.
 
+
+<Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/>
 ---
 
 ## Approach — Sort by start + farthest reach (canonical)
@@ -44,6 +52,10 @@ int videoStitching(int[][] clips, int T) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="video-stitching" />
 
 ## Complexity summary
 

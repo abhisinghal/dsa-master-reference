@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Sort Array By Parity](https://leetcode.com/problems/sort-array-by-parity/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
+<CompanyTags companies="Meta, Amazon" />
+
 Rearrange so all even values come before all odd. Any valid partition accepted.
 
 **Example 1** — `nums=[3,1,2,4]` → `[2,4,3,1]` or `[4,2,3,1]` etc.
@@ -9,6 +11,12 @@ Rearrange so all even values come before all odd. Any valid partition accepted.
 
 **Constraints** — `1 ≤ n ≤ 5000`.
 
+
+<Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/>
 ---
 
 ## Approach — Opposing pointers + swap (canonical)
@@ -44,6 +52,10 @@ int[] sortArrayByParity(int[] nums) {
 **Trap** — for stable ordering (preserving relative order), use slow/fast writer instead.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="sort-array-by-parity" />
 
 ## Complexity summary
 

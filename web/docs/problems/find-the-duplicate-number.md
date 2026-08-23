@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/fast-slow)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft" /&gt;
+
 Given an array `nums` of `n + 1` integers where each is in `[1, n]`, there is exactly one duplicate. Return it. **Constraints**: don't modify `nums`; use **O(1)** extra space.
 
 **Example 1** — `nums = [1,3,4,2,2]` → `2`
@@ -10,6 +12,12 @@ Given an array `nums` of `n + 1` integers where each is in `[1, n]`, there is ex
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ nums[i] ≤ n`.
 
+
+&lt;Hints
+  hint1="Two pointers moving at different speeds detect cycles without extra memory."
+  hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
+  hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
+/&gt;
 ---
 
 ## Approach 1 — Sort
@@ -85,6 +93,10 @@ int findDuplicate(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="find-the-duplicate-number" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Binary Search](https://leetcode.com/problems/binary-search/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/binary-search)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
+
 Given a sorted array `nums` and an integer `target`, return the index of `target`, or `-1` if not present. Must run in **O(log n)** time.
 
 **Example 1** — `nums = [-1,0,3,5,9,12], target = 9` → `4`
@@ -10,6 +12,12 @@ Given a sorted array `nums` and an integer `target`, return the index of `target
 
 **Constraints** — `1 ≤ n ≤ 10⁴`; all distinct; sorted ascending.
 
+
+<Hints
+  hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
+  hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."
+  hint3="For rotated arrays: one half is always sorted — compare mid with lo (or hi) to detect which side."
+/>
 ---
 
 ## Approach 1 — Linear scan
@@ -71,6 +79,10 @@ int searchHO(int[] nums, int target) {
 **Complexity** — Time **O(log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="binary-search" />
 
 ## Complexity summary
 

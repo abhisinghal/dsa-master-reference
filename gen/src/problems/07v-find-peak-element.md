@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Find Peak Element](https://leetcode.com/problems/find-peak-element/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/binary-search)
 
+<CompanyTags companies="Meta, Google, Amazon, Bloomberg" />
+
 A peak is an element strictly greater than its neighbors. Given `nums` (with `nums[-1] = nums[n] = -∞`), return the index of any peak. Must run in **O(log n)**.
 
 **Example 1** — `nums = [1,2,3,1]` → `2` (value 3 is a peak)
@@ -10,6 +12,12 @@ A peak is an element strictly greater than its neighbors. Given `nums` (with `nu
 
 **Constraints** — `1 ≤ n ≤ 1000`; `-2³¹ ≤ nums[i] ≤ 2³¹ − 1`; adjacent values differ (no plateau).
 
+
+<Hints
+  hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
+  hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."
+  hint3="For rotated arrays: one half is always sorted — compare mid with lo (or hi) to detect which side."
+/>
 ---
 
 ## Approach 1 — Linear scan
@@ -58,6 +66,10 @@ int findPeakElement(int[] nums) {
 O(n) linear pass; rejected.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="find-peak-element" />
 
 ## Complexity summary
 

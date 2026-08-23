@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn" /&gt;
+
 Return the length of the **longest strictly increasing subsequence** of `nums`.
 
 **Example 1** — `nums=[10,9,2,5,3,7,101,18]` → `4` (`2,3,7,101`)
@@ -10,6 +12,12 @@ Return the length of the **longest strictly increasing subsequence** of `nums`.
 
 **Constraints** — `1 ≤ n ≤ 2500`; `-10⁴ ≤ nums[i] ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach 1 — Brute force recursion
@@ -89,6 +97,10 @@ int lengthOfLIS(int[] a) {
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="longest-increasing-subsequence" />
 
 ## Complexity summary
 

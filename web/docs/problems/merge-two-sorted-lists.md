@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/k-way-merge)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" /&gt;
+
 Given the heads of two sorted linked lists, merge them into one sorted list.
 
 **Example 1** — `l1 = 1→2→4, l2 = 1→3→4` → `1→1→2→3→4→4`
@@ -10,6 +12,12 @@ Given the heads of two sorted linked lists, merge them into one sorted list.
 
 **Constraints** — `0 ≤ len ≤ 50`; values in `[-100, 100]`; both sorted ascending.
 
+
+&lt;Hints
+  hint1="You have k sorted sequences. Which element is globally next?"
+  hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."
+  hint3="For ’smallest range covering k lists’, track max-in-heap; window is [minInHeap, maxSeen]."
+/&gt;
 ---
 
 ## Approach 1 — Materialize and re-sort
@@ -77,6 +85,10 @@ ListNode mergeTwoListsRec(ListNode l1, ListNode l2) {
 **Complexity** — Time **O(m + n)**; Space **O(m + n)** stack — watch stack overflow on long lists.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="merge-two-sorted-lists" />
 
 ## Complexity summary
 

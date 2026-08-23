@@ -10,6 +10,12 @@ Given a positive-int array `nums` and integer `k`, return the number of contiguo
 
 **Constraints** — `1 ≤ n ≤ 3 · 10⁴`; `1 ≤ nums[i] ≤ 1000`; `0 ≤ k ≤ 10⁶`. **All values positive.**
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Every subarray
@@ -87,6 +93,10 @@ int numSubarrayProductLessThanK(int[] nums, int k) {
 **Complexity** — Time **O(n log n)**; Space **O(n)**. Suboptimal — the sliding window wins.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="subarray-product-less-than-k" />
 
 ## Complexity summary
 

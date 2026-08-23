@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Replace Words](https://leetcode.com/problems/replace-words/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
 
+<CompanyTags companies="Meta, Amazon, Google" />
+
 Given a dictionary of roots and a `sentence`, replace each word with its **shortest** root that is a prefix. If no root, keep the word.
 
 **Example 1** — `dict=["cat","bat","rat"], sentence="the cattle was rattled by the battery"` → `"the cat was rat by the bat"`
 
 **Constraints** — dict ≤ 1000 roots; sentence words ≤ 1000.
 
+
+<Hints
+  hint1="Prefix operations? Word set lookups? Autocomplete?"
+  hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
+  hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
+/>
 ---
 
 ## Approach 1 — HashSet + prefix scan
@@ -64,6 +72,10 @@ String replaceWords(List<String> dict, String sentence) {
 **Complexity** — Time **O(D + S)** where D = total root chars, S = sentence chars; Space **O(D)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="replace-words" />
 
 ## Complexity summary
 

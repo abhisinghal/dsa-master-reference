@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Matrix Block Sum](https://leetcode.com/problems/matrix-block-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
+&lt;CompanyTags companies="Google, Amazon" /&gt;
+
 Given matrix `mat[m][n]` and integer `k`, return `answer[i][j]` = sum of all elements `mat[r][c]` with `|r-i| ≤ k` and `|c-j| ≤ k`.
 
 **Example 1** — `mat=[[1,2,3],[4,5,6],[7,8,9]], k=1` → `[[12,21,16],[27,45,33],[24,39,28]]`
@@ -9,6 +11,12 @@ Given matrix `mat[m][n]` and integer `k`, return `answer[i][j]` = sum of all ele
 
 **Constraints** — `1 ≤ m, n ≤ 100`; `1 ≤ k ≤ 100`.
 
+
+&lt;Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/&gt;
 ---
 
 ## Approach 1 — For each cell, sum k-neighborhood
@@ -55,6 +63,10 @@ int[][] matrixBlockSum(int[][] mat, int k) {
 **Complexity** — Time **O(m·n)**; Space **O(m·n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="matrix-block-sum" />
 
 ## Complexity summary
 

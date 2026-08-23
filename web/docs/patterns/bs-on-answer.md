@@ -521,63 +521,7 @@ Partition binary search — the most sophisticated member of the family; demonst
 
 ## Check your understanding
 
-<Quiz patternId="bs-on-answer" :questions='[
-  {
-    "q": "A problem asks for the minimum speed that finishes within h hours. Which pattern fits?",
-    "choices": [
-      {
-        "text": "Binary search on answer",
-        "correct": true,
-        "explanation": "Yes. Feasible speed is monotone: once fast enough, any higher speed also works."
-      },
-      {
-        "text": "Merge intervals"
-      },
-      {
-        "text": "Fast and slow pointers"
-      },
-      {
-        "text": "Backtracking"
-      }
-    ]
-  },
-  {
-    "q": "For Koko-style speed search, what should feasible(speed) mean?",
-    "choices": [
-      {
-        "text": "True when speed is too slow",
-        "explanation": "That flips the boundary and moves the search the wrong way."
-      },
-      {
-        "text": "True when all piles finish in time",
-        "correct": true,
-        "explanation": "Correct. The search then finds the smallest speed on the true side."
-      },
-      {
-        "text": "True only at the exact answer"
-      },
-      {
-        "text": "True when piles are sorted"
-      }
-    ]
-  },
-  {
-    "q": "For Split Array Largest Sum, what are tight initial bounds for capacity?",
-    "choices": [
-      {
-        "text": "zero and array length"
-      },
-      {
-        "text": "minimum element and maximum element"
-      },
-      {
-        "text": "max element and total sum",
-        "correct": true,
-        "explanation": "Right. A part must hold the largest element; one part may hold everything."
-      },
-      {
-        "text": "target and target squared"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="bs-on-answer"
+  :questions='[{"q": "What TWO ingredients are required to apply \"Binary Search on the Answer\"?", "choices": [{"text": "A monotonic feasibility predicate + bounded answer range", "correct": true, "explanation": "Without monotonicity you can’t eliminate halves."}, {"text": "The array must be sorted", "correct": false, "explanation": "The array need not be sorted."}, {"text": "The answer must be an integer", "correct": false, "explanation": "It can be a real number with epsilon convergence."}, {"text": "Recursion", "correct": false}]}, {"q": "For Koko Eating Bananas, what is the feasibility function?", "choices": [{"text": "Given eating speed k, can we finish within h hours?", "correct": true, "explanation": "Monotone: larger k → fewer hours required."}, {"text": "Is k the smallest pile?", "correct": false}, {"text": "Is k a divisor of h?", "correct": false}, {"text": "Is k > max(piles)?", "correct": false}]}, {"q": "For Split Array Largest Sum, what does `feasible(cap)` check?", "choices": [{"text": "Can we split into ≤ m parts each with sum ≤ cap?", "correct": true, "explanation": "Larger cap → fewer parts needed."}, {"text": "Is cap ≥ max(nums)?", "correct": false, "explanation": "That is the lower bound of the search, not the check."}, {"text": "Is cap divisible by m?", "correct": false}, {"text": "Nothing", "correct": false}]}, {"q": "What is the total complexity of BS on Answer with an O(n) feasibility check over range [lo, hi]?", "choices": [{"text": "O(n log(hi - lo))", "correct": true, "explanation": "log iterations × O(n) per check."}, {"text": "O(n²)", "correct": false}, {"text": "O(log n)", "correct": false}, {"text": "O(hi - lo)", "correct": false}]}, {"q": "For real-valued BS on Answer (e.g., minimize max distance to gas station), how do you terminate?", "choices": [{"text": "Iterate until `hi - lo < epsilon` for some small threshold", "correct": true, "explanation": "Integer BS uses `lo < hi`; real-valued uses epsilon convergence."}, {"text": "Loop 1000 times", "correct": false, "explanation": "Fragile; use epsilon."}, {"text": "Never — infinite loop", "correct": false}, {"text": "Cast to int", "correct": false}]}]'
+/>

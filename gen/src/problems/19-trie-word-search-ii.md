@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Word Search II](https://leetcode.com/problems/word-search-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" />
+
 Given `board[m][n]` of letters and a dictionary `words`, return all words in `words` that can be traced through adjacent cells (no cell reused within a single word).
 
 **Example** — `board=[[o,a,a,n],[e,t,a,e],[i,h,k,r],[i,f,l,v]], words=["oath","pea","eat","rain"]` → `["oath","eat"]`
 
 **Constraints** — `1 ≤ m, n ≤ 12`; up to 3·10⁴ words.
 
+
+<Hints
+  hint1="Prefix operations? Word set lookups? Autocomplete?"
+  hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
+  hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
+/>
 ---
 
 ## Approach 1 — DFS per word
@@ -93,6 +101,10 @@ void dfs(char[][] b, int r, int c, TrieNode node, List<String> out) {
 **Complexity** — Time **O(m·n · 4^L)** — the whole word list is walked in one traversal; Space **O(#chars in dict)** for the trie.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="trie-word-search-ii" />
 
 ## Complexity summary
 

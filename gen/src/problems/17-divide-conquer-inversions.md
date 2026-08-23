@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/divide-conquer)
 
+<CompanyTags companies="Google, Amazon, Meta" />
+
 For each index `i`, return the number of `j > i` with `nums[j] < nums[i]`.
 
 **Example** — `nums=[5,2,6,1]` → `[2,1,1,0]`
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; values fit in `int`.
 
+
+<Hints
+  hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
+  hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."
+  hint3="For count-of-X-across-boundary, two-pointer walk during the merge step."
+/>
 ---
 
 ## Approach 1 — Brute force (nested compare)
@@ -110,6 +118,10 @@ void mergeSort(int[] nums, Integer[] idx, int lo, int hi) {
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="divide-conquer-inversions" />
 
 ## Complexity summary
 

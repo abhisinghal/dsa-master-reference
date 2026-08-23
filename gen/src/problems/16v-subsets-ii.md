@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Subsets II](https://leetcode.com/problems/subsets-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
+
 All **unique** subsets when nums may contain duplicates.
 
 **Example 1** — `nums=[1,2,2]` → `[[],[1],[1,2],[1,2,2],[2],[2,2]]`
 
 **Constraints** — `1 ≤ n ≤ 10`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach — Sort + skip equal-at-same-depth (canonical)
@@ -47,6 +55,10 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 **Complexity** — Time **O(n · 2ⁿ)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="subsets-ii" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Next Greater Element II](https://leetcode.com/problems/next-greater-element-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
+&lt;CompanyTags companies="Amazon, Google, Bloomberg" /&gt;
+
 Given a **circular** integer array `nums`, return the next greater element for each position. If none exists, output `-1`.
 
 **Example 1** — `nums = [1,2,1]` → `[2,-1,2]` (position 2 wraps around to position 0's `1`, still not greater; but then to position 1's `2`)
@@ -10,6 +12,12 @@ Given a **circular** integer array `nums`, return the next greater element for e
 
 **Constraints** — `1 ≤ n ≤ 10⁴`; `-10⁹ ≤ nums[i] ≤ 10⁹`.
 
+
+&lt;Hints
+  hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
+  hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
+  hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
+/&gt;
 ---
 
 ## Approach 1 — Brute force (2n scan per position)
@@ -81,6 +89,10 @@ int[] nextGreaterElements(int[] nums) {
 **Complexity** — Time **O(n)** (each index pushed and popped at most twice); Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="next-greater-element-ii" />
 
 ## Complexity summary
 

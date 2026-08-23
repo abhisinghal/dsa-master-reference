@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Permutations II](https://leetcode.com/problems/permutations-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
+
 All **unique** permutations of nums (may contain duplicates).
 
 **Example 1** — `nums=[1,1,2]` → 3 unique perms
 
 **Constraints** — `1 ≤ n ≤ 8`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach — Sort + used[] + skip equal-and-unused (canonical)
@@ -39,6 +47,10 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> out) {
 **Complexity** — Time **O(n · n!)** worst; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="permutations-ii" />
 
 ## Complexity summary
 

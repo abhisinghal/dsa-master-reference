@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Number of Provinces](https://leetcode.com/problems/number-of-provinces/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
+<CompanyTags companies="Amazon, Google, Meta, LinkedIn" />
+
 Given `isConnected[n][n]` (adjacency matrix; `1` if direct road), return the number of connected components.
 
 **Example 1** — `[[1,1,0],[1,1,0],[0,0,1]]` → `2`
@@ -9,6 +11,12 @@ Given `isConnected[n][n]` (adjacency matrix; `1` if direct road), return the num
 
 **Constraints** — `1 ≤ n ≤ 200`.
 
+
+<Hints
+  hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
+  hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
+  hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
+/>
 ---
 
 ## Approach 1 — DFS from each unvisited city
@@ -85,6 +93,10 @@ boolean union(int[] parent, int[] size, int a, int b) {
 **Complexity** — Time **O(n² α(n)) ≈ O(n²)**; Space **O(n)**. Same big-O as DFS but *incremental* — supports streaming edges.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="union-find-number-of-provinces" />
 
 ## Complexity summary
 

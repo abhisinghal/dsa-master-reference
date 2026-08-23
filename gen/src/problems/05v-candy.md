@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Candy](https://leetcode.com/problems/candy/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/greedy)
 
+<CompanyTags companies="Amazon, Meta, Bloomberg" />
+
 Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly more. Minimize total.
 
 **Example 1** — `ratings=[1,0,2]` → `5`
@@ -9,6 +11,12 @@ Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly 
 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach — Two-pass sweep (canonical)
@@ -46,6 +54,10 @@ int candy(int[] ratings) {
 Track up-slope and down-slope lengths + current peak. Trickier but O(1) extra space.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="candy" />
 
 ## Complexity summary
 

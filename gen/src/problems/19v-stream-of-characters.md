@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Stream of Characters](https://leetcode.com/problems/stream-of-characters/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
+<CompanyTags companies="Amazon, Google" />
+
 Design `StreamChecker`. `query(c)` returns true iff the last k chars form a word in the dictionary (for any k).
 
 **Example** — with `dict = ["cd","f","kl"]`, streaming `a,b,c,d,e,f,g,h,i,j,k,l` returns `[F,F,F,T,F,T,F,F,F,F,F,T]`.
 
 **Constraints** — dict ≤ 2000 words, each ≤ 200 chars; up to 4·10⁴ queries.
 
+
+<Hints
+  hint1="Prefix operations? Word set lookups? Autocomplete?"
+  hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
+  hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
+/>
 ---
 
 ## Approach 1 — Materialize stream, check every suffix
@@ -61,6 +69,10 @@ class StreamChecker {
 **Complexity** — `query` **O(L_max)**; Space **O(D)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="stream-of-characters" />
 
 ## Complexity summary
 

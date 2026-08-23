@@ -10,6 +10,12 @@ String of Q,W,E,R (length n divisible by 4). Return length of smallest substring
 
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach — Sliding window over "outside" counts (canonical)
@@ -52,6 +58,10 @@ int balancedString(String s) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="replace-the-substring-for-balanced-string" />
 
 ## Complexity summary
 

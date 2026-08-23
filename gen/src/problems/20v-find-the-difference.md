@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Find the Difference](https://leetcode.com/problems/find-the-difference/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
+<CompanyTags companies="Google, Amazon, Meta" />
+
 `t` is `s` shuffled with **one extra letter**. Return that letter.
 
 **Example 1** — `s="abcd", t="abcde"` → `'e'`
@@ -9,6 +11,12 @@
 
 **Constraints** — `0 ≤ |s| ≤ 1000`.
 
+
+<Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/>
 ---
 
 ## Approach 1 — Sort both, walk
@@ -47,6 +55,10 @@ char findTheDifference(String s, String t) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="find-the-difference" />
 
 ## Complexity summary
 

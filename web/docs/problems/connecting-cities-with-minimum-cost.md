@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/union-find)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Given `n` cities and `connections[i] = [a, b, cost]`, return the minimum cost to make all connected. `-1` if impossible.
 
 **Example 1** — `n=3, connections=[[1,2,5],[1,3,6],[2,3,1]]` → `6` (pick [2,3,1] and [1,2,5])
@@ -9,6 +11,12 @@ Given `n` cities and `connections[i] = [a, b, cost]`, return the minimum cost to
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
+  hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
+  hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
+/&gt;
 ---
 
 ## Approach 1 — Try all spanning trees
@@ -55,6 +63,10 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 **Complexity** — Time **O(E log E)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="connecting-cities-with-minimum-cost" />
 
 ## Complexity summary
 

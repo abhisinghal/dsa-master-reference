@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
+&lt;CompanyTags companies="Amazon, Meta" /&gt;
+
 Given `n` flights and bookings `[first, last, seats]`, return an array where index `i` = total seats booked on flight `i+1`.
 
 **Example 1** — `bookings=[[1,2,10],[2,3,20],[2,5,25]], n=5` → `[10,55,45,25,25]`
@@ -10,6 +12,12 @@ Given `n` flights and bookings `[first, last, seats]`, return an array where ind
 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`; `1 ≤ bookings.length ≤ 2·10⁴`.
 
+
+&lt;Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/&gt;
 ---
 
 ## Approach 1 — Direct fill
@@ -50,6 +58,10 @@ int[] corpFlightBookings(int[][] bookings, int n) {
 **Complexity** — Time **O(n + m)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="corporate-flight-bookings" />
 
 ## Complexity summary
 

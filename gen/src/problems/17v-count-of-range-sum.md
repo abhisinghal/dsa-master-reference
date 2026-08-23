@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/divide-conquer)
 
+<CompanyTags companies="Google, Amazon" />
+
 Count subarrays whose sum lies in `[lower, upper]` (inclusive).
 
 **Example 1** — `nums=[-2,5,-1], lower=-2, upper=2` → `3`
@@ -9,6 +11,12 @@ Count subarrays whose sum lies in `[lower, upper]` (inclusive).
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `-2³¹ ≤ nums[i] ≤ 2³¹−1`.
 
+
+<Hints
+  hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
+  hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."
+  hint3="For count-of-X-across-boundary, two-pointer walk during the merge step."
+/>
 ---
 
 ## Approach 1 — All subarrays
@@ -60,6 +68,10 @@ int mergeCount(long[] p, int lo, int hi, int lower, int upper) {
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="count-of-range-sum" />
 
 ## Complexity summary
 

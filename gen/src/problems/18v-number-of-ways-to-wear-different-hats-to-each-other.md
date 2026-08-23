@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Number of Ways to Wear Different Hats to Each Other](https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Google, Amazon" />
+
 n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 person; each person wears one. Count assignments (mod 1e9+7).
 
 **Constraints** — `1 ≤ n ≤ 10`.
@@ -10,6 +12,12 @@ n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 
 **Example 2** — `hats=[[3,5,1],[3,5]]` → `4`
 **Example 3** — `hats=[[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4]]` → `24`
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — Bitmask DP iterating hats (canonical)
@@ -52,6 +60,10 @@ int numberWays(List<List<Integer>> hats) {
 **Complexity** — Time **O(40 · 2ⁿ · n)**; Space **O(2ⁿ)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="number-of-ways-to-wear-different-hats-to-each-other" />
 
 ## Complexity summary
 

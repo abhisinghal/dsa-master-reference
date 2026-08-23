@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Single Number](https://leetcode.com/problems/single-number/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Adobe" />
+
 Every element appears twice except one. Return that one, in **O(n)** time and **O(1)** space.
 
 **Example 1** — `nums=[2,2,1]` → `1`
@@ -9,6 +11,12 @@ Every element appears twice except one. Return that one, in **O(n)** time and **
 
 **Constraints** — `1 ≤ n ≤ 3·10⁴`; all fit in `int`.
 
+
+<Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/>
 ---
 
 ## Approach 1 — HashSet toggle
@@ -73,6 +81,10 @@ int singleNumber(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(1)**. Optimal.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="bit-manip-single-number" />
 
 ## Complexity summary
 

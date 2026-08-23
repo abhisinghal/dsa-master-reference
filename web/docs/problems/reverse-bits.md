@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Reverse Bits](https://leetcode.com/problems/reverse-bits/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Apple, Microsoft, Adobe" /&gt;
+
 Reverse the bits of a 32-bit unsigned integer.
 
 **Example 1** — `n = 0000...1010 (43261596)` → `0011...1001 (964176192)`
 
 **Constraints** — 32 bits.
 
+
+&lt;Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/&gt;
 ---
 
 ## Approach 1 — Bit-by-bit
@@ -54,6 +62,10 @@ int reverseBits(int n) {
 For repeated calls, precompute an int[256] table of reversed bytes.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="reverse-bits" />
 
 ## Complexity summary
 

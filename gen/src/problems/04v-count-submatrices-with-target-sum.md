@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Count Submatrices with Target Sum](https://leetcode.com/problems/count-submatrices-that-sum-to-target/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/prefix-sum)
 
+<CompanyTags companies="Google, Amazon" />
+
 Given matrix and integer `target`, count submatrices whose sum equals `target`.
 
 **Example 1** — `mat=[[0,1,0],[1,1,1],[0,1,0]], target=0` → `4`
@@ -10,6 +12,12 @@ Given matrix and integer `target`, count submatrices whose sum equals `target`.
 
 **Constraints** — `1 ≤ m, n ≤ 100`; `-1000 ≤ mat[i][j] ≤ 1000`.
 
+
+<Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/>
 ---
 
 ## Approach 1 — Enumerate every submatrix
@@ -57,6 +65,10 @@ int numSubmatrixSumTarget(int[][] mat, int target) {
 **Complexity** — Time **O(m²·n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="count-submatrices-with-target-sum" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Dungeon Game](https://leetcode.com/problems/dungeon-game/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Knight from top-left to bottom-right; each cell gives/takes HP; HP ≥ 1 always. Find min initial HP.
 
 **Constraints** — `1 ≤ m, n ≤ 200`.
@@ -9,6 +11,12 @@ Knight from top-left to bottom-right; each cell gives/takes HP; HP ≥ 1 always.
 **Example 1** — `dungeon=[[-2,-3,3],[-5,-10,1],[10,30,-5]]` → `7`
 **Example 2** — `dungeon=[[0]]` → `1`
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — Reverse DP from bottom-right (canonical)
@@ -45,6 +53,10 @@ int calculateMinimumHP(int[][] room) {
 **Complexity** — Time **O(mn)**; Space **O(mn)** (compressible).
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="dungeon-game" />
 
 ## Complexity summary
 

@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
+
 Unlimited transactions; must skip one day between sell and next buy.
 
 **Example 1** — `prices=[1,2,3,0,2]` → `3`
 
 **Constraints** — `1 ≤ n ≤ 5000`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — State-machine DP (canonical)
@@ -45,6 +53,10 @@ int maxProfit(int[] prices) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" />
 
 ## Complexity summary
 

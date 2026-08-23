@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Minimum Falling Path Sum](https://leetcode.com/problems/minimum-falling-path-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Grid; falling path picks one cell per row; next row's cell must be in `[j-1, j, j+1]`. Min sum from top to bottom.
 
 **Example 1** — `[[2,1,3],[6,5,4],[7,8,9]]` → `13`
 
 **Constraints** — `1 ≤ n ≤ 100`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — Row-by-row DP (canonical)
@@ -53,6 +61,10 @@ int minFallingPathSum(int[][] grid) {
 **Complexity** — Time **O(n²)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="minimum-falling-path-sum" />
 
 ## Complexity summary
 

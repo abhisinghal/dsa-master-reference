@@ -10,6 +10,12 @@ Fixed window of size `k` over calories. For each window: +1 if sum &gt; upper; �
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach — Fixed-window running sum (canonical)
@@ -51,6 +57,10 @@ int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="diet-plan-performance" />
 
 ## Complexity summary
 

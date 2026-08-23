@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Number of Islands II](https://leetcode.com/problems/number-of-islands-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
 
+<CompanyTags companies="Google, Amazon, Meta" />
+
 You have an `m × n` grid of water. Given `positions` where each `(r, c)` becomes land, return count of islands after each addition.
 
 **Example 1** — `m=3, n=3, positions=[[0,0],[0,1],[1,2],[2,1]]` → `[1,1,2,3]`
 
 **Constraints** — `1 ≤ m·n ≤ 10⁴`.
 
+
+<Hints
+  hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
+  hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
+  hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
+/>
 ---
 
 ## Approach 1 — DFS after each addition
@@ -64,6 +72,10 @@ boolean union(int[] p, int a, int b) {
 **Complexity** — Time **O(k · α(m·n))**; Space **O(m·n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="number-of-islands-ii" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Perfect Squares](https://leetcode.com/problems/perfect-squares/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Min count of perfect squares summing to `n`.
 
 **Example 1** — `n=12` → `3` (`4+4+4`)
@@ -9,6 +11,12 @@ Min count of perfect squares summing to `n`.
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach 1 — DP (min coin change with square coins)
@@ -43,6 +51,10 @@ Every positive integer = sum of ≤ 4 squares. Result ∈ {1,2,3,4}.
 **O(√n).** Beat the DP.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="perfect-squares" />
 
 ## Complexity summary
 

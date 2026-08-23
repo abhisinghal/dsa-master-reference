@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/trie-pattern)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Uber" /&gt;
+
 Design `WordDictionary` with `addWord(word)` and `search(word)`. `search` may contain `.` which matches any letter.
 
 **Example** —
@@ -20,6 +22,12 @@ w.search("b.."); // true
 
 **Constraints** — ≤ 25 chars/word; up to 10⁴ ops.
 
+
+&lt;Hints
+  hint1="Prefix operations? Word set lookups? Autocomplete?"
+  hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
+  hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
+/&gt;
 ---
 
 ## Approach 1 — HashSet + linear scan
@@ -76,6 +84,10 @@ class WordDictionary {
 **Complexity** — `addWord` **O(L)**; `search` **O(26^k · L)** worst where k = # dots; usually much less.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="design-add-and-search-words-data-structure" />
 
 ## Complexity summary
 

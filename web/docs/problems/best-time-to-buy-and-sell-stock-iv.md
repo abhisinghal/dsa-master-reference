@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+
 At most `k` transactions. Max profit.
 
 **Constraints** — `1 ≤ k ≤ 100`; `1 ≤ n ≤ 1000`.
@@ -9,6 +11,12 @@ At most `k` transactions. Max profit.
 **Example 1** — `k=2, prices=[2,4,1]` → `2`
 **Example 2** — `k=2, prices=[3,2,6,5,0,3]` → `7`
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — 2k states DP with unlimited-k shortcut (canonical)
@@ -53,6 +61,10 @@ int maxProfit(int k, int[] prices) {
 **Complexity** — Time **O(n · k)**; Space **O(k)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="best-time-to-buy-and-sell-stock-iv" />
 
 ## Complexity summary
 

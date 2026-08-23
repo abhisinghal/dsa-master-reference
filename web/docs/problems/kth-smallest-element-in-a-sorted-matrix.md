@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Uber, Bloomberg" /&gt;
+
 Given `n×n` matrix sorted row and column, return the k-th smallest element.
 
 **Example** — `matrix=[[1,5,9],[10,11,13],[12,13,15]], k=8` → `13`
 
 **Constraints** — `1 ≤ n ≤ 300`; `1 ≤ k ≤ n²`.
 
+
+&lt;Hints
+  hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
+  hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
+  hint3="The feasibility check is O(n); total complexity is O(n log range)."
+/&gt;
 ---
 
 ## Approach 1 — Flatten + sort
@@ -59,6 +67,10 @@ int kthSmallest(int[][] m, int k) {
 />
 
 **Complexity** — Time **O(n log(max-min))**; Space **O(1)**.
+
+## Try it yourself
+
+<JavaRunner problem-slug="kth-smallest-element-in-a-sorted-matrix" />
 
 ## Complexity summary
 

@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Course Schedule III](https://leetcode.com/problems/course-schedule-iii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/greedy)
 
+&lt;CompanyTags companies="Amazon, Google" /&gt;
+
 Each course `[duration, lastDay]`. Take max number of courses (one at a time). Each must finish by lastDay.
 
 **Example 1** — `courses=[[100,200],[200,1300],[1000,1250],[2000,3200]]` → `3`
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/&gt;
 ---
 
 ## Approach — Sort by deadline + max-heap regret (canonical)
@@ -48,6 +56,10 @@ int scheduleCourse(int[][] courses) {
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="course-schedule-iii" />
 
 ## Complexity summary
 

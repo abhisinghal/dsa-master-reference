@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: My Calendar II](https://leetcode.com/problems/my-calendar-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sweep-line)
 
+&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+
 Design `MyCalendarTwo`. `book(start, end)` returns `true` iff the new event can be added without causing a **triple** overlap.
 
 **Example 1** —
@@ -21,6 +23,12 @@ c.book(25, 55); // true
 
 **Constraints** — `≤ 1000` `book` calls; `0 ≤ start < end ≤ 10⁹`.
 
+
+&lt;Hints
+  hint1="Turn events into `(time, +1/-1)` pairs. What’s the ’active count’ or ’max concurrent’?"
+  hint2="Sort events by time; break ties consistently (end before start for ’meetings’, or vice versa)."
+  hint3="Sweep; maintain a running count/set. Max active gives room count; drops give free slots."
+/&gt;
 ---
 
 ## Approach 1 — Track singles + doubles
@@ -85,6 +93,10 @@ class MyCalendarTwo2 {
 **Complexity** — Time **O(n log n)** per `book`; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="my-calendar-ii" />
 
 ## Complexity summary
 

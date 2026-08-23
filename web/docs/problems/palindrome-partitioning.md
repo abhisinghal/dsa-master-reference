@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+
 All partitions of `s` where every part is a palindrome.
 
 **Example 1** — `s="aab"` → `[["a","a","b"],["aa","b"]]`
@@ -9,6 +11,12 @@ All partitions of `s` where every part is a palindrome.
 
 **Constraints** — `1 ≤ n ≤ 16`.
 
+
+&lt;Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/&gt;
 ---
 
 ## Approach 1 — DFS + palindrome check on the fly (canonical)
@@ -57,6 +65,10 @@ O(n²) precompute; O(1) checks during recursion.
 **Complexity** — Time exponential (~2ⁿ · n); Space **O(n²)** with DP.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="palindrome-partitioning" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Happy Number](https://leetcode.com/problems/happy-number/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/fast-slow)
 
+&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+
 A "happy number" transformation repeatedly replaces `n` by the sum of the squares of its digits. `n` is happy iff this sequence eventually reaches `1`. Return `true` if `n` is happy.
 
 **Example 1** — `n = 19` → `true` (`1² + 9² = 82 → 8² + 2² = 68 → … → 1`)
@@ -10,6 +12,12 @@ A "happy number" transformation repeatedly replaces `n` by the sum of the square
 
 **Constraints** — `1 ≤ n ≤ 2³¹ − 1`.
 
+
+&lt;Hints
+  hint1="Two pointers moving at different speeds detect cycles without extra memory."
+  hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."
+  hint3="For cycle entry (Floyd’s Tortoise): after meeting, reset one pointer to head; walk both at speed 1; meet at entry."
+/&gt;
 ---
 
 ## Approach 1 — Hash set of seen values
@@ -100,6 +108,10 @@ Small proof: iterate 1..810; every trajectory either reaches 1 or hits `4 → 16
 **Complexity** — Time **O(log n · k)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="happy-number" />
 
 ## Complexity summary
 

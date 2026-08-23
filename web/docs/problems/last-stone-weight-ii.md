@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Last Stone Weight II](https://leetcode.com/problems/last-stone-weight-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Amazon, Google" /&gt;
+
 Smash pairs (larger becomes diff). Minimize final remaining weight.
 
 **Example 1** — `stones=[2,7,4,1,8,1]` → `1`
@@ -9,6 +11,12 @@ Smash pairs (larger becomes diff). Minimize final remaining weight.
 
 **Constraints** — `1 ≤ n ≤ 30`; `1 ≤ stones[i] ≤ 100`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — Reduce to subset-sum closest to total/2 (canonical)
@@ -48,6 +56,10 @@ int lastStoneWeightII(int[] stones) {
 **Complexity** — Time **O(n · total)**; Space **O(total)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="last-stone-weight-ii" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Maximum Product of Word Lengths](https://leetcode.com/problems/maximum-product-of-word-lengths/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bit-manip)
 
+&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+
 Return `max(len(a) * len(b))` over pairs whose character sets are disjoint (no shared letter).
 
 **Example 1** — `words=["abcw","baz","foo","bar","xtfn","abcdef"]` → `16` (`"abcw"` × `"xtfn"`)
@@ -9,6 +11,12 @@ Return `max(len(a) * len(b))` over pairs whose character sets are disjoint (no s
 
 **Constraints** — `2 ≤ n ≤ 1000`; lowercase.
 
+
+&lt;Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/&gt;
 ---
 
 ## Approach 1 — Set intersection per pair
@@ -53,6 +61,10 @@ int maxProduct(String[] words) {
 **Complexity** — Time **O(n·L + n²)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximum-product-of-word-lengths" />
 
 ## Complexity summary
 

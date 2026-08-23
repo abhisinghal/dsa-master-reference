@@ -268,62 +268,7 @@ Meeting Rooms II looks like interval merging, but the answer is a count of simul
 
 ## Check your understanding
 
-<Quiz patternId="merge-intervals" :questions='[
-  {
-    "q": "After sorting intervals by start, when does the next interval merge with the running one?",
-    "choices": [
-      {
-        "text": "next start is at most current end",
-        "correct": true,
-        "explanation": "Yes. Sorted starts reduce overlap checking to one comparison against the running end."
-      },
-      {
-        "text": "next end is smaller than current start"
-      },
-      {
-        "text": "the intervals have equal lengths"
-      },
-      {
-        "text": "the starts are both even"
-      }
-    ]
-  },
-  {
-    "q": "The intervals [1,2] and [2,3] appear. What decides whether they merge?",
-    "choices": [
-      {
-        "text": "The problem definition for touching endpoints",
-        "correct": true,
-        "explanation": "Correct. Some problems treat touching as overlap; others require a strict gap."
-      },
-      {
-        "text": "The array length only"
-      },
-      {
-        "text": "Whether input is unsorted"
-      },
-      {
-        "text": "Whether starts are unique"
-      }
-    ]
-  },
-  {
-    "q": "Which problem shape should push you from Merge Intervals to Sweep Line instead?",
-    "choices": [
-      {
-        "text": "Return the union of ranges"
-      },
-      {
-        "text": "Count active intervals over time",
-        "correct": true,
-        "explanation": "Right. Sweep line tracks active counts or state at ordered event times."
-      },
-      {
-        "text": "Sort by start first"
-      },
-      {
-        "text": "Merge overlapping meetings"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="merge-intervals"
+  :questions='[{"q": "Standard Merge Intervals: sort by what?", "choices": [{"text": "Start ascending", "correct": true, "explanation": "Then walk once and merge on overlap."}, {"text": "End ascending", "correct": false, "explanation": "Better for activity selection / non-overlap counting."}, {"text": "Length descending", "correct": false}, {"text": "Random", "correct": false}]}, {"q": "For Insert Interval into a pre-sorted list, what is the canonical algorithm?", "choices": [{"text": "Three-phase single pass: copy-before, merge-overlapping, copy-after", "correct": true, "explanation": "O(n) time; no re-sort needed since input is sorted."}, {"text": "Insert then run full Merge Intervals", "correct": false, "explanation": "Works but O(n log n)."}, {"text": "Sort by end and use greedy", "correct": false, "explanation": "That is Non-overlap Intervals."}, {"text": "Binary search only", "correct": false}]}, {"q": "For Remove Covered Intervals, what tie-break at same-start intervals?", "choices": [{"text": "Sort by start asc, end DESC", "correct": true, "explanation": "Ensures the covering interval comes first when starts tie."}, {"text": "Sort by start asc, end asc", "correct": false, "explanation": "Would mislabel the shorter one as covering."}, {"text": "No tie-break needed", "correct": false}, {"text": "Random tie-break", "correct": false}]}, {"q": "For Meeting Rooms (bool \"can attend all\"), what is the O(n log n) check?", "choices": [{"text": "Sort by start; verify each start ≥ previous end", "correct": true, "explanation": "Adjacent-check suffices after sorting."}, {"text": "Full n² pair check", "correct": false, "explanation": "Wasteful."}, {"text": "Union-Find", "correct": false}, {"text": "DP", "correct": false}]}, {"q": "Interval List Intersections (two sorted disjoint lists) is best solved by:", "choices": [{"text": "Two-pointer merge with `[max(starts), min(ends)]` intersection formula", "correct": true, "explanation": "O(n+m) linear pass."}, {"text": "Sort both then binary search", "correct": false, "explanation": "Already sorted; unnecessary sort."}, {"text": "Union all then re-detect overlaps", "correct": false, "explanation": "Overkill."}, {"text": "Recursion", "correct": false}]}]'
+/>

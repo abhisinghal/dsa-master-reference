@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Sum of All Subset XOR Totals](https://leetcode.com/problems/sum-of-all-subset-xor-totals/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
+<CompanyTags companies="Amazon, Google" />
+
 Return the sum of XOR of every subset of `nums` (including empty).
 
 **Example 1** — `nums=[1,3]` → `6` (subsets: {},{1},{3},{1,3}; XORs: 0,1,3,2; sum 6)
@@ -9,6 +11,12 @@ Return the sum of XOR of every subset of `nums` (including empty).
 
 **Constraints** — `1 ≤ n ≤ 12`.
 
+
+<Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/>
 ---
 
 ## Approach 1 — Enumerate all 2ⁿ subsets
@@ -44,6 +52,10 @@ int subsetXORSum(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="sum-of-all-subset-xor-totals" />
 
 ## Complexity summary
 

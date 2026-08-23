@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Subarrays with K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Google, Amazon" /&gt;
+
 Given an integer array `nums` and integer `k`, return the number of contiguous subarrays containing **exactly** `k` distinct integers.
 
 **Example 1** — `nums = [1,2,1,2,3], k = 2` → `7` (subarrays: `[1,2]`, `[2,1]`, `[1,2]`, `[2,1,2]`, `[1,2,1]`, `[1,2,1,2]`, `[2,1,2,1]`… actually 7 with exactly 2 distinct)
@@ -10,6 +12,12 @@ Given an integer array `nums` and integer `k`, return the number of contiguous s
 
 **Constraints** — `1 ≤ n ≤ 2 · 10⁴`; `1 ≤ nums[i] ≤ n`; `1 ≤ k ≤ n`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Enumerate every subarray
@@ -89,6 +97,10 @@ Then `atMost(2) - atMost(1) = 12 - 5 = 7`.
 **Complexity** — Time **O(n)** — two O(n) sweeps; Space **O(k)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="subarrays-with-k-different-integers" />
 
 ## Complexity summary
 

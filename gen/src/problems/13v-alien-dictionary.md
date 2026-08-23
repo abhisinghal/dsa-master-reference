@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Alien Dictionary](https://leetcode.com/problems/alien-dictionary/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/topological-sort)
 
+<CompanyTags companies="Meta, Amazon, Google, LinkedIn, Uber" />
+
 Given words sorted alphabetically in an alien language, return the character order. Return `""` if impossible.
 
 **Example 1** — `words=["wrt","wrf","er","ett","rftt"]` → `"wertf"`
@@ -10,6 +12,12 @@ Given words sorted alphabetically in an alien language, return the character ord
 
 **Constraints** — `1 ≤ words.length ≤ 100`; `1 ≤ words[i].length ≤ 100`; lowercase English.
 
+
+<Hints
+  hint1="Directed graph? Prerequisites? You need topological order."
+  hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
+  hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
+/>
 ---
 
 ## Approach 1 — Trial-and-error permutation
@@ -64,6 +72,10 @@ String alienOrder(String[] words) {
 **Complexity** — Time **O(C)** where C = total characters; Space **O(1)** (bounded alphabet).
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="alien-dictionary" />
 
 ## Complexity summary
 

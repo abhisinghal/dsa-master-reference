@@ -313,62 +313,7 @@ The engine is "one half is always sorted — decide which, then which half to ke
 
 ## Check your understanding
 
-<Quiz patternId="binary-search" :questions='[
-  {
-    "q": "What is the core shape behind most binary-search variants in the chapter?",
-    "choices": [
-      {
-        "text": "A false-to-true predicate boundary",
-        "correct": true,
-        "explanation": "Yes. Sorted arrays are just one way to expose a monotone boundary."
-      },
-      {
-        "text": "A random pivot position"
-      },
-      {
-        "text": "A graph with no cycles"
-      },
-      {
-        "text": "A window with fixed size"
-      }
-    ]
-  },
-  {
-    "q": "In a half-open binary search, which update pair stays consistent?",
-    "choices": [
-      {
-        "text": "hi equals mid, lo equals mid plus one",
-        "correct": true,
-        "explanation": "Correct. That is the standard half-open boundary template."
-      },
-      {
-        "text": "hi equals mid minus one always"
-      },
-      {
-        "text": "lo equals mid always"
-      },
-      {
-        "text": "Swap lo and hi each loop"
-      }
-    ]
-  },
-  {
-    "q": "Why can rotated-array search with many duplicates degrade to O(n)?",
-    "choices": [
-      {
-        "text": "The array is no longer finite"
-      },
-      {
-        "text": "Equal ends hide the sorted half",
-        "correct": true,
-        "explanation": "Exactly. When lo, mid, and hi tie, the algorithm may only shrink one step at a time."
-      },
-      {
-        "text": "midpoint overflow is guaranteed"
-      },
-      {
-        "text": "Duplicates require a heap"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="binary-search"
+  :questions='[{"q": "What is the danger of using `mid = (lo + hi) / 2`?", "choices": [{"text": "Integer overflow when lo + hi > Integer.MAX_VALUE", "correct": true, "explanation": "Use `mid = lo + (hi - lo) / 2` to avoid this."}, {"text": "Off-by-one error", "correct": false}, {"text": "Nothing; it’s always safe", "correct": false}, {"text": "It divides by zero", "correct": false}]}, {"q": "In Rotated Sorted Array search, how do you decide which half is sorted?", "choices": [{"text": "Compare `nums[mid]` with `nums[lo]` (or nums[hi])", "correct": true, "explanation": "If `nums[mid] > nums[lo]`, the left half is sorted; else the right half is."}, {"text": "Always search the left half first", "correct": false}, {"text": "Random guess", "correct": false}, {"text": "Sort the array first", "correct": false, "explanation": "Defeats the log n requirement."}]}, {"q": "For Find Peak Element, which comparison guides the BS?", "choices": [{"text": "`nums[mid] < nums[mid+1]` → climb right; else → left", "correct": true, "explanation": "A climbing side must eventually peak (nums[n] = -∞)."}, {"text": "`nums[mid] < nums[0]`", "correct": false}, {"text": "`nums[mid] > target`", "correct": false}, {"text": "Nothing; use linear scan", "correct": false}]}, {"q": "Half-open BS returns `lo` after the loop. What does `lo` represent?", "choices": [{"text": "The lower_bound: smallest index i with nums[i] ≥ target", "correct": true, "explanation": "Extensible to first-true / first-occurrence variants."}, {"text": "Always the answer", "correct": false, "explanation": "Not for closed-interval BS."}, {"text": "The middle of the array", "correct": false}, {"text": "Nothing; the loop iterates forever", "correct": false}]}, {"q": "When can binary search NOT be applied?", "choices": [{"text": "When there is no monotonic property", "correct": true, "explanation": "BS requires that you can eliminate half the search space each step, which needs monotonicity."}, {"text": "When n is large", "correct": false, "explanation": "BS is BEST for large n."}, {"text": "When elements are integers", "correct": false}, {"text": "When there are duplicates", "correct": false, "explanation": "Duplicates change some variants but not the general applicability."}]}]'
+/>

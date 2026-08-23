@@ -10,6 +10,12 @@ Given `s`, `t`, `maxCost`. Convert `s[i]` → `t[i]` costs `|s[i] - t[i]|`. Retu
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ maxCost ≤ 10⁶`.
 
+
+<Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/>
 ---
 
 ## Approach — Sliding window on the diff array (canonical)
@@ -42,6 +48,10 @@ int equalSubstring(String s, String t, int maxCost) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="get-equal-substrings-within-budget" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Permutations](https://leetcode.com/problems/permutations/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Apple" />
+
 Return all permutations of distinct integers.
 
 **Example 1** — `nums=[1,2,3]` → 6 permutations
@@ -9,6 +11,12 @@ Return all permutations of distinct integers.
 
 **Constraints** — `1 ≤ n ≤ 6`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach 1 — Insert-at-every-position recursion
@@ -59,6 +67,10 @@ void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 Cleaner when duplicates exist — see [Permutations II](/problems/permutations-ii).
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="permutations" />
 
 ## Complexity summary
 

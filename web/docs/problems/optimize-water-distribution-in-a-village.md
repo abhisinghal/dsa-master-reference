@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Optimize Water Distribution in a Village](https://leetcode.com/problems/optimize-water-distribution-in-a-village/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
 
+&lt;CompanyTags companies="Amazon, Google" /&gt;
+
 Given `n` houses, `wells[i]` = cost to dig a well at house `i`, and `pipes[i] = [a, b, cost]` = cost to build a pipe between houses. Provide water to all houses at min cost.
 
 **Example 1** — `n=3, wells=[1,2,2], pipes=[[1,2,1],[2,3,1]]` → `3` (dig at 1: 1; pipes 1-2:1 and 2-3:1)
 
 **Constraints** — `2 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
+  hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
+  hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
+/&gt;
 ---
 
 ## Approach — Add virtual node + MST (canonical)
@@ -53,6 +61,10 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 **Complexity** — Time **O((n + E) log(n + E))**; Space **O(n + E)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="optimize-water-distribution-in-a-village" />
 
 ## Complexity summary
 

@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
+&lt;CompanyTags companies="Meta, Google, Amazon, Bloomberg" /&gt;
+
 Split `nums` into `m` non-empty contiguous subarrays to minimize the largest sum among the subarrays. Return that min largest sum.
 
 **Example** — `nums=[7,2,5,10,8], m=2` → `18`
 
 **Constraints** — `1 ≤ m ≤ n ≤ 1000`; `0 ≤ nums[i] ≤ 10⁶`.
 
+
+&lt;Hints
+  hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
+  hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
+  hint3="The feasibility check is O(n); total complexity is O(n log range)."
+/&gt;
 ---
 
 ## Approach 1 — Interval DP
@@ -55,6 +63,10 @@ int splitArray(int[] nums, int m) {
 />
 
 **Complexity** — Time **O(n log sum)**; Space **O(1)**.
+
+## Try it yourself
+
+<JavaRunner problem-slug="split-array-largest-sum" />
 
 ## Complexity summary
 

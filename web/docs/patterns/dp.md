@@ -1534,63 +1534,7 @@ If answers are wrong, verify in order: (1) does the state capture all future-rel
 
 ## Check your understanding
 
-<Quiz patternId="dp" :questions='[
-  {
-    "q": "What should you design first in a dynamic programming solution?",
-    "choices": [
-      {
-        "text": "The state",
-        "correct": true,
-        "explanation": "Yes. The state must capture all information that can affect future decisions."
-      },
-      {
-        "text": "The final print statement"
-      },
-      {
-        "text": "The random seed"
-      },
-      {
-        "text": "The heap comparator"
-      }
-    ]
-  },
-  {
-    "q": "In 0/1 knapsack with one-dimensional DP, which capacity direction prevents reusing an item?",
-    "choices": [
-      {
-        "text": "Descending capacity",
-        "correct": true,
-        "explanation": "Correct. Going downward reads the previous item layer instead of the value just written."
-      },
-      {
-        "text": "Ascending capacity",
-        "explanation": "Ascending is for unbounded reuse, and would use the same item multiple times."
-      },
-      {
-        "text": "Random capacity order"
-      },
-      {
-        "text": "Only capacity zero"
-      }
-    ]
-  },
-  {
-    "q": "Why should Kadane initialize best from the first element instead of zero?",
-    "choices": [
-      {
-        "text": "To handle all-negative arrays",
-        "correct": true,
-        "explanation": "Right. An all-negative input should return the least negative element, not an empty sum of zero."
-      },
-      {
-        "text": "To sort the subarray"
-      },
-      {
-        "text": "To reduce memory below O(1)"
-      },
-      {
-        "text": "To force positive answers"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="dp"
+  :questions='[{"q": "What are the FOUR components of a DP formulation?", "choices": [{"text": "State, Transition, Base case, Order", "correct": true, "explanation": "Miss any one and the DP doesn’t work."}, {"text": "Array, Loop, If, Return", "correct": false}, {"text": "Sort, Search, Store", "correct": false}, {"text": "Just recursion", "correct": false}]}, {"q": "For 0/1 knapsack DP, why iterate weight DESCENDING?", "choices": [{"text": "To prevent using the same item twice in one iteration", "correct": true, "explanation": "Ascending order would let item[i] extend a state that already included item[i]."}, {"text": "For cache efficiency", "correct": false}, {"text": "To handle negative weights", "correct": false}, {"text": "It doesn’t matter", "correct": false}]}, {"q": "Coin Change II: count unordered combinations. What is the loop order?", "choices": [{"text": "Outer: coins; Inner: amount", "correct": true, "explanation": "Fixes coin usage order → unordered."}, {"text": "Outer: amount; Inner: coins", "correct": false, "explanation": "That counts ordered sequences (Combination Sum IV)."}, {"text": "Random", "correct": false}, {"text": "Nested both", "correct": false}]}, {"q": "For Burst Balloons, why does \"last to burst\" (not \"first\") work?", "choices": [{"text": "The last one’s neighbors are fixed at the sub-range boundaries", "correct": true, "explanation": "This isolates subproblems into independent intervals."}, {"text": "Random", "correct": false}, {"text": "For symmetry", "correct": false}, {"text": "It doesn’t work; must use first", "correct": false, "explanation": "First fails — this is the trick."}]}, {"q": "For Best Time to Buy/Sell Stock IV (k transactions), when does k allow unlimited?", "choices": [{"text": "When k ≥ n/2", "correct": true, "explanation": "You can capture every increasing step → sum of positive diffs."}, {"text": "k = n", "correct": false}, {"text": "k = 1", "correct": false, "explanation": "Then O(n) single-tx algorithm."}, {"text": "Never", "correct": false}]}]'
+/>

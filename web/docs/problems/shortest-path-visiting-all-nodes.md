@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Shortest Path Visiting All Nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+
 Undirected graph. Shortest length path visiting every node (may reuse).
 
 **Constraints** — `1 ≤ n ≤ 12`.
@@ -9,6 +11,12 @@ Undirected graph. Shortest length path visiting every node (may reuse).
 **Example 1** — `graph=[[1,2,3],[0],[0],[0]]` → `4`
 **Example 2** — `graph=[[1],[0,2,4],[1,3,4],[2],[1,2]]` → `4`
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — Bitmask BFS (canonical)
@@ -59,6 +67,10 @@ int shortestPathLength(int[][] graph) {
 **Complexity** — Time **O(n · 2ⁿ · degree)**; Space **O(n · 2ⁿ)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="shortest-path-visiting-all-nodes" />
 
 ## Complexity summary
 

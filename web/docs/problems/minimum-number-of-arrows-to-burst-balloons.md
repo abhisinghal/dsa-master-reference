@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Balloons span `[xstart, xend]`. Arrow at x bursts every balloon whose span contains x. Min arrows.
 
 **Example 1** — `points=[[10,16],[2,8],[1,6],[7,12]]` → `2`
@@ -9,6 +11,12 @@ Balloons span `[xstart, xend]`. Arrow at x bursts every balloon whose span conta
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `-2³¹ ≤ x ≤ 2³¹−1`.
 
+
+&lt;Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/&gt;
 ---
 
 ## Approach — Sort by end + shoot at end of first alive (canonical)
@@ -46,6 +54,10 @@ int findMinArrowShots(int[][] points) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="minimum-number-of-arrows-to-burst-balloons" />
 
 ## Complexity summary
 

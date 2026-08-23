@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 
 **Example 1** — `people=[1,2], limit=3` → `1`
@@ -10,6 +12,12 @@ Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 
 **Constraints** — `1 ≤ n ≤ 5·10⁴`.
 
+
+<Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/>
 ---
 
 ## Approach — Sort + greedy two-pointer (canonical)
@@ -45,6 +53,10 @@ int numRescueBoats(int[] people, int limit) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="boats-to-save-people" />
 
 ## Complexity summary
 

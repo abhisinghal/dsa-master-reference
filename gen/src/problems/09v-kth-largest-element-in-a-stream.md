@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/top-k-heap)
 
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
+
 Design a class `KthLargest`. Constructor takes `k` and an initial array; `add(val)` returns the k-th largest element after inserting `val` into the stream.
 
 **Example 1** —
@@ -16,6 +18,12 @@ kthLargest.add(4);   // returns 8
 
 **Constraints** — `1 ≤ k ≤ 10⁴`; `0 ≤ nums.length ≤ 10⁴`; `-10⁴ ≤ vals ≤ 10⁴`; at most `10⁴` `add` calls.
 
+
+<Hints
+  hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
+  hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."
+  hint3="For ’k closest’ or ’k most frequent’, the heap’s comparator holds the distance/frequency metric."
+/>
 ---
 
 ## Approach 1 — Re-sort on every add
@@ -73,6 +81,10 @@ class KthLargest {
 **Complexity** — Same as heap.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="kth-largest-element-in-a-stream" />
 
 ## Complexity summary
 

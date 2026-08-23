@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Meta, Google, Microsoft, Amazon" /&gt;
+
 Given `s` (uppercase A–Z) and integer `k`, return the length of the longest substring you can make of a single repeated character by replacing at most `k` other characters.
 
 **Example 1** — `s = "ABAB", k = 2` → `4` (replace both `A`s or both `B`s)
@@ -10,6 +12,12 @@ Given `s` (uppercase A–Z) and integer `k`, return the length of the longest su
 
 **Constraints** — `1 ≤ n ≤ 10⁵`, `0 ≤ k ≤ n`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Try every substring
@@ -96,6 +104,10 @@ int characterReplacement(String s, int k) {
 **Why "lazy max" is safe.** The answer we output is never smaller than `best`. If `maxCount` is stale (real max is lower), the window only grows if a **new** character bumps `maxCount` higher — which is real, not stale. Correctness preserved.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="longest-repeating-character-replacement" />
 
 ## Complexity summary
 

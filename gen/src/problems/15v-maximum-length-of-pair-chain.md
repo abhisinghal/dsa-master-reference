@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Maximum Length of Pair Chain](https://leetcode.com/problems/maximum-length-of-pair-chain/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Pair `[a,b]` chains with next `[c,d]` iff `c > b`. Return longest chain length.
 
 **Example 1** — `pairs=[[1,2],[2,3],[3,4]]` → `2`
@@ -9,6 +11,12 @@ Pair `[a,b]` chains with next `[c,d]` iff `c > b`. Return longest chain length.
 
 **Constraints** — `1 ≤ n ≤ 1000`.
 
+
+<Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/>
 ---
 
 ## Approach 1 — DP (LIS-style)
@@ -43,6 +51,10 @@ int findLongestChain(int[][] pairs) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximum-length-of-pair-chain" />
 
 ## Complexity summary
 

@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Robot Room Cleaner](https://leetcode.com/problems/robot-room-cleaner/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Google, Amazon" />
+
 Robot API: `move()`, `turnLeft()`, `turnRight()`, `clean()`. No coordinates. Clean every reachable cell.
 
 **Constraints** — grid unknown; obstacles hidden.
 
 **Example 1** — Room modeled as grid with obstacles; robot at `(row, col)`. Robot cleans every reachable cell.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach — DFS with relative coords + backtrack move (canonical)
@@ -37,6 +45,10 @@ void dfs(Robot r, int x, int y, int d, Set<String> seen) {
 **Complexity** — Time **O(4^(cells))**; each cell has 4 turns + 1 move at most.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="robot-room-cleaner" />
 
 ## Complexity summary
 

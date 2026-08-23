@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
+<CompanyTags companies="Amazon, Google, Meta, Microsoft" />
+
 Given a binary matrix, find the largest rectangle containing only `1`s.
 
 **Example 1** — `mat=[["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]` → `6`
@@ -10,6 +12,12 @@ Given a binary matrix, find the largest rectangle containing only `1`s.
 
 **Constraints** — `1 ≤ m, n ≤ 200`; entries `'0'`/`'1'`.
 
+
+<Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/>
 ---
 
 ## Approach 1 — Every submatrix
@@ -61,6 +69,10 @@ int largestRect(int[] h) {
 **Complexity** — Time **O(m·n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximal-rectangle" />
 
 ## Complexity summary
 

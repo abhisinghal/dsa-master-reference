@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: N-Queens II](https://leetcode.com/problems/n-queens-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
+
 Return **count** of distinct N-Queens solutions.
 
 **Example 1** — `n=4` → `2`
 
 **Constraints** — `1 ≤ n ≤ 9`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach — Bitmask backtracking (canonical)
@@ -35,6 +43,10 @@ void dfs(int n, int row, int cols, int d1, int d2, int[] count) {
 **Complexity** — Time **O(n!)** worst; ~50× faster than column-scan in practice.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="n-queens-ii" />
 
 ## Complexity summary
 

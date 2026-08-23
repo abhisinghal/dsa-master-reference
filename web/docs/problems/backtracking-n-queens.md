@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: N-Queens](https://leetcode.com/problems/n-queens/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple" /&gt;
+
 Place `n` queens on an `n × n` board so no two attack each other. Return all distinct solutions.
 
 **Example** — `n=4` → `2` solutions
 
 **Constraints** — `1 ≤ n ≤ 9`.
 
+
+&lt;Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/&gt;
 ---
 
 ## Approach 1 — Brute force (all n^n placements)
@@ -98,6 +106,10 @@ void solve(int r, int n, int[] queens, boolean[] cols, boolean[] main, boolean[]
 **Complexity** — Time **O(n!)**; Space **O(n)**. Constant-factor faster than Approach 2 because validation is O(1) per cell.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="backtracking-n-queens" />
 
 ## Complexity summary
 

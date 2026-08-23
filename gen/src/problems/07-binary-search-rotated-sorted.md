@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/binary-search)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg, Adobe" />
+
 Given a rotated ascending array `nums` and `target`, return its index or `-1`. Time must be **O(log n)**.
 
 **Example 1** — `nums=[4,5,6,7,0,1,2], target=0` → `4`
@@ -10,6 +12,12 @@ Given a rotated ascending array `nums` and `target`, return its index or `-1`. T
 
 **Constraints** — `1 ≤ n ≤ 5000`; values distinct.
 
+
+<Hints
+  hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
+  hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."
+  hint3="For rotated arrays: one half is always sorted — compare mid with lo (or hi) to detect which side."
+/>
 ---
 
 ## Approach 1 — Brute force (linear scan)
@@ -101,6 +109,10 @@ int search(int[] a, int target) {
 **Complexity** — Time **O(log n)**; Space **O(1)**. Optimal — one pass.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="binary-search-rotated-sorted" />
 
 ## Complexity summary
 

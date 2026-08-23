@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Smallest Range Covering Elements from K Lists](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/k-way-merge)
 
+&lt;CompanyTags companies="Google, Amazon" /&gt;
+
 Given `k` sorted lists of integers, find the smallest range `[a, b]` that contains **at least one element from each list**. If multiple, return the one with smaller `a`; if still tied, smaller `b`.
 
 **Example 1** — `lists = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]` → `[20, 24]` (24-20=4)
@@ -9,6 +11,12 @@ Given `k` sorted lists of integers, find the smallest range `[a, b]` that contai
 
 **Constraints** — `1 ≤ k ≤ 3500`; total elements ≤ 5·10⁴.
 
+
+&lt;Hints
+  hint1="You have k sorted sequences. Which element is globally next?"
+  hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."
+  hint3="For ’smallest range covering k lists’, track max-in-heap; window is [minInHeap, maxSeen]."
+/&gt;
 ---
 
 ## Approach 1 — Merge, sweep with sliding window on tagged list
@@ -70,6 +78,10 @@ int[] smallestRange(List<List<Integer>> lists) {
 **Complexity** — Time **O(N log k)** where N = total elements; Space **O(k)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="smallest-range-covering-elements-from-k-lists" />
 
 ## Complexity summary
 

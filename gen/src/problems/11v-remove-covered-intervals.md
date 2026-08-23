@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Remove Covered Intervals](https://leetcode.com/problems/remove-covered-intervals/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
+<CompanyTags companies="Amazon, Google" />
+
 Count intervals remaining after removing every interval covered by another.
 
 **Example 1** — `intervals=[[1,4],[3,6],[2,8]]` → `2` (only [3,6] is covered by [2,8])
@@ -9,6 +11,12 @@ Count intervals remaining after removing every interval covered by another.
 
 **Constraints** — `1 ≤ intervals.length ≤ 1000`.
 
+
+<Hints
+  hint1="Sort by start (or end, depending on the question)."
+  hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
+  hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
+/>
 ---
 
 ## Approach 1 — All pairs
@@ -44,6 +52,10 @@ int removeCoveredIntervals(int[][] intervals) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="remove-covered-intervals" />
 
 ## Complexity summary
 

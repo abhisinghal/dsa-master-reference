@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: House Robber II](https://leetcode.com/problems/house-robber-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 
 **Example 1** — `nums=[2,3,2]` → `3`
@@ -9,6 +11,12 @@ Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 
 **Constraints** — `1 ≤ n ≤ 100`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — Two linear runs (canonical)
@@ -50,6 +58,10 @@ int linear(int[] nums, int lo, int hi) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="house-robber-ii" />
 
 ## Complexity summary
 

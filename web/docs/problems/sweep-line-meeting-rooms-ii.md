@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sweep-line)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+
 Given meeting intervals `[[start, end)]`, return the minimum number of rooms required.
 
 **Example 1** — `[[0,30],[5,10],[15,20]]` → `2`
@@ -9,6 +11,12 @@ Given meeting intervals `[[start, end)]`, return the minimum number of rooms req
 
 **Constraints** — `1 ≤ n ≤ 10⁴`; `0 ≤ start < end ≤ 10⁶`.
 
+
+&lt;Hints
+  hint1="Turn events into `(time, +1/-1)` pairs. What’s the ’active count’ or ’max concurrent’?"
+  hint2="Sort events by time; break ties consistently (end before start for ’meetings’, or vice versa)."
+  hint3="Sweep; maintain a running count/set. Max active gives room count; drops give free slots."
+/&gt;
 ---
 
 ## Approach 1 — Brute force (per-minute counter)
@@ -100,6 +108,10 @@ int minMeetingRooms(int[][] meetings) {
 **Complexity** — Time **O(n log n)**; Space **O(n)**. No heap, tight and easy to verify.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="sweep-line-meeting-rooms-ii" />
 
 ## Complexity summary
 

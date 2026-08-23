@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/k-way-merge)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Adobe, Uber" /&gt;
+
 Merge `k` sorted linked lists into one sorted list.
 
 **Example** — `[[1,4,5],[1,3,4],[2,6]]` → `[1,1,2,3,4,4,5,6]`
 
 **Constraints** — `k ≤ 10⁴`; total nodes `N ≤ 10⁴`; values `-10⁴..10⁴`.
 
+
+&lt;Hints
+  hint1="You have k sorted sequences. Which element is globally next?"
+  hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."
+  hint3="For ’smallest range covering k lists’, track max-in-heap; window is [minInHeap, maxSeen]."
+/&gt;
 ---
 
 ## Approach 1 — Collect + sort
@@ -122,6 +130,10 @@ ListNode mergeKListsHeap(ListNode[] lists) {
 **Complexity** — Time **O(N log k)**; Space **O(k)**. Same time as D&C, but streaming-friendly and easier to reason about.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="k-way-merge-k-sorted-lists" />
 
 ## Complexity summary
 

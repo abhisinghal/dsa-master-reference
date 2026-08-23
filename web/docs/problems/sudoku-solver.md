@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Sudoku Solver](https://leetcode.com/problems/sudoku-solver/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/backtracking)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" /&gt;
+
 Fill the 9×9 board so every row/col/box contains 1..9.
 
 **Example 1** — Standard Sudoku puzzle.
 
 **Constraints** — 9×9 board, `.` for empty.
 
+
+&lt;Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/&gt;
 ---
 
 ## Approach — Backtracking + constraint bitmasks (canonical)
@@ -52,6 +60,10 @@ Pick cell with **fewest legal digits** each step — typical hard puzzles solve 
 **Complexity** — Worst-case exponential; MRV makes real Sudokus near-instant.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="sudoku-solver" />
 
 ## Complexity summary
 

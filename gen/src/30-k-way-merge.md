@@ -374,62 +374,7 @@ O(k), because the heap stores one current entry per list. The output stream itse
 
 ## Check your understanding
 
-<Quiz patternId="k-way-merge" :questions='[
-  {
-    "q": "You have k sorted linked lists and need one sorted output. What does the heap store?",
-    "choices": [
-      {
-        "text": "Every node from every list"
-      },
-      {
-        "text": "One current head per list",
-        "correct": true,
-        "explanation": "Correct. The heap is the frontier; its minimum is the next global value."
-      },
-      {
-        "text": "Only the longest list"
-      },
-      {
-        "text": "Only duplicate values"
-      }
-    ]
-  },
-  {
-    "q": "After popping a node from one sorted stream, what must happen next?",
-    "choices": [
-      {
-        "text": "Push that same stream next node",
-        "correct": true,
-        "explanation": "Yes. Re-feeding preserves one representative from that stream if more values remain."
-      },
-      {
-        "text": "Push a random stream head"
-      },
-      {
-        "text": "Clear the whole heap"
-      },
-      {
-        "text": "Sort all output again"
-      }
-    ]
-  },
-  {
-    "q": "For Smallest Range Covering K Lists, what invariant must hold before evaluating a range?",
-    "choices": [
-      {
-        "text": "The frontier includes every list",
-        "correct": true,
-        "explanation": "Right. heap minimum to current maximum is meaningful only when each list contributes one value."
-      },
-      {
-        "text": "All lists have equal length"
-      },
-      {
-        "text": "The heap is empty"
-      },
-      {
-        "text": "Only one list remains"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="k-way-merge"
+  :questions='[{"q": "For merging k sorted lists into one, what is the heap-based complexity?", "choices": [{"text": "O(N log k) where N = total elements", "correct": true, "explanation": "Heap holds one head per list; O(log k) per pop."}, {"text": "O(N log N)", "correct": false, "explanation": "Full sort of merged; wastes existing sortedness."}, {"text": "O(k · N)", "correct": false, "explanation": "Naive round-robin merge."}, {"text": "O(N)", "correct": false}]}, {"q": "For Smallest Range Covering k Lists, what does the heap track?", "choices": [{"text": "Current-minimum across all lists (via one pointer per list)", "correct": true, "explanation": "And separately track current-max seen; range = [heapMin, currentMax]."}, {"text": "All possible ranges", "correct": false, "explanation": "Exponential; not needed."}, {"text": "Only the k smallest values", "correct": false, "explanation": "Different problem."}, {"text": "Only the k largest values", "correct": false}]}, {"q": "When does K-way Merge stop for the \"smallest range\" problem?", "choices": [{"text": "When any one list is exhausted", "correct": true, "explanation": "We can no longer cover that list; done."}, {"text": "When the heap is empty", "correct": false, "explanation": "That is total exhaustion."}, {"text": "After N iterations", "correct": false}, {"text": "Never", "correct": false}]}, {"q": "For Ugly Number II, why does the 3-pointer approach beat the min-heap?", "choices": [{"text": "It avoids duplicates and the heap overhead — pure O(n)", "correct": true, "explanation": "Three pointers into the growing ugly[] give exact sequence generation."}, {"text": "It uses less memory", "correct": false, "explanation": "Same memory."}, {"text": "Heap doesn’t work", "correct": false, "explanation": "Heap works too, but slower."}, {"text": "Randomness", "correct": false}]}, {"q": "Merging two sorted linked lists is best done with:", "choices": [{"text": "Two-pointer merge with a dummy head, in-place re-linking", "correct": true, "explanation": "O(m+n) time, O(1) space (nodes reused)."}, {"text": "Copying to array, sorting, rebuilding", "correct": false, "explanation": "Wastes existing sortedness."}, {"text": "Heap-based merge", "correct": false, "explanation": "Overkill for k=2."}, {"text": "Recursion only", "correct": false, "explanation": "Works but O(n) stack."}]}]'
+/>

@@ -10,6 +10,12 @@ Given matrix of zeros `m × n` and operations `[a, b]` that add 1 to every cell 
 
 **Constraints** — `1 ≤ m, n ≤ 4·10⁴`; `0 ≤ ops.length ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/&gt;
 ---
 
 ## Approach 1 — Actually apply operations
@@ -46,6 +52,10 @@ int maxCount(int m, int n, int[][] ops) {
 **Complexity** — Time **O(#ops)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="range-addition-ii" />
 
 ## Complexity summary
 

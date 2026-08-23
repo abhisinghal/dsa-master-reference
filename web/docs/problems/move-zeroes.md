@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Move Zeroes](https://leetcode.com/problems/move-zeroes/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple" /&gt;
+
 Move all zeros to end preserving order of non-zeros. In-place.
 
 **Example 1** — `nums=[0,1,0,3,12]` → `[1,3,12,0,0]`
@@ -9,6 +11,12 @@ Move all zeros to end preserving order of non-zeros. In-place.
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/&gt;
 ---
 
 ## Approach 1 — Two-pass write
@@ -63,6 +71,10 @@ void moveZeroesSwap(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="move-zeroes" />
 
 ## Complexity summary
 

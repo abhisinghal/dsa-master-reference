@@ -736,63 +736,7 @@ Space is O(1) because only two pointers, two running maxima, and the water total
 
 ## Check your understanding
 
-<Quiz patternId="two-pointers" :questions='[
-  {
-    "q": "In sorted two-sum, the current sum is too large. Which pointer move is justified?",
-    "choices": [
-      {
-        "text": "Move lo right"
-      },
-      {
-        "text": "Move hi left",
-        "correct": true,
-        "explanation": "Yes. With a sorted array, lowering the larger endpoint discards an entire impossible column."
-      },
-      {
-        "text": "Move both pointers"
-      },
-      {
-        "text": "Restart from the middle"
-      }
-    ]
-  },
-  {
-    "q": "In Container With Most Water, which wall should move after evaluating an area?",
-    "choices": [
-      {
-        "text": "Always move the taller wall",
-        "explanation": "Moving the taller wall only shrinks width without improving the limiting height."
-      },
-      {
-        "text": "Always move both walls"
-      },
-      {
-        "text": "Move the shorter wall",
-        "correct": true,
-        "explanation": "Right. Only replacing the limiting shorter wall can possibly improve the area."
-      },
-      {
-        "text": "Move a random wall"
-      }
-    ]
-  },
-  {
-    "q": "In Dutch National Flag, after swapping a 2 with high, why should mid not advance immediately?",
-    "choices": [
-      {
-        "text": "The swapped-in value is unexamined",
-        "correct": true,
-        "explanation": "Exactly. The value from high could be 0, 1, or 2 and must be processed at mid."
-      },
-      {
-        "text": "high must move right"
-      },
-      {
-        "text": "The array becomes unsorted"
-      },
-      {
-        "text": "mid should reset to zero"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="two-pointers"
+  :questions='[{"q": "What pre-condition is usually required before applying Two Pointers?", "choices": [{"text": "The array must be sorted (or have a monotone metric)", "correct": true, "explanation": "Movements rely on knowing which side is provably suboptimal."}, {"text": "The array must be a permutation of 1..n", "correct": false}, {"text": "The array must contain only positive integers", "correct": false}, {"text": "The array size must be a power of 2", "correct": false}]}, {"q": "In 3Sum, how do you enforce uniqueness of triplets?", "choices": [{"text": "Use a HashSet of sorted triplets", "correct": false, "explanation": "Works but wasteful."}, {"text": "Skip duplicates at all three levels of pointer movement", "correct": true, "explanation": "Sort + skip at i, l, r ensures each triplet is emitted once."}, {"text": "Emit only the first found triplet", "correct": false}, {"text": "Duplicates are impossible after sorting", "correct": false}]}, {"q": "For Trapping Rain Water, why does the opposing two-pointer work with O(1) extra space?", "choices": [{"text": "The water at pointer p is bounded by the shorter of the two \"walls seen so far\"", "correct": true, "explanation": "Moving the shorter side is safe because the other side’s known max bounds it."}, {"text": "Because heights are integers", "correct": false}, {"text": "Because there is always a global maximum", "correct": false}, {"text": "It doesn’t — you need O(n) leftMax/rightMax arrays", "correct": false, "explanation": "Those work too, but 2p achieves O(1)."}]}, {"q": "What is the complexity of the sort + two-pointer solution for 3Sum?", "choices": [{"text": "O(n)", "correct": false}, {"text": "O(n log n)", "correct": false}, {"text": "O(n²)", "correct": true, "explanation": "Sort is O(n log n), then outer loop × inner two-pointer = O(n²), which dominates."}, {"text": "O(n³)", "correct": false, "explanation": "That is the brute-force triple loop."}]}, {"q": "For Valid Palindrome II (delete ≤ 1 char), what is the two-pointer strategy on mismatch?", "choices": [{"text": "Skip the character with the higher ASCII value", "correct": false}, {"text": "Try skipping left OR skipping right; return true iff either remainder is a palindrome", "correct": true, "explanation": "Two choices at the mismatch; test each; each is O(n) but only tried once."}, {"text": "Give up immediately", "correct": false}, {"text": "Recurse with k-1 deletion budget", "correct": false, "explanation": "That is the k-deletion generalization."}]}]'
+/>

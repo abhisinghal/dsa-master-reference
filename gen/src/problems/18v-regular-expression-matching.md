@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber" />
+
 Match `s` against `p` with `.` (any char) and `*` (0+ of prev char).
 
 **Example 1** — `s="aa", p="a"` → `false`
@@ -10,6 +12,12 @@ Match `s` against `p` with `.` (any char) and `*` (0+ of prev char).
 
 **Constraints** — `1 ≤ |s|, |p| ≤ 20`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — 2D DP (canonical)
@@ -57,6 +65,10 @@ boolean matches(String s, String p, int i, int j) {
 **Complexity** — Time **O(mn)**; Space **O(mn)** (compressible).
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="regular-expression-matching" />
 
 ## Complexity summary
 

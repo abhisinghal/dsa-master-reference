@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Contiguous Array](https://leetcode.com/problems/contiguous-array/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
+&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+
 Given binary array `nums`, return the length of the longest subarray with equal numbers of 0s and 1s.
 
 **Example 1** — `nums = [0,1]` → `2`
@@ -10,6 +12,12 @@ Given binary array `nums`, return the length of the longest subarray with equal 
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `nums[i] ∈ {0,1}`.
 
+
+&lt;Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/&gt;
 ---
 
 ## Approach 1 — Every subarray
@@ -54,6 +62,10 @@ int findMaxLength(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="contiguous-array" />
 
 ## Complexity summary
 

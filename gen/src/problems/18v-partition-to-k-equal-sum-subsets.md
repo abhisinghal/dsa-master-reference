@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Meta, Amazon, Google" />
+
 Split nums into k subsets each summing to `total/k`.
 
 **Example 1** — `nums=[4,3,2,3,5,2,1], k=4` → `true`
@@ -9,6 +11,12 @@ Split nums into k subsets each summing to `total/k`.
 
 **Constraints** — `1 ≤ n ≤ 16`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach 1 — Backtracking with sort-desc + pruning
@@ -55,6 +63,10 @@ boolean canPartitionKSubsets(int[] nums, int k) {
 **Complexity** — Time **O(n · 2ⁿ)**; Space **O(2ⁿ)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="partition-to-k-equal-sum-subsets" />
 
 ## Complexity summary
 

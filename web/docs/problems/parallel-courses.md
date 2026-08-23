@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Parallel Courses](https://leetcode.com/problems/parallel-courses/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Given `n` courses and prerequisites `[a, b]` (must take `a` before `b`), each semester you can take any courses whose prereqs are met. Return the min number of semesters. `-1` if impossible.
 
 **Example 1** — `n=3, prerequisites=[[1,3],[2,3]]` → `2` (sem 1: {1,2}; sem 2: {3})
@@ -9,6 +11,12 @@ Given `n` courses and prerequisites `[a, b]` (must take `a` before `b`), each se
 
 **Constraints** — `1 ≤ n ≤ 5000`.
 
+
+&lt;Hints
+  hint1="Directed graph? Prerequisites? You need topological order."
+  hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
+  hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
+/&gt;
 ---
 
 ## Approach 1 — DFS with recursion depth
@@ -59,6 +67,10 @@ int minimumSemesters(int n, int[][] relations) {
 **Complexity** — Time **O(n + m)**; Space **O(n + m)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="parallel-courses" />
 
 ## Complexity summary
 

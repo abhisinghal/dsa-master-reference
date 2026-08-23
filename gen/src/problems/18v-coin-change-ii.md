@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Coin Change II](https://leetcode.com/problems/coin-change-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Amazon, Google, Meta" />
+
 Count ways to make `amount` from `coins` (unlimited each, **unordered**).
 
 **Example 1** — `amount=5, coins=[1,2,5]` → `4`
@@ -10,6 +12,12 @@ Count ways to make `amount` from `coins` (unlimited each, **unordered**).
 
 **Constraints** — `1 ≤ #coins ≤ 300`; `1 ≤ amount ≤ 5000`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — Unbounded knapsack counting (canonical)
@@ -44,6 +52,10 @@ int change(int amount, int[] coins) {
 **Complexity** — Time **O(amount · |coins|)**; Space **O(amount)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="coin-change-ii" />
 
 ## Complexity summary
 

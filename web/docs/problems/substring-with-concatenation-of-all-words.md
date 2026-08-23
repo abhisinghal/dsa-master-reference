@@ -9,6 +9,12 @@ Find starting indices of substrings that are concatenations of every word in `wo
 
 **Constraints** — `1 ≤ |s| ≤ 10⁴`; each word ≤ 30 chars.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Try every start
@@ -67,6 +73,10 @@ List<Integer> findSubstring(String s, String[] words) {
 **Complexity** — Time **O(n · L)**; Space **O(k · L)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="substring-with-concatenation-of-all-words" />
 
 ## Complexity summary
 

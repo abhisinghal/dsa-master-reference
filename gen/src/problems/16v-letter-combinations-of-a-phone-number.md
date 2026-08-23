@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber, Bloomberg" />
+
 Given digits 2-9, return all letter combinations.
 
 **Example 1** — `digits="23"` → `["ad","ae","af","bd","be","bf","cd","ce","cf"]`
@@ -9,6 +11,12 @@ Given digits 2-9, return all letter combinations.
 
 **Constraints** — `0 ≤ len ≤ 4`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach 1 — DFS enumeration (canonical)
@@ -49,6 +57,10 @@ Extend all combinations by next digit's letters; same complexity, no recursion.
 **Complexity** — Time **O(4ⁿ · n)** worst; Space **O(n)** recursion.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="letter-combinations-of-a-phone-number" />
 
 ## Complexity summary
 

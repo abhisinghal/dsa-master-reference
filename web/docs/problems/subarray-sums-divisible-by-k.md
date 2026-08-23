@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/prefix-sum)
 
+&lt;CompanyTags companies="Google, Amazon" /&gt;
+
 Count subarrays whose sum is divisible by `k`.
 
 **Example 1** — `nums = [4,5,0,-2,-3,1], k = 5` → `7`
@@ -10,6 +12,12 @@ Count subarrays whose sum is divisible by `k`.
 
 **Constraints** — `1 ≤ n ≤ 3·10⁴`; `2 ≤ k ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
+  hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."
+  hint3="For ’≥ 2 length’ or ’divisible by k’ variants, store first occurrence and check remainders."
+/&gt;
 ---
 
 ## Approach 1 — Every subarray
@@ -57,6 +65,10 @@ int subarraysDivByK(int[] nums, int k) {
 **Complexity** — Time **O(n)**; Space **O(k)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="subarray-sums-divisible-by-k" />
 
 ## Complexity summary
 

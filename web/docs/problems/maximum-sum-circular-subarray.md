@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Max subarray sum in a **circular** array.
 
 **Example 1** — `nums=[1,-2,3,-2]` → `3`
@@ -10,6 +12,12 @@ Max subarray sum in a **circular** array.
 
 **Constraints** — `1 ≤ n ≤ 3·10⁴`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — Kadane on both max and min (canonical)
@@ -53,6 +61,10 @@ int maxSubarraySumCircular(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximum-sum-circular-subarray" />
 
 ## Complexity summary
 

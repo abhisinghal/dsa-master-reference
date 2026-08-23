@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Maximum XOR With an Element From Array](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
+&lt;CompanyTags companies="Google, Amazon" /&gt;
+
 Given `nums` and queries `[query_val, max_allowed]`. For each query return the max XOR of `query_val` with any `x ∈ nums` where `x ≤ max_allowed`. Return -1 if no such x.
 
 **Example** — `nums=[0,1,2,3,4], queries=[[3,1],[1,3],[5,6]]` → `[3,3,7]`
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; nums, queries ≤ 10⁵.
 
+
+&lt;Hints
+  hint1="Prefix operations? Word set lookups? Autocomplete?"
+  hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
+  hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
+/&gt;
 ---
 
 ## Approach 1 — Linear per query
@@ -73,6 +81,10 @@ int maxXor(Node root, int v) {
 **Complexity** — Time **O((n + q) · 32 + q log q)**; Space **O(n · 32)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximum-xor-with-an-element-from-array" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Beautiful Arrangement](https://leetcode.com/problems/beautiful-arrangement/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Amazon, Google" />
+
 Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i == 0` OR `i % a[i] == 0`.
 
 **Example 1** — `n=2` → `2`
@@ -9,6 +11,12 @@ Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i =
 
 **Constraints** — `1 ≤ n ≤ 15`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach 1 — Backtracking with used-mask
@@ -54,6 +62,10 @@ int countArrangementBM(int n) {
 **Complexity** — Both **O(n · 2ⁿ)**; DP cleaner for n ≤ 15.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="beautiful-arrangement" />
 
 ## Complexity summary
 

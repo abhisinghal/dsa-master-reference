@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
+<CompanyTags companies="Google, Amazon" />
+
 Count pairs `(i, j)` with `i < j` and `low ≤ nums[i] XOR nums[j] ≤ high`.
 
 **Example 1** — `nums=[1,4,2,7], low=2, high=6` → `6`
@@ -9,6 +11,12 @@ Count pairs `(i, j)` with `i < j` and `low ≤ nums[i] XOR nums[j] ≤ high`.
 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`; `0 ≤ nums[i] ≤ 2·10⁴`.
 
+
+<Hints
+  hint1="Prefix operations? Word set lookups? Autocomplete?"
+  hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
+  hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
+/>
 ---
 
 ## Approach 1 — All pairs
@@ -68,6 +76,10 @@ int queryLE(Node root, int x, int t) {
 **Complexity** — Time **O(n · 16)**; Space **O(n · 16)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="count-pairs-with-xor-in-a-range" />
 
 ## Complexity summary
 

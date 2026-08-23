@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/union-find)
 
+<CompanyTags companies="Google, Amazon" />
+
 Given a graph, classify each edge:
 - **Critical** — removing it makes MST cost strictly larger (or disconnects).
 - **Pseudo-critical** — appears in at least one MST but is not critical.
@@ -10,6 +12,12 @@ Given a graph, classify each edge:
 
 **Constraints** — `2 ≤ n ≤ 100`; `1 ≤ E ≤ min(200, C(n,2))`.
 
+
+<Hints
+  hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
+  hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."
+  hint3="For MST (min-cost connect all): Kruskal sorts edges, unions if disjoint, stops at n−1 edges."
+/>
 ---
 
 ## Approach — Kruskal with per-edge experiments (canonical)
@@ -56,6 +64,10 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 **Complexity** — Time **O(E² · α)**; Space **O(n + E)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />
 
 ## Complexity summary
 

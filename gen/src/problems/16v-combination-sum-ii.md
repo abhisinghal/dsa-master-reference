@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Combination Sum II](https://leetcode.com/problems/combination-sum-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Amazon, Google" />
+
 Combinations summing to target, each candidate used at most once; candidates may repeat.
 
 **Example 1** — `candidates=[10,1,2,7,6,1,5], target=8` → 4 unique combos
 
 **Constraints** — `1 ≤ n ≤ 100`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach — Sort + skip equal-at-same-depth + prune on sum (canonical)
@@ -33,6 +41,10 @@ void dfs(int[] a, int start, int rem, List<Integer> path, List<List<Integer>> ou
 **Complexity** — Time exponential; heavily pruned.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="combination-sum-ii" />
 
 ## Complexity summary
 

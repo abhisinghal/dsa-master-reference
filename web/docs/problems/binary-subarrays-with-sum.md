@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+
 Given a binary array `nums` and integer `goal`, return the number of non-empty contiguous subarrays with sum equal to `goal`.
 
 **Example 1** — `nums = [1,0,1,0,1], goal = 2` → `4` (subarrays: `[1,0,1]`, `[1,0,1,0]`, `[0,1,0,1]`, `[1,0,1]`)
@@ -10,6 +12,12 @@ Given a binary array `nums` and integer `goal`, return the number of non-empty c
 
 **Constraints** — `1 ≤ n ≤ 3 · 10⁴`; `nums[i] ∈ {0, 1}`; `0 ≤ goal ≤ n`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Every subarray
@@ -105,6 +113,10 @@ int atMost(int[] nums, int goal) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="binary-subarrays-with-sum" />
 
 ## Complexity summary
 

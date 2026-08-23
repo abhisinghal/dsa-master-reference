@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Target Sum](https://leetcode.com/problems/target-sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+
 Assign + or − to each `nums[i]`; count ways to reach `target`.
 
 **Example 1** — `nums=[1,1,1,1,1], target=3` → `5`
@@ -9,6 +11,12 @@ Assign + or − to each `nums[i]`; count ways to reach `target`.
 
 **Constraints** — `1 ≤ n ≤ 20`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach 1 — Backtracking
@@ -51,6 +59,10 @@ int findTargetSumWays(int[] nums, int target) {
 **Complexity** — Time **O(n · P)**; Space **O(P)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="target-sum" />
 
 ## Complexity summary
 

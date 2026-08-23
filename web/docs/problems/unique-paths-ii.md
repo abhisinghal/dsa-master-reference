@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+
 Grid with obstacles. Count paths from top-left to bottom-right (right/down).
 
 **Example 1** — `[[0,0,0],[0,1,0],[0,0,0]]` → `2`
@@ -9,6 +11,12 @@ Grid with obstacles. Count paths from top-left to bottom-right (right/down).
 
 **Constraints** — `1 ≤ m, n ≤ 100`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — Grid DP with obstacle guard (canonical)
@@ -48,6 +56,10 @@ int uniquePathsWithObstacles(int[][] grid) {
 **Complexity** — Time **O(mn)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="unique-paths-ii" />
 
 ## Complexity summary
 

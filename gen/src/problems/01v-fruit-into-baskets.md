@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Fruit Into Baskets](https://leetcode.com/problems/fruit-into-baskets/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/sliding-window)
 
+<CompanyTags companies="Google, Meta, Amazon" />
+
 Given an array `fruits` where `fruits[i]` is a type of fruit, and 2 baskets each holding a single fruit type, pick fruits from a contiguous subarray. Return the max number of fruits you can collect.
 
 **Example 1** — `fruits = [1,2,1]` → `3` (all 3, using 2 baskets)
@@ -10,6 +12,12 @@ Given an array `fruits` where `fruits[i]` is a type of fruit, and 2 baskets each
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `fruits[i] ∈ [0, n−1]`.
 
+
+<Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/>
 ---
 
 ## Approach 1 — Try every subarray
@@ -100,6 +108,10 @@ int totalFruitTwoTypes(int[] fruits) {
 **Complexity** — Time **O(n)**; Space **O(1)** — no map at all.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="fruit-into-baskets" />
 
 ## Complexity summary
 

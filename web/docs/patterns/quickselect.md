@@ -315,62 +315,7 @@ O(1) extra because the selection loop partitions in place.
 
 ## Check your understanding
 
-<Quiz patternId="quickselect" :questions='[
-  {
-    "q": "You need the k-th largest value in an unsorted array, not the full order. Which pattern fits?",
-    "choices": [
-      {
-        "text": "Quickselect",
-        "correct": true,
-        "explanation": "Yes. It partitions around pivots and only continues on the side containing the target rank."
-      },
-      {
-        "text": "Topological sort"
-      },
-      {
-        "text": "Sweep line"
-      },
-      {
-        "text": "Prefix sum"
-      }
-    ]
-  },
-  {
-    "q": "After partitioning, why can Quickselect discard one side?",
-    "choices": [
-      {
-        "text": "The pivot final rank is known",
-        "correct": true,
-        "explanation": "Correct. If the target rank is left or right of the pivot, the other side cannot contain it."
-      },
-      {
-        "text": "Both sides are already fully sorted"
-      },
-      {
-        "text": "The array length becomes zero"
-      },
-      {
-        "text": "Duplicates disappear automatically"
-      }
-    ]
-  },
-  {
-    "q": "What makes fixed last-element pivots dangerous on already sorted input?",
-    "choices": [
-      {
-        "text": "They can shrink by only one each time",
-        "correct": true,
-        "explanation": "Right. That creates the O(n squared) worst case; random pivots reduce this risk."
-      },
-      {
-        "text": "They guarantee O(log n) time"
-      },
-      {
-        "text": "They require a trie"
-      },
-      {
-        "text": "They cannot compare integers"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="quickselect"
+  :questions='[{"q": "Average complexity of Quickselect for k-th element?", "choices": [{"text": "O(n)", "correct": true, "explanation": "Each partition eliminates a constant fraction of remaining candidates on average."}, {"text": "O(n log n)", "correct": false, "explanation": "That is full quicksort."}, {"text": "O(log n)", "correct": false}, {"text": "O(k)", "correct": false}]}, {"q": "Worst-case complexity of Quickselect (without randomization)?", "choices": [{"text": "O(n²)", "correct": true, "explanation": "On adversarial inputs / sorted-with-first-pivot."}, {"text": "O(n log n)", "correct": false}, {"text": "O(n)", "correct": false, "explanation": "Only with median-of-medians pivot."}, {"text": "O(log n)", "correct": false}]}, {"q": "For k-th LARGEST via Quickselect, how do you compute the index?", "choices": [{"text": "Look for index n - k in ascending-sorted order", "correct": true, "explanation": "k-th largest = element at position n-k when sorted ascending."}, {"text": "Look for index k", "correct": false, "explanation": "That is k-th smallest."}, {"text": "Random", "correct": false}, {"text": "Nothing; use max-heap", "correct": false, "explanation": "Works but heavier."}]}, {"q": "What is Wiggle Sort II’s O(n) trick using Quickselect?", "choices": [{"text": "Quickselect median, then Dutch flag partition using virtual index mapping", "correct": true, "explanation": "Virtual index `(2i+1) % (n|1)` interleaves ranks correctly."}, {"text": "Just sort", "correct": false, "explanation": "That is O(n log n)."}, {"text": "Random shuffle", "correct": false}, {"text": "BFS", "correct": false}]}, {"q": "What guarantees Quickselect terminates?", "choices": [{"text": "The partition strictly reduces the search size by at least 1 each step", "correct": true, "explanation": "The pivot itself is placed correctly and excluded."}, {"text": "Random luck", "correct": false}, {"text": "Recursion depth bound", "correct": false}, {"text": "Sorted input", "correct": false}]}]'
+/>

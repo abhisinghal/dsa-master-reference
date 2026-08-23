@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Combination Sum III](https://leetcode.com/problems/combination-sum-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/backtracking)
 
+<CompanyTags companies="Meta, Amazon, Google" />
+
 `k` distinct digits from 1..9 summing to `n`.
 
 **Example 1** — `k=3, n=7` → `[[1,2,4]]`
@@ -9,6 +11,12 @@
 
 **Constraints** — `2 ≤ k ≤ 9`; `1 ≤ n ≤ 60`.
 
+
+<Hints
+  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
+  hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
+/>
 ---
 
 ## Approach — Backtracking with pruning (canonical)
@@ -34,6 +42,10 @@ void dfs(int start, int k, int rem, List<Integer> path, List<List<Integer>> out)
 **Complexity** — Time **O(C(9, k) · k)**; Space **O(k)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="combination-sum-iii" />
 
 ## Complexity summary
 

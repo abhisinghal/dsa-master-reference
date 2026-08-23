@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
+<CompanyTags companies="Amazon, Google, Microsoft, Meta, Adobe" />
+
 Given bar heights, return the largest rectangle contained.
 
 **Example 1** — `heights=[2,1,5,6,2,3]` → `10`
@@ -9,6 +11,12 @@ Given bar heights, return the largest rectangle contained.
 
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
+
+<Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/>
 ---
 
 ## Approach 1 — For each bar expand outward
@@ -53,6 +61,10 @@ int largestRectangleArea(int[] h) {
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="largest-rectangle-in-histogram" />
 
 ## Complexity summary
 

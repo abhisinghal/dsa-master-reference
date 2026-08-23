@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: The Skyline Problem](https://leetcode.com/problems/the-skyline-problem/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sweep-line)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+
 Given buildings `[left, right, height]`, return the skyline as key points `[x, y]` where the height changes.
 
 **Example 1** — `[[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]` → `[[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24,0]]`
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Turn events into `(time, +1/-1)` pairs. What’s the ’active count’ or ’max concurrent’?"
+  hint2="Sort events by time; break ties consistently (end before start for ’meetings’, or vice versa)."
+  hint3="Sweep; maintain a running count/set. Max active gives room count; drops give free slots."
+/&gt;
 ---
 
 ## Approach 1 — Every x
@@ -64,6 +72,10 @@ List<List<Integer>> getSkyline(int[][] buildings) {
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="the-skyline-problem" />
 
 ## Complexity summary
 

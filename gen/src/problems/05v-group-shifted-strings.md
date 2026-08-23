@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Group Shifted Strings](https://leetcode.com/problems/group-shifted-strings/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
+<CompanyTags companies="Meta, Google, Uber" />
+
 Group strings that are cyclic shifts of each other.
 
 **Example 1** — `strings=["abc","bcd","acef","xyz","az","ba","a","z"]` → `[["abc","bcd","xyz"],["acef"],["az","ba"],["a","z"]]`
 
 **Constraints** — `1 ≤ #strings ≤ 200`.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach — Canonical key = diff pattern (canonical)
@@ -46,6 +54,10 @@ List<List<String>> groupStrings(String[] strings) {
 **Complexity** — Time **O(Σ length)**; Space **O(Σ length)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="group-shifted-strings" />
 
 ## Complexity summary
 

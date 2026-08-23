@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/two-pointers)
 
+&lt;CompanyTags companies="Meta, Google, Amazon, Microsoft, Apple, Bloomberg, Uber" /&gt;
+
 Given `n` non-negative integers representing an elevation map, compute how much water it traps after raining.
 
 **Example 1** — `height=[0,1,0,2,1,0,1,3,2,1,2,1]` → `6`
@@ -9,6 +11,12 @@ Given `n` non-negative integers representing an elevation map, compute how much 
 
 **Constraints** — `1 ≤ n ≤ 2·10⁴`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Precompute leftMax, rightMax
@@ -60,6 +68,10 @@ Push indices while heights decrease; on rise, pop the "bottom" and compute water
 **Complexity** — Time **O(n)**; Space **O(1)** for 2p, **O(n)** for arrays/stack.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="trapping-rain-water" />
 
 ## Complexity summary
 

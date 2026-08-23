@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Maximum Genetic Difference Query](https://leetcode.com/problems/maximum-genetic-difference-query/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/trie-pattern)
 
+<CompanyTags companies="Google, Amazon" />
+
 Given a rooted tree of gene values `parents[]` and queries `[node, val]`, for each query return `max XOR(val, x)` over `x` in any ancestor of `node` (including `node` itself).
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; queries ≤ 3·10⁴.
 
 **Example 1** — `parents=[-1,0,1,1], queries=[[0,2],[3,2],[2,5]]` → `[2,3,7]`
 
+
+<Hints
+  hint1="Prefix operations? Word set lookups? Autocomplete?"
+  hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."
+  hint3="For XOR max: binary trie of 32-bit values; walk greedily choosing the opposite bit."
+/>
 ---
 
 ## Approach — Offline DFS + binary trie with subtree insert/erase (canonical)
@@ -71,6 +79,10 @@ int queryMax(Node root, int v) {
 **Complexity** — Time **O((n + q) · 18)**; Space **O(n · 18)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximum-genetic-difference-query" />
 
 ## Complexity summary
 

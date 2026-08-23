@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bs-on-answer)
 
+&lt;CompanyTags companies="Google, Amazon, Meta" /&gt;
+
 Koko has `n` piles of bananas, `piles[i]` in each. She can eat at speed `k` bananas/hour. Each hour she picks one pile; if it has ≥ `k` bananas she eats `k`, otherwise she eats the whole pile (and rests the remainder of that hour). She must finish all piles in `h` hours. Return the minimum `k`.
 
 **Example 1** — `piles=[3,6,7,11], h=8` → `4`
@@ -10,6 +12,12 @@ Koko has `n` piles of bananas, `piles[i]` in each. She can eat at speed `k` bana
 
 **Constraints** — `1 ≤ n ≤ 10⁴`; `1 ≤ piles[i] ≤ 10⁹`; `n ≤ h ≤ 10⁹`.
 
+
+&lt;Hints
+  hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
+  hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
+  hint3="The feasibility check is O(n); total complexity is O(n log range)."
+/&gt;
 ---
 
 ## Approach 1 — Brute force (try every speed)
@@ -81,6 +89,10 @@ private boolean feasible(int[] piles, int k, int h) {
 **Complexity** — Time **O(n log max)**; Space **O(1)**. Optimal.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="bs-on-answer-koko-bananas" />
 
 ## Complexity summary
 

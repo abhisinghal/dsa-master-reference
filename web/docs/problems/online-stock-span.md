@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Online Stock Span](https://leetcode.com/problems/online-stock-span/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/monotonic-stack)
 
+&lt;CompanyTags companies="Amazon, Google" /&gt;
+
 Design `StockSpanner`. Method `next(price)` returns the span of the current day — the max number of consecutive days (going back and including today) where the price was **less than or equal to** today's.
 
 **Example 1** —
@@ -22,6 +24,12 @@ S.next(85);    // 6
 
 **Constraints** — `1 ≤ price ≤ 10⁵`; up to `10⁴` calls.
 
+
+&lt;Hints
+  hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
+  hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
+  hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
+/&gt;
 ---
 
 ## Approach 1 — Store all prices, scan on each `next`
@@ -71,6 +79,10 @@ class StockSpanner {
 **Complexity** — Amortized **O(1)** per `next`; Space **O(n)** worst.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="online-stock-span" />
 
 ## Complexity summary
 

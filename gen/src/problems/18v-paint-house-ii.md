@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Paint House II](https://leetcode.com/problems/paint-house-ii/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="LinkedIn, Facebook, Meta, Google" />
+
 `n` houses, `k` colors. cost to paint. No two adjacent same color. Min total.
 
 **Constraints** — `1 ≤ n·k ≤ 5000`.
@@ -9,6 +11,12 @@
 **Example 1** — `costs=[[1,5,3],[2,9,4]]` → `5`
 **Example 2** — `costs=[[1,3],[2,4]]` → `5`
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach 1 — O(n · k²) DP
@@ -50,6 +58,10 @@ int minCostII(int[][] costs) {
 **Complexity** — Time **O(n · k)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="paint-house-ii" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/top-k-heap)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Uber, Bloomberg, LinkedIn" /&gt;
+
 Given `points[][2]` and integer `k`, return the `k` points closest to origin `(0, 0)` (Euclidean).
 
 **Example 1** — `points = [[1,3],[-2,2]], k = 1` → `[[-2,2]]`
@@ -10,6 +12,12 @@ Given `points[][2]` and integer `k`, return the `k` points closest to origin `(0
 
 **Constraints** — `1 ≤ k ≤ n ≤ 10⁴`; `-10⁴ ≤ x, y ≤ 10⁴`. Any order accepted.
 
+
+&lt;Hints
+  hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
+  hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."
+  hint3="For ’k closest’ or ’k most frequent’, the heap’s comparator holds the distance/frequency metric."
+/&gt;
 ---
 
 ## Approach 1 — Sort by distance
@@ -105,6 +113,10 @@ void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
 **Complexity** — Time **O(n)** average; **O(n²)** worst; Space **O(1)** in place (recursion O(log n) avg).
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="k-closest-points-to-origin" />
 
 ## Complexity summary
 

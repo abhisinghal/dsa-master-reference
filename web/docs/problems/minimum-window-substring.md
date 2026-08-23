@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/sliding-window)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Uber" /&gt;
+
 Given strings `s` and `t`, return the smallest substring of `s` that contains every character of `t` (with multiplicity). Return `""` if impossible.
 
 **Example 1** — `s = "ADOBECODEBANC", t = "ABC"` → `"BANC"`
@@ -10,6 +12,12 @@ Given strings `s` and `t`, return the smallest substring of `s` that contains ev
 
 **Constraints** — `1 ≤ m, n ≤ 10⁵`. Uppercase + lowercase ASCII.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Enumerate every substring
@@ -105,6 +113,10 @@ String minWindow(String s, String t) {
 **Complexity** — Time **O(n + m)** — each char enters and leaves the window at most once; Space **O(σ)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="minimum-window-substring" />
 
 ## Complexity summary
 

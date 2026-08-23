@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Valid Anagram](https://leetcode.com/problems/valid-anagram/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/hashing)
 
+<CompanyTags companies="Meta, Amazon, Google, Bloomberg" />
+
 Given two strings `s` and `t`, return `true` iff `t` is an anagram of `s`.
 
 **Example 1** — `s = "anagram", t = "nagaram"` → `true`
@@ -10,6 +12,12 @@ Given two strings `s` and `t`, return `true` iff `t` is an anagram of `s`.
 
 **Constraints** — `1 ≤ n ≤ 5 · 10⁴`. Lowercase English.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach 1 — Sort both and compare
@@ -81,6 +89,10 @@ boolean isAnagramUnicode(String s, String t) {
 **Complexity** — Time **O(n)**; Space **O(σ)** where σ ≤ n.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="valid-anagram" />
 
 ## Complexity summary
 

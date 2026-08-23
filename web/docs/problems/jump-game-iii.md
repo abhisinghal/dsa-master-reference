@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Jump Game III](https://leetcode.com/problems/jump-game-iii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/bfs)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 From index `start`, you may jump `i ± arr[i]`. Return true iff you can reach any zero.
 
 **Example 1** — `arr=[4,2,3,0,3,1,2], start=5` → `true`
@@ -10,6 +12,12 @@ From index `start`, you may jump `i ± arr[i]`. Return true iff you can reach an
 
 **Constraints** — `1 ≤ n ≤ 5·10⁴`; `0 ≤ arr[i] < n`.
 
+
+&lt;Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/&gt;
 ---
 
 ## Approach 1 — DFS/BFS on implicit graph (canonical)
@@ -50,6 +58,10 @@ boolean canReach(int[] arr, int start) {
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="jump-game-iii" />
 
 ## Complexity summary
 

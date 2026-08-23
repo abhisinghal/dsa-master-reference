@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Power of Two](https://leetcode.com/problems/power-of-two/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
+
 Return true iff `n` is a positive power of two.
 
 **Example 1** — `n=1` → `true` (2⁰)
@@ -10,6 +12,12 @@ Return true iff `n` is a positive power of two.
 
 **Constraints** — `-2³¹ ≤ n ≤ 2³¹−1`.
 
+
+<Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/>
 ---
 
 ## Approach 1 — Divide by 2
@@ -31,6 +39,10 @@ boolean isPowerOfTwo(int n) {
 **Complexity** — Time **O(1)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="power-of-two" />
 
 ## Complexity summary
 

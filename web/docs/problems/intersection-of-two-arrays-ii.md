@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Uber" /&gt;
+
 Return the multi-set intersection (each element appears `min(cnt_a, cnt_b)` times).
 
 **Example 1** — `nums1=[1,2,2,1], nums2=[2,2]` → `[2,2]`
@@ -9,6 +11,12 @@ Return the multi-set intersection (each element appears `min(cnt_a, cnt_b)` time
 
 **Constraints** — `1 ≤ n, m ≤ 1000`.
 
+
+&lt;Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/&gt;
 ---
 
 ## Approach 1 — Hash-map count
@@ -52,6 +60,10 @@ int[] intersect(int[] nums1, int[] nums2) {
 **Complexity** — Time **O((n+m) log(n+m))**; Space **O(1)** extra.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="intersection-of-two-arrays-ii" />
 
 ## Complexity summary
 

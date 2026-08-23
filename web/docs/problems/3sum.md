@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: 3Sum](https://leetcode.com/problems/3sum/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" /&gt;
+
 Given an integer array `nums`, return all **unique** triplets `[nums[i], nums[j], nums[k]]` with `i < j < k` and `nums[i] + nums[j] + nums[k] == 0`.
 
 **Example 1** — `nums = [-1,0,1,2,-1,-4]` → `[[-1,-1,2], [-1,0,1]]`
@@ -10,6 +12,12 @@ Given an integer array `nums`, return all **unique** triplets `[nums[i], nums[j]
 
 **Constraints** — `3 ≤ n ≤ 3000`; `-10⁵ ≤ nums[i] ≤ 10⁵`.
 
+
+&lt;Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/&gt;
 ---
 
 ## Approach 1 — Triple nested loop + set for dedup
@@ -121,6 +129,10 @@ List<List<Integer>> threeSum(int[] nums) {
 **Complexity** — Time **O(n²)** — outer O(n) × inner O(n); Space **O(1)** extra (not counting output).
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="3sum" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Missing Number](https://leetcode.com/problems/missing-number/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/bit-manip)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" />
+
 Given `nums` containing `n` distinct integers in `[0, n]`, return the missing one.
 
 **Example 1** — `nums=[3,0,1]` → `2`
@@ -10,6 +12,12 @@ Given `nums` containing `n` distinct integers in `[0, n]`, return the missing on
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+<Hints
+  hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
+  hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."
+  hint3="For ’find the unique/missing’: XOR the whole array with 0..n; pairs cancel, missing survives."
+/>
 ---
 
 ## Approach 1 — Sort, find gap
@@ -51,6 +59,10 @@ int missingNumber(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="missing-number" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Coin Change](https://leetcode.com/problems/coin-change/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg, Uber" />
+
 Given `coins` (unbounded supply of each) and `amount`, return the **minimum** number of coins that sum to `amount`, or `-1` if impossible.
 
 **Example 1** — `coins=[1,2,5], amount=11` → `3` (`5+5+1`)
@@ -10,6 +12,12 @@ Given `coins` (unbounded supply of each) and `amount`, return the **minimum** nu
 
 **Constraints** — `1 ≤ #coins ≤ 12`; `0 ≤ amount ≤ 10⁴`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach 1 — Brute force recursion
@@ -100,6 +108,10 @@ int coinChange(int[] coins, int amount) {
 **Complexity** — Time **O(amount · k)**; Space **O(amount)**. Optimal.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="coin-change" />
 
 ## Complexity summary
 

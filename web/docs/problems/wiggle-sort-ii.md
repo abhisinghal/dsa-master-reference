@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Wiggle Sort II](https://leetcode.com/problems/wiggle-sort-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
+&lt;CompanyTags companies="Google, Amazon" /&gt;
+
 Reorder `nums` so `a[0] < a[1] > a[2] < a[3] …` (strict inequality).
 
 **Example 1** — `nums=[1,5,1,1,6,4]` → `[1,6,1,5,1,4]` (or any valid arrangement)
@@ -9,6 +11,12 @@ Reorder `nums` so `a[0] < a[1] > a[2] < a[3] …` (strict inequality).
 
 **Constraints** — `1 ≤ n ≤ 5·10⁴`.
 
+
+&lt;Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/&gt;
 ---
 
 ## Approach 1 — Sort + interleave (canonical simple)
@@ -52,6 +60,10 @@ void wiggleSort(int[] nums) {
 Code is subtle — study the classic writeup before an interview.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="wiggle-sort-ii" />
 
 ## Complexity summary
 

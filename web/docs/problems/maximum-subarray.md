@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, LinkedIn, Bloomberg, Apple" /&gt;
+
 Max sum of a contiguous non-empty subarray.
 
 **Example 1** — `nums=[-2,1,-3,4,-1,2,1,-5,4]` → `6` (`[4,-1,2,1]`)
@@ -10,6 +12,12 @@ Max sum of a contiguous non-empty subarray.
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `-10⁴ ≤ nums[i] ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/&gt;
 ---
 
 ## Approach 1 — All subarrays
@@ -54,6 +62,10 @@ int maxSubArray(int[] nums) {
 `max(left, right, crossing)`. **O(n log n)**. Interview curiosity.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximum-subarray" />
 
 ## Complexity summary
 

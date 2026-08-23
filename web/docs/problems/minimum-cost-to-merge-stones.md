@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Minimum Cost to Merge Stones](https://leetcode.com/problems/minimum-cost-to-merge-stones/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Google, Amazon" /&gt;
+
 Merge exactly k consecutive piles at a time; cost = sum. Min total to merge all into one. `-1` if impossible.
 
 **Example 1** — `stones=[3,2,4,1], k=2` → `20`
 
 **Constraints** — `1 ≤ n ≤ 30`; `2 ≤ k ≤ 30`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — Interval DP with residue trick (canonical)
@@ -52,6 +60,10 @@ int mergeStones(int[] stones, int k) {
 **Complexity** — Time **O(n³ / k)**; Space **O(n²)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="minimum-cost-to-merge-stones" />
 
 ## Complexity summary
 

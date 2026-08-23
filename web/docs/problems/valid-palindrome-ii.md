@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Valid Palindrome II](https://leetcode.com/problems/valid-palindrome-ii/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/two-pointers)
 
+&lt;CompanyTags companies="Meta, Amazon, Google" /&gt;
+
 Given a string `s`, return `true` if it can become a palindrome by deleting **at most one** character.
 
 **Example 1** — `s = "aba"` → `true`
@@ -10,6 +12,12 @@ Given a string `s`, return `true` if it can become a palindrome by deleting **at
 
 **Constraints** — `1 ≤ n ≤ 10⁵`. Lowercase ASCII.
 
+
+&lt;Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/&gt;
 ---
 
 ## Approach 1 — Try deleting each position
@@ -98,6 +106,10 @@ boolean validPalindromeK(String s, int k) {
 **Complexity** — Time **O(n²)** via LPS DP; Space **O(n²)** or O(n) with roll-down. Overkill for `k = 1`.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="valid-palindrome-ii" />
 
 ## Complexity summary
 

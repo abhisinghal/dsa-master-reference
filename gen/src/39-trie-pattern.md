@@ -371,62 +371,7 @@ O(n·32) trie nodes in the worst case.
 
 ## Check your understanding
 
-<Quiz patternId="trie-pattern" :questions='[
-  {
-    "q": "Many query words share prefixes, and repeated prefix checks dominate. Which structure helps?",
-    "choices": [
-      {
-        "text": "Trie",
-        "correct": true,
-        "explanation": "Yes. Shared prefixes become shared paths, reducing repeated work."
-      },
-      {
-        "text": "Union-Find"
-      },
-      {
-        "text": "Merge intervals"
-      },
-      {
-        "text": "Quickselect"
-      }
-    ]
-  },
-  {
-    "q": "In Word Search II, why clear the word stored at a trie leaf after finding it?",
-    "choices": [
-      {
-        "text": "To avoid duplicate results",
-        "correct": true,
-        "explanation": "Correct. Multiple board paths can reach the same leaf, but the word should be reported once."
-      },
-      {
-        "text": "To rebalance the trie"
-      },
-      {
-        "text": "To shorten every prefix"
-      },
-      {
-        "text": "To make DFS iterative"
-      }
-    ]
-  },
-  {
-    "q": "For maximum XOR in a binary trie, which bit branch do you prefer first?",
-    "choices": [
-      {
-        "text": "The same bit"
-      },
-      {
-        "text": "The opposite bit",
-        "correct": true,
-        "explanation": "Right. XOR gets a 1 where bits differ, so opposite bits maximize high-value positions."
-      },
-      {
-        "text": "The smaller subtree"
-      },
-      {
-        "text": "The leaf with zero depth"
-      }
-    ]
-  }
-]' />
+<Quiz
+  pattern-id="trie"
+  :questions='[{"q": "What is the space complexity of a trie storing N words of avg length L over alphabet σ?", "choices": [{"text": "O(N · L · σ) worst case", "correct": true, "explanation": "Each node has ≤ σ child pointers; N·L nodes total."}, {"text": "O(N)", "correct": false}, {"text": "O(L)", "correct": false}, {"text": "O(σ)", "correct": false}]}, {"q": "Search in a trie for a word of length L costs:", "choices": [{"text": "O(L)", "correct": true, "explanation": "One step per character, regardless of N."}, {"text": "O(N)", "correct": false}, {"text": "O(N · L)", "correct": false}, {"text": "O(σ · L)", "correct": false, "explanation": "Only if scanning all children each step."}]}, {"q": "For Word Search II, why is Trie + DFS faster than DFS-per-word?", "choices": [{"text": "Shared prefix traversal — each grid cell visits the trie at most O(σ) times", "correct": true, "explanation": "Grid DFS + trie fusion avoids repeated prefix work."}, {"text": "Sorting", "correct": false}, {"text": "Randomization", "correct": false}, {"text": "Not faster", "correct": false}]}, {"q": "For Stream of Characters (last-suffix match), what modification to the standard trie?", "choices": [{"text": "Insert each dictionary word REVERSED", "correct": true, "explanation": "Then walk backward through the stream — matches end at the newest char."}, {"text": "Store hash of suffixes", "correct": false}, {"text": "Use two tries", "correct": false}, {"text": "Never possible in O(L)", "correct": false}]}, {"q": "For Maximum XOR Between Numbers, what tree do you build?", "choices": [{"text": "Binary trie of the numbers (bit-by-bit)", "correct": true, "explanation": "Walk from MSB, greedily choosing the opposite bit."}, {"text": "BST", "correct": false}, {"text": "Character trie", "correct": false}, {"text": "Heap", "correct": false}]}]'
+/>

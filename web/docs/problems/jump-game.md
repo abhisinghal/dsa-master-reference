@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Jump Game](https://leetcode.com/problems/jump-game/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+
 `nums[i]` = max jump length from `i`. Return `true` iff we can reach the last index starting from index 0.
 
 **Example 1** — `nums=[2,3,1,1,4]` → `true`
@@ -10,6 +12,12 @@
 
 **Constraints** — `1 ≤ n ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/&gt;
 ---
 
 ## Approach 1 — DP `reachable[i]`
@@ -51,6 +59,10 @@ boolean canJump(int[] nums) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="jump-game" />
 
 ## Complexity summary
 

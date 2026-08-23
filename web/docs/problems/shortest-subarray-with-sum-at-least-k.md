@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Shortest Subarray with Sum at Least K](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/monotonic-stack)
 
+&lt;CompanyTags companies="Amazon, Google" /&gt;
+
 Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 
 **Example 1** — `nums=[1], k=1` → `1`
@@ -10,6 +12,12 @@ Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 
 **Constraints** — `1 ≤ n ≤ 10⁵`; `-10⁵ ≤ nums[i] ≤ 10⁵`.
 
+
+&lt;Hints
+  hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
+/&gt;
 ---
 
 ## Approach 1 — Sliding window fails
@@ -60,6 +68,10 @@ int shortestSubarray(int[] nums, int k) {
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="shortest-subarray-with-sum-at-least-k" />
 
 ## Complexity summary
 

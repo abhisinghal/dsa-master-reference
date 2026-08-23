@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/bs-on-answer)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Adobe, Apple" /&gt;
+
 Given two sorted arrays, return the median in **O(log(min(m,n)))**.
 
 **Example** — `A=[1,3], B=[2]` → `2.0`
 
 **Constraints** — `0 ≤ n, m ≤ 1000`; total ≥ 1.
 
+
+&lt;Hints
+  hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
+  hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."
+  hint3="The feasibility check is O(n); total complexity is O(n log range)."
+/&gt;
 ---
 
 ## Approach 1 — Merge sort halves
@@ -60,6 +68,10 @@ double findMedianSortedArrays(int[] A, int[] B) {
 />
 
 **Complexity** — Time **O(log(min(m, n)))**; Space **O(1)**.
+
+## Try it yourself
+
+<JavaRunner problem-slug="median-of-two-sorted-arrays" />
 
 ## Complexity summary
 

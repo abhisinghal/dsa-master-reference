@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/hashing)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft" />
+
 Given an unsorted integer array `nums`, return the length of the longest **consecutive** elements sequence. Must run in **O(n)** time.
 
 **Example 1** — `nums = [100,4,200,1,3,2]` → `4` (`[1,2,3,4]`)
@@ -10,6 +12,12 @@ Given an unsorted integer array `nums`, return the length of the longest **conse
 
 **Constraints** — `0 ≤ n ≤ 10⁵`; `-10⁹ ≤ nums[i] ≤ 10⁹`.
 
+
+<Hints
+  hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
+  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+/>
 ---
 
 ## Approach 1 — Sort, then walk
@@ -100,6 +108,10 @@ void union(Map<Integer,Integer> p, Map<Integer,Integer> r, int a, int b) {
 **Complexity** — Time **O(n · α(n))**; Space **O(n)**. Handy for streaming inputs where "add" operations must extend runs.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="longest-consecutive-sequence" />
 
 ## Complexity summary
 

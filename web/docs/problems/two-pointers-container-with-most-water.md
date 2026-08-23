@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Container With Most Water](https://leetcode.com/problems/container-with-most-water/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/two-pointers)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Bloomberg" /&gt;
+
 Given `n` non-negative integer heights, find two vertical lines that form a container holding the maximum amount of water. Water volume = `min(h[i], h[j]) × (j − i)`.
 
 **Example 1** — `heights = [1,8,6,2,5,4,8,3,7]` → `49` (indices 1 and 8: `min(8,7)*7`)
 **Example 2** — `heights = [1,1]` → `1`
 **Constraints** — `2 ≤ n ≤ 10⁵`, `0 ≤ h[i] ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
+  hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
+/&gt;
 ---
 
 ## Approach 1 — Brute force (all pairs)
@@ -86,6 +94,10 @@ int maxArea(int[] h) {
 **Trap.** Advancing the taller wall is provably wrong because the container's limiting dimension is the shorter wall — you'd shrink width without any chance of the height going up.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="two-pointers-container-with-most-water" />
 
 ## Complexity summary
 

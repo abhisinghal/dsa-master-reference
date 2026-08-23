@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/greedy)
 
+&lt;CompanyTags companies="Amazon, Google, Meta" /&gt;
+
 Min intervals to remove so the rest are non-overlapping.
 
 **Example 1** — `intervals=[[1,2],[2,3],[3,4],[1,3]]` → `1`
@@ -10,6 +12,12 @@ Min intervals to remove so the rest are non-overlapping.
 
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
+
+&lt;Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/&gt;
 ---
 
 ## Approach — Sort by end + activity selection (canonical)
@@ -44,6 +52,10 @@ int eraseOverlapIntervals(int[][] intervals) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="non-overlapping-intervals" />
 
 ## Complexity summary
 

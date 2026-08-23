@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Maximal Square](https://leetcode.com/problems/maximal-square/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/dp)
 
+&lt;CompanyTags companies="Amazon, Google, Meta, Uber" /&gt;
+
 Largest square of `1`s in binary matrix. Return area.
 
 **Example 1** — Standard binary matrix → `4`
 
 **Constraints** — `1 ≤ m, n ≤ 300`.
 
+
+&lt;Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/&gt;
 ---
 
 ## Approach — DP `side[i][j]` = largest square ending at (i, j) (canonical)
@@ -41,6 +49,10 @@ int maximalSquare(char[][] mat) {
 **Complexity** — Time **O(mn)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="maximal-square" />
 
 ## Complexity summary
 

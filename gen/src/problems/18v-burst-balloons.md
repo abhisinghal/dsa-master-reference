@@ -2,12 +2,20 @@
 
 *[↗ LeetCode: Burst Balloons](https://leetcode.com/problems/burst-balloons/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Google, Amazon, Meta" />
+
 Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r are alive neighbors. Max coins.
 
 **Example 1** — `nums=[3,1,5,8]` → `167`
 
 **Constraints** — `1 ≤ n ≤ 300`.
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — Interval DP with "last to burst" trick (canonical)
@@ -48,6 +56,10 @@ int maxCoins(int[] nums) {
 **Complexity** — Time **O(n³)**; Space **O(n²)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="burst-balloons" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Meeting Rooms](https://leetcode.com/problems/meeting-rooms/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/merge-intervals)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Bloomberg" /&gt;
+
 Given meeting time intervals, return `true` iff a person can attend all.
 
 **Example 1** — `intervals=[[0,30],[5,10],[15,20]]` → `false`
@@ -10,6 +12,12 @@ Given meeting time intervals, return `true` iff a person can attend all.
 
 **Constraints** — `0 ≤ intervals.length ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Sort by start (or end, depending on the question)."
+  hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
+  hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
+/&gt;
 ---
 
 ## Approach 1 — Every pair
@@ -46,6 +54,10 @@ boolean canAttendMeetings(int[][] intervals) {
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="meeting-rooms" />
 
 ## Complexity summary
 

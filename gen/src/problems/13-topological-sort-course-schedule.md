@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/topological-sort)
 
+<CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg" />
+
 Given `numCourses` and `prerequisites[i] = [a, b]` meaning "to take `a` you must first take `b`", return an ordering, or `[]` if impossible (cycle).
 
 **Example 1** — `n=2, [[1,0]]` → `[0,1]`
@@ -10,6 +12,12 @@ Given `numCourses` and `prerequisites[i] = [a, b]` meaning "to take `a` you must
 
 **Constraints** — `1 ≤ n ≤ 2000`; `0 ≤ #prereqs ≤ n·(n−1)/2`.
 
+
+<Hints
+  hint1="Directed graph? Prerequisites? You need topological order."
+  hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."
+  hint3="For ’layers/semesters’, process one full BFS layer per timestep. For ’unique order?’, check queue size ≤ 1 at every step."
+/>
 ---
 
 ## Approach 1 — Brute force (try every permutation)
@@ -99,6 +107,10 @@ int[] findOrder(int n, int[][] prereqs) {
 **Complexity** — Time **O(V + E)**; Space **O(V + E)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="topological-sort-course-schedule" />
 
 ## Complexity summary
 

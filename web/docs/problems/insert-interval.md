@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Insert Interval](https://leetcode.com/problems/insert-interval/)* · <span class="diff diff-m">Medium</span> · [pattern chapter →](/patterns/merge-intervals)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, LinkedIn" /&gt;
+
 Given sorted, non-overlapping `intervals` and a `newInterval`, insert it and merge if needed.
 
 **Example 1** — `intervals=[[1,3],[6,9]], newInterval=[2,5]` → `[[1,5],[6,9]]`
@@ -10,6 +12,12 @@ Given sorted, non-overlapping `intervals` and a `newInterval`, insert it and mer
 
 **Constraints** — `0 ≤ intervals.length ≤ 10⁴`.
 
+
+&lt;Hints
+  hint1="Sort by start (or end, depending on the question)."
+  hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."
+  hint3="For ’insert’ or ’intersect’, use the same sweep with a merge/intersection rule at overlaps."
+/&gt;
 ---
 
 ## Approach 1 — Append + full merge
@@ -59,6 +67,10 @@ int[][] insert(int[][] intervals, int[] newInterval) {
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="insert-interval" />
 
 ## Complexity summary
 

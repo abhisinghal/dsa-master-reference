@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)* · <span class="diff diff-e">Easy</span> · [pattern chapter →](/patterns/greedy)
 
+&lt;CompanyTags companies="Meta, Amazon, Google, Microsoft, Apple, Bloomberg, Adobe" /&gt;
+
 At most one buy + one sell. Max profit.
 
 **Example 1** — `prices=[7,1,5,3,6,4]` → `5`
@@ -9,6 +11,12 @@ At most one buy + one sell. Max profit.
 
 **Constraints** — `1 ≤ n ≤ 10⁵`.
 
+
+&lt;Hints
+  hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
+  hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
+  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+/&gt;
 ---
 
 ## Approach 1 — Compare every pair
@@ -48,6 +56,10 @@ int maxProfit(int[] prices) {
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="best-time-to-buy-and-sell-stock" />
 
 ## Complexity summary
 

@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Reverse Pairs](https://leetcode.com/problems/reverse-pairs/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/divide-conquer)
 
+<CompanyTags companies="Google, Amazon" />
+
 Count pairs `(i, j)` with `i < j` and `nums[i] > 2 · nums[j]`.
 
 **Example 1** — `nums=[1,3,2,3,1]` → `2`
@@ -9,6 +11,12 @@ Count pairs `(i, j)` with `i < j` and `nums[i] > 2 · nums[j]`.
 
 **Constraints** — `1 ≤ n ≤ 5·10⁴`; `-2³¹ ≤ nums[i] ≤ 2³¹−1`.
 
+
+<Hints
+  hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
+  hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."
+  hint3="For count-of-X-across-boundary, two-pointer walk during the merge step."
+/>
 ---
 
 ## Approach 1 — All pairs
@@ -58,6 +66,10 @@ int mergeSort(int[] a, int lo, int hi) {
 **Complexity** — Time **O(n log n)**; Space **O(n)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="reverse-pairs" />
 
 ## Complexity summary
 

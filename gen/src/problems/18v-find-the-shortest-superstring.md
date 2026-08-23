@@ -2,6 +2,8 @@
 
 *[↗ LeetCode: Find the Shortest Superstring](https://leetcode.com/problems/find-the-shortest-superstring/)* · <span class="diff diff-h">Hard</span> · [pattern chapter →](/patterns/dp)
 
+<CompanyTags companies="Google, Amazon" />
+
 Return shortest string containing every given word as substring.
 
 **Constraints** — `1 ≤ n ≤ 12`.
@@ -9,6 +11,12 @@ Return shortest string containing every given word as substring.
 **Example 1** — `words=["alex","loves","leetcode"]` → `"alexlovesleetcode"`
 **Example 2** — `words=["catg","ctaagt","gcta","ttca","atgcatc"]` → `"gctaagttcatgcatc"`
 
+
+<Hints
+  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
+  hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
+/>
 ---
 
 ## Approach — Bitmask TSP-style DP + overlap precompute (canonical)
@@ -69,6 +77,10 @@ int computeOverlap(String a, String b) {
 **Complexity** — Time **O(n² · 2ⁿ)**; Space **O(n · 2ⁿ)**.
 
 ---
+
+## Try it yourself
+
+<JavaRunner problem-slug="find-the-shortest-superstring" />
 
 ## Complexity summary
 
