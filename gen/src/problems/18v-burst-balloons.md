@@ -33,6 +33,18 @@ int maxCoins(int[] nums) {
 }
 ```
 
+<CodeTrace
+  title="Interval DP with  last to burst  trick (canonical)"
+  :values="['3', '1', '5', '8']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 3 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n³)**; Space **O(n²)**.
 
 ---

@@ -38,6 +38,18 @@ int maxProduct(String[] words) {
 
 
 
+<CodeTrace
+  title="Set intersection per pair"
+  :values="['abcw', 'baz', 'foo', 'bar', 'xtfn', 'abcdef']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 3 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 5 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n·L + n²)**; Space **O(n)**.
 
 ---

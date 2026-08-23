@@ -42,6 +42,18 @@ int numSubmatrixSumTarget(int[][] mat, int target) {
 }
 ```
 
+<CodeTrace
+  title="Enumerate every submatrix"
+  :values="['0', '1', '0']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(m²·n)**; Space **O(n)**.
 
 ---

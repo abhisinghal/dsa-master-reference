@@ -29,6 +29,18 @@ void dfs(char[] a, int i, List<String> out) {
 }
 ```
 
+<CodeTrace
+  title="DFS with two branches per letter (canonical)"
+  :values="['a', '1', 'b', '2']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 3 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 ## Approach 2 — Iterative bit-enumeration
 Count L letters; for mask 0..2^L-1 flip corresponding cases.
 

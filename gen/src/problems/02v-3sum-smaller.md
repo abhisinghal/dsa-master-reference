@@ -34,6 +34,18 @@ int threeSumSmaller(int[] nums, int target) {
 }
 ```
 
+<CodeTrace
+  title="Triple loop"
+  :values="['-2', '0', '1', '3']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 3 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n²)**; Space **O(1)**.
 
 ---

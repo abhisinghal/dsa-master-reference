@@ -37,6 +37,18 @@ void reverse(int[] a, int l, int r) { while (l < r) swap(a, l++, r--); }
 
 
 
+<CodeTrace
+  title="Classic algorithm (canonical)"
+  :values="['1', '2', '3']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---

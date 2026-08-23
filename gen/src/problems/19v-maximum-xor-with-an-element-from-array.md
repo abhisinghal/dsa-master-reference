@@ -54,6 +54,18 @@ int maxXor(Node root, int v) {
 }
 ```
 
+<CodeTrace
+  title="Linear per query"
+  :values="['0', '1', '2', '3', '4']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 4 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O((n + q) · 32 + q log q)**; Space **O(n · 32)**.
 
 ---

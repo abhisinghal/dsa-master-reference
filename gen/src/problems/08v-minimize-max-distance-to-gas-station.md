@@ -34,6 +34,18 @@ double minmaxGasDist(int[] s, int k) {
 }
 ```
 
+<CodeTrace
+  title="Priority queue (greedy)"
+  :values="['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 5 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 9 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n log(hi/eps))** ≈ O(n · 30); Space **O(1)**.
 
 ## Complexity summary

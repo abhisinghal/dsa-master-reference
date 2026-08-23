@@ -41,6 +41,18 @@ int dfs(int[][] g, int r, int c, int rem) {
 
 
 
+<CodeTrace
+  title="Hamiltonian-path DFS with in-place marking (canonical)"
+  :values="['1', '0', '0', '0']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 3 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time exponential (~4^cells); n·m ≤ 20 makes it feasible.
 
 ---

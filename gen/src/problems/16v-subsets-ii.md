@@ -32,6 +32,18 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 }
 ```
 
+<CodeTrace
+  title="Sort + skip equal-at-same-depth (canonical)"
+  :values="['1', '2', '2']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n · 2ⁿ)**; Space **O(n)**.
 
 ---

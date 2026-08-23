@@ -35,6 +35,18 @@ boolean canPartition(int[] nums) {
 
 
 
+<CodeTrace
+  title="Subset-sum DP (0/1 knapsack, canonical)"
+  :values="['1', '5', '11', '5']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 3 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n · sum)**; Space **O(sum)**.
 
 ## BitSet speedup

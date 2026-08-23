@@ -29,6 +29,18 @@ int lastStoneWeightII(int[] stones) {
 }
 ```
 
+<CodeTrace
+  title="Reduce to subset-sum closest to total/2 (canonical)"
+  :values="['2', '7', '4', '1', '8', '1']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 3 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 5 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n · total)**; Space **O(total)**.
 
 ---

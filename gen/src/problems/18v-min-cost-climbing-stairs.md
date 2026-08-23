@@ -26,6 +26,18 @@ int minCostClimbingStairs(int[] cost) {
 }
 ```
 
+<CodeTrace
+  title="DP O(1) space (canonical)"
+  :values="['10', '15', '20']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---

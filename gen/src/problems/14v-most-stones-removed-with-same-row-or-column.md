@@ -44,6 +44,18 @@ void union(Map<Integer, Integer> p, int a, int b) {
 }
 ```
 
+<CodeTrace
+  title="Simulation"
+  :values="['0', '0']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 1 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n · α)**; Space **O(n)**.
 
 ---

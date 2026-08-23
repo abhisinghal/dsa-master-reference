@@ -39,6 +39,18 @@ boolean isPali(String s, int l, int r) {
 
 
 
+<CodeTrace
+  title="DFS + palindrome check on the fly (canonical)"
+  :values="['a', 'a', 'b']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 ## Approach 2 — Precompute `pal[i][j]` DP
 O(n²) precompute; O(1) checks during recursion.
 

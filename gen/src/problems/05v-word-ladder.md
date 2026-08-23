@@ -49,6 +49,18 @@ int ladderLength(String beginWord, String endWord, List<String> wordList) {
 }
 ```
 
+<CodeTrace
+  title="BFS over all pairs"
+  :values="['hot', 'dot', 'dog', 'lot', 'log', 'cog']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 3 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 5 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 ## Approach 3 — Bidirectional BFS
 Expand from both ends until frontiers meet. ~O(2 · b^(d/2)).
 

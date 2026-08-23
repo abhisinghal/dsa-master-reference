@@ -28,6 +28,18 @@ int twoSumLessThanK(int[] nums, int k) {
 }
 ```
 
+<CodeTrace
+  title="Sort + two pointer (canonical)"
+  :values="['34', '23', '1', '24', '75', '33', '54', '8']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 4 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 7 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 **Bucket variant** — since values ≤ 1000, bucket-count then two-pointer over buckets → O(n + 1000) time.

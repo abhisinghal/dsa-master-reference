@@ -38,6 +38,18 @@ int maxProfit(int k, int[] prices) {
 
 
 
+<CodeTrace
+  title="2k states DP with unlimited-k shortcut (canonical)"
+  :values="['2', '4', '1']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n · k)**; Space **O(k)**.
 
 ---

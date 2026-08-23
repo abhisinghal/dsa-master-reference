@@ -27,6 +27,18 @@ int candy(int[] ratings) {
 }
 ```
 
+<CodeTrace
+  title="Two-pass sweep (canonical)"
+  :values="['1', '0', '2']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(n)**.
 
 ## Approach 2 — One-pass slope counting

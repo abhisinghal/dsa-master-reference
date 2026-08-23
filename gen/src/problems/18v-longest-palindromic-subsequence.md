@@ -35,6 +35,18 @@ int longestPalindromeSubseq(String s) {
 }
 ```
 
+<CodeTrace
+  title="LCS(s, reverse(s))"
+  :values="['b', 'b', 'b', 'a', 'b']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 4 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Corollary.** Min insertions to make s palindrome = `n - LPS(s)`.
 
 **Complexity** — Time **O(n²)**; Space **O(n²)**.

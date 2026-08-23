@@ -44,6 +44,18 @@ void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 
 
 
+<CodeTrace
+  title="Insert-at-every-position recursion"
+  :values="['1']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 0 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 0 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n · n!)**; Space **O(n)**.
 
 ## Approach 3 — Used-set + build (extensible to duplicates)

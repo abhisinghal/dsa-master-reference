@@ -28,6 +28,18 @@ void moveZeroes(int[] nums) {
 }
 ```
 
+<CodeTrace
+  title="Two-pass write"
+  :values="['0', '1', '0', '3', '12']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 4 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 ## Approach 3 — Swap on the fly (fewer writes)
 
 Use when array is mostly zeros — each non-zero causes one swap.

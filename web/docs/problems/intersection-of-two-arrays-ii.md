@@ -37,6 +37,18 @@ int[] intersect(int[] nums1, int[] nums2) {
 
 
 
+<CodeTrace
+  title="Hash-map count"
+  :values="['1', '2', '2', '1']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 3 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O((n+m) log(n+m))**; Space **O(1)** extra.
 
 ---

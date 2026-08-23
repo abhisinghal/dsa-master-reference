@@ -34,6 +34,18 @@ int numRescueBoats(int[] people, int limit) {
 
 
 
+<CodeTrace
+  title="Sort + greedy two-pointer (canonical)"
+  :values="['1', '2']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 1 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n log n)**; Space **O(1)**.
 
 ---

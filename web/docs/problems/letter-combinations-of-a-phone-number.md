@@ -35,6 +35,18 @@ void dfs(String d, int i, String[] map, StringBuilder sb, List<String> out) {
 
 
 
+<CodeTrace
+  title="DFS enumeration (canonical)"
+  :values="['2', '3']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 1 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 ## Approach 2 — Iterative BFS
 Extend all combinations by next digit's letters; same complexity, no recursion.
 

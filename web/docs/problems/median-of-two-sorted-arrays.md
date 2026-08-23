@@ -47,6 +47,18 @@ double findMedianSortedArrays(int[] A, int[] B) {
 
 
 
+<CodeTrace
+  title="Merge sort halves"
+  :values="['1', '3']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 1 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(log(min(m, n)))**; Space **O(1)**.
 
 ## Complexity summary

@@ -31,6 +31,18 @@ List<List<String>> groupStrings(String[] strings) {
 }
 ```
 
+<CodeTrace
+  title="Canonical key = diff pattern (canonical)"
+  :values="['abc', 'bcd', 'acef', 'xyz', 'az', 'ba', 'a', 'z']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 4 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 7 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(Σ length)**; Space **O(Σ length)**.
 
 ---

@@ -43,6 +43,18 @@ boolean canFormFromOthers(String w, Set<String> dict, int start, int count) {
 
 
 
+<CodeTrace
+  title="Brute force per word"
+  :values="['cat', 'cats', 'catsdogcats', 'dog', 'dogcatsdog', 'hippopotamuses', 'rat', 'ratcatdogcat']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 4 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 7 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(N · L² )**; Space **O(N · L)**.
 
 ---

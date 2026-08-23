@@ -31,6 +31,18 @@ int change(int amount, int[] coins) {
 
 
 
+<CodeTrace
+  title="Unbounded knapsack counting (canonical)"
+  :values="['1', '2', '5']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Contrast.** Swap loop order → counts **ordered** sequences → [Combination Sum IV](/problems/combination-sum-iv).
 
 **Complexity** — Time **O(amount · |coins|)**; Space **O(amount)**.

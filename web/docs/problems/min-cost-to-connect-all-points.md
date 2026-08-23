@@ -41,6 +41,18 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 
 
 
+<CodeTrace
+  title="Kruskal on all pairs"
+  :values="['0', '0']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 1 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 ## Approach 2 — Prim with priority queue (canonical for dense)
 
 **Insight.** Start at any node; repeatedly add closest unvisited. O(n²) unvisited scans without heap, or O(E log V) with heap.

@@ -36,6 +36,18 @@ int findTargetSumWays(int[] nums, int target) {
 
 
 
+<CodeTrace
+  title="Backtracking"
+  :values="['1', '1', '1', '1', '1']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 4 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n · P)**; Space **O(P)**.
 
 ---

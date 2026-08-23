@@ -32,6 +32,18 @@ int maxProfit(int[] prices, int fee) {
 
 
 
+<CodeTrace
+  title="State-machine DP (canonical)"
+  :values="['1', '3', '2', '8', '4', '9']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 3 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 5 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n)**; Space **O(1)**.
 
 ---

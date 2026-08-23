@@ -30,6 +30,18 @@ int combinationSum4(int[] nums, int target) {
 }
 ```
 
+<CodeTrace
+  title="Backtracking"
+  :values="['1', '2', '3']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Contrast.** Loop order swap counts **unordered** (see [Coin Change II](/problems/coin-change-ii)).
 
 **Trap** — may overflow — problem guarantees fits in int; if unsure use `long`.

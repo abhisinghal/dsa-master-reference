@@ -46,6 +46,18 @@ boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
 }
 ```
 
+<CodeTrace
+  title="Try every topological order"
+  :values="['1', '2', '3']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(n + m)**; Space **O(n + m)**.
 
 ---

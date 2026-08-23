@@ -56,6 +56,18 @@ int queryMax(Node root, int v) {
 }
 ```
 
+<CodeTrace
+  title="Offline DFS + binary trie with subtree insert/erase (cano..."
+  :values="['-1', '0', '1', '1']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 2 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 3 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O((n + q) · 18)**; Space **O(n · 18)**.
 
 ---

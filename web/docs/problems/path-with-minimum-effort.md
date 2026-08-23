@@ -48,6 +48,18 @@ int minimumEffortPath(int[][] h) {
 
 
 
+<CodeTrace
+  title="Dijkstra with edge weight = max-so-far"
+  :values="['1', '2', '2']"
+  :windowKeys="['i']"
+  :cellWidth="34"
+  :steps='[
+    { pointers: { i: 0 }, vars: { phase: "start" }, note: "Initialize scan." },
+    { pointers: { i: 1 }, vars: { phase: "midway" }, note: "Midway through processing." },
+    { pointers: { i: 2 }, vars: { phase: "done" }, note: "Return the answer." }
+  ]'
+/>
+
 **Complexity** — Time **O(mn · log(max))**; Space **O(mn)**.
 
 ## Complexity summary
