@@ -103,16 +103,71 @@ Plus 8 high-value canonical variations:
 - `d1a7683` System Design chapter
 - `cdc2ff2` 100% CodeTrace coverage
 
-## Deferred (from prior audits — post-visualizer sweep)
+## CEO-level gap audit (Educative + AlgoExpert lens) — 2026-08-23
 
-The four visualizer items from the Grokking-head audit are now shipped:
+Even with 205 flagship-quality pages, real gaps remain vs. the incumbents:
 
-1. ✅ **Complexity growth-curve visualizer** — `ComplexityCurve.vue` on complexity chapter (interactive n-slider, 8 classes, ops-vs-wall-time toggle, feasibility verdict)
-2. ✅ **6-phase playbook single-page animation** — `PlaybookPhases.vue` on playbook chapter (colored phase progress, playback controls, working artefact per phase)
-3. ✅ **~30 Data-structure operation state-machines** — `DsStateMachine.vue` + 5 wrappers (StackQueueOps, HeapOps, BstOps, TrieOps, UnionFindOps) covering push/pop/enq/deq, sift-up/sift-down/heapify, BST search/insert/delete/BFS, trie insert/search/prefix, and UF find/union/components. Embedded across 5 DS chapters.
-4. ✅ **~84 Problem-statement Example previews** — `ExamplePreview.vue` + auto-generator `gen/add_example_previews.py` parsing `**Example N:**` lines and auto-embedding input→output visuals with multi-arg support. Coverage across 17 chapters.
+### Educative.io CEO perspective — "Great reference, not a course"
 
-Nothing outstanding on the audit list.
+**P0 (business-breaking):**
+1. No user accounts (progress lost across devices, no B2B, no personalization)
+2. JavaRunner on only 7/205 problems (landing over-promises)
+3. No quizzes on 21 pattern chapters (component exists, sparsely used)
+4. No AI companion ("explain differently", "give me a hint") — 2026 table stakes
+5. No time estimates per chapter (Educative always shows "8h 30m")
+
+**P1 (retention killers):**
+6. No certificate on completion
+7. No email capture / drip campaign
+8. No bookmark/notes feature
+9. No mobile app
+10. No spaced-repetition review prompts
+
+**P2 (product-shape):**
+- No "Recommended next" on chapter completion
+- No Team/Org accounts (no B2B revenue)
+- Roadmap is a doc, not interactive checklist
+- No pricing / monetization
+
+### AlgoExpert CEO perspective — "Where are the videos?"
+
+**P0 (category-defining):**
+1. Zero videos (AlgoExpert sells 5-15 min per problem)
+2. Java-only (locks out ~65% of segment)
+3. No hint system (progressive Hint 1 → Hint 2 → Solution)
+4. No company tags (Meta / Google / Amazon)
+5. No timed practice mode (real interviews are 45 min)
+
+**P1 (product-completeness):**
+6. No frequency indicator ("asked in 40% of Meta interviews")
+7. No streaks / achievements / gamification
+8. No whiteboarding canvas
+9. No mock interview mode
+10. No language switcher on solutions (JS/Py/Java/C++ tabs)
+11. No solution comparison ("your O(n²) vs optimal O(n)")
+12. No "similar mistakes" telemetry callout
+
+### Top 8 next steps (impact × urgency ÷ effort)
+
+| # | Task | Wave |
+|---|---|---|
+| 1 | JavaRunner on all 205 problems (CheerpJ WASM) — 2 weeks | A |
+| 2 | Quizzes at end of every pattern chapter (21 × 5 Q) — 1 week | A |
+| 3 | Hint system per problem (3 progressive hints) — 1 week | A |
+| 4 | Company tags on top 100 problems — 1 week | A |
+| 5 | User accounts + progress sync (Supabase) — 3 weeks | B |
+| 6 | Email capture + 8-week drip campaign — 1 week | B |
+| 7 | 21 pattern-intro Loom videos — 4-6 weeks | C |
+| 8 | AI companion chat per problem — 4 weeks | C |
+
+### Monetization decision (30-day deadline)
+
+Pick one:
+1. Free + newsletter (ByteByteGo) — needs email + weekly cadence
+2. $19 lifetime PDF+notes (Grokking-companion) — needs Stripe + gated content
+3. $99/yr full course (Educative) — needs accounts + videos + mock + community
+4. Free reference + $99/hr coaching — needs Calendly + Stripe + testimonials
+
 
 ## Blocked on you
 
