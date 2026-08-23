@@ -299,4 +299,6 @@ long modpow(long b, long e, long m) {
 
 > [trap] **Common Trap** — Forgetting `(a − b + MOD) % MOD` when a subtraction can go negative, or applying the mod only at the very end (the intermediate product already overflowed). Reduce early and often.
 
+<PrintButton />
+
 <RelatedPatterns pattern-id="math" />

@@ -500,4 +500,6 @@ Generalizes to **k samples** (keep a size-k reservoir; the `i`-th element joins 
 | [Shuffle an Array](https://leetcode.com/problems/shuffle-an-array/) | Fisher–Yates: swap i with random ≤ i | O(n) · O(1) |
 | [Random Pick with Blacklist](https://leetcode.com/problems/random-pick-with-blacklist/) | remap blacklisted low indices to allowed high indices | O(1) pick |
 
+&lt;PrintButton /&gt;
+
 &lt;RelatedPatterns pattern-id="design" /&gt;

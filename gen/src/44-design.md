@@ -408,4 +408,6 @@ O(1) auxiliary space for one sample and a counter.
 | [Shuffle an Array](https://leetcode.com/problems/shuffle-an-array/) | Fisher–Yates: swap i with random ≤ i | O(n) · O(1) |
 | [Random Pick with Blacklist](https://leetcode.com/problems/random-pick-with-blacklist/) | remap blacklisted low indices to allowed high indices | O(1) pick |
 
+<PrintButton />
+
 <RelatedPatterns pattern-id="design" />

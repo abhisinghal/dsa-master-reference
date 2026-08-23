@@ -61,6 +61,8 @@ import ReadingProgressBar from './ReadingProgressBar.vue'
 import BackToTop from './BackToTop.vue'
 import NotFound from './NotFound.vue'
 import ProblemStats from './ProblemStats.vue'
+import NotificationBell from './NotificationBell.vue'
+import PrintButton from './PrintButton.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -71,7 +73,7 @@ export default {
     return h(DefaultTheme.Layout, null, {
       'doc-before': () => h(Breadcrumbs),
       'layout-top': () => h(ReadingProgressBar),
-      'layout-bottom': () => [h(ShortcutHint), h(OnboardingTour), h(PageAnalytics), h(BackToTop)],
+      'layout-bottom': () => [h(ShortcutHint), h(OnboardingTour), h(PageAnalytics), h(BackToTop), h(NotificationBell)],
     })
   },
   enhanceApp({ app, router }) {
@@ -136,6 +138,8 @@ export default {
     app.component('BackToTop', BackToTop)
     app.component('NotFound', NotFound)
     app.component('ProblemStats', ProblemStats)
+    app.component('NotificationBell', NotificationBell)
+    app.component('PrintButton', PrintButton)
     installSolvedCountBadges(router)
   }
 }
