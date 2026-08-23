@@ -1,24 +1,40 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 const props = defineProps<{
   title?: string
   subtitle?: string
   cta?: string
   compact?: boolean
+  dismissible?: boolean
 }>()
 
 const email = ref('')
 const submitting = ref(false)
 const success = ref(false)
 const error = ref('')
+const dismissed = ref(false)
 
 const STORAGE_KEY = 'dsa-newsletter-subscribed'
+const DISMISS_KEY = 'dsa-newsletter-dismissed'
 
 const alreadySubscribed = computed(() => {
   if (typeof window === 'undefined') return false
   try { return localStorage.getItem(STORAGE_KEY) === 'true' } catch (e) { return false }
 })
+
+onMounted(() => {
+  try {
+    if (props.dismissible !== false && localStorage.getItem(DISMISS_KEY) === 'true') {
+      dismissed.value = true
+    }
+  } catch (e) {}
+})
+
+function dismiss() {
+  dismissed.value = true
+  try { localStorage.setItem(DISMISS_KEY, 'true') } catch (e) {}
+}
 
 const emailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))
 
@@ -48,7 +64,14 @@ async function submit() {
 </script>
 
 <template>
-  <div :class="['ec-panel', { compact: props.compact }]">
+  <div v-if="!dismissed" :class="['ec-panel', { compact: props.compact }]">
+    <button
+      v-if="props.dismissible !== false"
+      class="ec-dismiss"
+      @click="dismiss"
+      title="Dismiss"
+      aria-label="Dismiss"
+    >×</button>
     <template v-if="!success && !alreadySubscribed">
       <div class="ec-header">
         <div class="ec-badge">Newsletter</div>
@@ -90,12 +113,28 @@ async function submit() {
 
 <style scoped>
 .ec-panel {
+  position: relative;
   border: 1px solid var(--vp-c-divider);
   border-radius: 12px;
   padding: 22px 24px;
   margin: 28px 0;
   background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(139,92,246,0.03));
 }
+.ec-dismiss {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--vp-c-text-3);
+  font-size: 20px;
+  line-height: 1;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.ec-dismiss:hover { background: var(--vp-c-divider); color: var(--vp-c-text-1); }
 .ec-panel.compact { padding: 14px 16px; margin: 16px 0; }
 .ec-header { margin-bottom: 14px; }
 .ec-badge {

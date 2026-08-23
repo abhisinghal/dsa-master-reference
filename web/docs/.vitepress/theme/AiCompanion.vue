@@ -30,13 +30,27 @@ const STORAGE_KEY = computed(() => `dsa-ai-chat:${props.problemSlug}`)
 function loadHistory() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY.value)
-    if (raw) messages.value = JSON.parse(raw)
+    if (raw) {
+      const parsed = JSON.parse(raw)
+      // Expire chat older than 30 days
+      const expiry = 30 * 24 * 60 * 60 * 1000
+      if (Array.isArray(parsed)) {
+        messages.value = parsed.slice(-40) // cap at 40 messages
+      } else if (parsed && parsed.ts && Date.now() - parsed.ts < expiry) {
+        messages.value = (parsed.msgs || []).slice(-40)
+      }
+    }
   } catch (e) {}
 }
 loadHistory()
 
 function saveHistory() {
-  try { localStorage.setItem(STORAGE_KEY.value, JSON.stringify(messages.value)) } catch (e) {}
+  try {
+    localStorage.setItem(STORAGE_KEY.value, JSON.stringify({
+      ts: Date.now(),
+      msgs: messages.value.slice(-40),
+    }))
+  } catch (e) {}
 }
 
 const suggestions = [

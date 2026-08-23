@@ -80,6 +80,43 @@ features:
   </div>
 </div>
 
+# DSA Master Reference
+
+## Try it before you read it
+
+<div class="try-it-strip">
+  <div class="try-it-card">
+    <div class="try-it-icon">▶</div>
+    <div class="try-it-body">
+      <div class="try-it-title">Run Java on any problem — no signup</div>
+      <div class="try-it-sub">CheerpJ WASM runtime, in-browser, on 205 problems.</div>
+    </div>
+  </div>
+  <div class="try-it-card">
+    <div class="try-it-icon">💡</div>
+    <div class="try-it-body">
+      <div class="try-it-title">Progressive hints on every page</div>
+      <div class="try-it-sub">3 levels of help — general → specific → near-solution.</div>
+    </div>
+  </div>
+  <div class="try-it-card">
+    <div class="try-it-icon">✨</div>
+    <div class="try-it-body">
+      <div class="try-it-title">AI companion per problem</div>
+      <div class="try-it-sub">Ask "explain differently", "give me a nudge", "what edge cases?"</div>
+    </div>
+  </div>
+  <div class="try-it-card">
+    <div class="try-it-icon">🎯</div>
+    <div class="try-it-body">
+      <div class="try-it-title">Pattern quizzes with scoring</div>
+      <div class="try-it-sub">5 questions per pattern; 105 questions total. Tracks progress.</div>
+    </div>
+  </div>
+</div>
+
+<UserProfile />
+
 <div class="stats-strip">
   <div class="stat">
     <div class="stat-value">338</div>
@@ -90,20 +127,20 @@ features:
     <div class="stat-label">Core patterns</div>
   </div>
   <div class="stat">
-    <div class="stat-value">98</div>
-    <div class="stat-label">Canonical problems</div>
+    <div class="stat-value">205</div>
+    <div class="stat-label">Interactive problems</div>
   </div>
   <div class="stat">
     <div class="stat-value">109</div>
     <div class="stat-label">Interview traps</div>
   </div>
   <div class="stat">
-    <div class="stat-value">7</div>
-    <div class="stat-label">Animated walkthroughs</div>
+    <div class="stat-value">105</div>
+    <div class="stat-label">Quiz questions</div>
   </div>
   <div class="stat">
-    <div class="stat-value">▶</div>
-    <div class="stat-label">CheerpJ-powered Java runner (WASM, no rate limit)</div>
+    <div class="stat-value">✨</div>
+    <div class="stat-label">AI companion + Java runner on every page</div>
   </div>
 </div>
 
@@ -151,8 +188,49 @@ For flights, whiteboarding, or interview eve without WiFi. Same content as the w
 .stat-label {
   font-size: 0.82em;
   color: var(--vp-c-text-2);
-  margin-top: 6px;
-  font-weight: 500;
+  margin-top: 4px;
+}
+.try-it-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin: 24px 0 32px;
+}
+.try-it-card {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  background: var(--vp-c-bg-soft);
+  transition: transform 0.15s, border-color 0.15s;
+}
+.try-it-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--vp-c-brand-1);
+}
+.try-it-icon {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--vp-c-brand-1), var(--vp-c-brand-2));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.try-it-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+}
+.try-it-sub {
+  font-size: 11.5px;
+  color: var(--vp-c-text-2);
+  margin-top: 2px;
+  line-height: 1.4;
 }
 .screenshot-strip {
   display: grid;

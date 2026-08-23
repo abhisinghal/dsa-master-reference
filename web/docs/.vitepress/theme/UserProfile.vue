@@ -52,16 +52,18 @@ function signOut() {
 }
 
 const initial = computed(() => profile.value?.name?.[0]?.toUpperCase() ?? '?')
-const solvedCount = computed(() => {
-  const solved = [] as string[]
+const solvedCount = ref(0)
+function refreshSolvedCount() {
+  let n = 0
   try {
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i) || ''
-      if (k.startsWith('dsa-solved:') && localStorage.getItem(k) === 'true') solved.push(k)
+      if (k.startsWith('dsa-solved:') && localStorage.getItem(k) === 'true') n++
     }
   } catch (e) {}
-  return solved.length
-})
+  solvedCount.value = n
+}
+onMounted(refreshSolvedCount)
 </script>
 
 <template>
