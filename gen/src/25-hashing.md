@@ -239,8 +239,6 @@ Given a list of words, bucket together the ones that are **anagrams** of each ot
 
 **Example 2:** `["", "b"]` → `[[""],["b"]]` (empty string has the all-zero signature).
 
-<ExamplePreview compact :input="['""', '"b"']" :output="['[[""],["b"]]']" />
-
 ### Solution — brute force
 Brute force compares each word against every other word by sorting both words or counting letters and checking equality. That can reach O(n²·L log L) time with a visited array, which is correct but wasteful because each group comparison repeats work. The optimized version computes one canonical signature per word and uses it as a hash-map key, so all anagrams land in the same bucket immediately.
 

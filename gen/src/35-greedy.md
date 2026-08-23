@@ -321,11 +321,7 @@ Given task labels and a cooldown `n` (identical tasks must be at least `n` apart
 
 **Example 1:** `["A","A","A","B","B","B"], n = 2` → `8` (`AB_AB_AB`).
 
-<ExamplePreview compact :input="['"A"', '"A"', '"A"', '"B"', '"B"', '"B"', '|', '2']" :output="['8']" />
-
 **Example 2:** `tasks = ["A","A","A","B","B","B"], n = 0` → `6` because no cooldown gaps are needed.
-
-<ExamplePreview compact :input="['"A"', '"A"', '"A"', '"B"', '"B"', '"B"', '|', '0']" :output="['6']" />
 
 ### Solution — brute force
 For task scheduling, brute force can simulate each time slot by repeatedly choosing an available task and trying schedules with idle slots when blocked. That search branches heavily and is effectively exponential if you enumerate orders; even a priority-queue simulation is more machinery than needed. The optimized formula observes that the most frequent task creates the idle-frame skeleton, then fills gaps with all other tasks in linear time over the task counts.

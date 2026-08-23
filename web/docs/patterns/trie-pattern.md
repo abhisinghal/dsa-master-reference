@@ -162,11 +162,7 @@ Given a grid of letters and a dictionary, return **all dictionary words** that c
 
 **Example 1:** grid with words `["oath","pea","eat","rain"]` → the traceable ones (e.g. `["oath","eat"]`).
 
-&lt;ExamplePreview compact :input="['"oath"', '"pea"', '"eat"', '"rain"']" :output="['"oath"', '"eat"']" /&gt;
-
 **Example 2:** Board `[["a"]]`, words `["a","b"]` → `["a"]`.
-
-&lt;ExamplePreview compact :input="['[["a"]]']" :output="['"a"', '"b"']" /&gt;
 
 ### Solution — brute force
 The straightforward approach is: for every word, run the single-word Word Search DFS over the board. That is easy to explain but terrible at scale because common prefixes are re-explored for every word.
@@ -310,11 +306,11 @@ Given an array, find the **maximum XOR** obtainable from any two elements.
 
 **Example 1:** `[3,10,5,25,2,8]` → `28` (`5 XOR 25`).
 
-&lt;ExamplePreview compact :input="['3', '10', '5', '25', '2', '8']" :output="['28']" /&gt;
+<ExamplePreview compact :input="['3', '10', '5', '25', '2', '8']" :output="['28']" />
 
 **Example 2:** `[0]` → `0` because the only possible pair value with itself is zero.
 
-&lt;ExamplePreview compact :input="['0']" :output="['0']" /&gt;
+<ExamplePreview compact :input="['0']" :output="['0']" />
 
 ### Solution — brute force
 The brute-force version checks every pair. It is a good correctness baseline and a terrible final answer for `n = 2·10^5`.

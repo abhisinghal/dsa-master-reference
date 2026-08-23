@@ -123,11 +123,11 @@ Rob houses in a line to maximize loot, but you **can't rob two adjacent** houses
 
 **Example 1:** `[2,7,9,3,1]` → `12` (rob 2, 9, 1).
 
-&lt;ExamplePreview compact :input="['2', '7', '9', '3', '1']" :output="['12']" /&gt;
+<ExamplePreview compact :input="['2', '7', '9', '3', '1']" :output="['12']" />
 
 **Example 2:** `[1,2,3,1]` → `4` (rob 1 and 3).
 
-&lt;ExamplePreview compact :input="['1', '2', '3', '1']" :output="['4']" /&gt;
+<ExamplePreview compact :input="['1', '2', '3', '1']" :output="['4']" />
 
 ### Solution — brute force
 Brute force recursion branches at each house: either skip it or rob it and jump over the adjacent house. That explores overlapping choices repeatedly, giving O(2ⁿ) time and O(n) recursion depth. The optimized DP stores the best answer up to each position, then collapses the recurrence to two rolling values because only `i-1` and `i-2` are needed.
@@ -322,11 +322,11 @@ Find the contiguous subarray with the **largest sum** and return that sum (the a
 
 **Example 1:** `[-2,1,-3,4,-1,2,1,-5,4]` → `6` (the subarray `[4,-1,2,1]`).
 
-&lt;ExamplePreview compact :input="['-2', '1', '-3', '4', '-1', '2', '1', '-5', '4']" :output="['6']" /&gt;
+<ExamplePreview compact :input="['-2', '1', '-3', '4', '-1', '2', '1', '-5', '4']" :output="['6']" />
 
 **Example 2:** `[5,4,-1,7,8]` → `23` (the whole array).
 
-&lt;ExamplePreview compact :input="['5', '4', '-1', '7', '8']" :output="['23']" /&gt;
+<ExamplePreview compact :input="['5', '4', '-1', '7', '8']" :output="['23']" />
 
 ### Solution — brute force
 Brute force checks every subarray sum and keeps the maximum. Recomputing each sum directly is O(n³); carrying a running sum for each start improves the baseline to O(n²) time and O(1) space, still too slow for `10⁵`. Kadane's optimization realizes the only state needed is the best subarray ending at the current index, so a negative prefix is dropped immediately.
@@ -461,11 +461,11 @@ Can the array be split into **two subsets with equal sum**?
 
 **Example 1:** `[1,5,11,5]` → `true` (`11 = 5+5+1`).
 
-&lt;ExamplePreview compact :input="['1', '5', '11', '5']" :output="['true']" /&gt;
+<ExamplePreview compact :input="['1', '5', '11', '5']" :output="['true']" />
 
 **Example 2:** `[1,2,3,5]` → `false` because total is 11 (odd).
 
-&lt;ExamplePreview compact :input="['1', '2', '3', '5']" :output="['false']" /&gt;
+<ExamplePreview compact :input="['1', '2', '3', '5']" :output="['false']" />
 
 ### Solution — brute force
 Brute force chooses include or exclude for every number, then checks whether any selected subset reaches the target sum. That is O(2ⁿ) time and O(n) recursion space, and it repeats equivalent partial sums many times. The optimized boolean knapsack DP records which sums are reachable after each item; iterating capacities downward enforces the 0/1 rule that each item is used at most once.
@@ -667,11 +667,11 @@ Given coin denominations (each reusable) and an amount, return the **fewest coin
 
 **Example 1:** `coins = [1,2,5], amount = 11` → `3` (`5+5+1`).
 
-&lt;ExamplePreview compact :input="['1', '2', '5', '|', '11']" :output="['3']" /&gt;
+<ExamplePreview compact :input="['1', '2', '5', '|', '11']" :output="['3']" />
 
 **Example 2:** `coins=[2], amount=3` → `-1`.
 
-&lt;ExamplePreview compact :input="['2', '|', '3']" :output="['-1']" /&gt;
+<ExamplePreview compact :input="['2', '|', '3']" :output="['-1']" />
 
 ### Solution — brute force
 Brute force recursively tries every coin as the next pick until the remaining amount is zero or negative. Because the same remaining amounts recur through many orders, the search is exponential in the amount without memoization. The optimized DP treats each amount as a state, fills smaller amounts first, and uses each coin transition to compute the fewest coins for the current amount.
@@ -809,7 +809,7 @@ Count the paths from the top-left to the bottom-right of an `m×n` grid, moving 
 
 **Example 1:** `m = 3, n = 7` → `28`.
 
-&lt;ExamplePreview compact :input="['3, n = 7']" :output="['28']" /&gt;
+<ExamplePreview compact :input="['3, n = 7']" :output="['28']" />
 
 **Example 2:** `grid=[[1,2,3],[4,5,6]]` minimum path sum → `12` (`1→2→3→6`).
 
@@ -1105,11 +1105,11 @@ Bursting balloon `i` earns `nums[left]·nums[i]·nums[right]` (its current neigh
 
 **Example 1:** `[3,1,5,8]` → `167`.
 
-&lt;ExamplePreview compact :input="['3', '1', '5', '8']" :output="['167']" /&gt;
+<ExamplePreview compact :input="['3', '1', '5', '8']" :output="['167']" />
 
 **Example 2:** `[1,5]` → `10` (burst 1 then 5 with boundary 1s gives 5 + 5).
 
-&lt;ExamplePreview compact :input="['1', '5']" :output="['10']" /&gt;
+<ExamplePreview compact :input="['1', '5']" :output="['10']" />
 
 ### Solution — brute force
 Brute force tries every possible order of operations, such as every balloon bursting order or every parenthesization of a matrix product. That is exponential because choosing the first action changes the neighboring context and creates many repeated intervals. The optimized interval DP flips the thinking: choose the last action inside an interval, combine already-solved left and right subintervals, and iterate by increasing length.
@@ -1251,11 +1251,11 @@ Maximize profit over many buy/sell transactions, but after selling you must **co
 
 **Example 1:** `[1,2,3,0,2]` → `3` (buy 1, sell 3, cooldown, buy 0, sell 2).
 
-&lt;ExamplePreview compact :input="['1', '2', '3', '0', '2']" :output="['3']" /&gt;
+<ExamplePreview compact :input="['1', '2', '3', '0', '2']" :output="['3']" />
 
 **Example 2:** `[1]` → `0` because no sell can follow a buy.
 
-&lt;ExamplePreview compact :input="['1']" :output="['0']" /&gt;
+<ExamplePreview compact :input="['1']" :output="['0']" />
 
 ### Solution — brute force
 Brute force recursion considers every legal action each day: buy, sell, rest, or cool down depending on the previous action. That creates an exponential decision tree and repeatedly revisits the same `(day, mode)` situations. The optimized state-machine DP keeps the best profit for each mode after each price, then rolls the states because only the previous day matters.
@@ -1393,11 +1393,11 @@ Can the array be partitioned into **`k` subsets that all have equal sum**?
 
 **Example 1:** `[4,3,2,3,5,2,1], k = 4` → `true` (each subset sums to 5).
 
-&lt;ExamplePreview compact :input="['4', '3', '2', '3', '5', '2', '1', '|', '4']" :output="['true']" /&gt;
+<ExamplePreview compact :input="['4', '3', '2', '3', '5', '2', '1', '|', '4']" :output="['true']" />
 
 **Example 2:** `n=1` cost matrix `[[0]]` → route cost `0`.
 
-&lt;ExamplePreview compact :input="['1']" :output="['[[0]]']" /&gt;
+<ExamplePreview compact :input="['1']" :output="['[[0]]']" />
 
 ### Solution — brute force
 Brute force tries every order of visiting or assigning the `n` items, which is O(n!) time for TSP-style problems and O(n) path space. That is quickly impossible even around `n = 15`. The optimized bitmask DP replaces permutation history with a mask of used items plus the current endpoint, so each subset/endpoint state is solved once and extended by one unused bit.

@@ -119,11 +119,11 @@ Detect whether a singly linked list has a **cycle**, and if so return the node w
 
 **Example 1:** `3→2→0→-4` with `-4` linking back to `2` → returns node `2`.
 
-&lt;ExamplePreview compact :input="['3→2→0→-4']" :output="['-4']" /&gt;
+<ExamplePreview compact :input="['3→2→0→-4']" :output="['-4']" />
 
 **Example 2:** `1→2→null` → `null` (no cycle, so no entry node).
 
-&lt;ExamplePreview compact :input="['1→2→null']" :output="['null']" /&gt;
+<ExamplePreview compact :input="['1→2→null']" :output="['null']" />
 
 ### Solution — brute force
 The first correct idea is to remember every node reference you have seen. Walk from `head`; before visiting a node, ask whether it is already in the set. If yes, that exact node is the cycle entry. If you reach `null`, there is no cycle.

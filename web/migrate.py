@@ -210,7 +210,7 @@ def escape_lt_gt_in_prose(body: str) -> str:
         r"TwoPointersAnim|FastSlowAnim|BinarySearchAnim|HeapAnim|"
         r"BFSGridAnim|DFSGridAnim|DpFillAnim|TrieWalkAnim|"
         r"ComplexityCurve|PlaybookPhases|DsStateMachine|"
-        r"StackQueueOps|HeapOps|BstOps|TrieOps|UnionFindOps|"
+        r"StackQueueOps|HeapOps|BstOps|TrieOps|UnionFindOps|ExamplePreview|"
         r"Hints|CompanyTags|EmailCapture|UserProfile|PatternVideo|AiCompanion|"
         r"PatternProgress|RelatedPatterns|DueForReview|RelatedProblems|"
         r"FeedbackWidget|ShortcutHint|OnboardingTour|PageAnalytics|"

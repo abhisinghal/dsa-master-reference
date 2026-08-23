@@ -538,8 +538,6 @@ Place `n` queens on an `n×n` board so that **none attack** another (no shared r
 
 **Example 2:** `n = 1` → one board: `["Q"]`.
 
-<ExamplePreview compact :input="['1']" :output="['"Q"']" />
-
 ### Solution — brute force
 Brute force places queens on arbitrary cells and checks every completed board for row, column, and diagonal conflicts. Choosing `n` squares from `n²` and validating them is enormous, and even row-by-row placement is O(n!) before pruning. The optimized backtracking commits to one queen per row and uses column plus diagonal occupancy arrays so each proposed placement is checked in O(1) before descending.
 

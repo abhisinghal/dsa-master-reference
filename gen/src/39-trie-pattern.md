@@ -143,11 +143,7 @@ Given a grid of letters and a dictionary, return **all dictionary words** that c
 
 **Example 1:** grid with words `["oath","pea","eat","rain"]` → the traceable ones (e.g. `["oath","eat"]`).
 
-<ExamplePreview compact :input="['"oath"', '"pea"', '"eat"', '"rain"']" :output="['"oath"', '"eat"']" />
-
 **Example 2:** Board `[["a"]]`, words `["a","b"]` → `["a"]`.
-
-<ExamplePreview compact :input="['[["a"]]']" :output="['"a"', '"b"']" />
 
 ### Solution — brute force
 The straightforward approach is: for every word, run the single-word Word Search DFS over the board. That is easy to explain but terrible at scale because common prefixes are re-explored for every word.

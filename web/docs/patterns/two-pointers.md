@@ -142,7 +142,7 @@ Find **all unique triplets** `(a, b, c)` in the array with `a + b + c = 0`. The 
 
 **Example 2:** `[0,0,0,0]` → `[[0,0,0]]` (many duplicates, one unique triplet).
 
-&lt;ExamplePreview compact :input="['0', '0', '0', '0']" :output="['[[0,0,0]]']" /&gt;
+<ExamplePreview compact :input="['0', '0', '0', '0']" :output="['[[0,0,0]]']" />
 
 ### Solution — brute force
 Brute force is three nested loops over `i < j < k`, checking every triplet and putting sorted triplets into a set to avoid duplicates. That is O(n³) time plus output/dedup space, and it times out quickly at `n = 3000`. Sorting first lets us fix one value and replace the inner pair scan with two pointers, cutting the search to O(n²) while still skipping duplicates deterministically.
@@ -353,11 +353,11 @@ Each element is the height of a vertical wall. Pick the two walls that (with the
 
 **Example 1:** `[1,8,6,2,5,4,8,3,7]` → `49`.
 
-&lt;ExamplePreview compact :input="['1', '8', '6', '2', '5', '4', '8', '3', '7']" :output="['49']" /&gt;
+<ExamplePreview compact :input="['1', '8', '6', '2', '5', '4', '8', '3', '7']" :output="['49']" />
 
 **Example 2:** `[1,1]` → `1` (the only pair has width 1 and height 1).
 
-&lt;ExamplePreview compact :input="['1', '1']" :output="['1']" /&gt;
+<ExamplePreview compact :input="['1', '1']" :output="['1']" />
 
 ### Solution — brute force
 Brute force checks every pair of walls `(i, j)`, computes `min(h[i], h[j]) * (j - i)`, and keeps the largest area. It is easy to reason about and uses O(1) space, but it is O(n²) time because there are all-pairs choices. The optimized two-pointer version keeps the widest container first and moves only the shorter wall, because moving the taller wall cannot raise the limiting height.
@@ -485,11 +485,11 @@ Given a **sorted** array that may contain negatives, return the squares of every
 
 **Example 1:** `[-4,-1,0,3,10]` → `[0,1,9,16,100]`.
 
-&lt;ExamplePreview compact :input="['-4', '-1', '0', '3', '10']" :output="['0', '1', '9', '16', '100']" /&gt;
+<ExamplePreview compact :input="['-4', '-1', '0', '3', '10']" :output="['0', '1', '9', '16', '100']" />
 
 **Example 2:** `[-3,-2,-1]` → `[1,4,9]` (all negatives reverse after squaring).
 
-&lt;ExamplePreview compact :input="['-3', '-2', '-1']" :output="['1', '4', '9']" /&gt;
+<ExamplePreview compact :input="['-3', '-2', '-1']" :output="['1', '4', '9']" />
 
 ### Solution — brute force
 Brute force squares every element, then sorts the squared values. That is correct because sorting restores the lost order after negatives become positive, but it costs O(n log n) time and O(n) output space. The sorted input still gives structure: the largest remaining square must be at the left or right end, so the optimized method fills the output array from back to front in one pass.
@@ -622,11 +622,11 @@ Sort an array of `0`s, `1`s, and `2`s **in place** in a single pass (the Dutch-n
 
 **Example 1:** `[2,0,2,1,1,0]` → `[0,0,1,1,2,2]`.
 
-&lt;ExamplePreview compact :input="['2', '0', '2', '1', '1', '0']" :output="['0', '0', '1', '1', '2', '2']" /&gt;
+<ExamplePreview compact :input="['2', '0', '2', '1', '1', '0']" :output="['0', '0', '1', '1', '2', '2']" />
 
 **Example 2:** `[0]` → `[0]` (already sorted single bucket).
 
-&lt;ExamplePreview compact :input="['0']" :output="['0']" /&gt;
+<ExamplePreview compact :input="['0']" :output="['0']" />
 
 ### Solution — brute force
 Brute force can count how many `0`s, `1`s, and `2`s appear, then overwrite the array with that many of each value. That is O(n) time and O(1) space, but it uses two passes; a comparison sort would be O(n log n) and unnecessary. The Dutch National Flag optimization keeps three regions and partitions in one pass, which is the version to present when the interviewer asks for one-pass in-place sorting.
@@ -757,11 +757,11 @@ Each bar has width 1; compute how much **rain water** is trapped between the bar
 
 **Example 1:** `[0,1,0,2,1,0,1,3,2,1,2,1]` → `6`.
 
-&lt;ExamplePreview compact :input="['0', '1', '0', '2', '1', '0', '1', '3', '2', '1', '2', '1']" :output="['6']" /&gt;
+<ExamplePreview compact :input="['0', '1', '0', '2', '1', '0', '1', '3', '2', '1', '2', '1']" :output="['6']" />
 
 **Example 2:** `[4,2,0,3,2,5]` → `9` (global side walls matter, not nearest bars).
 
-&lt;ExamplePreview compact :input="['4', '2', '0', '3', '2', '5']" :output="['9']" /&gt;
+<ExamplePreview compact :input="['4', '2', '0', '3', '2', '5']" :output="['9']" />
 
 ### Solution — brute force
 Brute force computes water at each index by scanning left for the tallest wall and scanning right for the tallest wall, then adding `min(leftMax, rightMax) - height[i]`. That is correct but costs O(n²) time and O(1) space. Precomputing prefix/suffix maxima gives O(n) time with O(n) space; the shown two-pointer version compresses those maxima into two running values for O(1) extra space.

@@ -121,11 +121,11 @@ Return the **k most frequent** elements of an array (or, in the sibling, the kth
 
 **Example 1:** `nums = [1,1,1,2,2,3], k = 2` → `[1,2]`.
 
-&lt;ExamplePreview compact :input="['1', '1', '1', '2', '2', '3', '|', '2']" :output="['1', '2']" /&gt;
+<ExamplePreview compact :input="['1', '1', '1', '2', '2', '3', '|', '2']" :output="['1', '2']" />
 
 **Example 2:** `nums = [1], k = 1` → `[1]`.
 
-&lt;ExamplePreview compact :input="['1', '|', '1']" :output="['1']" /&gt;
+<ExamplePreview compact :input="['1', '|', '1']" :output="['1']" />
 
 ### Solution — brute force
 First count frequencies. The brute-force way is then to sort all distinct values by decreasing frequency and take the first `k`.

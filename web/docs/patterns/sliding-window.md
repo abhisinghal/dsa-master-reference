@@ -273,11 +273,11 @@ Given an array and an integer `k`, find the contiguous subarray of length **exac
 
 **Example 1:** `nums = [1,12,-5,-6,50,3], k = 4` → `12.75` (the window `[12,-5,-6,50]` has sum 51 → avg 51/4).
 
-&lt;ExamplePreview compact :input="['1', '12', '-5', '-6', '50', '3', '|', '4']" :output="['12.75']" /&gt;
+<ExamplePreview compact :input="['1', '12', '-5', '-6', '50', '3', '|', '4']" :output="['12.75']" />
 
 **Example 2:** `nums = [-5,-1,-3], k = 2` → `-2.0` (best window `[-1,-3]`; all-negative inputs still need the least-bad sum).
 
-&lt;ExamplePreview compact :input="['-5', '-1', '-3', '|', '2']" :output="['-2.0']" /&gt;
+<ExamplePreview compact :input="['-5', '-1', '-3', '|', '2']" :output="['-2.0']" />
 
 ### Solution — brute force
 Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
@@ -633,7 +633,7 @@ Find the length of the **longest substring** (contiguous) that has **all distinc
 
 **Example 1:** `"abcabcbb"` → `3` (the substring `"abc"`).
 
-&lt;ExamplePreview compact :input="['a', 'b', 'c', 'a', 'b', 'c', 'b', 'b']" :output="['3']" /&gt;
+<ExamplePreview compact :input="['a', 'b', 'c', 'a', 'b', 'c', 'b', 'b']" :output="['3']" />
 
 **Example 2:** `s = ""` → `0` (empty string has no substring).
 
@@ -954,7 +954,7 @@ You may replace **at most `k`** characters in the string. Find the length of the
 
 **Example 1:** `"AABABBA", k = 1` → `4`.
 
-&lt;ExamplePreview compact :input="['1']" :output="['4']" /&gt;
+<ExamplePreview compact :input="['1']" :output="['4']" />
 
 **Example 2:** `s = "ABAB", k = 2` → `4` (replace two chars to make the whole string one letter).
 
@@ -1160,11 +1160,11 @@ Given a positive-integer array and a `k`, count the number of **contiguous subar
 
 **Example 1:** `nums = [10,5,2,6], k = 100` → `8`. The 8 valid subarrays are `[10], [5], [2], [6], [10,5], [5,2], [2,6], [5,2,6]`.
 
-&lt;ExamplePreview compact :input="['10', '5', '2', '6', '|', '100']" :output="['8']" /&gt;
+<ExamplePreview compact :input="['10', '5', '2', '6', '|', '100']" :output="['8']" />
 
 **Example 2:** `nums = [1,2,3], k = 0` → `0` (positive products are never below 0).
 
-&lt;ExamplePreview compact :input="['1', '2', '3', '|', '0']" :output="['0']" /&gt;
+<ExamplePreview compact :input="['1', '2', '3', '|', '0']" :output="['0']" />
 
 ### Solution — brute force
 Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.
@@ -1304,11 +1304,11 @@ Given a fixed window of size `k` sliding left-to-right across the array, output 
 
 **Example 1:** `[1,3,-1,-3,5,3,6,7], k = 3` → `[3,3,5,5,6,7]`.
 
-&lt;ExamplePreview compact :input="['1', '3', '-1', '-3', '5', '3', '6', '7', '|', '3']" :output="['3', '3', '5', '5', '6', '7']" /&gt;
+<ExamplePreview compact :input="['1', '3', '-1', '-3', '5', '3', '6', '7', '|', '3']" :output="['3', '3', '5', '5', '6', '7']" />
 
 **Example 2:** `nums = [1], k = 1` → `[1]` (single full window).
 
-&lt;ExamplePreview compact :input="['1', '|', '1']" :output="['1']" /&gt;
+<ExamplePreview compact :input="['1', '|', '1']" :output="['1']" />
 
 ### Solution — brute force
 Start with the direct baseline: enumerate every candidate and compute the answer from scratch. It is correct, but it repeats the exact work that the pattern is meant to reuse.

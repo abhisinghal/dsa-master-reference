@@ -146,7 +146,7 @@ Compute `gcd(a, b)` (largest integer dividing both) and, from it, `lcm(a, b)`. *
 
 **Example 2:** `gcd(17, 13) = 1`, `lcm(17, 13) = 221`.
 
-&lt;ExamplePreview compact :input="['1']" :output="['221']" /&gt;
+<ExamplePreview compact :input="['1']" :output="['221']" />
 
 ### Solution — brute force
 The direct baseline scans possible divisors from large to small until it finds one that divides both numbers.
@@ -246,7 +246,7 @@ Count primes strictly below `n`. **Example 1:** `n = 10 → 4` (2, 3, 5, 7).
 
 **Example 2:** `n = 0` or `n = 2` → `0` primes strictly below n.
 
-&lt;ExamplePreview compact :input="['0']" :output="['2']" /&gt;
+<ExamplePreview compact :input="['0']" :output="['2']" />
 
 **Constraints:** `0 ≤ n ≤ 5·10⁶` — so an O(n√n) per-number test is too slow; the sieve is O(n log log n).
 
