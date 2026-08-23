@@ -20,7 +20,7 @@ Given a sorted array `nums` and an integer `target`, return the index of `target
 />
 ---
 
-<MarkSolved problem-slug="binary-search" />
+<MarkSolved problem-slug="binary-search" /> <Bookmark problem-slug="binary-search" />
 
 <InterviewTimer problem-slug="binary-search" />
 

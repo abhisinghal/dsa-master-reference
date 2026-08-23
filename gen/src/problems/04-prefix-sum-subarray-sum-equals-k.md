@@ -20,7 +20,7 @@ Given an integer array `nums` (may contain negatives) and integer `k`, return th
 />
 ---
 
-<MarkSolved problem-slug="prefix-sum-subarray-sum-equals-k" />
+<MarkSolved problem-slug="prefix-sum-subarray-sum-equals-k" /> <Bookmark problem-slug="prefix-sum-subarray-sum-equals-k" />
 
 <InterviewTimer problem-slug="prefix-sum-subarray-sum-equals-k" />
 

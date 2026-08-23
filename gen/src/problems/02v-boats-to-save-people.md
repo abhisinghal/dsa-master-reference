@@ -20,7 +20,7 @@ Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 />
 ---
 
-<MarkSolved problem-slug="boats-to-save-people" />
+<MarkSolved problem-slug="boats-to-save-people" /> <Bookmark problem-slug="boats-to-save-people" />
 
 <InterviewTimer problem-slug="boats-to-save-people" />
 

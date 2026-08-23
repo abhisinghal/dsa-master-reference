@@ -24,7 +24,7 @@ ts.find(7);  // false
 />
 ---
 
-<MarkSolved problem-slug="two-sum-iii-data-structure-design" />
+<MarkSolved problem-slug="two-sum-iii-data-structure-design" /> <Bookmark problem-slug="two-sum-iii-data-structure-design" />
 
 <InterviewTimer problem-slug="two-sum-iii-data-structure-design" />
 

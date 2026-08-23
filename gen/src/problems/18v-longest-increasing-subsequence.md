@@ -20,7 +20,7 @@ Return the length of the **longest strictly increasing subsequence** of `nums`.
 />
 ---
 
-<MarkSolved problem-slug="longest-increasing-subsequence" />
+<MarkSolved problem-slug="longest-increasing-subsequence" /> <Bookmark problem-slug="longest-increasing-subsequence" />
 
 <InterviewTimer problem-slug="longest-increasing-subsequence" />
 

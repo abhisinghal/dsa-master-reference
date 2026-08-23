@@ -20,7 +20,7 @@ Given an array `fruits` where `fruits[i]` is a type of fruit, and 2 baskets each
 />
 ---
 
-<MarkSolved problem-slug="fruit-into-baskets" />
+<MarkSolved problem-slug="fruit-into-baskets" /> <Bookmark problem-slug="fruit-into-baskets" />
 
 <InterviewTimer problem-slug="fruit-into-baskets" />
 

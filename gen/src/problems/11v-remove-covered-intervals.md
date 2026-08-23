@@ -19,7 +19,7 @@ Count intervals remaining after removing every interval covered by another.
 />
 ---
 
-<MarkSolved problem-slug="remove-covered-intervals" />
+<MarkSolved problem-slug="remove-covered-intervals" /> <Bookmark problem-slug="remove-covered-intervals" />
 
 <InterviewTimer problem-slug="remove-covered-intervals" />
 

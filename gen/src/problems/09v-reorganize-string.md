@@ -20,7 +20,7 @@ Given string `s`, rearrange characters so no two adjacent characters are the sam
 />
 ---
 
-<MarkSolved problem-slug="reorganize-string" />
+<MarkSolved problem-slug="reorganize-string" /> <Bookmark problem-slug="reorganize-string" />
 
 <InterviewTimer problem-slug="reorganize-string" />
 

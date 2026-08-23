@@ -18,7 +18,7 @@ Given `nums` and integer `k`, return the k-th smallest **absolute** distance amo
 />
 ---
 
-<MarkSolved problem-slug="find-k-th-smallest-pair-distance" />
+<MarkSolved problem-slug="find-k-th-smallest-pair-distance" /> <Bookmark problem-slug="find-k-th-smallest-pair-distance" />
 
 <InterviewTimer problem-slug="find-k-th-smallest-pair-distance" />
 

@@ -18,7 +18,7 @@
 />
 ---
 
-<MarkSolved problem-slug="trapping-rain-water-ii" />
+<MarkSolved problem-slug="trapping-rain-water-ii" /> <Bookmark problem-slug="trapping-rain-water-ii" />
 
 <InterviewTimer problem-slug="trapping-rain-water-ii" />
 

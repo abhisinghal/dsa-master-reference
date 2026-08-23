@@ -19,7 +19,7 @@ Grid with obstacles. Count paths from top-left to bottom-right (right/down).
 />
 ---
 
-<MarkSolved problem-slug="unique-paths-ii" />
+<MarkSolved problem-slug="unique-paths-ii" /> <Bookmark problem-slug="unique-paths-ii" />
 
 <InterviewTimer problem-slug="unique-paths-ii" />
 

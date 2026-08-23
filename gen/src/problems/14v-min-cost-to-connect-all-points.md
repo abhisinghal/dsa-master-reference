@@ -19,7 +19,7 @@ Given 2D `points`, connect all with min total Manhattan distance.
 />
 ---
 
-<MarkSolved problem-slug="min-cost-to-connect-all-points" />
+<MarkSolved problem-slug="min-cost-to-connect-all-points" /> <Bookmark problem-slug="min-cost-to-connect-all-points" />
 
 <InterviewTimer problem-slug="min-cost-to-connect-all-points" />
 

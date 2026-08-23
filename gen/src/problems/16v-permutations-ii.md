@@ -18,7 +18,7 @@ All **unique** permutations of nums (may contain duplicates).
 />
 ---
 
-<MarkSolved problem-slug="permutations-ii" />
+<MarkSolved problem-slug="permutations-ii" /> <Bookmark problem-slug="permutations-ii" />
 
 <InterviewTimer problem-slug="permutations-ii" />
 

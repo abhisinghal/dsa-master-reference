@@ -19,7 +19,7 @@ Given distinct integers `nums`, return all possible subsets (the power set).
 />
 ---
 
-<MarkSolved problem-slug="subsets" />
+<MarkSolved problem-slug="subsets" /> <Bookmark problem-slug="subsets" />
 
 <InterviewTimer problem-slug="subsets" />
 

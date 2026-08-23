@@ -20,7 +20,7 @@ Min cuts so every part of `s` is palindrome.
 />
 ---
 
-<MarkSolved problem-slug="palindrome-partitioning-ii" />
+<MarkSolved problem-slug="palindrome-partitioning-ii" /> <Bookmark problem-slug="palindrome-partitioning-ii" />
 
 <InterviewTimer problem-slug="palindrome-partitioning-ii" />
 

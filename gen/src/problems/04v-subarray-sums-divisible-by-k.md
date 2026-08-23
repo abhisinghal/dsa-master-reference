@@ -20,7 +20,7 @@ Count subarrays whose sum is divisible by `k`.
 />
 ---
 
-<MarkSolved problem-slug="subarray-sums-divisible-by-k" />
+<MarkSolved problem-slug="subarray-sums-divisible-by-k" /> <Bookmark problem-slug="subarray-sums-divisible-by-k" />
 
 <InterviewTimer problem-slug="subarray-sums-divisible-by-k" />
 

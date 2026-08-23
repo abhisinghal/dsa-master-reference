@@ -20,7 +20,7 @@ A "happy number" transformation repeatedly replaces `n` by the sum of the square
 />
 ---
 
-<MarkSolved problem-slug="happy-number" />
+<MarkSolved problem-slug="happy-number" /> <Bookmark problem-slug="happy-number" />
 
 <InterviewTimer problem-slug="happy-number" />
 

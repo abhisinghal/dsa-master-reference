@@ -18,7 +18,7 @@ Given `n` houses, `wells[i]` = cost to dig a well at house `i`, and `pipes[i] = 
 />
 ---
 
-<MarkSolved problem-slug="optimize-water-distribution-in-a-village" />
+<MarkSolved problem-slug="optimize-water-distribution-in-a-village" /> <Bookmark problem-slug="optimize-water-distribution-in-a-village" />
 
 <InterviewTimer problem-slug="optimize-water-distribution-in-a-village" />
 

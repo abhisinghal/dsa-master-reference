@@ -20,7 +20,7 @@ Given an integer array `nums` of length `n` and integer `target`, return the sum
 />
 ---
 
-<MarkSolved problem-slug="3sum-closest" />
+<MarkSolved problem-slug="3sum-closest" /> <Bookmark problem-slug="3sum-closest" />
 
 <InterviewTimer problem-slug="3sum-closest" />
 

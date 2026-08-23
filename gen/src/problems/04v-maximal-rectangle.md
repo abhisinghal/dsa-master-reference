@@ -20,7 +20,7 @@ Given a binary matrix, find the largest rectangle containing only `1`s.
 />
 ---
 
-<MarkSolved problem-slug="maximal-rectangle" />
+<MarkSolved problem-slug="maximal-rectangle" /> <Bookmark problem-slug="maximal-rectangle" />
 
 <InterviewTimer problem-slug="maximal-rectangle" />
 

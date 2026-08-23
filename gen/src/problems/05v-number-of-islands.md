@@ -18,7 +18,7 @@ Count connected components of `'1'`s in a binary grid.
 />
 ---
 
-<MarkSolved problem-slug="number-of-islands" />
+<MarkSolved problem-slug="number-of-islands" /> <Bookmark problem-slug="number-of-islands" />
 
 <InterviewTimer problem-slug="number-of-islands" />
 

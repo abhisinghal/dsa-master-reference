@@ -27,7 +27,7 @@ c.book(25, 55); // true
 />
 ---
 
-<MarkSolved problem-slug="my-calendar-ii" />
+<MarkSolved problem-slug="my-calendar-ii" /> <Bookmark problem-slug="my-calendar-ii" />
 
 <InterviewTimer problem-slug="my-calendar-ii" />
 

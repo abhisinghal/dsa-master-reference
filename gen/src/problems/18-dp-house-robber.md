@@ -19,7 +19,7 @@ Given `nums[i]` = value at house `i`, return the max total value you can rob giv
 />
 ---
 
-<MarkSolved problem-slug="dp-house-robber" />
+<MarkSolved problem-slug="dp-house-robber" /> <Bookmark problem-slug="dp-house-robber" />
 
 <InterviewTimer problem-slug="dp-house-robber" />
 

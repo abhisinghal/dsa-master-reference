@@ -19,7 +19,7 @@ Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly 
 />
 ---
 
-<MarkSolved problem-slug="candy" />
+<MarkSolved problem-slug="candy" /> <Bookmark problem-slug="candy" />
 
 <InterviewTimer problem-slug="candy" />
 

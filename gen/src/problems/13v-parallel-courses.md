@@ -19,7 +19,7 @@ Given `n` courses and prerequisites `[a, b]` (must take `a` before `b`), each se
 />
 ---
 
-<MarkSolved problem-slug="parallel-courses" />
+<MarkSolved problem-slug="parallel-courses" /> <Bookmark problem-slug="parallel-courses" />
 
 <InterviewTimer problem-slug="parallel-courses" />
 

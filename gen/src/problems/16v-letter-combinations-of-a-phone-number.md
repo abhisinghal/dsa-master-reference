@@ -19,7 +19,7 @@ Given digits 2-9, return all letter combinations.
 />
 ---
 
-<MarkSolved problem-slug="letter-combinations-of-a-phone-number" />
+<MarkSolved problem-slug="letter-combinations-of-a-phone-number" /> <Bookmark problem-slug="letter-combinations-of-a-phone-number" />
 
 <InterviewTimer problem-slug="letter-combinations-of-a-phone-number" />
 

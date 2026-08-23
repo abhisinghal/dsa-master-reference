@@ -18,7 +18,7 @@ Combinations summing to target, each candidate used at most once; candidates may
 />
 ---
 
-<MarkSolved problem-slug="combination-sum-ii" />
+<MarkSolved problem-slug="combination-sum-ii" /> <Bookmark problem-slug="combination-sum-ii" />
 
 <InterviewTimer problem-slug="combination-sum-ii" />
 

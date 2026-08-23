@@ -20,7 +20,7 @@ Given sorted, non-overlapping `intervals` and a `newInterval`, insert it and mer
 />
 ---
 
-<MarkSolved problem-slug="insert-interval" />
+<MarkSolved problem-slug="insert-interval" /> <Bookmark problem-slug="insert-interval" />
 
 <InterviewTimer problem-slug="insert-interval" />
 

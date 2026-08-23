@@ -17,7 +17,7 @@ Return `true` iff **number of global inversions == number of local inversions**.
 />
 ---
 
-<MarkSolved problem-slug="global-and-local-inversions" />
+<MarkSolved problem-slug="global-and-local-inversions" /> <Bookmark problem-slug="global-and-local-inversions" />
 
 <InterviewTimer problem-slug="global-and-local-inversions" />
 

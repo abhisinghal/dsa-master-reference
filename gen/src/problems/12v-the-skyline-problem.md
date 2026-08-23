@@ -18,7 +18,7 @@ Given buildings `[left, right, height]`, return the skyline as key points `[x, y
 />
 ---
 
-<MarkSolved problem-slug="the-skyline-problem" />
+<MarkSolved problem-slug="the-skyline-problem" /> <Bookmark problem-slug="the-skyline-problem" />
 
 <InterviewTimer problem-slug="the-skyline-problem" />
 

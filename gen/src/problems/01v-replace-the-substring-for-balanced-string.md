@@ -18,7 +18,7 @@ String of Q,W,E,R (length n divisible by 4). Return length of smallest substring
 />
 ---
 
-<MarkSolved problem-slug="replace-the-substring-for-balanced-string" />
+<MarkSolved problem-slug="replace-the-substring-for-balanced-string" /> <Bookmark problem-slug="replace-the-substring-for-balanced-string" />
 
 <InterviewTimer problem-slug="replace-the-substring-for-balanced-string" />
 

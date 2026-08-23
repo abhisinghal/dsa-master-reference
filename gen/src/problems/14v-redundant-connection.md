@@ -19,7 +19,7 @@ Given an undirected graph that starts as a tree with `n` nodes and has **one** e
 />
 ---
 
-<MarkSolved problem-slug="redundant-connection" />
+<MarkSolved problem-slug="redundant-connection" /> <Bookmark problem-slug="redundant-connection" />
 
 <InterviewTimer problem-slug="redundant-connection" />
 

@@ -18,7 +18,7 @@ All **unique** subsets when nums may contain duplicates.
 />
 ---
 
-<MarkSolved problem-slug="subsets-ii" />
+<MarkSolved problem-slug="subsets-ii" /> <Bookmark problem-slug="subsets-ii" />
 
 <InterviewTimer problem-slug="subsets-ii" />
 

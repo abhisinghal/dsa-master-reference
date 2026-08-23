@@ -19,7 +19,7 @@
 />
 ---
 
-<MarkSolved problem-slug="paint-house-ii" />
+<MarkSolved problem-slug="paint-house-ii" /> <Bookmark problem-slug="paint-house-ii" />
 
 <InterviewTimer problem-slug="paint-house-ii" />
 

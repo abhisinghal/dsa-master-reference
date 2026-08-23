@@ -19,7 +19,7 @@ Steps of 1 or 2. Number of ways to reach step `n`.
 />
 ---
 
-<MarkSolved problem-slug="climbing-stairs" />
+<MarkSolved problem-slug="climbing-stairs" /> <Bookmark problem-slug="climbing-stairs" />
 
 <InterviewTimer problem-slug="climbing-stairs" />
 

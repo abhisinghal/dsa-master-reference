@@ -19,7 +19,7 @@ Two lists of **sorted, disjoint** intervals. Return their intersection.
 />
 ---
 
-<MarkSolved problem-slug="interval-list-intersections" />
+<MarkSolved problem-slug="interval-list-intersections" /> <Bookmark problem-slug="interval-list-intersections" />
 
 <InterviewTimer problem-slug="interval-list-intersections" />
 

@@ -20,7 +20,7 @@ Given strings `s1` and `s2`, return `true` iff `s2` contains any permutation of 
 />
 ---
 
-<MarkSolved problem-slug="permutation-in-string" />
+<MarkSolved problem-slug="permutation-in-string" /> <Bookmark problem-slug="permutation-in-string" />
 
 <InterviewTimer problem-slug="permutation-in-string" />
 

@@ -20,7 +20,7 @@ Given a rotated ascending array `nums` and `target`, return its index or `-1`. T
 />
 ---
 
-<MarkSolved problem-slug="binary-search-rotated-sorted" />
+<MarkSolved problem-slug="binary-search-rotated-sorted" /> <Bookmark problem-slug="binary-search-rotated-sorted" />
 
 <InterviewTimer problem-slug="binary-search-rotated-sorted" />
 

@@ -28,7 +28,7 @@ S.next(85);    // 6
 />
 ---
 
-<MarkSolved problem-slug="online-stock-span" />
+<MarkSolved problem-slug="online-stock-span" /> <Bookmark problem-slug="online-stock-span" />
 
 <InterviewTimer problem-slug="online-stock-span" />
 

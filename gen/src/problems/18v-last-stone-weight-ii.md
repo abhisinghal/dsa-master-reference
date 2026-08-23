@@ -19,7 +19,7 @@ Smash pairs (larger becomes diff). Minimize final remaining weight.
 />
 ---
 
-<MarkSolved problem-slug="last-stone-weight-ii" />
+<MarkSolved problem-slug="last-stone-weight-ii" /> <Bookmark problem-slug="last-stone-weight-ii" />
 
 <InterviewTimer problem-slug="last-stone-weight-ii" />
 

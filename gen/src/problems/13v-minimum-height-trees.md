@@ -19,7 +19,7 @@ Given an undirected tree of `n` nodes, return all nodes that when picked as root
 />
 ---
 
-<MarkSolved problem-slug="minimum-height-trees" />
+<MarkSolved problem-slug="minimum-height-trees" /> <Bookmark problem-slug="minimum-height-trees" />
 
 <InterviewTimer problem-slug="minimum-height-trees" />
 

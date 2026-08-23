@@ -20,7 +20,7 @@ Given an integer array `nums`, return all **unique** triplets `[nums[i], nums[j]
 />
 ---
 
-<MarkSolved problem-slug="3sum" />
+<MarkSolved problem-slug="3sum" /> <Bookmark problem-slug="3sum" />
 
 <InterviewTimer problem-slug="3sum" />
 

@@ -20,7 +20,7 @@ Given a binary array `nums` and integer `k`, return the maximum length of a suba
 />
 ---
 
-<MarkSolved problem-slug="max-consecutive-ones-iii" />
+<MarkSolved problem-slug="max-consecutive-ones-iii" /> <Bookmark problem-slug="max-consecutive-ones-iii" />
 
 <InterviewTimer problem-slug="max-consecutive-ones-iii" />
 

@@ -19,7 +19,7 @@ All partitions of `s` where every part is a palindrome.
 />
 ---
 
-<MarkSolved problem-slug="palindrome-partitioning" />
+<MarkSolved problem-slug="palindrome-partitioning" /> <Bookmark problem-slug="palindrome-partitioning" />
 
 <InterviewTimer problem-slug="palindrome-partitioning" />
 

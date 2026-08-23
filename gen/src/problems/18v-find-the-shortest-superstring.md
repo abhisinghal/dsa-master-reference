@@ -19,7 +19,7 @@ Return shortest string containing every given word as substring.
 />
 ---
 
-<MarkSolved problem-slug="find-the-shortest-superstring" />
+<MarkSolved problem-slug="find-the-shortest-superstring" /> <Bookmark problem-slug="find-the-shortest-superstring" />
 
 <InterviewTimer problem-slug="find-the-shortest-superstring" />
 

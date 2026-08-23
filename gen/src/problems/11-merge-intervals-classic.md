@@ -19,7 +19,7 @@ Given a list of intervals, merge all overlapping ones and return the result.
 />
 ---
 
-<MarkSolved problem-slug="merge-intervals-classic" />
+<MarkSolved problem-slug="merge-intervals-classic" /> <Bookmark problem-slug="merge-intervals-classic" />
 
 <InterviewTimer problem-slug="merge-intervals-classic" />
 

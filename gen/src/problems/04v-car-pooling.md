@@ -20,7 +20,7 @@ Given trips `[numPassengers, from, to]` and car `capacity`, return `true` iff yo
 />
 ---
 
-<MarkSolved problem-slug="car-pooling" />
+<MarkSolved problem-slug="car-pooling" /> <Bookmark problem-slug="car-pooling" />
 
 <InterviewTimer problem-slug="car-pooling" />
 

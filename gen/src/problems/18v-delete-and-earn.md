@@ -19,7 +19,7 @@ Delete `x` to earn `x` points; also removes all `x-1` and `x+1`. Max points.
 />
 ---
 
-<MarkSolved problem-slug="delete-and-earn" />
+<MarkSolved problem-slug="delete-and-earn" /> <Bookmark problem-slug="delete-and-earn" />
 
 <InterviewTimer problem-slug="delete-and-earn" />
 

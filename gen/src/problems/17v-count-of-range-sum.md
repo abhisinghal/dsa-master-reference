@@ -19,7 +19,7 @@ Count subarrays whose sum lies in `[lower, upper]` (inclusive).
 />
 ---
 
-<MarkSolved problem-slug="count-of-range-sum" />
+<MarkSolved problem-slug="count-of-range-sum" /> <Bookmark problem-slug="count-of-range-sum" />
 
 <InterviewTimer problem-slug="count-of-range-sum" />
 

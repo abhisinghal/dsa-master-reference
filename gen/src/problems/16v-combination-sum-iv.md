@@ -19,7 +19,7 @@ Count ordered sequences of `nums` summing to `target`. `[1,2]` and `[2,1]` are d
 />
 ---
 
-<MarkSolved problem-slug="combination-sum-iv" />
+<MarkSolved problem-slug="combination-sum-iv" /> <Bookmark problem-slug="combination-sum-iv" />
 
 <InterviewTimer problem-slug="combination-sum-iv" />
 

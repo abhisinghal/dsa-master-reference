@@ -19,7 +19,7 @@ Given `temps`, return `answer` where `answer[i]` is the number of days until a w
 />
 ---
 
-<MarkSolved problem-slug="monotonic-stack-daily-temperatures" />
+<MarkSolved problem-slug="monotonic-stack-daily-temperatures" /> <Bookmark problem-slug="monotonic-stack-daily-temperatures" />
 
 <InterviewTimer problem-slug="monotonic-stack-daily-temperatures" />
 

@@ -18,7 +18,7 @@ Given `"dir file1.ext(content) file2.ext(content) …"` strings, group files wit
 />
 ---
 
-<MarkSolved problem-slug="find-duplicate-file-in-system" />
+<MarkSolved problem-slug="find-duplicate-file-in-system" /> <Bookmark problem-slug="find-duplicate-file-in-system" />
 
 <InterviewTimer problem-slug="find-duplicate-file-in-system" />
 

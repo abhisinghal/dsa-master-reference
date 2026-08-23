@@ -20,7 +20,7 @@ Sorted array rotated at unknown pivot, **may contain duplicates**. Return true i
 />
 ---
 
-<MarkSolved problem-slug="search-in-rotated-sorted-array-ii" />
+<MarkSolved problem-slug="search-in-rotated-sorted-array-ii" /> <Bookmark problem-slug="search-in-rotated-sorted-array-ii" />
 
 <InterviewTimer problem-slug="search-in-rotated-sorted-array-ii" />
 

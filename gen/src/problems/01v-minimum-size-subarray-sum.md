@@ -20,7 +20,7 @@ Given a positive-int array `nums` and target `target`, return the minimal length
 />
 ---
 
-<MarkSolved problem-slug="minimum-size-subarray-sum" />
+<MarkSolved problem-slug="minimum-size-subarray-sum" /> <Bookmark problem-slug="minimum-size-subarray-sum" />
 
 <InterviewTimer problem-slug="minimum-size-subarray-sum" />
 

@@ -19,7 +19,7 @@ Sort a linked list in **O(n log n)** time, O(1) extra space (constant beyond rec
 />
 ---
 
-<MarkSolved problem-slug="sort-list" />
+<MarkSolved problem-slug="sort-list" /> <Bookmark problem-slug="sort-list" />
 
 <InterviewTimer problem-slug="sort-list" />
 

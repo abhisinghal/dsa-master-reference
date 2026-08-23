@@ -131,6 +131,8 @@ features:
 
 <DueForReview />
 
+<BookmarksList />
+
 <div class="stats-strip">
   <div class="stat">
     <div class="stat-value">338</div>

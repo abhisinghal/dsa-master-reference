@@ -20,7 +20,7 @@
 />
 ---
 
-<MarkSolved problem-slug="jump-game" />
+<MarkSolved problem-slug="jump-game" /> <Bookmark problem-slug="jump-game" />
 
 <InterviewTimer problem-slug="jump-game" />
 

@@ -18,7 +18,7 @@ Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r
 />
 ---
 
-<MarkSolved problem-slug="burst-balloons" />
+<MarkSolved problem-slug="burst-balloons" /> <Bookmark problem-slug="burst-balloons" />
 
 <InterviewTimer problem-slug="burst-balloons" />
 

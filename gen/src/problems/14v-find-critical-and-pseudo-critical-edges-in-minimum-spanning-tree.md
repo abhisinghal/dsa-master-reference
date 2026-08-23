@@ -20,7 +20,7 @@ Given a graph, classify each edge:
 />
 ---
 
-<MarkSolved problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />
+<MarkSolved problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" /> <Bookmark problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />
 
 <InterviewTimer problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />
 

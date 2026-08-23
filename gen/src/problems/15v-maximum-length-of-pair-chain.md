@@ -19,7 +19,7 @@ Pair `[a,b]` chains with next `[c,d]` iff `c > b`. Return longest chain length.
 />
 ---
 
-<MarkSolved problem-slug="maximum-length-of-pair-chain" />
+<MarkSolved problem-slug="maximum-length-of-pair-chain" /> <Bookmark problem-slug="maximum-length-of-pair-chain" />
 
 <InterviewTimer problem-slug="maximum-length-of-pair-chain" />
 

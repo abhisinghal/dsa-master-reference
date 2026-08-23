@@ -19,7 +19,7 @@ Balloons span `[xstart, xend]`. Arrow at x bursts every balloon whose span conta
 />
 ---
 
-<MarkSolved problem-slug="minimum-number-of-arrows-to-burst-balloons" />
+<MarkSolved problem-slug="minimum-number-of-arrows-to-burst-balloons" /> <Bookmark problem-slug="minimum-number-of-arrows-to-burst-balloons" />
 
 <InterviewTimer problem-slug="minimum-number-of-arrows-to-burst-balloons" />
 

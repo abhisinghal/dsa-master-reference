@@ -20,7 +20,7 @@ Given `n` flights and bookings `[first, last, seats]`, return an array where ind
 />
 ---
 
-<MarkSolved problem-slug="corporate-flight-bookings" />
+<MarkSolved problem-slug="corporate-flight-bookings" /> <Bookmark problem-slug="corporate-flight-bookings" />
 
 <InterviewTimer problem-slug="corporate-flight-bookings" />
 

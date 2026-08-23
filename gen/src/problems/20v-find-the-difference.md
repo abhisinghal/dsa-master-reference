@@ -19,7 +19,7 @@
 />
 ---
 
-<MarkSolved problem-slug="find-the-difference" />
+<MarkSolved problem-slug="find-the-difference" /> <Bookmark problem-slug="find-the-difference" />
 
 <InterviewTimer problem-slug="find-the-difference" />
 

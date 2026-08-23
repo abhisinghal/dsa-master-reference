@@ -18,7 +18,7 @@ Given a list of distinct words, return all words that can be built as a concaten
 />
 ---
 
-<MarkSolved problem-slug="concatenated-words" />
+<MarkSolved problem-slug="concatenated-words" /> <Bookmark problem-slug="concatenated-words" />
 
 <InterviewTimer problem-slug="concatenated-words" />
 

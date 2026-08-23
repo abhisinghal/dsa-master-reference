@@ -20,7 +20,7 @@ Given an integer array `nums` and integer `target`, return all unique quadruplet
 />
 ---
 
-<MarkSolved problem-slug="4sum" />
+<MarkSolved problem-slug="4sum" /> <Bookmark problem-slug="4sum" />
 
 <InterviewTimer problem-slug="4sum" />
 

@@ -18,7 +18,7 @@ Reverse the bits of a 32-bit unsigned integer.
 />
 ---
 
-<MarkSolved problem-slug="reverse-bits" />
+<MarkSolved problem-slug="reverse-bits" /> <Bookmark problem-slug="reverse-bits" />
 
 <InterviewTimer problem-slug="reverse-bits" />
 

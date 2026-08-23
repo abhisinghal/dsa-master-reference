@@ -19,7 +19,7 @@ Given bar heights, return the largest rectangle contained.
 />
 ---
 
-<MarkSolved problem-slug="largest-rectangle-in-histogram" />
+<MarkSolved problem-slug="largest-rectangle-in-histogram" /> <Bookmark problem-slug="largest-rectangle-in-histogram" />
 
 <InterviewTimer problem-slug="largest-rectangle-in-histogram" />
 

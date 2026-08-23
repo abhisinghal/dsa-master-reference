@@ -26,7 +26,7 @@ w.search("b.."); // true
 />
 ---
 
-<MarkSolved problem-slug="design-add-and-search-words-data-structure" />
+<MarkSolved problem-slug="design-add-and-search-words-data-structure" /> <Bookmark problem-slug="design-add-and-search-words-data-structure" />
 
 <InterviewTimer problem-slug="design-add-and-search-words-data-structure" />
 

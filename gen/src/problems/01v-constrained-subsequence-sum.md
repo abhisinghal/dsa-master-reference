@@ -20,7 +20,7 @@ Max sum of a subsequence where every two consecutive chosen indices differ by at
 />
 ---
 
-<MarkSolved problem-slug="constrained-subsequence-sum" />
+<MarkSolved problem-slug="constrained-subsequence-sum" /> <Bookmark problem-slug="constrained-subsequence-sum" />
 
 <InterviewTimer problem-slug="constrained-subsequence-sum" />
 

@@ -20,7 +20,7 @@ Given words sorted alphabetically in an alien language, return the character ord
 />
 ---
 
-<MarkSolved problem-slug="alien-dictionary" />
+<MarkSolved problem-slug="alien-dictionary" /> <Bookmark problem-slug="alien-dictionary" />
 
 <InterviewTimer problem-slug="alien-dictionary" />
 

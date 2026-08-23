@@ -20,7 +20,7 @@ Max sum of a contiguous non-empty subarray.
 />
 ---
 
-<MarkSolved problem-slug="maximum-subarray" />
+<MarkSolved problem-slug="maximum-subarray" /> <Bookmark problem-slug="maximum-subarray" />
 
 <InterviewTimer problem-slug="maximum-subarray" />
 

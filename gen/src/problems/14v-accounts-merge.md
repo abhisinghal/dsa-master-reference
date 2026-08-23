@@ -19,7 +19,7 @@ Given accounts `[name, email1, email2, …]`, merge accounts sharing any email i
 />
 ---
 
-<MarkSolved problem-slug="accounts-merge" />
+<MarkSolved problem-slug="accounts-merge" /> <Bookmark problem-slug="accounts-merge" />
 
 <InterviewTimer problem-slug="accounts-merge" />
 

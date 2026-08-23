@@ -20,7 +20,7 @@ Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 />
 ---
 
-<MarkSolved problem-slug="shortest-subarray-with-sum-at-least-k" />
+<MarkSolved problem-slug="shortest-subarray-with-sum-at-least-k" /> <Bookmark problem-slug="shortest-subarray-with-sum-at-least-k" />
 
 <InterviewTimer problem-slug="shortest-subarray-with-sum-at-least-k" />
 

@@ -19,7 +19,7 @@ Given meeting intervals `[[start, end)]`, return the minimum number of rooms req
 />
 ---
 
-<MarkSolved problem-slug="sweep-line-meeting-rooms-ii" />
+<MarkSolved problem-slug="sweep-line-meeting-rooms-ii" /> <Bookmark problem-slug="sweep-line-meeting-rooms-ii" />
 
 <InterviewTimer problem-slug="sweep-line-meeting-rooms-ii" />
 

@@ -20,7 +20,7 @@ Given the head of a singly linked list, return `true` iff it's a palindrome.
 />
 ---
 
-<MarkSolved problem-slug="palindrome-linked-list" />
+<MarkSolved problem-slug="palindrome-linked-list" /> <Bookmark problem-slug="palindrome-linked-list" />
 
 <InterviewTimer problem-slug="palindrome-linked-list" />
 

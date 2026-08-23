@@ -18,7 +18,7 @@ Group strings that are cyclic shifts of each other.
 />
 ---
 
-<MarkSolved problem-slug="group-shifted-strings" />
+<MarkSolved problem-slug="group-shifted-strings" /> <Bookmark problem-slug="group-shifted-strings" />
 
 <InterviewTimer problem-slug="group-shifted-strings" />
 

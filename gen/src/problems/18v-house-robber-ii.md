@@ -19,7 +19,7 @@ Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 />
 ---
 
-<MarkSolved problem-slug="house-robber-ii" />
+<MarkSolved problem-slug="house-robber-ii" /> <Bookmark problem-slug="house-robber-ii" />
 
 <InterviewTimer problem-slug="house-robber-ii" />
 

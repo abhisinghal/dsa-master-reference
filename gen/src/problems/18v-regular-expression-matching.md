@@ -20,7 +20,7 @@ Match `s` against `p` with `.` (any char) and `*` (0+ of prev char).
 />
 ---
 
-<MarkSolved problem-slug="regular-expression-matching" />
+<MarkSolved problem-slug="regular-expression-matching" /> <Bookmark problem-slug="regular-expression-matching" />
 
 <InterviewTimer problem-slug="regular-expression-matching" />
 

@@ -20,7 +20,7 @@ Given matrix and integer `target`, count submatrices whose sum equals `target`.
 />
 ---
 
-<MarkSolved problem-slug="count-submatrices-with-target-sum" />
+<MarkSolved problem-slug="count-submatrices-with-target-sum" /> <Bookmark problem-slug="count-submatrices-with-target-sum" />
 
 <InterviewTimer problem-slug="count-submatrices-with-target-sum" />
 

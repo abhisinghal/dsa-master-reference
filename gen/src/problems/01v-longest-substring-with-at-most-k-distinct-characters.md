@@ -20,7 +20,7 @@ Given a string `s` and integer `k`, return the length of the longest substring c
 />
 ---
 
-<MarkSolved problem-slug="longest-substring-with-at-most-k-distinct-characters" />
+<MarkSolved problem-slug="longest-substring-with-at-most-k-distinct-characters" /> <Bookmark problem-slug="longest-substring-with-at-most-k-distinct-characters" />
 
 <InterviewTimer problem-slug="longest-substring-with-at-most-k-distinct-characters" />
 

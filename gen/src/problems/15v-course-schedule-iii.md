@@ -18,7 +18,7 @@ Each course `[duration, lastDay]`. Take max number of courses (one at a time). E
 />
 ---
 
-<MarkSolved problem-slug="course-schedule-iii" />
+<MarkSolved problem-slug="course-schedule-iii" /> <Bookmark problem-slug="course-schedule-iii" />
 
 <InterviewTimer problem-slug="course-schedule-iii" />
 
