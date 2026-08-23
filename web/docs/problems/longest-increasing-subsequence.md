@@ -22,6 +22,9 @@ Return the length of the **longest strictly increasing subsequence** of `nums`.
 
 &lt;MarkSolved problem-slug="longest-increasing-subsequence" /&gt;
 
+&lt;InterviewTimer problem-slug="longest-increasing-subsequence" /&gt;
+
+
 
 ## Approach 1 — Brute force recursion
 

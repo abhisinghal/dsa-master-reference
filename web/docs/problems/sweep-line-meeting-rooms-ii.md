@@ -21,6 +21,9 @@ Given meeting intervals `[[start, end)]`, return the minimum number of rooms req
 
 &lt;MarkSolved problem-slug="sweep-line-meeting-rooms-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="sweep-line-meeting-rooms-ii" /&gt;
+
+
 
 ## Approach 1 — Brute force (per-minute counter)
 

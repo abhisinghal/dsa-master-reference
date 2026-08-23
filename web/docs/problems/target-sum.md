@@ -21,6 +21,9 @@ Assign + or − to each `nums[i]`; count ways to reach `target`.
 
 &lt;MarkSolved problem-slug="target-sum" /&gt;
 
+&lt;InterviewTimer problem-slug="target-sum" /&gt;
+
+
 
 ## Approach 1 — Backtracking
 O(2ⁿ). Baseline.

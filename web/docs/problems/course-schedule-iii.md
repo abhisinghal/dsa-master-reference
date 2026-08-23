@@ -20,6 +20,9 @@ Each course `[duration, lastDay]`. Take max number of courses (one at a time). E
 
 &lt;MarkSolved problem-slug="course-schedule-iii" /&gt;
 
+&lt;InterviewTimer problem-slug="course-schedule-iii" /&gt;
+
+
 
 ## Approach — Sort by deadline + max-heap regret (canonical)
 

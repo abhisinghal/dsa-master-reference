@@ -22,6 +22,9 @@ Count subarrays whose sum is divisible by `k`.
 
 &lt;MarkSolved problem-slug="subarray-sums-divisible-by-k" /&gt;
 
+&lt;InterviewTimer problem-slug="subarray-sums-divisible-by-k" /&gt;
+
+
 
 ## Approach 1 — Every subarray
 

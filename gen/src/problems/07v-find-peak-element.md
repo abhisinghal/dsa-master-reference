@@ -22,6 +22,9 @@ A peak is an element strictly greater than its neighbors. Given `nums` (with `nu
 
 <MarkSolved problem-slug="find-peak-element" />
 
+<InterviewTimer problem-slug="find-peak-element" />
+
+
 
 ## Approach 1 — Linear scan
 

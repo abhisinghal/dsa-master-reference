@@ -21,6 +21,9 @@ Given an integer array `arr`, return the sum of `min(subarray)` over every conti
 
 &lt;MarkSolved problem-slug="sum-of-subarray-minimums" /&gt;
 
+&lt;InterviewTimer problem-slug="sum-of-subarray-minimums" /&gt;
+
+
 
 ## Approach 1 — Enumerate every subarray
 

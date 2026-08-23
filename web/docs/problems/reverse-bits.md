@@ -20,6 +20,9 @@ Reverse the bits of a 32-bit unsigned integer.
 
 &lt;MarkSolved problem-slug="reverse-bits" /&gt;
 
+&lt;InterviewTimer problem-slug="reverse-bits" /&gt;
+
+
 
 ## Approach 1 — Bit-by-bit
 

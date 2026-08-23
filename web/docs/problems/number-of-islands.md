@@ -20,6 +20,9 @@ Count connected components of `'1'`s in a binary grid.
 
 &lt;MarkSolved problem-slug="number-of-islands" /&gt;
 
+&lt;InterviewTimer problem-slug="number-of-islands" /&gt;
+
+
 
 ## Approach 1 — DFS flood fill (canonical)
 

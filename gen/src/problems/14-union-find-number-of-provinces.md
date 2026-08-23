@@ -21,6 +21,9 @@ Given `isConnected[n][n]` (adjacency matrix; `1` if direct road), return the num
 
 <MarkSolved problem-slug="union-find-number-of-provinces" />
 
+<InterviewTimer problem-slug="union-find-number-of-provinces" />
+
+
 
 ## Approach 1 — DFS from each unvisited city
 

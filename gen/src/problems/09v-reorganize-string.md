@@ -22,6 +22,9 @@ Given string `s`, rearrange characters so no two adjacent characters are the sam
 
 <MarkSolved problem-slug="reorganize-string" />
 
+<InterviewTimer problem-slug="reorganize-string" />
+
+
 
 ## Approach 1 — Try all permutations (backtracking)
 

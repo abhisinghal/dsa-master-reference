@@ -21,6 +21,9 @@ Pair `[a,b]` chains with next `[c,d]` iff `c > b`. Return longest chain length.
 
 &lt;MarkSolved problem-slug="maximum-length-of-pair-chain" /&gt;
 
+&lt;InterviewTimer problem-slug="maximum-length-of-pair-chain" /&gt;
+
+
 
 ## Approach 1 — DP (LIS-style)
 

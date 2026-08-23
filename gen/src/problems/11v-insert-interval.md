@@ -22,6 +22,9 @@ Given sorted, non-overlapping `intervals` and a `newInterval`, insert it and mer
 
 <MarkSolved problem-slug="insert-interval" />
 
+<InterviewTimer problem-slug="insert-interval" />
+
+
 
 ## Approach 1 — Append + full merge
 

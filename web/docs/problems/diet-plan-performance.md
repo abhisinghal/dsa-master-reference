@@ -20,6 +20,9 @@ Fixed window of size `k` over calories. For each window: +1 if sum &gt; upper; â
 
 &lt;MarkSolved problem-slug="diet-plan-performance" /&gt;
 
+&lt;InterviewTimer problem-slug="diet-plan-performance" /&gt;
+
+
 
 ## Approach â€” Fixed-window running sum (canonical)
 

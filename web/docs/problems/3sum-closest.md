@@ -22,6 +22,9 @@ Given an integer array `nums` of length `n` and integer `target`, return the sum
 
 &lt;MarkSolved problem-slug="3sum-closest" /&gt;
 
+&lt;InterviewTimer problem-slug="3sum-closest" /&gt;
+
+
 
 ## Approach 1 — Triple nested loop
 

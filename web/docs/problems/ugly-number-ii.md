@@ -22,6 +22,9 @@ An **ugly number** has only 2, 3, or 5 as prime factors. `1` is ugly by conventi
 
 &lt;MarkSolved problem-slug="ugly-number-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="ugly-number-ii" /&gt;
+
+
 
 ## Approach 1 — Test each candidate
 

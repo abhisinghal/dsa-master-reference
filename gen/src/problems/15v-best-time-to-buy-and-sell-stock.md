@@ -21,6 +21,9 @@ At most one buy + one sell. Max profit.
 
 <MarkSolved problem-slug="best-time-to-buy-and-sell-stock" />
 
+<InterviewTimer problem-slug="best-time-to-buy-and-sell-stock" />
+
+
 
 ## Approach 1 — Compare every pair
 

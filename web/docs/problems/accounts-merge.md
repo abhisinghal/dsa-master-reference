@@ -21,6 +21,9 @@ Given accounts `[name, email1, email2, …]`, merge accounts sharing any email i
 
 &lt;MarkSolved problem-slug="accounts-merge" /&gt;
 
+&lt;InterviewTimer problem-slug="accounts-merge" /&gt;
+
+
 
 ## Approach 1 — DFS on email graph
 

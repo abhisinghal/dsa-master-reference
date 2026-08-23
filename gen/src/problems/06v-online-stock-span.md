@@ -30,6 +30,9 @@ S.next(85);    // 6
 
 <MarkSolved problem-slug="online-stock-span" />
 
+<InterviewTimer problem-slug="online-stock-span" />
+
+
 
 ## Approach 1 — Store all prices, scan on each `next`
 

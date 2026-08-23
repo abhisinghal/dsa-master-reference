@@ -21,6 +21,9 @@ Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
 
 &lt;MarkSolved problem-slug="video-stitching" /&gt;
 
+&lt;InterviewTimer problem-slug="video-stitching" /&gt;
+
+
 
 ## Approach — Sort by start + farthest reach (canonical)
 

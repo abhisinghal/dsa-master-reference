@@ -22,6 +22,9 @@ Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 
 &lt;MarkSolved problem-slug="shortest-subarray-with-sum-at-least-k" /&gt;
 
+&lt;InterviewTimer problem-slug="shortest-subarray-with-sum-at-least-k" /&gt;
+
+
 
 ## Approach 1 — Sliding window fails
 

@@ -22,6 +22,9 @@ Min cuts so every part of `s` is palindrome.
 
 <MarkSolved problem-slug="palindrome-partitioning-ii" />
 
+<InterviewTimer problem-slug="palindrome-partitioning-ii" />
+
+
 
 ## Approach — Two DPs (canonical)
 

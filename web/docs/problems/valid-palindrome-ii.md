@@ -22,6 +22,9 @@ Given a string `s`, return `true` if it can become a palindrome by deleting **at
 
 &lt;MarkSolved problem-slug="valid-palindrome-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="valid-palindrome-ii" /&gt;
+
+
 
 ## Approach 1 — Try deleting each position
 

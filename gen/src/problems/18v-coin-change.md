@@ -22,6 +22,9 @@ Given `coins` (unbounded supply of each) and `amount`, return the **minimum** nu
 
 <MarkSolved problem-slug="coin-change" />
 
+<InterviewTimer problem-slug="coin-change" />
+
+
 
 ## Approach 1 — Brute force recursion
 

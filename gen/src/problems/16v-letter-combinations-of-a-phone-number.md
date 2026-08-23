@@ -21,6 +21,9 @@ Given digits 2-9, return all letter combinations.
 
 <MarkSolved problem-slug="letter-combinations-of-a-phone-number" />
 
+<InterviewTimer problem-slug="letter-combinations-of-a-phone-number" />
+
+
 
 ## Approach 1 — DFS enumeration (canonical)
 

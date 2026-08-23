@@ -21,6 +21,9 @@ Return max product of a contiguous subarray.
 
 &lt;MarkSolved problem-slug="maximum-product-subarray" /&gt;
 
+&lt;InterviewTimer problem-slug="maximum-product-subarray" /&gt;
+
+
 
 ## Approach 1 — Try every subarray
 

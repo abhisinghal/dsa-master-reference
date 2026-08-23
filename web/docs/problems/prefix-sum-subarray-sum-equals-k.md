@@ -22,6 +22,9 @@ Given an integer array `nums` (may contain negatives) and integer `k`, return th
 
 &lt;MarkSolved problem-slug="prefix-sum-subarray-sum-equals-k" /&gt;
 
+&lt;InterviewTimer problem-slug="prefix-sum-subarray-sum-equals-k" /&gt;
+
+
 
 ## Approach 1 — Brute force (all subarrays)
 

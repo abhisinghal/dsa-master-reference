@@ -20,6 +20,9 @@ Place `n` queens on an `n × n` board so no two attack each other. Return all di
 
 <MarkSolved problem-slug="backtracking-n-queens" />
 
+<InterviewTimer problem-slug="backtracking-n-queens" />
+
+
 
 ## Approach 1 — Brute force (all n^n placements)
 

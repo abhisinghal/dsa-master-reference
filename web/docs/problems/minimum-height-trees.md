@@ -21,6 +21,9 @@ Given an undirected tree of `n` nodes, return all nodes that when picked as root
 
 &lt;MarkSolved problem-slug="minimum-height-trees" /&gt;
 
+&lt;InterviewTimer problem-slug="minimum-height-trees" /&gt;
+
+
 
 ## Approach 1 — Try each node as root, BFS
 

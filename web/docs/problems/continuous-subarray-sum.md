@@ -22,6 +22,9 @@ Return true iff there is a subarray of length **≥ 2** whose sum is a multiple 
 
 &lt;MarkSolved problem-slug="continuous-subarray-sum" /&gt;
 
+&lt;InterviewTimer problem-slug="continuous-subarray-sum" /&gt;
+
+
 
 ## Approach 1 — Every subarray
 

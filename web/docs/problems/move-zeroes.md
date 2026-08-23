@@ -21,6 +21,9 @@ Move all zeros to end preserving order of non-zeros. In-place.
 
 &lt;MarkSolved problem-slug="move-zeroes" /&gt;
 
+&lt;InterviewTimer problem-slug="move-zeroes" /&gt;
+
+
 
 ## Approach 1 — Two-pass write
 

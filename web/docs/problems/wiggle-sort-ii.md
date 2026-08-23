@@ -21,6 +21,9 @@ Reorder `nums` so `a[0] < a[1] > a[2] < a[3] …` (strict inequality).
 
 &lt;MarkSolved problem-slug="wiggle-sort-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="wiggle-sort-ii" /&gt;
+
+
 
 ## Approach 1 — Sort + interleave (canonical simple)
 

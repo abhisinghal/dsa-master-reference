@@ -21,6 +21,9 @@ Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i =
 
 &lt;MarkSolved problem-slug="beautiful-arrangement" /&gt;
 
+&lt;InterviewTimer problem-slug="beautiful-arrangement" /&gt;
+
+
 
 ## Approach 1 — Backtracking with used-mask
 

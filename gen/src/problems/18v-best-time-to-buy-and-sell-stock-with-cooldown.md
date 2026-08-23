@@ -20,6 +20,9 @@ Unlimited transactions; must skip one day between sell and next buy.
 
 <MarkSolved problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" />
 
+<InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-with-cooldown" />
+
+
 
 ## Approach — State-machine DP (canonical)
 

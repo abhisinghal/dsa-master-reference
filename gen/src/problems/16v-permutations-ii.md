@@ -20,6 +20,9 @@ All **unique** permutations of nums (may contain duplicates).
 
 <MarkSolved problem-slug="permutations-ii" />
 
+<InterviewTimer problem-slug="permutations-ii" />
+
+
 
 ## Approach — Sort + used[] + skip equal-and-unused (canonical)
 

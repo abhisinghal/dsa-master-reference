@@ -21,6 +21,9 @@ All partitions of `s` where every part is a palindrome.
 
 &lt;MarkSolved problem-slug="palindrome-partitioning" /&gt;
 
+&lt;InterviewTimer problem-slug="palindrome-partitioning" /&gt;
+
+
 
 ## Approach 1 — DFS + palindrome check on the fly (canonical)
 

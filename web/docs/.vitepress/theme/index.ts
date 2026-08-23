@@ -63,6 +63,7 @@ import NotFound from './NotFound.vue'
 import ProblemStats from './ProblemStats.vue'
 import NotificationBell from './NotificationBell.vue'
 import PrintButton from './PrintButton.vue'
+import InterviewTimer from './InterviewTimer.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -140,6 +141,7 @@ export default {
     app.component('ProblemStats', ProblemStats)
     app.component('NotificationBell', NotificationBell)
     app.component('PrintButton', PrintButton)
+    app.component('InterviewTimer', InterviewTimer)
     installSolvedCountBadges(router)
   }
 }

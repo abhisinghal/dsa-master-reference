@@ -22,6 +22,9 @@ Given the head of a singly linked list, return `true` iff it's a palindrome.
 
 &lt;MarkSolved problem-slug="palindrome-linked-list" /&gt;
 
+&lt;InterviewTimer problem-slug="palindrome-linked-list" /&gt;
+
+
 
 ## Approach 1 — Copy to array, two-pointer
 

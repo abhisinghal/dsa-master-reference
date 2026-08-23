@@ -21,6 +21,9 @@ At most `k` transactions. Max profit.
 
 <MarkSolved problem-slug="best-time-to-buy-and-sell-stock-iv" />
 
+<InterviewTimer problem-slug="best-time-to-buy-and-sell-stock-iv" />
+
+
 
 ## Approach — 2k states DP with unlimited-k shortcut (canonical)
 

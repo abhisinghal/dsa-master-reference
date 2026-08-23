@@ -22,6 +22,9 @@ Given strings `s1` and `s2`, return `true` iff `s2` contains any permutation of 
 
 &lt;MarkSolved problem-slug="permutation-in-string" /&gt;
 
+&lt;InterviewTimer problem-slug="permutation-in-string" /&gt;
+
+
 
 ## Approach 1 — Sort every window
 

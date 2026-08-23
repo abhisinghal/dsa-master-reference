@@ -19,6 +19,9 @@ Return `true` iff **number of global inversions == number of local inversions**.
 
 &lt;MarkSolved problem-slug="global-and-local-inversions" /&gt;
 
+&lt;InterviewTimer problem-slug="global-and-local-inversions" /&gt;
+
+
 
 ## Approach 1 — Count both explicitly
 

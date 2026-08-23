@@ -21,6 +21,9 @@ Given a list of intervals, merge all overlapping ones and return the result.
 
 <MarkSolved problem-slug="merge-intervals-classic" />
 
+<InterviewTimer problem-slug="merge-intervals-classic" />
+
+
 
 ## Approach 1 — Brute force (compare every pair)
 

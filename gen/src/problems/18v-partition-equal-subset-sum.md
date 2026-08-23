@@ -21,6 +21,9 @@ Can `nums` split into two subsets with equal sum?
 
 <MarkSolved problem-slug="partition-equal-subset-sum" />
 
+<InterviewTimer problem-slug="partition-equal-subset-sum" />
+
+
 
 ## Approach — Subset-sum DP (0/1 knapsack, canonical)
 

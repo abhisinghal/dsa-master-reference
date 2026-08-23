@@ -21,6 +21,9 @@ Given `n` courses and prerequisites `[a, b]` (must take `a` before `b`), each se
 
 <MarkSolved problem-slug="parallel-courses" />
 
+<InterviewTimer problem-slug="parallel-courses" />
+
+
 
 ## Approach 1 — DFS with recursion depth
 

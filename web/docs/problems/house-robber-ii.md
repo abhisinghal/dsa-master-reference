@@ -21,6 +21,9 @@ Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 
 &lt;MarkSolved problem-slug="house-robber-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="house-robber-ii" /&gt;
+
+
 
 ## Approach — Two linear runs (canonical)
 

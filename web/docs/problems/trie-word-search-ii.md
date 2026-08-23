@@ -20,6 +20,9 @@ Given `board[m][n]` of letters and a dictionary `words`, return all words in `wo
 
 &lt;MarkSolved problem-slug="trie-word-search-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="trie-word-search-ii" /&gt;
+
+
 
 ## Approach 1 — DFS per word
 

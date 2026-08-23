@@ -22,6 +22,9 @@ Given binary array `nums`, return the length of the longest subarray with equal 
 
 &lt;MarkSolved problem-slug="contiguous-array" /&gt;
 
+&lt;InterviewTimer problem-slug="contiguous-array" /&gt;
+
+
 
 ## Approach 1 — Every subarray
 

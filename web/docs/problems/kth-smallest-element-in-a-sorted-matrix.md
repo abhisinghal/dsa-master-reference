@@ -20,6 +20,9 @@ Given `n×n` matrix sorted row and column, return the k-th smallest element.
 
 &lt;MarkSolved problem-slug="kth-smallest-element-in-a-sorted-matrix" /&gt;
 
+&lt;InterviewTimer problem-slug="kth-smallest-element-in-a-sorted-matrix" /&gt;
+
+
 
 ## Approach 1 — Flatten + sort
 

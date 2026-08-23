@@ -22,6 +22,9 @@ Given a positive-int array `nums` and target `target`, return the minimal length
 
 &lt;MarkSolved problem-slug="minimum-size-subarray-sum" /&gt;
 
+&lt;InterviewTimer problem-slug="minimum-size-subarray-sum" /&gt;
+
+
 
 ## Approach 1 — All subarrays
 

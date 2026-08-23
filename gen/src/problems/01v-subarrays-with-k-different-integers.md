@@ -22,6 +22,9 @@ Given an integer array `nums` and integer `k`, return the number of contiguous s
 
 <MarkSolved problem-slug="subarrays-with-k-different-integers" />
 
+<InterviewTimer problem-slug="subarrays-with-k-different-integers" />
+
+
 
 ## Approach 1 — Enumerate every subarray
 

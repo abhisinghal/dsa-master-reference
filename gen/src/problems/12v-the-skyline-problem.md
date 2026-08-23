@@ -20,6 +20,9 @@ Given buildings `[left, right, height]`, return the skyline as key points `[x, y
 
 <MarkSolved problem-slug="the-skyline-problem" />
 
+<InterviewTimer problem-slug="the-skyline-problem" />
+
+
 
 ## Approach 1 — Every x
 

@@ -22,6 +22,9 @@ Return true iff `n` is a positive power of two.
 
 &lt;MarkSolved problem-slug="power-of-two" /&gt;
 
+&lt;InterviewTimer problem-slug="power-of-two" /&gt;
+
+
 
 ## Approach 1 — Divide by 2
 

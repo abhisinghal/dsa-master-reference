@@ -20,6 +20,9 @@
 
 &lt;MarkSolved problem-slug="trapping-rain-water-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="trapping-rain-water-ii" /&gt;
+
+
 
 ## Approach — Min-heap Dijkstra-style border expansion (canonical)
 

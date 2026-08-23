@@ -21,6 +21,9 @@ Length of longest palindromic subsequence.
 
 <MarkSolved problem-slug="longest-palindromic-subsequence" />
 
+<InterviewTimer problem-slug="longest-palindromic-subsequence" />
+
+
 
 ## Approach 1 — LCS(s, reverse(s))
 O(n²) — quick way.

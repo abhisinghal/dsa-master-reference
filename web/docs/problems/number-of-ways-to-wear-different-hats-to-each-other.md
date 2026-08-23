@@ -22,6 +22,9 @@ n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 
 
 &lt;MarkSolved problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt;
 
+&lt;InterviewTimer problem-slug="number-of-ways-to-wear-different-hats-to-each-other" /&gt;
+
+
 
 ## Approach — Bitmask DP iterating hats (canonical)
 

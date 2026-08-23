@@ -21,6 +21,9 @@ Return the popcount (number of set bits) of an unsigned 32-bit integer.
 
 <MarkSolved problem-slug="number-of-1-bits" />
 
+<InterviewTimer problem-slug="number-of-1-bits" />
+
+
 
 ## Approach 1 — Loop all 32 bits
 

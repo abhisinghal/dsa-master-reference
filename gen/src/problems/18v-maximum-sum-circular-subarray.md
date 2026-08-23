@@ -22,6 +22,9 @@ Max subarray sum in a **circular** array.
 
 <MarkSolved problem-slug="maximum-sum-circular-subarray" />
 
+<InterviewTimer problem-slug="maximum-sum-circular-subarray" />
+
+
 
 ## Approach — Kadane on both max and min (canonical)
 

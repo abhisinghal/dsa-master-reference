@@ -22,6 +22,9 @@ Given `numCourses` and `prerequisites[i] = [a, b]` meaning "to take `a` you must
 
 &lt;MarkSolved problem-slug="topological-sort-course-schedule" /&gt;
 
+&lt;InterviewTimer problem-slug="topological-sort-course-schedule" /&gt;
+
+
 
 ## Approach 1 — Brute force (try every permutation)
 

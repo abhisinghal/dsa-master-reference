@@ -21,6 +21,9 @@ Return `max(len(a) * len(b))` over pairs whose character sets are disjoint (no s
 
 &lt;MarkSolved problem-slug="maximum-product-of-word-lengths" /&gt;
 
+&lt;InterviewTimer problem-slug="maximum-product-of-word-lengths" /&gt;
+
+
 
 ## Approach 1 — Set intersection per pair
 

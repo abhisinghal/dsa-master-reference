@@ -20,6 +20,9 @@ Given `s`, `t`, `maxCost`. Convert `s[i]` → `t[i]` costs `|s[i] - t[i]|`. Retu
 
 <MarkSolved problem-slug="get-equal-substrings-within-budget" />
 
+<InterviewTimer problem-slug="get-equal-substrings-within-budget" />
+
+
 
 ## Approach — Sliding window on the diff array (canonical)
 

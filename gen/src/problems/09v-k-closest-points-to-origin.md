@@ -22,6 +22,9 @@ Given `points[][2]` and integer `k`, return the `k` points closest to origin `(0
 
 <MarkSolved problem-slug="k-closest-points-to-origin" />
 
+<InterviewTimer problem-slug="k-closest-points-to-origin" />
+
+
 
 ## Approach 1 — Sort by distance
 

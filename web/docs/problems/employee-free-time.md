@@ -21,6 +21,9 @@ Given schedules (each a list of disjoint intervals), return the intersection of 
 
 &lt;MarkSolved problem-slug="employee-free-time" /&gt;
 
+&lt;InterviewTimer problem-slug="employee-free-time" /&gt;
+
+
 
 ## Approach 1 — Flatten + merge + gaps
 

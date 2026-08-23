@@ -21,6 +21,9 @@ Given `temps`, return `answer` where `answer[i]` is the number of days until a w
 
 &lt;MarkSolved problem-slug="monotonic-stack-daily-temperatures" /&gt;
 
+&lt;InterviewTimer problem-slug="monotonic-stack-daily-temperatures" /&gt;
+
+
 
 ## Approach 1 — Brute force (nested scan)
 

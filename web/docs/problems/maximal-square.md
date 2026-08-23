@@ -20,6 +20,9 @@ Largest square of `1`s in binary matrix. Return area.
 
 &lt;MarkSolved problem-slug="maximal-square" /&gt;
 
+&lt;InterviewTimer problem-slug="maximal-square" /&gt;
+
+
 
 ## Approach — DP `side[i][j]` = largest square ending at (i, j) (canonical)
 

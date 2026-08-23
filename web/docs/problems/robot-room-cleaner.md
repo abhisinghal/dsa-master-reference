@@ -20,6 +20,9 @@ Robot API: `move()`, `turnLeft()`, `turnRight()`, `clean()`. No coordinates. Cle
 
 &lt;MarkSolved problem-slug="robot-room-cleaner" /&gt;
 
+&lt;InterviewTimer problem-slug="robot-room-cleaner" /&gt;
+
+
 
 ## Approach — DFS with relative coords + backtrack move (canonical)
 

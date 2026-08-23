@@ -21,6 +21,9 @@ Count intervals remaining after removing every interval covered by another.
 
 &lt;MarkSolved problem-slug="remove-covered-intervals" /&gt;
 
+&lt;InterviewTimer problem-slug="remove-covered-intervals" /&gt;
+
+
 
 ## Approach 1 — All pairs
 

@@ -22,6 +22,9 @@ Return the longest palindromic substring of `s`.
 
 <MarkSolved problem-slug="longest-palindromic-substring" />
 
+<InterviewTimer problem-slug="longest-palindromic-substring" />
+
+
 
 ## Approach 1 — Every substring O(n³)
 

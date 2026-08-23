@@ -22,6 +22,9 @@ Given `s` (uppercase A–Z) and integer `k`, return the length of the longest su
 
 <MarkSolved problem-slug="longest-repeating-character-replacement" />
 
+<InterviewTimer problem-slug="longest-repeating-character-replacement" />
+
+
 
 ## Approach 1 — Try every substring
 

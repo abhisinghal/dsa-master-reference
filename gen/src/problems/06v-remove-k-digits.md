@@ -22,6 +22,9 @@ Given a numeric string `num` (no leading zeros unless it's `"0"`) and integer `k
 
 <MarkSolved problem-slug="remove-k-digits" />
 
+<InterviewTimer problem-slug="remove-k-digits" />
+
+
 
 ## Approach 1 — Try every subset of digits to remove
 

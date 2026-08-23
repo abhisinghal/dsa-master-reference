@@ -20,6 +20,9 @@ Group strings that are cyclic shifts of each other.
 
 <MarkSolved problem-slug="group-shifted-strings" />
 
+<InterviewTimer problem-slug="group-shifted-strings" />
+
+
 
 ## Approach — Canonical key = diff pattern (canonical)
 

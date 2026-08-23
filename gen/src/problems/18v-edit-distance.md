@@ -21,6 +21,9 @@ Given two strings `word1` and `word2`, return the minimum number of edits (inser
 
 <MarkSolved problem-slug="edit-distance" />
 
+<InterviewTimer problem-slug="edit-distance" />
+
+
 
 ## Approach 1 — Brute recursion → Approach 2 — Memoized
 

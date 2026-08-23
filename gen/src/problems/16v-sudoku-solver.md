@@ -20,6 +20,9 @@ Fill the 9×9 board so every row/col/box contains 1..9.
 
 <MarkSolved problem-slug="sudoku-solver" />
 
+<InterviewTimer problem-slug="sudoku-solver" />
+
+
 
 ## Approach — Backtracking + constraint bitmasks (canonical)
 

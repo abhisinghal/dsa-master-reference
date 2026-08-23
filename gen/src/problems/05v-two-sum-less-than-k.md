@@ -21,6 +21,9 @@ Return max sum `< k` from any pair, or `-1`.
 
 <MarkSolved problem-slug="two-sum-less-than-k" />
 
+<InterviewTimer problem-slug="two-sum-less-than-k" />
+
+
 
 ## Approach — Sort + two pointer (canonical)
 

@@ -20,6 +20,9 @@ Given package weights and `days`, find the minimum ship capacity that ships all 
 
 &lt;MarkSolved problem-slug="capacity-to-ship-packages-within-d-days" /&gt;
 
+&lt;InterviewTimer problem-slug="capacity-to-ship-packages-within-d-days" /&gt;
+
+
 
 ## Approach 1 — Try every capacity
 

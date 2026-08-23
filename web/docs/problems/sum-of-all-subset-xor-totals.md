@@ -21,6 +21,9 @@ Return the sum of XOR of every subset of `nums` (including empty).
 
 &lt;MarkSolved problem-slug="sum-of-all-subset-xor-totals" /&gt;
 
+&lt;InterviewTimer problem-slug="sum-of-all-subset-xor-totals" /&gt;
+
+
 
 ## Approach 1 — Enumerate all 2ⁿ subsets
 

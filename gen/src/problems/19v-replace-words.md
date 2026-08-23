@@ -20,6 +20,9 @@ Given a dictionary of roots and a `sentence`, replace each word with its **short
 
 <MarkSolved problem-slug="replace-words" />
 
+<InterviewTimer problem-slug="replace-words" />
+
+
 
 ## Approach 1 — HashSet + prefix scan
 

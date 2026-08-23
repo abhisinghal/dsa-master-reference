@@ -22,6 +22,9 @@ Max sum of a subsequence where every two consecutive chosen indices differ by at
 
 &lt;MarkSolved problem-slug="constrained-subsequence-sum" /&gt;
 
+&lt;InterviewTimer problem-slug="constrained-subsequence-sum" /&gt;
+
+
 
 ## Approach — DP with monotonic deque (canonical)
 

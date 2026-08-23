@@ -21,6 +21,9 @@ Rearrange so all even values come before all odd. Any valid partition accepted.
 
 <MarkSolved problem-slug="sort-array-by-parity" />
 
+<InterviewTimer problem-slug="sort-array-by-parity" />
+
+
 
 ## Approach — Opposing pointers + swap (canonical)
 

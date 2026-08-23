@@ -22,6 +22,9 @@ Given the head of a singly linked list, return the middle node. If there are two
 
 &lt;MarkSolved problem-slug="middle-of-the-linked-list" /&gt;
 
+&lt;InterviewTimer problem-slug="middle-of-the-linked-list" /&gt;
+
+
 
 ## Approach 1 — Two passes: count then jump
 

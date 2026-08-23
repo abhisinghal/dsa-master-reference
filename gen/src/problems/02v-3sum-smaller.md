@@ -21,6 +21,9 @@ Count triplets `(i, j, k)` with `i < j < k` and `nums[i] + nums[j] + nums[k] < t
 
 <MarkSolved problem-slug="3sum-smaller" />
 
+<InterviewTimer problem-slug="3sum-smaller" />
+
+
 
 ## Approach 1 — Triple loop
 

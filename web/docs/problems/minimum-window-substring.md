@@ -22,6 +22,9 @@ Given strings `s` and `t`, return the smallest substring of `s` that contains ev
 
 &lt;MarkSolved problem-slug="minimum-window-substring" /&gt;
 
+&lt;InterviewTimer problem-slug="minimum-window-substring" /&gt;
+
+
 
 ## Approach 1 — Enumerate every substring
 

@@ -20,6 +20,9 @@ Split `nums` into `m` non-empty contiguous subarrays to minimize the largest sum
 
 &lt;MarkSolved problem-slug="split-array-largest-sum" /&gt;
 
+&lt;InterviewTimer problem-slug="split-array-largest-sum" /&gt;
+
+
 
 ## Approach 1 — Interval DP
 

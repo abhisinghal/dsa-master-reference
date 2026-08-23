@@ -22,6 +22,9 @@ Count ways to make `amount` from `coins` (unlimited each, **unordered**).
 
 &lt;MarkSolved problem-slug="coin-change-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="coin-change-ii" /&gt;
+
+
 
 ## Approach — Unbounded knapsack counting (canonical)
 

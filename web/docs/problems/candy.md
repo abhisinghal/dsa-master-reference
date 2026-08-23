@@ -21,6 +21,9 @@ Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly 
 
 &lt;MarkSolved problem-slug="candy" /&gt;
 
+&lt;InterviewTimer problem-slug="candy" /&gt;
+
+
 
 ## Approach — Two-pass sweep (canonical)
 

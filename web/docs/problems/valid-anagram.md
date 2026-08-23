@@ -22,6 +22,9 @@ Given two strings `s` and `t`, return `true` iff `t` is an anagram of `s`.
 
 &lt;MarkSolved problem-slug="valid-anagram" /&gt;
 
+&lt;InterviewTimer problem-slug="valid-anagram" /&gt;
+
+
 
 ## Approach 1 — Sort both and compare
 

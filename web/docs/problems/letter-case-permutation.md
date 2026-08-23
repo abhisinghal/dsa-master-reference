@@ -20,6 +20,9 @@ Return every case variant of letters (digits stay).
 
 &lt;MarkSolved problem-slug="letter-case-permutation" /&gt;
 
+&lt;InterviewTimer problem-slug="letter-case-permutation" /&gt;
+
+
 
 ## Approach 1 — DFS with two branches per letter (canonical)
 

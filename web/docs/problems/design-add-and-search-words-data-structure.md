@@ -32,6 +32,9 @@ w.search("b.."); // true
 
 &lt;MarkSolved problem-slug="design-add-and-search-words-data-structure" /&gt;
 
+&lt;InterviewTimer problem-slug="design-add-and-search-words-data-structure" /&gt;
+
+
 
 ## Approach 1 — HashSet + linear scan
 

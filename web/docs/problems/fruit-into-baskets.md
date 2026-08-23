@@ -22,6 +22,9 @@ Given an array `fruits` where `fruits[i]` is a type of fruit, and 2 baskets each
 
 &lt;MarkSolved problem-slug="fruit-into-baskets" /&gt;
 
+&lt;InterviewTimer problem-slug="fruit-into-baskets" /&gt;
+
+
 
 ## Approach 1 — Try every subarray
 

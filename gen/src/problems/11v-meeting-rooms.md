@@ -22,6 +22,9 @@ Given meeting time intervals, return `true` iff a person can attend all.
 
 <MarkSolved problem-slug="meeting-rooms" />
 
+<InterviewTimer problem-slug="meeting-rooms" />
+
+
 
 ## Approach 1 — Every pair
 

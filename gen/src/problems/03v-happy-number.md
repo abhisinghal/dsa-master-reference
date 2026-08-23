@@ -22,6 +22,9 @@ A "happy number" transformation repeatedly replaces `n` by the sum of the square
 
 <MarkSolved problem-slug="happy-number" />
 
+<InterviewTimer problem-slug="happy-number" />
+
+
 
 ## Approach 1 — Hash set of seen values
 

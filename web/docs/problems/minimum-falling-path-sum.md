@@ -20,6 +20,9 @@ Grid; falling path picks one cell per row; next row's cell must be in `[j-1, j, 
 
 &lt;MarkSolved problem-slug="minimum-falling-path-sum" /&gt;
 
+&lt;InterviewTimer problem-slug="minimum-falling-path-sum" /&gt;
+
+
 
 ## Approach — Row-by-row DP (canonical)
 

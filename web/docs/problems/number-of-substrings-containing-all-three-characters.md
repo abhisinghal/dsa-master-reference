@@ -20,6 +20,9 @@ Given a string `s` over `{a, b, c}`, return the number of substrings containing 
 
 &lt;MarkSolved problem-slug="number-of-substrings-containing-all-three-characters" /&gt;
 
+&lt;InterviewTimer problem-slug="number-of-substrings-containing-all-three-characters" /&gt;
+
+
 
 ## Approach 1 — Every substring
 

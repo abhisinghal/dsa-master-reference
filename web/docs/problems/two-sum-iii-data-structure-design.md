@@ -30,6 +30,9 @@ ts.find(7);  // false
 
 &lt;MarkSolved problem-slug="two-sum-iii-data-structure-design" /&gt;
 
+&lt;InterviewTimer problem-slug="two-sum-iii-data-structure-design" /&gt;
+
+
 
 ## Approach 1 — Fast add, slow find (canonical if adds dominate)
 

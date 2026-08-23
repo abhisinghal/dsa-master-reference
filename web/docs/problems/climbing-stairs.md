@@ -21,6 +21,9 @@ Steps of 1 or 2. Number of ways to reach step `n`.
 
 &lt;MarkSolved problem-slug="climbing-stairs" /&gt;
 
+&lt;InterviewTimer problem-slug="climbing-stairs" /&gt;
+
+
 
 ## Approach 1 — Recursion + memo
 O(n).

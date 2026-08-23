@@ -22,6 +22,9 @@ Given the head of a linked list, return the node where the cycle begins, or `nul
 
 <MarkSolved problem-slug="fast-slow-linked-list-cycle-ii" />
 
+<InterviewTimer problem-slug="fast-slow-linked-list-cycle-ii" />
+
+
 
 ## Approach 1 — Brute force (hash-set of visited nodes)
 

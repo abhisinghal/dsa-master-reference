@@ -21,6 +21,9 @@
 
 &lt;MarkSolved problem-slug="find-the-difference" /&gt;
 
+&lt;InterviewTimer problem-slug="find-the-difference" /&gt;
+
+
 
 ## Approach 1 — Sort both, walk
 

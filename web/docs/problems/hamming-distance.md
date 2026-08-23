@@ -21,6 +21,9 @@ Return the number of positions where the bits of `x` and `y` differ.
 
 &lt;MarkSolved problem-slug="hamming-distance" /&gt;
 
+&lt;InterviewTimer problem-slug="hamming-distance" /&gt;
+
+
 
 ## Approach — Popcount of XOR
 

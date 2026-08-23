@@ -22,6 +22,9 @@ Given strings `s` and `p`, return all starting indices in `s` where a permutatio
 
 <MarkSolved problem-slug="find-all-anagrams-in-a-string" />
 
+<InterviewTimer problem-slug="find-all-anagrams-in-a-string" />
+
+
 
 ## Approach 1 — Sort every window
 

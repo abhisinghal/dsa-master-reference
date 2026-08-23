@@ -22,6 +22,9 @@ Given an array `nums` of `n + 1` integers where each is in `[1, n]`, there is ex
 
 &lt;MarkSolved problem-slug="find-the-duplicate-number" /&gt;
 
+&lt;InterviewTimer problem-slug="find-the-duplicate-number" /&gt;
+
+
 
 ## Approach 1 — Sort
 

@@ -22,6 +22,9 @@ Max sum of a contiguous non-empty subarray.
 
 &lt;MarkSolved problem-slug="maximum-subarray" /&gt;
 
+&lt;InterviewTimer problem-slug="maximum-subarray" /&gt;
+
+
 
 ## Approach 1 — All subarrays
 

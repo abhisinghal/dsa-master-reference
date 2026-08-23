@@ -20,6 +20,9 @@ Given a positive-int array `nums` and integer `k`, return the number of contiguo
 
 &lt;MarkSolved problem-slug="subarray-product-less-than-k" /&gt;
 
+&lt;InterviewTimer problem-slug="subarray-product-less-than-k" /&gt;
+
+
 
 ## Approach 1 — Every subarray
 

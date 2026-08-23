@@ -20,6 +20,9 @@ Given `n` non-negative integer heights, find two vertical lines that form a cont
 
 &lt;MarkSolved problem-slug="two-pointers-container-with-most-water" /&gt;
 
+&lt;InterviewTimer problem-slug="two-pointers-container-with-most-water" /&gt;
+
+
 
 ## Approach 1 — Brute force (all pairs)
 

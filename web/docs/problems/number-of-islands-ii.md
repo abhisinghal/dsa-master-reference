@@ -20,6 +20,9 @@ You have an `m × n` grid of water. Given `positions` where each `(r, c)` become
 
 &lt;MarkSolved problem-slug="number-of-islands-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="number-of-islands-ii" /&gt;
+
+
 
 ## Approach 1 — DFS after each addition
 

@@ -20,6 +20,9 @@ Given two sorted arrays, return the median in **O(log(min(m,n)))**.
 
 <MarkSolved problem-slug="median-of-two-sorted-arrays" />
 
+<InterviewTimer problem-slug="median-of-two-sorted-arrays" />
+
+
 
 ## Approach 1 — Merge sort halves
 

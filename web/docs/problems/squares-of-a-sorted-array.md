@@ -21,6 +21,9 @@ Return squares of a sorted (possibly-negative) array, sorted.
 
 &lt;MarkSolved problem-slug="squares-of-a-sorted-array" /&gt;
 
+&lt;InterviewTimer problem-slug="squares-of-a-sorted-array" /&gt;
+
+
 
 ## Approach 1 — Square then sort
 

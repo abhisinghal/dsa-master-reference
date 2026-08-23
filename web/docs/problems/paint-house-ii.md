@@ -21,6 +21,9 @@
 
 &lt;MarkSolved problem-slug="paint-house-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="paint-house-ii" /&gt;
+
+
 
 ## Approach 1 — O(n · k²) DP
 `dp[i][j] = cost[i][j] + min(dp[i-1][j'])` over `j' ≠ j`.

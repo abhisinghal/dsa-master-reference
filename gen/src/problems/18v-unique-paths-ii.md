@@ -21,6 +21,9 @@ Grid with obstacles. Count paths from top-left to bottom-right (right/down).
 
 <MarkSolved problem-slug="unique-paths-ii" />
 
+<InterviewTimer problem-slug="unique-paths-ii" />
+
+
 
 ## Approach — Grid DP with obstacle guard (canonical)
 

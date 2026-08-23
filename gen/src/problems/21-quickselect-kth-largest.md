@@ -21,6 +21,9 @@ Given `nums` and integer `k`, return the k-th **largest** element (1-indexed). O
 
 <MarkSolved problem-slug="quickselect-kth-largest" />
 
+<InterviewTimer problem-slug="quickselect-kth-largest" />
+
+
 
 ## Approach 1 — Sort + index
 

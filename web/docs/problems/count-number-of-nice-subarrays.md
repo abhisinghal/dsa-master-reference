@@ -22,6 +22,9 @@ Given an array `nums` and integer `k`, return the number of contiguous subarrays
 
 &lt;MarkSolved problem-slug="count-number-of-nice-subarrays" /&gt;
 
+&lt;InterviewTimer problem-slug="count-number-of-nice-subarrays" /&gt;
+
+
 
 ## Approach 1 — Every subarray
 

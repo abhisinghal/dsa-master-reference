@@ -21,6 +21,9 @@ Given `nums[i]` = max jump length from index `i`, return the **minimum jumps** t
 
 &lt;MarkSolved problem-slug="greedy-jump-game-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="greedy-jump-game-ii" /&gt;
+
+
 
 ## Approach 1 — BFS (level = jump count)
 

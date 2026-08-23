@@ -22,6 +22,9 @@ Given `n` flights and bookings `[first, last, seats]`, return an array where ind
 
 &lt;MarkSolved problem-slug="corporate-flight-bookings" /&gt;
 
+&lt;InterviewTimer problem-slug="corporate-flight-bookings" /&gt;
+
+
 
 ## Approach 1 — Direct fill
 

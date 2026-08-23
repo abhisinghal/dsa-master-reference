@@ -22,6 +22,9 @@ Given a target permutation `nums` and a list of subsequences `sequences`, return
 
 <MarkSolved problem-slug="sequence-reconstruction" />
 
+<InterviewTimer problem-slug="sequence-reconstruction" />
+
+
 
 ## Approach 1 — Try every topological order
 

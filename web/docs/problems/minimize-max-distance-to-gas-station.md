@@ -20,6 +20,9 @@ Given sorted station positions and integer `k`, add `k` new stations to minimize
 
 &lt;MarkSolved problem-slug="minimize-max-distance-to-gas-station" /&gt;
 
+&lt;InterviewTimer problem-slug="minimize-max-distance-to-gas-station" /&gt;
+
+
 
 ## Approach 1 — Priority queue (greedy)
 

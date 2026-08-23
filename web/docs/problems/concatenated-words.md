@@ -20,6 +20,9 @@ Given a list of distinct words, return all words that can be built as a concaten
 
 &lt;MarkSolved problem-slug="concatenated-words" /&gt;
 
+&lt;InterviewTimer problem-slug="concatenated-words" /&gt;
+
+
 
 ## Approach 1 — Brute force per word
 

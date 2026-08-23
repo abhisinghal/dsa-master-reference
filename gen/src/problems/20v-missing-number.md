@@ -22,6 +22,9 @@ Given `nums` containing `n` distinct integers in `[0, n]`, return the missing on
 
 <MarkSolved problem-slug="missing-number" />
 
+<InterviewTimer problem-slug="missing-number" />
+
+
 
 ## Approach 1 — Sort, find gap
 

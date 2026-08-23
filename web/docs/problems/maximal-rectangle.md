@@ -22,6 +22,9 @@ Given a binary matrix, find the largest rectangle containing only `1`s.
 
 &lt;MarkSolved problem-slug="maximal-rectangle" /&gt;
 
+&lt;InterviewTimer problem-slug="maximal-rectangle" /&gt;
+
+
 
 ## Approach 1 — Every submatrix
 

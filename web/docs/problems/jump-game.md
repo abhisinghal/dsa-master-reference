@@ -22,6 +22,9 @@
 
 &lt;MarkSolved problem-slug="jump-game" /&gt;
 
+&lt;InterviewTimer problem-slug="jump-game" /&gt;
+
+
 
 ## Approach 1 — DP `reachable[i]`
 

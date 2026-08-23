@@ -21,6 +21,9 @@ Smash pairs (larger becomes diff). Minimize final remaining weight.
 
 &lt;MarkSolved problem-slug="last-stone-weight-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="last-stone-weight-ii" /&gt;
+
+
 
 ## Approach — Reduce to subset-sum closest to total/2 (canonical)
 

@@ -22,6 +22,9 @@ Sorted array; return 1-indexed pair summing to target.
 
 &lt;MarkSolved problem-slug="two-sum-ii-input-array-is-sorted" /&gt;
 
+&lt;InterviewTimer problem-slug="two-sum-ii-input-array-is-sorted" /&gt;
+
+
 
 ## Approach 1 — Hash-map
 

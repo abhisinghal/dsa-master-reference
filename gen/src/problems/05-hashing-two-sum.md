@@ -22,6 +22,9 @@ Given `nums` and `target`, return indices `[i, j]` such that `nums[i] + nums[j] 
 
 <MarkSolved problem-slug="hashing-two-sum" />
 
+<InterviewTimer problem-slug="hashing-two-sum" />
+
+
 
 ## Approach 1 — Brute force (nested loops)
 

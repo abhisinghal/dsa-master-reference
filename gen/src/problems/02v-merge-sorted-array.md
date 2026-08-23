@@ -21,6 +21,9 @@ Merge `nums2` into `nums1` in-place; `nums1` has size `m+n` with last `n` slots 
 
 <MarkSolved problem-slug="merge-sorted-array" />
 
+<InterviewTimer problem-slug="merge-sorted-array" />
+
+
 
 ## Approach 1 — Copy then sort
 

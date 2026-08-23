@@ -22,6 +22,9 @@ Given a **circular** integer array `nums`, return the next greater element for e
 
 <MarkSolved problem-slug="next-greater-element-ii" />
 
+<InterviewTimer problem-slug="next-greater-element-ii" />
+
+
 
 ## Approach 1 — Brute force (2n scan per position)
 

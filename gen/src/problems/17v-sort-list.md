@@ -21,6 +21,9 @@ Sort a linked list in **O(n log n)** time, O(1) extra space (constant beyond rec
 
 <MarkSolved problem-slug="sort-list" />
 
+<InterviewTimer problem-slug="sort-list" />
+
+
 
 ## Approach 1 — Copy to array, sort, rebuild
 

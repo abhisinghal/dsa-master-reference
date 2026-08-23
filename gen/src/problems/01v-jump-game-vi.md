@@ -21,6 +21,9 @@ Start at 0. At index `i`, jump 1..k steps. Max total score reaching last index.
 
 <MarkSolved problem-slug="jump-game-vi" />
 
+<InterviewTimer problem-slug="jump-game-vi" />
+
+
 
 ## Approach — DP + monotonic deque (canonical)
 

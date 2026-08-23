@@ -22,6 +22,9 @@ Length of longest subsequence appearing in both strings.
 
 &lt;MarkSolved problem-slug="longest-common-subsequence" /&gt;
 
+&lt;InterviewTimer problem-slug="longest-common-subsequence" /&gt;
+
+
 
 ## Approach — 2D DP (canonical)
 

@@ -21,6 +21,9 @@ Given `n` non-negative integers representing an elevation map, compute how much 
 
 <MarkSolved problem-slug="trapping-rain-water" />
 
+<InterviewTimer problem-slug="trapping-rain-water" />
+
+
 
 ## Approach 1 — Precompute leftMax, rightMax
 

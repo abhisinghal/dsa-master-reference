@@ -34,6 +34,9 @@ S.next(85);    // 6
 
 &lt;MarkSolved problem-slug="online-stock-span" /&gt;
 
+&lt;InterviewTimer problem-slug="online-stock-span" /&gt;
+
+
 
 ## Approach 1 — Store all prices, scan on each `next`
 

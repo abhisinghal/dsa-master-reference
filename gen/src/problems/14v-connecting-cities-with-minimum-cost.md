@@ -21,6 +21,9 @@ Given `n` cities and `connections[i] = [a, b, cost]`, return the minimum cost to
 
 <MarkSolved problem-slug="connecting-cities-with-minimum-cost" />
 
+<InterviewTimer problem-slug="connecting-cities-with-minimum-cost" />
+
+
 
 ## Approach 1 — Try all spanning trees
 

@@ -22,6 +22,9 @@ Return true iff there's a **bijection** of characters mapping `s → t`.
 
 <MarkSolved problem-slug="isomorphic-strings" />
 
+<InterviewTimer problem-slug="isomorphic-strings" />
+
+
 
 ## Approach — Two maps (canonical)
 

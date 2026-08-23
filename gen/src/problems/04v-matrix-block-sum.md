@@ -21,6 +21,9 @@ Given matrix `mat[m][n]` and integer `k`, return `answer[i][j]` = sum of all ele
 
 <MarkSolved problem-slug="matrix-block-sum" />
 
+<InterviewTimer problem-slug="matrix-block-sum" />
+
+
 
 ## Approach 1 — For each cell, sum k-neighborhood
 

@@ -21,6 +21,9 @@
 
 <MarkSolved problem-slug="combination-sum-iii" />
 
+<InterviewTimer problem-slug="combination-sum-iii" />
+
+
 
 ## Approach — Backtracking with pruning (canonical)
 

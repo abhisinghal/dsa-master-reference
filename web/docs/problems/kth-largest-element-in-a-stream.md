@@ -32,6 +32,9 @@ kthLargest.add(4);   // returns 8
 
 &lt;MarkSolved problem-slug="kth-largest-element-in-a-stream" /&gt;
 
+&lt;InterviewTimer problem-slug="kth-largest-element-in-a-stream" /&gt;
+
+
 
 ## Approach 1 — Re-sort on every add
 

@@ -21,6 +21,9 @@ Count subarrays whose sum lies in `[lower, upper]` (inclusive).
 
 <MarkSolved problem-slug="count-of-range-sum" />
 
+<InterviewTimer problem-slug="count-of-range-sum" />
+
+
 
 ## Approach 1 — All subarrays
 

@@ -20,6 +20,9 @@ Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r
 
 <MarkSolved problem-slug="burst-balloons" />
 
+<InterviewTimer problem-slug="burst-balloons" />
+
+
 
 ## Approach — Interval DP with "last to burst" trick (canonical)
 

@@ -21,6 +21,9 @@ Return all permutations of distinct integers.
 
 <MarkSolved problem-slug="permutations" />
 
+<InterviewTimer problem-slug="permutations" />
+
+
 
 ## Approach 1 — Insert-at-every-position recursion
 

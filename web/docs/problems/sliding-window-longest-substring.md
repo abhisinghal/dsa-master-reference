@@ -22,6 +22,9 @@ Given a string `s`, return the length of the longest substring with all distinct
 
 &lt;MarkSolved problem-slug="sliding-window-longest-substring" /&gt;
 
+&lt;InterviewTimer problem-slug="sliding-window-longest-substring" /&gt;
+
+
 
 ## Approach 1 — Brute force (all substrings, check distinct)
 

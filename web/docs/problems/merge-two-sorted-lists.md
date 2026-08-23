@@ -22,6 +22,9 @@ Given the heads of two sorted linked lists, merge them into one sorted list.
 
 &lt;MarkSolved problem-slug="merge-two-sorted-lists" /&gt;
 
+&lt;InterviewTimer problem-slug="merge-two-sorted-lists" /&gt;
+
+
 
 ## Approach 1 — Materialize and re-sort
 

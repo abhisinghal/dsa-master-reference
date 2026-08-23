@@ -21,6 +21,9 @@ Delete `x` to earn `x` points; also removes all `x-1` and `x+1`. Max points.
 
 &lt;MarkSolved problem-slug="delete-and-earn" /&gt;
 
+&lt;InterviewTimer problem-slug="delete-and-earn" /&gt;
+
+
 
 ## Approach — Reduce to House Robber (canonical)
 

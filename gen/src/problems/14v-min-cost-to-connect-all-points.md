@@ -21,6 +21,9 @@ Given 2D `points`, connect all with min total Manhattan distance.
 
 <MarkSolved problem-slug="min-cost-to-connect-all-points" />
 
+<InterviewTimer problem-slug="min-cost-to-connect-all-points" />
+
+
 
 ## Approach 1 — Kruskal on all pairs
 

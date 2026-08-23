@@ -22,6 +22,9 @@ Given trips `[numPassengers, from, to]` and car `capacity`, return `true` iff yo
 
 &lt;MarkSolved problem-slug="car-pooling" /&gt;
 
+&lt;InterviewTimer problem-slug="car-pooling" /&gt;
+
+
 
 ## Approach 1 — Sort by time + sweep
 

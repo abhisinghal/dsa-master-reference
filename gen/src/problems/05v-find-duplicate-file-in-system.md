@@ -20,6 +20,9 @@ Given `"dir file1.ext(content) file2.ext(content) …"` strings, group files wit
 
 <MarkSolved problem-slug="find-duplicate-file-in-system" />
 
+<InterviewTimer problem-slug="find-duplicate-file-in-system" />
+
+
 
 ## Approach — Hash by content (canonical)
 

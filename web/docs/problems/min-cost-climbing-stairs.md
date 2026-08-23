@@ -21,6 +21,9 @@ Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end
 
 &lt;MarkSolved problem-slug="min-cost-climbing-stairs" /&gt;
 
+&lt;InterviewTimer problem-slug="min-cost-climbing-stairs" /&gt;
+
+
 
 ## Approach — DP O(1) space (canonical)
 

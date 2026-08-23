@@ -19,6 +19,9 @@ Find the min window in `s1` such that `s2` is a subsequence.
 
 &lt;MarkSolved problem-slug="minimum-window-subsequence" /&gt;
 
+&lt;InterviewTimer problem-slug="minimum-window-subsequence" /&gt;
+
+
 
 ## Approach 1 — DP `dp[i][j]` = latest start of match
 

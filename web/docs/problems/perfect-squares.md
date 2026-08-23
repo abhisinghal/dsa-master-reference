@@ -21,6 +21,9 @@ Min count of perfect squares summing to `n`.
 
 &lt;MarkSolved problem-slug="perfect-squares" /&gt;
 
+&lt;InterviewTimer problem-slug="perfect-squares" /&gt;
+
+
 
 ## Approach 1 — DP (min coin change with square coins)
 

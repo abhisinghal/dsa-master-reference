@@ -21,6 +21,9 @@ Given bar heights, return the largest rectangle contained.
 
 <MarkSolved problem-slug="largest-rectangle-in-histogram" />
 
+<InterviewTimer problem-slug="largest-rectangle-in-histogram" />
+
+
 
 ## Approach 1 — For each bar expand outward
 

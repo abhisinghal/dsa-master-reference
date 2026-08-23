@@ -21,6 +21,9 @@ Given `nums[i]` = value at house `i`, return the max total value you can rob giv
 
 <MarkSolved problem-slug="dp-house-robber" />
 
+<InterviewTimer problem-slug="dp-house-robber" />
+
+
 
 ## Approach 1 — Brute force recursion
 

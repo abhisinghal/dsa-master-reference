@@ -20,6 +20,9 @@ Return **count** of distinct N-Queens solutions.
 
 <MarkSolved problem-slug="n-queens-ii" />
 
+<InterviewTimer problem-slug="n-queens-ii" />
+
+
 
 ## Approach — Bitmask backtracking (canonical)
 

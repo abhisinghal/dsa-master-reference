@@ -21,6 +21,9 @@ Given `nums` and integer `k`, return the `k` most frequent elements (any order).
 
 &lt;MarkSolved problem-slug="top-k-frequent-elements" /&gt;
 
+&lt;InterviewTimer problem-slug="top-k-frequent-elements" /&gt;
+
+
 
 ## Approach 1 — Sort by frequency
 

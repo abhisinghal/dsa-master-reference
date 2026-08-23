@@ -22,6 +22,9 @@ Min intervals to remove so the rest are non-overlapping.
 
 &lt;MarkSolved problem-slug="non-overlapping-intervals" /&gt;
 
+&lt;InterviewTimer problem-slug="non-overlapping-intervals" /&gt;
+
+
 
 ## Approach — Sort by end + activity selection (canonical)
 

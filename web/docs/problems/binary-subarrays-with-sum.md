@@ -22,6 +22,9 @@ Given a binary array `nums` and integer `goal`, return the number of non-empty c
 
 &lt;MarkSolved problem-slug="binary-subarrays-with-sum" /&gt;
 
+&lt;InterviewTimer problem-slug="binary-subarrays-with-sum" /&gt;
+
+
 
 ## Approach 1 — Every subarray
 

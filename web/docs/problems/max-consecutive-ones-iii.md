@@ -22,6 +22,9 @@ Given a binary array `nums` and integer `k`, return the maximum length of a suba
 
 &lt;MarkSolved problem-slug="max-consecutive-ones-iii" /&gt;
 
+&lt;InterviewTimer problem-slug="max-consecutive-ones-iii" /&gt;
+
+
 
 ## Approach 1 — Try every subarray
 

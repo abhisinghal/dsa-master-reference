@@ -20,6 +20,9 @@ Given a rooted tree of gene values `parents[]` and queries `[node, val]`, for ea
 
 &lt;MarkSolved problem-slug="maximum-genetic-difference-query" /&gt;
 
+&lt;InterviewTimer problem-slug="maximum-genetic-difference-query" /&gt;
+
+
 
 ## Approach — Offline DFS + binary trie with subtree insert/erase (canonical)
 

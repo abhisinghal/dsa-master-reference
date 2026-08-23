@@ -20,6 +20,9 @@ Given `n` houses, `wells[i]` = cost to dig a well at house `i`, and `pipes[i] = 
 
 <MarkSolved problem-slug="optimize-water-distribution-in-a-village" />
 
+<InterviewTimer problem-slug="optimize-water-distribution-in-a-village" />
+
+
 
 ## Approach — Add virtual node + MST (canonical)
 

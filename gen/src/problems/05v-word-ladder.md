@@ -21,6 +21,9 @@ Transform `beginWord` → `endWord` by changing one letter at a time; each inter
 
 <MarkSolved problem-slug="word-ladder" />
 
+<InterviewTimer problem-slug="word-ladder" />
+
+
 
 ## Approach 1 — BFS over all pairs
 

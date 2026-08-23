@@ -21,6 +21,9 @@ Given an undirected graph that starts as a tree with `n` nodes and has **one** e
 
 &lt;MarkSolved problem-slug="redundant-connection" /&gt;
 
+&lt;InterviewTimer problem-slug="redundant-connection" /&gt;
+
+
 
 ## Approach 1 — DFS to detect cycle for each edge
 

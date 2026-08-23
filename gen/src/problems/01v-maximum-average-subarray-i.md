@@ -19,6 +19,9 @@ Return the max average of any contiguous subarray of length exactly `k`.
 
 <MarkSolved problem-slug="maximum-average-subarray-i" />
 
+<InterviewTimer problem-slug="maximum-average-subarray-i" />
+
+
 
 ## Approach — Fixed-window running sum (canonical)
 

@@ -21,6 +21,9 @@ Given distinct integers `nums`, return all possible subsets (the power set).
 
 <MarkSolved problem-slug="subsets" />
 
+<InterviewTimer problem-slug="subsets" />
+
+
 
 ## Approach 1 — Backtracking
 

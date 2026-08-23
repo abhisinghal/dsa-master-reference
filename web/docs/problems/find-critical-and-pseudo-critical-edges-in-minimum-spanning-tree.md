@@ -22,6 +22,9 @@ Given a graph, classify each edge:
 
 &lt;MarkSolved problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" /&gt;
 
+&lt;InterviewTimer problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" /&gt;
+
+
 
 ## Approach — Kruskal with per-edge experiments (canonical)
 

@@ -22,6 +22,9 @@ Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 
 &lt;MarkSolved problem-slug="boats-to-save-people" /&gt;
 
+&lt;InterviewTimer problem-slug="boats-to-save-people" /&gt;
+
+
 
 ## Approach — Sort + greedy two-pointer (canonical)
 

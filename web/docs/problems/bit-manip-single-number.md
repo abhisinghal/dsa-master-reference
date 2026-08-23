@@ -21,6 +21,9 @@ Every element appears twice except one. Return that one, in **O(n)** time and **
 
 &lt;MarkSolved problem-slug="bit-manip-single-number" /&gt;
 
+&lt;InterviewTimer problem-slug="bit-manip-single-number" /&gt;
+
+
 
 ## Approach 1 — HashSet toggle
 

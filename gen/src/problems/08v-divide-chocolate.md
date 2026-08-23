@@ -20,6 +20,9 @@ Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the s
 
 <MarkSolved problem-slug="divide-chocolate" />
 
+<InterviewTimer problem-slug="divide-chocolate" />
+
+
 
 ## Approach — Binary search on the minimum
 

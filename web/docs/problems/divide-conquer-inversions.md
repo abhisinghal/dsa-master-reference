@@ -20,6 +20,9 @@ For each index `i`, return the number of `j > i` with `nums[j] < nums[i]`.
 
 &lt;MarkSolved problem-slug="divide-conquer-inversions" /&gt;
 
+&lt;InterviewTimer problem-slug="divide-conquer-inversions" /&gt;
+
+
 
 ## Approach 1 — Brute force (nested compare)
 

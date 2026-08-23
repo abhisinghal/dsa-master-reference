@@ -21,6 +21,9 @@ Knight from top-left to bottom-right; each cell gives/takes HP; HP ≥ 1 always.
 
 <MarkSolved problem-slug="dungeon-game" />
 
+<InterviewTimer problem-slug="dungeon-game" />
+
+
 
 ## Approach — Reverse DP from bottom-right (canonical)
 

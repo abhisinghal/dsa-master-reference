@@ -20,6 +20,9 @@ Merge exactly k consecutive piles at a time; cost = sum. Min total to merge all 
 
 <MarkSolved problem-slug="minimum-cost-to-merge-stones" />
 
+<InterviewTimer problem-slug="minimum-cost-to-merge-stones" />
+
+
 
 ## Approach — Interval DP with residue trick (canonical)
 

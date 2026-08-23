@@ -21,6 +21,9 @@ Given `k` sorted lists of integers, find the smallest range `[a, b]` that contai
 
 <MarkSolved problem-slug="smallest-range-covering-elements-from-k-lists" />
 
+<InterviewTimer problem-slug="smallest-range-covering-elements-from-k-lists" />
+
+
 
 ## Approach 1 — Merge, sweep with sliding window on tagged list
 

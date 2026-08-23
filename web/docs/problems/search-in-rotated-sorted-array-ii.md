@@ -22,6 +22,9 @@ Sorted array rotated at unknown pivot, **may contain duplicates**. Return true i
 
 &lt;MarkSolved problem-slug="search-in-rotated-sorted-array-ii" /&gt;
 
+&lt;InterviewTimer problem-slug="search-in-rotated-sorted-array-ii" /&gt;
+
+
 
 ## Approach 1 — Linear scan
 

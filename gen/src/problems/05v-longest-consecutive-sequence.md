@@ -22,6 +22,9 @@ Given an unsorted integer array `nums`, return the length of the longest **conse
 
 <MarkSolved problem-slug="longest-consecutive-sequence" />
 
+<InterviewTimer problem-slug="longest-consecutive-sequence" />
+
+
 
 ## Approach 1 — Sort, then walk
 

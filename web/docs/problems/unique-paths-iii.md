@@ -22,6 +22,9 @@ Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cel
 
 &lt;MarkSolved problem-slug="unique-paths-iii" /&gt;
 
+&lt;InterviewTimer problem-slug="unique-paths-iii" /&gt;
+
+
 
 ## Approach — Hamiltonian-path DFS with in-place marking (canonical)
 

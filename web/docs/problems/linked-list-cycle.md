@@ -22,6 +22,9 @@ Given the head of a linked list, return `true` iff the list contains a cycle.
 
 &lt;MarkSolved problem-slug="linked-list-cycle" /&gt;
 
+&lt;InterviewTimer problem-slug="linked-list-cycle" /&gt;
+
+
 
 ## Approach 1 — Hash set of visited nodes
 

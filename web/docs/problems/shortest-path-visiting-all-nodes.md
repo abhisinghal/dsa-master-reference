@@ -21,6 +21,9 @@ Undirected graph. Shortest length path visiting every node (may reuse).
 
 &lt;MarkSolved problem-slug="shortest-path-visiting-all-nodes" /&gt;
 
+&lt;InterviewTimer problem-slug="shortest-path-visiting-all-nodes" /&gt;
+
+
 
 ## Approach — Bitmask BFS (canonical)
 

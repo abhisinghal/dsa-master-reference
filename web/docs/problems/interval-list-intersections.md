@@ -21,6 +21,9 @@ Two lists of **sorted, disjoint** intervals. Return their intersection.
 
 &lt;MarkSolved problem-slug="interval-list-intersections" /&gt;
 
+&lt;InterviewTimer problem-slug="interval-list-intersections" /&gt;
+
+
 
 ## Approach 1 — All pairs
 

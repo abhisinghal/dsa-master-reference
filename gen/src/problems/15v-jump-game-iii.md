@@ -22,6 +22,9 @@ From index `start`, you may jump `i ± arr[i]`. Return true iff you can reach an
 
 <MarkSolved problem-slug="jump-game-iii" />
 
+<InterviewTimer problem-slug="jump-game-iii" />
+
+
 
 ## Approach 1 — DFS/BFS on implicit graph (canonical)
 

@@ -22,6 +22,9 @@ Given matrix and integer `target`, count submatrices whose sum equals `target`.
 
 &lt;MarkSolved problem-slug="count-submatrices-with-target-sum" /&gt;
 
+&lt;InterviewTimer problem-slug="count-submatrices-with-target-sum" /&gt;
+
+
 
 ## Approach 1 — Enumerate every submatrix
 
