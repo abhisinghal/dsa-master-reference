@@ -67,6 +67,7 @@ import InterviewTimer from './InterviewTimer.vue'
 import Bookmark from './Bookmark.vue'
 import BookmarksList from './BookmarksList.vue'
 import RoadmapChecklist from './RoadmapChecklist.vue'
+import StudyPlanGenerator from './StudyPlanGenerator.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -148,6 +149,7 @@ export default {
     app.component('Bookmark', Bookmark)
     app.component('BookmarksList', BookmarksList)
     app.component('RoadmapChecklist', RoadmapChecklist)
+    app.component('StudyPlanGenerator', StudyPlanGenerator)
     installSolvedCountBadges(router)
   }
 }

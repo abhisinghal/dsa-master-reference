@@ -1,5 +1,10 @@
 [
   {
+    "title": "Zero-to-Hero Roadmap",
+    "url": "/foundations/roadmap",
+    "updated": "2026-08-23T05:12:19.000Z"
+  },
+  {
     "title": "Sliding Window",
     "url": "/patterns/sliding-window",
     "updated": "2026-08-23T05:01:48.000Z"
@@ -22,11 +27,6 @@
   {
     "title": "Hashing",
     "url": "/patterns/hashing",
-    "updated": "2026-08-23T05:01:48.000Z"
-  },
-  {
-    "title": "Monotonic Stack",
-    "url": "/patterns/monotonic-stack",
     "updated": "2026-08-23T05:01:48.000Z"
   }
 ]
