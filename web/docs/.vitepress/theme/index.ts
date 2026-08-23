@@ -46,6 +46,8 @@ import AiCompanion from './AiCompanion.vue'
 import PatternProgress from './PatternProgress.vue'
 import FeedbackWidget from './FeedbackWidget.vue'
 import ShortcutHint from './ShortcutHint.vue'
+import OnboardingTour from './OnboardingTour.vue'
+import PageAnalytics from './PageAnalytics.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -54,7 +56,7 @@ export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
       'doc-before': () => h(Breadcrumbs),
-      'layout-bottom': () => h(ShortcutHint),
+      'layout-bottom': () => [h(ShortcutHint), h(OnboardingTour), h(PageAnalytics)],
     })
   },
   enhanceApp({ app, router }) {
@@ -104,6 +106,8 @@ export default {
     app.component('PatternProgress', PatternProgress)
     app.component('FeedbackWidget', FeedbackWidget)
     app.component('ShortcutHint', ShortcutHint)
+    app.component('OnboardingTour', OnboardingTour)
+    app.component('PageAnalytics', PageAnalytics)
     installSolvedCountBadges(router)
   }
 }
