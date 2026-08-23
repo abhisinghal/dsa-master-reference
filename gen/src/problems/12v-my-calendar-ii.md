@@ -111,3 +111,5 @@ class MyCalendarTwo2 {
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
 
 <FeedbackWidget problem-slug="my-calendar-ii" />
+
+<RelatedProblems problems="merge-intervals-classic::Merge Intervals Classic|insert-interval::Insert Interval|remove-covered-intervals::Remove Covered Intervals" />

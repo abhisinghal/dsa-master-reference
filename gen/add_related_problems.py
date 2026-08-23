@@ -134,11 +134,16 @@ def get_related(slug: str) -> list:
     return []
 
 
+def strip_prefix(stem: str) -> str:
+    """Strip NN- or NNv- prefix from filename stem."""
+    return re.sub(r'^\d+v?-', '', stem)
+
+
 def process(path: Path) -> bool:
     text = path.read_text(encoding='utf-8')
     if '<RelatedProblems' in text:
         return False
-    slug = path.stem
+    slug = strip_prefix(path.stem)
     related = get_related(slug)
     if not related:
         return False

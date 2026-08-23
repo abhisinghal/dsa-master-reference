@@ -71,3 +71,5 @@ int climbStairs(int n) {
 - [Fibonacci Number](https://leetcode.com/problems/fibonacci-number/)
 
 <FeedbackWidget problem-slug="climbing-stairs" />
+
+<RelatedProblems problems="coin-change::Coin Change|target-sum::Target Sum|min-cost-climbing-stairs::Min Cost Climbing Stairs" />

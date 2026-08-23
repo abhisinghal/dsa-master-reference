@@ -135,3 +135,5 @@ String reorganizeBucket(String s) {
 - [Top K Frequent Elements](/problems/top-k-frequent-elements)
 
 <FeedbackWidget problem-slug="reorganize-string" />
+
+<RelatedProblems problems="ugly-number-ii::Ugly Number II|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists|k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists" />

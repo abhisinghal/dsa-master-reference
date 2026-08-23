@@ -88,3 +88,5 @@ int minDistance(String a, String b) {
 - [Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/) — same 2D table skeleton
 
 <FeedbackWidget problem-slug="edit-distance" />
+
+<RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|maximal-square::Maximal Square|coin-change-ii::Coin Change II" />

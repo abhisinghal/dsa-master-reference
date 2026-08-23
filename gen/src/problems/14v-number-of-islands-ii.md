@@ -102,3 +102,5 @@ boolean union(int[] p, int a, int b) {
 - [Making a Large Island](https://leetcode.com/problems/making-a-large-island/)
 
 <FeedbackWidget problem-slug="number-of-islands-ii" />
+
+<RelatedProblems problems="connecting-cities-with-minimum-cost::Connecting Cities With Minimum Cost|number-of-provinces::Number Of Provinces|most-stones-removed-with-same-row-or-column::Most Stones Removed With Same Row Or Column" />

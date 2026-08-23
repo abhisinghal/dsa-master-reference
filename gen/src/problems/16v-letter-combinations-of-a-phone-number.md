@@ -86,3 +86,5 @@ Extend all combinations by next digit's letters; same complexity, no recursion.
 - [Palindrome Partitioning](/problems/palindrome-partitioning)
 
 <FeedbackWidget problem-slug="letter-combinations-of-a-phone-number" />
+
+<RelatedProblems problems="permutations::Permutations|palindrome-partitioning::Palindrome Partitioning|n-queens-ii::N Queens II" />

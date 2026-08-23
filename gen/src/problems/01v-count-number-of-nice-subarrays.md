@@ -135,3 +135,5 @@ int numberOfSubarraysPS(int[] nums, int k) {
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — hash-map sibling
 
 <FeedbackWidget problem-slug="count-number-of-nice-subarrays" />
+
+<RelatedProblems problems="subarray-product-less-than-k::Subarray Product Less Than K|minimum-window-substring::Minimum Window Substring|find-all-anagrams-in-a-string::Find All Anagrams In A String" />

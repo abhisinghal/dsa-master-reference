@@ -130,3 +130,5 @@ int numberOfSubstringsLast(String s) {
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)
 
 <FeedbackWidget problem-slug="number-of-substrings-containing-all-three-characters" />
+
+<RelatedProblems problems="minimum-size-subarray-sum::Minimum Size Subarray Sum|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|count-number-of-nice-subarrays::Count Number Of Nice Subarrays" />

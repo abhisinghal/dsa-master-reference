@@ -80,3 +80,5 @@ int numRescueBoats(int[] people, int limit) {
 - [Assign Cookies](https://leetcode.com/problems/assign-cookies/)
 
 <FeedbackWidget problem-slug="boats-to-save-people" />
+
+<RelatedProblems problems="squares-of-a-sorted-array::Squares Of A Sorted Array|valid-palindrome-ii::Valid Palindrome II|sort-array-by-parity::Sort Array By Parity" />

@@ -114,3 +114,5 @@ class KthLargest {
 - [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) — two-heap for streaming median
 
 <FeedbackWidget problem-slug="kth-largest-element-in-a-stream" />
+
+<RelatedProblems problems="k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists|ugly-number-ii::Ugly Number II|k-closest-points-to-origin::K Closest Points To Origin" />

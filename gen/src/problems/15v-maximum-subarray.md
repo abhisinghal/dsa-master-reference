@@ -89,3 +89,5 @@ int maxSubArray(int[] nums) {
 - [Best Time to Buy and Sell Stock](/problems/best-time-to-buy-and-sell-stock)
 
 <FeedbackWidget problem-slug="maximum-subarray" />
+
+<RelatedProblems problems="jump-game-ii::Jump Game II|jump-game::Jump Game|non-overlapping-intervals::Non Overlapping Intervals" />

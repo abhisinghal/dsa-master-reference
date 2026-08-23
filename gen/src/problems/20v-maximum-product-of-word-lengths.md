@@ -86,3 +86,5 @@ int maxProduct(String[] words) {
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other) — bitmask DP
 
 <FeedbackWidget problem-slug="maximum-product-of-word-lengths" />
+
+<RelatedProblems problems="hamming-distance::Hamming Distance|find-the-difference::Find The Difference|power-of-two::Power Of Two" />

@@ -104,3 +104,5 @@ boolean hasCycle(ListNode head) {
 - [Find the Duplicate Number](/problems/find-the-duplicate-number) — cycle detection on array as implicit list
 
 <FeedbackWidget problem-slug="linked-list-cycle" />
+
+<RelatedProblems problems="fast-slow-linked-list-cycle-ii::Fast Slow Linked List Cycle II|find-the-duplicate-number::Find The Duplicate Number|happy-number::Happy Number" />

@@ -93,3 +93,5 @@ int minimumSemesters(int n, int[][] relations) {
 - [Alien Dictionary](/problems/alien-dictionary)
 
 <FeedbackWidget problem-slug="parallel-courses" />
+
+<RelatedProblems problems="course-schedule::Course Schedule|minimum-height-trees::Minimum Height Trees|sequence-reconstruction::Sequence Reconstruction" />

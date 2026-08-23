@@ -83,3 +83,5 @@ int longestCommonSubsequence(String s1, String s2) {
 - [Shortest Common Supersequence](https://leetcode.com/problems/shortest-common-supersequence/)
 
 <FeedbackWidget problem-slug="longest-common-subsequence" />
+
+<RelatedProblems problems="palindrome-partitioning-ii::Palindrome Partitioning II|coin-change::Coin Change|unique-paths-ii::Unique Paths II" />

@@ -137,3 +137,5 @@ String minWindow(String s, String t) {
 - [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string) — return all indices
 
 <FeedbackWidget problem-slug="minimum-window-substring" />
+
+<RelatedProblems problems="binary-subarrays-with-sum::Binary Subarrays With Sum|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|longest-palindromic-substring::Longest Palindromic Substring" />

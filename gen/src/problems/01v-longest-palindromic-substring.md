@@ -101,3 +101,5 @@ Sentinels + palindrome-radius array with reuse across mirrored centers.
 - [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)
 
 <FeedbackWidget problem-slug="longest-palindromic-substring" />
+
+<RelatedProblems problems="find-all-anagrams-in-a-string::Find All Anagrams In A String|sliding-window-longest-substring::Sliding Window Longest Substring|subarrays-with-k-different-integers::Subarrays With K Different Integers" />

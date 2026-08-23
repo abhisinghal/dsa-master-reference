@@ -134,3 +134,5 @@ void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
 - [Kth Smallest Element in a Sorted Matrix](/problems/kth-smallest-element-in-a-sorted-matrix) — BS-on-answer alternative
 
 <FeedbackWidget problem-slug="k-closest-points-to-origin" />
+
+<RelatedProblems problems="ugly-number-ii::Ugly Number II|k-way-merge-k-sorted-lists::K Way Merge K Sorted Lists|smallest-range-covering-elements-from-k-lists::Smallest Range Covering Elements From K Lists" />

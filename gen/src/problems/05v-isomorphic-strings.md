@@ -84,3 +84,5 @@ boolean isIsomorphic(String s, String t) {
 - [Valid Anagram](/problems/valid-anagram)
 
 <FeedbackWidget problem-slug="isomorphic-strings" />
+
+<RelatedProblems problems="group-shifted-strings::Group Shifted Strings|3sum::3sum|valid-anagram::Valid Anagram" />

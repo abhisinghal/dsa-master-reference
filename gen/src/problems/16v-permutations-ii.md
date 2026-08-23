@@ -76,3 +76,5 @@ void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> out) {
 - [Combination Sum II](/problems/combination-sum-ii)
 
 <FeedbackWidget problem-slug="permutations-ii" />
+
+<RelatedProblems problems="letter-combinations-of-a-phone-number::Letter Combinations Of A Phone Number|combination-sum-iv::Combination Sum IV|n-queens::N Queens" />

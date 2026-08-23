@@ -150,3 +150,5 @@ List<List<Integer>> threeSum(int[] nums) {
 - [Two Sum](/problems/hashing-two-sum) — the seed
 
 <FeedbackWidget problem-slug="3sum" />
+
+<RelatedProblems problems="hashing-two-sum::Hashing Two Sum|two-sum-ii-input-array-is-sorted::Two Sum II Input Array Is Sorted|group-shifted-strings::Group Shifted Strings" />

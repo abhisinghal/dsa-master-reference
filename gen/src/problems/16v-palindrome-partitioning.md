@@ -91,3 +91,5 @@ O(n²) precompute; O(1) checks during recursion.
 - [Word Break II](https://leetcode.com/problems/word-break-ii/)
 
 <FeedbackWidget problem-slug="palindrome-partitioning" />
+
+<RelatedProblems problems="n-queens-ii::N Queens II|sudoku-solver::Sudoku Solver|combination-sum-iii::Combination Sum III" />

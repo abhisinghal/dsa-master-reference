@@ -103,3 +103,5 @@ ListNode middleNode(ListNode head) {
 - [Sort List](/problems/sort-list) — merge sort using middle split
 
 <FeedbackWidget problem-slug="middle-of-the-linked-list" />
+
+<RelatedProblems problems="fast-slow-linked-list-cycle-ii::Fast Slow Linked List Cycle II|palindrome-linked-list::Palindrome Linked List|find-the-duplicate-number::Find The Duplicate Number" />

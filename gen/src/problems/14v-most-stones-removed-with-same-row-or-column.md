@@ -97,3 +97,5 @@ void union(Map<Integer, Integer> p, int a, int b) {
 - [Connecting Cities With Minimum Cost](/problems/connecting-cities-with-minimum-cost)
 
 <FeedbackWidget problem-slug="most-stones-removed-with-same-row-or-column" />
+
+<RelatedProblems problems="redundant-connection::Redundant Connection|min-cost-to-connect-all-points::Min Cost To Connect All Points|number-of-islands-ii::Number Of Islands II" />

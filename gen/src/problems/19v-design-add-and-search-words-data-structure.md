@@ -106,3 +106,5 @@ class WordDictionary {
 - [Stream of Characters](/problems/stream-of-characters)
 
 <FeedbackWidget problem-slug="design-add-and-search-words-data-structure" />
+
+<RelatedProblems problems="word-search-ii::Word Search II|trie-word-search-ii::Trie Word Search II|stream-of-characters::Stream Of Characters" />

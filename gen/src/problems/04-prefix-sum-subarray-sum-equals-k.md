@@ -144,3 +144,5 @@ int subarraySum(int[] nums, int k) {
 - [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/) — same skeleton
 
 <FeedbackWidget problem-slug="prefix-sum-subarray-sum-equals-k" />
+
+<RelatedProblems problems="subarray-sums-divisible-by-k::Subarray Sums Divisible By K|car-pooling::Car Pooling|contiguous-array::Contiguous Array" />

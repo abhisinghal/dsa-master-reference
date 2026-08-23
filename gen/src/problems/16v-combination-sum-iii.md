@@ -71,3 +71,5 @@ void dfs(int start, int k, int rem, List<Integer> path, List<List<Integer>> out)
 - [Combination Sum IV](/problems/combination-sum-iv)
 
 <FeedbackWidget problem-slug="combination-sum-iii" />
+
+<RelatedProblems problems="subsets-ii::Subsets II|beautiful-arrangement::Beautiful Arrangement|sudoku-solver::Sudoku Solver" />

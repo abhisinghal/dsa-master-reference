@@ -81,3 +81,5 @@ int change(int amount, int[] coins) {
 - [Perfect Squares](/problems/perfect-squares)
 
 <FeedbackWidget problem-slug="coin-change-ii" />
+
+<RelatedProblems problems="longest-increasing-subsequence::Longest Increasing Subsequence|climbing-stairs::Climbing Stairs|min-cost-climbing-stairs::Min Cost Climbing Stairs" />

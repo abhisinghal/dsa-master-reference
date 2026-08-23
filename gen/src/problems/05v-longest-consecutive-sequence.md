@@ -140,3 +140,5 @@ void union(Map<Integer,Integer> p, Map<Integer,Integer> r, int a, int b) {
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — hash-key grouping
 
 <FeedbackWidget problem-slug="longest-consecutive-sequence" />
+
+<RelatedProblems problems="group-shifted-strings::Group Shifted Strings|hashing-two-sum::Hashing Two Sum|3sum::3sum" />

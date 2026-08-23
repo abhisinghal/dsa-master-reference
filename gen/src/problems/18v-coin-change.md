@@ -139,3 +139,5 @@ int coinChange(int[] coins, int amount) {
 - [Minimum Cost For Tickets](https://leetcode.com/problems/minimum-cost-for-tickets/) — variant with day-based DP
 
 <FeedbackWidget problem-slug="coin-change" />
+
+<RelatedProblems problems="min-cost-climbing-stairs::Min Cost Climbing Stairs|target-sum::Target Sum|burst-balloons::Burst Balloons" />

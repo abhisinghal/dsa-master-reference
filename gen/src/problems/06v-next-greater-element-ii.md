@@ -113,3 +113,5 @@ int[] nextGreaterElements(int[] nums) {
 - [Trapping Rain Water](/problems/trapping-rain-water) — monotonic stack solution exists
 
 <FeedbackWidget problem-slug="next-greater-element-ii" />
+
+<RelatedProblems problems="monotonic-stack-daily-temperatures::Monotonic Stack Daily Temperatures|sum-of-subarray-minimums::Sum Of Subarray Minimums|remove-k-digits::Remove K Digits" />

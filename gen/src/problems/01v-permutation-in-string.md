@@ -168,3 +168,5 @@ boolean checkInclusion(String s1, String s2) {
 - [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words) — window on word offsets
 
 <FeedbackWidget problem-slug="permutation-in-string" />
+
+<RelatedProblems problems="number-of-substrings-containing-all-three-characters::Number Of Substrings Containing All Three Characters|longest-repeating-character-replacement::Longest Repeating Character Replacement|minimum-size-subarray-sum::Minimum Size Subarray Sum" />

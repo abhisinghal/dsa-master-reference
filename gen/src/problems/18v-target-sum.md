@@ -83,3 +83,5 @@ int findTargetSumWays(int[] nums, int target) {
 - [Coin Change II](/problems/coin-change-ii)
 
 <FeedbackWidget problem-slug="target-sum" />
+
+<RelatedProblems problems="climbing-stairs::Climbing Stairs|longest-increasing-subsequence::Longest Increasing Subsequence|partition-equal-subset-sum::Partition Equal Subset Sum" />

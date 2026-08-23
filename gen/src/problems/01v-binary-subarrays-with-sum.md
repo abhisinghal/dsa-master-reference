@@ -133,3 +133,5 @@ int atMost(int[] nums, int goal) {
 - [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays) — same trick with odd counts
 
 <FeedbackWidget problem-slug="binary-subarrays-with-sum" />
+
+<RelatedProblems problems="fruit-into-baskets::Fruit Into Baskets|longest-substring-with-at-most-k-distinct-characters::Longest Substring With At Most K Distinct Characters|subarray-product-less-than-k::Subarray Product Less Than K" />

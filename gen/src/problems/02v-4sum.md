@@ -161,3 +161,5 @@ List<List<Integer>> kSum(int[] nums, long target, int start, int k) {
 - [Two Sum](/problems/hashing-two-sum)
 
 <FeedbackWidget problem-slug="4sum" />
+
+<RelatedProblems problems="valid-palindrome-ii::Valid Palindrome II|container-with-most-water::Container With Most Water|merge-sorted-array::Merge Sorted Array" />

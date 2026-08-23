@@ -88,3 +88,5 @@ boolean carPooling(int[][] trips, int capacity) {
 - [Range Addition](/problems/range-addition)
 
 <FeedbackWidget problem-slug="car-pooling" />
+
+<RelatedProblems problems="prefix-sum-subarray-sum-equals-k::Prefix Sum Subarray Sum Equals K|contiguous-array::Contiguous Array|continuous-subarray-sum::Continuous Subarray Sum" />

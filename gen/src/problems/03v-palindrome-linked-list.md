@@ -139,3 +139,5 @@ boolean check(ListNode node) {
 - [Reorder List](https://leetcode.com/problems/reorder-list/) — same split + reverse + interleave
 
 <FeedbackWidget problem-slug="palindrome-linked-list" />
+
+<RelatedProblems problems="linked-list-cycle::Linked List Cycle|find-the-duplicate-number::Find The Duplicate Number|happy-number::Happy Number" />

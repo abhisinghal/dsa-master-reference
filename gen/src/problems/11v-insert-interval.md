@@ -93,3 +93,5 @@ int[][] insert(int[][] intervals, int[] newInterval) {
 - [Remove Covered Intervals](/problems/remove-covered-intervals)
 
 <FeedbackWidget problem-slug="insert-interval" />
+
+<RelatedProblems problems="remove-covered-intervals::Remove Covered Intervals|my-calendar-ii::My Calendar II|meeting-rooms-ii::Meeting Rooms II" />

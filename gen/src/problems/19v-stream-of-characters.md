@@ -99,3 +99,5 @@ class StreamChecker {
 - [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/)
 
 <FeedbackWidget problem-slug="stream-of-characters" />
+
+<RelatedProblems problems="design-add-and-search-words-data-structure::Design Add And Search Words Data Structure|word-search-ii::Word Search II|concatenated-words::Concatenated Words" />

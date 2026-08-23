@@ -140,3 +140,5 @@ int[] dailyTemperatures(int[] t) {
 - [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) — closest-smaller-both-sides via one stack
 
 <FeedbackWidget problem-slug="monotonic-stack-daily-temperatures" />
+
+<RelatedProblems problems="next-greater-element-ii::Next Greater Element II|online-stock-span::Online Stock Span|remove-k-digits::Remove K Digits" />

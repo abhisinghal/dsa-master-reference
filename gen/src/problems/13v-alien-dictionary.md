@@ -102,3 +102,5 @@ String alienOrder(String[] words) {
 - [Parallel Courses](/problems/parallel-courses)
 
 <FeedbackWidget problem-slug="alien-dictionary" />
+
+<RelatedProblems problems="course-schedule::Course Schedule|sequence-reconstruction::Sequence Reconstruction|parallel-courses::Parallel Courses" />

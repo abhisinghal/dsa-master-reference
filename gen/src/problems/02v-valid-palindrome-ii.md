@@ -126,3 +126,5 @@ boolean validPalindromeK(String s, int k) {
 - [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
 
 <FeedbackWidget problem-slug="valid-palindrome-ii" />
+
+<RelatedProblems problems="sort-array-by-parity::Sort Array By Parity|boats-to-save-people::Boats To Save People|merge-sorted-array::Merge Sorted Array" />

@@ -89,3 +89,5 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - [Find Critical/Pseudo-Critical MST Edges](/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree)
 
 <FeedbackWidget problem-slug="connecting-cities-with-minimum-cost" />
+
+<RelatedProblems problems="min-cost-to-connect-all-points::Min Cost To Connect All Points|number-of-islands-ii::Number Of Islands II|accounts-merge::Accounts Merge" />

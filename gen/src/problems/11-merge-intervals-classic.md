@@ -114,3 +114,5 @@ int[][] merge(int[][] intervals) {
 - [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) — greedy on end times
 
 <FeedbackWidget problem-slug="merge-intervals-classic" />
+
+<RelatedProblems problems="employee-free-time::Employee Free Time|my-calendar-ii::My Calendar II|meeting-rooms-ii::Meeting Rooms II" />

@@ -77,3 +77,5 @@ int minCostClimbingStairs(int[] cost) {
 - [House Robber](/problems/dp-house-robber)
 
 <FeedbackWidget problem-slug="min-cost-climbing-stairs" />
+
+<RelatedProblems problems="longest-palindromic-subsequence::Longest Palindromic Subsequence|longest-common-subsequence::Longest Common Subsequence|climbing-stairs::Climbing Stairs" />

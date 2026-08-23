@@ -128,3 +128,5 @@ int characterReplacement(String s, int k) {
 - [Longest Substring Without Repeating Characters](/problems/sliding-window-longest-substring) — the seed
 
 <FeedbackWidget problem-slug="longest-repeating-character-replacement" />
+
+<RelatedProblems problems="permutation-in-string::Permutation In String|longest-palindromic-substring::Longest Palindromic Substring|fruit-into-baskets::Fruit Into Baskets" />

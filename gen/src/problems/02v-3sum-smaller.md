@@ -85,3 +85,5 @@ int threeSumSmaller(int[] nums, int target) {
 - [3Sum Closest](/problems/3sum-closest)
 
 <FeedbackWidget problem-slug="3sum-smaller" />
+
+<RelatedProblems problems="container-with-most-water::Container With Most Water|3sum-closest::3sum Closest|move-zeroes::Move Zeroes" />

@@ -98,3 +98,5 @@ Cleaner when duplicates exist — see [Permutations II](/problems/permutations-i
 - [Letter Case Permutation](/problems/letter-case-permutation)
 
 <FeedbackWidget problem-slug="permutations" />
+
+<RelatedProblems problems="beautiful-arrangement::Beautiful Arrangement|subsets-ii::Subsets II|n-queens-ii::N Queens II" />

@@ -70,3 +70,5 @@ void dfs(int[] a, int start, int rem, List<Integer> path, List<List<Integer>> ou
 - [Combination Sum IV](/problems/combination-sum-iv) — DP
 
 <FeedbackWidget problem-slug="combination-sum-ii" />
+
+<RelatedProblems problems="n-queens-ii::N Queens II|permutations-ii::Permutations II|subsets-ii::Subsets II" />

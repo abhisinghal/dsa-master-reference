@@ -105,3 +105,5 @@ ListNode merge(ListNode a, ListNode b) {
 - [Middle of the Linked List](/problems/middle-of-the-linked-list) — split primitive
 
 <FeedbackWidget problem-slug="sort-list" />
+
+<RelatedProblems problems="count-of-range-sum::Count Of Range Sum|reverse-pairs::Reverse Pairs|global-and-local-inversions::Global And Local Inversions" />

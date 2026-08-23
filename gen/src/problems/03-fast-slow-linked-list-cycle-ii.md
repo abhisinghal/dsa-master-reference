@@ -126,3 +126,5 @@ ListNode detectCycle(ListNode head) {
 - [Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/) — Floyd to find middle, reverse second half, compare
 
 <FeedbackWidget problem-slug="fast-slow-linked-list-cycle-ii" />
+
+<RelatedProblems problems="palindrome-linked-list::Palindrome Linked List|linked-list-cycle::Linked List Cycle|find-the-duplicate-number::Find The Duplicate Number" />

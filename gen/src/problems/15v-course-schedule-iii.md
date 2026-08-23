@@ -79,3 +79,5 @@ int scheduleCourse(int[][] courses) {
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/)
 
 <FeedbackWidget problem-slug="course-schedule-iii" />
+
+<RelatedProblems problems="jump-game-ii::Jump Game II|jump-game::Jump Game|minimum-number-of-arrows-to-burst-balloons::Minimum Number Of Arrows To Burst Balloons" />

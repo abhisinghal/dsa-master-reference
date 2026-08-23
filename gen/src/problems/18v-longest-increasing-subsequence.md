@@ -121,3 +121,5 @@ int lengthOfLIS(int[] a) {
 - [Number of Longest Increasing Subsequence](https://leetcode.com/problems/number-of-longest-increasing-subsequence/) — track count alongside length
 
 <FeedbackWidget problem-slug="longest-increasing-subsequence" />
+
+<RelatedProblems problems="burst-balloons::Burst Balloons|coin-change::Coin Change|unique-paths-ii::Unique Paths II" />

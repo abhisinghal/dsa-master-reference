@@ -81,3 +81,5 @@ int uniquePathsWithObstacles(int[][] grid) {
 - [Minimum Falling Path Sum](/problems/minimum-falling-path-sum)
 
 <FeedbackWidget problem-slug="unique-paths-ii" />
+
+<RelatedProblems problems="palindrome-partitioning-ii::Palindrome Partitioning II|min-cost-climbing-stairs::Min Cost Climbing Stairs|coin-change::Coin Change" />

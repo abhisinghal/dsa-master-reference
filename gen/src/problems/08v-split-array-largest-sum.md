@@ -89,3 +89,5 @@ int splitArray(int[] nums, int m) {
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)
 
 <FeedbackWidget problem-slug="split-array-largest-sum" />
+
+<RelatedProblems problems="binary-search-rotated-sorted::Binary Search Rotated Sorted|find-peak-element::Find Peak Element|koko-bananas::Koko Bananas" />

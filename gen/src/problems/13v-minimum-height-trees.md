@@ -94,3 +94,5 @@ List<Integer> findMinHeightTrees(int n, int[][] edges) {
 - [Longest Path in Tree](https://leetcode.com/problems/longest-path-with-different-adjacent-characters/)
 
 <FeedbackWidget problem-slug="minimum-height-trees" />
+
+<RelatedProblems problems="course-schedule::Course Schedule|sequence-reconstruction::Sequence Reconstruction|alien-dictionary::Alien Dictionary" />

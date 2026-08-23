@@ -105,3 +105,5 @@ For `target = 3`:
 - [Find Minimum in Rotated Sorted Array II](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/) — duplicates variant of that
 
 <FeedbackWidget problem-slug="search-in-rotated-sorted-array-ii" />
+
+<RelatedProblems problems="median-of-two-sorted-arrays::Median Of Two Sorted Arrays|split-array-largest-sum::Split Array Largest Sum|binary-search::Binary Search" />

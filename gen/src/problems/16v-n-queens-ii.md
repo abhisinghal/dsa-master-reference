@@ -71,3 +71,5 @@ void dfs(int n, int row, int cols, int d1, int d2, int[] count) {
 - [Sudoku Solver](/problems/sudoku-solver)
 
 <FeedbackWidget problem-slug="n-queens-ii" />
+
+<RelatedProblems problems="permutations::Permutations|sudoku-solver::Sudoku Solver|beautiful-arrangement::Beautiful Arrangement" />

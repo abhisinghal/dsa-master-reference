@@ -146,3 +146,5 @@ List<Integer> findAnagrams(String s, String p) {
 - [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words)
 
 <FeedbackWidget problem-slug="find-all-anagrams-in-a-string" />
+
+<RelatedProblems problems="binary-subarrays-with-sum::Binary Subarrays With Sum|shortest-subarray-with-sum-at-least-k::Shortest Subarray With Sum At Least K|permutation-in-string::Permutation In String" />

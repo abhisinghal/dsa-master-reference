@@ -91,3 +91,5 @@ int countArrangementBM(int n) {
 - [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)
 
 <FeedbackWidget problem-slug="beautiful-arrangement" />
+
+<RelatedProblems problems="permutations-ii::Permutations II|sudoku-solver::Sudoku Solver|combination-sum-ii::Combination Sum II" />

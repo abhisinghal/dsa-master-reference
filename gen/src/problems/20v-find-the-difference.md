@@ -86,3 +86,5 @@ char findTheDifference(String s, String t) {
 - [Valid Anagram](/problems/valid-anagram)
 
 <FeedbackWidget problem-slug="find-the-difference" />
+
+<RelatedProblems problems="reverse-bits::Reverse Bits|single-number::Single Number|power-of-two::Power Of Two" />

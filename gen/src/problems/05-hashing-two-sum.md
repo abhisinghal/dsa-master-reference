@@ -165,3 +165,5 @@ Optimal. Single scan, O(1) lookup, no sort.
 - [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) — same idea, but hash **prefix sums** instead of raw values
 
 <FeedbackWidget problem-slug="hashing-two-sum" />
+
+<RelatedProblems problems="group-shifted-strings::Group Shifted Strings|longest-consecutive-sequence::Longest Consecutive Sequence|3sum::3sum" />

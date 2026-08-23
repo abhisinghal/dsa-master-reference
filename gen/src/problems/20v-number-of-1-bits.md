@@ -85,3 +85,5 @@ Uses hardware popcount when available.
 - [Reverse Bits](/problems/reverse-bits)
 
 <FeedbackWidget problem-slug="number-of-1-bits" />
+
+<RelatedProblems problems="hamming-distance::Hamming Distance|find-the-difference::Find The Difference|single-number::Single Number" />

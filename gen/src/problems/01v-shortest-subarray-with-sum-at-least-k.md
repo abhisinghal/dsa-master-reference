@@ -94,3 +94,5 @@ int shortestSubarray(int[] nums, int k) {
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
 
 <FeedbackWidget problem-slug="shortest-subarray-with-sum-at-least-k" />
+
+<RelatedProblems problems="binary-subarrays-with-sum::Binary Subarrays With Sum|trapping-rain-water::Trapping Rain Water|fruit-into-baskets::Fruit Into Baskets" />
