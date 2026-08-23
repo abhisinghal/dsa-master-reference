@@ -2,7 +2,61 @@
 
 *Reverse-chronological list of substantive reader-facing changes since project inception. Skips typos, merge commits, and internal-only cleanup unless it changes what readers see.*
 
-This changelog is curated from the `gen/src/` git history plus the current Wave B reader-facing additions. The raw source history currently has two content commits on 2026-08-21, so the entries below group those commits by what a reader actually experiences.
+This changelog is curated from the `gen/src/` git history plus recent reader-facing additions. Entries are grouped by what a reader actually experiences.
+
+## November 2026 — CEO plan execution
+
+### 2026-11 — Round 9: Interview Day Kit + print-friendly styles
+- New Interview Day Kit page — 24-hour countdown checklist with emergency mode.
+- Landing gained two new feature cards: Company Tracks (Meta / Google / Amazon) and Interview Day Kit.
+- Print CSS added: interactive overlays hidden, hints and code traces stay visible when printing.
+
+### 2026-11 — Round 8: Company Tracks
+- New Meta / Google / Amazon track pages with 4-week problem sequences and level-by-level focus.
+- Company Tracks dropdown added to the top navigation.
+
+### 2026-11 — Round 7: Streaks + Share buttons
+- Added a StreakTracker on the landing showing consecutive-day activity with fire-emoji tiers.
+- Added ShareButtons using the Web Share API plus Twitter and LinkedIn quick-share.
+
+### 2026-11 — Round 6: Social proof + support
+- Landing gained a Social Proof panel with 4 anonymized composite testimonials.
+- Added a Support panel with GitHub Sponsors and Buy Me a Coffee links (monetization Path 1 = free + newsletter/sponsors).
+
+### 2026-11 — Round 5: Mark solved + storage manager
+- Every problem page now has a Mark Solved button (with confetti) that syncs with the pattern progress bar.
+- Roadmap now has a Storage Manager to export/import/clear all local progress as JSON.
+
+### 2026-11 — Round 4: Onboarding tour + page analytics
+- First-time visitors see a 6-step onboarding tour highlighting hints, runner, and AI companion.
+- Privacy-first client-side page-view counter (no external tracking).
+
+### 2026-11 — Round 3: Feedback + keyboard shortcuts
+- Thumbs up/down + free-text feedback widget on all 205 problem pages.
+- Floating keyboard-shortcut hint panel (H = hints, R = runner, A = AI companion).
+
+### 2026-11 — Round 2: Per-pattern progress bar
+- Each of the 21 pattern chapters now shows a live progress bar combining solved problems and quiz scores.
+- Landing feature grid refreshed to lead with AI Companion, Hints, and Quizzes.
+
+### 2026-11 — Round 1: Landing polish + user profile
+- Added a "Try it before you read it" strip on the landing.
+- User Profile card with solved count now displayed prominently.
+- Newsletter capture and AI chat now have dismiss + 30-day expiry.
+
+### 2026-11 — Wave C: AI companion + pattern videos
+- Added an AI Companion chat panel to all 205 problem pages (pattern-templated MVP responses; wired to swap in a real LLM).
+- Added a Pattern Video placeholder to all 21 pattern chapters (YouTube/Loom-ready with a "coming soon" fallback).
+
+### 2026-11 — Wave B: User accounts + email capture
+- Local User Profile with solved-count badge (localStorage-only; ready for future cross-device auth).
+- Email capture on the landing with local dismiss/success states (backend integration pending user signup).
+
+### 2026-11 — Wave A: Hints, company tags, quizzes, Java runner
+- Progressive 3-hint reveal system on all 205 problem pages.
+- Company tags (Meta / Google / Amazon and 60+ others) on 194 problem pages.
+- Every one of the 21 pattern chapters now ends with a 5-question quiz (105 questions total).
+- Interactive Java runner (CheerpJ WASM in-browser) embedded on all 205 problem pages — no server needed.
 
 ## August 2026
 

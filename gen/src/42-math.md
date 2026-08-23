@@ -298,3 +298,5 @@ long modpow(long b, long e, long m) {
 > [pat] **Pattern Connection** — This unlocks the counting-DP finale: *Unique Paths* / *Distinct Subsequences* / *Number of Ways* problems that ask for the count `mod p`. Precompute `fact[]` and `invFact[]` once (O(n)), then every `nCr` is O(1).
 
 > [trap] **Common Trap** — Forgetting `(a − b + MOD) % MOD` when a subtraction can go negative, or applying the mod only at the very end (the intermediate product already overflowed). Reduce early and often.
+
+<RelatedPatterns pattern-id="math" />

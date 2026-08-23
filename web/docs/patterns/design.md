@@ -499,3 +499,5 @@ Generalizes to **k samples** (keep a size-k reservoir; the `i`-th element joins 
 | [Random Pick Index](https://leetcode.com/problems/random-pick-index/) | reservoir over indices matching a target | O(n) · O(1) |
 | [Shuffle an Array](https://leetcode.com/problems/shuffle-an-array/) | Fisher–Yates: swap i with random ≤ i | O(n) · O(1) |
 | [Random Pick with Blacklist](https://leetcode.com/problems/random-pick-with-blacklist/) | remap blacklisted low indices to allowed high indices | O(1) pick |
+
+&lt;RelatedPatterns pattern-id="design" /&gt;

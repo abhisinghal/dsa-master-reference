@@ -382,3 +382,5 @@ This unlocks the counting-DP finale: *Unique Paths* / *Distinct Subsequences* / 
 Forgetting `(a − b + MOD) % MOD` when a subtraction can go negative, or applying the mod only at the very end (the intermediate product already overflowed). Reduce early and often.
 
 </Callout>
+
+&lt;RelatedPatterns pattern-id="math" /&gt;
