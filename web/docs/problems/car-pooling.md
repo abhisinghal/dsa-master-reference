@@ -87,3 +87,5 @@ boolean carPooling(int[][] trips, int capacity) {
 - [Corporate Flight Bookings](/problems/corporate-flight-bookings)
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
 - [Range Addition](/problems/range-addition)
+
+&lt;FeedbackWidget problem-slug="car-pooling" /&gt;

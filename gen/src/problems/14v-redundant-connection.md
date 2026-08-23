@@ -82,3 +82,5 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - [Number of Provinces](/problems/union-find-number-of-provinces)
 - [Redundant Connection II](https://leetcode.com/problems/redundant-connection-ii/) — directed
 - [Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/)
+
+<FeedbackWidget problem-slug="redundant-connection" />

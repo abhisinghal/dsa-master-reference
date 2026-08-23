@@ -135,3 +135,5 @@ void dfs(char[][] b, int r, int c, TrieNode node, List<String> out) {
 - [Concatenated Words](https://leetcode.com/problems/concatenated-words/) — trie + DP
 - [Replace Words](https://leetcode.com/problems/replace-words/) — trie for shortest root prefix
 - [Stream of Characters](https://leetcode.com/problems/stream-of-characters/) — trie in reverse
+
+&lt;FeedbackWidget problem-slug="trie-word-search-ii" /&gt;

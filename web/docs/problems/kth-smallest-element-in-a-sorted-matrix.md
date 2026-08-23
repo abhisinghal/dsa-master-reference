@@ -93,3 +93,5 @@ int kthSmallest(int[][] m, int k) {
 - [Find K-th Smallest Pair Distance](/problems/find-k-th-smallest-pair-distance)
 - [Median of Two Sorted Arrays](/problems/median-of-two-sorted-arrays)
 - [Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/) — same staircase walk
+
+&lt;FeedbackWidget problem-slug="kth-smallest-element-in-a-sorted-matrix" /&gt;

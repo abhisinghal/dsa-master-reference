@@ -78,3 +78,5 @@ Track up-slope and down-slope lengths + current peak. Trickier but O(1) extra sp
 
 - [Trapping Rain Water](/problems/trapping-rain-water)
 - [Gas Station](/problems/gas-station)
+
+<FeedbackWidget problem-slug="candy" />

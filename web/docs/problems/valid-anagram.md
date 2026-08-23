@@ -128,3 +128,5 @@ boolean isAnagramUnicode(String s, String t) {
 - [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string) — sliding window
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — canonical-key hashing
 - [Permutation in String](/problems/permutation-in-string) — sliding boolean version
+
+&lt;FeedbackWidget problem-slug="valid-anagram" /&gt;

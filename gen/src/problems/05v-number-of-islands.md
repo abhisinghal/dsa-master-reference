@@ -72,3 +72,5 @@ Union adjacent `'1'`s; count components at end. Useful for streaming (Islands II
 - [Number of Islands II](/problems/number-of-islands-ii)
 - [Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
 - [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/)
+
+<FeedbackWidget problem-slug="number-of-islands" />

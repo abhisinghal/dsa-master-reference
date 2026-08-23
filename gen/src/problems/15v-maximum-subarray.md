@@ -84,3 +84,5 @@ int maxSubArray(int[] nums) {
 - [Maximum Product Subarray](/problems/maximum-product-subarray) — min/max dual tracking
 - [Maximum Sum Circular Subarray](/problems/maximum-sum-circular-subarray)
 - [Best Time to Buy and Sell Stock](/problems/best-time-to-buy-and-sell-stock)
+
+<FeedbackWidget problem-slug="maximum-subarray" />

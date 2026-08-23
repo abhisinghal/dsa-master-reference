@@ -100,3 +100,5 @@ For `target = 3`:
 - [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted) — no duplicates
 - [Find Minimum in Rotated Sorted Array](/problems/find-minimum-in-rotated-sorted-array) — same pivot logic
 - [Find Minimum in Rotated Sorted Array II](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/) — duplicates variant of that
+
+<FeedbackWidget problem-slug="search-in-rotated-sorted-array-ii" />

@@ -113,3 +113,5 @@ int numSubarrayProductLessThanK(int[] nums, int k) {
 - [Binary Subarrays With Sum](/problems/binary-subarrays-with-sum) — sibling with `atMost` trick
 - [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays) — sibling
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)
+
+<FeedbackWidget problem-slug="subarray-product-less-than-k" />

@@ -107,3 +107,5 @@ int singleNumber(int[] nums) {
 - [Find the Difference](https://leetcode.com/problems/find-the-difference/) — XOR two strings; survivor is the added char
 - [Single Number II](https://leetcode.com/problems/single-number-ii/) — every element thrice except one; bit-count mod 3
 - [Single Number III](https://leetcode.com/problems/single-number-iii/) — two loners; XOR gives their xor, then split by any set bit
+
+<FeedbackWidget problem-slug="bit-manip-single-number" />

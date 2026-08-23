@@ -83,3 +83,5 @@ int[][] intervalIntersection(int[][] A, int[][] B) {
 - [Merge Intervals](/problems/merge-intervals-classic)
 - [Employee Free Time](/problems/employee-free-time) — k-list union
 - [Interval Union / Difference] — variants
+
+<FeedbackWidget problem-slug="interval-list-intersections" />

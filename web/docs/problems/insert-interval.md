@@ -92,3 +92,5 @@ int[][] insert(int[][] intervals, int[] newInterval) {
 - [Merge Intervals](/problems/merge-intervals-classic)
 - [Interval List Intersections](/problems/interval-list-intersections)
 - [Remove Covered Intervals](/problems/remove-covered-intervals)
+
+&lt;FeedbackWidget problem-slug="insert-interval" /&gt;

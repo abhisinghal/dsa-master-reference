@@ -76,3 +76,5 @@ int findMinArrowShots(int[][] points) {
 
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
+
+&lt;FeedbackWidget problem-slug="minimum-number-of-arrows-to-burst-balloons" /&gt;

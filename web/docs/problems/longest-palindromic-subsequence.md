@@ -88,3 +88,5 @@ int longestPalindromeSubseq(String s) {
 
 - [Longest Common Subsequence](/problems/longest-common-subsequence)
 - [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)
+
+&lt;FeedbackWidget problem-slug="longest-palindromic-subsequence" /&gt;

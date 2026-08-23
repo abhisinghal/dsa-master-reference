@@ -135,3 +135,5 @@ void union(Map<Integer,Integer> p, Map<Integer,Integer> r, int a, int b) {
 - [Number of Islands](/problems/number-of-islands) — same "connected component" mindset
 - [Longest Substring Without Repeating Characters](/problems/sliding-window-longest-substring) — sliding-window sibling
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/) — hash-key grouping
+
+<FeedbackWidget problem-slug="longest-consecutive-sequence" />

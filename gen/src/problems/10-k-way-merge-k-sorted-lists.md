@@ -142,3 +142,5 @@ ListNode mergeKListsHeap(ListNode[] lists) {
 - [Smallest Range Covering Elements from K Lists](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/) — heap of one from each list
 - [Ugly Number II](https://leetcode.com/problems/ugly-number-ii/) — 3-way merge with dedup
 - [Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) — heap of row heads
+
+<FeedbackWidget problem-slug="k-way-merge-k-sorted-lists" />

@@ -76,3 +76,5 @@ int minCostClimbingStairs(int[] cost) {
 
 - [Climbing Stairs](/problems/climbing-stairs)
 - [House Robber](/problems/dp-house-robber)
+
+&lt;FeedbackWidget problem-slug="min-cost-climbing-stairs" /&gt;

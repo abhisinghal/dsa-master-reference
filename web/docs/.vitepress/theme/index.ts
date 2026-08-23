@@ -44,6 +44,8 @@ import UserProfile from './UserProfile.vue'
 import PatternVideo from './PatternVideo.vue'
 import AiCompanion from './AiCompanion.vue'
 import PatternProgress from './PatternProgress.vue'
+import FeedbackWidget from './FeedbackWidget.vue'
+import ShortcutHint from './ShortcutHint.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -51,7 +53,8 @@ export default {
   extends: DefaultTheme,
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
-      'doc-before': () => h(Breadcrumbs)
+      'doc-before': () => h(Breadcrumbs),
+      'layout-bottom': () => h(ShortcutHint),
     })
   },
   enhanceApp({ app, router }) {
@@ -99,6 +102,8 @@ export default {
     app.component('PatternVideo', PatternVideo)
     app.component('AiCompanion', AiCompanion)
     app.component('PatternProgress', PatternProgress)
+    app.component('FeedbackWidget', FeedbackWidget)
+    app.component('ShortcutHint', ShortcutHint)
     installSolvedCountBadges(router)
   }
 }

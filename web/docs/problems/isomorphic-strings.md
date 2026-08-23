@@ -83,3 +83,5 @@ boolean isIsomorphic(String s, String t) {
 - [Word Pattern](https://leetcode.com/problems/word-pattern/)
 - [Group Shifted Strings](/problems/group-shifted-strings)
 - [Valid Anagram](/problems/valid-anagram)
+
+&lt;FeedbackWidget problem-slug="isomorphic-strings" /&gt;

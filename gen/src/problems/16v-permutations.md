@@ -93,3 +93,5 @@ Cleaner when duplicates exist — see [Permutations II](/problems/permutations-i
 - [Permutations II](/problems/permutations-ii)
 - [Next Permutation](/problems/next-permutation)
 - [Letter Case Permutation](/problems/letter-case-permutation)
+
+<FeedbackWidget problem-slug="permutations" />

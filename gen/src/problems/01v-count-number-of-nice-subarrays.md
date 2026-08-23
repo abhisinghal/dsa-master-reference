@@ -130,3 +130,5 @@ int numberOfSubarraysPS(int[] nums, int k) {
 - [Binary Subarrays With Sum](/problems/binary-subarrays-with-sum) — identical mechanics
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers) — same atMost pattern for distinct count
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — hash-map sibling
+
+<FeedbackWidget problem-slug="count-number-of-nice-subarrays" />

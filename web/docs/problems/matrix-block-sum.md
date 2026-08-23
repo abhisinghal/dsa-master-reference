@@ -88,3 +88,5 @@ int[][] matrixBlockSum(int[][] mat, int k) {
 - [Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/) — same technique
 - [Count Submatrices with Target Sum](/problems/count-submatrices-with-target-sum)
 - [Maximal Rectangle](/problems/maximal-rectangle)
+
+&lt;FeedbackWidget problem-slug="matrix-block-sum" /&gt;

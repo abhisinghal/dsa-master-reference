@@ -84,3 +84,5 @@ int minFallingPathSum(int[][] grid) {
 - [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
 - [Triangle](https://leetcode.com/problems/triangle/)
 - [Dungeon Game](/problems/dungeon-game)
+
+&lt;FeedbackWidget problem-slug="minimum-falling-path-sum" /&gt;

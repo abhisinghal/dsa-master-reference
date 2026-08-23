@@ -86,3 +86,5 @@ int shortestPathLength(int[][] graph) {
 
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other)
 - [Find the Shortest Superstring](/problems/find-the-shortest-superstring)
+
+<FeedbackWidget problem-slug="shortest-path-visiting-all-nodes" />

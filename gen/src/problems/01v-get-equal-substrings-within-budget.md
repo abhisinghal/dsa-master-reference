@@ -72,3 +72,5 @@ int equalSubstring(String s, String t, int maxCost) {
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)
 - [Max Consecutive Ones III](/problems/max-consecutive-ones-iii)
 - [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum)
+
+<FeedbackWidget problem-slug="get-equal-substrings-within-budget" />

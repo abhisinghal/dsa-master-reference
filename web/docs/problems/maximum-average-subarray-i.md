@@ -77,3 +77,5 @@ double findMaxAverage(int[] nums, int k) {
 - [Diet Plan Performance](/problems/diet-plan-performance)
 - [Maximum Average Subarray II](https://leetcode.com/problems/maximum-average-subarray-ii/)
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
+
+&lt;FeedbackWidget problem-slug="maximum-average-subarray-i" /&gt;

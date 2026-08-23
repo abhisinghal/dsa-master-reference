@@ -85,3 +85,5 @@ int smallestDistancePair(int[] nums, int k) {
 - [Kth Smallest Element in a Sorted Matrix](/problems/kth-smallest-element-in-a-sorted-matrix)
 - [Find K Closest Elements](https://leetcode.com/problems/find-k-closest-elements/)
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)
+
+<FeedbackWidget problem-slug="find-k-th-smallest-pair-distance" />

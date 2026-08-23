@@ -79,3 +79,5 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 - [Subsets](/problems/bit-manip-subsets)
 - [Combination Sum II](/problems/combination-sum-ii)
 - [Permutations II](/problems/permutations-ii)
+
+<FeedbackWidget problem-slug="subsets-ii" />

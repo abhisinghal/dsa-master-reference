@@ -108,3 +108,5 @@ So the correct trace at i=5 (digit 1): after previous [1, 2, 2], seeing 1: pop 2
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram) — pop-when-shrinking stack
 - [Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/) — same greedy with counts
 - [Create Maximum Number](https://leetcode.com/problems/create-maximum-number/) — two-array variant
+
+<FeedbackWidget problem-slug="remove-k-digits" />

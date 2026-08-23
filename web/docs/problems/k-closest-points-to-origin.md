@@ -141,3 +141,5 @@ void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
 - [Kth Largest Element in an Array](/problems/quickselect-kth-largest) — Quickselect archetype
 - [Kth Largest Element in a Stream](/problems/kth-largest-element-in-a-stream) — streaming
 - [Kth Smallest Element in a Sorted Matrix](/problems/kth-smallest-element-in-a-sorted-matrix) — BS-on-answer alternative
+
+&lt;FeedbackWidget problem-slug="k-closest-points-to-origin" /&gt;

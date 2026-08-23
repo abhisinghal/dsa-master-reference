@@ -82,3 +82,5 @@ int balancedString(String s) {
 - [Longest Repeating Character Replacement](/problems/longest-repeating-character-replacement)
 - [Minimum Window Substring](/problems/minimum-window-substring)
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)
+
+&lt;FeedbackWidget problem-slug="replace-the-substring-for-balanced-string" /&gt;

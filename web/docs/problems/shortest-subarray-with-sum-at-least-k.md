@@ -93,3 +93,5 @@ int shortestSubarray(int[] nums, int k) {
 - [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum) — positives only
 - [Constrained Subsequence Sum](/problems/constrained-subsequence-sum)
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
+
+&lt;FeedbackWidget problem-slug="shortest-subarray-with-sum-at-least-k" /&gt;

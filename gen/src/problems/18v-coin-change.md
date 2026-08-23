@@ -134,3 +134,5 @@ int coinChange(int[] coins, int amount) {
 - [Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/) — same skeleton with ordered sequences
 - [Perfect Squares](https://leetcode.com/problems/perfect-squares/) — coins = square numbers
 - [Minimum Cost For Tickets](https://leetcode.com/problems/minimum-cost-for-tickets/) — variant with day-based DP
+
+<FeedbackWidget problem-slug="coin-change" />

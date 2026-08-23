@@ -85,3 +85,5 @@ Code is subtle — study the classic writeup before an interview.
 - [Wiggle Sort I](https://leetcode.com/problems/wiggle-sort/)
 - [Kth Largest Element in an Array](/problems/quickselect-kth-largest)
 - [Sort Colors](https://leetcode.com/problems/sort-colors/) — Dutch partition
+
+&lt;FeedbackWidget problem-slug="wiggle-sort-ii" /&gt;

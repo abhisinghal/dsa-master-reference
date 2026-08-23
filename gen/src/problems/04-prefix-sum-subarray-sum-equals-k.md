@@ -139,3 +139,5 @@ int subarraySum(int[] nums, int k) {
 - [Continuous Subarray Sum](https://leetcode.com/problems/continuous-subarray-sum/) — same but requires length ≥ 2
 - [Contiguous Array](https://leetcode.com/problems/contiguous-array/) — map 0→-1, then it's "sum equals 0"
 - [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/) — same skeleton
+
+<FeedbackWidget problem-slug="prefix-sum-subarray-sum-equals-k" />

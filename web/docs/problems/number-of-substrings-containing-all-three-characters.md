@@ -137,3 +137,5 @@ int numberOfSubstringsLast(String s) {
 - [Minimum Window Substring](/problems/minimum-window-substring) — need/have generalization
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers)
+
+&lt;FeedbackWidget problem-slug="number-of-substrings-containing-all-three-characters" /&gt;

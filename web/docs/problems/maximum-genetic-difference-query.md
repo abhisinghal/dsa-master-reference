@@ -107,3 +107,5 @@ int queryMax(Node root, int v) {
 - [Maximum XOR With an Element From Array](/problems/maximum-xor-with-an-element-from-array)
 - [Count Pairs With XOR in Range](/problems/count-pairs-with-xor-in-a-range)
 - [Maximum XOR of Two Numbers](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
+
+&lt;FeedbackWidget problem-slug="maximum-genetic-difference-query" /&gt;

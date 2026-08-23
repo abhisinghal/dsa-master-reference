@@ -72,3 +72,5 @@ int maximalSquare(char[][] mat) {
 
 - [Maximal Rectangle](/problems/maximal-rectangle)
 - [Count Square Submatrices](https://leetcode.com/problems/count-square-submatrices-with-all-ones/)
+
+&lt;FeedbackWidget problem-slug="maximal-square" /&gt;

@@ -83,3 +83,5 @@ int canCompleteCircuit(int[] gas, int[] cost) {
 
 - [Candy](/problems/candy) — two-sweep sibling
 - [Best Sightseeing Pair](https://leetcode.com/problems/best-sightseeing-pair/)
+
+&lt;FeedbackWidget problem-slug="gas-station" /&gt;

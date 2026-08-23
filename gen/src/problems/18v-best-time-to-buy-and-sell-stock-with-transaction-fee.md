@@ -73,3 +73,5 @@ int maxProfit(int[] prices, int fee) {
 
 - [With Cooldown](/problems/best-time-to-buy-and-sell-stock-with-cooldown)
 - [Best Time to Buy and Sell Stock IV](/problems/best-time-to-buy-and-sell-stock-iv)
+
+<FeedbackWidget problem-slug="best-time-to-buy-and-sell-stock-with-transaction-fee" />

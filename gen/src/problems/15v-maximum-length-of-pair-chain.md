@@ -76,3 +76,5 @@ int findLongestChain(int[][] pairs) {
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)
 - [Minimum Number of Arrows](/problems/minimum-number-of-arrows-to-burst-balloons)
 - [Longest Increasing Subsequence](/problems/longest-increasing-subsequence)
+
+<FeedbackWidget problem-slug="maximum-length-of-pair-chain" />

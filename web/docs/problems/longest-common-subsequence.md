@@ -82,3 +82,5 @@ int longestCommonSubsequence(String s1, String s2) {
 - [Edit Distance](/problems/edit-distance)
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence)
 - [Shortest Common Supersequence](https://leetcode.com/problems/shortest-common-supersequence/)
+
+&lt;FeedbackWidget problem-slug="longest-common-subsequence" /&gt;

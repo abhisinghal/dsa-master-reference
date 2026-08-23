@@ -135,3 +135,5 @@ void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
 - [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) — quickselect by frequency
 - [Wiggle Sort II](https://leetcode.com/problems/wiggle-sort-ii/) — quickselect to find median, then three-way partition
 - [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) — two heaps (streaming counterpart)
+
+&lt;FeedbackWidget problem-slug="quickselect-kth-largest" /&gt;

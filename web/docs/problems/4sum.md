@@ -168,3 +168,5 @@ List<List<Integer>> kSum(int[] nums, long target, int start, int k) {
 - [3Sum Closest](/problems/3sum-closest) — closest sum variant
 - [4Sum II](https://leetcode.com/problems/4sum-ii/) — hash-based, splits into halves
 - [Two Sum](/problems/hashing-two-sum)
+
+&lt;FeedbackWidget problem-slug="4sum" /&gt;

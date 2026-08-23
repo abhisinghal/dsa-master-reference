@@ -98,3 +98,5 @@ int largestRect(int[] h) {
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram) — the primitive
 - [Maximal Square](/problems/maximal-square)
 - [Count Submatrices with Target Sum](/problems/count-submatrices-with-target-sum)
+
+&lt;FeedbackWidget problem-slug="maximal-rectangle" /&gt;

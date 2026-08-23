@@ -134,3 +134,5 @@ int[] findOrder(int n, int[][] prereqs) {
 - [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) — build the DAG from adjacent word pairs, then topo-sort
 - [Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/) — peel leaves iteratively (topo-sort variant)
 - [Parallel Courses](https://leetcode.com/problems/parallel-courses/) — Kahn tracking levels (semesters)
+
+<FeedbackWidget problem-slug="topological-sort-course-schedule" />

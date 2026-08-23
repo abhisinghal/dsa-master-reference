@@ -97,3 +97,5 @@ class StockSpanner {
 - [Daily Temperatures](/problems/monotonic-stack-daily-temperatures)
 - [Next Greater Element II](/problems/next-greater-element-ii) — circular sibling
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) — deque-based sibling
+
+<FeedbackWidget problem-slug="online-stock-span" />

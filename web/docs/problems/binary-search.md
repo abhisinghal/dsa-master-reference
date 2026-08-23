@@ -115,3 +115,5 @@ int searchHO(int[] nums, int target) {
 - [First Bad Version](https://leetcode.com/problems/first-bad-version/) — "first true"
 - [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted) — piecewise-sorted
 - [Find Peak Element](/problems/find-peak-element) — BS on non-monotone
+
+&lt;FeedbackWidget problem-slug="binary-search" /&gt;

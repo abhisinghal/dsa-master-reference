@@ -84,3 +84,5 @@ int maxSubarraySumCircular(int[] nums) {
 
 - [Maximum Subarray](/problems/maximum-subarray)
 - [Maximum Product Subarray](/problems/maximum-product-subarray)
+
+&lt;FeedbackWidget problem-slug="maximum-sum-circular-subarray" /&gt;

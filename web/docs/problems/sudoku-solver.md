@@ -84,3 +84,5 @@ Pick cell with **fewest legal digits** each step — typical hard puzzles solve 
 
 - [Valid Sudoku](/problems/valid-sudoku)
 - [N-Queens](/problems/backtracking-n-queens)
+
+&lt;FeedbackWidget problem-slug="sudoku-solver" /&gt;

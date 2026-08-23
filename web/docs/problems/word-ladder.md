@@ -105,3 +105,5 @@ Expand from both ends until frontiers meet. ~O(2 · b^(d/2)).
 - [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/)
 - [Minimum Genetic Mutation](https://leetcode.com/problems/minimum-genetic-mutation/)
 - [Open the Lock](https://leetcode.com/problems/open-the-lock/)
+
+&lt;FeedbackWidget problem-slug="word-ladder" /&gt;

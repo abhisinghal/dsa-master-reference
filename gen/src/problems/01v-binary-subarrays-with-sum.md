@@ -128,3 +128,5 @@ int atMost(int[] nums, int goal) {
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — arbitrary integers
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers) — same `atMost` trick
 - [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays) — same trick with odd counts
+
+<FeedbackWidget problem-slug="binary-subarrays-with-sum" />

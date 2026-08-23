@@ -80,3 +80,5 @@ Uses hardware popcount when available.
 - [Counting Bits](/problems/counting-bits) — 0..n via Kernighan DP
 - [Hamming Distance](/problems/hamming-distance)
 - [Reverse Bits](/problems/reverse-bits)
+
+<FeedbackWidget problem-slug="number-of-1-bits" />

@@ -70,3 +70,5 @@ void dfs(int start, int k, int rem, List<Integer> path, List<List<Integer>> out)
 - [Combination Sum](https://leetcode.com/problems/combination-sum/)
 - [Combination Sum II](/problems/combination-sum-ii)
 - [Combination Sum IV](/problems/combination-sum-iv)
+
+&lt;FeedbackWidget problem-slug="combination-sum-iii" /&gt;

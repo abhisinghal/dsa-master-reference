@@ -76,3 +76,5 @@ int change(int amount, int[] coins) {
 - [Coin Change](/problems/coin-change)
 - [Combination Sum IV](/problems/combination-sum-iv)
 - [Perfect Squares](/problems/perfect-squares)
+
+<FeedbackWidget problem-slug="coin-change-ii" />

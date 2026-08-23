@@ -90,3 +90,5 @@ O(n²) precompute; O(1) checks during recursion.
 - [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)
 - [Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses/)
 - [Word Break II](https://leetcode.com/problems/word-break-ii/)
+
+&lt;FeedbackWidget problem-slug="palindrome-partitioning" /&gt;

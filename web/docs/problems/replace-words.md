@@ -101,3 +101,5 @@ String replaceWords(List<String> dict, String sentence) {
 - [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/)
 - [Implement Trie](/problems/implement-trie)
 - [Word Break](https://leetcode.com/problems/word-break/) — DP with trie option
+
+&lt;FeedbackWidget problem-slug="replace-words" /&gt;

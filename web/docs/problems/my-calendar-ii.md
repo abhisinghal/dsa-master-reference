@@ -118,3 +118,5 @@ class MyCalendarTwo2 {
 - [My Calendar I](https://leetcode.com/problems/my-calendar-i/) — no double
 - [My Calendar III](https://leetcode.com/problems/my-calendar-iii/) — return current max concurrency
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
+
+&lt;FeedbackWidget problem-slug="my-calendar-ii" /&gt;

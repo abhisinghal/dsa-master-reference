@@ -77,3 +77,5 @@ int maxFrequency(int[] nums, int k) {
 - [Longest Repeating Character Replacement](/problems/longest-repeating-character-replacement)
 - [Minimum Operations to Reduce X to Zero](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/)
 - [Max Consecutive Ones III](/problems/max-consecutive-ones-iii)
+
+&lt;FeedbackWidget problem-slug="frequency-of-the-most-frequent-element" /&gt;

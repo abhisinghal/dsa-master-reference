@@ -91,3 +91,5 @@ int trapRainWater(int[][] h) {
 - [Trapping Rain Water](/problems/trapping-rain-water)
 - [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/)
 - [Path With Minimum Effort](/problems/path-with-minimum-effort)
+
+&lt;FeedbackWidget problem-slug="trapping-rain-water-ii" /&gt;

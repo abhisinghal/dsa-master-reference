@@ -75,3 +75,5 @@ boolean canAttendMeetings(int[][] intervals) {
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
 - [Merge Intervals](/problems/merge-intervals-classic)
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)
+
+<FeedbackWidget problem-slug="meeting-rooms" />

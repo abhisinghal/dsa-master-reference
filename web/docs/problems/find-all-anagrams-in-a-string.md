@@ -153,3 +153,5 @@ List<Integer> findAnagrams(String s, String p) {
 - [Valid Anagram](/problems/valid-anagram) — single pair
 - [Minimum Window Substring](/problems/minimum-window-substring) — variable window with need/have
 - [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words)
+
+&lt;FeedbackWidget problem-slug="find-all-anagrams-in-a-string" /&gt;

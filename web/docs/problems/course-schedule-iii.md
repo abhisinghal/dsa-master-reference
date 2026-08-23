@@ -78,3 +78,5 @@ int scheduleCourse(int[][] courses) {
 
 - [Maximum Events Attended](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/)
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/)
+
+&lt;FeedbackWidget problem-slug="course-schedule-iii" /&gt;

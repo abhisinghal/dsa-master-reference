@@ -90,3 +90,5 @@ int numSubmatrixSumTarget(int[][] mat, int target) {
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
 - [Max Sum of Rectangle No Larger Than K](https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/)
 - [Maximum Sum Rectangle](/problems/maximum-subarray) — 1D Kadane sibling
+
+<FeedbackWidget problem-slug="count-submatrices-with-target-sum" />

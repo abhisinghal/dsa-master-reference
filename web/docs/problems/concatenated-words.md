@@ -91,3 +91,5 @@ boolean canFormFromOthers(String w, Set<String> dict, int start, int count) {
 - [Word Break](https://leetcode.com/problems/word-break/)
 - [Word Break II](https://leetcode.com/problems/word-break-ii/)
 - [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/)
+
+&lt;FeedbackWidget problem-slug="concatenated-words" /&gt;

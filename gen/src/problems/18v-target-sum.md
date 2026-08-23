@@ -78,3 +78,5 @@ int findTargetSumWays(int[] nums, int target) {
 
 - [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)
 - [Coin Change II](/problems/coin-change-ii)
+
+<FeedbackWidget problem-slug="target-sum" />

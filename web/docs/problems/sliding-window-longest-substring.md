@@ -183,3 +183,5 @@ Optimal. One pass, O(1) work per index.
 - [Longest Substring with At Most K Distinct](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/) — validity: `distinct ≤ k`
 - [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) — window is valid if `(windowLen − maxFreq) ≤ k`
 - [Permutation in String](https://leetcode.com/problems/permutation-in-string/) — fixed-size window, count-match
+
+&lt;FeedbackWidget problem-slug="sliding-window-longest-substring" /&gt;

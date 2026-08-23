@@ -117,3 +117,5 @@ int[][] merge(int[][] intervals) {
 - [Interval List Intersections](https://leetcode.com/problems/interval-list-intersections/) — two-pointer over two sorted interval lists
 - [Meeting Rooms](https://leetcode.com/problems/meeting-rooms/) — sorted + adjacent check
 - [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) — greedy on end times
+
+&lt;FeedbackWidget problem-slug="merge-intervals-classic" /&gt;

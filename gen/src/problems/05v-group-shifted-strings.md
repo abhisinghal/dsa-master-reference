@@ -77,3 +77,5 @@ List<List<String>> groupStrings(String[] strings) {
 
 - [Group Anagrams](https://leetcode.com/problems/group-anagrams/)
 - [Isomorphic Strings](/problems/isomorphic-strings)
+
+<FeedbackWidget problem-slug="group-shifted-strings" />

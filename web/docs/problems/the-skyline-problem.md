@@ -97,3 +97,5 @@ List<List<Integer>> getSkyline(int[][] buildings) {
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
 - [Falling Squares](https://leetcode.com/problems/falling-squares/)
 - [Rectangle Area II](https://leetcode.com/problems/rectangle-area-ii/)
+
+&lt;FeedbackWidget problem-slug="the-skyline-problem" /&gt;

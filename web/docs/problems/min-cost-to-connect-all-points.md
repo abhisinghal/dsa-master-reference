@@ -94,3 +94,5 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - [Connecting Cities With Minimum Cost](/problems/connecting-cities-with-minimum-cost)
 - [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village)
 - [Find Critical/Pseudo-Critical MST Edges](/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree)
+
+&lt;FeedbackWidget problem-slug="min-cost-to-connect-all-points" /&gt;

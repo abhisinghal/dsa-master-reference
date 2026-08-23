@@ -88,3 +88,5 @@ void moveZeroesSwap(int[] nums) {
 
 - [Remove Element](https://leetcode.com/problems/remove-element/)
 - [Sort Array By Parity](/problems/sort-array-by-parity)
+
+<FeedbackWidget problem-slug="move-zeroes" />

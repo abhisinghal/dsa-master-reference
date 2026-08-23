@@ -132,3 +132,5 @@ String minWindow(String s, String t) {
 - [Permutation in String](/problems/permutation-in-string) — fixed-size window variant
 - [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words) — window on word offsets
 - [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string) — return all indices
+
+<FeedbackWidget problem-slug="minimum-window-substring" />

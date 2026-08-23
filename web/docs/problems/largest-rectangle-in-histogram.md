@@ -90,3 +90,5 @@ int largestRectangleArea(int[] h) {
 - [Maximal Rectangle](/problems/maximal-rectangle)
 - [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums)
 - [Trapping Rain Water](/problems/trapping-rain-water)
+
+&lt;FeedbackWidget problem-slug="largest-rectangle-in-histogram" /&gt;

@@ -82,3 +82,5 @@ boolean canReach(int[] arr, int start) {
 - [Jump Game](/problems/jump-game)
 - [Jump Game IV](https://leetcode.com/problems/jump-game-iv/)
 - [Minimum Jumps to Reach Home](https://leetcode.com/problems/minimum-jumps-to-reach-home/)
+
+&lt;FeedbackWidget problem-slug="jump-game-iii" /&gt;

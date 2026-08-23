@@ -117,3 +117,5 @@ class KthLargest {
 - [K Closest Points to Origin](/problems/k-closest-points-to-origin)
 - [Kth Largest Element in an Array](/problems/quickselect-kth-largest) — offline sibling
 - [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) — two-heap for streaming median
+
+&lt;FeedbackWidget problem-slug="kth-largest-element-in-a-stream" /&gt;

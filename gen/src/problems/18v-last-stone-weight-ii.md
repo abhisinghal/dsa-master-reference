@@ -74,3 +74,5 @@ int lastStoneWeightII(int[] stones) {
 
 - [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)
 - [Target Sum](/problems/target-sum)
+
+<FeedbackWidget problem-slug="last-stone-weight-ii" />

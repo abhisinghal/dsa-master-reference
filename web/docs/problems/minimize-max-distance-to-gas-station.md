@@ -84,3 +84,5 @@ double minmaxGasDist(int[] s, int k) {
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas) — integer BS
 - [Divide Chocolate](/problems/divide-chocolate) — maximize-min
 - [Path With Minimum Effort](/problems/path-with-minimum-effort)
+
+&lt;FeedbackWidget problem-slug="minimize-max-distance-to-gas-station" /&gt;

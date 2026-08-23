@@ -129,3 +129,5 @@ int jump(int[] a) {
 - [Jump Game III](https://leetcode.com/problems/jump-game-iii/) — BFS with two edges per node
 - [Video Stitching](https://leetcode.com/problems/video-stitching/) — same greedy frontier expansion
 - [Minimum Number of Taps to Open](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/) — reframe intervals → same greedy
+
+<FeedbackWidget problem-slug="greedy-jump-game-ii" />

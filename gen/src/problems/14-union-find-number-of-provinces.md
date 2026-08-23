@@ -120,3 +120,5 @@ boolean union(int[] parent, int[] size, int a, int b) {
 - [Redundant Connection](https://leetcode.com/problems/redundant-connection/) — find the edge whose two endpoints are already connected
 - [Number of Islands II](https://leetcode.com/problems/number-of-islands-ii/) — streaming version of Number of Islands
 - [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/) — Kruskal's MST via Union-Find
+
+<FeedbackWidget problem-slug="union-find-number-of-provinces" />

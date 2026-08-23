@@ -66,3 +66,5 @@ void dfs(int n, int row, int cols, int d1, int d2, int[] count) {
 
 - [N-Queens](/problems/backtracking-n-queens)
 - [Sudoku Solver](/problems/sudoku-solver)
+
+<FeedbackWidget problem-slug="n-queens-ii" />

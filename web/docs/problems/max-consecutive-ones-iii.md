@@ -160,3 +160,5 @@ int longestOnes(int[] nums, int k) {
 - [Longest Repeating Character Replacement](/problems/longest-repeating-character-replacement) — generalization to arbitrary alphabet
 - [Fruit Into Baskets](/problems/fruit-into-baskets) — `k=2` distinct
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters)
+
+&lt;FeedbackWidget problem-slug="max-consecutive-ones-iii" /&gt;

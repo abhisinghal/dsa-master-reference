@@ -100,3 +100,5 @@ int[] smallestRange(List<List<Integer>> lists) {
 - [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — same heap-sweep
 - [Ugly Number II](/problems/ugly-number-ii) — heap merges 3 streams
 - [Median of Two Sorted Arrays](/problems/median-of-two-sorted-arrays) — 2-list balance BS
+
+<FeedbackWidget problem-slug="smallest-range-covering-elements-from-k-lists" />

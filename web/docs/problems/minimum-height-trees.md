@@ -93,3 +93,5 @@ List<Integer> findMinHeightTrees(int n, int[][] edges) {
 - [Course Schedule](/problems/topological-sort-course-schedule) — general graph toposort
 - [Tree Diameter](https://leetcode.com/problems/tree-diameter/)
 - [Longest Path in Tree](https://leetcode.com/problems/longest-path-with-different-adjacent-characters/)
+
+&lt;FeedbackWidget problem-slug="minimum-height-trees" /&gt;

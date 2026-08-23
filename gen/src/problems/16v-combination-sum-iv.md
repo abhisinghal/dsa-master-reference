@@ -82,3 +82,5 @@ int combinationSum4(int[] nums, int target) {
 - [Coin Change](/problems/coin-change)
 - [Coin Change II](/problems/coin-change-ii)
 - [Combination Sum](https://leetcode.com/problems/combination-sum/)
+
+<FeedbackWidget problem-slug="combination-sum-iv" />

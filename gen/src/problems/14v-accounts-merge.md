@@ -88,3 +88,5 @@ void union(int[] p, int a, int b) { p[find(p, a)] = find(p, b); }
 - [Number of Provinces](/problems/union-find-number-of-provinces)
 - [Redundant Connection](/problems/redundant-connection)
 - [Most Stones Removed with Same Row or Column](/problems/most-stones-removed-with-same-row-or-column)
+
+<FeedbackWidget problem-slug="accounts-merge" />

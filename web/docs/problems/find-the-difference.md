@@ -85,3 +85,5 @@ char findTheDifference(String s, String t) {
 - [Missing Number](/problems/missing-number)
 - [Single Number](/problems/bit-manip-single-number)
 - [Valid Anagram](/problems/valid-anagram)
+
+&lt;FeedbackWidget problem-slug="find-the-difference" /&gt;

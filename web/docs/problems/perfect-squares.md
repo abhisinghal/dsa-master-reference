@@ -75,3 +75,5 @@ Every positive integer = sum of ≤ 4 squares. Result ∈ {1,2,3,4}.
 
 - [Coin Change](/problems/coin-change)
 - [Word Break](https://leetcode.com/problems/word-break/)
+
+&lt;FeedbackWidget problem-slug="perfect-squares" /&gt;

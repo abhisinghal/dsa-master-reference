@@ -82,3 +82,5 @@ int maximizeSweetness(int[] sweetness, int k) {
 - [Split Array Largest Sum](/problems/split-array-largest-sum) — minimize the maximum (sibling)
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)
 - [Minimize Max Distance to Gas Station](/problems/minimize-max-distance-to-gas-station)
+
+<FeedbackWidget problem-slug="divide-chocolate" />

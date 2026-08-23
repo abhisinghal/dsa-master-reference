@@ -101,3 +101,5 @@ List<List<Integer>> subsetsBM(int[] nums) {
 - [Subsets II](/problems/subsets-ii) — with duplicates
 - [Combination Sum](https://leetcode.com/problems/combination-sum/)
 - [Permutations](/problems/permutations)
+
+<FeedbackWidget problem-slug="subsets" />

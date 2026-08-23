@@ -96,3 +96,5 @@ Sentinels + palindrome-radius array with reuse across mirrored centers.
 - [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence)
 - [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)
+
+<FeedbackWidget problem-slug="longest-palindromic-substring" />

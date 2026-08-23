@@ -73,3 +73,5 @@ Precompute all pairwise sums into a set on `add`. `find` = O(1). `add` = O(n).
 ## Related problems
 
 - [Two Sum](/problems/hashing-two-sum)
+
+<FeedbackWidget problem-slug="two-sum-iii-data-structure-design" />

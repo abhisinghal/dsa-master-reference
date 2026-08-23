@@ -74,3 +74,5 @@ boolean isValidSudoku(char[][] board) {
 ## Related problems
 
 - [Sudoku Solver](/problems/sudoku-solver)
+
+&lt;FeedbackWidget problem-slug="valid-sudoku" /&gt;

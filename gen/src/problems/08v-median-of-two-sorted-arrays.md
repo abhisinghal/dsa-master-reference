@@ -88,3 +88,5 @@ double findMedianSortedArrays(int[] A, int[] B) {
 
 - [Kth Smallest in Two Sorted Arrays](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
 - [Merge Two Sorted Lists](/problems/merge-two-sorted-lists)
+
+<FeedbackWidget problem-slug="median-of-two-sorted-arrays" />

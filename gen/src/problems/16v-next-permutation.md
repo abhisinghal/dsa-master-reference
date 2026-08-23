@@ -79,3 +79,5 @@ void reverse(int[] a, int l, int r) { while (l < r) swap(a, l++, r--); }
 
 - [Permutations](/problems/permutations)
 - [Permutation Sequence](https://leetcode.com/problems/permutation-sequence/)
+
+<FeedbackWidget problem-slug="next-permutation" />

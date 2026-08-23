@@ -95,3 +95,5 @@ int mergeSort(int[] a, int lo, int hi) {
 - [Count of Range Sum](/problems/count-of-range-sum)
 - [Global and Local Inversions](/problems/global-and-local-inversions)
 - [Count Inversions](/problems/divide-conquer-inversions)
+
+&lt;FeedbackWidget problem-slug="reverse-pairs" /&gt;

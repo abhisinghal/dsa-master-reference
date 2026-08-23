@@ -121,3 +121,5 @@ boolean validPalindromeK(String s, int k) {
 - [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) — zero deletions
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence) — LPS DP
 - [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
+
+<FeedbackWidget problem-slug="valid-palindrome-ii" />

@@ -68,3 +68,5 @@ boolean isPowerOfTwo(int n) {
 - [Power of Three](https://leetcode.com/problems/power-of-three/)
 - [Power of Four](https://leetcode.com/problems/power-of-four/)
 - [Number of 1 Bits](/problems/number-of-1-bits)
+
+&lt;FeedbackWidget problem-slug="power-of-two" /&gt;

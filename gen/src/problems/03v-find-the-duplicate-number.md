@@ -113,3 +113,5 @@ int findDuplicate(int[] nums) {
 - [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — same Floyd's algorithm
 - [Missing Number](/problems/missing-number) — one missing, all distinct — XOR trick
 - [First Missing Positive](https://leetcode.com/problems/first-missing-positive/) — index-marking
+
+<FeedbackWidget problem-slug="find-the-duplicate-number" />

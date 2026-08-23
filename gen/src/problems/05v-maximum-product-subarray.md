@@ -81,3 +81,5 @@ int maxProduct(int[] nums) {
 
 - [Maximum Subarray (Kadane)](/problems/maximum-subarray)
 - [Maximum Sum Circular Subarray](/problems/maximum-sum-circular-subarray)
+
+<FeedbackWidget problem-slug="maximum-product-subarray" />

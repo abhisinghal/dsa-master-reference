@@ -130,3 +130,5 @@ String reorganizeBucket(String s) {
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/) — same greedy
 - [Rearrange String k Distance Apart](https://leetcode.com/problems/rearrange-string-k-distance-apart/) — k-generalization
 - [Top K Frequent Elements](/problems/top-k-frequent-elements)
+
+<FeedbackWidget problem-slug="reorganize-string" />

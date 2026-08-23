@@ -78,3 +78,5 @@ Count L letters; for mask 0..2^L-1 flip corresponding cases.
 
 - [Subsets](/problems/bit-manip-subsets)
 - [Permutations](/problems/permutations)
+
+<FeedbackWidget problem-slug="letter-case-permutation" />

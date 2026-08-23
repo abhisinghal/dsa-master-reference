@@ -79,3 +79,5 @@ int maxResult(int[] nums, int k) {
 - [Constrained Subsequence Sum](/problems/constrained-subsequence-sum)
 - [Jump Game II](/problems/greedy-jump-game-ii)
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
+
+<FeedbackWidget problem-slug="jump-game-vi" />

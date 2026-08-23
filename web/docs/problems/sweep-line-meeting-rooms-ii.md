@@ -134,3 +134,5 @@ int minMeetingRooms(int[][] meetings) {
 - [The Skyline Problem](https://leetcode.com/problems/the-skyline-problem/) — sweep + heap for max heights over intervals
 - [My Calendar II](https://leetcode.com/problems/my-calendar-ii/) — sweep with 2-limit constraint
 - [Employee Free Time](https://leetcode.com/problems/employee-free-time/) — flatten schedules, then find gaps
+
+&lt;FeedbackWidget problem-slug="sweep-line-meeting-rooms-ii" /&gt;

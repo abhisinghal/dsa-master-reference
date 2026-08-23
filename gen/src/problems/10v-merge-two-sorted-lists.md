@@ -104,3 +104,5 @@ ListNode mergeTwoListsRec(ListNode l1, ListNode l2) {
 - [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — k lists, min-heap
 - [Merge Sorted Array](/problems/merge-sorted-array) — sorted arrays, fill from back
 - [Sort List](/problems/sort-list) — mergesort using merge as primitive
+
+<FeedbackWidget problem-slug="merge-two-sorted-lists" />

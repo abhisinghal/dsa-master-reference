@@ -98,3 +98,5 @@ int computeOverlap(String a, String b) {
 ## Related problems
 
 - [Shortest Path Visiting All Nodes](/problems/shortest-path-visiting-all-nodes)
+
+<FeedbackWidget problem-slug="find-the-shortest-superstring" />

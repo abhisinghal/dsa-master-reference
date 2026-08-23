@@ -78,3 +78,5 @@ int mergeStones(int[] stones, int k) {
 ## Related problems
 
 - [Burst Balloons](/problems/burst-balloons)
+
+<FeedbackWidget problem-slug="minimum-cost-to-merge-stones" />

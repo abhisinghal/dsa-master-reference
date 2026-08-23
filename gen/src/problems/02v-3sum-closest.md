@@ -109,3 +109,5 @@ int threeSumClosest(int[] nums, int target) {
 - [3Sum Smaller](/problems/3sum-smaller) — count strictly less than target
 - [4Sum](/problems/4sum) — one more nested loop
 - [Two Sum](/problems/hashing-two-sum)
+
+<FeedbackWidget problem-slug="3sum-closest" />

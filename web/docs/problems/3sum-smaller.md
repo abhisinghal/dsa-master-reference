@@ -84,3 +84,5 @@ int threeSumSmaller(int[] nums, int target) {
 
 - [3Sum](/problems/3sum)
 - [3Sum Closest](/problems/3sum-closest)
+
+&lt;FeedbackWidget problem-slug="3sum-smaller" /&gt;

@@ -78,3 +78,5 @@ int[] sortedSquares(int[] nums) {
 
 - [Merge Sorted Array](/problems/merge-sorted-array)
 - [Sort Colors](https://leetcode.com/problems/sort-colors/)
+
+<FeedbackWidget problem-slug="squares-of-a-sorted-array" />

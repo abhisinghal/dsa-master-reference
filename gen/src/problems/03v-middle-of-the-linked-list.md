@@ -98,3 +98,5 @@ ListNode middleNode(ListNode head) {
 - [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — find entry
 - [Palindrome Linked List](/problems/palindrome-linked-list) — split at middle, reverse half
 - [Sort List](/problems/sort-list) — merge sort using middle split
+
+<FeedbackWidget problem-slug="middle-of-the-linked-list" />

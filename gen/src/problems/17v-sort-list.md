@@ -100,3 +100,5 @@ ListNode merge(ListNode a, ListNode b) {
 - [Merge Two Sorted Lists](/problems/merge-two-sorted-lists) — the merge primitive
 - [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — extension
 - [Middle of the Linked List](/problems/middle-of-the-linked-list) — split primitive
+
+<FeedbackWidget problem-slug="sort-list" />

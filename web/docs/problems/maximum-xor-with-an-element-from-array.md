@@ -106,3 +106,5 @@ int maxXor(Node root, int v) {
 - [Maximum XOR of Two Numbers](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) — offline sibling
 - [Count Pairs With XOR in Range](/problems/count-pairs-with-xor-in-a-range)
 - [Maximum Genetic Difference Query](/problems/maximum-genetic-difference-query)
+
+&lt;FeedbackWidget problem-slug="maximum-xor-with-an-element-from-array" /&gt;

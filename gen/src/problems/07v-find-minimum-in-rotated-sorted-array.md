@@ -111,3 +111,5 @@ int findMinDup(int[] nums) {
 - [Search in Rotated Sorted Array](/problems/binary-search-rotated-sorted) — search for target
 - [Search in Rotated Sorted Array II](/problems/search-in-rotated-sorted-array-ii)
 - [Find Peak Element](/problems/find-peak-element) — related BS on non-monotone
+
+<FeedbackWidget problem-slug="find-minimum-in-rotated-sorted-array" />

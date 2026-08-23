@@ -144,3 +144,5 @@ void mergeSort(int[] nums, Integer[] idx, int lo, int hi) {
 - [Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/) — prefix sums + merge sort with range count
 - [Global and Local Inversions](https://leetcode.com/problems/global-and-local-inversions/)
 - [Sort List](https://leetcode.com/problems/sort-list/) — merge sort on linked list
+
+<FeedbackWidget problem-slug="divide-conquer-inversions" />

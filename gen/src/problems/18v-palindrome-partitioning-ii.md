@@ -83,3 +83,5 @@ int minCut(String s) {
 
 - [Palindrome Partitioning](/problems/palindrome-partitioning)
 - [Longest Palindromic Subsequence](/problems/longest-palindromic-subsequence)
+
+<FeedbackWidget problem-slug="palindrome-partitioning-ii" />

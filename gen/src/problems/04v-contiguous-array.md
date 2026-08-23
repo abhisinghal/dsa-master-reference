@@ -83,3 +83,5 @@ int findMaxLength(int[] nums) {
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
 - [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k)
 - [Continuous Subarray Sum](/problems/continuous-subarray-sum)
+
+<FeedbackWidget problem-slug="contiguous-array" />

@@ -122,3 +122,5 @@ int nthUglyNumber(int n) {
 - [Super Ugly Number](https://leetcode.com/problems/super-ugly-number/) — k-primes generalization
 - [Merge k Sorted Lists](/problems/k-way-merge-k-sorted-lists) — the pattern seed
 - [Perfect Squares](/problems/perfect-squares) — DP alternative
+
+<FeedbackWidget problem-slug="ugly-number-ii" />

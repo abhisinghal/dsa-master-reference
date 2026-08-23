@@ -88,3 +88,5 @@ boolean matches(String s, String p, int i, int j) {
 
 - [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)
 - [Edit Distance](/problems/edit-distance)
+
+<FeedbackWidget problem-slug="regular-expression-matching" />

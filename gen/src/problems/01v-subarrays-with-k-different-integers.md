@@ -116,3 +116,5 @@ Then `atMost(2) - atMost(1) = 12 - 5 = 7`.
 - [Count Number of Nice Subarrays](/problems/count-number-of-nice-subarrays) — same trick, k odd numbers
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters) — length variant
 - [Subarray Product Less Than K](/problems/subarray-product-less-than-k)
+
+<FeedbackWidget problem-slug="subarrays-with-k-different-integers" />

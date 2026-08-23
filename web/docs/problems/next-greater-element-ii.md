@@ -116,3 +116,5 @@ int[] nextGreaterElements(int[] nums) {
 - [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) — subset of positions
 - [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums) — count contribution per element
 - [Trapping Rain Water](/problems/trapping-rain-water) — monotonic stack solution exists
+
+&lt;FeedbackWidget problem-slug="next-greater-element-ii" /&gt;

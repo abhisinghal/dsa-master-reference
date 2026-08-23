@@ -125,3 +125,5 @@ int sumSubarrayMins(int[] arr) {
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram) — same L/R spanning trick
 - [Sum of Subarray Ranges](https://leetcode.com/problems/sum-of-subarray-ranges/) — max − min
 - [Maximum Sum of Minimum of Every Subarray](https://leetcode.com/problems/maximum-of-minimum-values-in-all-subarrays/) — related
+
+&lt;FeedbackWidget problem-slug="sum-of-subarray-minimums" /&gt;

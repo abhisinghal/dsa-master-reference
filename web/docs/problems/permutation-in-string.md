@@ -175,3 +175,5 @@ boolean checkInclusion(String s1, String s2) {
 - [Valid Anagram](/problems/valid-anagram) — single comparison
 - [Minimum Window Substring](/problems/minimum-window-substring) — variable-size window with need/have
 - [Substring with Concatenation of All Words](/problems/substring-with-concatenation-of-all-words) — window on word offsets
+
+&lt;FeedbackWidget problem-slug="permutation-in-string" /&gt;

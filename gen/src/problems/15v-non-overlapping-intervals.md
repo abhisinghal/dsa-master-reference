@@ -72,3 +72,5 @@ int eraseOverlapIntervals(int[][] intervals) {
 - [Maximum Length of Pair Chain](/problems/maximum-length-of-pair-chain)
 - [Minimum Arrows](/problems/minimum-number-of-arrows-to-burst-balloons)
 - [Meeting Rooms](/problems/meeting-rooms)
+
+<FeedbackWidget problem-slug="non-overlapping-intervals" />

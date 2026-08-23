@@ -85,3 +85,5 @@ int maxProduct(String[] words) {
 
 - [Design Bit Set](https://leetcode.com/problems/design-bitset/)
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other) — bitmask DP
+
+&lt;FeedbackWidget problem-slug="maximum-product-of-word-lengths" /&gt;

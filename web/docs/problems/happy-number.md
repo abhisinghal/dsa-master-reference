@@ -135,3 +135,5 @@ Small proof: iterate 1..810; every trajectory either reaches 1 or hits `4 → 16
 - [Linked List Cycle](/problems/linked-list-cycle) — same detection
 - [Linked List Cycle II](/problems/fast-slow-linked-list-cycle-ii) — same on lists
 - [Find the Duplicate Number](/problems/find-the-duplicate-number) — cycle on implicit function
+
+&lt;FeedbackWidget problem-slug="happy-number" /&gt;

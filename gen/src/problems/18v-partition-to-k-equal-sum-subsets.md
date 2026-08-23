@@ -88,3 +88,5 @@ boolean canPartitionKSubsets(int[] nums, int k) {
 - [Partition Equal Subset Sum](/problems/partition-equal-subset-sum)
 - [Number of Ways to Wear Different Hats](/problems/number-of-ways-to-wear-different-hats-to-each-other)
 - [Beautiful Arrangement](/problems/beautiful-arrangement)
+
+<FeedbackWidget problem-slug="partition-to-k-equal-sum-subsets" />

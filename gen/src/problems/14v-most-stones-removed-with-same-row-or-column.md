@@ -92,3 +92,5 @@ void union(Map<Integer, Integer> p, int a, int b) {
 - [Number of Provinces](/problems/union-find-number-of-provinces)
 - [Accounts Merge](/problems/accounts-merge)
 - [Connecting Cities With Minimum Cost](/problems/connecting-cities-with-minimum-cost)
+
+<FeedbackWidget problem-slug="most-stones-removed-with-same-row-or-column" />

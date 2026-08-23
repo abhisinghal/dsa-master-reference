@@ -81,3 +81,5 @@ int constrainedSubsetSum(int[] nums, int k) {
 - [Jump Game VI](/problems/jump-game-vi)
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
 - [Shortest Subarray with Sum at Least K](/problems/shortest-subarray-with-sum-at-least-k)
+
+<FeedbackWidget problem-slug="constrained-subsequence-sum" />

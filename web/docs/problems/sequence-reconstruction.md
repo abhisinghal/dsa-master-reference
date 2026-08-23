@@ -98,3 +98,5 @@ boolean sequenceReconstruction(int[] nums, List<List<Integer>> sequences) {
 - [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
 - [Alien Dictionary](/problems/alien-dictionary)
 - [Parallel Courses](/problems/parallel-courses)
+
+&lt;FeedbackWidget problem-slug="sequence-reconstruction" /&gt;

@@ -83,3 +83,5 @@ boolean isIdealPermutation(int[] nums) {
 - [Reverse Pairs](/problems/reverse-pairs)
 - [Count Inversions](/problems/divide-conquer-inversions)
 - [Number of Reverse Pairs in Array](https://leetcode.com/problems/number-of-reverse-pairs-in-array/)
+
+<FeedbackWidget problem-slug="global-and-local-inversions" />

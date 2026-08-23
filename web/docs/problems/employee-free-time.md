@@ -95,3 +95,5 @@ Better when k is much smaller than N.
 - [Meeting Rooms II](/problems/sweep-line-meeting-rooms-ii)
 - [Interval List Intersections](/problems/interval-list-intersections)
 - [Smallest Range Covering k Lists](/problems/smallest-range-covering-elements-from-k-lists)
+
+&lt;FeedbackWidget problem-slug="employee-free-time" /&gt;

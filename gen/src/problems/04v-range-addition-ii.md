@@ -71,3 +71,5 @@ int maxCount(int m, int n, int[][] ops) {
 
 - [Range Addition](/problems/range-addition)
 - [Matrix Block Sum](/problems/matrix-block-sum)
+
+<FeedbackWidget problem-slug="range-addition-ii" />

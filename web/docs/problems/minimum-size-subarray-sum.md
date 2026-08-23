@@ -153,3 +153,5 @@ int minSubArrayLenBS(int target, int[] nums) {
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k) — count of subarrays, not length
 - [Maximum Subarray](/problems/maximum-subarray) — Kadane
 - [Minimum Window Substring](/problems/minimum-window-substring) — same shrinking template
+
+&lt;FeedbackWidget problem-slug="minimum-size-subarray-sum" /&gt;

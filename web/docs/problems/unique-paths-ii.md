@@ -80,3 +80,5 @@ int uniquePathsWithObstacles(int[][] grid) {
 - [Unique Paths](https://leetcode.com/problems/unique-paths/)
 - [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
 - [Minimum Falling Path Sum](/problems/minimum-falling-path-sum)
+
+&lt;FeedbackWidget problem-slug="unique-paths-ii" /&gt;

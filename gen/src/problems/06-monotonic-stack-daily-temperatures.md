@@ -135,3 +135,5 @@ int[] dailyTemperatures(int[] t) {
 - [Online Stock Span](https://leetcode.com/problems/online-stock-span/) — same skeleton, streaming input
 - [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) — monotonic stack + contribution technique
 - [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) — closest-smaller-both-sides via one stack
+
+<FeedbackWidget problem-slug="monotonic-stack-daily-temperatures" />

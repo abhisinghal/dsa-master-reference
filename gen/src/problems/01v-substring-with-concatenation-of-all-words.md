@@ -94,3 +94,5 @@ List<Integer> findSubstring(String s, String[] words) {
 - [Minimum Window Substring](/problems/minimum-window-substring)
 - [Find All Anagrams in a String](/problems/find-all-anagrams-in-a-string)
 - [Permutation in String](/problems/permutation-in-string)
+
+<FeedbackWidget problem-slug="substring-with-concatenation-of-all-words" />

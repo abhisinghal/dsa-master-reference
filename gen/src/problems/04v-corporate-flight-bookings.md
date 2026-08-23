@@ -79,3 +79,5 @@ int[] corpFlightBookings(int[][] bookings, int n) {
 - [Car Pooling](/problems/car-pooling) — identical idea with capacity check
 - [Range Addition](/problems/range-addition) — the primitive
 - [Range Addition II](/problems/range-addition-ii)
+
+<FeedbackWidget problem-slug="corporate-flight-bookings" />

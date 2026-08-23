@@ -151,3 +151,5 @@ int rob(int[] a) {
 - [Delete and Earn](https://leetcode.com/problems/delete-and-earn/) — bucket by value, then House Robber
 - [Paint House](https://leetcode.com/problems/paint-house/) — 3-state variant
 - [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) — same recurrence shape (Fibonacci)
+
+&lt;FeedbackWidget problem-slug="dp-house-robber" /&gt;

@@ -106,3 +106,5 @@ private boolean feasible(int[] piles, int k, int h) {
 - [Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/) — feasibility: can we split into ≤ m parts each with sum ≤ cap
 - [Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/) — real-number BS on max gap
 - [Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/) — BS on the partition point
+
+<FeedbackWidget problem-slug="bs-on-answer-koko-bananas" />

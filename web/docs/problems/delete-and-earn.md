@@ -79,3 +79,5 @@ int deleteAndEarn(int[] nums) {
 
 - [House Robber](/problems/dp-house-robber)
 - [House Robber II](/problems/house-robber-ii)
+
+&lt;FeedbackWidget problem-slug="delete-and-earn" /&gt;

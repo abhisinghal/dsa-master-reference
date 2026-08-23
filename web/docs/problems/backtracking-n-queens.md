@@ -132,3 +132,5 @@ void solve(int r, int n, int[] queens, boolean[] cols, boolean[] main, boolean[]
 - [Sudoku Solver](https://leetcode.com/problems/sudoku-solver/) — same backtracking, three bitset dimensions (row/col/box)
 - [Permutations](https://leetcode.com/problems/permutations/) — swap-in-place backtracking
 - [Subsets](https://leetcode.com/problems/subsets/) — start-index backtracking
+
+&lt;FeedbackWidget problem-slug="backtracking-n-queens" /&gt;

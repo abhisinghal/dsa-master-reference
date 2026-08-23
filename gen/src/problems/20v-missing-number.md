@@ -86,3 +86,5 @@ int missingNumber(int[] nums) {
 - [Single Number](/problems/bit-manip-single-number)
 - [Find the Difference](/problems/find-the-difference)
 - [Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)
+
+<FeedbackWidget problem-slug="missing-number" />

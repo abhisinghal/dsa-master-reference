@@ -134,3 +134,5 @@ int search(int[] a, int target) {
 - [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) — Approach 2's pivot-finding step alone
 - [Search in Rotated Sorted Array II](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) — same shape, duplicates → worst-case O(n)
 - [Find Peak Element](https://leetcode.com/problems/find-peak-element/) — BS on an unsorted array via the peak invariant
+
+<FeedbackWidget problem-slug="binary-search-rotated-sorted" />

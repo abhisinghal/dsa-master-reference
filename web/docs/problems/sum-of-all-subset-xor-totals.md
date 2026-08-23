@@ -79,3 +79,5 @@ int subsetXORSum(int[] nums) {
 
 - [Sum of Subarray Minimums](/problems/sum-of-subarray-minimums) — contribution counting
 - [Subsets](/problems/bit-manip-subsets)
+
+&lt;FeedbackWidget problem-slug="sum-of-all-subset-xor-totals" /&gt;

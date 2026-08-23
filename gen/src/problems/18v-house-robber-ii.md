@@ -77,3 +77,5 @@ int linear(int[] nums, int lo, int hi) {
 
 - [House Robber](/problems/dp-house-robber)
 - [Delete and Earn](/problems/delete-and-earn)
+
+<FeedbackWidget problem-slug="house-robber-ii" />

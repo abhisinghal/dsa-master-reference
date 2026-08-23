@@ -109,3 +109,5 @@ class WordDictionary {
 - [Implement Trie](/problems/implement-trie) — the base
 - [Word Search II](/problems/trie-word-search-ii)
 - [Stream of Characters](/problems/stream-of-characters)
+
+&lt;FeedbackWidget problem-slug="design-add-and-search-words-data-structure" /&gt;

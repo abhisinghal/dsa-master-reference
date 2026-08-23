@@ -81,3 +81,5 @@ int twoSumLessThanK(int[] nums, int k) {
 
 - [Two Sum II](/problems/two-sum-ii-input-array-is-sorted)
 - [3Sum Smaller](/problems/3sum-smaller)
+
+&lt;FeedbackWidget problem-slug="two-sum-less-than-k" /&gt;

@@ -82,3 +82,5 @@ int maxCoins(int[] nums) {
 
 - [Minimum Cost to Merge Stones](/problems/minimum-cost-to-merge-stones)
 - [Palindrome Partitioning II](/problems/palindrome-partitioning-ii)
+
+&lt;FeedbackWidget problem-slug="burst-balloons" /&gt;

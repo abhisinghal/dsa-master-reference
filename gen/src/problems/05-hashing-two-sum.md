@@ -160,3 +160,5 @@ Optimal. Single scan, O(1) lookup, no sort.
 - [4Sum](https://leetcode.com/problems/4sum/) — sort, fix i and j, two-pointer the tail
 - [Two Sum III — Design](https://leetcode.com/problems/two-sum-iii-data-structure-design/) — hash map with counts for the streaming variant
 - [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) — same idea, but hash **prefix sums** instead of raw values
+
+<FeedbackWidget problem-slug="hashing-two-sum" />

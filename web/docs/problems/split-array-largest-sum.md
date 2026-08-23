@@ -88,3 +88,5 @@ int splitArray(int[] nums, int m) {
 - [Capacity To Ship Packages](/problems/capacity-to-ship-packages-within-d-days) — same skeleton
 - [Divide Chocolate](/problems/divide-chocolate) — maximize the minimum
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)
+
+&lt;FeedbackWidget problem-slug="split-array-largest-sum" /&gt;

@@ -101,3 +101,5 @@ String alienOrder(String[] words) {
 - [Course Schedule](/problems/topological-sort-course-schedule)
 - [Sequence Reconstruction](/problems/sequence-reconstruction)
 - [Parallel Courses](/problems/parallel-courses)
+
+&lt;FeedbackWidget problem-slug="alien-dictionary" /&gt;

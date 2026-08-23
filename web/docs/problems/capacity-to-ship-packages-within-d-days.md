@@ -89,3 +89,5 @@ int shipWithinDays(int[] w, int days) {
 - [Koko Eating Bananas](/problems/bs-on-answer-koko-bananas)
 - [Split Array Largest Sum](/problems/split-array-largest-sum) — same skeleton
 - [Divide Chocolate](/problems/divide-chocolate) — maximise the minimum
+
+&lt;FeedbackWidget problem-slug="capacity-to-ship-packages-within-d-days" /&gt;

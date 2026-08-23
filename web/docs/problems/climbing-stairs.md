@@ -70,3 +70,5 @@ int climbStairs(int n) {
 - [Min Cost Climbing Stairs](/problems/min-cost-climbing-stairs)
 - [House Robber](/problems/dp-house-robber)
 - [Fibonacci Number](https://leetcode.com/problems/fibonacci-number/)
+
+&lt;FeedbackWidget problem-slug="climbing-stairs" /&gt;

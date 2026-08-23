@@ -101,3 +101,5 @@ boolean union(int[] p, int a, int b) {
 - [Number of Islands](/problems/number-of-islands)
 - [Number of Provinces](/problems/union-find-number-of-provinces)
 - [Making a Large Island](https://leetcode.com/problems/making-a-large-island/)
+
+&lt;FeedbackWidget problem-slug="number-of-islands-ii" /&gt;

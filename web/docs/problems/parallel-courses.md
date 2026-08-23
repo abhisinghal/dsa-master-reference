@@ -92,3 +92,5 @@ int minimumSemesters(int n, int[][] relations) {
 - [Course Schedule](/problems/topological-sort-course-schedule)
 - [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
 - [Alien Dictionary](/problems/alien-dictionary)
+
+&lt;FeedbackWidget problem-slug="parallel-courses" /&gt;

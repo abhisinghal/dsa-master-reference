@@ -83,3 +83,5 @@ int[] twoSum(int[] nums, int target) {
 
 - [Two Sum](/problems/hashing-two-sum)
 - [3Sum](/problems/3sum)
+
+&lt;FeedbackWidget problem-slug="two-sum-ii-input-array-is-sorted" /&gt;

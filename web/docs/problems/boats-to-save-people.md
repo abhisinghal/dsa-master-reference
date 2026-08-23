@@ -79,3 +79,5 @@ int numRescueBoats(int[] people, int limit) {
 
 - [Two Sum II](/problems/two-sum-ii-input-array-is-sorted)
 - [Assign Cookies](https://leetcode.com/problems/assign-cookies/)
+
+&lt;FeedbackWidget problem-slug="boats-to-save-people" /&gt;

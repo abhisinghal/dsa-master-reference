@@ -82,3 +82,5 @@ int numberWays(List<List<Integer>> hats) {
 
 - [Beautiful Arrangement](/problems/beautiful-arrangement)
 - [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)
+
+<FeedbackWidget problem-slug="number-of-ways-to-wear-different-hats-to-each-other" />

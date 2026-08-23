@@ -94,3 +94,5 @@ class StreamChecker {
 - [Implement Trie](/problems/implement-trie)
 - [Word Search II](/problems/trie-word-search-ii)
 - [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/)
+
+<FeedbackWidget problem-slug="stream-of-characters" />

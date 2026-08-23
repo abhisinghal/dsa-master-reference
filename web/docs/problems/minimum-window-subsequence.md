@@ -98,3 +98,5 @@ String minWindow(String s1, String s2) {
 - [Minimum Window Substring](/problems/minimum-window-substring)
 - [Is Subsequence](https://leetcode.com/problems/is-subsequence/)
 - [Longest Common Subsequence](/problems/longest-common-subsequence)
+
+&lt;FeedbackWidget problem-slug="minimum-window-subsequence" /&gt;

@@ -74,3 +74,5 @@ int videoStitching(int[][] clips, int T) {
 
 - [Jump Game II](/problems/greedy-jump-game-ii)
 - [Minimum Number of Taps](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/)
+
+<FeedbackWidget problem-slug="video-stitching" />

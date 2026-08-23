@@ -77,3 +77,5 @@ int removeCoveredIntervals(int[][] intervals) {
 - [Merge Intervals](/problems/merge-intervals-classic)
 - [Non-overlapping Intervals](/problems/non-overlapping-intervals)
 - [Maximum Length of Pair Chain](/problems/maximum-length-of-pair-chain)
+
+<FeedbackWidget problem-slug="remove-covered-intervals" />

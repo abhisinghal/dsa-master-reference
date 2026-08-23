@@ -82,3 +82,5 @@ boolean canPartition(int[] nums) {
 - [Target Sum](/problems/target-sum)
 - [Last Stone Weight II](/problems/last-stone-weight-ii)
 - [Partition to K Equal Sum Subsets](/problems/partition-to-k-equal-sum-subsets)
+
+<FeedbackWidget problem-slug="partition-equal-subset-sum" />

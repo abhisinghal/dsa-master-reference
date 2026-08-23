@@ -94,3 +94,5 @@ Push indices while heights decrease; on rise, pop the "bottom" and compute water
 - [Trapping Rain Water II](/problems/trapping-rain-water-ii)
 - [Container With Most Water](/problems/two-pointers-container-with-most-water)
 - [Largest Rectangle in Histogram](/problems/largest-rectangle-in-histogram)
+
+&lt;FeedbackWidget problem-slug="trapping-rain-water" /&gt;

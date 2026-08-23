@@ -116,3 +116,5 @@ int lengthOfLIS(int[] a) {
 - [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/) — LCS(s, reverse(s))
 - [Russian Doll Envelopes](https://leetcode.com/problems/russian-doll-envelopes/) — sort by width, LIS on heights
 - [Number of Longest Increasing Subsequence](https://leetcode.com/problems/number-of-longest-increasing-subsequence/) — track count alongside length
+
+<FeedbackWidget problem-slug="longest-increasing-subsequence" />

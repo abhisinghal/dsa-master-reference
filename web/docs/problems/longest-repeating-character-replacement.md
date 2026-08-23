@@ -131,3 +131,5 @@ int characterReplacement(String s, int k) {
 - [Max Consecutive Ones III](/problems/max-consecutive-ones-iii) — binary version
 - [Replace the Substring for Balanced String](/problems/replace-the-substring-for-balanced-string) — window on outside counts
 - [Longest Substring Without Repeating Characters](/problems/sliding-window-longest-substring) — the seed
+
+&lt;FeedbackWidget problem-slug="longest-repeating-character-replacement" /&gt;

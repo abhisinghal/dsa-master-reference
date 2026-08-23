@@ -86,3 +86,5 @@ int minCostII(int[][] costs) {
 
 - [Paint House](https://leetcode.com/problems/paint-house/)
 - [Paint Fence](https://leetcode.com/problems/paint-fence/)
+
+&lt;FeedbackWidget problem-slug="paint-house-ii" /&gt;

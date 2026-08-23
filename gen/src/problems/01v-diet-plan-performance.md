@@ -77,3 +77,5 @@ int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
 - [Maximum Average Subarray I](/problems/maximum-average-subarray-i)
 - [Minimum Size Subarray Sum](/problems/minimum-size-subarray-sum)
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
+
+<FeedbackWidget problem-slug="diet-plan-performance" />

@@ -129,3 +129,5 @@ ListNode detectCycle(ListNode head) {
 - [Happy Number](https://leetcode.com/problems/happy-number/) — Floyd on the digit-square-sum sequence
 - [Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/) — Floyd on `next = nums[i]`
 - [Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/) — Floyd to find middle, reverse second half, compare
+
+&lt;FeedbackWidget problem-slug="fast-slow-linked-list-cycle-ii" /&gt;

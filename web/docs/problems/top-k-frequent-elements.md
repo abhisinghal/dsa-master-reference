@@ -141,3 +141,5 @@ int[] topKFrequentBucket(int[] nums, int k) {
 - [Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) — min-heap of size k over a stream
 - [Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) — heap on rows
 - [Reorganize String](https://leetcode.com/problems/reorganize-string/) — max-heap on char frequencies
+
+&lt;FeedbackWidget problem-slug="top-k-frequent-elements" /&gt;

@@ -86,3 +86,5 @@ boolean checkSubarraySum(int[] nums, int k) {
 - [Subarray Sums Divisible by K](/problems/subarray-sums-divisible-by-k)
 - [Contiguous Array](/problems/contiguous-array)
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
+
+<FeedbackWidget problem-slug="continuous-subarray-sum" />

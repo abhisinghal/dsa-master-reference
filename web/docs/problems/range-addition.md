@@ -82,3 +82,5 @@ int[] getModifiedArray(int n, int[][] updates) {
 - [Corporate Flight Bookings](/problems/corporate-flight-bookings)
 - [Car Pooling](/problems/car-pooling)
 - [Range Addition II](/problems/range-addition-ii)
+
+&lt;FeedbackWidget problem-slug="range-addition" /&gt;

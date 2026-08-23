@@ -86,3 +86,5 @@ int subarraysDivByK(int[] nums, int k) {
 - [Subarray Sum Equals K](/problems/prefix-sum-subarray-sum-equals-k)
 - [Continuous Subarray Sum](/problems/continuous-subarray-sum) — sum multiple of k with length ≥ 2
 - [Contiguous Array](/problems/contiguous-array) — same modulo trick with +1/−1
+
+<FeedbackWidget problem-slug="subarray-sums-divisible-by-k" />

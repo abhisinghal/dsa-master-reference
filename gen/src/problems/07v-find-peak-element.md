@@ -92,3 +92,5 @@ O(n) linear pass; rejected.
 - [Find Minimum in Rotated Sorted Array](/problems/find-minimum-in-rotated-sorted-array) — similar BS on non-monotone
 - [Peak Index in a Mountain Array](https://leetcode.com/problems/peak-index-in-a-mountain-array/) — guaranteed single peak
 - [Find a Peak Element II](https://leetcode.com/problems/find-a-peak-element-ii/) — 2D
+
+<FeedbackWidget problem-slug="find-peak-element" />

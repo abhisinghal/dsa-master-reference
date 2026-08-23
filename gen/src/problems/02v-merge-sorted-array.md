@@ -77,3 +77,5 @@ void merge(int[] nums1, int m, int[] nums2, int n) {
 - [Merge Two Sorted Lists](/problems/merge-two-sorted-lists)
 - [Squares of a Sorted Array](/problems/squares-of-a-sorted-array)
 - [Sort Colors](https://leetcode.com/problems/sort-colors/)
+
+<FeedbackWidget problem-slug="merge-sorted-array" />

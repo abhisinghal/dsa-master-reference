@@ -87,3 +87,5 @@ int minDistance(String a, String b) {
 - [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) — same shape, different recurrence
 - [Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/) — count matches instead
 - [Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/) — same 2D table skeleton
+
+&lt;FeedbackWidget problem-slug="edit-distance" /&gt;

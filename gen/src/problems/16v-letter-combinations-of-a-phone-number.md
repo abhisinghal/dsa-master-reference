@@ -81,3 +81,5 @@ Extend all combinations by next digit's letters; same complexity, no recursion.
 
 - [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)
 - [Palindrome Partitioning](/problems/palindrome-partitioning)
+
+<FeedbackWidget problem-slug="letter-combinations-of-a-phone-number" />

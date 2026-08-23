@@ -92,3 +92,5 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 - [Connecting Cities With Minimum Cost](/problems/connecting-cities-with-minimum-cost)
 - [Min Cost to Connect All Points](/problems/min-cost-to-connect-all-points)
 - [Optimize Water Distribution](/problems/optimize-water-distribution-in-a-village)
+
+&lt;FeedbackWidget problem-slug="find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" /&gt;

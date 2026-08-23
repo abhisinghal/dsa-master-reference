@@ -146,3 +146,5 @@ boolean check(ListNode node) {
 - [Middle of the Linked List](/problems/middle-of-the-linked-list) — the split primitive
 - [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) — the reversal primitive
 - [Reorder List](https://leetcode.com/problems/reorder-list/) — same split + reverse + interleave
+
+&lt;FeedbackWidget problem-slug="palindrome-linked-list" /&gt;

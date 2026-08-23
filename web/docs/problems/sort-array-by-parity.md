@@ -79,3 +79,5 @@ int[] sortArrayByParity(int[] nums) {
 
 - [Sort Colors](https://leetcode.com/problems/sort-colors/) — 3-way
 - [Move Zeroes](/problems/move-zeroes)
+
+&lt;FeedbackWidget problem-slug="sort-array-by-parity" /&gt;

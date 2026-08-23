@@ -59,3 +59,5 @@ int hammingDistance(int x, int y) {
 - [Total Hamming Distance](https://leetcode.com/problems/total-hamming-distance/)
 - [Number of 1 Bits](/problems/number-of-1-bits)
 - [XOR Sum problems]
+
+&lt;FeedbackWidget problem-slug="hamming-distance" /&gt;

@@ -97,3 +97,5 @@ int mergeCount(long[] p, int lo, int hi, int lower, int upper) {
 - [Reverse Pairs](/problems/reverse-pairs)
 - [Count of Smaller Numbers After Self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
 - [Global and Local Inversions](/problems/global-and-local-inversions)
+
+&lt;FeedbackWidget problem-slug="count-of-range-sum" /&gt;

@@ -84,3 +84,5 @@ boolean canJump(int[] nums) {
 - [Jump Game II](/problems/greedy-jump-game-ii)
 - [Jump Game III](/problems/jump-game-iii)
 - [Jump Game VI](/problems/jump-game-vi)
+
+&lt;FeedbackWidget problem-slug="jump-game" /&gt;

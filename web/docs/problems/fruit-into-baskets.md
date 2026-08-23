@@ -147,3 +147,5 @@ int totalFruitTwoTypes(int[] fruits) {
 - [Longest Substring with At Most K Distinct Characters](/problems/longest-substring-with-at-most-k-distinct-characters) — generalization
 - [Max Consecutive Ones III](/problems/max-consecutive-ones-iii) — binary variant
 - [Subarrays with K Different Integers](/problems/subarrays-with-k-different-integers) — count variant
+
+&lt;FeedbackWidget problem-slug="fruit-into-baskets" /&gt;

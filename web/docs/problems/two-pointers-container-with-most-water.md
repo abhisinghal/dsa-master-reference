@@ -119,3 +119,5 @@ int maxArea(int[] h) {
 - [3Sum](https://leetcode.com/problems/3sum/) — sort, fix pivot, two-pointer the tail
 - [Sort Colors](https://leetcode.com/problems/sort-colors/) — three-way partition (Dutch flag)
 - [Squares of a Sorted Array](https://leetcode.com/problems/squares-of-a-sorted-array/) — two pointers from ends, fill back-to-front
+
+&lt;FeedbackWidget problem-slug="two-pointers-container-with-most-water" /&gt;
