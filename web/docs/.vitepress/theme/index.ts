@@ -52,6 +52,8 @@ import MarkSolved from './MarkSolved.vue'
 import StorageManager from './StorageManager.vue'
 import SocialProof from './SocialProof.vue'
 import SupportPanel from './SupportPanel.vue'
+import StreakTracker from './StreakTracker.vue'
+import ShareButtons from './ShareButtons.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import './style.css'
 
@@ -116,6 +118,8 @@ export default {
     app.component('StorageManager', StorageManager)
     app.component('SocialProof', SocialProof)
     app.component('SupportPanel', SupportPanel)
+    app.component('StreakTracker', StreakTracker)
+    app.component('ShareButtons', ShareButtons)
     installSolvedCountBadges(router)
   }
 }

@@ -115,6 +115,8 @@ features:
   </div>
 </div>
 
+<StreakTracker />
+
 <UserProfile />
 
 <div class="stats-strip">
