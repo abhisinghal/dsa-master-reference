@@ -23,6 +23,8 @@ The catch, and it's a real one: hash tables can **degrade to O(n)** per operatio
 
 ## The core idea — replace scans with lookups
 
+<HashingAnim />
+
 Every hashing solution has the same three-part shape:
 
 1. **Choose a key** — an integer, a string, a canonical fingerprint of some structure. The key is *what makes two things "the same"*.

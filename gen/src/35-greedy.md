@@ -15,6 +15,8 @@ A brute-force solution usually enumerates choices, schedules, subsets, or paths 
 
 > [key] **Key Insight** — Before coding greedy, find the sort key that makes the safe choice obvious (earliest finish, largest ratio, nearest deadline). If you can construct a counterexample to "always take the locally best," greedy is wrong → switch to DP.
 
+<GreedyAnim />
+
 ## When to use it — local choices with a proof
 
 ### Recognize by

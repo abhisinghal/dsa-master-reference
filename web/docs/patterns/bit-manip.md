@@ -23,6 +23,8 @@ The catch: bit manipulation is *unforgiving*. Off-by-one on a shift and your pro
 
 ## The core idea — a few identities do all the work
 
+<BitManipAnim />
+
 **Memorize these seven identities.** Half of the "clever" bit problems reduce to one of them.
 
 

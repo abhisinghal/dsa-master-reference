@@ -19,6 +19,8 @@ Before coding greedy, find the sort key that makes the safe choice obvious (earl
 
 </Callout>
 
+<GreedyAnim />
+
 ## When to use it — local choices with a proof
 
 ### Recognize by

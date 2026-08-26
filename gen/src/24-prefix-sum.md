@@ -23,6 +23,8 @@ And the party trick: pair prefix sums with a hash map to count subarrays with a 
 
 ## The core idea — precompute once, query in O(1) forever
 
+<PrefixSumAnim />
+
 ```text
 a      =   3   1   4   1   5
 pre    = 0   3   4   8   9  14      pre[i] = sum of a[0..i-1]

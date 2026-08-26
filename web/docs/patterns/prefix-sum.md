@@ -23,6 +23,8 @@ And the party trick: pair prefix sums with a hash map to count subarrays with a 
 
 ## The core idea — precompute once, query in O(1) forever
 
+<PrefixSumAnim />
+
 
 
 ```text

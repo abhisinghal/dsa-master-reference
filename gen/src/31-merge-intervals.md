@@ -17,6 +17,8 @@ That is the intuition to carry into interviews. You are not sorting because the 
 
 > [key] **Key Insight** — Two intervals `[a,b]` and `[c,d]` overlap iff `a ≤ d && c ≤ b`. After sorting by start, overlap with the running interval is simply `next.start ≤ cur.end`.
 
+<MergeIntervalsAnim />
+
 ## When to use it — ordered ranges that may touch
 
 ### Recognize by

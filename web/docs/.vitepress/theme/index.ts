@@ -19,6 +19,12 @@ import DpFillAnim from './DpFillAnim.vue'
 import TrieWalkAnim from './TrieWalkAnim.vue'
 import BinarySearchAnim from './BinarySearchAnim.vue'
 import HeapAnim from './HeapAnim.vue'
+import PrefixSumAnim from './PrefixSumAnim.vue'
+import HashingAnim from './HashingAnim.vue'
+import MergeIntervalsAnim from './MergeIntervalsAnim.vue'
+import TopoSortAnim from './TopoSortAnim.vue'
+import GreedyAnim from './GreedyAnim.vue'
+import BitManipAnim from './BitManipAnim.vue'
 import Breadcrumbs from './Breadcrumbs.vue'
 import ReadingTime from './ReadingTime.vue'
 import RecentUpdates from './RecentUpdates.vue'
@@ -102,6 +108,12 @@ export default {
     app.component('TrieWalkAnim', TrieWalkAnim)
     app.component('BinarySearchAnim', BinarySearchAnim)
     app.component('HeapAnim', HeapAnim)
+    app.component('PrefixSumAnim', PrefixSumAnim)
+    app.component('HashingAnim', HashingAnim)
+    app.component('MergeIntervalsAnim', MergeIntervalsAnim)
+    app.component('TopoSortAnim', TopoSortAnim)
+    app.component('GreedyAnim', GreedyAnim)
+    app.component('BitManipAnim', BitManipAnim)
     app.component('Breadcrumbs', Breadcrumbs)
     app.component('ReadingTime', ReadingTime)
     app.component('RecentUpdates', RecentUpdates)

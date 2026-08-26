@@ -21,6 +21,8 @@ Topological sort exists iff the graph is a DAG. If Kahn's queue empties before y
 
 There are two standard algorithms, and they feel mechanically different. **Kahn's BFS** repeatedly removes nodes with zero remaining prerequisites; it is like saying, "what can I do right now?" **DFS post-order** dives down prerequisites and appends a node after all of its descendants are done; reversing that finish order gives a valid topo order. Both are O(V+E), both detect cycles as a side-effect, and interviewers often accept either if you explain the invariant clearly.
 
+<TopoSortAnim />
+
 ## When to use it — and when not to
 
 ### Recognize by

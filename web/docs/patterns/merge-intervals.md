@@ -21,6 +21,8 @@ Two intervals `[a,b]` and `[c,d]` overlap iff `a ≤ d && c ≤ b`. After sortin
 
 </Callout>
 
+<MergeIntervalsAnim />
+
 ## When to use it — ordered ranges that may touch
 
 ### Recognize by
