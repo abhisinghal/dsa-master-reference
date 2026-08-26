@@ -9,7 +9,13 @@
 
 ## Why sliding window exists — the story
 
-Imagine you're asked to look at every *contiguous* stretch of an array — every block of `k` numbers in a row, or every run that satisfies some rule — and compute something about each one. The obvious-but-slow way is to re-scan each block from scratch: **O(n·k)** if there are n windows of length k. The sliding-window trick starts from one simple observation: **consecutive blocks overlap almost entirely.** As the window slides one step to the right, only *one* element enters on the right and *one* leaves on the left. So instead of recomputing the whole block, we just **add the newcomer and subtract the leaver**. That little bit of reuse turns an O(n·k) grind into a single O(n) pass.
+You're a network engineer at a CDN. Every millisecond, your edge servers process 50,000 requests. Your alert rule is: "in any 60-second window, if error-rate exceeds 5%, page the on-call." Simple to state — how do you compute it?
+
+The obvious way: for each new millisecond, sum the last 60,000 error records and divide. That is `60,000` operations per millisecond × `1000` ms/sec = `6·10⁷` operations per second per edge server, just for one alert rule. Multiply by 200 rules × 500 edge servers, and you're at `6·10¹²` ops per second globally. Your alerting fleet melts. This isn't stupid, though: it's exactly how the reference implementation reads, and for windows of a few dozen it's the fastest option because branch predictors love the tight nested loop.
+
+But at production scale — 60,000-element windows sliding one step every millisecond — you're doing 59,999 redundant additions on every step, because consecutive windows share 59,999 elements. The naive approach is *proven* to re-count almost everything it just counted. That waste is the tell.
+
+The sliding-window pattern is: recognize that when the window slides one step, only *one* element enters on the right and *one* leaves on the left. Add the newcomer, subtract the leaver — **two ops instead of 60,000**. The O(n·k) grind becomes a single O(n) pass. Your alerting fleet runs on a fraction of the hardware. Meta, CloudFlare, and every real-time monitoring system on the planet uses this exact trick.
 
 Let's make it concrete. Say we want the sum of every contiguous subarray of size 5. The first window covers indices 0–4; the next covers 1–5. Notice they share indices 1–4 — so the new sum is just the old sum, minus the element that slid out, plus the element that slid in:
 

@@ -7,13 +7,21 @@
 
 
 
-**Grokking arc:** The motivating problem is finding one rank without needing the whole sorted order. Brute force sorts everything. **Can we do better?** Partition once, compare the pivot's final index with the target rank, and discard the side that cannot contain the answer.
-
 ## Why Quickselect exists — the story
 
-Sorting is a powerful habit, but sometimes it is too much. If someone asks for the 2nd largest number in `[3,2,1,5,6,4]`, a full sort gives `[1,2,3,4,5,6]` and then returns `5`. Correct, but notice how much extra information you computed: you learned the full order of every value even though only one rank mattered. Quickselect exists for the moment you say, "I only need the element that would land at one index if the array were sorted."
+You're an engineer at Netflix. The Recommendation Systems team asks: *"For each user, return the top 10 movies from our catalog of 100,000 titles."*
+
+The obvious approach: sort all 100,000 movies by predicted rating, return the first 10. `O(n log n)` — for 200 million users, ~`2·10¹²` sort operations. **Manageable, but wasteful.** You spent effort ranking movie 50,000 vs movie 60,000 when you only care about the top 10.
+
+You could argue: *"sort is O(n log n), that's fine."* And it is — for one query. But Netflix does this **per user, per day**, for 200 million users. And the *interesting* question isn't sort; it's **"why did I spend cycles ordering movies I'll never return?"** After finding the top 10, you don't care whether movie 50,000 or 60,000 is better. That's pure waste.
+
+The pattern is **Quickselect**: return the k-th smallest (or largest) element in **O(n) expected time** without fully sorting. Pick a pivot, partition the array around it. The pivot lands in its final sorted position `p`. If `p == k`, you're done. If `p < k`, the answer is in the right half — throw away the left half and recurse. If `p > k`, symmetric. **You never recurse into both halves.** For finding top-10-of-100,000, Quickselect averages ~200,000 ops vs. sort's `100,000 · log₂(100,000) = 1,700,000` — an **8.5× speedup** for the same answer. Scaled to Netflix: from 2·10¹² to 2·10¹¹ ops per day. Ships hit datacenter power budgets.
 
 Quickselect borrows the partition step from quicksort. Pick a pivot, move smaller values to the left and larger values to the right, then the pivot lands in its final sorted position. If that position is the target rank, you are done. If it is too small, the target is on the right; if it is too large, the target is on the left. Unlike quicksort, you never recursively sort both sides. You throw away the side that cannot contain the answer.
+
+**Grokking arc:** The motivating problem is finding one rank without needing the whole sorted order. Brute force sorts everything. **Can we do better?** Partition once, compare the pivot's final index with the target rank, and discard the side that cannot contain the answer.
+
+Sorting is a powerful habit, but sometimes it is too much. If someone asks for the 2nd largest number in `[3,2,1,5,6,4]`, a full sort gives `[1,2,3,4,5,6]` and then returns `5`. Correct, but notice how much extra information you computed: you learned the full order of every value even though only one rank mattered. Quickselect exists for the moment you say, "I only need the element that would land at one index if the array were sorted."
 
 Trace a tiny example by hand. For `[7, 1, 5, 3, 9, 2]`, the 2nd largest is index `n-k = 4` in ascending order. Suppose pivot `5` partitions to `[1,3,2,5,9,7]`, so pivot index is `3`. Target `4` is to the right, so ignore indices `0..3`. Now partition `[9,7]`; if pivot `7` lands at index `4`, return `7`. You selected the answer without sorting `[1,3,2]` at all.
 

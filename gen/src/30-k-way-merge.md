@@ -9,15 +9,15 @@
 
 ## Why k-way merge exists — the story
 
-Imagine you have three sorted logs coming from three servers:
+You're an infrastructure engineer at Snowflake. A user submits a query that scans 200 columnar files, each already sorted by timestamp. To answer the query, you need one *globally* sorted stream of rows. And the total data is **1.4 TB** — you cannot load it all into memory.
 
-| stream | values left |
-|---|---|
-| A | `1, 4, 5` |
-| B | `1, 3, 4` |
-| C | `2, 6` |
+The obvious approach: concatenate all 200 files and sort. Correct — for a small `n`. But you have 1.4 TB and 128 GB of RAM. External sort passes over disk multiple times, at ~500 MB/s. Result: **50 minutes per query.** Your users churn. This is why every early database, from the 1960s tape drives to MySQL circa 2005, felt slow on aggregations: they used naive merge-sort-then-scan.
 
-If you concatenate everything and sort, you get the right answer, but you throw away the one gift the input already gave you: each stream is sorted. The first element of each stream is a promise. If A starts with `1`, then A will not hide a smaller value behind it. So the global next value must be one of the `k` visible heads. That is the whole k-way merge idea: keep `k` pointers, put their current values in a min-heap, repeatedly pop the smallest head, then advance only that stream.
+But look at the input. Every file is **already sorted**. That's the gift the data model gave you — and full sorting throws it away. If the head of file A is `t=1000` and the head of file B is `t=999`, then B's next row is guaranteed to be the globally-smallest remaining row. You never need to compare it against the tails of A, B, ..., F. **You only need to compare the heads.**
+
+That's k-way merge: maintain `k` cursors, one per input file. Put the current head value of each into a min-heap of size `k`. Repeatedly `pop` the smallest head, emit it, and `push` the next value from that same file. Each of the total `N` rows costs `log k`, not `log N`. For 200 files of 1B rows each: `2·10¹¹ · log₂(200) ≈ 1.5·10¹²` ops — but no disk re-reads, no memory blow-up. Snowflake, BigQuery, DuckDB, Spark — every columnar OLAP engine on Earth is doing this at the bottom of its query plan.
+
+<HeapAnim />
 
 Trace the tiny example by hand. The heap starts with `(1,A), (1,B), (2,C)`. Pop `(1,A)`, output `1`, and push A's next value `4`; the heap is now `(1,B), (2,C), (4,A)`. Pop `(1,B)`, push `3`; then pop `2`, push `6`; then `3`, `4`, `4`, `5`, `6`. At no point did you compare every remaining element with every other element. The heap only compares the current frontier, so each of the `N` total elements costs `log k`, not `log N`.
 

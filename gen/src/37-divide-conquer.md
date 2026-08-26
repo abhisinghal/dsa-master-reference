@@ -7,9 +7,19 @@
 
 
 
-**Grokking arc:** The motivating problem is counting cross-boundary relationships that brute force checks pair by pair. Brute force compares every pair. **Can we do better?** Split the input, solve organized halves, then let the combine step count many relationships at once.
-
 ## Why divide and conquer exists — the story
+
+You're a game engine developer at Riot. Every frame you must sort the visible entities by depth to correctly render transparent water effects. **50,000 entities. 60 frames per second. That's 3 million sorts per second per player.**
+
+The obvious approach: bubble sort, insertion sort, or any O(n²) sort. For 50,000 entities that's `2.5·10⁹` comparisons per frame — **40 seconds per frame** on a modern CPU. Frame budget is 16 milliseconds. You are **2,500× over budget.** Water flickers, players uninstall.
+
+You could try to be clever with domain tricks: bucket the entities by depth ranges, sort each bucket. But entities are moving; buckets constantly rebalance. You could try to sort incrementally frame-over-frame, but a single teleport ruins the assumption.
+
+The right answer is a **general-purpose O(n log n) sort** — and the one used by every game engine, JVM, and database on Earth is **merge sort** (or a hybrid like Timsort). The insight is: sort of `[5, 2, 6, 1]` is hard. Sort of `[5, 2]` is easy. Sort of `[6, 1]` is easy. Once both halves are sorted, **merging** them in one linear pass produces the final sorted result. `T(n) = 2·T(n/2) + O(n) = O(n log n)`. For 50,000 entities: `50,000 · log₂(50,000) ≈ 800,000` comparisons per frame — **50,000× faster than bubble sort**. Frame budget met. Water renders correctly.
+
+That's **divide and conquer**: split the input, solve each half recursively, then combine. The split is the easy part; the *combine* is where the cleverness lives. Merge sort combines by merging two sorted halves. Quicksort combines by picking a pivot and letting the recursion handle everything. Fast Fourier Transform combines by "twisting" two half-spectra with roots of unity. Karatsuba's multiplication combines by reusing three product results instead of four. Every one is the same shape: **T(n) = a·T(n/b) + f(n)**.
+
+**Grokking arc:** The motivating problem is counting cross-boundary relationships that brute force checks pair by pair. Brute force compares every pair. **Can we do better?** Split the input, solve organized halves, then let the combine step count many relationships at once.
 
 Divide and conquer is what you reach for when solving the whole input directly feels messy, but solving smaller pieces feels natural. You split the input, solve the left half, solve the right half, and then combine the two answers. The split is usually the easy part. The combine step is where the cleverness lives.
 

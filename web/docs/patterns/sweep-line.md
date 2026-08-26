@@ -9,17 +9,23 @@
 
 ## Why sweep line exists — the story
 
-Suppose you are watching a hallway with meetings scheduled as intervals: `[0,30]`, `[5,10]`, and `[15,20]`. A direct question like "how many rooms do I need?" sounds like it asks about pairs of meetings: compare every meeting to every other meeting and see what overlaps. That works, but it is the wrong lens. You do not really care which pair overlaps; you care how many meetings are active as time moves forward.
+You're an SRE at Uber. Every ride creates a `driver_online` event at time `t_start` and a `driver_offline` event at time `t_end`. Your dashboard shows: **"How many drivers are on the road at any moment during the peak-hour surge?"**
 
-Sweep line changes the input into events. A meeting start is `+1` active meeting, and a meeting end is `-1` active meeting. For the tiny schedule, the events are `(0,+1)`, `(30,-1)`, `(5,+1)`, `(10,-1)`, `(15,+1)`, `(20,-1)`. Sort them by time and scan left to right: active becomes `1` at time 0, `2` at time 5, back to `1` at time 10, up to `2` at time 15, down to `1` at time 20, and finally `0` at time 30. The peak active count is `2`, so two rooms are enough.
+The obvious approach: for every timestamp in the surge window, count how many `[t_start, t_end]` ranges contain it. With 100,000 drivers and one query per second, that's `10⁵` interval-containment checks per query × 3600 queries per hour = **3.6·10⁸ ops per hour**. Doable for one dashboard. But now imagine a company like Uber with 200 cities, each running this analytic, and you're at `7·10¹⁰` ops per hour. Fleet dies.
+
+And the naive approach re-does work. When time advances from `12:00:00` to `12:00:01`, the driver count changes by *at most a handful* — someone came online, someone finished a ride. Yet the naive scan asks the question from scratch on every second. **Every one of those 100,000 checks is unchanged from the previous second.**
+
+The pattern is **sweep line**: turn intervals into a stream of events. A `driver_online` event is `+1`. A `driver_offline` is `−1`. Sort all events by time. Scan left to right, maintaining a running `active` counter. Now the "how many drivers online at time t" query is just: **read the counter after processing events up to time t**. **O(n log n)** sort + **O(n)** scan, answers *every* time-point query in the surge window in a single pass. 3.6·10⁸ ops per hour → about 2·10⁵. **Four orders of magnitude faster.**
+
+The pattern gets its name from geometry: imagine a vertical line sweeping across a drawing from left to right. Whenever the line hits the start or end of an interval, your state changes. For meeting rooms the state is a count. For car pooling it is passengers in the car. For skyline it is a max-heap of active building heights. The reusable idea is always the same: sort the moments where state can change, then process them in order.
+
+For the meeting-rooms flavour of this: meetings scheduled as `[0,30]`, `[5,10]`, `[15,20]`. Events: `(0,+1)`, `(30,-1)`, `(5,+1)`, `(10,-1)`, `(15,+1)`, `(20,-1)`. Sort by time: active becomes `1` at time 0, `2` at time 5, back to `1` at time 10, `2` at time 15, `1` at time 20, `0` at time 30. Peak active is `2` → two rooms.
 
 <Callout kind="key" title="Key Insight">
 
 Same input, different lens. Merge Intervals asks "which intervals overlap into which?"; sweep line asks "how many are active at time t?". The +1/−1 event stream answers the second in one linear pass.
 
 </Callout>
-
-The pattern gets its name from geometry: imagine a vertical line sweeping across a drawing from left to right. Whenever the line hits the start or end of an interval, your state changes. For meeting rooms the state is a count. For car pooling it is passengers in the car. For skyline it is a max-heap of active building heights. The reusable idea is always the same: sort the moments where state can change, then process them in order.
 
 
 

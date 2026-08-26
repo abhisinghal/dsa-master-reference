@@ -9,7 +9,13 @@
 
 ## Why merge intervals exists — the story
 
-An interval is a promise about a stretch of time or space: a meeting from 9 to 10, a reservation from 4 to 7, a closed range `[1, 3]` on a number line. The hard part is not understanding one interval. The hard part is what happens when you receive a messy pile of them: `[8,10]`, `[1,3]`, `[2,6]`, `[15,18]`. At first glance, any interval could overlap any other interval, so the brute-force instinct is to compare every pair. The merge-intervals pattern exists because sorting turns the pile into a line.
+You're building the calendar backend for Google Meet. Users grant you a list of "busy" blocks from their Outlook, Zoom, and Slack calendars. Before showing free/busy to a meeting scheduler, you must **merge** overlapping busy blocks into one clean list.
+
+The honest first attempt: for each pair of intervals, check if they overlap and merge. Nested loop. For 50 busy blocks per user (typical exec calendar), it's `~1,250` comparisons — instant. And it's a legit first answer: interviewers accept it as the baseline.
+
+But at scale it dies. Meet processes calendar-merge requests for **1 billion users** to power its "find a time" feature. If each user has 200 busy blocks (5-day rolling window), naive is `200² = 40,000` ops per user × `10⁹` users = `4·10¹³` ops. At 100M ops/sec per core, that's **12 million CPU-hours** — daily. Google's infra team would notice.
+
+The pattern is: sort once, then sweep left to right. After sort, if the next interval's start is `≤` the current merged block's end, extend the block; otherwise, close the block and open a new one. **O(n log n)** sort + **O(n)** sweep. For 200 blocks per user, that's ~1,500 ops — 25× faster and, more importantly, asymptotically better. What makes this work is an **invariant**: after sorting by start time, every interval you've already emitted is final; only the current one can still grow. Sorting turned a global relation ("does this overlap with any of the 199 others?") into a local check ("does this touch the previous?").
 
 Sort by start time: `[1,3]`, `[2,6]`, `[8,10]`, `[15,18]`. Now you only need a "current merged block." Start with `[1,3]`. The next interval starts at `2`, which is before the current block ends at `3`, so merge them into `[1,6]`. The next starts at `8`, after `6`, so the old block is finished and you start a new one. The final answer is `[[1,6],[8,10],[15,18]]`. Sorting made the question local: once starts are ordered, a future interval cannot reach backward past the current block without first touching it.
 

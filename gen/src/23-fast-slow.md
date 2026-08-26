@@ -9,7 +9,13 @@
 
 ## Why fast / slow exists — the story
 
-Imagine walking through a linked list where each node only tells you one thing: "go to my next node." There is no index, no length you can trust, and no way to jump backward. If the list is clean, eventually you hit `null`. If the list loops, you can walk forever and never know whether you are just on a long list or trapped in a cycle. The fast/slow pattern exists for exactly this kind of one-way maze. Instead of remembering every room you have visited, you send two walkers through the maze: one moves one step at a time, the other moves two. If there is a loop, the faster walker eventually laps the slower one like runners on a track.
+You're building a garbage collector for a JVM. Every allocated object has references to other objects. To decide what's still alive, you traverse the reference graph. **What if it cycles?** Java's garbage collector must never loop forever. Ever.
+
+The honest first attempt is a `HashSet<Object>` of visited nodes. Walk the graph; before recursing into a node, check the set. If it's already there, you've found a cycle — stop. If not, add it and continue. This is exactly what most tutorials teach for cycle detection: a `visited` set, O(n) extra memory. It works. It's correct. Every reference implementation of `LinkedList#detectCycle` I've seen ships with it.
+
+But the JVM's GC runs on the same heap it's collecting. If it allocates a `HashSet` sized to the reachable object graph, it *doubles* the memory pressure at exactly the moment memory is tightest. For a 4GB heap with 10⁸ objects, that's 3-4GB of extra HashSet — often more than the free memory. The GC's own bookkeeping causes the GC to fail. Real production incident, from Twitter's 2013 postmortem on JVM tuning.
+
+The pattern that saves us is Floyd's Tortoise & Hare (1967): send **two walkers** through the graph, one at speed 1, one at speed 2. If a cycle exists, the fast walker eventually laps the slow one — **like runners on a track**. Cycle detection in O(n) time and **O(1) extra space**. Zero heap pressure. Every mark-sweep GC on Earth (HotSpot, V8, Go, .NET) uses a variant of this trick. Every LeetCode "Linked List Cycle" problem is testing whether you know it.
 
 <FastSlowAnim />
 

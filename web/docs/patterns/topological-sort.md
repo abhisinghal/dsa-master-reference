@@ -9,7 +9,15 @@
 
 ## Why topological sort exists — the story
 
-Some tasks are not about shortest paths or reachability. They are about order. You cannot take Algorithms before Data Structures, cannot deploy before tests pass, and cannot compile a file before its dependencies compile. When the rules are directed prerequisites — "B must happen before A" — you are looking for a topological ordering.
+You're a build engineer at Google, maintaining Bazel. Every codebase has thousands of source files, each declaring its dependencies. A user runs `bazel build //frontend/app`. The build system must compile files **in an order** that respects: *nothing gets compiled before its dependencies*.
+
+The naive approach: for every file, check if all its dependencies are ready; if yes, compile it; repeat until done. With 100,000 source files in the average monorepo, that's a **quadratic scan** — `10¹⁰` checks per full build. At 10ns per check, that's **100 seconds** of pure scheduling overhead, before a single compile actually runs. On Google's monorepo (2 billion lines of code), naive scheduling would cost hours.
+
+Worse, the naive approach silently loops forever if there's a **cycle** — file A depends on B which depends on A. Not paranoia: every experienced C++ engineer has hit a circular include exactly once, and remembers where they were.
+
+The pattern is **topological sort**: use graph structure to schedule the traversal in **O(V + E)** — linear in the size of the dependency graph, regardless of quadratic worst-case. Kahn's algorithm (1962) does it with a queue: start with all files that have zero unresolved dependencies, emit them, decrement each dependent's remaining count, and enqueue any that just hit zero. **Detects cycles as a side effect** — if the queue empties before every file is emitted, the remaining files form a cycle. That's how Bazel, Make, npm, Cargo, and every other build system on Earth schedules parallel work.
+
+Some tasks are not about shortest paths or reachability. They are about **order**. You cannot take Algorithms before Data Structures, cannot deploy before tests pass, and cannot compile a file before its dependencies compile. When the rules are directed prerequisites — "B must happen before A" — you are looking for a topological ordering.
 
 Take four courses: `0` has no prerequisites, `1` needs `0`, `2` needs `0`, and `3` needs both `1` and `2`. One valid order is `0,1,2,3`; another is `0,2,1,3`. The exact order is not unique, but every valid answer respects the arrows. If you add one more rule, `0` needs `3`, the graph becomes a cycle: `0 → 1 → 3 → 0` or `0 → 2 → 3 → 0`. Now no course can be first, because each course in the loop waits for another.
 

@@ -9,7 +9,17 @@
 
 ## Why union-find exists — the story
 
-Imagine edges arriving one at a time: city 0 connects to city 1, account A shares an email with account B, stone x shares a row with stone y. The brute-force instinct is to rebuild the connected components with DFS/BFS after every new edge. That works for one static graph, but it repeats old work when all you need is “are these two already in the same group?”
+You're a backend engineer at Facebook. A new signup arrives: **"Alice, alice@work.com."** Your dedup pipeline needs to answer: is this the same person as an existing user? Signals include shared emails, shared phone numbers, shared devices, shared friend graphs. Every new signal is an edge.
+
+The honest first attempt: for each new signup, run BFS from that node across all known signal edges, collecting the connected component. If it overlaps with an existing user's component, they're the same person. Correct. Simple.
+
+But Facebook adds **300 signups per second** and has ~10⁹ users. Each BFS is `O(V + E)`. Even amortized, that's ~10¹² operations per second globally — 200,000× more than a single machine can do. The naive approach is a fleet-wide meltdown.
+
+Worse: for the "same-person?" query, you don't need to *rebuild* the component. You just need to know which representative user Alice already collapses to. That question — *"do these two nodes belong to the same group?"* — has its own data structure: **Union-Find**. It answers `find(a)` in **near-O(1)** using path compression, and `union(a, b)` in the same. Total cost across `m` operations is `O(m · α(n))` where `α` is the inverse Ackermann function — effectively constant for any real input. For Facebook: 300 lookups per second, each ~10ns instead of 10⁴ns. **A 1,000× per-query speedup and no fleet meltdown.**
+
+This isn't just an interview trick. Every incremental clustering system on Earth uses Union-Find: Kruskal's MST (1956), image segmentation (connected components labeling), Percolation theory (Sedgewick's canonical example), Git's tag-graph reachability, Kubernetes' pod-affinity solver. Every LeetCode "Number of Provinces / Connected Components / Accounts Merge" problem is testing this.
+
+Imagine edges arriving one at a time: city 0 connects to city 1, account A shares an email with account B, stone x shares a row with stone y. The brute-force instinct is to rebuild the connected components with DFS/BFS after every new edge. That works for one static graph, but it repeats old work when all you need is "are these two already in the same group?"
 
 Can we do better? Union-Find keeps one representative root per group. Each new edge either merges two roots or tells you the edge was redundant. Path compression and union by rank make those repeated membership checks nearly constant time.
 
