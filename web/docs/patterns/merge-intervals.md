@@ -27,6 +27,24 @@ Two intervals `[a,b]` and `[c,d]` overlap iff `a ≤ d && c ≤ b`. After sortin
 
 </Callout>
 
+<Callout kind="key" title="Key Insight — sort direction depends on the question.">
+
+For "merge all overlaps," sort by **start**. For "minimum arrows to burst balloons" or "max non-overlapping," sort by **end**. For "erase overlaps," either works but end-sort simplifies the greedy proof. **Wrong sort key = wrong invariant = silently wrong answer.**
+
+</Callout>
+
+<Callout kind="inv" title="Invariant — the running merged interval is the only one that can still grow.">
+
+After sorting by start, every merged interval you've closed and pushed to output is final; a future interval cannot reach back past it because its start ≥ the closed interval's start. This is why sweep on sorted input beats brute-force pairwise checks.
+
+</Callout>
+
+<Callout kind="inv" title="Invariant — `cur.end` is monotonically non-decreasing across merges.">
+
+When you extend the running interval with `cur.end = max(cur.end, next.end)`, `cur.end` never shrinks. This gives a strong sanity check during debugging: if you see `cur.end` decrease at some step, the sort key was wrong or the update logic swapped a min for a max.
+
+</Callout>
+
 <MergeIntervalsAnim />
 
 ## When to use it — ordered ranges that may touch
@@ -43,6 +61,24 @@ Two intervals `[a,b]` and `[c,d]` overlap iff `a ≤ d && c ≤ b`. After sortin
 You need *how many are active at time t?* rather than *which merged into which?* — that's the [Sweep Line](/patterns/sweep-line) variant. Also skip this pattern when intervals live on multiple axes (2-D) — reach for coordinate compression + segment tree.
 
 Do not use plain merge-intervals if order is already fixed by original sequence and you are forbidden to reorder; then you may need a stack or greedy pass over the given order. Do not use it when intervals are open/closed in a nonstandard way until you clarify whether touching endpoints count as overlap. Finally, if you only need the maximum number of simultaneous meetings, sorting starts and ends separately is often cleaner than building merged ranges.
+
+<Callout kind="trap" title="Trap — touching endpoints.">
+
+Is `[1, 5]` and `[5, 10]` overlapping or adjacent? **Ask the interviewer explicitly.** For meetings (half-open time), they're not overlapping — one ends exactly when the other begins. For number-line closed intervals, they are. If you don't ask, half your test cases silently fail.
+
+</Callout>
+
+<Callout kind="trap" title="Trap — mutating the input.">
+
+LeetCode's `int[][]` input arrays are technically writable. Sorting in-place and *then* pushing outputs by *reference* means you're returning aliases to the mutated input. Some judges catch this; others don't. **Safe rule: `new int[]{cur.start, cur.end}` when appending to output.**
+
+</Callout>
+
+<Callout kind="trap" title="Trap — insert-interval loop off-by-one.">
+
+The classical "Insert Interval" problem has three phases: pre-insert (intervals entirely before), overlap-merge (intervals that touch the new one), post-insert (intervals entirely after). Boundaries between phases are `existing.end < new.start` (pre) and `existing.start > new.end` (post). **Get either strict/non-strict wrong and you double-count or lose an interval.**
+
+</Callout>
 
 ## How to use it — template
 

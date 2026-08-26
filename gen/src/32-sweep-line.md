@@ -64,6 +64,12 @@ For the meeting-rooms flavour of this: meetings scheduled as `[0,30]`, `[5,10]`,
 ```
 <div class="readfig"><b>How to read it:</b> Each interval becomes two events: green starts add <b>+1</b>, red ends add <b>−1</b>. The blue sweep line processes events in sorted order and maintains the running <code>active</code> count. The maximum value in that row is <b>2</b>, so two meetings overlap at peak and two rooms are required.</div>
 
+> [inv] **Invariant — running sum equals active count.** At every event time `t`, `active = Σ (+1 for starts ≤ t) − Σ (+1 for ends ≤ t)`. The running counter is the answer to "how many are active *at this instant*." Sanity check: `active` must be ≥ 0 at all times; a negative value means an end event fired without a matching start (data corruption).
+
+> [trap] **Trap — sorting starts and ends together loses the tie-break decision.** Meetings `[1,5]` and `[5,10]`: does the end at 5 fire *before* or *after* the start at 5? Answer changes the room count. **The rule for "sharing endpoints doesn't need a new room": sort so that end events precede start events on ties.** In Java: `Arrays.sort(events, (a, b) -> a.time != b.time ? a.time - b.time : a.type - b.type)` where `type = 0` for end, `1` for start.
+
+> [trap] **Trap — using ends as strictly less-than-start events.** The sweep produces the same peak whether you use `+1` at start / `−1` at (end + 1) OR `+1` at start / `−1` at end with the tie-break rule above. **Pick one convention and stick to it.** Mixing conventions across problems is the single most common sweep-line bug.
+
 ## When to use it — and when not to
 
 ### Recognize by

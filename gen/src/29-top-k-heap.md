@@ -57,6 +57,10 @@ return answer;
 
 Fill in `compareWorstFirst` based on what "worst among the winners" means. For k largest, the smallest value is worst, so Java's default min-heap works. For k smallest, the largest value is worst, so reverse the comparator. For k most frequent, the lowest frequency is worst, so order by `freq.get(x)`. The loop invariant is simple: after processing any prefix of the input, the heap contains the best `k` items from that prefix, or all items if fewer than `k` have appeared.
 
+> [inv] **Invariant — heap size is exactly `min(k, elements_seen_so_far)`.** Never grows beyond `k`, never shrinks. The "grow then trim" one-liner `offer; if (size > k) poll;` maintains this exactly. If size drifts, the algorithm silently returns the wrong top-k.
+
+> [inv] **Invariant — the heap root is the *weakest* of the winners.** For k-largest with a min-heap, the root is the smallest current winner — it's the one to compare a new candidate against. If `candidate > root`, evict root and add candidate. If `candidate <= root`, the candidate can never be in the top-k, so discard. This one comparison per element is what makes it O(n log k) instead of O(n log n).
+
 ## When NOT to use it
 
 - **You need the top k *in sorted order relative to each other*** — the heap doesn't guarantee internal order, only that the root is the worst-of-the-winners. Extract with successive polls if order matters.

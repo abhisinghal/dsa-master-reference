@@ -85,6 +85,30 @@ After partitioning around a pivot, the pivot sits at its final sorted index p. I
 
 <div class="readfig"><b>How to read it:</b> Partition moves values smaller than the pivot to the green left side and values greater than or equal to it to the red right side. The pivot <b>5</b> lands at its final sorted rank <b>p</b>. Quickselect compares <b>p</b> with the target rank <b>k</b> and discards the side that cannot contain the answer.</div>
 
+<Callout kind="key">
+
+**Key Insight — Quickselect is expected O(n) *because* it discards half the array on each step.** Total work: `n + n/2 + n/4 + ... = 2n = O(n)`. This is the same geometric-series argument as binary search, but applied to a partition step instead of a midpoint comparison. Say "expected linear" out loud in interviews — the word "expected" acknowledges the worst-case O(n²).
+
+</Callout>
+
+<Callout kind="key" title="Key Insight — Hoare partitioning vs. Lomuto partitioning matters.">
+
+Lomuto is simpler (one pass, one write-pointer) but 3× slower in practice and has worst-case O(n²) even on unique-value arrays. Hoare's two-pointer swap is 3× faster and handles equal elements better. **For interviews: use Lomuto for correctness (simpler to explain); for contests: use Hoare.**
+
+</Callout>
+
+<Callout kind="inv" title="Invariant — after each partition, the pivot's index is fixed forever.">
+
+Once `partition()` returns index `p`, `a[p]` is the correct value for rank `p` in the fully-sorted output. Quickselect never re-partitions across `p` because the search is confined to the side that could contain rank `k`.
+
+</Callout>
+
+<Callout kind="inv" title="Invariant — the search interval `[lo, hi]` always contains index `k`.">
+
+Every recursive call maintains this: if `p < k`, recurse on `[p+1, hi]` (which contains k); if `p > k`, recurse on `[lo, p-1]`. Violating this invariant means you passed the wrong subrange and will return the wrong rank.
+
+</Callout>
+
 ## When to use it — one-shot rank selection
 
 ### Recognize by
@@ -95,6 +119,17 @@ After partitioning around a pivot, the pivot sits at its final sorted index p. I
 - constraints where O(n log n) sort is acceptable but the interviewer asks for better average time
 - array is available in memory, so random access and in-place swaps are allowed
 
+<Callout kind="trap" title="Trap — deterministic worst-case O(n²) pivots.">
+
+Picking the first or last element as pivot on already-sorted input → each partition shrinks by 1 → O(n²). **Rule: `pivotIdx = lo + random.nextInt(hi - lo + 1)`.** For truly deterministic linear-time worst case, use median-of-medians (Blum-Floyd-Pratt-Rivest-Tarjan 1973) — but mention only if asked.
+
+</Callout>
+
+<Callout kind="trap" title="Trap — using recursion where iteration is safer.">
+
+Quickselect's recursion depth is expected O(log n) but worst case O(n). On adversarial input with `n = 10⁵`, that's `10⁵` stack frames = stack overflow. **Iterative Quickselect uses a while loop and eliminates the recursion; use this on very large inputs.**
+
+</Callout>
 
 <QuickselectAnim />
 

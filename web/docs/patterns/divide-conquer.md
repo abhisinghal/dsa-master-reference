@@ -87,6 +87,24 @@ That is the mental upgrade from "recursion" to "divide and conquer." Recursion i
 
 <div class="readfig"><b>How to read it:</b> The input splits until every leaf is size 1. On the way back up, each merge level touches all <b>n</b> elements total, even though the work is spread across many small merges. There are <b>log n</b> levels, so merge-sort-shaped divide and conquer costs <b>O(n log n)</b> when combine is linear.</div>
 
+<Callout kind="key" title="Key Insight — the Master Theorem gives the total cost from `T(n) = a·T(n/b) + f(n)`.">
+
+For merge sort: `a=2, b=2, f(n)=O(n)` → O(n log n). For binary search: `a=1, b=2, f(n)=O(1)` → O(log n). For Strassen matrix mult: `a=7, b=2, f(n)=O(n²)` → O(n^{log₂7}) ≈ O(n^2.81). **Say the phrase "Master Theorem" out loud in an interview when justifying complexity — it signals recursion literacy.**
+
+</Callout>
+
+<Callout kind="inv">
+
+**Invariant — every recursive call must receive a *strictly smaller* subproblem.** If your recursion is `solve(a, b)` and after splitting you call `solve(a, b)` again with the same range, the base case is never hit → stack overflow. Always assert `end - start > 1` before recursing, or make the split unambiguous.
+
+</Callout>
+
+<Callout kind="trap" title="Trap — treating divide-and-conquer as a synonym for recursion.">
+
+All D&C is recursive, but not all recursion is D&C. Fibonacci, DFS, tree traversal — those are recursion but *not* divide-and-conquer, because they don't split the input into independent halves. D&C specifically means: split → solve halves → combine, where the halves are of comparable size.
+
+</Callout>
+
 ## When to use it — and when not to
 
 ### Recognize by
@@ -110,6 +128,12 @@ Also avoid it when:
 - the combine step has to re-scan too much hidden state from both halves.
 - the problem needs online updates; segment trees or Fenwick trees may be better.
 - recursion depth could exceed limits and an iterative structure is simpler.
+
+<Callout kind="trap" title="Trap — copying subarrays instead of passing indices.">
+
+Naive D&C code does `solve(Arrays.copyOfRange(a, lo, mid))` on every call. That's O(n) copy per recursion frame × O(log n) depth × O(n) elements = **O(n² log n) total memory allocation.** GC dies. **Rule: pass `int lo, int hi` and scratch buffers, never copy arrays.**
+
+</Callout>
 
 ## How to use it — template
 

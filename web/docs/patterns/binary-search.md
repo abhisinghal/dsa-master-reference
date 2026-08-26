@@ -51,6 +51,24 @@ If the interviewer says the words *"sorted"*, *"monotonic"*, *"minimum X such th
 - **The interval's "feasibility" is not monotonic** — e.g., "smallest `x` such that some non-monotone metric is minimized." Binary search silently returns the wrong answer here. Verify monotonicity on paper first.
 - **Floating-point ranges without a stopping criterion** — you must fix either an epsilon tolerance or an iteration cap, otherwise the loop never terminates.
 
+<Callout kind="inv" title="Invariant — the target (if it exists) always lies in `[lo, hi]` (or `[lo, hi)` — pick one).">
+
+This is the single most important sentence in binary search. Before writing the loop, state it out loud. On every branch of the update logic, verify: did I preserve the invariant, or did I possibly discard the target?
+
+</Callout>
+
+<Callout kind="inv" title="Invariant — `hi - lo` strictly decreases every iteration.">
+
+For closed-interval `[lo, hi]` with `lo <= hi`, either `lo` increases (via `mid + 1`) or `hi` decreases (via `mid - 1`) on every iteration. The interval shrinks until empty. If your loop can iterate without shrinking `hi - lo`, you have an infinite loop.
+
+</Callout>
+
+<Callout kind="inv" title="Invariant — for lower-bound `[lo, hi)`, after the loop `lo == hi == first index where P is true`.">
+
+Every index `< lo` fails predicate `P`; every index `≥ hi` satisfies `P`. When `lo == hi`, the boundary is found. If no index satisfies `P`, `lo == a.length` (an off-the-end sentinel).
+
+</Callout>
+
 ## The three templates — memorize *one* form of each
 
 ### Template 1: closed interval `[lo, hi]`

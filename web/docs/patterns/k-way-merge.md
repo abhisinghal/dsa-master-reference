@@ -31,6 +31,18 @@ The heap holds a moving *frontier* of size k, one representative per stream. Its
 
 This is also why k-way merge feels like a cousin of Dijkstra's algorithm. Dijkstra keeps a heap of the best currently-known frontier nodes and expands the cheapest one next. K-way merge keeps a heap of stream fronts and expands the smallest one next. In both, the heap is not magic; it is just an efficient way to ask, again and again, "which frontier item should I process next?"
 
+<Callout kind="inv" title="Invariant — heap size stays ≤ k throughout.">
+
+After every `poll` + `offer` cycle, the heap contains at most one live representative per input stream. If two representatives from the same stream ever coexist, you've forgotten to advance the stream after popping, which is bug class #1 in this pattern.
+
+</Callout>
+
+<Callout kind="trap" title="Trap — comparator overflow on `int` subtraction.">
+
+`(a, b) -> a.val - b.val` overflows and returns the wrong sign when `a.val` and `b.val` straddle `Integer.MIN_VALUE`. Use `Integer.compare(a.val, b.val)` — Java's canonical comparator idiom. Interviewers who care about production code look for this specifically.
+
+</Callout>
+
 ## When to use it — and when not to
 
 ### Recognize by

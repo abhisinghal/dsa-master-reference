@@ -42,6 +42,14 @@ Anything that isn't a single-successor structure. For general graphs (each node 
 
 Also avoid this pattern when you must list every node in the cycle, when the structure can branch, or when the input is already indexed and a prefix/suffix computation answers the question more directly. Fast/slow tells you about meeting, distance, and relative position. It is not a replacement for graph traversal or sorting-based pair search.
 
+> [key] **Key Insight — the successor function is deterministic.** Fast/slow works only when every node has *exactly one* next-node (linked list, functional graph, `x → f(x)` sequence). If a node can branch (tree, general graph), the "hare laps the tortoise" argument breaks because the walkers may take divergent paths.
+
+> [inv] **Invariant — hare closes the gap by 1 per step once both are in the cycle.** Once slow enters the cycle, the gap between slow and fast (modulo the cycle length `C`) decreases by 1 per iteration. They meet in at most `C - (slow.dist mod C)` steps — always within one full cycle traversal.
+
+> [trap] **Trap — off-by-one in "middle of the list."** For an even-length list `1→2→3→4`, do you want middle = 2 or 3? Depends on the problem statement. If slow starts at head and the loop is `while (fast != null && fast.next != null)`, slow lands on **3** for even length (second middle). If you want the first middle (**2**), change the loop to `while (fast.next != null && fast.next.next != null)` and pre-check the empty case. Stating this choice out loud in an interview signals depth.
+
+> [trap] **Trap — cycle detection on a "linked list" that's actually a doubly-linked list.** Doubly-linked lists have a `prev` pointer; some cycle-detection candidates try to walk both directions or check `prev == null` for "no cycle." This is wrong — you can still cycle in a doubly-linked list. Ignore `prev` and run Floyd exactly as on a singly-linked list.
+
 ## How to use it — template
 
 ```java

@@ -31,6 +31,30 @@ There are two standard algorithms, and they feel mechanically different. **Kahn'
 
 <TopoSortAnim />
 
+<Callout kind="key">
+
+**Key Insight — Kahn's algorithm is BFS on the *indegree=0 frontier*.** The queue holds nodes ready-to-emit; each pop removes one from the graph and decrements neighbours' indegrees. It's a BFS in structure, but on the *dependency* graph rather than a raw graph.
+
+</Callout>
+
+<Callout kind="key">
+
+**Key Insight — DFS-based topo emits in *post-order*.** After visiting all descendants of `u`, push `u` onto a stack. Reverse the stack at the end. The invariant: `u` is pushed only after everything reachable from `u` is pushed, so `u` appears later in the reversed stack. Equally valid, equally O(V+E), preferred when you want to reuse the DFS bookkeeping for cycle detection.
+
+</Callout>
+
+<Callout kind="inv" title="Invariant — Kahn's queue is exactly the set of nodes with indegree 0 given the current graph.">
+
+Every pop reduces the graph by one node; every enqueue reflects a neighbour whose last dependency just left. If the queue empties while unemitted nodes remain, those nodes form a **cycle** — every node in the cycle depends on another node in the cycle, so no one hits indegree 0.
+
+</Callout>
+
+<Callout kind="inv" title="Invariant — emitted order respects every edge.">
+
+For every edge `u → v` in the original graph, `u` appears before `v` in the output. Verify by walking the output and checking each edge; this is the constant-factor way to sanity-check your implementation without believing your correctness proof.
+
+</Callout>
+
 ## When to use it — and when not to
 
 ### Recognize by
@@ -43,6 +67,24 @@ There are two standard algorithms, and they feel mechanically different. **Kahn'
 
 ### When NOT to use it
 The graph is *undirected* — topological sort is undefined. For "reach everything from x" use BFS/DFS. For "is this graph a DAG?" use DFS with a 3-colour visitor. If dependencies come with weights (build times, delays), reach for critical-path DP instead.
+
+<Callout kind="trap" title="Trap — using DFS three-coloring wrong.">
+
+Cycle detection with DFS needs *three* states: white (unvisited), gray (in current DFS stack), black (finished). Encountering a gray node is a back-edge = cycle. Using just visited/unvisited (two states) fails on graphs like `A → B, A → C, B → D, C → D` — you'd flag the second visit to `D` as a cycle, but it isn't.
+
+</Callout>
+
+<Callout kind="trap" title="Trap — building the reverse graph when you meant the forward graph.">
+
+Kahn's needs `outEdges[u]` for "when I emit u, decrement all its dependents' indegrees." Some candidates build `inEdges[u]` (the wrong direction) and get infinite loops. **Rule: `outEdges[u] = list of v such that u → v`.**
+
+</Callout>
+
+<Callout kind="trap" title="Trap — assuming unique output.">
+
+Topo order is generally *not* unique — for parallel-independent tasks, any ordering that respects edges is valid. If the problem says "return *the* topological order" it's usually a tell that only one valid order exists (given tie-breaks like lexicographic). If your submission fails a "wrong answer" test but your order respects edges, check whether the grader wants a specific tie-break.
+
+</Callout>
 
 Also avoid it when:
 - edges do not represent precedence; shortest path, connected components, and MSTs are different problems.

@@ -67,6 +67,14 @@ Can we do better? Union-Find keeps one representative root per group. Each new e
 ```
 <div class="readfig"><b>How to read it:</b> Before compression, <code>find(a)</code> has to climb every parent pointer until it reaches the representative root. On the return trip, path compression rewrites each visited node's parent to the root. The set membership is unchanged, but future <code>find</code> calls on <b>a</b>, <b>b</b>, <b>c</b>, or <b>d</b> are nearly instant.</div>
 
+> [key] **Key Insight — path compression and union-by-rank are both essential.** Path compression alone gives O(log n) amortized. Union-by-rank alone also gives O(log n) amortized. **Together they give O(α(n)) — effectively constant.** Skipping either one bumps you back to log; skipping both makes worst-case O(n). Interviewers ask about *both* separately to test whether you memorized one and skipped the other.
+
+> [inv] **Invariant — rank is a *height upper bound*, not the exact height.** Union-by-rank tracks `rank[root]`, which is an upper bound on the tree's height (rank only increments on equal-rank unions). Path compression may reduce the actual height without updating rank; that's fine — rank is used only for the union comparison, not for correctness of `find`.
+
+> [trap] **Trap — using `size[]` and `rank[]` interchangeably.** Both work as tie-breaks for union, but with subtly different semantics. `rank`-by-height gives O(α(n)) with the classical Tarjan analysis. `size`-by-cardinality also gives O(α(n)) but requires a different proof. **Pick one convention per implementation. Mixing them (attaching by rank in `union`, comparing by size in a helper) breaks the amortized analysis.**
+
+> [trap] **Trap — updating parent without also updating rank.** After union-by-rank, only one of the two rank values changes (the winner's, on tie). Some candidates copy over rank on every union, which corrupts the height bound and degrades to O(log n). **Rule: `rank[winnerRoot] += (rank[winnerRoot] == rank[loserRoot] ? 1 : 0)`.**
+
 ## When to use it — dynamic connectivity
 
 ### Recognize by
