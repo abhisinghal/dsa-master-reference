@@ -7,19 +7,218 @@
 
 
 
-Almost every problem starts life as an array, and the single most useful upgrade you can make to an array algorithm is a **hash map**. Here's the pattern to watch for: a brute-force solution says *"for each element, look through all the others"* — that's the O(n²) nested loop. A hash map lets you **remember what you've already seen**, so instead of re-scanning you just ask "have I seen the thing I need?" in O(1). That one swap collapses a whole class of problems from O(n²) down to O(n).
+## Why hashing exists — the story
 
-Throughout this chapter you'll meet the same few moves: **complement lookup** (remember values, then ask for the partner), **frequency signatures** (turn a group into a canonical key so equal things land together), and **prefix/suffix products** (carry a running result in from each side).
+You get an interview question you've seen before: **Two Sum**. Given `nums = [2, 7, 11, 15]` and `target = 9`, return the indices of the two numbers that add up to 9. Easy. You write two nested loops. Every pair. Return `[0, 1]`. Done.
 
-> [key] **Key Insight** — Whenever a brute force does "for each element, scan the rest" (O(n²)), ask: *can a hash map remember what I've seen so I never rescan?* That single question collapses a huge class of problems to O(n).
+The interviewer nods, then says: *"Great. Now `n = 10⁷`."*
 
-### Recognize by
-- "pair / triplet summing to target", "any duplicate?", "first non-repeated"
-- "group by canonical key" — anagrams, isomorphic strings, group shifted strings
-- "seen this before?" — cycle detection in a functional graph (Happy Number), longest consecutive sequence
+Your O(n²) solution is now **5 × 10¹³ operations** — about 20 minutes at 40M ops/sec. The interviewer will not wait 20 minutes. And here's the maddening part: for each `nums[i]`, you know *exactly* what number you need — it's `target - nums[i]`. You don't need to *scan* for it; you need to *look it up*. Scanning is what makes the loop O(n²). Lookup is what turns it O(n).
 
-### When NOT to use it
-You need a *contiguous* result (subarray, substring) and the running quantity is monotone — [Sliding Window](#sliding-window) is O(1) extra space vs. the map's O(n). Also skip hashing when the *order* between duplicates matters (hash maps lose it).
+The idea that makes lookup fast is a **hash table**: a data structure that maps keys to values with **average O(1)** insert and lookup — no scanning, no comparing, no sorting. Give it a key, get back the value in constant time. For Two Sum, walk the array once; at each `nums[i]` ask *"have I seen `target - nums[i]` already?"* If yes, return. If no, remember `nums[i]` and continue. One pass. **20 minutes → 100 milliseconds.** A twelve-thousand-times speedup for four lines of code.
+
+But hash tables are more than just fast Two Sum. Anywhere a brute-force says *"for each element, look through all the others"*, a hash map lets you swap that inner scan for a lookup. Group anagrams? Instead of comparing every pair, hash each word to a canonical fingerprint and bucket. Longest consecutive sequence? Instead of sorting, dump into a set and expand only from the "start" of each run. Streak detection, frequency counting, complement lookup, cycle detection in a functional graph — hashing is the single most productive tool in a competitive programmer's toolbox.
+
+The catch, and it's a real one: hash tables can **degrade to O(n)** per operation if the hash function is bad or an adversary crafts colliding keys. Understanding when this happens — and how Java's `HashMap` mitigates it — is the difference between a candidate who says *"hashing"* and one who says *"HashMap with treeified buckets past load factor 0.75, average O(1)."*
+
+## The core idea — replace scans with lookups
+
+Every hashing solution has the same three-part shape:
+
+1. **Choose a key** — an integer, a string, a canonical fingerprint of some structure. The key is *what makes two things "the same"*.
+2. **Choose a value** — usually the index, a count, or a linked structure holding more state.
+3. **Walk the input once**, at each element (a) asking the hash table a question about what you've seen, and (b) updating the table with the current element.
+
+The engineering discipline is: **before writing the loop, decide what the key is, what the value is, and what question you ask the hash at each step.** Half of the "I got Two Sum on a whiteboard and blanked" stories come from starting the loop with a fuzzy plan.
+
+## When to use it — recognition signals
+
+- **"Pair / triplet / quadruple summing to target"** — complement lookup. Two Sum, 3Sum (hash-based variant), 4Sum.
+- **"Any duplicate?" / "first non-repeated"** — hash set membership; hash map with counts.
+- **"Group by some property"** — anagrams (sorted-string key), isomorphic strings (pattern signature), group shifted strings (relative-offset signature).
+- **"Streak / longest consecutive run"** — dump values into a `HashSet`, then expand from each element that starts a run.
+- **"Have I visited this state?"** — cycle detection in a functional graph (Happy Number), state deduplication in BFS.
+- **"Distinct elements in a window"** — a sliding-window frequency map is a hashing inside a two-pointer.
+- **"Given operations mixed with queries on values"** — key by value, store position or count.
+- **"Return the k-th most X"** — hash to count, then reduce.
+- **"Random access on arbitrary-shaped keys"** — arrays only key by integer; hash maps key by anything with `hashCode` + `equals`. Tuples, strings, records, canonical forms.
+
+## When NOT to use it
+
+- **The keyspace is a small dense integer range** — arrays are faster and simpler. Counting sort, radix sort, and array-indexed lookups beat HashMap for ASCII-character-frequency problems.
+- **You need ordered iteration or range queries** — hash maps are unordered by contract. Use `TreeMap` (log n but ordered) or maintain a parallel sorted structure.
+- **Memory is tight** — HashMap has overhead: each entry is a wrapper node with a hash int, key ref, value ref, next ref. For `n = 10⁷` `Integer → Integer` mappings, expect ~500 MB. A primitive `int[]` beats it 100× on memory.
+- **You need worst-case O(1)** — hash maps are *average* O(1), *worst-case* O(n) if all keys collide. For adversarial or crypto-sensitive contexts (rate limiter keys, DDoS vectors), use a `TreeMap` (O(log n) worst-case) or a **cryptographically strong** hash.
+- **The comparison you want isn't equality** — hashing keys by equality doesn't help "find the closest match" or "range query." Use a BST or interval tree.
+- **You need to remember insertion order** — plain `HashMap` doesn't; use `LinkedHashMap` (constant-factor overhead) or explicit ordering.
+
+## The templates
+
+### Template 1: Complement lookup (Two Sum family)
+
+```java
+int[] twoSum(int[] a, int target) {
+    Map<Integer, Integer> seen = new HashMap<>();   // value -> index
+    for (int i = 0; i < a.length; i++) {
+        int need = target - a[i];                    // partner we're looking for
+        if (seen.containsKey(need)) {                // did we see the partner already?
+            return new int[]{seen.get(need), i};
+        }
+        seen.put(a[i], i);                           // remember this value for future queries
+    }
+    return new int[]{-1, -1};
+}
+```
+
+**Invariant:** `seen` contains exactly the values `a[0..i-1]` mapped to their indices.
+**Complexity:** O(n) average, O(n²) worst-case (if all values collide to one bucket).
+**Trap:** if the array has duplicates (`a = [3, 3]`, target = 6), record *after* checking, not before.
+
+### Template 2: Canonical-key grouping (Group Anagrams)
+
+```java
+List<List<String>> groupAnagrams(String[] words) {
+    Map<String, List<String>> buckets = new HashMap<>();
+    for (String w : words) {
+        char[] chars = w.toCharArray();
+        Arrays.sort(chars);                          // sorted string is the canonical form
+        String key = new String(chars);
+        buckets.computeIfAbsent(key, k -> new ArrayList<>()).add(w);
+    }
+    return new ArrayList<>(buckets.values());
+}
+```
+
+**Invariant:** every string in bucket `key` has `sortedChars(word) == key`.
+**Complexity:** O(n · L log L) where L is average word length.
+**Alternative canonical key:** a length-26 int array of character counts, converted to a string — O(n · L) but with a larger constant.
+
+### Template 3: Frequency map with running counts (character-count problems)
+
+```java
+Map<Character, Integer> freqs = new HashMap<>();
+for (char c : s.toCharArray()) {
+    freqs.merge(c, 1, Integer::sum);                 // idiomatic Java: increment or insert
+}
+```
+
+**Idiom to memorize:** `map.merge(key, 1, Integer::sum)` is Java's canonical "increment counter" one-liner. Cleaner than `map.put(key, map.getOrDefault(key, 0) + 1)`.
+
+### Template 4: HashSet for O(1) membership
+
+```java
+Set<Integer> present = new HashSet<>();
+for (int x : a) present.add(x);
+// membership check anywhere:
+if (present.contains(y)) { ... }
+```
+
+Use `HashSet` when you only need presence, not a value payload. Half the memory of `HashMap`.
+
+### Complexity summary
+
+| Operation | Average | Worst-case | Notes |
+|---|---|---|---|
+| `put` / `get` / `containsKey` | O(1) | O(log n)† | †Java 8+: treeifies buckets past 8 collisions |
+| `remove` | O(1) | O(log n)† | |
+| Iteration | O(n + capacity) | O(n + capacity) | Order is undefined |
+| Space | O(n) | O(n) | ~48 bytes per entry in Java |
+
+Rule of thumb: **HashMap-based algorithms are O(n) average, but always state the O(1) qualification explicitly in interviews.** Interviewers respect candidates who acknowledge the worst case.
+
+## Traps & gotchas — the 5 that fail candidates on interview day
+
+> [trap] **Trap 1 — Ordering matters in Two Sum with duplicates.** Input `a = [3, 3]`, target `6`. If you `put` before checking, when you visit `a[0] = 3`, `seen` gets `{3: 0}`, then when you visit `a[1] = 3`, you look for `3`, find it (yourself!), and return `[0, 0]` — wrong. **Rule: check first, then put.**
+
+> [trap] **Trap 2 — Mutating a key.** In Java, if you use a mutable object (a list, a `char[]`) as a HashMap key and modify it after insertion, its `hashCode` changes and the map cannot find it. `map.containsKey(theSameObject)` returns `false`. **Rule: keys must be effectively immutable, or use immutable wrappers like `String`.**
+
+> [trap] **Trap 3 — Autoboxing in hot loops.** `HashMap<Integer, Integer>` boxes every primitive `int` into an `Integer` object. For `n = 10⁷`, that's 10⁷ heap allocations just for keys. Performance drops 5-10× vs. a primitive `int[]`. **Rule: for dense integer keys, prefer a primitive array or a specialized library like Eclipse Collections' `IntIntHashMap`.**
+
+> [trap] **Trap 4 — `hashCode()` and `equals()` contract violation.** If you override `equals` but not `hashCode` (or vice versa), your custom class silently misbehaves as a HashMap key. Two objects that `equals` returns true for must return the same `hashCode`. **Rule: always override both, or neither. IDE-generate them.**
+
+> [trap] **Trap 5 — Adversarial collisions in security-sensitive code.** Java's `String.hashCode()` was famously predictable; an attacker sending crafted keys could force all hash buckets to collide, degrading a HashMap to O(n²). **Rule: for user-controlled keys in a web service, use randomized hashing (`Objects.hash` with a per-instance seed) or a `TreeMap`. Java 8 mitigates this by treeifying buckets, but only if the key's `Comparable` — `String` is, custom classes may not be.**
+
+## History — Dumey's 1956 memo at IBM
+
+The hash-table idea was first written down in an internal IBM memo by **Arnold Dumey in 1956**, titled *"Indexing for rapid random-access memory systems."* Dumey proposed dividing the address space into "buckets" indexed by a key's remainder modulo a prime — the exact structure every modern hash table still uses. The technique was formalized by **Wesley Peterson** in 1957 and became a standard technique in Knuth's *Sorting and Searching* (1973).
+
+Java's `HashMap` (1998, JDK 1.2) used **separate chaining** — collisions live in a linked list. In JDK 8 (2014), Josh Bloch and Doug Lea rewrote it to **treeify buckets that exceed 8 collisions**, capping worst-case from O(n) to O(log n). This mitigates hash-flooding DoS attacks that had plagued HashMap-based web services since 2011.
+
+Google's **BigTable** (2006), **Redis** (2009), and **Memcached** (2003) are all — at their core — massive distributed hash tables. Every time you use a `Map` in Java, you're calling a subroutine invented in a 1956 memo.
+
+## Canonical problem walkthrough — Two Sum
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/two-sum/)): Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`. Assume exactly one solution exists; you may not use the same element twice.
+
+### Approach 1 — Brute force
+
+Two nested loops.
+
+```java
+int[] twoSumBrute(int[] a, int target) {
+    for (int i = 0; i < a.length; i++)
+        for (int j = i + 1; j < a.length; j++)
+            if (a[i] + a[j] == target) return new int[]{i, j};
+    return new int[]{-1, -1};
+}
+```
+
+**Complexity:** O(n²) time, O(1) space. For `n = 10⁴`, about 5·10⁷ ops — passes. For `n = 10⁷`, ~10¹⁴ ops — fails. State it, move on.
+
+### Approach 2 — Sort + two pointers (if we could)
+
+Sort, then walk two pointers from the ends. **Problem:** sorting destroys the original indices. So we'd need to sort pairs of `(value, index)`.
+
+```java
+int[] twoSumSort(int[] a, int target) {
+    int n = a.length;
+    int[][] pairs = new int[n][2];
+    for (int i = 0; i < n; i++) pairs[i] = new int[]{a[i], i};
+    Arrays.sort(pairs, (x, y) -> x[0] - y[0]);
+    int lo = 0, hi = n - 1;
+    while (lo < hi) {
+        int sum = pairs[lo][0] + pairs[hi][0];
+        if (sum == target) return new int[]{pairs[lo][1], pairs[hi][1]};
+        if (sum < target)  lo++;
+        else               hi--;
+    }
+    return new int[]{-1, -1};
+}
+```
+
+**Complexity:** O(n log n) time, O(n) space. Works, but the sort dominates. And we need to allocate the `pairs` array. Not the best.
+
+### Approach 3 — HashMap in one pass (the interview answer)
+
+Walk the array once. At each `a[i]`, check whether `target - a[i]` is already in the map (indexed by its position). If yes, return. If no, record `a[i]` and continue.
+
+```java
+int[] twoSum(int[] a, int target) {
+    Map<Integer, Integer> seen = new HashMap<>();
+    for (int i = 0; i < a.length; i++) {
+        int need = target - a[i];
+        if (seen.containsKey(need)) return new int[]{seen.get(need), i};
+        seen.put(a[i], i);                           // record AFTER checking
+    }
+    return new int[]{-1, -1};
+}
+```
+
+**Complexity:** O(n) time average, O(n) space.
+
+**Interview commentary:**
+- *"Brute force is O(n²). We can do O(n) by remembering values we've seen."*
+- *"For each `a[i]`, we need `target - a[i]`. If it's already in the map, we've found the pair."*
+- *"Record after checking, not before, so we don't match an element with itself."*
+- *"Average O(1) per operation; worst case O(n) per op if adversarial collisions, but Java 8 HashMap treeifies past 8 collisions."*
+
+### Complexity ladder
+
+| Approach | Time | Space | When |
+|---|---|---|---|
+| Brute force | O(n²) | O(1) | Reference / very small n |
+| Sort + two pointers | O(n log n) | O(n) | If sort is already needed for another reason |
+| **HashMap one-pass** | **O(n) avg** | **O(n)** | **Interview default** |
 
 ---
 

@@ -7,11 +7,222 @@
 
 
 
-Start with the motivating problem: find one target in a sorted list. Brute force checks every element from left to right, which is O(n) even though the ordering is screaming useful information at you.
+## Why binary search exists — the story
 
-Can we do better? Yes — one comparison at the middle tells you that half the search space is impossible. Repeat that discard-half move until the answer is forced.
+You get an on-call ping at 3 AM: the payments service is misbehaving on a specific `order_id`. Your logs are sorted by `order_id`. There are **50 million rows**. You need to find one.
 
-The whole idea is embarrassingly simple: if your data is **ordered**, you never look at half of it. Guess the middle. If the middle is too small, the answer must be in the right half, so throw the left half away. Too big? Throw the right half away. Each guess **halves** what's left, so even a billion elements are settled in about 30 steps (`log₂ 10⁹ ≈ 30`).
+The honest first attempt is linear scan: read each row, compare, move on. It's a `while` loop and a print statement. Correct. And for a small file — say, the last hour's traffic, 100,000 rows — you're done in a second. That is the *reason* linear scan survived so long as an interview answer: it works, it's easy to prove correct, and for small n it's actually the fastest thing (branch predictors love it).
+
+But at 50 million rows, linear scan takes about **half a second** — and 20 alerts fire in parallel while you wait. At 5 *billion* rows, you're waiting a minute. Every one of those comparisons is throwing away the fact that your logs are *sorted*: after checking row 500 and seeing `order_id = 42_000`, you've just proven every row before 500 has a smaller id. Ignoring that fact is what makes linear scan wasteful.
+
+Binary search is the fix. Look at the *middle* row. If its `order_id` matches, you're done. If it's too big, the target must be in the left half — throw the right half away. Too small? Symmetric. Each step **halves** the search space, so 50 million rows collapse to `log₂(5·10⁷) ≈ 25` steps. **Half a second → 25 nanoseconds.** A 20-million-times speedup for four lines of code.
+
+## The core idea — halving is not enough; you need an *invariant*
+
+<BinarySearchAnim />
+
+Every real binary-search bug — and there are many — comes from one root cause: **the writer had a fuzzy idea of what the loop invariant was**. Before you write `int mid = (lo + hi) / 2`, you must be able to state precisely:
+
+> "At every iteration, the answer (if it exists) lies inside the interval `[lo, hi]` (or `[lo, hi)` — pick one **and stick with it**)."
+
+Half the interview candidates I've watched code binary search on a whiteboard don't pass this test. They know the shape of the loop, they can write `lo + (hi - lo) / 2`, but when I ask *"what does `hi` mean after the loop exits?"* they freeze. If you cannot answer that in one sentence, your loop will infinite-loop or return an off-by-one answer.
+
+There are three template families, each with a different invariant. Pick one, memorize it cold, and use it everywhere. Switching templates mid-problem is where careers go to die.
+
+## When to use it — recognition signals
+
+Binary search is applicable when your input has any of these shapes:
+
+- **Sorted or monotonic data** — the classic. Sorted array, sorted list of files, sorted rows in a DB index.
+- **Monotonic predicate on an unsorted-looking domain** — this is the "search on answer" pattern. If you can define a boolean function `feasible(x)` that is `false` for `x < answer` and `true` for `x ≥ answer` (or vice-versa), binary-search the domain of `x`. Classic examples: "smallest capacity that ships packages in `D` days", "minimum time Koko needs to eat all bananas", "smallest maximum sub-array sum with `k` splits."
+- **Rotated sorted array** — at least one half around `mid` is sorted; check which and recurse.
+- **Boundary problems** — "find the first index where `a[i] ≥ target`" or "the last index where `a[i] ≤ target`". These are *lower_bound* / *upper_bound* variants and appear in every leveling-guide problem.
+- **A function has a valley or peak** — ternary or binary search on derivative-sign.
+- **Constants that make O(log n) matter** — DB indexes, geometric algorithms with tight n·log n bounds, streaming median with sorted multiset.
+
+If the interviewer says the words *"sorted"*, *"monotonic"*, *"minimum X such that ..."*, or *"maximum X such that ..."*, binary search should be your first hypothesis.
+
+## When NOT to use it
+
+- **Unsorted data with no monotonic predicate** — sorting to enable binary search costs O(n log n), which is worse than a straight O(n) hash-map lookup. Only sort-then-binary-search if you'll do many queries against the same data.
+- **You need every match, not the first** — plain iteration is easier and often just as fast (or a range query with `lower_bound` + `upper_bound`).
+- **The array is small (`n ≤ 32`)** — linear scan is faster in practice: no branch misprediction, cache-friendly, and the `log₂ 32 = 5` comparisons plus overhead lose to a straight loop.
+- **The data has duplicates and the interviewer wants *all* occurrences** — do a lower-bound binary search followed by linear expansion, or use two binary searches (lower + upper). Don't try to hack it inside one loop.
+- **The interval's "feasibility" is not monotonic** — e.g., "smallest `x` such that some non-monotone metric is minimized." Binary search silently returns the wrong answer here. Verify monotonicity on paper first.
+- **Floating-point ranges without a stopping criterion** — you must fix either an epsilon tolerance or an iteration cap, otherwise the loop never terminates.
+
+## The three templates — memorize *one* form of each
+
+### Template 1: closed interval `[lo, hi]`
+
+The most common. The interval always contains valid indices. Loop while `lo ≤ hi`.
+
+```java
+int binarySearchClosed(int[] a, int target) {
+    int lo = 0, hi = a.length - 1;             // closed interval [lo, hi]
+    while (lo <= hi) {                          // <= because [lo, hi] includes hi
+        int mid = lo + (hi - lo) / 2;           // safe against int overflow
+        if      (a[mid] == target) return mid;
+        else if (a[mid] < target)  lo = mid + 1;   // discard [lo..mid], now [mid+1, hi]
+        else                       hi = mid - 1;   // discard [mid..hi], now [lo, mid-1]
+    }
+    return -1;                                  // interval empty; target not present
+}
+```
+
+**Invariant:** if `target` exists in `a`, its index lies in `[lo, hi]`. When `lo > hi`, the interval is empty → not found.
+**When to reach for it:** you need to *find an exact match* on a sorted array. Simple, symmetric, no boundary trickery.
+
+### Template 2: half-open interval `[lo, hi)` — lower bound
+
+Returns the smallest index `i` such that `a[i] ≥ target`. Returns `a.length` if no such index exists. This is Java's `Collections.binarySearch` semantic and C++ `std::lower_bound`.
+
+```java
+int lowerBound(int[] a, int target) {
+    int lo = 0, hi = a.length;                  // half-open [lo, hi); hi = n is *past* last index
+    while (lo < hi) {                            // < because [lo, hi) excludes hi
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] < target) lo = mid + 1;      // [mid..hi) still valid, mid itself is < target
+        else                 hi = mid;          // a[mid] ≥ target — mid might be the answer; keep it
+    }
+    return lo;                                   // lo == hi == first index with a[i] ≥ target
+}
+```
+
+**Invariant:** every index `< lo` has `a[i] < target`; every index `≥ hi` has `a[i] ≥ target`. On exit, `lo == hi` is the boundary.
+**When to reach for it:** *boundary problems*. "Find the first / last occurrence", "count values ≥ X", "insertion point." This is the most reusable template — nearly every "at what index does X first become true?" problem reduces to it.
+
+### Template 3: search on answer (feasibility)
+
+The pattern that makes staff engineers. You are not searching an array — you're binary-searching the *answer*.
+
+```java
+int searchOnAnswer(int lo, int hi) {          // lo = min plausible answer; hi = max
+    while (lo < hi) {                          // half-open convention
+        int mid = lo + (hi - lo) / 2;
+        if (feasible(mid)) hi = mid;           // mid works — but maybe smaller works too
+        else               lo = mid + 1;       // mid doesn't work — answer is strictly larger
+    }
+    return lo;                                 // smallest feasible value
+}
+// feasible(x) must be monotonic: false for x < answer, true for x ≥ answer.
+```
+
+**Invariant:** every `x < lo` is infeasible; every `x ≥ hi` is feasible. On exit `lo` is the boundary — the *smallest* feasible answer.
+**When to reach for it:** the problem statement is a minimization or maximization with a "verify a candidate answer in linear time" structure. Koko Eating Bananas, Capacity to Ship Packages, Split Array Largest Sum — the entire Wave 2 chapter on this pattern.
+
+### Complexity summary
+
+| Template | Time | Space | Best use |
+|---|---|---|---|
+| Closed `[lo, hi]` | O(log n) | O(1) | Exact match on sorted array |
+| Lower bound `[lo, hi)` | O(log n) | O(1) | Boundary / first-occurrence / count |
+| Search on answer | O(log(hi − lo) × Θ(feasibility)) | O(1) | Feasibility-based optimization |
+
+## Traps & gotchas — the 5 that fail candidates on interview day
+
+> [trap] **Trap 1 — `int mid = (lo + hi) / 2` overflows.** For `lo = hi = 2·10⁹`, `lo + hi = 4·10⁹` — larger than `Integer.MAX_VALUE`, wraps negative, and `mid` becomes negative. Your program then reads `a[-1]`, throws, or worse, silently returns the wrong answer. **Every implementation of `binarySearch` in the JDK had this bug for 9 years** until Josh Bloch fixed it in 2006 (Google's blog post: *"Nearly All Binary Searches and Mergesorts are Broken"*). Fix: `int mid = lo + (hi - lo) / 2;` — never subtract instead of adding. Say the words *"Bloch overflow fix"* aloud in your interview.
+
+> [trap] **Trap 2 — Mixing `<` and `<=` between templates.** If you use `lo ≤ hi` (closed template) but write `hi = mid` (half-open update), you infinite-loop when `lo == hi == mid`. If you use `lo < hi` but write `hi = mid - 1`, you may skip the answer when it lies at `mid`. The fix is a rule: **pick one interval convention, and every branch of your update logic must respect it.** Do not switch conventions inside a single function.
+
+> [trap] **Trap 3 — `feasible(mid)` returns the wrong direction of monotonicity.** In search-on-answer, you must be 100% sure whether "feasible" grows as `x` grows or shrinks. Get this backwards and you binary-search into the wrong half. **Sanity check on paper:** try `feasible(lo)` and `feasible(hi)`; verify one is true and the other false. If both agree, you have a boundary problem — not a feasibility problem.
+
+> [trap] **Trap 4 — Off-by-one on the return value.** After the loop exits with `lo == hi`, is that the answer, or the answer + 1, or `-1` if not found? This depends on your template. **Interview move:** after coding the loop, write a comment above the `return` line stating what `lo` (or `hi`) *means* in your invariant language. That comment forces you to notice off-by-one errors *before* running tests.
+
+> [trap] **Trap 5 — Rotated array template contamination.** When solving "search in a rotated sorted array", candidates copy the plain binary-search template and add branches for rotation. This gets messy fast (5–6 branches) and produces subtle bugs. **Cleaner:** first binary-search the *pivot* (the smallest element's index) with a boundary-style template, then binary-search the correct rotated half using the plain template. Two clean searches beat one messy one.
+
+## History — 30 years of broken implementations
+
+Binary search was first described by **John Mauchly in 1946**, one of the earliest algorithms ever formally analyzed. Yet in 2006, Josh Bloch published *"Nearly All Binary Searches and Mergesorts are Broken"* on the Google Research blog, revealing that essentially every JDK implementation (Java 1.0 through Java 5) contained the `mid = (lo + hi) / 2` overflow bug — for arrays larger than about a billion elements, the answer was wrong. Bloch had co-authored *Java: The Java Programming Language* and *Effective Java*; he found the bug while reading the code of his own book's `Arrays.binarySearch`.
+
+Bloch's exact quote: *"the general point that I want to make is much larger. It is that even careful programmers make horrible mistakes."* Mention this in an interview and the seasoned interviewer will smile — because you just signaled that you understand binary search is deceptively simple *and* dangerously bug-prone.
+
+The full technique family — including search-on-answer — was formalized by **Nimrod Megiddo** in 1979 as *"parametric search"*. His paper on optimization by binary-searching the answer space became the template for a generation of geometric algorithms (nearest-neighbor, minimum-enclosing-circle).
+
+## Canonical problem walkthrough — Search in Rotated Sorted Array
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/search-in-rotated-sorted-array/)): You have a sorted array of distinct integers that has been rotated at an unknown pivot — e.g., `[4,5,6,7,0,1,2]` was originally `[0,1,2,4,5,6,7]` rotated. Given a target, return its index or -1. Must run in O(log n).
+
+### Approach 1 — Brute force (the reference)
+
+Linear scan. O(n). This is what your junior teammate writes.
+
+```java
+int searchLinear(int[] a, int target) {
+    for (int i = 0; i < a.length; i++) if (a[i] == target) return i;
+    return -1;
+}
+```
+
+Correct but doesn't meet the O(log n) constraint. State it, then move on.
+
+### Approach 2 — Find pivot, then two searches (the modular one)
+
+**Step 1:** binary-search the pivot index (position of the smallest element). The rotated array has *two* monotonic halves; the pivot is where they meet.
+
+**Step 2:** binary-search the correct half.
+
+```java
+int searchByPivot(int[] a, int target) {
+    int n = a.length;
+    int pivot = findPivot(a);                   // index of smallest
+    // Two sorted halves: [0, pivot) and [pivot, n). Search the right one.
+    if (pivot == 0 || target < a[0]) {
+        return binarySearch(a, target, pivot, n - 1);
+    } else {
+        return binarySearch(a, target, 0, pivot - 1);
+    }
+}
+
+int findPivot(int[] a) {
+    int lo = 0, hi = a.length - 1;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] > a[hi]) lo = mid + 1;       // pivot in right half
+        else                hi = mid;           // pivot at mid or left
+    }
+    return lo;
+}
+```
+
+**Complexity:** O(log n) time, O(1) space. Two clean binary searches.
+**Trade-off:** twice the code, but each half is a template you can recite from memory. Much easier to debug live in an interview.
+
+### Approach 3 — Single-pass modified binary search (the compact one)
+
+At each step, at least one half of `[lo, mid]` and `[mid, hi]` is sorted. Determine which, check if target lies in the sorted half, and shrink accordingly.
+
+```java
+int searchOnePass(int[] a, int target) {
+    int lo = 0, hi = a.length - 1;
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] == target) return mid;
+        // Which half is sorted?
+        if (a[lo] <= a[mid]) {                          // left half [lo..mid] is sorted
+            if (target >= a[lo] && target < a[mid]) hi = mid - 1;
+            else                                     lo = mid + 1;
+        } else {                                        // right half [mid..hi] is sorted
+            if (target > a[mid] && target <= a[hi])  lo = mid + 1;
+            else                                     hi = mid - 1;
+        }
+    }
+    return -1;
+}
+```
+
+**Complexity:** O(log n) time, O(1) space. Half the LOC, but you must trace through the branch logic to convince yourself of correctness.
+**Interview delivery:** implement Approach 2 first (safer). Say *"I could compact this into a single-pass loop by determining which half is sorted at each step; happy to do that if we have time."* Only write Approach 3 if the interviewer explicitly asks.
+
+### Complexity ladder
+
+| Approach | Time | Space | Best use |
+|---|---|---|---|
+| Linear scan | O(n) | O(1) | State only; violates the problem constraint |
+| Find pivot + two searches | O(log n) | O(1) | Clean, modular, debuggable — interview default |
+| Single-pass modified BS | O(log n) | O(1) | Compact but requires care; contest / follow-up |
+
+
 
 <BinarySearchAnim />
 
@@ -73,26 +284,6 @@ flowchart TD
 The data isn't sorted / monotone — you can't halve safely. Sort first (O(n log n)) or scan linearly. Also skip when random-access lookup is expensive (linked lists) — walking to `mid` is O(n) there, killing the log advantage.
 
 ---
-
-## Canonical templates
-<p class="secgoal"><b>What & why:</b> the two boundary-safe binary-search skeletons (lower-bound and upper-bound) you should write from muscle memory. Goal — never fumble the `lo/hi/mid` bookkeeping or the off-by-one at the boundary again.</p>
-
-**Lower bound (first index with `P` true)** — the workhorse. Use half-open `[lo, hi)`:
-
-```java
-int firstTrue(int lo, int hi, IntPredicate P) {   // hi is exclusive; returns hi if none
-    while (lo < hi) {
-        int mid = lo + (hi - lo) / 2;
-        if (P.test(mid)) hi = mid;      // P holds -> boundary at mid or left
-        else             lo = mid + 1;  // P fails  -> boundary strictly right
-    }
-    return lo;
-}
-```
-
-> [inv] **Invariant** — `P(lo-1)` is false and `P(hi)` is true throughout; the loop shrinks `[lo,hi)` while preserving that the answer lies in it. Terminates when `lo == hi`.
-
-> [trap] **Common Trap** — Mixing conventions. Pick half-open `[lo,hi)` with `hi=mid`/`lo=mid+1` and never write `hi=mid-1` in the same template. Use `lo + (hi-lo)/2` to avoid overflow. For "last true", find first-false and step back.
 
 ## Search in Rotated Sorted Array <span class="diff diff-m">Medium</span>
 

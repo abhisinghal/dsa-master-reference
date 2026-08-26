@@ -84,6 +84,244 @@ int bestXorAgainst(BitNode root, int x) {
 
 The important interview move is to name the alphabet. Letter tries branch over characters. Binary tries branch over `0/1` bits. Reversed tries branch over the query from the end. Once you say that out loud, the code becomes a normal walk with a different interpretation of "next edge."
 
+## When NOT to use it
+
+- **You have very few short strings** — a plain `HashSet<String>` is faster and simpler. Tries pay for themselves at ~1000+ words or when you need prefix / wildcard / streaming semantics.
+- **You need only whole-word membership, no prefix operations** — hash sets win on memory (no per-character overhead) and CPU (one hash vs. one walk).
+- **Memory is critically tight** — a trie node in Java holds 26 pointers just for lowercase letters (~200 bytes per node). A million-word dictionary can eat 1 GB. Alternatives: **Ternary Search Trees** (3 pointers per node), **DAWG / DAFSA** (merge equivalent suffixes), **compressed trie** (Patricia / Radix tree — collapse single-child chains).
+- **The alphabet is huge** — Unicode with 1M+ code points makes 26-pointer arrays absurd. Use `HashMap<Character, Node>` per node, or switch to a suffix automaton.
+- **Queries are exact-match only** — the exact-match `HashMap` beats trie walks on both memory and lookup time.
+- **You need range queries or ordering** — tries iterate in lexicographic order but don't support "words in range [aardvark, badger]" efficiently. `TreeMap` is O(log n) and cleaner.
+
+## The templates
+
+### Template 1: Basic 26-way letter trie
+
+```java
+class Trie {
+    Trie[] next = new Trie[26];             // one pointer per lowercase letter
+    boolean end = false;                     // marks end-of-word
+
+    void insert(String word) {
+        Trie node = this;
+        for (char c : word.toCharArray()) {
+            int i = c - 'a';
+            if (node.next[i] == null) node.next[i] = new Trie();
+            node = node.next[i];
+        }
+        node.end = true;
+    }
+
+    boolean search(String word) {
+        Trie node = walk(word);
+        return node != null && node.end;
+    }
+
+    boolean startsWith(String prefix) {
+        return walk(prefix) != null;
+    }
+
+    private Trie walk(String s) {
+        Trie node = this;
+        for (char c : s.toCharArray()) {
+            int i = c - 'a';
+            if (node.next[i] == null) return null;
+            node = node.next[i];
+        }
+        return node;
+    }
+}
+```
+
+**Complexity:** O(L) insert / search / startsWith, where L is word length. Space: O(alphabet × total characters) worst case.
+
+### Template 2: Binary trie (32-bit) for max-XOR
+
+```java
+class BinaryTrie {
+    BinaryTrie[] next = new BinaryTrie[2];
+
+    void insert(int x) {
+        BinaryTrie node = this;
+        for (int b = 31; b >= 0; b--) {
+            int bit = (x >> b) & 1;
+            if (node.next[bit] == null) node.next[bit] = new BinaryTrie();
+            node = node.next[bit];
+        }
+    }
+
+    int maxXor(int q) {                     // best XOR partner for q
+        BinaryTrie node = this;
+        int result = 0;
+        for (int b = 31; b >= 0; b--) {
+            int bit = (q >> b) & 1;
+            int want = 1 - bit;              // XOR wants the opposite bit
+            if (node.next[want] != null) {
+                result |= (1 << b);
+                node = node.next[want];
+            } else {
+                node = node.next[bit];
+            }
+        }
+        return result;
+    }
+}
+```
+
+**Complexity:** O(32) per operation. Independent of stored count.
+**Key move:** at every bit, prefer the opposite bit — greedy from MSB.
+
+### Template 3: Wildcard search (`.` matches any)
+
+```java
+boolean searchWildcard(Trie node, String word, int i) {
+    if (i == word.length()) return node.end;
+    char c = word.charAt(i);
+    if (c == '.') {
+        for (Trie child : node.next)
+            if (child != null && searchWildcard(child, word, i + 1)) return true;
+        return false;
+    } else {
+        Trie child = node.next[c - 'a'];
+        return child != null && searchWildcard(child, word, i + 1);
+    }
+}
+```
+
+**Complexity:** O(26^k) worst case where k = number of wildcards. In practice, most `.` positions branch to very few children.
+
+### Complexity summary
+
+| Operation | Time | Space | Notes |
+|---|---|---|---|
+| Insert word of length L | O(L) | O(alphabet × L) worst | Amortize across shared prefixes |
+| Search / startsWith | O(L) | O(1) auxiliary | Constant-space walk |
+| Delete | O(L) | O(1) | Optionally prune unused branches |
+| All words with prefix P | O(L + total chars in matches) | O(1) | DFS from prefix's end node |
+| Max XOR | O(32) | O(1) | Independent of stored count |
+
+## Traps & gotchas — the 5 that fail candidates on interview day
+
+> [trap] **Trap 1 — Forgetting the `end` flag.** Without it, `search("app")` returns true even if only `"apple"` was inserted. Every terminal node needs an explicit "word ends here" boolean. **Rule: `insert` sets `end = true` on the last node; `search` verifies `end == true` at the walk's end.**
+
+> [trap] **Trap 2 — Not marking words as visited during Word Search II.** When you find "cat" on the board, if you don't remove it from the trie (set `end = false`) or from your result set, you'll emit it multiple times if it can be spelled multiple ways. **Rule: after collecting a word, either remove its terminal or add to a `Set<String>` to dedupe.**
+
+> [trap] **Trap 3 — Recursion re-entering visited board cells in Word Search II.** Classic backtracking bug. Mark the cell before recursing; unmark after. Trie navigation and board navigation are independent — track both. **Rule: `board[r][c] = '#'; dfs(...); board[r][c] = original;`.**
+
+> [trap] **Trap 4 — Memory blowup with 26-way arrays.** A trie for 100K English words allocates ~50M pointer slots at 8 bytes each = 400 MB. If the interviewer says "memory-constrained," switch to `HashMap<Character, Node>` (only allocate pointers actually used) or a compressed trie. **Rule: mention this trade-off explicitly when discussing memory.**
+
+> [trap] **Trap 5 — Binary trie bit order.** For max-XOR, always insert MSB-first. Bit `31` gives the largest place value, so choosing the "opposite bit" at the MSB matters most. **Rule: iterate `for (int b = 31; b >= 0; b--)` — top down.**
+
+## History — de la Briandais 1959, Fredkin 1960, Google's first index
+
+The trie data structure was invented by **René de la Briandais** in 1959 as a compact way to store dictionaries in punch-card memory. **Edward Fredkin** independently rediscovered and named it in 1960: *"trie"* from "re**trie**val" (Fredkin insisted it should be pronounced "tree," but nobody listened; the standard pronunciation is "try").
+
+Google's **first web search index (1996-1998)** was a trie of URL prefixes — that's how it did `startsWith` queries so cheaply while other search engines lagged. The **Judy Array** (2000s) was Doug Baskins' cache-aware trie variant for the Cray-1 supercomputer. Modern applications:
+
+- **Autocomplete** everywhere — from your terminal shell (`bash` completion) to Google Search's dropdown.
+- **IP routing tables** — every packet routing table on the internet is a Patricia trie (compressed trie) on IP address bit prefixes. Cisco's ASIC hardware performs the walk in one clock cycle.
+- **Ethereum's state tree** is a Merkle Patricia trie — cryptographically verifiable trie of account states.
+- **Bioinformatics** — suffix tries (Aho-Corasick, 1975) find all occurrences of multiple patterns in DNA sequences.
+
+When you mention *"we could compress single-child chains with a Patricia trie"* in an interview, you're citing a data structure Cisco routers use to move billions of packets per second.
+
+## Canonical problem walkthrough — Word Search II
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/word-search-ii/)): Given an `m × n` board of characters and a list of `words`, return **all words** in the list that can be constructed from letters of sequentially adjacent cells. A cell may not be used more than once in a single word.
+
+### Approach 1 — Word Search I per word
+
+For each word, run the O(m·n · 4^L) DFS from every cell.
+
+```java
+List<String> findWordsBrute(char[][] board, String[] words) {
+    List<String> res = new ArrayList<>();
+    for (String w : words) {
+        boolean found = false;
+        for (int r = 0; r < board.length && !found; r++)
+            for (int c = 0; c < board[0].length && !found; c++)
+                if (dfs(board, r, c, w, 0)) { res.add(w); found = true; }
+    }
+    return res;
+}
+
+boolean dfs(char[][] b, int r, int c, String w, int i) {
+    if (i == w.length()) return true;
+    if (r < 0 || r >= b.length || c < 0 || c >= b[0].length || b[r][c] != w.charAt(i)) return false;
+    char tmp = b[r][c]; b[r][c] = '#';
+    boolean ok = dfs(b,r+1,c,w,i+1) || dfs(b,r-1,c,w,i+1) || dfs(b,r,c+1,w,i+1) || dfs(b,r,c-1,w,i+1);
+    b[r][c] = tmp;
+    return ok;
+}
+```
+
+**Complexity:** O(k · m · n · 4^L) where k = number of words. For 10⁴ words on a 15×15 board, this TLEs immediately.
+
+### Approach 2 — Trie of dictionary + single board DFS
+
+Build a trie of all words. From each board cell, DFS **once**, walking the trie in parallel. The trie prunes: if the current cell's letter doesn't extend the trie path, the entire branch dies immediately.
+
+```java
+class Trie {
+    Trie[] next = new Trie[26];
+    String word = null;               // stored at terminals for direct collection
+}
+
+List<String> findWords(char[][] board, String[] words) {
+    Trie root = new Trie();
+    for (String w : words) {
+        Trie node = root;
+        for (char c : w.toCharArray()) {
+            int i = c - 'a';
+            if (node.next[i] == null) node.next[i] = new Trie();
+            node = node.next[i];
+        }
+        node.word = w;
+    }
+    List<String> res = new ArrayList<>();
+    for (int r = 0; r < board.length; r++)
+        for (int c = 0; c < board[0].length; c++)
+            dfs(board, r, c, root, res);
+    return res;
+}
+
+void dfs(char[][] b, int r, int c, Trie node, List<String> res) {
+    if (r < 0 || r >= b.length || c < 0 || c >= b[0].length) return;
+    char ch = b[r][c];
+    if (ch == '#' || node.next[ch - 'a'] == null) return;
+    node = node.next[ch - 'a'];
+    if (node.word != null) { res.add(node.word); node.word = null; }   // dedupe
+    b[r][c] = '#';
+    dfs(b, r+1, c, node, res);
+    dfs(b, r-1, c, node, res);
+    dfs(b, r, c+1, node, res);
+    dfs(b, r, c-1, node, res);
+    b[r][c] = ch;
+}
+```
+
+**Complexity:** O(m · n · 4^L) where L is longest word. Dictionary-size factor eliminated — the trie prunes.
+
+**Interview commentary:**
+- *"Brute force is O(k · 4^L) — for 10⁴ words it TLEs."*
+- *"Trie shares prefixes so one board DFS finds all words simultaneously. The trie prunes any branch not represented in the dictionary."*
+- *"Store `word` at the terminal instead of a boolean — makes collection O(1). Set to null after collecting to avoid duplicates."*
+- *"Standard mark-unmark backtracking on the board; the trie navigation is separate."*
+
+### Approach 3 — Trie + prune empty branches
+
+Optimize by removing trie nodes after all words in that subtree are found. Ensures the trie shrinks as we work, so later cells have less to explore.
+
+Marginal improvement — mentioned as a follow-up in interviews, rarely coded.
+
+### Complexity ladder
+
+| Approach | Time | Space | When |
+|---|---|---|---|
+| DFS per word | O(k · m · n · 4^L) | O(L) | Reference / k ≤ 10 |
+| **Trie + single DFS** | **O(m · n · 4^L)** | **O(dictionary chars)** | **Interview default** |
+| Trie with pruning | Slightly better in practice | O(dictionary chars) | Contest / large k |
+
 ---
 
 ## Word Search II (Trie + Backtracking) <span class="diff diff-h">Hard</span>

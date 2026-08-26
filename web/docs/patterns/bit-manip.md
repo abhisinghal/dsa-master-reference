@@ -7,17 +7,281 @@
 
 
 
-**Grokking arc:** The motivating problem is representing tiny sets, parity, or binary properties without bulky data structures. Brute force counts, scans, or stores everything. **Can we do better?** Treat bits as flags and use identities like XOR cancellation or lowest-set-bit removal to collapse work into O(1) operations per element.
+## Why bit manipulation exists — the story
 
-Bits let you treat an integer as a tiny array of on/off switches you can flip in O(1). That unlocks three things interviewers love: fast **set operations** (union, intersection, membership on up to ~30 elements with a single number), **parity/XOR tricks** (where duplicates cancel out to zero), and **compact state** for bitmask DP. A handful of identities do most of the heavy lifting — memorize them and a lot of "hard" bit problems collapse into one line. One Java landmine to internalize: `int` is 32-bit **signed**, so use `>>>` (not `>>`) when you want a logical shift, and switch to `1L << k` once `k` climbs past 30.
+You're implementing a game engine's collision system. Every game object has a set of tags: `enemy`, `friendly`, `flying`, `underwater`, `explosive`, `pickup`, ... twenty tags total. On every frame, for every object, you need to answer: *"Does this object have any of tags X, Y, or Z?"*
 
-### Recognize by
-- n ≤ 20 and you're enumerating subsets — a mask is the set
-- "single number" / "XOR of everything cancels pairs"
-- "count set bits" / "lowest set bit" / "is power of two?"
+The obvious approach: `HashSet<String>` for each object's tags, iterate over the query tags, `set.contains(tag)`. It works. It's readable. And for 10 objects it's fine.
 
-### When NOT to use it
-n &gt; ~20 and you're considering bitmask DP — 2ⁿ blows past 10⁶. Also, bit tricks that look clever but yield the same complexity as a `HashSet` add reading cost with no gain — reserve them for problems where the O(1) bitmap operation is genuinely a win.
+But your game has **100,000 active objects**, and you check tags **60 times per second**. That's 6 million tag queries per second, each doing 3 HashMap lookups (hash calc, bucket walk, string equals). Rough cost: 100 ns per query × 6M = **600 ms per frame** — 36× over your frame budget. The game stutters. Your engine ships slow.
+
+The fix is to represent each object's tags as **a single integer**, one bit per tag. `enemy` is bit 0, `friendly` bit 1, `flying` bit 2, ... A "has any of these tags" query becomes: `(object.tags & queryMask) != 0` — **one AND, one comparison, done in 1 nanosecond**. 100 ns → 1 ns is a 100× speedup, and now you have 594 ms of frame budget back. This is exactly how every AAA game engine (Unreal, Unity, Frostbite) implements object filtering, physics layer masks, and collision queries.
+
+Bit manipulation is what happens when you realize the CPU handles 32 or 64 bits in parallel for free. Any time your data fits in ≤ 64 flags, a single integer beats every fancy data structure. XOR cancels duplicates. `x & -x` isolates the lowest set bit. `x & (x-1)` clears it. These aren't tricks for showing off — they're production optimizations used in networking (IP filter masks), cryptography (SHA-256 avalanche), compilers (register allocation), and databases (bitmap indexes on columns with few distinct values).
+
+The catch: bit manipulation is *unforgiving*. Off-by-one on a shift and your program silently returns garbage. Confuse `>>` (arithmetic shift, preserves sign) with `>>>` (logical shift, zero-fills) in Java and negative numbers explode. Java's `int` is signed 32-bit, so `1 << 31` is `Integer.MIN_VALUE` — negative. The interview trap isn't the algorithm; it's the arithmetic subtlety.
+
+## The core idea — a few identities do all the work
+
+**Memorize these seven identities.** Half of the "clever" bit problems reduce to one of them.
+
+
+
+```java
+x & (x - 1)     // clear the lowest set bit           e.g. 0b1010 -> 0b1000
+x & -x          // isolate the lowest set bit         e.g. 0b1010 -> 0b0010
+x | (x + 1)     // set the lowest unset bit           e.g. 0b1010 -> 0b1011
+x ^ x           // 0  (any value XOR'd with itself)   fundamental to "find single" family
+x ^ 0           // x  (identity)
+(x >> k) & 1    // read bit k
+x | (1 << k)    // set bit k
+x & ~(1 << k)   // clear bit k
+x ^ (1 << k)    // toggle bit k
+```
+
+
+
+**Java landmines to internalize:**
+- `int` is signed 32-bit. `1 << 31` is `Integer.MIN_VALUE`, not 2^31. Use `1L << 31` for the positive value.
+- `>>` is *arithmetic* shift (preserves sign bit). `>>>` is *logical* shift (zero-fills). For unsigned bit counting or hashing, use `>>>`.
+- `~x` is bitwise complement, flips all 32 bits. `~5 == -6` (two's complement).
+- `Integer.bitCount(x)` uses a hardware `popcnt` instruction — vastly faster than looping.
+
+## When to use it — recognition signals
+
+- **n ≤ 20** and you're enumerating subsets — a mask *is* the set. Bitmask DP.
+- **"Single number that appears once, all others twice"** — XOR everything → duplicates cancel → result is the single. XOR-cancellation family.
+- **"Count set bits" / "lowest set bit" / "is power of two"** — bit tricks, one-liners.
+- **You need a compact set with fast union/intersection** — set as `int`; union is `|`, intersection is `&`, complement is `~`.
+- **Bitmask DP over subsets** — `dp[mask]` where mask indicates which items are used. Traveling Salesman, Assignment, "shortest superstring."
+- **Hash-like fingerprinting on small alphabets** — 26-bit mask for lowercase letters used, for "Maximum Product of Word Lengths" (two words have no common letters iff `mask1 & mask2 == 0`).
+- **Fast integer arithmetic simulations** — multiplying by 2^k is `<< k`; dividing is `>>> k`.
+- **Parity or checksum problems** — XOR is its own inverse, so parity computations are one line.
+
+## When NOT to use it
+
+- **n &gt; 25 or so** — 2^25 = 33M is barely tractable; 2^30 = 10^9 explodes. Bitmask DP over subsets is dead beyond that.
+- **The set has real semantic complexity** — bit manipulation shines when set membership is a clean boolean. If you need weights, counts, or ordering, use `HashMap` or `SortedSet`.
+- **Bit tricks that yield the same asymptotic complexity as a HashSet** — cleverness has readability cost. Only reach for the trick when the O(1) bitmap operation is genuinely a bottleneck win.
+- **You're solving a real cryptographic problem** — the identities here are the *building blocks*, not the algorithm. Roll your own crypto with these primitives and you'll ship a vulnerability.
+- **Cross-language / cross-platform code where signed/unsigned mismatch matters** — Java's signed shifts differ from C's, from JavaScript's, from Python's arbitrary-precision. Bit-level code doesn't port cleanly.
+- **A team member cannot read the code in 30 seconds** — comment aggressively or use a helper method. Bit tricks are a maintainability tax.
+
+## The templates
+
+### Template 1: Iterate all set bits (Kernighan's trick)
+
+
+
+```java
+int popcount(int x) {
+    int count = 0;
+    while (x != 0) {
+        x &= (x - 1);                       // clear lowest set bit
+        count++;
+    }
+    return count;
+}
+// or: Integer.bitCount(x) — hardware popcnt, ~1 ns
+```
+
+
+
+**Why Kernighan wins:** each iteration removes one bit, so loop runs exactly popcount(x) times — not 32 times. For sparse bitmasks (few 1s), this is faster than shifting-and-testing every bit.
+
+### Template 2: Iterate all subsets of a mask
+
+
+
+```java
+for (int sub = mask; sub != 0; sub = (sub - 1) & mask) {
+    // sub is now a non-empty subset of mask
+    process(sub);
+}
+// Total iterations across all masks: 3^n (each of n bits is either in mask-not-sub, in-sub, or absent from both)
+```
+
+
+
+**Trick:** `(sub - 1) & mask` skips values that would violate the subset property. Classic subset-DP over a mask.
+
+### Template 3: XOR cancellation (Single Number)
+
+
+
+```java
+int singleNumber(int[] nums) {
+    int x = 0;
+    for (int n : nums) x ^= n;              // duplicates cancel, single survives
+    return x;
+}
+```
+
+
+
+**Complexity:** O(n) time, O(1) space. Compare with hash-set: O(n) time, O(n) space. Bit trick is strictly better here.
+
+### Template 4: Bitmask DP (traveling salesman skeleton)
+
+
+
+```java
+int tsp(int[][] dist) {
+    int n = dist.length;
+    int[][] dp = new int[1 << n][n];         // dp[mask][last] = min cost to visit mask, ending at last
+    for (int[] row : dp) Arrays.fill(row, Integer.MAX_VALUE / 2);
+    dp[1][0] = 0;                             // start at city 0
+    for (int mask = 1; mask < (1 << n); mask++)
+        for (int last = 0; last < n; last++) {
+            if ((mask & (1 << last)) == 0 || dp[mask][last] == Integer.MAX_VALUE / 2) continue;
+            for (int next = 0; next < n; next++)
+                if ((mask & (1 << next)) == 0) {
+                    int newMask = mask | (1 << next);
+                    dp[newMask][next] = Math.min(dp[newMask][next], dp[mask][last] + dist[last][next]);
+                }
+        }
+    int best = Integer.MAX_VALUE;
+    for (int last = 1; last < n; last++)
+        best = Math.min(best, dp[(1 << n) - 1][last] + dist[last][0]);   // return to start
+    return best;
+}
+```
+
+
+
+**Complexity:** O(2^n · n^2) time, O(2^n · n) space. For n ≤ 20, tractable.
+
+### Complexity summary
+
+| Operation | Time | Space |
+|---|---|---|
+| Read/set/clear/toggle bit | O(1) | O(1) |
+| Popcount (via Kernighan) | O(popcount) | O(1) |
+| Popcount (hardware) | O(1) | O(1) |
+| Iterate subsets of mask | O(2^popcount) per mask | O(1) |
+| Bitmask DP (TSP-style) | O(2^n · n^2) | O(2^n · n) |
+| XOR-cancellation | O(n) | O(1) |
+
+## Traps & gotchas — the 5 that fail candidates on interview day
+
+<Callout kind="trap" title="Trap 1 — Signed vs. unsigned shift.">
+
+In Java, `>>` preserves the sign bit — for negative numbers, `-1 >> 1 == -1` (fills with 1s). `>>>` zero-fills — `-1 >>> 1 == Integer.MAX_VALUE`. For bit counting on 32-bit ints of arbitrary sign, always use `>>>`. **Rule: if in doubt, use `>>>`.**
+
+</Callout>
+
+<Callout kind="trap" title="Trap 2 — `1 &lt;&lt; 31` overflow.">
+
+`int` is signed 32-bit, so `1 << 31` is `Integer.MIN_VALUE == -2147483648`. If you meant "the value 2^31 = 2147483648," use `1L << 31`. **Rule: if the shift result might reach or exceed bit 31, use `long`.**
+
+</Callout>
+
+<Callout kind="trap" title="Trap 3 — Wrong precedence of `&` vs. `==`.">
+
+`if (x & mask == 0)` parses as `if (x & (mask == 0))` — checking whether `mask == 0` gives boolean 0, then AND-ing with `x`, then implicit conversion. Almost never what you want. **Rule: always parenthesize: `if ((x & mask) == 0)`.**
+
+</Callout>
+
+<Callout kind="trap" title="Trap 4 — Iterating all 32 bits when the value is sparse.">
+
+`for (int i = 0; i < 32; i++) if ((x >> i) & 1)` is O(32) regardless of the popcount. `while (x != 0) { x &= x - 1; count++; }` is O(popcount) — sometimes 1 iteration. **Rule: use Kernighan's trick when iteration count depends on popcount.**
+
+</Callout>
+
+<Callout kind="trap" title="Trap 5 — Assuming XOR undoes any operation.">
+
+XOR undoes XOR (`x ^ y ^ y == x`), but doesn't undo AND or OR. Candidates sometimes write `x = x ^ mask` when they mean `x = x & ~mask`. **Rule: be explicit about the operation: `set = |`, `clear = & ~`, `toggle = ^`.**
+
+</Callout>
+
+## History — Kernighan's popcount trick (1988) and popcnt hardware (2000)
+
+The bit-clearing trick `x & (x - 1)` was popularized by **Brian Kernighan** in his 1988 book *The C Programming Language* (2nd ed., co-authored with Dennis Ritchie). The trick appears in an exercise: count the number of 1-bits in an integer *in time proportional to the number of 1-bits*, not the number of bits. It's still the fastest software approach on architectures without native popcount.
+
+In **2000**, Intel added the `popcnt` instruction as part of SSE4.2 — a single-cycle hardware popcount. AMD followed in 2006. Java's `Integer.bitCount()` compiles to this instruction on modern JVMs, making bit counting effectively free. Every LLVM-compiled bit-heavy algorithm (Bloom filter, geohash, HyperLogLog) uses it.
+
+**Cryptography** has always been the largest consumer of bit tricks: SHA-256 mixes bits via 64 rounds of XOR, AND, OR, rotates, and additions. AES uses `xtime` — a specific `<< 1 XOR 0x1b` operation — to walk finite-field elements. In the compiler world, **register allocation** uses bitmask interference graphs to decide which variables can share a register.
+
+Google's **Roaring Bitmap** (2013) is a compressed bitmap format used in Apache Lucene, Elasticsearch, Druid, Spark, and Snowflake for indexing sparse boolean columns. It combines the ideas from this chapter — bit tricks, bitmask iteration, popcount — into a real production data structure that indexes trillion-row datasets.
+
+## Canonical problem walkthrough — Single Number
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/single-number/)): Given a non-empty array of integers where every element appears **twice** except for one, find that single one. Solve in linear time using constant extra space.
+
+### Approach 1 — HashSet
+
+Track seen elements; anything already there gets removed. Whatever remains is the single.
+
+
+
+```java
+int singleNumberSet(int[] nums) {
+    Set<Integer> seen = new HashSet<>();
+    for (int n : nums) {
+        if (!seen.add(n)) seen.remove(n);
+    }
+    return seen.iterator().next();
+}
+```
+
+
+
+**Complexity:** O(n) time, O(n) space. Violates the "constant space" constraint but is correct.
+
+### Approach 2 — Sort and scan
+
+Sort. Adjacent duplicates flank the single number.
+
+
+
+```java
+int singleNumberSort(int[] nums) {
+    Arrays.sort(nums);
+    for (int i = 0; i < nums.length - 1; i += 2) {
+        if (nums[i] != nums[i + 1]) return nums[i];
+    }
+    return nums[nums.length - 1];
+}
+```
+
+
+
+**Complexity:** O(n log n) time, O(1) space if in-place sort. Violates the "linear time" constraint.
+
+### Approach 3 — XOR cancellation (the interview answer)
+
+Since `x ^ x == 0` and XOR is associative and commutative, XORing every number in the array cancels all pairs. What remains is the single.
+
+
+
+```java
+int singleNumber(int[] nums) {
+    int x = 0;
+    for (int n : nums) x ^= n;
+    return x;
+}
+```
+
+
+
+**Complexity:** O(n) time, O(1) space. Meets both constraints. **One loop, one line.**
+
+**Interview commentary:**
+- *"HashSet is O(n) time but O(n) space — doesn't meet the constraint."*
+- *"Sort-and-scan is O(1) space but O(n log n) time — also fails."*
+- *"XOR-cancellation: since `x ^ x = 0` and XOR is commutative, XORing everything leaves only the single element. One pass, one line, both constraints met."*
+
+### Complexity ladder
+
+| Approach | Time | Space | When |
+|---|---|---|---|
+| HashSet | O(n) | O(n) | Violates constant-space constraint |
+| Sort + scan | O(n log n) | O(1) | Violates linear-time constraint |
+| **XOR cancellation** | **O(n)** | **O(1)** | **Interview default** |
+
+---
+
+**Grokking arc:** The motivating problem is representing tiny sets, parity, or binary properties without bulky data structures.
 
 ---
 

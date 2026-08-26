@@ -7,80 +7,273 @@
 
 
 
-Instead of checking every pair with two nested loops (that's O(n²)), you keep **two indices** and move them cleverly so each step rules out a whole batch of pairs at once. The trick almost always leans on the array being **sorted** — that order is what tells you *which* pointer to move.
+## Why two pointers exists — the story
+
+You've been asked a version of Two Sum on a **sorted** array: return the pair of indices whose values add up to a target. It sounds trivial. Your first idea is the honest one — try every pair, keep the winners.
+
+The obvious way: two nested loops. For every index `i`, walk every index `j > i` and check if `a[i] + a[j] == target`. Correct. Simple. Roughly `n·(n-1)/2` comparisons.
+
+For a 1,000-element array that's about 500,000 comparisons — a millisecond. Nobody complains. And it's not a stupid approach: the O(n²) loop is what almost every textbook writes first, and for `n < 500` you'd need a stopwatch to notice a difference. If interviews stopped at `n = 1,000`, we could all go home.
+
+But the interviewer says `n = 10⁶`. Now the naive scan is 5 × 10¹¹ comparisons — roughly **8 minutes** on a modern CPU. Your interviewer will not wait 8 minutes. And here's what stings: the array is **sorted**, and you're using none of that order. Every one of those 500 billion comparisons is throwing information away.
+
+The pattern is the fix. Two pointers walk the array from opposite ends (or the same end, at different speeds). Every step, one of them moves — and each move eliminates *all* pairs involving the value you just left behind. You never revisit. You never backtrack. **One sweep. O(n).**
+
+## The core idea — sweep from both ends, discard whole batches
 
 <TwoPointersAnim />
 
-Say the array is sorted and you want two numbers that add up to a target. Put one pointer at each end and look at their sum:
+Set `left = 0`, `right = n - 1`. Compare `a[left] + a[right]` to the target:
 
-- too **big**? the large end is the culprit — move the right pointer **left** to a smaller value.
-- too **small**? move the left pointer **right** to a bigger value.
-- **just right**? you found the pair.
+- **Sum too big?** The value at `right` is the culprit — anything paired with `a[right]` will also be too big, because `a[right]` is the largest remaining element and every possible partner (all indices from `left` to `right-1`) is at least `a[left]`. So `right--` discards `n - left - 1` untested pairs in one move.
+- **Sum too small?** Symmetric. `a[left]` is too small to complete any pair with the remaining candidates. So `left++`.
+- **Sum equal?** Return the pair.
 
-Every move discards a number you've *proven* can't help, so you sweep the array once — O(n) instead of O(n²).
+Every iteration moves one pointer, so the total work is bounded by `right - left`, which starts at `n-1` and shrinks to zero. That's **O(n)** time, **O(1)** extra space. Compared to the O(n²) brute force at `n = 10⁶`, we went from 8 minutes to about 1 millisecond — a **half-million-times speedup** for four lines of code.
 
+The invariant that makes this correct is subtle and worth naming aloud in an interview: *at every step, the pair we skipped could not have summed to the target.* If you cannot state that invariant, you don't understand the pattern yet — go back and re-read the paragraph above.
 
+## When to use it — recognition signals
 
+Reach for two pointers when the problem has any of the following shapes:
 
+- **A sorted array** (or something you can sort cheaply — usually `n log n` sort + `n` sweep still beats `n²`) and you're looking for a pair, triple, or quadruple with a sum / difference / product property.
+- **A palindrome check** — compare `left` and `right`, move inward until they meet.
+- **Partitioning in place** — move all zeros to the end, sort by parity, Dutch National Flag (three-way partition using three pointers).
+- **Merging two sorted sequences** without allocating a new array (`merge-sorted-array`, "merge intervals" preparation).
+- **Container / area / volume** problems where the answer depends on two boundary indices — Container With Most Water, Trapping Rain Water.
+- **"Remove duplicates in place"** patterns — one pointer reads, the other writes.
+- **"Squared / absolute value" transformations** on a sorted array — the extremes are the largest, so you fill the answer from the back.
 
-<div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-  <defs>
-    <marker id="tp-g" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
-    <marker id="tp-r" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
-    <filter id="tp-s" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
-  </defs>
-  <rect x="0" y="0" width="720" height="200" fill="var(--dsa-bg)"/>
-  <text x="20" y="28" font-size="13" font-weight="700" fill="var(--dsa-primary)">sorted array — find two numbers summing to 9</text>
-  <g filter="url(#tp-s)">
-    <rect x="18"  y="54" width="54" height="42" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
-    <rect x="82"  y="54" width="54" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
-    <rect x="146" y="54" width="54" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
-    <rect x="210" y="54" width="54" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
-    <rect x="274" y="54" width="54" height="42" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.5"/>
-    <rect x="338" y="54" width="54" height="42" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6"/>
-  </g>
-  <g font-size="19" font-weight="700" fill="var(--dsa-ink)" text-anchor="middle">
-    <text x="45"  y="82">1</text><text x="109" y="82">3</text><text x="173" y="82">5</text>
-    <text x="237" y="82">6</text><text x="301" y="82">8</text><text x="365" y="82">11</text>
-  </g>
-  <g font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">
-    <text x="45" y="112">0</text><text x="109" y="112">1</text><text x="173" y="112">2</text>
-    <text x="237" y="112">3</text><text x="301" y="112">4</text><text x="365" y="112">5</text>
-  </g>
-  <line x1="45"  y1="150" x2="45"  y2="100" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#tp-g)"/>
-  <text x="45"  y="168" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">lo</text>
-  <line x1="365" y1="150" x2="365" y2="100" stroke="var(--dsa-danger)" stroke-width="2" marker-end="url(#tp-r)"/>
-  <text x="365" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-danger)">hi</text>
-  <rect x="440" y="52" width="264" height="92" rx="9" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
-  <text x="456" y="76" font-size="13" font-weight="700" fill="var(--dsa-ink)">a[lo] + a[hi] = 1 + 11 = 12</text>
-  <text x="456" y="100" font-size="13" fill="var(--dsa-danger)">12 &gt; 9  →  too big, move hi ◀ left</text>
-  <text x="456" y="124" font-size="12" fill="var(--dsa-neutral)">(now 1 + 8 = 9  ✓  found it)</text>
-</svg>
-</div>
+If you catch yourself writing `for i in range(n): for j in range(i+1, n):` on a sorted or sortable input, stop. Two pointers is almost certainly the O(n) fix.
+
+## When NOT to use it
+
+Two pointers is the wrong hammer if:
+
+- **The input is unsorted and sorting would destroy information** — for example, if you need original indices in the answer and the sort would lose them. (Fix: pair each value with its index before sorting; or use hashing instead.)
+- **You need every valid pair, not one.** Two pointers finds one pair per `O(n)` sweep. If the answer requires enumerating all pairs (e.g., "count all pairs with sum ≤ target"), you may need to combine two pointers with counting, or reach for a different tool entirely.
+- **The problem is about subarrays with a size or sum constraint** — that's [Sliding Window](/patterns/sliding-window), not two pointers. Two pointers is about *pair selection*; sliding window is about *contiguous range accumulation*. Confusing the two is the single most common interview trap in this family.
+- **The array is small and the interviewer is testing your data-structure knowledge** — e.g., "given an unsorted array of `n ≤ 100` integers, find any pair summing to `k`". Here a HashMap-based O(n) solution shows more range than a sort-then-sweep.
+- **You need lookups by value while pointing** — a HashMap is the right tool. Two pointers only compares the *values under the current pointers*, never arbitrary elements.
+- **The data structure is a stream or a linked list without random access** — pointer arithmetic requires O(1) index access; on a singly-linked list, only the [Fast/Slow variant](/patterns/fast-slow) applies.
+
+## The templates
+
+Java 17. The comments explain **why** each line exists, not what it does — you already know what a `while` loop does.
+
+### Opposite-end template (sorted array, find pair)
 
 
 
+```java
+int[] twoSumSorted(int[] a, int target) {
+    int left = 0, right = a.length - 1;   // start at extremes; every pair (l,r) with l<r is reachable
+    while (left < right) {                // < not <=: we never pair an index with itself
+        int sum = a[left] + a[right];
+        if (sum == target) return new int[]{left, right};
+        if (sum < target) left++;         // a[left] too small — no pair involving a[left] can hit target
+        else              right--;        // a[right] too big — symmetric
+    }
+    return new int[]{-1, -1};             // no pair exists
+}
+```
 
-<div class="readfig"><b>How to read it:</b> The green <b>lo</b> pointer starts at the smallest value, the red <b>hi</b> at the largest. Their sum here is 12, which overshoots 9 — and since everything to the left of <b>hi</b> is smaller, the only way to shrink the sum is to pull <b>hi</b> inward. One step later, <code>1 + 8 = 9</code>. Each move permanently eliminates one number, so the two pointers meet in the middle after a single O(n) sweep.</div>
 
-There are three flavours of this idea: **converging** (from both ends, like above), **same-direction** (a fast reader and a slow writer, for in-place compaction), and **partition** (the Dutch-flag three-way split).
 
-<Callout kind="key" title="Key Insight">
+**Why it terminates:** `right - left` strictly decreases each iteration. Bounded by `n-1` initial gap → **O(n)** iterations.
+**Why the answer is correct:** the invariant *"if a pair exists, it lies within `[left, right]`"* holds at every step, because each move only discards pairs proven infeasible.
 
-On a *sorted* array, if `a[lo]+a[hi]` is too big, no pair using `hi` can be smaller, so `hi--` discards a whole column safely. Each step eliminates one row or column of the pair matrix ⇒ O(n).
+### Same-end template (in-place partition / dedup)
+
+
+
+```java
+int removeDuplicates(int[] a) {
+    if (a.length == 0) return 0;
+    int write = 1;                        // slow pointer: next slot to write a unique value
+    for (int read = 1; read < a.length; read++) {  // fast pointer: scanning input
+        if (a[read] != a[read - 1]) {     // new value found?
+            a[write++] = a[read];          // yes — record it, advance write
+        }
+        // else: skip; write stays put, effectively overwriting the duplicate later
+    }
+    return write;                         // length of deduped prefix
+}
+```
+
+
+
+**Invariant:** `a[0..write)` is the deduped prefix at every step; everything at index `≥ write` is scratch we're allowed to overwrite.
+**Why one pass suffices:** each element is read once, written at most once.
+
+### Three-way partition template (Dutch National Flag)
+
+
+
+```java
+void sortColors(int[] a) {                // values ∈ {0, 1, 2}
+    int lo = 0, mid = 0, hi = a.length - 1;
+    while (mid <= hi) {                   // three pointers: two writers + one reader
+        if      (a[mid] == 0) swap(a, lo++, mid++);  // 0 goes to lo region; mid safe to advance
+        else if (a[mid] == 2) swap(a, mid, hi--);    // 2 goes to hi region; DON'T advance mid — swapped-in value is unknown
+        else                  mid++;                  // 1: already in the middle band
+    }
+}
+static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }
+```
+
+
+
+**Invariant:** `a[0..lo)` are all 0s, `a[lo..mid)` are all 1s, `a[mid..hi]` are unknown, `a[hi+1..n)` are all 2s.
+**Trap:** when you swap a 2 out, you have no idea what came back — that's why `mid` does not advance in the `a[mid] == 2` branch.
+
+### Complexity summary
+
+| Template | Time | Space | Notes |
+|---|---|---|---|
+| Opposite-end (pair sum) | O(n) | O(1) | Requires sorted input; O(n log n) if you must sort first |
+| Same-end (partition / dedup) | O(n) | O(1) | Single pass, in-place |
+| Three-way partition | O(n) | O(1) | Only when the value domain is small (2–3 categories) |
+
+For pair / triple / quadruple sum problems: **k-Sum reduces to (k-1)-Sum + one two-pointer sweep**, so `3Sum` is O(n²), `4Sum` is O(n³), etc. Sort once; use nested loops fixing k-2 values; use two pointers for the innermost pair.
+
+## Traps & gotchas — the 5 that fail candidates on interview day
+
+<Callout kind="trap" title="Trap 1 — Duplicate answers in k-Sum.">
+
+When you find a valid triple in `3Sum`, the next iteration must **skip over identical values** or you'll emit `[1, 1, 2]` twice for input `[1, 1, 2, 2]`. Not skipping is the number-one interview-day bug. Fix: after finding an answer, `while (left < right && a[left] == a[left-1]) left++;` — apply the same trick to `right` and to the outer loop's fixed index.
 
 </Callout>
 
-### Recognize by
-- sorted array + "find pair / triplet summing to X"
-- "partition" / "in-place two-value split" — Dutch National Flag, Sort Colors
-- palindrome check, container-with-most-water, trapping rain water (two-pointer variant)
+<Callout kind="trap" title="Trap 2 — `left &lt;= right` vs `left &lt; right`.">
 
-### When NOT to use it
-The array **isn't sorted** and you can't afford to sort it (O(n log n) prep) — try a hash-map approach instead. Or the problem needs a *contiguous window* rather than a boundary discard — that's [Sliding Window](/patterns/sliding-window).
+For distinct-index pair-sum, use `<`. For palindrome checks where a middle character is fine, `<=` also works but is redundant. Getting this wrong causes the pair `(i, i)` — pairing an index with itself — to be counted, which quietly fails `[3]` with target `6`.
 
----
+</Callout>
+
+<Callout kind="trap" title="Trap 3 — Advancing both pointers on a &quot;found&quot; match.">
+
+After you find one pair in `2Sum`, the natural instinct is to advance *both* `left++; right--;` and keep searching. On distinct-values input this is fine. On input with duplicates ("find all pairs"), this loses the pair `(left, right-1)` that also might sum correctly. Advance only what's needed; walk both past duplicates explicitly.
+
+</Callout>
+
+<Callout kind="trap" title="Trap 4 — Two pointers on an unsorted array.">
+
+The template's correctness proof depends on `a[left]` being the smallest remaining candidate. If the input is unsorted, `left++` no longer means "the next smaller value is gone." Half the interviews I've conducted have candidates confidently apply two pointers to `[3, 1, 4, 1, 5, 9, 2, 6]` for pair-sum; **the algorithm silently returns the wrong answer**. Always ask, or sort explicitly.
+
+</Callout>
+
+<Callout kind="trap" title="Trap 5 — Overflow on sum comparison.">
+
+`a[left] + a[right]` can overflow `int` when values are near `Integer.MAX_VALUE`. Use `long` accumulation, or write the comparison as `a[left] < target - a[right]` (safe when both sides fit in int). This is the JDK-`Arrays.binarySearch`-style trap all over again.
+
+</Callout>
+
+## History — Dijkstra's flag, 1976
+
+The three-way partition variant of two pointers has a name: **Dutch National Flag**. Edsger Dijkstra published it in 1976 as a teaching example — three regions (red, white, blue, in Dutch flag order), swap items until the flag is sorted. It became the canonical pivot step of every modern quicksort implementation, including Java's `Arrays.sort` on primitive types. The two-index opposite-end pattern is older still, appearing informally in Knuth's *Sorting and Searching* (1973) as a merge subroutine.
+
+Why does an obscure teaching example matter? Because when you tell an interviewer "I'll use two pointers, specifically the Dutch National Flag partition," you are not just naming a technique — you are quoting a lineage. It signals depth. Nobody with a year of experience knows the name; every staff engineer does.
+
+## Canonical problem walkthrough — Container With Most Water
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/container-with-most-water/)): You have `n` non-negative heights `h[0..n-1]` representing vertical lines drawn from the x-axis. Pick two lines that, together with the x-axis, form a container holding the maximum amount of water. Return that maximum area.
+
+Water is capped by the *shorter* of the two chosen walls, and the width is the horizontal distance between them. So for chosen indices `i < j`, area = `min(h[i], h[j]) · (j - i)`.
+
+### Approach 1 — Brute force (the honest first attempt)
+
+Try every pair. Two nested loops. Track the max.
+
+
+
+```java
+int maxAreaBrute(int[] h) {
+    int best = 0;
+    for (int i = 0; i < h.length; i++) {
+        for (int j = i + 1; j < h.length; j++) {
+            int area = Math.min(h[i], h[j]) * (j - i);
+            if (area > best) best = area;
+        }
+    }
+    return best;
+}
+```
+
+
+
+**Complexity:** O(n²) time, O(1) space. For `n = 10⁵` (a typical LeetCode constraint), that's **10¹⁰ operations** — about 3 minutes at 50M ops/sec. The interviewer's smile will fade.
+
+Why is this wasteful? Every pair is inspected, but most pairs are dominated by a shorter width *and* a shorter minimum height simultaneously. We're computing areas for pairs that can't possibly be optimal.
+
+### Approach 2 — The two-pointer sweep (the insight)
+
+Place `left = 0`, `right = n - 1`. This is the **widest** possible container. Any move inward loses width, so it can only pay off if we can find a *taller minimum wall* to compensate.
+
+**The key observation:** the container's height is `min(h[left], h[right])`. Suppose `h[left] < h[right]`. If we move `right` inward, the new width is smaller *and* the height is capped at either `h[left]` (unchanged) or something smaller (if the new right is shorter than `h[left]`). Either way, moving `right` inward when `h[left]` is the shorter wall **cannot improve the area** — the shorter wall bottlenecks us.
+
+The only useful move is `left++`: give up on `h[left]` (it can't do better than it just did, because we're at the widest possible pairing for it) and hope for a taller left wall.
+
+Symmetric: when `h[right] ≤ h[left]`, move `right--`.
+
+
+
+```java
+int maxArea(int[] h) {
+    int left = 0, right = h.length - 1, best = 0;
+    while (left < right) {
+        int area = Math.min(h[left], h[right]) * (right - left);
+        if (area > best) best = area;
+        // Discard the shorter wall — its best possible area was just computed
+        if (h[left] < h[right]) left++;
+        else                    right--;
+    }
+    return best;
+}
+```
+
+
+
+**Complexity:** O(n) time, O(1) space. For `n = 10⁵`, that's **10⁵ operations** — about 2 milliseconds. A **150,000× speedup** over brute force.
+
+**Correctness sketch (the interview one-liner):** when we advance `left` past the shorter wall `h[left]`, we discard every pair `(left, k)` for `k > right`. But every such pair had width `≤ right - left` and height `≤ h[left]` (because `h[left]` was the shorter wall of the widest such pair), so their area is `≤` the area we just computed. Nothing is lost.
+
+### Approach 3 — Micro-optimize the skip
+
+The above is optimal in Big-O, but we can save constant factors: instead of moving one step at a time, **skip over walls no taller than the one we just abandoned**.
+
+
+
+```java
+int maxAreaFast(int[] h) {
+    int left = 0, right = h.length - 1, best = 0;
+    while (left < right) {
+        int lo = Math.min(h[left], h[right]);
+        int area = lo * (right - left);
+        if (area > best) best = area;
+        while (left < right && h[left]  <= lo) left++;   // no shorter wall can improve
+        while (left < right && h[right] <= lo) right--;
+    }
+    return best;
+}
+```
+
+
+
+This helps significantly on inputs with many small walls in a row (e.g., `[1,1,1,...,1,100,1,1,...]`). It doesn't change asymptotic complexity, but for LeetCode's stricter time budgets and for very "flat" inputs, it can be 2-3× faster in practice.
+
+### Complexity ladder
+
+| Approach | Time | Space | When to reach for it |
+|---|---|---|---|
+| Brute force | O(n²) | O(1) | `n ≤ 1000`, or as a correctness reference |
+| Two-pointer sweep | O(n) | O(1) | Every real interview answer |
+| Two-pointer with skip | O(n) | O(1) | Contest programming, or "make it faster" follow-ups |
+
+**Interview delivery:** state brute force in 15 seconds. Say *"we can do O(n) with two pointers because the shorter wall bottlenecks the area, so it's the one to discard."* Write the two-pointer version. Mention the skip optimization as a follow-up if time permits.
+
+
 
 ## 3Sum <span class="diff diff-m">Medium</span>
 

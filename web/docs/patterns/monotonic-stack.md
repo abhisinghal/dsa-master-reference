@@ -7,17 +7,288 @@
 
 
 
-Imagine a brute-force solution for "next warmer day": for each day, scan every day to its right until you find a warmer one. That is simple, but it re-checks the same unresolved days again and again — O(n²) in the worst case.
+## Why monotonic stack exists — the story
 
-Can we do better? Yes: keep only the days that are still waiting for an answer. When a warmer day arrives, it resolves all colder days sitting on top of that waiting pile. That pile is the pattern.
+You're building a weather app. Users want to know: *"For each day, how many days until the next warmer day?"* The array is 365 daily temperatures. For January 1st, when was the first day that got warmer than January 1st?
 
-The star technique of this family is the **monotonic stack**: a stack you deliberately keep in sorted order, so that every time you pop something you've just answered a *"nearest bigger/smaller element"* question for it — turning an O(n²) scan into a single O(n) pass.
+The honest brute force: for each day `i`, scan forward from `i+1` looking for a warmer day. Return that gap. Simple, correct.
+
+For 365 days that's about 66,000 comparisons — fast enough that nobody notices. For a decade of hourly temperature data (`n = 87,600`), you're at `4 × 10⁹` comparisons — **20 seconds** on a modern CPU. Users close the app. And the wasted work is embarrassing: you keep re-scanning the same cold January stretches, once for each earlier day that hasn't been resolved yet.
+
+The insight is this: when a warmer day finally arrives, it **resolves every colder day that's still waiting.** They should be "answered" and forgotten. If we maintain a stack of *"days still waiting for an answer, in decreasing temperature order,"* each new day pops off every day it's warmer than — each pop answers exactly one query. Each day is pushed once and popped at most once. **Total: O(n).** For the decade of hourly data: 20 seconds → **1 millisecond.** A 20,000-times speedup because we track only what's unresolved.
+
+This is the **monotonic stack**: a stack you deliberately keep in sorted (monotonic) order, so that every time you *pop* something, you've just answered a "nearest bigger/smaller element" question about it. It's one of the most under-appreciated interview techniques — half of the "Hard" LeetCode array problems collapse to monotonic stack once you spot the pattern.
+
+## The core idea — the stack holds unresolved elements only
+
+<MonoStackAnim />
+
+Every problem in this family has the same three-part shape:
+
+1. **What do we push?** The current element (or its index). Almost always the index — you'll need it for distance / range queries.
+2. **What triggers a pop?** A monotonicity violation. If the stack must stay decreasing and the incoming element is larger, pop until it's decreasing again.
+3. **What does each pop compute?** The answer for the popped element — its "next greater," or "next smaller," or "span," or "area."
+
+The stack at any moment holds the **unresolved suffix** of what we've seen. A "resolved" element is one whose answer we've already recorded and forgotten. Every element enters the stack exactly once, leaves exactly once — total work is O(n) amortized, even though the inner `while` loop can pop many elements at a step.
 
 <Callout kind="key" title="Key Insight">
 
 Whenever a problem asks for the *nearest* element that is greater/smaller (to the left or right), or for spans/rectangles bounded by such elements, a monotonic stack turns an O(n²) scan into O(n): each index is pushed and popped exactly once.
 
 </Callout>
+
+## When to use it — recognition signals
+
+Reach for a monotonic stack when the problem says:
+
+- **"Next greater element"** / "next smaller element" / "previous greater" / "previous smaller" — any variant of the four directions. Daily Temperatures, Next Greater Element I / II / III.
+- **"Largest rectangle" / "maximal rectangle in a histogram"** — the O(n) solution uses a monotonic increasing stack to find, for each bar, the widest strip it can dominate.
+- **"Trapping rain water"** — one clean formulation counts water on top of each popped bar.
+- **"Span" problems** — Online Stock Span, "how many consecutive days does today's price beat?"
+- **"Sum of subarray minimums / maximums"** — sum over all subarrays of the min or max, in O(n) via contribution counting with a monotonic stack.
+- **"Remove k digits to form the smallest number"** — greedy pop of increasing prefix to lock in a smaller lexicographic value.
+- **"Lexicographically smallest / largest sequence" after some operation** — often a monotonic stack greedy.
+- **Circular variants** — walk the array twice, size the stack for `2n - 1` iterations.
+
+If the problem asks about *the nearest X-satisfying element* or *a range bounded by extremes*, the answer is almost certainly a monotonic stack.
+
+## When NOT to use it
+
+- **You need the k-th greater / k-th smaller** — the stack only remembers unresolved elements, not history. Use a heap or a sorted structure.
+- **The array is sorted** — monotonic stack shines on *unsorted* input where you need to discover local extremes. On sorted input, plain scanning is cheaper.
+- **You need updates in the middle of the array** — the stack processes left-to-right in one pass. If elements change mid-processing, you need a segment tree instead.
+- **The "monotonic" comparison is on multiple fields** — a stack is one-dimensional. For "nearest element that is both taller and heavier," a 2D structure is needed.
+- **Range aggregate queries with unrestricted ranges** — sparse table, segment tree, or Fenwick tree.
+- **Very small n (n ≤ 100)** — brute force is simpler and equally fast in practice. Save monotonic stack for `n ≥ 1000`.
+
+## The templates
+
+### Template 1: Next Greater Element — decreasing stack
+
+Given `a[]`, return `res[]` where `res[i]` = the *next* index `j > i` with `a[j] > a[i]`, or `-1` if none.
+
+
+
+```java
+int[] nextGreater(int[] a) {
+    int n = a.length;
+    int[] res = new int[n];
+    Arrays.fill(res, -1);
+    Deque<Integer> stack = new ArrayDeque<>();      // stores INDICES, values decreasing
+    for (int i = 0; i < n; i++) {
+        // pop every earlier index whose value is beaten by a[i]
+        while (!stack.isEmpty() && a[stack.peek()] < a[i]) {
+            res[stack.pop()] = i;                    // answer found: a[i] is their next-greater
+        }
+        stack.push(i);                                // this index becomes unresolved
+    }
+    return res;
+}
+```
+
+
+
+**Invariant:** the stack holds indices whose `a[]` values are *strictly decreasing* from bottom to top; every index still on the stack has no next-greater found yet.
+**Complexity:** O(n) time (amortized — each index pushed and popped ≤ once), O(n) space.
+**Common variants:** flip `<` to `>` for next-smaller. Iterate right-to-left for previous-greater / previous-smaller.
+
+### Template 2: Largest Rectangle in Histogram — increasing stack
+
+For each bar `i` of height `h[i]`, find the widest strip where `h[i]` is the *minimum*. Then `area = h[i] × width`. Take the max over all bars.
+
+
+
+```java
+int largestRectangle(int[] h) {
+    int n = h.length, max = 0;
+    Deque<Integer> stack = new ArrayDeque<>();      // increasing heights
+    for (int i = 0; i <= n; i++) {
+        int cur = (i == n) ? 0 : h[i];               // sentinel: flush stack at end
+        while (!stack.isEmpty() && h[stack.peek()] > cur) {
+            int top = stack.pop();
+            int left = stack.isEmpty() ? -1 : stack.peek();   // previous smaller (or -1)
+            int width = i - left - 1;                          // exclusive width
+            max = Math.max(max, h[top] * width);
+        }
+        stack.push(i);
+    }
+    return max;
+}
+```
+
+
+
+**Invariant:** heights on the stack are strictly increasing from bottom to top; when we pop, the popped bar's right boundary is the current index, its left boundary is the new stack top.
+**Trap:** the sentinel `i == n → cur = 0` is essential — otherwise bars remaining on the stack at the end are never processed.
+
+### Template 3: Circular array — walk twice
+
+For "Next Greater Element II" (circular array), iterate `2n - 1` times but only push during the first `n`.
+
+
+
+```java
+int[] nextGreaterCircular(int[] a) {
+    int n = a.length;
+    int[] res = new int[n];
+    Arrays.fill(res, -1);
+    Deque<Integer> stack = new ArrayDeque<>();
+    for (int i = 0; i < 2 * n - 1; i++) {
+        int idx = i % n;
+        while (!stack.isEmpty() && a[stack.peek()] < a[idx]) {
+            res[stack.pop()] = idx;
+        }
+        if (i < n) stack.push(idx);                  // only push in the first pass
+    }
+    return res;
+}
+```
+
+
+
+**Why it works:** the second pass simulates wrapping; the "only push in first pass" rule prevents infinite loops and double-answers.
+
+### Complexity summary
+
+| Template | Time | Space | Notes |
+|---|---|---|---|
+| Next greater / smaller | O(n) | O(n) | Amortized; each index visited ≤ twice |
+| Largest rectangle | O(n) | O(n) | Sentinel value needed to flush at end |
+| Circular variant | O(n) | O(n) | Iterate 2n - 1, push only first pass |
+
+## Traps & gotchas — the 5 that fail candidates on interview day
+
+<Callout kind="trap" title="Trap 1 — Storing values instead of indices.">
+
+If the stack holds values, you can't compute distances or widths. Every real problem needs the index — the value can be recovered as `a[stack.peek()]`. **Rule: always push the index; look up the value on demand.**
+
+</Callout>
+
+<Callout kind="trap" title="Trap 2 — Wrong comparison direction (strict vs non-strict).">
+
+For "strictly next greater," use `<` inside the pop condition. For "next greater or equal," use `≤`. Getting this wrong on equal-value inputs (`[2, 2, 2]`) silently returns wrong answers. **Verify on paper with a `[2, 2, 2, 3]` input.**
+
+</Callout>
+
+<Callout kind="trap" title="Trap 3 — Forgetting the sentinel in histogram / rectangle problems.">
+
+After the main loop, bars still on the stack have no "right boundary" and their areas are never computed. Push a virtual bar of height 0 at index `n` — or handle the flush in a post-loop while. Missing this bug is nearly universal in candidates seeing the pattern for the first time.
+
+</Callout>
+
+<Callout kind="trap" title="Trap 4 — Not amortizing when analyzing complexity.">
+
+During interviews, candidates say "O(n²) because there's a while loop inside a for loop." Wrong. Each element is pushed once and popped at most once — total pops across all iterations of the outer loop is at most `n`. **Amortized O(n).** Say the word "amortized" out loud.
+
+</Callout>
+
+<Callout kind="trap" title="Trap 5 — Using `java.util.Stack`.">
+
+Java's `Stack` extends `Vector` and is synchronized (a legacy from 1996). For high-performance code, use `ArrayDeque` as a stack — 3-5× faster, no synchronization overhead. **Rule: `Deque<Integer> stack = new ArrayDeque<>()`, never `new Stack<>()`.**
+
+</Callout>
+
+## History — Nagao-Matsuyama, 1971
+
+The monotonic stack technique was first formalized by **Makoto Nagao and Takahiko Matsuyama** in a 1971 paper on **expression parsing** — specifically the shunting-yard algorithm's operator-precedence stack, where the stack is kept in decreasing order of precedence. The pattern generalized to array problems through the "largest rectangle in a histogram" algorithm (used in compiler dead-code elimination) and became an interview staple in the early 2000s.
+
+The pattern also underlies **online query structures** in competitive programming — the "Cartesian tree" data structure, which represents an array as a heap-ordered binary tree, can be built in O(n) using exactly this stack technique. Interviewers who ask about "amortized analysis on a stack-based algorithm" are almost always testing whether you understand *this* pattern.
+
+## Canonical problem walkthrough — Daily Temperatures
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/daily-temperatures/)): Given an array `temperatures` representing daily temperatures, return an array `answer` such that `answer[i]` is the *number of days* you have to wait after day `i` to get a warmer temperature. If there is no future warmer day, `answer[i] = 0`.
+
+### Approach 1 — Brute force
+
+For each day, scan forward until warmer.
+
+
+
+```java
+int[] dailyTemperaturesBrute(int[] t) {
+    int n = t.length;
+    int[] res = new int[n];
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (t[j] > t[i]) { res[i] = j - i; break; }
+        }
+    }
+    return res;
+}
+```
+
+
+
+**Complexity:** O(n²) time, O(1) space (excluding output). For `n = 10⁵`, that's 10¹⁰ ops — TLE.
+
+### Approach 2 — Monotonic decreasing stack (the interview answer)
+
+Walk left to right. Maintain a stack of unresolved days (whose warmer day hasn't been found yet), in decreasing order of temperature. Each new day pops off every earlier day it's warmer than — those days now know their answer.
+
+
+
+```java
+int[] dailyTemperatures(int[] t) {
+    int n = t.length;
+    int[] res = new int[n];
+    Deque<Integer> stack = new ArrayDeque<>();      // decreasing t[i] from bottom to top
+    for (int i = 0; i < n; i++) {
+        while (!stack.isEmpty() && t[stack.peek()] < t[i]) {
+            int j = stack.pop();
+            res[j] = i - j;                          // days waited
+        }
+        stack.push(i);
+    }
+    // Any indices remaining on the stack have res[j] = 0 (already zero-init'd)
+    return res;
+}
+```
+
+
+
+**Complexity:** O(n) time (amortized), O(n) space (stack + output).
+
+**Interview commentary:**
+- *"For each day, brute force is O(n²). I can do O(n) by tracking only the unresolved days."*
+- *"Maintain a stack of indices in decreasing temperature. When a new warmer day arrives, it resolves every unresolved day it's warmer than."*
+- *"Each index is pushed and popped at most once, so amortized O(n)."*
+- *"Days remaining on the stack at the end have no future warmer day — their answer stays 0."*
+
+### Approach 3 — Reverse iteration variant (equivalent)
+
+Walk right to left. For each day, pop off cooler days at the top of the stack (they can never be the next-warmer-day for anything to their left). The stack top after popping is the answer.
+
+
+
+```java
+int[] dailyTemperaturesReverse(int[] t) {
+    int n = t.length;
+    int[] res = new int[n];
+    Deque<Integer> stack = new ArrayDeque<>();
+    for (int i = n - 1; i >= 0; i--) {
+        while (!stack.isEmpty() && t[stack.peek()] <= t[i]) stack.pop();
+        res[i] = stack.isEmpty() ? 0 : stack.peek() - i;
+        stack.push(i);
+    }
+    return res;
+}
+```
+
+
+
+Same O(n) complexity. Pick whichever direction is more intuitive — both work.
+
+### Complexity ladder
+
+| Approach | Time | Space | When |
+|---|---|---|---|
+| Brute force | O(n²) | O(1) | Reference / n ≤ 500 |
+| **Forward monotonic stack** | **O(n)** | **O(n)** | **Interview default** |
+| Reverse monotonic stack | O(n) | O(n) | Equivalent; use if it reads cleaner |
+
+---
+
+
 
 
 

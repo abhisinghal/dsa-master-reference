@@ -57,6 +57,118 @@ return answer;
 
 Fill in `compareWorstFirst` based on what "worst among the winners" means. For k largest, the smallest value is worst, so Java's default min-heap works. For k smallest, the largest value is worst, so reverse the comparator. For k most frequent, the lowest frequency is worst, so order by `freq.get(x)`. The loop invariant is simple: after processing any prefix of the input, the heap contains the best `k` items from that prefix, or all items if fewer than `k` have appeared.
 
+## When NOT to use it
+
+- **You need the top k *in sorted order relative to each other*** — the heap doesn't guarantee internal order, only that the root is the worst-of-the-winners. Extract with successive polls if order matters.
+- **k is very close to n (say k = n/2)** — the heap approach becomes O(n log(n/2)) ≈ O(n log n), same as full sort. Just sort.
+- **You need to answer many top-k queries with different k on the same data** — use quickselect once to partition, or sort once and slice.
+- **Elements arrive as a stream and you need to remove arbitrary items later** — a plain heap can't remove non-root elements in O(log n). Use `TreeSet` or an indexed heap.
+- **k = 1** — you don't need a heap. Just track a running max / min with a scalar. Simpler, faster, no allocation.
+- **The comparator involves floating-point tolerance** — heap operations don't tolerate `NaN` or unstable comparators. Wrap in integer keys where possible.
+
+## Traps & gotchas — the 5 that fail candidates on interview day
+
+> [trap] **Trap 1 — Wrong heap polarity.** For k *largest*, use a **min**-heap (worst-of-winners at root). Candidates instinctively reach for max-heap and end up popping the wrong elements. Say the polarity rule aloud before writing: *"k largest → min-heap; k smallest → max-heap."*
+
+> [trap] **Trap 2 — Adding *then* checking, vs checking then adding.** The clean template is `offer(item); if (heap.size() > k) poll();`. Some candidates write `if (heap.size() < k) offer(item); else if (item beats root) { poll(); offer(item); }`. Both work but the second is bug-prone (need to compare item to root correctly). Prefer the first.
+
+> [trap] **Trap 3 — Using `Collections.reverseOrder()` on custom comparators.** For primitives it's fine: `new PriorityQueue<>(Collections.reverseOrder())` gives a max-heap of Integers. For custom classes, wrap the natural comparator: `new PriorityQueue<>((a, b) -> b.value - a.value)` — and beware `int` subtraction overflow when values span `Integer.MIN_VALUE`. Use `Integer.compare(b.value, a.value)`.
+
+> [trap] **Trap 4 — Building the answer in the wrong order.** After the loop, `poll()` returns the *worst* of the winners first. If the interviewer wants "top k in descending order", you'll need to reverse the extracted list — or use a max-heap from the start with size `n` and poll `k` times (O(n + k log n), often faster).
+
+> [trap] **Trap 5 — Autoboxing tax in hot code.** Java's `PriorityQueue<Integer>` boxes every int into an Integer. For `n = 10⁷`, that's 10⁷ heap allocations for the boxed keys alone. In performance-critical contexts, use a primitive heap (from Eclipse Collections or write your own on a `long[]`). Interviews rarely test this, but staff-level candidates should mention it.
+
+## History — Williams's heap, 1964
+
+The binary heap was invented by **J.W.J. Williams** in 1964 as the core data structure of **heapsort**. Williams's paper introduced both the heap-invariant maintenance operations (sift-up, sift-down) and the array-based tree representation using index arithmetic — parent at `(i-1)/2`, children at `2i+1` and `2i+2`. That representation lets a heap live entirely in a contiguous `int[]` with zero pointer overhead, which is why every language's standard library ships a heap-backed `PriorityQueue`.
+
+The **k-way merge** algorithm — used in every external sort since von Neumann's 1945 tape-sort memo — is built on the same heap idea, with the heap holding one live iterator per input stream. Modern implementations include Lucene's segment merging, DuckDB's external sort, and Kafka's log compaction.
+
+The specific Top-K-on-a-stream pattern was formalized in the **NIST Text REtrieval Conference (TREC)** benchmarks in the late 1990s as *"top-K retrieval,"* and later applied to trending / recommendation systems at Google, Facebook, and Twitter. Every "top trending topic" list you see is a Top-K heap in disguise.
+
+## Canonical problem walkthrough — K Closest Points to Origin
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/k-closest-points-to-origin/)): Given an array of points on a 2D plane, return the `k` closest points to the origin. Distance is Euclidean; the order of the returned points doesn't matter.
+
+### Approach 1 — Full sort by distance
+
+```java
+int[][] kClosestSort(int[][] points, int k) {
+    Arrays.sort(points, (a, b) -> (a[0]*a[0] + a[1]*a[1]) - (b[0]*b[0] + b[1]*b[1]));
+    return Arrays.copyOf(points, k);
+}
+```
+
+**Complexity:** O(n log n) time, O(1) extra space (in-place sort).
+Correct, one line, but does more work than needed when `k << n`.
+
+### Approach 2 — Max-heap of size k
+
+Keep a heap of size `k` where the root is the *farthest* point currently in the top-k. Each new point that's closer than the root evicts it.
+
+```java
+int[][] kClosest(int[][] points, int k) {
+    // Max-heap by squared distance (avoid sqrt — it's monotonic so it doesn't change order).
+    PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> {
+        int da = a[0]*a[0] + a[1]*a[1], db = b[0]*b[0] + b[1]*b[1];
+        return db - da;                              // farthest at root
+    });
+    for (int[] p : points) {
+        heap.offer(p);
+        if (heap.size() > k) heap.poll();            // evict the farthest
+    }
+    int[][] res = new int[k][2];
+    for (int i = 0; i < k; i++) res[i] = heap.poll();
+    return res;
+}
+```
+
+**Complexity:** O(n log k) time, O(k) space.
+
+**Why this is faster when k is small:** each of the `n` iterations does O(log k) work instead of the O(log n) of full sort. For `n = 10⁵`, `k = 10`: sort is ~1.7·10⁶ ops, heap is ~3.3·10⁵ ops — 5× faster. The gap widens as `k` shrinks.
+
+### Approach 3 — Quickselect (Hoare partition)
+
+Partition the array around a pivot's distance; recurse on the side that contains rank `k`. Average O(n).
+
+```java
+int[][] kClosestQuickselect(int[][] points, int k) {
+    quickselect(points, 0, points.length - 1, k);
+    return Arrays.copyOf(points, k);
+}
+
+void quickselect(int[][] a, int lo, int hi, int k) {
+    if (lo >= hi) return;
+    int pivotIdx = lo + (int)(Math.random() * (hi - lo + 1));
+    int pivotDist = dist(a[pivotIdx]);
+    swap(a, pivotIdx, hi);
+    int store = lo;
+    for (int i = lo; i < hi; i++)
+        if (dist(a[i]) < pivotDist) swap(a, i, store++);
+    swap(a, store, hi);
+    if      (store == k) return;
+    else if (store < k)  quickselect(a, store + 1, hi, k);
+    else                 quickselect(a, lo, store - 1, k);
+}
+
+int dist(int[] p) { return p[0]*p[0] + p[1]*p[1]; }
+void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
+```
+
+**Complexity:** O(n) *average*, O(n²) worst case (defended by random pivot).
+
+**When to reach for it:** contest programming or when you know `k` is close to `n/2`. Interview trade-off — quickselect is faster asymptotically but more code, and interviewers occasionally distrust the "expected O(n)" claim.
+
+### Complexity ladder
+
+| Approach | Time | Space | When |
+|---|---|---|---|
+| Sort by distance | O(n log n) | O(1) | Simplest; equally good when k ~ n |
+| **Max-heap of size k** | **O(n log k)** | **O(k)** | **Interview default when k ≪ n** |
+| Quickselect | O(n) avg / O(n²) worst | O(1) in-place | Contest / follow-up "make it O(n)" |
+
+
+
 ---
 
 ## Kth Largest / Top K Frequent <span class="diff diff-m">Medium</span>
