@@ -1,15 +1,27 @@
 # Deep Audit & Modification Plan — 21 Core Patterns
 
 **Date:** 2026-08-26
+**Status:** ✅ **ALL 8 WAVES SHIPPED**
 **Applied via the 3-lens mindset (stored in user notes):**
 1. **Senior SWE + DSA architect** — mentor engineers from 1yr → 10+yrs
 2. **FAANG PM** — product/visual quality, interactive experiences
 3. **Top UX designer** — nitty-gritty scrutiny at pixel/flow level
-
 **Visual quality reference:** https://abhisinghal.github.io/systemexpert/learn/distributed-systems/consistent-hashing/
 
-**Trigger:** User said *"In the Two pointers, again I see the same issues as were present in the Sliding window."*
-Confirmed on inspection: Two Pointers opens with `"Instead of checking every pair…"` — no story, no `## Why exists`, no `## When to use`, jumps straight to templates. Same structural gap 10 other chapters share. This plan systematically fixes it across all 21.
+---
+
+## Execution summary
+
+| Wave | Content | Commit | Status |
+|---|---|---|---|
+| 1 | Narrative bones on 10 chapters (Why exists / When / Templates / Traps / History / Canonical walkthrough) | `2db68c6` | ✅ |
+| 2 | Anemic-chapter enrichment (folded into Wave 1) | — | ✅ |
+| 3 | 6 new user-driven Vue anim components + embed | `9a0f1cd` | ✅ |
+| 4 | Story-first opening rewrites on 10 chapters | `c39f372` | ✅ |
+| 5 | Callout enrichment — every chapter now ≥ 8 highlighted insights | `a70ca5c` | ✅ |
+| 6 | Historical grounding paragraphs on 10 remaining chapters (21/21 now covered) | `629b040` | ✅ |
+| 7 | Visual + a11y polish: 35/35 SVGs pass audit, 21 anims covered by global CSS, Playwright a11y suite added | `e7004fa` | ✅ |
+| 8 | 4 flagship canonical walkthroughs (Union Find, Topo Sort, Greedy, D&C) | `79afd41` | ✅ |
 
 ---
 
