@@ -192,6 +192,138 @@ For inversion count, the answers are crisp: each half returns sorted order plus 
 
 Divide-and-conquer is the mother pattern from which sorting, transforms, and multiplication all descended.
 
+## Canonical problem walkthrough — Count of Smaller Numbers After Self
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)): Given an integer array `nums`, return an array `counts` where `counts[i]` is the number of smaller elements to the right of `nums[i]`. Example: `nums = [5, 2, 6, 1]` → `[2, 1, 1, 0]` (5 has 2 smaller to its right; 2 has 1; 6 has 1; 1 has 0).
+
+### Approach 1 — Brute force
+
+For each `i`, scan all `j > i` and count how many `nums[j] < nums[i]`.
+
+
+
+```java
+int[] countSmallerBrute(int[] nums) {
+    int n = nums.length;
+    int[] res = new int[n];
+    for (int i = 0; i < n; i++) {
+        int c = 0;
+        for (int j = i + 1; j < n; j++) {
+            if (nums[j] < nums[i]) c++;
+        }
+        res[i] = c;
+    }
+    return res;
+}
+```
+
+
+
+**Complexity:** O(n²) time, O(1) extra space. For `n = 5·10⁴`, that's `1.25·10⁹` ops — TLE at LeetCode's 2-second limit. Correct, states the reference.
+
+### Approach 2 — Merge sort with piggyback counting (the interview answer)
+
+The insight: during merge, when you take an element from the right half **before** consuming some remaining elements in the left half, every remaining left element is *greater* than the right element you just took. That means each remaining left element has one more "smaller-on-its-right" — the right element.
+
+So we can piggyback counting onto merge sort's combine step. Sort as usual; every "take from right" contributes counts.
+
+The trick to preserve original indices: sort `indices[]` by `nums[]` values rather than sorting `nums[]` itself. Then `counts[originalIndex] += k` when merging.
+
+
+
+```java
+int[] result;   // result[i] = count for original index i
+
+List<Integer> countSmaller(int[] nums) {
+    int n = nums.length;
+    result = new int[n];
+    int[] indices = new int[n];
+    for (int i = 0; i < n; i++) indices[i] = i;
+    mergeSort(indices, 0, n - 1, nums, new int[n]);
+    List<Integer> out = new ArrayList<>(n);
+    for (int r : result) out.add(r);
+    return out;
+}
+
+void mergeSort(int[] indices, int lo, int hi, int[] nums, int[] tmp) {
+    if (lo >= hi) return;
+    int mid = lo + (hi - lo) / 2;
+    mergeSort(indices, lo, mid, nums, tmp);
+    mergeSort(indices, mid + 1, hi, nums, tmp);
+    merge(indices, lo, mid, hi, nums, tmp);
+}
+
+void merge(int[] indices, int lo, int mid, int hi, int[] nums, int[] tmp) {
+    for (int i = lo; i <= hi; i++) tmp[i] = indices[i];
+    int i = lo, j = mid + 1, k = lo;
+    while (i <= mid && j <= hi) {
+        if (nums[tmp[i]] <= nums[tmp[j]]) {
+            // take from left: for tmp[i], (j - mid - 1) elements from the right
+            // half have already been placed BEFORE tmp[i] — each was smaller.
+            result[tmp[i]] += (j - mid - 1);
+            indices[k++] = tmp[i++];
+        } else {
+            indices[k++] = tmp[j++];
+        }
+    }
+    while (i <= mid) {
+        result[tmp[i]] += (j - mid - 1);
+        indices[k++] = tmp[i++];
+    }
+    while (j <= hi) {
+        indices[k++] = tmp[j++];
+    }
+}
+```
+
+
+
+**Complexity:** O(n log n) time, O(n) space. For `n = 5·10⁴`, ~800K ops — a millisecond.
+
+**Interview commentary:**
+- *"Brute force is O(n²). We need better. This looks like inversion counting."*
+- *"Merge sort's combine step compares elements across the boundary. When we merge, if we advance the left pointer, every already-consumed right element is smaller than the current left value — that's exactly what we're counting."*
+- *"But we need to preserve original indices for the output. So sort `indices[]` by `nums[]`, not `nums[]` itself. Whenever we take from left in merge, add `(j - mid - 1)` to `result[originalIndex]`."*
+- *"O(n log n) time, O(n) auxiliary space for the merge buffer. Classic 'piggyback on the merge step' pattern."*
+
+### Approach 3 — Fenwick tree (Binary Indexed Tree)
+
+An alternative O(n log n) approach: iterate right-to-left. For each `nums[i]`, ask a Fenwick tree "how many values less than `nums[i]` have I seen so far?" Then insert `nums[i]`.
+
+Requires coordinate compression (values can be negative) but conceptually cleaner in some interviews.
+
+
+
+```java
+// Sketch — full implementation adds ~30 more lines for coord compression + BIT ops
+int[] countSmallerFenwick(int[] nums) {
+    int[] sorted = nums.clone();
+    Arrays.sort(sorted);
+    Map<Integer, Integer> rank = new HashMap<>();
+    for (int i = 0; i < sorted.length; i++) rank.putIfAbsent(sorted[i], i + 1);
+    int[] bit = new int[sorted.length + 2];
+    int[] res = new int[nums.length];
+    for (int i = nums.length - 1; i >= 0; i--) {
+        int r = rank.get(nums[i]);
+        res[i] = query(bit, r - 1);          // sum of counts for values < nums[i]
+        update(bit, r);
+    }
+    return res;
+}
+```
+
+
+
+Both O(n log n) approaches are correct. Merge sort is more "divide-and-conquer flavored" (which is why this chapter picks it as the flagship); Fenwick tree is more "data-structure flavored."
+
+### Complexity ladder
+
+| Approach | Time | Space | When |
+|---|---|---|---|
+| Brute force | O(n²) | O(1) | Reference / n ≤ 1000 |
+| **Merge sort combine** | **O(n log n)** | **O(n)** | **Interview default — showcases D&C combine step** |
+| Fenwick tree | O(n log n) | O(n) | If interviewer follows up with "solve without D&C" |
+
 ---
 
 ## Merge Sort &amp; Count of Smaller Numbers After Self <span class="diff diff-h">Hard</span>

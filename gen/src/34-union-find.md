@@ -108,6 +108,123 @@ Tarjan also proved this bound is **tight** — no comparison-based DSU can do be
 
 When you tell an interviewer *"Union-Find with path compression and union-by-rank, O(α(n)) amortized,"* you're citing one of the top-10 most-used data structures in all of computer science.
 
+## Canonical problem walkthrough — Number of Provinces
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/number-of-provinces/)): There are `n` cities. Some are directly connected. An `n × n` matrix `isConnected[i][j] = 1` means city `i` and city `j` are directly connected. A **province** is a group of cities transitively connected (direct or indirect). Return the number of provinces.
+
+### Approach 1 — Brute force: BFS from every city
+
+For each city that hasn't been visited yet, run a BFS to mark all cities in the same province. Each such BFS starts a new province.
+
+```java
+int findCircleNumBFS(int[][] isConnected) {
+    int n = isConnected.length;
+    boolean[] visited = new boolean[n];
+    int provinces = 0;
+    for (int i = 0; i < n; i++) {
+        if (visited[i]) continue;
+        provinces++;
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.offer(i);
+        visited[i] = true;
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+            for (int v = 0; v < n; v++) {
+                if (isConnected[u][v] == 1 && !visited[v]) {
+                    visited[v] = true;
+                    queue.offer(v);
+                }
+            }
+        }
+    }
+    return provinces;
+}
+```
+
+**Complexity:** O(n²) time (each cell visited once), O(n) space (visited + queue). For `n = 200` (LeetCode's cap), that's 40,000 ops — instant. Correct and idiomatic for this size.
+
+**Why show it first?** BFS/DFS is the honest reference for connected-components on a *static* input. If the graph is fixed and the problem asks "count components once," BFS beats Union-Find in constant factors. State this out loud in an interview — it signals you know when *not* to over-engineer.
+
+### Approach 2 — Union-Find (the pattern-teaching answer)
+
+Every `isConnected[i][j] == 1` is an edge that should be unioned. Count the number of distinct roots at the end.
+
+```java
+int findCircleNum(int[][] isConnected) {
+    int n = isConnected.length;
+    int[] parent = new int[n];
+    int[] rank = new int[n];
+    for (int i = 0; i < n; i++) parent[i] = i;
+    int provinces = n;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {         // upper triangle: matrix is symmetric
+            if (isConnected[i][j] == 1) {
+                if (union(parent, rank, i, j)) provinces--;
+            }
+        }
+    }
+    return provinces;
+}
+
+int find(int[] parent, int x) {
+    if (parent[x] != x) parent[x] = find(parent, parent[x]);  // path compression
+    return parent[x];
+}
+
+boolean union(int[] parent, int[] rank, int a, int b) {
+    int ra = find(parent, a), rb = find(parent, b);
+    if (ra == rb) return false;                    // already in same set
+    if (rank[ra] < rank[rb])       parent[ra] = rb;
+    else if (rank[ra] > rank[rb])  parent[rb] = ra;
+    else { parent[rb] = ra; rank[ra]++; }
+    return true;
+}
+```
+
+**Complexity:** O(n² · α(n)) time, O(n) space. For `n = 200`, that's still ~40,000 ops but with a smaller α(n) constant (effectively O(1) per union). Slightly slower than pure BFS in absolute wall time, **but far more general** — you can now handle *dynamic* edges arriving one at a time in O(α(n)) each, which BFS cannot.
+
+**Interview commentary to voice out loud:**
+- *"Brute force is O(n²) with BFS. Union-Find gives us the same asymptotic complexity for static input."*
+- *"But if the problem gets extended — 'edges arrive one at a time,' 'friends being introduced,' 'incremental cluster merging' — BFS re-runs from scratch on each edge, while Union-Find handles it in O(α(n)) per edge."*
+- *"Path compression flattens the tree during find; union-by-rank prevents linear chains. Both are essential to hit α(n)."*
+- *"The `union` returns `boolean` so we decrement the province counter only when a merge actually happens (not when both were already in the same set)."*
+
+### Approach 3 — DFS-based reference (equivalent to BFS)
+
+For completeness, DFS is one-liner-different from BFS:
+
+```java
+int findCircleNumDFS(int[][] isConnected) {
+    int n = isConnected.length;
+    boolean[] visited = new boolean[n];
+    int provinces = 0;
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            provinces++;
+            dfs(isConnected, visited, i);
+        }
+    }
+    return provinces;
+}
+
+void dfs(int[][] c, boolean[] visited, int u) {
+    visited[u] = true;
+    for (int v = 0; v < c.length; v++)
+        if (c[u][v] == 1 && !visited[v]) dfs(c, visited, v);
+}
+```
+
+**When to use which:** BFS avoids recursion depth issues on very deep chains. DFS is 1 line shorter. Union-Find is the answer when the problem may extend to *dynamic* edges.
+
+### Complexity ladder
+
+| Approach | Time | Space | Best use |
+|---|---|---|---|
+| BFS / DFS from each unvisited | O(n²) | O(n) | Static input, single-shot count |
+| **Union-Find** | **O(n² · α(n))** | **O(n)** | **Interview default; extends cleanly to dynamic** |
+| Adjacency list + Kruskal-style edge stream | O(E · α(n)) | O(n) | Sparse graphs where edges are given as a list, not a matrix |
+
 ---
 
 ## Union-Find (Disjoint Set Union) <span class="diff diff-m">Medium</span>

@@ -51,6 +51,98 @@ The mathematical foundation is even older. **Hassler Whitney's 1935 paper *"On t
 
 When you tell an interviewer *"I'll prove correctness with an exchange argument,"* you're citing Kruskal's 1956 proof technique — still the gold standard for greedy-algorithm proofs 70 years later.
 
+## Canonical problem walkthrough — Jump Game II
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/jump-game-ii/)): Given an array of non-negative integers `nums`, you are initially at index 0. Each element `nums[i]` is the *maximum jump length* from position `i`. Return the **minimum number of jumps** to reach the last index. Assume you can always reach the last index.
+
+### Approach 1 — Brute force recursion
+
+From index 0, try every possible jump length. Return `1 + min(recursions from each landing)`.
+
+```java
+int jumpBrute(int[] nums) {
+    return dfs(nums, 0);
+}
+
+int dfs(int[] nums, int i) {
+    if (i >= nums.length - 1) return 0;
+    int best = Integer.MAX_VALUE;
+    for (int step = 1; step <= nums[i]; step++) {
+        int sub = dfs(nums, i + step);
+        if (sub != Integer.MAX_VALUE) best = Math.min(best, sub + 1);
+    }
+    return best;
+}
+```
+
+**Complexity:** O(k^n) where k = max value. Exponential blowup for `n > 20`. Useful as a mental reference for "we're minimizing jumps."
+
+### Approach 2 — Dynamic programming
+
+Bottom-up: `dp[i] = minimum jumps to reach the last index from position i`. Base case: `dp[n-1] = 0`. Fill from right to left.
+
+```java
+int jumpDP(int[] nums) {
+    int n = nums.length;
+    int[] dp = new int[n];
+    Arrays.fill(dp, Integer.MAX_VALUE);
+    dp[n - 1] = 0;
+    for (int i = n - 2; i >= 0; i--) {
+        for (int step = 1; step <= nums[i] && i + step < n; step++) {
+            if (dp[i + step] != Integer.MAX_VALUE) {
+                dp[i] = Math.min(dp[i], dp[i + step] + 1);
+            }
+        }
+    }
+    return dp[0];
+}
+```
+
+**Complexity:** O(n²) time, O(n) space. For `n = 10⁴`, that's 10⁸ ops — passes but at the edge. Correct, but does more work than needed.
+
+### Approach 3 — Farthest-reach greedy (the interview answer)
+
+The insight: **at any position, the best "next jump" is the one that reaches the farthest.** Track two pointers:
+- `currentEnd`: the farthest index reachable with the *current* number of jumps
+- `farthest`: the farthest index reachable using *one more* jump from anywhere in `[current position, currentEnd]`
+
+When `i == currentEnd`, we must commit to a new jump: increment count, set `currentEnd = farthest`.
+
+```java
+int jump(int[] nums) {
+    int jumps = 0;
+    int currentEnd = 0;
+    int farthest = 0;
+    for (int i = 0; i < nums.length - 1; i++) {         // don't iterate past last index
+        farthest = Math.max(farthest, i + nums[i]);
+        if (i == currentEnd) {                            // must jump now
+            jumps++;
+            currentEnd = farthest;
+            if (currentEnd >= nums.length - 1) break;     // reached the end
+        }
+    }
+    return jumps;
+}
+```
+
+**Complexity:** O(n) time, O(1) space. For `n = 10⁴`, ~10⁴ ops — trivially fast.
+
+**Why is greedy correct here?** *Exchange argument:* suppose some optimal solution jumps to `j` at step k, and greedy jumps to `g` at step k with `g > j`. Any subsequent optimal jump from `j` reaches some position `p`. Since `g > j` and greedy's next-step farthest depends on positions in `[current, g]` ⊇ `[current, j]`, greedy can reach `p` (or farther) in the same number of steps. Swap `j → g` in optimal; still optimal. Repeat: optimal converges to greedy.
+
+**Interview commentary:**
+- *"DP is O(n²). We can do O(n) with greedy."*
+- *"At every position, track the farthest we can reach with one more jump. When we exhaust the current jump's range, commit to another jump."*
+- *"Correctness proof: exchange argument. Any position optimal can reach in k jumps, greedy can also reach in k jumps because greedy's next range dominates optimal's."*
+- *"Loop bound is `n-1` because we never *land* jumping *from* the last index."*
+
+### Complexity ladder
+
+| Approach | Time | Space | When |
+|---|---|---|---|
+| Recursion | O(k^n) | O(n) | Reference / n ≤ 20 |
+| DP | O(n²) | O(n) | Correct but O(n²) at edge of TLE |
+| **Farthest-reach greedy** | **O(n)** | **O(1)** | **Interview default** |
+
 ---
 
 ## Jump Game II (Farthest-Reach Greedy) <span class="diff diff-m">Medium</span>

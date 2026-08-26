@@ -171,6 +171,142 @@ The DFS-based topological sort was popularized by **Robert Tarjan** in the 1970s
 
 When you tell an interviewer *"Kahn's algorithm, O(V+E), cycle detection as a side effect,"* you're citing the algorithm that powers essentially every build tool your company uses.
 
+## Canonical problem walkthrough — Course Schedule II
+
+**Problem** ([↗ LeetCode](https://leetcode.com/problems/course-schedule-ii/)): There are `numCourses` courses labeled `0..numCourses-1`. Some courses have prerequisites — `prerequisites[i] = [a, b]` means "to take course `a`, you must first finish course `b`." Return **any valid ordering** in which you can take all courses. If it's impossible (cycle), return an empty array.
+
+### Approach 1 — Brute force: try every permutation
+
+Generate all `n!` permutations of courses. For each, verify it respects every prerequisite. Return the first valid one.
+
+
+
+```java
+int[] findOrderBrute(int n, int[][] prereqs) {
+    int[] perm = new int[n];
+    for (int i = 0; i < n; i++) perm[i] = i;
+    return permute(perm, 0, prereqs);
+}
+
+int[] permute(int[] perm, int start, int[][] prereqs) {
+    if (start == perm.length) {
+        return isValid(perm, prereqs) ? perm.clone() : null;
+    }
+    for (int i = start; i < perm.length; i++) {
+        swap(perm, start, i);
+        int[] result = permute(perm, start + 1, prereqs);
+        if (result != null) return result;
+        swap(perm, start, i);
+    }
+    return null;
+}
+
+boolean isValid(int[] perm, int[][] prereqs) {
+    int[] pos = new int[perm.length];
+    for (int i = 0; i < perm.length; i++) pos[perm[i]] = i;
+    for (int[] p : prereqs) {
+        if (pos[p[1]] > pos[p[0]]) return false;    // prereq must come first
+    }
+    return true;
+}
+```
+
+
+
+**Complexity:** O(n! · n · m) where m = # prerequisites. For `n = 20`, that's `2.4·10¹⁸` operations — heat death of universe. Useful only as a mental reference: "brute force is n!; we can do way better."
+
+### Approach 2 — Kahn's BFS (indegree queue) — the interview answer
+
+Build the graph: `outEdges[u] = list of v such that u→v` (i.e., "u must be done before v"). Compute `indegree[v]` for every v. Start with a queue of all zero-indegree nodes (no prerequisites). Pop, emit, decrement each neighbour's indegree; enqueue any that hit zero. If the emitted count equals `numCourses`, return the order. Otherwise, a cycle exists — return empty.
+
+
+
+```java
+int[] findOrder(int numCourses, int[][] prereqs) {
+    List<List<Integer>> out = new ArrayList<>();
+    for (int i = 0; i < numCourses; i++) out.add(new ArrayList<>());
+    int[] indeg = new int[numCourses];
+    for (int[] p : prereqs) {
+        out.get(p[1]).add(p[0]);                    // p[1] -> p[0]  (p[1] must be first)
+        indeg[p[0]]++;
+    }
+
+    Queue<Integer> queue = new ArrayDeque<>();
+    for (int i = 0; i < numCourses; i++)
+        if (indeg[i] == 0) queue.offer(i);
+
+    int[] order = new int[numCourses];
+    int idx = 0;
+    while (!queue.isEmpty()) {
+        int u = queue.poll();
+        order[idx++] = u;
+        for (int v : out.get(u)) {
+            if (--indeg[v] == 0) queue.offer(v);
+        }
+    }
+    return idx == numCourses ? order : new int[0];   // cycle detected
+}
+```
+
+
+
+**Complexity:** O(V + E) time, O(V + E) space. For `n = 10⁴, m = 10⁴`, ~2·10⁴ ops — a fraction of a millisecond.
+
+**Interview commentary:**
+- *"Brute force is O(n!) — dies past n=20."*
+- *"Kahn's algorithm: start with courses having zero prereqs. Emit one, decrement its dependents. Enqueue any that just hit zero."*
+- *"O(V+E). Cycle detection is free — if the emitted count is less than numCourses, a cycle exists (some courses never had all their prereqs satisfied)."*
+- *"Edge direction: `prereqs[i] = [a, b]` means b→a. Build the graph with that direction so out-edges represent 'nodes that must come after me.'"*
+
+### Approach 3 — DFS post-order
+
+Alternative: DFS from every unvisited node, using 3-coloring (white/gray/black) for cycle detection. Push nodes onto a stack in post-order. Reverse the stack.
+
+
+
+```java
+int[] findOrderDFS(int numCourses, int[][] prereqs) {
+    List<List<Integer>> out = new ArrayList<>();
+    for (int i = 0; i < numCourses; i++) out.add(new ArrayList<>());
+    for (int[] p : prereqs) out.get(p[1]).add(p[0]);
+
+    int[] color = new int[numCourses];                // 0=white, 1=gray, 2=black
+    Deque<Integer> stack = new ArrayDeque<>();
+    for (int i = 0; i < numCourses; i++) {
+        if (color[i] == 0 && !dfs(out, color, stack, i)) {
+            return new int[0];                        // cycle
+        }
+    }
+    int[] order = new int[numCourses];
+    int idx = 0;
+    while (!stack.isEmpty()) order[idx++] = stack.pop();
+    return order;
+}
+
+boolean dfs(List<List<Integer>> out, int[] color, Deque<Integer> stack, int u) {
+    color[u] = 1;                                     // gray
+    for (int v : out.get(u)) {
+        if (color[v] == 1) return false;              // back-edge = cycle
+        if (color[v] == 0 && !dfs(out, color, stack, v)) return false;
+    }
+    color[u] = 2;                                     // black
+    stack.push(u);                                    // post-order
+    return true;
+}
+```
+
+
+
+**Same complexity: O(V+E).** Choose DFS when the same traversal also does cycle detection, SCC decomposition, or timestamped exit analysis. Choose Kahn when the natural mental model is "process nodes as they become ready."
+
+### Complexity ladder
+
+| Approach | Time | Space | When |
+|---|---|---|---|
+| Brute permutations | O(n! · m) | O(n) | Reference / n ≤ 8 |
+| **Kahn's BFS** | **O(V + E)** | **O(V + E)** | **Interview default** |
+| DFS post-order (3-color) | O(V + E) | O(V + E) | If you also need cycle-edge details |
+
 ---
 
 ## Course Schedule (Topological Sort) <span class="diff diff-m">Medium</span>
