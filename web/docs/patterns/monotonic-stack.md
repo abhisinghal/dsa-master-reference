@@ -305,7 +305,7 @@ each pop's "next greater" is the current bar
 
 
 <div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" aria-label="Diagram illustrating: Complexity ladder">
   <defs>
     <marker id="ms-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
     <marker id="ms-ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
@@ -379,7 +379,7 @@ You need *farthest* rather than *nearest* — or the comparison isn't a simple o
 
 
 <div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Daily Temperatures (Next Greater Element) Medium">
   <defs>
     <marker id="ar-dt-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
     <marker id="ar-dt-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
@@ -399,7 +399,7 @@ You need *farthest* rather than *nearest* — or the comparison isn't a simple o
       <text x="30" y="85">73</text><text x="74" y="85">74</text><text x="118" y="85">75</text><text x="162" y="85">71</text>
       <text x="206" y="85">69</text><text x="250" y="85">72</text><text x="294" y="85">76</text><text x="338" y="85">73</text>
     </g>
-    <g font-size="10.5" fill="var(--dsa-neutral)">
+    <g font-size="11" fill="var(--dsa-neutral)">
       <text x="30" y="117">0</text><text x="74" y="117">1</text><text x="118" y="117">2</text><text x="162" y="117">3</text>
       <text x="206" y="117">4</text><text x="250" y="117">5</text><text x="294" y="117">6</text><text x="338" y="117">7</text>
     </g>

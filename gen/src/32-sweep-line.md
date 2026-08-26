@@ -24,7 +24,7 @@ For the meeting-rooms flavour of this: meetings scheduled as `[0,30]`, `[5,10]`,
 > [key] **Key Insight** — Same input, different lens. Merge Intervals asks "which intervals overlap into which?"; sweep line asks "how many are active at time t?". The +1/−1 event stream answers the second in one linear pass.
 
 ```svg
-<svg width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg role="img" width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" aria-label="turn intervals into sorted start/end events, then sweep left → right">
   <defs>
     <marker id="swp-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
     <filter id="swp-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
@@ -153,7 +153,7 @@ The "sweep as an event-processing metaphor" was originally *"a vertical line mov
 <ProgressCheck id="meeting-rooms-ii-minimum-concurrent-intervals" />
 
 ```svg
-<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+<svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Meeting Rooms II (Minimum Concurrent Intervals) Medium">
   <defs>
     <marker id="ar-sweep-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
       <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>

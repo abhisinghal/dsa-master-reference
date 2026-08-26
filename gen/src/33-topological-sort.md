@@ -140,7 +140,7 @@ When you tell an interviewer *"Kahn's algorithm, O(V+E), cycle detection as a si
 <ProgressCheck id="course-schedule-topological-sort" />
 
 ```svg
-<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+<svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Course Schedule (Topological Sort) Medium">
   <defs>
     <marker id="ar-topo-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
       <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>

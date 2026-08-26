@@ -293,7 +293,7 @@ int searchOnePass(int[] a, int target) {
 
 
 <div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 720 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" aria-label="Diagram illustrating: Complexity ladder">
   <rect x="0" y="0" width="720" height="176" fill="var(--dsa-bg)"/>
   <text x="20" y="26" font-size="13" font-weight="700" fill="var(--dsa-primary)">search for a value — each guess throws away half</text>
   <!-- step 1: whole range, mid in middle -->
@@ -302,18 +302,18 @@ int searchOnePass(int[] a, int target) {
   <rect x="350" y="42" width="30" height="28" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
   <text x="365" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">mid</text>
   <rect x="70" y="44" width="280" height="24" rx="5" fill="var(--dsa-danger-soft)" fill-opacity="0.55" stroke="none"/>
-  <text x="210" y="61" text-anchor="middle" font-size="10" fill="var(--dsa-danger)">discard (target is bigger)</text>
+  <text x="210" y="61" text-anchor="middle" font-size="11" fill="var(--dsa-danger)">discard (target is bigger)</text>
   <!-- step 2: right half, new mid -->
   <text x="20" y="98" font-size="11" fill="var(--dsa-neutral)">step 2</text>
   <rect x="384" y="84" width="266" height="24" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/>
   <rect x="503" y="82" width="30" height="28" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
   <text x="518" y="101" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">mid</text>
   <rect x="533" y="84" width="117" height="24" rx="5" fill="var(--dsa-danger-soft)" fill-opacity="0.55" stroke="none"/>
-  <text x="591" y="101" text-anchor="middle" font-size="10" fill="var(--dsa-danger)">discard</text>
+  <text x="591" y="101" text-anchor="middle" font-size="11" fill="var(--dsa-danger)">discard</text>
   <!-- step 3: small range -->
   <text x="20" y="138" font-size="11" fill="var(--dsa-neutral)">step 3</text>
   <rect x="384" y="124" width="119" height="24" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
-  <text x="443" y="141" text-anchor="middle" font-size="10" fill="var(--dsa-success)">found — range is tiny</text>
+  <text x="443" y="141" text-anchor="middle" font-size="11" fill="var(--dsa-success)">found — range is tiny</text>
   <text x="20" y="170" font-size="11" fill="var(--dsa-neutral)" font-style="italic">3 steps have already shrunk the space to ~1/8 — that halving is why it's O(log n).</text>
 </svg>
 </div>
@@ -370,7 +370,7 @@ The data isn't sorted / monotone — you can't halve safely. Sort first (O(n log
 
 
 <div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Search in Rotated Sorted Array Medium">
   <defs>
     <marker id="ar-rot-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
       <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>

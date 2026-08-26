@@ -260,7 +260,7 @@ int singleNumber(int[] nums) {
 <ProgressCheck id="single-number-i-ii-iii-xor" />
 
 ```svg
-<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+<svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating: Single Number I / II / III (XOR) Easy">
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">XOR accumulator cancels duplicate pairs</text>
   <g font-family="var(--dsa-font)" text-anchor="middle">

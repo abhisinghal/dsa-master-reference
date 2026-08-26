@@ -20,7 +20,7 @@ The sliding-window pattern is: recognize that when the window slides one step, o
 Let's make it concrete. Say we want the sum of every contiguous subarray of size 5. The first window covers indices 0–4; the next covers 1–5. Notice they share indices 1–4 — so the new sum is just the old sum, minus the element that slid out, plus the element that slid in:
 
 ```svg
-<svg width="720" height="220" viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg role="img" width="720" height="220" viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" aria-label="window at 0..4  (sum = 11)">
   <defs>
     <marker id="ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
     <marker id="ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
@@ -198,7 +198,7 @@ Now let's walk through the canonical shapes, from the simplest fixed-size warm-u
 <ProgressCheck id="maximum-average-subarray-i-fixed-size-warm-up" />
 
 ```svg
-<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+<svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Maximum Average Subarray I (fixed-size warm-up) Easy">
   <defs>
     <marker id="ar-mavg-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
     <marker id="ar-mavg-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
@@ -493,7 +493,7 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
 <ProgressCheck id="longest-substring-without-repeating-characters" />
 
 ```svg
-<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+<svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Try it yourself">
   <defs>
     <marker id="ar-ls-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
     <marker id="ar-ls-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>

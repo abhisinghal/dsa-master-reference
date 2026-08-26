@@ -390,7 +390,7 @@ Subproblems don't repeat — pure recursion is fine. Also skip when a **greedy**
 
 
 <div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating: 1D DP — Climbing Stairs &amp; House Robber Medium">
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">House Robber: choose take vs skip</text>
   <g font-family="var(--dsa-font)" text-anchor="middle">
@@ -574,7 +574,7 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
 
 
 <div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating: Try it yourself">
   <rect x="0" y="0" width="720" height="260" rx="12" fill="var(--dsa-bg)"/>
   <text x="360" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">Kadane keeps best ending here, then global best</text>
   <g font-family="var(--dsa-font)" text-anchor="middle">
@@ -918,7 +918,7 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
 
 
 <div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating: Try it yourself">
   <defs>
     <marker id="coin-ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
       <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>

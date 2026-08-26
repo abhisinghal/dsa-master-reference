@@ -268,7 +268,7 @@ Backtracking is how you say *"try everything — but be smart about it."* Pictur
 > [key] **Key Insight** — The template is invariant across problems: `choose → recurse → un-choose`. What changes is (a) the **choice set** at each level, (b) the **constraint/prune**, and (c) what makes a node a **complete solution**.
 
 ```svg
-<svg width="720" height="260" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg role="img" width="720" height="260" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" aria-label="subsets of [1,2,3]: include / exclude each element">
   <defs>
     <marker id="bt-ar-grn" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
     <marker id="bt-ar-red" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
@@ -286,7 +286,7 @@ Backtracking is how you say *"try everything — but be smart about it."* Pictur
     <line x1="432" y1="154" x2="414" y2="188" stroke="var(--dsa-success)" marker-end="url(#bt-ar-grn)"/><line x1="432" y1="154" x2="470" y2="188" stroke="var(--dsa-neutral)" marker-end="url(#bt-ar-mute)"/>
     <line x1="590" y1="154" x2="590" y2="188" stroke="var(--dsa-success)" marker-end="url(#bt-ar-grn)"/><line x1="590" y1="154" x2="646" y2="188" stroke="var(--dsa-neutral)" marker-end="url(#bt-ar-mute)"/>
   </g>
-  <g font-size="10" font-weight="700" text-anchor="middle">
+  <g font-size="11" font-weight="700" text-anchor="middle">
     <text x="286" y="69" fill="var(--dsa-success)">include 1</text><text x="435" y="69" fill="var(--dsa-neutral)">exclude 1</text>
     <text x="172" y="121" fill="var(--dsa-success)">include 2</text><text x="255" y="121" fill="var(--dsa-neutral)">exclude 2</text>
     <text x="466" y="121" fill="var(--dsa-success)">include 2</text><text x="548" y="121" fill="var(--dsa-neutral)">exclude 2</text>
@@ -301,14 +301,14 @@ Backtracking is how you say *"try everything — but be smart about it."* Pictur
     <rect x="262" y="132" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="288" y="151" font-size="11" fill="var(--dsa-ink)">[1]</text>
     <rect x="406" y="132" width="52" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="432" y="151" font-size="11" fill="var(--dsa-ink)">[2]</text>
     <rect x="564" y="132" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="590" y="151" font-size="11" fill="var(--dsa-ink)">[]</text>
-    <rect x="35" y="188" width="78" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="74" y="207" font-size="10.5" fill="var(--dsa-ink)">[1,2,3]</text>
-    <rect x="98" y="188" width="64" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="130" y="207" font-size="10.5" fill="var(--dsa-ink)">[1,2]</text>
-    <rect x="216" y="188" width="68" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="250" y="207" font-size="10.5" fill="var(--dsa-ink)">[1,3]</text>
-    <rect x="280" y="188" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="306" y="207" font-size="10.5" fill="var(--dsa-ink)">[1]</text>
-    <rect x="377" y="188" width="74" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="414" y="207" font-size="10.5" fill="var(--dsa-ink)">[2,3]</text>
-    <rect x="444" y="188" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="470" y="207" font-size="10.5" fill="var(--dsa-ink)">[2]</text>
-    <rect x="564" y="188" width="52" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="590" y="207" font-size="10.5" fill="var(--dsa-ink)">[3]</text>
-    <rect x="620" y="188" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="646" y="207" font-size="10.5" fill="var(--dsa-ink)">[]</text>
+    <rect x="35" y="188" width="78" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="74" y="207" font-size="11" fill="var(--dsa-ink)">[1,2,3]</text>
+    <rect x="98" y="188" width="64" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="130" y="207" font-size="11" fill="var(--dsa-ink)">[1,2]</text>
+    <rect x="216" y="188" width="68" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="250" y="207" font-size="11" fill="var(--dsa-ink)">[1,3]</text>
+    <rect x="280" y="188" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="306" y="207" font-size="11" fill="var(--dsa-ink)">[1]</text>
+    <rect x="377" y="188" width="74" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="414" y="207" font-size="11" fill="var(--dsa-ink)">[2,3]</text>
+    <rect x="444" y="188" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="470" y="207" font-size="11" fill="var(--dsa-ink)">[2]</text>
+    <rect x="564" y="188" width="52" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="590" y="207" font-size="11" fill="var(--dsa-ink)">[3]</text>
+    <rect x="620" y="188" width="52" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="646" y="207" font-size="11" fill="var(--dsa-ink)">[]</text>
   </g>
   <text x="586" y="235" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-neutral)">8 leaves = 2³ subsets</text>
 </svg>
@@ -354,7 +354,7 @@ You want *one* answer, not all — a pruned DFS or DP is faster than enumerating
 <ProgressCheck id="subsets-amp-combinations-the-start-index-template" />
 
 ```svg
-<svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+<svg role="img" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating: Subsets &amp; Combinations (the start-index template) Medium">
   <defs>
     <marker id="subsets-ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
       <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
@@ -371,11 +371,11 @@ You want *one* answer, not all — a pruned DFS or DP is faster than enumerating
     <line x1="360" y1="156" x2="360" y2="190"/>
   </g>
   <g font-family="var(--dsa-font)" text-anchor="middle">
-    <g font-size="10.5" font-weight="700" fill="var(--dsa-neutral)">
+    <g font-size="11" font-weight="700" fill="var(--dsa-neutral)">
       <text x="278" y="86">choose 1</text><text x="374" y="98">choose 2</text><text x="462" y="86">choose 3</text>
       <text x="146" y="176">choose 2</text><text x="234" y="176">choose 3</text><text x="374" y="176">choose 3</text>
     </g>
-    <g font-size="10.5" font-weight="700" fill="var(--dsa-ink)">
+    <g font-size="11" font-weight="700" fill="var(--dsa-ink)">
       <rect x="338" y="38" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/><text x="360" y="57">1</text><text x="360" y="73">∅</text>
       <rect x="170" y="112" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="192" y="131">2</text><text x="192" y="147">{1}</text>
       <rect x="338" y="112" width="44" height="44" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="360" y="131">6</text><text x="360" y="147">{2}</text>
@@ -737,7 +737,7 @@ O(target/minCandidate) recursion/path space excluding output.
 <ProgressCheck id="n-queens-constraint-occupancy" />
 
 ```svg
-<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+<svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating: N-Queens (constraint occupancy) Hard">
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">one queen blocks row, column, and diagonals</text>
   <g font-family="var(--dsa-font)" text-anchor="middle" font-size="17" font-weight="700">

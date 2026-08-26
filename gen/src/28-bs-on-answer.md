@@ -197,7 +197,7 @@ The feasibility predicate isn't monotone — you can find an x where `feasible(x
 <ProgressCheck id="koko-eating-bananas-search-on-answer-rate" />
 
 ```svg
-<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+<svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Koko Eating Bananas (Search on Answer — rate) Medium">
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">binary search over the answer: eating rate k</text>
 

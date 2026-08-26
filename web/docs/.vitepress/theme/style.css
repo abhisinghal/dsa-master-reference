@@ -323,3 +323,81 @@ h3 {
   .ct-tag::after { content: ", "; }
   .ct-tag:last-child::after { content: ""; }
 }
+
+/* =========================================================================
+   Wave 7: Global visual + a11y polish for SVG figures and Vue animations
+   ========================================================================= */
+
+/* Every SVG in a .svg-figure wrapper (produced by migrate.py transform_svg_fences)
+   scales responsively down to mobile width. */
+.svg-figure {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;   /* very narrow phones scroll rather than clip */
+}
+.svg-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* WCAG AA dark-mode text contrast for SVG text elements that inherit --dsa-*
+   tokens. In dark mode, --dsa-ink and --dsa-neutral need brightening so we don't
+   emit low-contrast dark-blue-on-dark-navy. The tokens themselves define this. */
+.dark .svg-figure svg text {
+  fill: var(--dsa-ink, #e5e7eb);
+}
+.dark .svg-figure svg {
+  filter: brightness(1.04);   /* subtle lift; not enough to wash out reds/greens */
+}
+
+/* Every SVG chart should get a visible focus ring when tabbed to, if it's
+   accessible via keyboard (it isn't by default, but for consistency): */
+.svg-figure svg:focus-visible,
+.anim-card svg:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* prefers-reduced-motion: kill decorative transitions site-wide in figures. */
+@media (prefers-reduced-motion: reduce) {
+  .svg-figure svg *,
+  .anim-card svg *,
+  .anim-card * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Print rules for figures: keep them but drop shadows and interactive controls. */
+@media print {
+  .svg-figure svg { filter: none !important; box-shadow: none !important; }
+  .anim-card .controls,
+  .anim-card .live,
+  .anim-card .misc-row,
+  .anim-card .preset-row,
+  .anim-card .edge-panel {
+    display: none !important;
+  }
+}
+
+/* Ensure ALL interactive control labels inside .anim-card have visible focus. */
+.anim-card button:focus-visible,
+.anim-card select:focus-visible,
+.anim-card input:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
+}
+
+/* Caption support: <div class="svg-caption"> renders below any chart. */
+.svg-caption {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  text-align: center;
+  margin: 4px auto 12px;
+  max-width: 720px;
+  font-style: italic;
+}

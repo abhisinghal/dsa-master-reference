@@ -387,7 +387,7 @@ Marginal improvement — mentioned as a follow-up in interviews, rarely coded.
 
 
 <div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating: Word Search II (Trie + Backtracking) Hard">
   <rect x="0" y="0" width="720" height="260" rx="12" fill="var(--dsa-bg)"/>
   <text x="360" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">Trie of {"cat","car","cop"} + DFS on grid emits "car"</text>
   <g font-family="var(--dsa-font)" text-anchor="middle" font-size="14" font-weight="700" fill="var(--dsa-ink)">
@@ -432,6 +432,8 @@ Marginal improvement — mentioned as a follow-up in interviews, rarely coded.
 
 
 
+
+<div class="readfig"><b>How to read it:</b> The grid on the left holds the letters; the trie on the right holds all dictionary words. A DFS walk starts from every grid cell and follows adjacent cells one step at a time. At each step it also walks the trie — if the current letter isn't a trie edge from the current node, the entire branch is dead. When the DFS reaches a trie node marked "end of word," it emits that word (e.g. <code>car</code>).</div>
 
 ### Problem
 Given a grid of letters and a dictionary, return **all dictionary words** that can be traced through **adjacent** cells (up/down/left/right), never reusing a cell within one word.

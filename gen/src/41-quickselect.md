@@ -28,7 +28,7 @@ Trace a tiny example by hand. For `[7, 1, 5, 3, 9, 2]`, the 2nd largest is index
 > [key] **Key Insight** — After partitioning around a pivot, the pivot sits at its final sorted index p. If p == k you're done. If p < k, the answer is in the right half; else the left. You never touch the side that doesn't contain rank k.
 
 ```svg
-<svg width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+<svg role="img" width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" aria-label="one partition step decides which side can contain rank k">
   <defs>
     <marker id="qs-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
     <marker id="qs-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>

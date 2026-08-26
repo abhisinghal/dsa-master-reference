@@ -125,7 +125,7 @@ Bentley was also a co-inventor of **kd-trees** and *Bentley-Ottmann sweep* (see 
 
 
 <div class="svg-figure">
-<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Merge Intervals Medium">
   <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
   <text x="200" y="27" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">merge intervals after sorting by start</text>
   <line x1="48" y1="64" x2="352" y2="64" stroke="var(--dsa-neutral)" stroke-width="2"/>
