@@ -33,6 +33,24 @@ A brute-force solution usually enumerates choices, schedules, subsets, or paths 
 ### When NOT to use it
 A locally-best choice can be regretted later — construct a counterexample ("if I take the largest coin first…") and if you find one, switch to [Dynamic Programming](#dynamic-programming). The exchange-argument proof is what separates a safe greedy from a wrong one.
 
+## History — Kruskal 1956, matroid theory 1935
+
+Greedy algorithms as a formal class date to **Joseph Kruskal's 1956 minimum-spanning-tree paper** *"On the shortest spanning subtree of a graph and the traveling salesman problem"* (Proc. AMS 7(1):48-50). Kruskal proved that sorting edges by weight and greedily adding the cheapest cross-component edge produces a globally-optimal MST. The proof used what we now call an **exchange argument** — if the greedy answer differs from any optimal answer, you can swap one edge to reduce the difference without increasing the total weight, contradicting optimality.
+
+The mathematical foundation is even older. **Hassler Whitney's 1935 paper *"On the abstract properties of linear dependence"*** introduced **matroids** — the abstract structure in which greedy always works. A matroid is a set system where "independence" satisfies specific axioms; when your problem is a matroid, the greedy algorithm provably finds the optimal answer. Kruskal's MST and Prim-Jarnik's MST are both matroid-greedy in this sense. Job Sequencing with Deadlines, Activity Selection, and Huffman Coding are also matroid-greedy problems.
+
+**Real-world adoption:**
+
+- **Huffman Coding (1952)** — the greedy compression algorithm inside every ZIP, PNG, JPEG, MP3, and MPEG file. Powered gzip, brotli, and Zstandard.
+- **Dijkstra's shortest-path algorithm (1959)** — technically greedy (extract-min from priority queue). Used in every road-routing GPS, every internet routing protocol (OSPF, IS-IS), every network flow analysis.
+- **Kruskal's MST** — cell tower placement, Internet backbone design, cluster analysis in bioinformatics, image segmentation.
+- **Prim's MST** — the actual algorithm most textbook implementations use.
+- **Interval scheduling** (earliest-finish-first) — every meeting-room scheduler, every "book the maximum non-overlapping X" application.
+- **Fractional Knapsack** — CPU scheduling in real-time systems, resource allocation in cloud auto-scalers.
+- **Set Cover approximation** — every anti-spam filter's rule-selection subsystem.
+
+When you tell an interviewer *"I'll prove correctness with an exchange argument,"* you're citing Kruskal's 1956 proof technique — still the gold standard for greedy-algorithm proofs 70 years later.
+
 ---
 
 ## Jump Game II (Farthest-Reach Greedy) <span class="diff diff-m">Medium</span>

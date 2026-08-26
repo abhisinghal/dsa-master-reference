@@ -171,6 +171,27 @@ Before writing code, ask three questions. First, what does each half return? It 
 
 For inversion count, the answers are crisp: each half returns sorted order plus its internal inversion count; cross relationships are pairs with left index in the left half and right index in the right half; sorted order lets one comparison count many such pairs. This checklist keeps the solution grounded instead of turning into vague recursion.
 
+## History — von Neumann 1945, Karatsuba 1962, Strassen 1969
+
+**John von Neumann** wrote the first published divide-and-conquer algorithm in **1945**: merge sort, in his *"First Draft of a Report on the EDVAC."* He described splitting an array in half, sorting each half, and merging — every element of the pattern was there. Von Neumann was designing algorithms for a computer that didn't exist yet (EDVAC wouldn't run until 1949), so merge sort predates its own hardware by 4 years.
+
+**Anatoly Karatsuba** applied divide-and-conquer to integer multiplication in **1962**. Grade-school multiplication of two `n`-digit numbers is O(n²). Karatsuba noticed that `(a·10^k + b)(c·10^k + d) = ac·10^{2k} + (ad+bc)·10^k + bd`, but the middle term `(ad+bc)` can be computed as `(a+b)(c+d) - ac - bd` — reducing 4 multiplications to 3. Recursion gives `T(n) = 3·T(n/2) + O(n) = O(n^{log₂3}) ≈ O(n^{1.585})`. GMP, Java's BigInteger, Python's int — all use Karatsuba for large-integer multiplication.
+
+**Volker Strassen** did the same for matrix multiplication in **1969**: reduced the 8 recursive multiplications in a 2×2 divide-and-conquer scheme to 7, giving O(n^{log₂7}) ≈ O(n^2.81). His paper stunned the community — everyone believed matrix multiplication was Ω(n³). The current best-known bound (Coppersmith-Winograd, refined by Le Gall 2014) is O(n^2.373), and every improvement uses the divide-and-conquer skeleton Strassen introduced.
+
+**Master Theorem** (Bentley-Haken-Saxe 1980) formalized the analysis: `T(n) = a·T(n/b) + f(n)` has a closed-form solution based on `log_b(a)` vs. `f(n)`. Every complexity analysis you'll write in an interview uses this theorem, even if you don't cite it by name.
+
+**Real-world adoption:**
+
+- **FFT (Cooley-Tukey 1965)** — the fast Fourier transform is divide-and-conquer on trigonometric sums, O(n log n) instead of O(n²). Enables every audio codec (MP3, AAC), every image codec (JPEG DCT), every telecom modulation (OFDM in 4G/5G/WiFi).
+- **Merge sort variants** power Java's `Arrays.sort` (Timsort — merge sort + insertion sort hybrid), Python's `list.sort`, Rust's `slice.sort`, and every database's external sort.
+- **Karatsuba multiplication** — every language's arbitrary-precision integer library.
+- **Strassen** — HPC linear-algebra libraries (BLAS, LAPACK, cuBLAS) switch to Strassen for large matrices.
+- **Quicksort's `partition` step** — Hoare 1961; still the fastest general-purpose sort in practice.
+- **Median-of-medians** — Blum-Floyd-Pratt-Rivest-Tarjan 1973; deterministic linear-time selection.
+
+Divide-and-conquer is the mother pattern from which sorting, transforms, and multiplication all descended.
+
 ---
 
 ## Merge Sort &amp; Count of Smaller Numbers After Self <span class="diff diff-h">Hard</span>

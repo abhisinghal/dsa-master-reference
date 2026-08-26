@@ -70,8 +70,15 @@ for (int i = 1; i < intervals.length; i++) {
 out.add(cur);
 return out.toArray(new int[0][]);
 ```
-
 The sort is the setup. `cur` is the union of the current overlapping cluster. If the next interval starts before or exactly at `cur`'s end, it belongs to the same cluster, so only the end might extend. If the next interval starts after `cur` ends, there is a gap; `cur` can never be touched again, so emit it and begin a new cluster. That "emit only after a gap" rule is the main invariant.
+
+## History — Bentley's *Programming Pearls*, 1986
+
+The interval-merging pattern was formalized by **Jon Bentley** in his classic 1986 book **Programming Pearls**, specifically in the essay *"Column 8: Algorithm Design Techniques."* Bentley used the interval-cover problem as a running example to teach the general principle: **when brute force is quadratic pairwise comparison, sort first and reduce it to a linear sweep.** His larger contribution was the "sort-then-sweep" idiom, which underlies not just Merge Intervals but the entire interval-scheduling family (Meeting Rooms, Non-overlapping Intervals, Insert Interval).
+
+Bentley was also a co-inventor of **kd-trees** and *Bentley-Ottmann sweep* (see the Sweep Line chapter). His *Programming Pearls* essays first appeared as columns in *Communications of the ACM*; every essay taught one specific transformation from naive to elegant algorithm. When you tell an interviewer "I'll sort by start time and sweep in O(n log n)," you're citing exactly the pattern Bentley wrote about in 1986.
+
+**Real-world adoption:** every calendar merge (Google Calendar, Outlook, Fantastical), every network billing system's "aggregate overlapping charge windows," every video-editing timeline's "collapse overlapping clips" feature — all merge-intervals. Kubernetes' `PodDisruptionBudget` uses merge-intervals to check whether maintenance windows overlap. AWS's Reserved Instance billing runs it hourly across trillions of usage records.
 
 ---
 

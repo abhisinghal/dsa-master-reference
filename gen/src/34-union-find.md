@@ -89,6 +89,25 @@ Can we do better? Union-Find keeps one representative root per group. Each new e
 ### When NOT to use it
 You need to *walk* the components (traversal, distances, colouring) — Union-Find only tells you set membership, not adjacency. Also, if you must **remove** edges (not just add), Union-Find doesn't support that natively — either process events offline in reverse or use link-cut trees.
 
+## History — Galler-Fischer 1964, Tarjan 1975
+
+The disjoint-set data structure was introduced by **Bernard Galler and Michael Fischer in 1964** in their paper *"An improved equivalence algorithm"* (Communications of the ACM 7(5):301-303). Their algorithm used simple parent-pointers with no rank or path compression — worst-case O(n) per operation, still faster than the previous best.
+
+The breakthrough came in **1975 with Robert Tarjan's O(m · α(n)) analysis**. Tarjan (later a Turing Award winner in 1986) proved that union-by-rank combined with path compression gives an *amortized* per-operation cost of **α(n) — the inverse Ackermann function**. For all practical inputs (`n < 2^{2^{2^{16}}}`), `α(n) ≤ 4`. So Union-Find is effectively **constant-time**, a wildly counterintuitive result given the tree structure suggests O(log n).
+
+Tarjan also proved this bound is **tight** — no comparison-based DSU can do better in general. That means the algorithm we teach in this chapter is *provably optimal* (up to constants), a rare and beautiful result in algorithm design.
+
+**Real-world adoption:**
+
+- **Kruskal's Minimum Spanning Tree** (1956) — the classic application; every network-optimization system uses it.
+- **Image segmentation** (connected-component labeling) — every 2D image processing pipeline runs union-find over pixels.
+- **Percolation theory** — used to model how fluids flow through porous materials; Sedgewick's textbook uses it as the flagship example.
+- **Kubernetes' scheduler** — pod affinity and anti-affinity rules are evaluated via union-find over node groups.
+- **Compiler optimization**: Steensgaard's alias analysis (1996) treats pointer-may-alias as a union-find on variable types. **Every optimizing compiler** (GCC, LLVM, Rust's borrow checker) runs this.
+- **Git** — determining whether two commits share a common ancestor uses union-find over the commit graph.
+
+When you tell an interviewer *"Union-Find with path compression and union-by-rank, O(α(n)) amortized,"* you're citing one of the top-10 most-used data structures in all of computer science.
+
 ---
 
 ## Union-Find (Disjoint Set Union) <span class="diff diff-m">Medium</span>

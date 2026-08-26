@@ -107,6 +107,12 @@ the shape of the shrink rule. Longest-variable shrinks *lazily* (only when broke
 
 </Callout>
 
+## History — Karp-Rabin's rolling hash, 1987
+
+The sliding-window idea for fixed-size windows appears in Knuth's *The Art of Computer Programming Vol 3* (1973) as a natural optimization for windowed statistics. Its most famous application is **Karp-Rabin string matching (1987)**: Michael Rabin and Richard Karp introduced a *rolling hash* — a hash function that recomputes in O(1) as the window slides. For each new character, subtract the leaving character's contribution and add the incoming character's, exactly the sliding-window trick applied to hash arithmetic. Karp-Rabin turned substring search from O(n·m) into expected O(n + m). It's what powers `grep -F`, Elasticsearch's ngram tokenizer, git's `blame` heuristic, and every diff tool's fingerprinting layer.
+
+The variable-size sliding-window pattern (shrink-when-invariant-breaks) was formalized in competitive programming circles around **2010**, when Codeforces problems began systematically requiring it. LeetCode's *Longest Substring Without Repeating Characters* (2014) made it interview-standard. Every real-time monitoring system, from Prometheus recording rules to Datadog's aggregation pipeline, does sliding-window computation over time-series windows — exactly the CDN scene we opened with.
+
 ## How to use it — the two templates
 
 Every sliding-window solution boils down to one of two loops. Memorize the shape; fill in the state.

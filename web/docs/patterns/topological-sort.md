@@ -152,6 +152,25 @@ In Course Schedule, the graph is handed to you as pairs. In Alien Dictionary, yo
 
 This is a common interview twist: topological sort is only half the solution. The other half is translating the domain into nodes and directed edges without inventing edges that the input does not prove. When in doubt, say what a node represents, what an edge means, and why each edge is justified by the problem statement.
 
+## History — Kahn 1962 and every build system on Earth
+
+Topological sort was formalized by **Arthur B. Kahn in 1962** in his paper *"Topological sorting of large networks"* (Communications of the ACM 5(11):558-562). Kahn's algorithm — repeatedly remove nodes with zero indegree — is the same one you'd write today. His motivation was **program dependency analysis**: given a set of tasks with precedence constraints, find a valid execution order. His paper is unusually readable for 1962 and is worth reading if you want to see the pattern in its original form.
+
+The DFS-based topological sort was popularized by **Robert Tarjan** in the 1970s as a byproduct of his strongly-connected-components work. Cormen-Leiserson-Rivest-Stein's *Introduction to Algorithms* (CLRS, 1990) presents both flavors side by side.
+
+**Real-world adoption is universal.** Every build system on Earth is a topological sort:
+
+- **`make`** (1976) topologically sorts source files by `#include` dependencies.
+- **`npm install`** topologically sorts npm packages by `dependencies`.
+- **`pip install -r requirements.txt`** does the same for Python.
+- **Cargo** (Rust), **Bazel** (Google's monorepo build), **Buck** (Meta), **Gradle** (Android) — all topological sort under the hood.
+- **Excel's formula recalculation**: cells depend on other cells; topo sort determines evaluation order.
+- **Terraform's plan** topologically sorts resource-creation order (VPCs before subnets, subnets before EC2 instances).
+- **Airflow / Dagster / Prefect** DAG-based workflow schedulers are literally named after topological sort's precondition (Directed Acyclic Graph).
+- **CI/CD pipelines** (GitHub Actions, CircleCI, Jenkins) topologically sort job dependencies.
+
+When you tell an interviewer *"Kahn's algorithm, O(V+E), cycle detection as a side effect,"* you're citing the algorithm that powers essentially every build tool your company uses.
+
 ---
 
 ## Course Schedule (Topological Sort) <span class="diff diff-m">Medium</span>

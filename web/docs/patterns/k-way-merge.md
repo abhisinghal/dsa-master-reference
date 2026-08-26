@@ -319,6 +319,12 @@ A good rule of thumb: if the problem says "always output the next smallest item"
 #### Details that decide correctness
 Duplicates are fine: if two heap entries have the same value, either can come first and the output is still sorted. Empty lists should simply be skipped during initialization. Comparator overflow is worth mentioning in production Java: `(x, y) -> x.val - y.val` is common in interview snippets, but `Integer.compare(x.val, y.val)` is safer when values can be near integer limits. Finally, remember that the heap stores nodes or `(value, list, index)` triples, not just values, because you need provenance to advance the correct stream.
 
+## History — von Neumann's tape sort, 1945
+
+The k-way merge originated in **John von Neumann's 1945 draft *"First Draft of a Report on the EDVAC"***, the founding document of stored-program computing. Von Neumann's motivating problem: sort a data set too large to fit in the machine's memory. His answer was **external merge sort** — split the input into runs that fit in memory, sort each, then merge the sorted runs back with a k-way merge. His original paper used **magnetic tape drives** as the "streams" and had `k = 4` (four tape decks common on IBM 704 systems). The idea has survived every hardware revolution since: 1970s IBM/360 sort utilities, 1990s dbSort in Oracle, 2010s external-sort operators in Spark, DuckDB, Snowflake — every system that has to answer *"sort more data than we can hold in RAM"* uses von Neumann's tape-sort blueprint.
+
+The **loser tree** (a compact heap variant) was introduced by Knuth in *TAOCP Vol 3* (1973) as the specific data structure for the merge step; it uses `k − 1` comparisons per output element instead of the plain heap's `log₂ k`, which matters when disk I/O time is comparable to CPU time. When you tell an interviewer "the k-way merge with a heap is O(n log k)," you're citing an algorithm the entire OLAP industry runs on. Snowflake, BigQuery, Databricks — every "sort by timestamp" over a petabyte is doing exactly this.
+
 ---
 
 ## Merge K Sorted Lists / Smallest Range (K-way merge) <span class="diff diff-h">Hard</span>

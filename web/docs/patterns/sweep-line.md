@@ -158,6 +158,20 @@ For coverage length, the scan records distance, not just state. If the previous 
 ### Tie-breaks are part of the problem
 At equal coordinates, you must know whether an end and a start overlap. For meetings, `[1,5]` followed by `[5,10]` usually uses one room, so process the end before the start. For closed intervals where both endpoints count, touching intervals do overlap, so you may process starts before ends or shift end events by one in integer-coordinate problems. For skyline, starts and ends at the same x need special ordering by height so the silhouette does not briefly dip or spike. Do not treat the comparator as boilerplate; it encodes the interval semantics.
 
+## History — Bentley-Ottmann sweep, 1979
+
+The sweep-line technique was formalized by **Jon Bentley and Thomas Ottmann in 1979** for the classical problem of finding *all* intersection points among `n` line segments in a 2D plane. Their algorithm sweeps a vertical line from left to right, maintaining a **binary search tree of active segments** ordered by their y-coordinate at the sweep line. When a segment starts, it's inserted; when it ends, it's removed; segment intersections happen precisely when adjacent segments in the BST swap order. Total complexity: **O((n + k) log n)** where `k` is the number of intersections — a huge win over the naive O(n²) brute force.
+
+The idea generalized beyond geometry. **Franco Preparata and Michael Shamos**'s foundational textbook *Computational Geometry* (1985) devoted an entire chapter to the pattern. Modern applications:
+
+- **CAD software** (AutoCAD, Fusion 360) sweeps to detect overlapping boundaries in real time as you draw.
+- **Chip design (VLSI CAD)** uses sweep to check for design-rule violations (are these two metal traces too close?) on billion-transistor circuits.
+- **Graphics engines** use "z-buffer sweeps" to determine which pixels are covered by which triangles.
+- **Databases** use interval-tree-like sweeps to compute date-range JOINs efficiently.
+- **Every "meeting rooms" / "concurrent sessions" / "peak users" question** on LeetCode is a 1D sweep. The 2D Bentley-Ottmann is where the pattern's name comes from.
+
+The "sweep as an event-processing metaphor" was originally *"a vertical line moving from left to right"* in Bentley's language. Today it's the mental model behind every event-driven state machine.
+
 ---
 
 ## Meeting Rooms II (Minimum Concurrent Intervals) <span class="diff diff-m">Medium</span>

@@ -71,6 +71,14 @@ return null;                   // no cycle
 
 The template has two phases. Phase one moves at different speeds and answers "do the pointers ever meet?" The guard must check both `fast` and `fast.next`, because the fast pointer takes a double hop. Phase two starts one pointer from the head and one from the meeting point; moving both at speed one turns the algebra into code. If the problem only asks for detection, stop at `slow == fast`. If it asks for a middle node, keep the first phase but return `slow` when `fast` falls off the list.
 
+## History — Floyd's Tortoise & Hare, 1967
+
+The two-speed cycle-detection algorithm was invented by **Robert W. Floyd** in **1967** — famously not in a paper, but as an *exercise* in Donald Knuth's *The Art of Computer Programming Vol 2* (1969, §3.1 ex. 6-7). Knuth attributed it to Floyd via personal communication. The nickname "Tortoise and Hare" comes from Aesop; Knuth's exercise uses the terms informally in the answer key.
+
+Floyd himself was a Turing Award winner (1978, for language semantics) and one of the founding figures of formal program correctness — the same person who introduced the concept of loop invariants that we've cited throughout this chapter. It's fitting that cycle detection, which relies on a tight algebraic invariant (`slow.dist ≡ fast.dist mod C`), came from him.
+
+**Real-world usage:** every mark-sweep garbage collector (HotSpot JVM, V8, .NET, Go) uses variants of Floyd's algorithm to detect cyclic reference chains without allocating a `visited` set. The **Pollard's rho** integer-factorization algorithm (1975) — the same one used in RSA cryptanalysis — is Floyd's cycle detection applied to the sequence `x_{n+1} = (x_n² + c) mod N`. When you tell an interviewer "I'll use Floyd's cycle-detection, O(n) time and O(1) space," you're citing an algorithm still used at the bottom of every modern GC and every cryptographer's toolkit.
+
 ---
 
 ## Linked List Cycle II (Floyd) <span class="diff diff-m">Medium</span>

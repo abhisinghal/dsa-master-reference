@@ -161,8 +161,28 @@ return a[lo];
 ```
 
 
-
 The template is a narrowing search over ranks, not values. `partition` gives you one value in its final sorted position. Comparing that position with `target` tells you which half can still contain the answer. `choosePivot` should be randomized or at least not always the same bad endpoint. For kth largest, convert to an ascending rank with `target = n - k`; for kth smallest, use `target = k - 1`.
+
+## History — Hoare 1961, Blum-Floyd-Pratt-Rivest-Tarjan 1973
+
+Quickselect was invented by **Sir Charles Antony Richard Hoare** in **1961** — the same year and the same paper (*"Algorithm 65: FIND"*, Communications of the ACM 4(7):321-322) that introduced **quicksort**. Hoare was 27 years old, working on a Russian-English translation dictionary at Elliott Brothers Ltd; sorting Russian words prompted him to invent the partition technique. He got the Turing Award in 1980 for both algorithms.
+
+Hoare's quickselect had a randomized average of O(n) but worst-case O(n²) on adversarial input. This worst case was unacceptable in system code (adversaries could craft slow requests to DoS a server). The question of *"can we achieve deterministic linear-time selection?"* stayed open for 12 years.
+
+**Blum, Floyd, Pratt, Rivest, and Tarjan** answered in **1973** with the **median-of-medians algorithm** — a deterministic O(n) selection algorithm. Their trick: recursively find a *"good enough"* pivot by taking the median of medians of groups of 5. This guarantees the pivot rejects at least 30% of the elements per step, giving O(n) with a large constant. The paper *"Time bounds for selection"* is one of the most cited results in theoretical computer science.
+
+**Real-world adoption:**
+
+- **C++ `std::nth_element`** — introselect (Musser 1997), a hybrid of Hoare's quickselect and heapsort-fallback for worst-case protection.
+- **NumPy's `np.partition`** — uses the same introselect hybrid.
+- **Netflix's recommendation top-K** — the scene we opened with; production code uses quickselect for O(n) expected instead of O(n log n) sort.
+- **Databases** — every "TOP N" query optimizer uses partial partitioning under the hood, not full sort.
+- **Median filters** in image processing (used for denoising every phone photo) — quickselect over pixel windows.
+- **Java's Dual-Pivot Quicksort** (Yaroslavskiy 2009), the algorithm behind `Arrays.sort` on primitives, uses two pivots per partition; quickselect variants adapt the same idea.
+
+Bloch's 2006 blog post on the Binary Search bug also revealed that Java's original `Arrays.sort` had subtle quickselect-related bugs — even the JDK's sort spec-authors weren't immune. That story reinforces the Chapter 27 point: partition-based algorithms *look* simple but are among the most bug-prone code in a standard library.
+
+When you tell an interviewer *"Hoare's quickselect, expected O(n) with randomized pivot, worst-case O(n²) unless you use median-of-medians for a guaranteed O(n),"* you're citing a 63-year-old lineage still running at the bottom of every ML framework and every database's top-K operator.
 
 ---
 
