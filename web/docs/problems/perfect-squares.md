@@ -9,9 +9,7 @@ Min count of perfect squares summing to `n`.
 **Example 1** — `n=12` → `3` (`4+4+4`)
 **Example 2** — `n=13` → `2` (`4+9`)
 
-**Constraints** — `1 ≤ n ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`. Brute BFS over all decompositions is O(n^(√n)) — dies past n=200. DP is O(n·√n) = 10⁴·100 = 10⁶ ops = &lt;10 ms.
 <Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

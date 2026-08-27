@@ -8,9 +8,7 @@ Given a dictionary of roots and a `sentence`, replace each word with its **short
 
 **Example 1** — `dict=["cat","bat","rat"], sentence="the cattle was rattled by the battery"` → `"the cat was rat by the bat"`
 
-**Constraints** — dict ≤ 1000 roots; sentence words ≤ 1000.
-
-
+**Constraints** — dict ≤ 1000 roots; sentence words ≤ 1000. Brute checks every root against every word in O(n·L·m) — 10⁶·L (grows fast). Trie compresses shared prefixes: O(sum-of-lengths) build + O(L) per lookup = 10⁶ ops total.
 <Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."

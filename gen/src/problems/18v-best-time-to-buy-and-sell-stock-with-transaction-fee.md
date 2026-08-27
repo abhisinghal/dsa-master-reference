@@ -10,9 +10,7 @@ Unlimited transactions; each sell pays `fee`. Max profit.
 **Example 2** — `prices=[1,3,7,5,10,3], fee=3` → `6`
 **Example 3** — `prices=[1,2,3,4,5], fee=1` → `3` (buy 1, sell 5 → 4 - 1 = 3, better than chained trades because fee eats them)
 
-**Constraints** — `1 ≤ n ≤ 5·10⁴`; `0 ≤ fee ≤ 5·10⁴`. For n=5·10⁴, brute force is O(2ⁿ) — the age of the universe. DP fits in 50µs.
-
-
+**Constraints** — `1 ≤ n ≤ 5·10⁴`; `0 ≤ fee ≤ 5·10⁴`. For n=5·10⁴, brute force is O(2ⁿ) — the age of the universe. DP fits in 50µs. Brute enumerates 2ⁿ buy/sell subsets — at n=5·10⁴ that's 10¹⁵⁰⁰⁰ ops. State-machine DP is O(n) = 5·10⁴ ops = <5 ms.
 <Hints
   hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

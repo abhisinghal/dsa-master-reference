@@ -10,9 +10,7 @@ Unlimited transactions; must skip one day between sell and next buy.
 **Example 2** — `prices=[1]` → `0`
 **Example 3** — `prices=[6,1,3,2,4,7]` → `6` (buy at 1, sell at 3 → cooldown → buy at 2, sell at 7 = 2 + 5 wait, actually 3-1=2, cooldown, 7-2=5, total 7... check: sample answer for this input is 6)
 
-**Constraints** — `1 ≤ n ≤ 5000`.
-
-
+**Constraints** — `1 ≤ n ≤ 5000`. Brute enumerates buy/sell/rest choices — O(3ⁿ) ≈ 10⁹ ops at n=20, 10²³⁰⁰ ops at n=5000 (dies). State-machine DP with 3 rolling variables is O(n) = 5·10³ ops = &lt;1 min even for the constraint's worst case.
 <Hints
   hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

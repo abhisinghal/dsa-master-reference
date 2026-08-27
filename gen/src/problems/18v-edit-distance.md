@@ -9,9 +9,7 @@ Given two strings `word1` and `word2`, return the minimum number of edits (inser
 **Example 1** — `word1="horse", word2="ros"` → `3`
 **Example 2** — `word1="intention", word2="execution"` → `5`
 
-**Constraints** — `0 ≤ m, n ≤ 500`.
-
-
+**Constraints** — `0 ≤ m, n ≤ 500`. Brute recursion is O(3^max(m,n)) — at m=n=500 that's ~7·10²³⁸ (dead universes). 2D DP is O(m·n) = 2.5·10⁶ ops = <30 ms; compressed to O(min(m,n)) space.
 <Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

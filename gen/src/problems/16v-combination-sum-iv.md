@@ -9,9 +9,7 @@ Count ordered sequences of `nums` summing to `target`. `[1,2]` and `[2,1]` are d
 **Example 1** — `nums=[1,2,3], target=4` → `7`
 **Example 2** — `nums=[9], target=3` → `0`
 
-**Constraints** — `1 ≤ n ≤ 200`.
-
-
+**Constraints** — `1 ≤ n ≤ 200`. Brute recursion tries every ordered combination — at target=1000 with 4 nums that's 4^1000 = 10⁶⁰² ops. Bottom-up DP counting orderings is O(target·n) = 10³·200 = 2·10⁵ ops.
 <Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

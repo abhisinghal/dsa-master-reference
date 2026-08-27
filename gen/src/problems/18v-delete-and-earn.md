@@ -10,9 +10,7 @@ Delete `x` to earn `x` points; also removes all `x-1` and `x+1`. Max points.
 **Example 2** — `nums=[2,2,3,3,3,4]` → `9`
 **Example 3** — `nums=[1,1,1,2,4,5,5,5,6]` → `18`
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`; `1 ≤ nums[i] ≤ 10⁴`. Brute subset enumeration is 2ⁿ — impossible past n=25. Reduction to House Robber gives O(n + max) ≈ 4·10⁴.
-
-
+**Constraints** — `1 ≤ n ≤ 2·10⁴`; `1 ≤ nums[i] ≤ 10⁴`. Brute subset enumeration is 2ⁿ — impossible past n=25. Reduction to House Robber gives O(n + max) ≈ 4·10⁴. Brute enumerates 2ⁿ subsets — at n=2·10⁴ = 10⁶⁰⁰⁰ (dead). Reduce to house-robber on bucketed sums → DP O(n + max) = 2·10⁴ + 10⁴ = 3·10⁴ ops = <2 ms.
 <Hints
   hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

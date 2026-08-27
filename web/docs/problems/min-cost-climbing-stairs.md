@@ -10,9 +10,7 @@ Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end
 **Example 2** — `cost=[1,100,1,1,1,100,1,1,100,1]` → `6` (skip the 100s)
 **Example 3** — `cost=[0,0,0,0]` → `0` (all free)
 
-**Constraints** — `2 ≤ n ≤ 1000`. Brute recursion is O(2ⁿ) ≈ 10³⁰¹ at n=1000. DP is O(n) = 1000.
-
-
+**Constraints** — `2 ≤ n ≤ 1000`. Brute recursion tries +1 or +2 at each step — O(2ⁿ) ≈ 10³⁰¹ ops at n=1000 (10¹ magnitude → dead universes over). Rolling DP is O(n) = 10⁶ pointer ops at hot-path scale = &lt;1 ms.
 <Hints
   hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

@@ -9,9 +9,7 @@ Length of longest palindromic subsequence.
 **Example 1** — `s="bbbab"` → `4`
 **Example 2** — `s="cbbd"` → `2`
 
-**Constraints** — `1 ≤ n ≤ 1000`.
-
-
+**Constraints** — `1 ≤ n ≤ 1000`. Brute enumerates 2ⁿ subsequences — at n=10³ that's 10³⁰¹ ops (universe-age × 10²⁸⁰). 2D interval DP is O(n²) = 10⁶ ops = ~5 ms.
 <Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

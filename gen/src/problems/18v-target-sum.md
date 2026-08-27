@@ -9,9 +9,7 @@ Assign + or − to each `nums[i]`; count ways to reach `target`.
 **Example 1** — `nums=[1,1,1,1,1], target=3` → `5`
 **Example 2** — `nums=[1], target=1` → `1`
 
-**Constraints** — `1 ≤ n ≤ 20`.
-
-
+**Constraints** — `1 ≤ n ≤ 20`. Brute enumerates ±assignments — O(2ⁿ) = 10⁶ ops at n=20 (fine), but 10³⁰ ops at n=100. Knapsack DP is O(n·sum) ≤ 20·10⁴ = 2·10⁵ ops.
 <Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

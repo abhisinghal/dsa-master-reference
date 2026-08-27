@@ -9,9 +9,7 @@ Return all permutations of distinct integers.
 **Example 1** — `nums=[1,2,3]` → 6 permutations
 **Example 2** — `nums=[1]` → `[[1]]`
 
-**Constraints** — `1 ≤ n ≤ 6`.
-
-
+**Constraints** — `1 ≤ n ≤ 6`. Brute checks all n^n placements: at n=8 that's ~10⁷ ops. Backtracking with used-mask visits exactly n! = 40320 at n=8; grows to 3·10⁶ at n=10.
 <Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

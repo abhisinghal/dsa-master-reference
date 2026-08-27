@@ -6,8 +6,7 @@
 
 Knight from top-left to bottom-right; each cell gives/takes HP; HP ≥ 1 always. Find min initial HP.
 
-**Constraints** — `1 ≤ m, n ≤ 200`. Brute enumerate paths + simulate is O(2^(m+n)) — impossible past 20×20. Reverse DP is O(mn) = 4·10⁴.
-
+**Constraints** — `1 ≤ m, n ≤ 200`. Brute enumerate paths + simulate is O(2^(m+n)) — 2^400 ≈ 10¹²⁰ paths at max, impossible past 20×20. Reverse DP is O(mn) = 4·10⁴ ops, ~1 ms; forward-DP attempt burns 5 hour of debugging before you realize you can't know future minimum HP.
 **Example 1** — `dungeon=[[-2,-3,3],[-5,-10,1],[10,30,-5]]` → `7`
 **Example 2** — `dungeon=[[0]]` → `1`
 **Example 3** — `dungeon=[[1,-3,3],[0,-2,0],[-3,-3,-3]]` → `3`

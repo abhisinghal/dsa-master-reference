@@ -10,9 +10,7 @@ Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 **Example 2** — `nums=[1,2,3,1]` → `4` (rob houses 0 and 2: `1+3=4`)
 **Example 3** — `nums=[1]` → `1`
 
-**Constraints** — `1 ≤ n ≤ 100`. Brute 2ⁿ subset enumeration is 2¹⁰⁰ = universe-age. Two linear-DP runs is O(n) = 100 ops.
-
-
+**Constraints** — `1 ≤ n ≤ 100`. Brute 2ⁿ subset enumeration at n=100 = 2¹⁰⁰ ≈ 10³⁰ ops — at 10⁹ ops/sec that's ~10¹³ year, ~1000× universe-age. Two linear-DP runs (skip first or last) is O(n) = 200 ops = trivial.
 <Hints
   hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

@@ -10,9 +10,7 @@ All **unique** subsets when nums may contain duplicates.
 **Example 2** — `nums=[0]` → `[[],[0]]`
 **Example 3** — `nums=[4,4,4,1,4]` → 10 unique subsets (naive gives 32, of which 22 are duplicates)
 
-**Constraints** — `1 ≤ n ≤ 10`.
-
-
+**Constraints** — `1 ≤ n ≤ 10`. Brute enumerates 2ⁿ subsets and dedups — at n=10 with duplicates that's 10³ subsets each hashed. Sort + skip-duplicates in backtrack yields exactly distinct subsets in one pass — 10⁶ ops even for max input.
 <Hints
   hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

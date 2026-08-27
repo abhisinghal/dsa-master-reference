@@ -10,9 +10,7 @@ All **unique** permutations of nums (may contain duplicates).
 **Example 2** — `nums=[1,2,3]` → 6 permutations (all distinct)
 **Example 3** — `nums=[2,2,2]` → `[[2,2,2]]` (only 1 unique)
 
-**Constraints** — `1 ≤ n ≤ 8`.
-
-
+**Constraints** — `1 ≤ n ≤ 8`. Brute enumerates n! permutations then dedups a set — at n=8 with heavy duplicates, dedup HashMap costs 10⁷ hashes. Sort + skip-duplicates in backtrack cuts to true-distinct permutations directly.
 <Hints
   hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

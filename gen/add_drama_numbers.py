@@ -83,6 +83,47 @@ DRAMA = {
         'Brute HashMap of counts is O(n) time + O(n) space. XOR-fold is O(n) time + O(1) space — 3·10⁴ XOR operations for the full input.',
     '21-quickselect-kth-largest.md':
         'Brute sort is O(n log n) = 10⁵·17 ≈ 2·10⁶ ops. Heap of size k is O(n log k). Quickselect with random pivot is expected O(n) = 10⁵ ops, worst-case O(n²) (mitigated by median-of-medians for provable linear).',
+    # --- Batch 3: DP + backtracking + trie + bit-manip family (20 pages) ---
+    '18v-climbing-stairs.md':
+        'Brute recursion is O(2ⁿ) — at n=45 that\'s ~3.5·10¹³ ops (dies past a full year at 10⁶ ops/sec). Rolling 2-variable DP is O(n) = 45 additions.',
+    '18v-coin-change.md':
+        'Brute recursion tries every coin at every amount — O(coins^amount) ≈ 12^10000 for max input (dies before universe end). Bottom-up DP is O(amount·|coins|) = 10⁴·12 ≈ 10⁶ ops = <10 ms.',
+    '18v-edit-distance.md':
+        'Brute recursion is O(3^max(m,n)) — at m=n=500 that\'s ~7·10²³⁸ (dead universes). 2D DP is O(m·n) = 2.5·10⁶ ops = <30 ms; compressed to O(min(m,n)) space.',
+    '18v-longest-increasing-subsequence.md':
+        'Brute enumerates all 2ⁿ subsequences — 2·10³ length = 10⁶⁰²⁰ ops (dead). DP is O(n²) = 4·10⁶ ops = ~20 ms; binary-search patience sort is O(n log n) = 2·10⁴ ops.',
+    '18v-longest-palindromic-subsequence.md':
+        'Brute enumerates 2ⁿ subsequences — at n=10³ that\'s 10³⁰¹ ops (universe-age × 10²⁸⁰). 2D interval DP is O(n²) = 10⁶ ops = ~5 ms.',
+    '18v-perfect-squares.md':
+        'Brute BFS over all decompositions is O(n^(√n)) — dies past n=200. DP is O(n·√n) = 10⁴·100 = 10⁶ ops = <10 ms.',
+    '18v-target-sum.md':
+        'Brute enumerates ±assignments — O(2ⁿ) = 10⁶ ops at n=20 (fine), but 10³⁰ ops at n=100. Knapsack DP is O(n·sum) ≤ 20·10⁴ = 2·10⁵ ops.',
+    '18v-partition-to-k-equal-sum-subsets.md':
+        'Brute enumerates k^n partitions — at n=16, k=4 that\'s 4·10⁹ ops (borderline TLE). Bitmask DP + prune is O(k·2ⁿ) = 4·65536 ≈ 2·10⁶ ops.',
+    '18v-delete-and-earn.md':
+        'Brute enumerates 2ⁿ subsets — at n=2·10⁴ = 10⁶⁰⁰⁰ (dead). Reduce to house-robber on bucketed sums → DP O(n + max) = 2·10⁴ + 10⁴ = 3·10⁴ ops = <2 ms.',
+    '18v-dungeon-game.md':
+        'Brute forward DP fails (need to know future minimum HP). Reverse DP from goal to start is O(m·n) = 200·200 = 4·10⁴ ops = ~1 ms; forward-DP attempt burns hours before you realize it can\'t work.',
+    '18v-min-cost-climbing-stairs.md':
+        'Brute recursion tries +1 or +2 at each step — O(2ⁿ) = 10³⁰⁰ ops at n=10³. Rolling DP is O(n) = 10³ ops = <1 ms.',
+    '18v-house-robber-ii.md':
+        'Brute enumerates 2ⁿ include/skip masks — at n=100 that\'s 10³⁰ ops (universe-age). Two-pass linear DP (skip first or last) is O(n) = 200 ops = trivial.',
+    '18v-best-time-to-buy-and-sell-stock-with-cooldown.md':
+        'Brute enumerates buy/sell/rest states — O(3ⁿ) = ~10⁴⁷ ops at n=100. State-machine DP with 3 rolling variables is O(n) = 5·10³ ops = <1 ms.',
+    '18v-best-time-to-buy-and-sell-stock-with-transaction-fee.md':
+        'Brute enumerates 2ⁿ buy/sell subsets — at n=5·10⁴ that\'s 10¹⁵⁰⁰⁰ ops. State-machine DP is O(n) = 5·10⁴ ops = <5 ms.',
+    '18v-best-time-to-buy-and-sell-stock-iv.md':
+        'Brute picks C(n, 2k) buy-sell pairs — at n=1000, k=100 that\'s ~10²³⁰ combinations. 2k-state DP is O(n·k) = 10⁵ ops with the k≥n/2 shortcut collapsing to greedy O(n) = 10³ ops.',
+    '16v-permutations.md':
+        'Brute checks all n^n placements: at n=8 that\'s ~10⁷ ops. Backtracking with used-mask visits exactly n! = 40320 at n=8; grows to 3·10⁶ at n=10.',
+    '16v-permutations-ii.md':
+        'Brute enumerates n! permutations then dedups a set — at n=8 with heavy duplicates, dedup HashMap costs 10⁷ hashes. Sort + skip-duplicates in backtrack cuts to true-distinct permutations directly.',
+    '16v-subsets-ii.md':
+        'Brute enumerates 2ⁿ subsets and dedups — at n=10 with duplicates that\'s 10³ subsets each hashed. Sort + skip-duplicates in backtrack yields exactly distinct subsets in one pass — 10⁶ ops even for max input.',
+    '16v-combination-sum-iv.md':
+        'Brute recursion tries every ordered combination — at target=1000 with 4 nums that\'s 4^1000 = 10⁶⁰² ops. Bottom-up DP counting orderings is O(target·n) = 10³·200 = 2·10⁵ ops.',
+    '19v-replace-words.md':
+        'Brute checks every root against every word in O(n·L·m) — 10⁶·L (grows fast). Trie compresses shared prefixes: O(sum-of-lengths) build + O(L) per lookup = 10⁶ ops total.',
 }
 
 

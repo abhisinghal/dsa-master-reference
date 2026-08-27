@@ -10,9 +10,7 @@ At most `k` transactions. Max profit.
 **Example 2** — `k=2, prices=[3,2,6,5,0,3]` → `7` (2→6 gives 4, 0→3 gives 3)
 **Example 3** — `k=0, prices=[1,3,2]` → `0`
 
-**Constraints** — `1 ≤ k ≤ 100`; `1 ≤ n ≤ 1000`. Brute enumerates C(n,2k) buy/sell combos ≈ 10^300. 2k-state DP is O(n·k) ≤ 10⁵ ops = <10ms.
-
-
+**Constraints** — `1 ≤ k ≤ 100`; `1 ≤ n ≤ 1000`. Brute picks C(n, 2k) buy-sell pairs — at n=1000, k=100 that's ~10²³⁰ combinations (10¹²⁰ dead universes). 2k-state DP is O(n·k) = 10⁵ ops = <5 min even before the k≥n/2 shortcut collapses it to greedy O(n) = ~10⁶ pointer ops on a hot service.
 <Hints
   hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

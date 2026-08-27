@@ -10,9 +10,7 @@ Return the length of the **longest strictly increasing subsequence** of `nums`.
 **Example 2** — `nums=[0,1,0,3,2,3]` → `4`
 **Example 3** — `nums=[7,7,7,7,7]` → `1`
 
-**Constraints** — `1 ≤ n ≤ 2500`; `-10⁴ ≤ nums[i] ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 2500`; `-10⁴ ≤ nums[i] ≤ 10⁴`. Brute enumerates all 2ⁿ subsequences — 2·10³ length = 10⁶⁰²⁰ ops (dead). DP is O(n²) = 4·10⁶ ops = ~20 ms; binary-search patience sort is O(n log n) = 2·10⁴ ops.
 <Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

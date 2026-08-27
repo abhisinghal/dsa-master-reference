@@ -9,9 +9,7 @@ Steps of 1 or 2. Number of ways to reach step `n`.
 **Example 1** — `n=2` → `2`
 **Example 2** — `n=3` → `3`
 
-**Constraints** — `1 ≤ n ≤ 45`.
-
-
+**Constraints** — `1 ≤ n ≤ 45`. Brute recursion is O(2ⁿ) — at n=45 that's ~3.5·10¹³ ops (dies past a full year at 10⁶ ops/sec). Rolling 2-variable DP is O(n) = 45 additions.
 <Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

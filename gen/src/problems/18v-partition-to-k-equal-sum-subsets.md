@@ -9,9 +9,7 @@ Split nums into k subsets each summing to `total/k`.
 **Example 1** — `nums=[4,3,2,3,5,2,1], k=4` → `true`
 **Example 2** — `nums=[1,2,3,4], k=3` → `false`
 
-**Constraints** — `1 ≤ n ≤ 16`.
-
-
+**Constraints** — `1 ≤ n ≤ 16`. Brute enumerates k^n partitions — at n=16, k=4 that's 4·10⁹ ops (borderline TLE). Bitmask DP + prune is O(k·2ⁿ) = 4·65536 ≈ 2·10⁶ ops.
 <Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

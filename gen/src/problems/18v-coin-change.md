@@ -10,9 +10,7 @@ Given `coins` (unbounded supply of each) and `amount`, return the **minimum** nu
 **Example 2** — `coins=[2], amount=3` → `-1`
 **Example 3** — `coins=[1], amount=0` → `0`
 
-**Constraints** — `1 ≤ #coins ≤ 12`; `0 ≤ amount ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ #coins ≤ 12`; `0 ≤ amount ≤ 10⁴`. Brute recursion tries every coin at every amount — O(coins^amount) ≈ 12^10000 for max input (dies before universe end). Bottom-up DP is O(amount·|coins|) = 10⁴·12 ≈ 10⁶ ops = <10 ms.
 <Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
