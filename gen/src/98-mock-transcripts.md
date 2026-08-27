@@ -1,6 +1,6 @@
 # Mock Interview Transcripts
 
-*The Interview Playbook (Ch. 01) described the 6-phase loop abstractly. This chapter shows what those phases sound like when a real senior candidate is speaking. Twelve transcripts spanning Easy → Hard across hashing, cache design, monotonic deque, DP, sort+sweep, graph traversal, BS-on-answer, trie+backtracking, backtracking, union-find, topological sort, and two-pointer proofs — annotated with what the interviewer is grading at each point.*
+*The Interview Playbook (Ch. 01) described the 6-phase loop abstractly. This chapter shows what those phases sound like when a real senior candidate is speaking. Fifteen transcripts spanning Easy → Hard across the canonical interview patterns — hashing, cache design, monotonic deque, DP, sort+sweep, graph traversal, BS-on-answer, trie+backtracking, backtracking, union-find, topological sort, two-pointer with proof, prefix-sum+hashing, heap/quickselect, and divide & conquer with merge — annotated with what the interviewer is grading at each point.*
 
 Read once for the shape, then again with the annotations covered — pretending you're the candidate — and see if you'd say the same things.
 
@@ -1218,6 +1218,270 @@ Note on ties (`height[l] == height[r]`): moving either side is safe because movi
 **Candidate**: Same shape (two pointers from ends), but the invariant is different — at each step you add water to the *shorter* side, tracking `max` seen on each side. Different loop body, same skeleton.
 
 > **What the interviewer sees:** Stated the invariant (why the shorter side must move) *and proved it under interviewer probing*, offered the tie-break rationale unprompted, and mapped to related two-pointer problems. Time: ~20 min. Hire, staff lean if the proof is really that crisp live.
+
+---
+
+## Transcript 13 — Subarray Sum Equals K (Medium prefix sum + hashing — should take 20–25 min)
+
+**Setup:** *"Given `nums[n]` and integer `k`, return the number of contiguous subarrays whose sum equals `k`."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Can `nums` contain negatives?*
+
+**Interviewer**: Yes — `-1000 ≤ nums[i] ≤ 1000`.
+
+*And `k` — can that be negative or zero?*
+
+**Interviewer**: Both possible.
+
+*Sizes?*
+
+**Interviewer**: `1 ≤ n ≤ 2·10⁴`.
+
+*Overlapping subarrays counted separately if they're different index ranges?*
+
+**Interviewer**: Yes.
+
+---
+
+**Candidate**: Examples. **[phase: examples]** `nums=[1,1,1], k=2` → `2` (`[0..1]` and `[1..2]`). `nums=[1,2,3], k=3` → `2` (`[0..1]` and `[2..2]`). `nums=[3,-3,3], k=3` → `3` (`[0]`, `[2]`, `[0..2]`).
+
+---
+
+**Candidate**: Brute force is O(n²). **[phase: brute]** Every pair `(i, j)` with a running sum. For `n = 2·10⁴` that's 4·10⁸ ops — borderline TLE and cache-hostile.
+
+Sliding window is out — the array can have negatives, so growing/shrinking the window doesn't monotonically change the sum. Standard trap: **do not use sliding window on unsorted arrays with negatives.**
+
+Key insight: **subarray sum `[i..j] = prefix[j+1] − prefix[i]`. We want this to equal k → `prefix[i] = prefix[j+1] − k`.** As we scan j left-to-right, at each position we need to count previous i's where `prefix[i] = prefix[j+1] − k`. **[phase: optimize]** That's a hashmap frequency lookup.
+
+- One pass, running `prefix` and `HashMap<sum, count>`.
+- Time O(n), space O(n).
+
+**Interviewer**: What's the initial state of the map?
+
+**Candidate**: `{0: 1}` — one occurrence of prefix 0 before any element. This handles the case where a subarray starting at index 0 sums to k. Missing this initial value is the #2 trap on this problem.
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+```java
+int subarraySum(int[] nums, int k) {
+    Map<Integer, Integer> seen = new HashMap<>();
+    seen.put(0, 1);                                 // empty prefix
+    int prefix = 0, count = 0;
+    for (int x : nums) {
+        prefix += x;
+        count += seen.getOrDefault(prefix - k, 0);  // look up complement FIRST
+        seen.merge(prefix, 1, Integer::sum);        // then insert current
+    }
+    return count;
+}
+```
+
+**Order matters.** Look up complement *before* inserting current prefix — otherwise if `k = 0` we'd double-count the empty subarray ending at each index.
+
+---
+
+**Candidate**: Trace `[1,-1,0], k=0`. **[phase: verify]** seen={0:1}. i=0: prefix=1, complement=1 — not in map, count=0. Insert 1. seen={0:1, 1:1}. i=1: prefix=0, complement=0 → +1 (count=1). Insert 0. seen={0:2, 1:1}. i=2: prefix=0, complement=0 → +2 (count=3). Insert 0. seen={0:3, 1:1}. Return 3. Subarrays: `[1,-1]`, `[1,-1,0]`, `[0]`. ✓
+
+**Interviewer**: What if I asked for the *longest* subarray with sum k?
+
+**Candidate**: Same prefix idea, but map stores the *first* index each prefix was seen. When we find `prefix − k` in the map, the length is `i − map.get(prefix−k)`. Track max. Also O(n).
+
+**Interviewer**: What if `nums` had only positives — could you do it in O(n) with O(1) space?
+
+**Candidate**: Yes — then sliding window applies. Grow right, shrink left when sum ≥ k. Positive-only guarantees monotonicity.
+
+> **What the interviewer sees:** Ruled out sliding window explicitly because of negatives, initialised the map with `{0:1}`, defended the lookup-before-insert order. Also mapped to the longest-variant with the correct twist (first-index map). Time: ~20 min. Strong hire.
+
+---
+
+## Transcript 14 — K Closest Points to Origin (Medium heap / quickselect — should take 20–30 min)
+
+**Setup:** *"Given `points[n][2]` and integer `k`, return the `k` closest points to the origin (Euclidean distance)."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Return order — does the output need to be sorted by distance?*
+
+**Interviewer**: Any order.
+
+*Sizes?*
+
+**Interviewer**: `1 ≤ k ≤ n ≤ 10⁴`.
+
+*Ties — if two points are the same distance, does it matter which one I return?*
+
+**Interviewer**: Either.
+
+---
+
+**Candidate**: Example. **[phase: examples]** `points=[[1,3],[-2,2]], k=1`. Distances squared: 10, 8. Return `[[-2,2]]`.
+
+Note I'll compare **squared distances** — `x² + y²` — to avoid `sqrt` and floating-point. Strictly monotonic in real distance, cheaper.
+
+---
+
+**Candidate**: Three viable approaches. **[phase: brute/optimize]**
+
+1. **Sort all n by distance → return first k.** O(n log n) time, O(n) sort space. Straightforward.
+2. **Max-heap of size k.** Push each point; if heap size > k, pop max. At the end, heap contains the k closest. O(n log k) time, O(k) space. Better when k ≪ n.
+3. **Quickselect for kth distance.** Partition around a pivot until the kth element is placed. Expected O(n), worst-case O(n²). O(1) extra space (in-place). Wins when we don't need the k elements sorted.
+
+Interviewer, I'll implement the max-heap version first because it's `O(n log k)` and always well-behaved. I'll mention quickselect but not code it unless you want.
+
+**Interviewer**: Max-heap it is. Why not min-heap?
+
+**Candidate**: With a max-heap of size k, popping the largest evicts the worst survivor — cheap, O(log k). With a min-heap you'd need to hold all n, then pop k times → O(n log n), no savings.
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+```java
+int[][] kClosest(int[][] points, int k) {
+    PriorityQueue<int[]> maxHeap = new PriorityQueue<>(
+        (a, b) -> dist(b) - dist(a));               // max-heap on dist²
+    for (int[] p : points) {
+        maxHeap.offer(p);
+        if (maxHeap.size() > k) maxHeap.poll();
+    }
+    return maxHeap.toArray(new int[0][]);
+}
+int dist(int[] p) { return p[0]*p[0] + p[1]*p[1]; }
+```
+
+Two nits:
+1. `dist(b) - dist(a)` can overflow if `|x|, |y|` are near `Integer.MAX_VALUE`. Given the LeetCode range (`-10⁴`), max `dist² ≈ 2·10⁸`, difference fits. In production I'd use `Integer.compare(dist(b), dist(a))`.
+2. `k > n` isn't in constraints here but I'd guard for it in production.
+
+---
+
+**Candidate**: Trace `points=[[3,3],[5,-1],[-2,4]], k=2`. **[phase: verify]** dists: 18, 26, 20. Push [3,3] (heap: [3,3]). Push [5,-1] (heap: {[5,-1],[3,3]}, top by max dist = [5,-1]). Size=2, no pop. Push [-2,4] (heap now has 3 entries: [5,-1] top=26, [-2,4]=20, [3,3]=18). Pop the max ([5,-1]). Heap: {[-2,4] top=20, [3,3]=18}. Return `[[-2,4], [3,3]]`. ✓ (any order acceptable)
+
+**Interviewer**: Quickselect — sketch it.
+
+**Candidate**: Choose a pivot point (random). Partition the array so all points with `dist < pivotDist` come before it and all `>` come after. Look at the pivot's final index `p`. If `p == k-1`, done — the first k elements are the answer. If `p > k-1`, recurse into the left half. Else recurse into the right half looking for `k - (p+1)` more. Random pivot gives expected O(n); the worst case O(n²) can be mitigated by median-of-medians for provable O(n).
+
+**Interviewer**: If `n = 10⁹` streamed and k = 1000?
+
+**Candidate**: Max-heap of size k over the stream. Space O(k) = 1000. Time O(n log k) = 10⁹ · 10 = 10¹⁰ ops — a lot but linear-time-ish. Quickselect can't stream (needs full array).
+
+> **What the interviewer sees:** Named all three approaches with trade-offs, justified max-heap over min-heap, called out squared-distance and overflow as separate concerns, sketched quickselect on demand, and explained streaming constraint. Time: ~25 min. Strong hire.
+
+---
+
+## Transcript 15 — Count of Range Sum (Hard divide & conquer — should take 35–45 min)
+
+**Setup:** *"Given `nums[n]` (signed 32-bit) and two integers `lower`, `upper`, count the number of range sums `S(i, j) = nums[i] + ... + nums[j−1]` such that `lower ≤ S(i, j) ≤ upper`."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Are indices `i < j` strict? So single-element ranges are counted with `j = i+1`?*
+
+**Interviewer**: Yes, `i ≤ j` with `j−i ≥ 1`. Single-element ranges are counted.
+
+*Values can overflow 32-bit sums?*
+
+**Interviewer**: Yes — use `long` for sums.
+
+*Sizes?*
+
+**Interviewer**: `n ≤ 10⁵`, `-2³¹ ≤ nums[i] ≤ 2³¹−1`, `lower, upper` fit in int.
+
+---
+
+**Candidate**: Example. **[phase: examples]** `nums=[-2,5,-1], lower=-2, upper=2`. Prefix sums (with 0 upfront): `[0,-2,3,2]`. Range sums: `S(0,1)=-2`, `S(0,2)=3`, `S(0,3)=2`, `S(1,2)=5`, `S(1,3)=4`, `S(2,3)=-1`. In `[-2, 2]`: `-2, 2, -1` → 3.
+
+---
+
+**Candidate**: Brute is O(n²). **[phase: brute]** For `n = 10⁵` that's 10¹⁰ — dead.
+
+Reformulation. Let `P[i]` be the prefix sum with `P[0] = 0`. Then `S(i, j) = P[j] − P[i]`. We're counting pairs `(i, j)` with `i < j` and `lower ≤ P[j] − P[i] ≤ upper`.
+
+That reduces to: **for each `j`, count the number of `i < j` with `P[j] − upper ≤ P[i] ≤ P[j] − lower`.**
+
+Three canonical solutions to that class of "count pairs in a range" problem: **[phase: optimize]**
+
+1. **BIT / Fenwick tree over coordinate-compressed prefixes.** O(n log n). Complex to code live.
+2. **Merge-sort-based divide & conquer.** O(n log n). Also complex but reuses standard merge sort.
+3. **Balanced BST / TreeMap.** O(n log n) with a rank-augmented tree — `java.util.TreeMap` doesn't expose rank, so this is really only clean in C++'s policy tree.
+
+I'll go with **merge sort D&C.** Reuses a familiar skeleton and avoids the BIT compression step.
+
+**The idea.** After computing prefix `P[0..n]`, merge-sort it. During the merge step, once left half `P[lo..mid]` and right half `P[mid+1..hi]` are each individually sorted, we can — for every `j` in the right half — count the number of `i` in the left half with `P[i] ∈ [P[j]−upper, P[j]−lower]`. Both bounds are moving windows over the sorted left half, so with two pointers we get O(mid − lo) per right index, O(n) per merge, O(n log n) total.
+
+**Why this works.** Every pair `(i, j)` with `i < j` gets classified during exactly one merge — the one where they land on opposite sides. So iterating `j` on the right and counting `i` on the left across all merges gives every pair exactly once.
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+```java
+int countRangeSum(int[] nums, int lower, int upper) {
+    long[] prefix = new long[nums.length + 1];
+    for (int i = 0; i < nums.length; i++)
+        prefix[i + 1] = prefix[i] + nums[i];
+    return mergeCount(prefix, 0, prefix.length, lower, upper, new long[prefix.length]);
+}
+int mergeCount(long[] sums, int lo, int hi, int lower, int upper, long[] buf) {
+    if (hi - lo <= 1) return 0;
+    int mid = (lo + hi) >>> 1;
+    int total = mergeCount(sums, lo, mid, lower, upper, buf)
+              + mergeCount(sums, mid, hi, lower, upper, buf);
+
+    // count valid pairs across the split
+    int j = mid, k = mid;
+    for (int i = lo; i < mid; i++) {
+        while (k < hi && sums[k] - sums[i] < lower) k++;      // first ≥ lower
+        while (j < hi && sums[j] - sums[i] <= upper) j++;     // first > upper
+        total += j - k;
+    }
+
+    // standard merge of two sorted halves
+    int p = lo, q = mid, r = lo;
+    while (p < mid && q < hi) buf[r++] = sums[p] <= sums[q] ? sums[p++] : sums[q++];
+    while (p < mid) buf[r++] = sums[p++];
+    while (q < hi) buf[r++] = sums[q++];
+    System.arraycopy(buf, lo, sums, lo, hi - lo);
+
+    return total;
+}
+```
+
+Traps to flag aloud:
+1. **`long[] prefix`** — the sum can exceed 32-bit range.
+2. **Two-pointer bounds during counting.** `j` advances until `sums[j] − sums[i] > upper`, so valid `j` count is `j − k`, exclusive at upper end and inclusive at lower end. Off-by-one here silently miscounts.
+3. **Pointers `j, k` do not reset between successive `i`s** — as `sums[i]` decreases (sorted left half is ascending in i, so `sums[i]` grows; the *threshold* `sums[i] + lower` grows; so both `j` and `k` only move rightward). This monotonicity is what makes the amortised O(n) merge count possible.
+4. **`(lo + hi) >>> 1`** for the mid to avoid overflow.
+
+---
+
+**Candidate**: Trace briefly on `[-2,5,-1], lower=-2, upper=2`. **[phase: verify]** prefix = `[0,-2,3,2]`. Split `[0,4)` into `[0,2)` and `[2,4)`.
+- Left `[0,2)` = `[0,-2]`. Recurse: sub-halves size 1, no cross pairs, merge → sorted `[-2,0]`.
+- Right `[2,4)` = `[3,2]`. Same → sorted `[2,3]`.
+- Cross count: `sums` is now `[-2,0,2,3]`. Left = indices 0,1 (`-2, 0`). Right = 2, 3 (`2, 3`).
+  - i=0: k advances while `sums[k] − (-2) < -2` → `sums[2]-(-2)=4 ≥ -2`, k stays at 2. j advances while `sums[j] − (-2) ≤ 2` → `sums[2]=2, 2-(-2)=4 > 2`, j stays at 2. `j-k = 0`.
+  - i=1: k while `sums[k]-0 < -2` → `2 ≥ -2`, k stays. j while `sums[j] - 0 ≤ 2` → `sums[2]=2 ≤ 2` (advance j=3), `sums[3]=3 > 2` (stop). `j-k = 3-2 = 1`. **1 cross pair here.**
+- Cross count = 1. Merge halves. Recurse totals from the two sub-merges also produce pairs — the trace would take another page but the final answer works out to 3. ✓
+
+**Interviewer**: What if I asked for the *list* of ranges, not the count?
+
+**Candidate**: The classical answer is: don't. It's Ω(n²) in the worst case (all sums in range) so you can't beat brute. The count problem has structure the enumeration problem doesn't.
+
+**Interviewer**: If `n = 10⁷`?
+
+**Candidate**: O(n log n) with the merge-sort variant is ~2·10⁸ ops — a few seconds. Fine offline. For a hot path I'd move to BIT with coordinate compression — same asymptote but 3× smaller constant.
+
+> **What the interviewer sees:** Named all three viable O(n log n) approaches with trade-offs, chose merge-sort D&C with reasoning, explicitly identified the two-pointer *monotonicity* argument that makes it work, flagged four separate traps, and gave a partial trace before hand-waving with confidence. Time: ~40 min. Hire, staff lean.
 
 ---
 
