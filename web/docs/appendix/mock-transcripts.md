@@ -1,6 +1,6 @@
 # Mock Interview Transcripts
 
-*The Interview Playbook (Ch. 01) described the 6-phase loop abstractly. This chapter shows what those phases sound like when a real senior candidate is speaking. Six transcripts — Easy, Medium (LRU / Coin Change / Merge Intervals / Islands), Hard — annotated with what the interviewer is grading at each point.*
+*The Interview Playbook (Ch. 01) described the 6-phase loop abstractly. This chapter shows what those phases sound like when a real senior candidate is speaking. Nine transcripts spanning Easy → Hard across hashing, cache design, monotonic deque, DP, sort+sweep, graph traversal, BS-on-answer, trie+backtracking, and pure backtracking — annotated with what the interviewer is grading at each point.*
 
 Read once for the shape, then again with the annotations covered — pretending you're the candidate — and see if you'd say the same things.
 
@@ -694,6 +694,319 @@ Critical detail: **mark visited before enqueue, not on dequeue.** If you mark on
 **Candidate**: Same worst-case complexity but higher constant factor and more code — no reason to prefer it here. Union-Find shines when the graph structure changes over time (add/remove land cells).
 
 &gt; **What the interviewer sees:** Chose BFS over DFS with a stack-overflow justification, named the enqueue-time marking trap, gave two well-reasoned follow-ups (sparse via HashSet, immutable via visited array). Time: ~25 min. Strong hire.
+
+---
+
+## Transcript 7 — Koko Eating Bananas (Medium BS-on-answer — should take 20–30 min)
+
+**Setup:** *"Koko has `piles[i]` bananas in pile `i`. She eats at rate `k` bananas/hour: each hour she picks a pile and eats `min(k, pilesLeft)`. Return the minimum `k` so she finishes within `h` hours."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Can `k` be a non-integer?*
+
+**Interviewer**: Integer.
+
+*Sizes?*
+
+**Interviewer**: `1 ≤ piles.length ≤ 10⁴`, `piles[i] ≤ 10⁹`, `h ≤ 10⁹`, `h ≥ piles.length`.
+
+*So `h ≥ piles.length` — she always has enough hours to at least visit each pile once?*
+
+**Interviewer**: Correct.
+
+*If `k = 5` and pile is `3`, does she waste the extra hour, or grab from another pile?*
+
+**Interviewer**: No cross-pile — she eats `min(k, pile)` this hour, then moves on next hour.
+
+---
+
+**Candidate**: Example. **[phase: examples]** `piles=[3,6,7,11], h=8`. If `k=4`: pile 3 → 1h, pile 6 → 2h (4+2), pile 7 → 2h (4+3), pile 11 → 3h (4+4+3). Total 8h ✓. If `k=3`: 1+2+3+4 = 10h, too slow. Answer 4.
+
+---
+
+**Candidate**: The brute is: try `k = 1, 2, 3, …` until we find one that fits. **[phase: brute]** Upper bound: `k = max(piles)` always finishes in `piles.length` hours ≤ h. So worst-case search space is `10⁹` values of k, each costing O(n) to test = 10¹³ ops. Dead.
+
+Key observation: **feasibility is monotonic in k**. If k works, k+1 also works (Koko never gets slower). So the set of feasible k's is `[k*, ∞)` — a contiguous suffix. That's a search-boundary → **binary search on answer**. **[phase: optimize]**
+
+- Range: `lo = 1`, `hi = max(piles)`.
+- Predicate `canFinish(k)`: `Σ ceil(pile / k) ≤ h`.
+- Standard "min k such that P(k) is true" binary search.
+
+**Interviewer**: What's the complexity?
+
+**Candidate**: `O(n log(max(piles)))` = 10⁴ · 30 = 3·10⁵ ops. Comfortable.
+
+**Interviewer**: How do you compute `ceil(pile / k)` cleanly?
+
+**Candidate**: `(pile + k - 1) / k` for positive integers — no floats, no overflow if piles ≤ 10⁹ and k ≥ 1 (max intermediate is ~2·10⁹, fits in long).
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+
+
+```java
+int minEatingSpeed(int[] piles, int h) {
+    int lo = 1, hi = 0;
+    for (int p : piles) hi = Math.max(hi, p);
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;                // avoid overflow
+        if (canFinish(piles, mid, h)) hi = mid;      // feasible → try slower
+        else lo = mid + 1;
+    }
+    return lo;
+}
+boolean canFinish(int[] piles, int k, int h) {
+    long hours = 0;
+    for (int p : piles) hours += (p + k - 1L) / k;   // long promotion
+    return hours <= h;
+}
+```
+
+
+
+Two things I'd flag:
+1. `mid = lo + (hi - lo) / 2` — not `(lo + hi) / 2`. Bentley's overflow bug; classic trap.
+2. `+ k - 1L` (literal `1L`) — forces the arithmetic into long so `p + k - 1` doesn't overflow int at `p ≈ 10⁹, k ≈ 10⁹`.
+
+---
+
+**Candidate**: Trace. **[phase: verify]** `piles=[3,6,7,11], h=8`, `lo=1, hi=11`. mid=6: hours=1+1+2+2=6≤8 ✓ → hi=6. mid=3: hours=1+2+3+4=10&gt;8 ✗ → lo=4. mid=5: 1+2+2+3=8≤8 ✓ → hi=5. mid=4: 1+2+2+3=8≤8 ✓ → hi=4. lo=hi=4, exit, return 4. ✓
+
+**Interviewer**: What if `piles[i]` was `10¹⁸` and there were `10⁵` piles?
+
+**Candidate**: Still fits — I already used `long` in `canFinish`, and `hi = max(piles)` fits in `long`. Just change types. `O(n log 10¹⁸)` = 10⁵ · 60 = 6·10⁶ ops.
+
+**Interviewer**: What if the constraint changed — Koko *can* combine piles within an hour (up to k total across piles)?
+
+**Candidate**: Then hours = `ceil(sum(piles) / k)` — a totally different problem, with closed-form min k. Much easier.
+
+&gt; **What the interviewer sees:** Named monotonicity as the reason binary search applies (not just "let's binary search it"). Used `long` and overflow-safe `mid` deliberately. Time: ~20 min. Strong hire.
+
+---
+
+## Transcript 8 — Word Search II (Hard trie + backtracking — should take 35–45 min)
+
+**Setup:** *"Given `board[m][n]` of letters and a dictionary `words`, return every word in `words` that can be traced through 4-adjacent cells without reusing a cell in the same word."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Case sensitive?*
+
+**Interviewer**: All lowercase.
+
+*Grid and dictionary sizes?*
+
+**Interviewer**: `m, n ≤ 12`, up to `3·10⁴` words, each ≤ 10 chars.
+
+*Can words repeat in the dictionary?*
+
+**Interviewer**: Assume distinct.
+
+*If a word appears traceable in two different ways, do I include it twice in the output?*
+
+**Interviewer**: No — each output word appears at most once.
+
+---
+
+**Candidate**: Example. **[phase: examples]**
+
+
+
+```
+o a a n
+e t a e
+i h k r
+i f l v      words = [oath, pea, eat, rain]
+```
+
+
+
+`oath` traces `(0,0)→(0,1)→(1,1)→(2,1)`. `eat` traces `(1,0)→(1,1)→(1,2)`. `pea` and `rain` don't trace. Output `[oath, eat]`.
+
+---
+
+**Candidate**: Brute. **[phase: brute]** For each word, run classic "Word Search I" DFS from every cell. Per-word cost: `O(m·n · 4^L)`. Over `k = 3·10⁴` words with `L = 10`: `3·10⁴ · 144 · 4^10 ≈ 4·10¹²` ops. Dead.
+
+The pain: 30,000 words with lots of shared prefixes are all re-tracing the same board positions independently.
+
+Insight: **share the prefix walk across all words simultaneously.** That's a **trie**. **[phase: optimize]** Build a trie from the dictionary. Do one DFS over the board; at each step, the current trie node tells us which characters are worth pursuing. If the character isn't in the trie, prune the entire subtree — every word that could have gone through that cell dies at once.
+
+- Complexity: `O(m·n · 4^L)` — the L exponent stays but the k multiplier is gone. Rough estimate: `144 · 4^10 ≈ 1.5·10⁸` ops. ~1s.
+- Space: `O(sum(word lengths))` for the trie.
+
+**Interviewer**: How do you record which words were found without duplicates?
+
+**Candidate**: Store the full word string on the trie node that terminates it. When DFS visits that node, add the word to the output *and null out the pointer* so we don't add it again from another traversal.
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+
+
+```java
+class TrieNode {
+    Map<Character, TrieNode> ch = new HashMap<>();
+    String word;                                     // set at end-of-word
+}
+List<String> findWords(char[][] b, String[] words) {
+    TrieNode root = new TrieNode();
+    for (String w : words) {
+        TrieNode cur = root;
+        for (char c : w.toCharArray())
+            cur = cur.ch.computeIfAbsent(c, k -> new TrieNode());
+        cur.word = w;
+    }
+    List<String> out = new ArrayList<>();
+    for (int r = 0; r < b.length; r++)
+        for (int c = 0; c < b[0].length; c++)
+            dfs(b, r, c, root, out);
+    return out;
+}
+void dfs(char[][] b, int r, int c, TrieNode node, List<String> out) {
+    if (r < 0 || r >= b.length || c < 0 || c >= b[0].length) return;
+    char ch = b[r][c];
+    if (ch == '#') return;                           // visited sentinel
+    TrieNode next = node.ch.get(ch);
+    if (next == null) return;                        // trie-driven prune
+    if (next.word != null) { out.add(next.word); next.word = null; }
+    b[r][c] = '#';
+    dfs(b, r + 1, c, next, out);
+    dfs(b, r - 1, c, next, out);
+    dfs(b, r, c + 1, next, out);
+    dfs(b, r, c - 1, next, out);
+    b[r][c] = ch;                                    // restore for siblings
+}
+```
+
+
+
+Two traps that get candidates:
+1. **Restore the cell** after DFS returns. Otherwise a sibling path can't reuse that cell for a *different* word.
+2. **Null the `word` field** after collecting. Otherwise a word with two traces gets emitted twice.
+
+Optional micro-optimization (I'd mention but not code): after collecting `next.word`, if `next.ch` is empty, we can also *unlink* `next` from its parent — the trie shrinks as we harvest. Cuts runtime measurably on adversarial inputs.
+
+---
+
+**Candidate**: Trace `oath`. **[phase: verify]** DFS at `(0,0)`, ch=`o`, trie has `root→o`. At `(0,1)`, ch=`a`, trie `o→a`. At `(1,1)`, ch=`t`, trie `a→t`. At `(2,1)`, ch=`h`, trie `t→h`, `h.word="oath"` → collect, null it. Backtrack, restore cells. Later trace `eat` from `(1,0)`, similar. Return `[oath, eat]`. ✓
+
+**Interviewer**: What if the same word could appear via two different cell paths and you needed to return *both* paths?
+
+**Candidate**: Don't null the word — keep collecting. Track the current path in a `Deque<int[]>` and clone it when you hit an end. Output changes from `List<String>` to `List<List<int[]>>`.
+
+**Interviewer**: What if the dictionary is 10⁷ words, not 3·10⁴?
+
+**Candidate**: HashMap children become the memory bottleneck. Two moves: (a) switch to `TrieNode[26]` — array indexed by `c - 'a'` — cache-friendlier and 8× smaller header overhead; (b) if that still doesn't fit, use a compressed radix trie / Patricia trie. Either brings memory to a few GB, which is workable.
+
+&gt; **What the interviewer sees:** Ruled brute force out with concrete op count, named the trie's role as "prune-a-subtree-per-cell", called out both restoration and word-nulling traps proactively, offered a micro-opt (trie shrinking) and a scaling answer (array children / Patricia). Time: ~35 min. Hire, strong lean staff.
+
+---
+
+## Transcript 9 — N-Queens (Hard backtracking — should take 30–40 min)
+
+**Setup:** *"Return all distinct board configurations of placing `n` queens on an `n×n` board so that no two attack each other."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Return format — the board strings with `.` for empty and `Q` for queen?*
+
+**Interviewer**: Yes, `List<List<String>>` where each inner list is `n` strings of length `n`.
+
+*`n` range?*
+
+**Interviewer**: `1 ≤ n ≤ 9`.
+
+*"Distinct configurations" — do rotations and reflections count as separate?*
+
+**Interviewer**: Yes, all count separately.
+
+---
+
+**Candidate**: Examples. **[phase: examples]** `n=1` → `[[Q]]`. `n=4` → 2 solutions. `n=8` → 92 solutions (classical result).
+
+---
+
+**Candidate**: Brute. **[phase: brute]** Place a queen in every square, then every remaining, and so on — check attack rules only at the end. That's `C(n², n)` placements — `C(64, 8) ≈ 4·10⁹` for n=8. Wasteful.
+
+Big pruning insight: **exactly one queen per row**. That means we decide row-by-row. Placing queen in row `r` at column `c`, we forbid: column `c`, diagonal `r+c`, anti-diagonal `r−c`. **[phase: optimize]** Classical backtracking.
+
+- Attack sets: `boolean[] cols`, `boolean[] diag1` indexed by `r+c` (range `[0, 2n-2]`), `boolean[] diag2` indexed by `r-c+n-1` (offset to non-negative).
+- Recurse over rows. For each row, try each column not blocked; place, recurse, undo.
+- Complexity: worst-case `O(n!)` — much less in practice due to attack pruning. For n=9, subseconds.
+
+**Interviewer**: Why not track a `boolean[][] board` of every attacked cell?
+
+**Candidate**: Two reasons. First, updating an entire attack pattern on place/unplace is `O(n)` per operation vs `O(1)` with three arrays. Second, undoing is trickier when multiple queens share attack coverage — you'd need reference counts. Three arrays is cleaner and provably correct.
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+
+
+```java
+List<List<String>> solveNQueens(int n) {
+    List<List<String>> res = new ArrayList<>();
+    int[] queens = new int[n];                       // queens[r] = col
+    boolean[] cols = new boolean[n];
+    boolean[] d1 = new boolean[2*n - 1];             // r + c
+    boolean[] d2 = new boolean[2*n - 1];             // r - c + (n-1)
+    backtrack(res, queens, 0, n, cols, d1, d2);
+    return res;
+}
+void backtrack(List<List<String>> res, int[] queens, int r, int n,
+               boolean[] cols, boolean[] d1, boolean[] d2) {
+    if (r == n) { res.add(render(queens, n)); return; }
+    for (int c = 0; c < n; c++) {
+        int a = r + c, b = r - c + n - 1;
+        if (cols[c] || d1[a] || d2[b]) continue;
+        queens[r] = c;
+        cols[c] = d1[a] = d2[b] = true;
+        backtrack(res, queens, r + 1, n, cols, d1, d2);
+        cols[c] = d1[a] = d2[b] = false;             // undo — mirror the set
+    }
+}
+List<String> render(int[] queens, int n) {
+    List<String> board = new ArrayList<>(n);
+    for (int r = 0; r < n; r++) {
+        char[] row = new char[n];
+        Arrays.fill(row, '.');
+        row[queens[r]] = 'Q';
+        board.add(new String(row));
+    }
+    return board;
+}
+```
+
+
+
+Traps:
+1. **Diagonal indices must be non-negative** — the `+ n - 1` offset for `r - c` is easy to skip; you'll get `ArrayIndexOutOfBounds` on the second row.
+2. **Undo mirrors set precisely.** Any missed reset silently breaks a later branch. In code review I'd insist these two lines sit adjacent so the symmetry is visible.
+
+---
+
+**Candidate**: Trace `n=4`. **[phase: verify]** Row 0: try c=0 → set. Row 1: c=0 blocked (cols), c=1 blocked (d1: 0+0=0 vs 1+1=2, no — actually 1+1=2, 1-1+3=3, both free) actually let me re-trace. `queens[0]=0`, cols[0]=d1[0]=d2[3]=true. Row 1, try c=0 (cols[0] blocked), c=1 (d2: 1-1+3=3, blocked). c=2 (d1: 1+2=3 free, d2: 1-2+3=2 free, cols[2] free) → place. Continue row 2, no valid c → backtrack row 1 to c=3, still no… eventually finds `(0,1),(1,3),(2,0),(3,2)` and `(0,2),(1,0),(2,3),(3,1)`. Two solutions. ✓
+
+**Interviewer**: Return only the count instead of boards — how does that change things?
+
+**Candidate**: Drop the render, replace `res.add(...)` with `count++`. That's [N-Queens II](https://leetcode.com/problems/n-queens-ii/). Same complexity.
+
+**Interviewer**: What's the fastest known algorithm for counting?
+
+**Candidate**: Bitmask DP with the `cols | d1 | d2` bitmask as state — one 64-bit register handles n ≤ 32. Speedup mostly comes from bit tricks: `int free = ~(cols | d1 | d2) & mask; while (free != 0) { int p = free & -free; recurse(...); free ^= p; }`. Same asymptotic, ~10× constant factor faster.
+
+&gt; **What the interviewer sees:** Justified the "one queen per row" pruning as *the* insight, chose 3-array attack tracking with reasoning, called out the diagonal-offset trap before it happened, and answered both follow-ups without hesitation (including the bit-DP acceleration for the counting variant). Time: ~35 min. Hire, staff lean.
 
 ---
 

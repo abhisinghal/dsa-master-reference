@@ -1,5 +1,10 @@
 [
   {
+    "title": "Mock Interview Transcripts",
+    "url": "/appendix/mock-transcripts",
+    "updated": "2026-08-27T06:56:41.000Z"
+  },
+  {
     "title": "Topological Sort",
     "url": "/patterns/topological-sort",
     "updated": "2026-08-26T11:09:17.000Z"
@@ -22,11 +27,6 @@
   {
     "title": "Sliding Window",
     "url": "/patterns/sliding-window",
-    "updated": "2026-08-26T11:02:39.000Z"
-  },
-  {
-    "title": "Two Pointers",
-    "url": "/patterns/two-pointers",
     "updated": "2026-08-26T11:02:39.000Z"
   }
 ]
