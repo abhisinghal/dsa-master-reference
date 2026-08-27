@@ -10,11 +10,11 @@ Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 **Example 2** — `people=[3,2,2,1], limit=3` → `3`
 **Example 3** — `people=[3,5,3,4], limit=5` → `4`
 
-**Constraints** — `1 ≤ n ≤ 5·10⁴`.
+**Constraints** — `1 ≤ n ≤ 5·10⁴`. Brute enumeration of all pairings is `(n/2)! ≈ 10²⁰⁰⁰⁰` — impossible. Sort + two-pointer greedy is O(n log n).
 
 
 <Hints
-  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint1="Sort first if the input isn't already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
 />
@@ -26,11 +26,19 @@ Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 
 
 
-## Approach — Sort + greedy two-pointer (canonical)
+## Approach 1 — Brute enumerate pairings (reference)
 
-**Insight.** Sort. Pair heaviest with lightest if possible; otherwise heaviest goes alone.
+**Intuition.** For each way to partition people into groups of 1 or 2 (each ≤ limit), count boats. Return the minimum.
 
-**Why optimal.** If heaviest can't pair with lightest, they can't pair with anyone.
+**Complexity** — Time **O((n/2)!)** partitions. At n=10 that's 3,628,800 — feasible but stops there. Just state this for completeness. *In an interview* say "there's a greedy exchange argument that gives O(n log n)."
+
+---
+
+## Approach 2 — Sort + greedy two-pointer (canonical)
+
+**Insight.** Sort. Pair the heaviest with the lightest if they fit; otherwise the heaviest goes alone.
+
+**Why optimal — exchange argument.** If the heaviest person can't share with the lightest available, they can't share with anyone (everyone else is at least as heavy as the lightest). So the heaviest is *forced* into a boat alone or with the lightest — no other choice can help.
 
 
 
@@ -60,7 +68,7 @@ int numRescueBoats(int[] people, int limit) {
   ]'
 />
 
-**Complexity** — Time **O(n log n)**; Space **O(1)**.
+**Complexity** — Time **O(n log n)**; Space **O(1)**. *Say aloud in an interview:* "same 'heaviest + lightest' exchange argument as fair-pairing problems in Balanced Load Assignment and Sum-of-Pairs Minimization."
 
 ---
 
@@ -72,7 +80,8 @@ int numRescueBoats(int[] people, int limit) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + greedy | **O(n log n)** | O(1) | canonical |
+| Brute pairings | O((n/2)!) | O(n) | Reference; dies past n=12 |
+| **Sort + greedy 2p** | **O(n log n)** | O(1) | **Canonical** |
 
 ## When to use which
 

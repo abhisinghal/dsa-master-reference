@@ -6,16 +6,17 @@
 
 Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly more. Minimize total.
 
-**Example 1** — `ratings=[1,0,2]` → `5`
-**Example 2** — `ratings=[1,2,2]` → `4`
+**Example 1** — `ratings=[1,0,2]` → `5` (candies = 2,1,2)
+**Example 2** — `ratings=[1,2,2]` → `4` (candies = 1,2,1)
+**Example 3** — `ratings=[1,3,4,5,2]` → `11` (candies = 1,2,3,4,1)
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`.
+**Constraints** — `1 ≤ n ≤ 2·10⁴`. Brute enumeration is 2·10⁴ ! — impossible. Two-pass is O(n) = 2·10⁴ ops (~50 µs).
 
 
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
-  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
-  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+  hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For 'first duplicate', a `HashSet` and single-pass `add()` is enough."
 />
 ---
 
@@ -25,9 +26,34 @@ Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly 
 
 
 
-## Approach — Two-pass sweep (canonical)
+## Approach 1 — Repeated pass until stable
 
-**Insight.** Left→right: enforce "left neighbor". Right→left: enforce "right neighbor". Take max at each position.
+**Intuition.** Give everyone 1 candy. Sweep left-to-right and right-to-left repeatedly, fixing any violation. Stop when no changes.
+
+```java
+int candyBrute(int[] r) {
+    int n = r.length;
+    int[] c = new int[n];
+    Arrays.fill(c, 1);
+    boolean changed = true;
+    while (changed) {
+        changed = false;
+        for (int i = 1; i < n; i++)
+            if (r[i] > r[i-1] && c[i] <= c[i-1]) { c[i] = c[i-1] + 1; changed = true; }
+        for (int i = n - 2; i >= 0; i--)
+            if (r[i] > r[i+1] && c[i] <= c[i+1]) { c[i] = c[i+1] + 1; changed = true; }
+    }
+    int s = 0; for (int x : c) s += x; return s;
+}
+```
+
+**Complexity** — Time worst-case **O(n²)** if the ratings are strictly increasing then decreasing; Space **O(n)**. *In an interview* state this, then observe that two passes are always enough.
+
+---
+
+## Approach 2 — Two-pass sweep (canonical)
+
+**Insight.** Left→right pass enforces every strictly-greater left constraint. Right→left pass enforces every strictly-greater right constraint. Take max at each position — a single 2-pass suffices because the two constraints are independent.
 
 ```java
 int candy(int[] ratings) {
@@ -53,9 +79,9 @@ int candy(int[] ratings) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(n)**.
+**Complexity** — Time **O(n)**; Space **O(n)**. *Say aloud in an interview:* "two-sweep = classic pattern for one-sided constraints on both sides. Same shape in Product of Array Except Self."
 
-## Approach 2 — One-pass slope counting
+## Approach 3 — One-pass slope counting
 
 Track up-slope and down-slope lengths + current peak. Trickier but O(1) extra space.
 
@@ -69,8 +95,9 @@ Track up-slope and down-slope lengths + current peak. Trickier but O(1) extra sp
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Two-sweep | **O(n)** | O(n) | canonical |
-| One-pass slope | O(n) | O(1) | polish |
+| Repeat-until-stable | O(n²) worst | O(n) | Reference; can TLE |
+| **Two-sweep** | **O(n)** | O(n) | **Canonical** |
+| One-pass slope | O(n) | O(1) | Polish |
 
 ## When to use which
 

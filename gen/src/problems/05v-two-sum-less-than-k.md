@@ -7,15 +7,16 @@
 Return max sum `< k` from any pair, or `-1`.
 
 **Example 1** — `nums=[34,23,1,24,75,33,54,8], k=60` → `58`
-**Example 2** — `nums=[10,20,30], k=15` → `-1`
+**Example 2** — `nums=[10,20,30], k=15` → `-1` (no pair fits under k)
+**Example 3** — `nums=[1,2,3,4,5], k=100` → `9` (4+5)
 
-**Constraints** — `1 ≤ n ≤ 100`.
+**Constraints** — `1 ≤ n ≤ 100`. Brute is O(n²) = 10⁴ — passes easily here, but the sort+2p is cleaner and generalises to n=10⁵.
 
 
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
-  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
-  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+  hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For 'first duplicate', a `HashSet` and single-pass `add()` is enough."
 />
 ---
 
@@ -25,9 +26,29 @@ Return max sum `< k` from any pair, or `-1`.
 
 
 
-## Approach — Sort + two pointer (canonical)
+## Approach 1 — Brute pair enumeration
 
-**Insight.** Sort. `l`, `r` from ends: if `sum < k`, record and advance `l`; else retreat `r`.
+**Intuition.** Try every pair. Track max sum below k.
+
+```java
+int twoSumLessThanKBrute(int[] nums, int k) {
+    int best = -1;
+    for (int i = 0; i < nums.length; i++)
+        for (int j = i + 1; j < nums.length; j++) {
+            int s = nums[i] + nums[j];
+            if (s < k) best = Math.max(best, s);
+        }
+    return best;
+}
+```
+
+**Complexity** — Time **O(n²)**; Space **O(1)**. Fine at n=100. Fails at n=10⁵. *In an interview* say "with sort, this becomes O(n log n) via two pointers."
+
+---
+
+## Approach 2 — Sort + two pointer (canonical)
+
+**Insight.** Sort. `l`, `r` from ends: if `sum < k`, this is a candidate — record it, then advance `l` to try a larger sum. If `sum ≥ k`, retreat `r` to make room.
 
 ```java
 int twoSumLessThanK(int[] nums, int k) {
@@ -54,7 +75,7 @@ int twoSumLessThanK(int[] nums, int k) {
   ]'
 />
 
-**Complexity** — Time **O(n log n)**; Space **O(1)**.
+**Complexity** — Time **O(n log n)**; Space **O(1)**. *Say aloud in an interview:* "same monotone-scan template as 3Sum Smaller and Container With Most Water."
 
 **Bucket variant** — since values ≤ 1000, bucket-count then two-pointer over buckets → O(n + 1000) time.
 
@@ -68,8 +89,9 @@ int twoSumLessThanK(int[] nums, int k) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + 2p | **O(n log n)** | O(1) | canonical |
-| Bucket count | O(n + V) | O(V) | best if V small |
+| Brute pair | O(n²) | O(1) | Fine at n≤100 |
+| **Sort + 2p** | **O(n log n)** | O(1) | **Canonical** |
+| Bucket count | O(n + V) | O(V) | Best if V small |
 
 ## When to use which
 

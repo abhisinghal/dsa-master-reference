@@ -7,12 +7,12 @@ Given nums and budget `k` (increments allowed), max frequency of any single valu
 **Example 1** — `nums=[1,2,4], k=5` → `3` (raise 1,2,4 to 4 → cost 3+2=5)
 **Example 2** — `nums=[1,4,8,13], k=5` → `2`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ 10⁵`.
+**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ 10⁵`. Brute enumeration of target values × window pairs is O(n²) = 10¹⁰ ops. Sort + sliding window is O(n log n) ≈ 1.7·10⁶.
 
 
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
-  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it's restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
 />
 ---
@@ -23,9 +23,33 @@ Given nums and budget `k` (increments allowed), max frequency of any single valu
 
 
 
-## Approach — Sort + sliding window with sum budget (canonical)
+## Approach 1 — Try every target value
 
-**Insight.** Sort. In window `[l, r]` of sorted nums, raising every value to `nums[r]` costs `nums[r] * (r-l+1) - windowSum`. Extend r; while cost > k, shrink l.
+**Intuition.** For each value `v` in nums, find the max count of elements we can raise to `v` with budget `k`. Sort; for each `v`, extend a window backward and sum costs.
+
+```java
+int maxFrequencyBrute(int[] nums, int k) {
+    Arrays.sort(nums);
+    int best = 1;
+    for (int r = 0; r < nums.length; r++) {
+        long cost = 0;
+        for (int l = r; l >= 0; l--) {
+            cost += (long)(nums[r] - nums[l]);
+            if (cost > k) break;
+            best = Math.max(best, r - l + 1);
+        }
+    }
+    return best;
+}
+```
+
+**Complexity** — Time **O(n²)**; Space **O(1)**. At 10⁵ = 10¹⁰ ops = TLE. *In an interview* say "the inner scan is a window; sum can be maintained incrementally."
+
+---
+
+## Approach 2 — Sort + sliding window with sum budget (canonical)
+
+**Insight.** Sort. In window `[l, r]` of sorted nums, raising every value to `nums[r]` costs `nums[r] * (r-l+1) - windowSum`. Extend r; while cost > k, shrink l. Two pointers, O(n) after sort.
 
 ```java
 int maxFrequency(int[] nums, int k) {
@@ -52,7 +76,7 @@ int maxFrequency(int[] nums, int k) {
   ]'
 />
 
-**Complexity** — Time **O(n log n)**; Space **O(1)**.
+**Complexity** — Time **O(n log n)**; Space **O(1)**. *Say aloud in an interview:* "same sort+shrink template as Longest Repeating Character Replacement and Max Consecutive Ones III."
 
 ---
 
@@ -64,7 +88,8 @@ int maxFrequency(int[] nums, int k) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + sliding budget | **O(n log n)** | O(1) | canonical |
+| Try every target | O(n²) | O(1) | Reference; TLE at 10⁵ |
+| **Sort + sliding budget** | **O(n log n)** | O(1) | **Canonical** |
 
 ## When to use which
 

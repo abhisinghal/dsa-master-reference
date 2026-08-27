@@ -10,13 +10,13 @@ Return true iff there's a **bijection** of characters mapping `s → t`.
 **Example 2** — `s="foo", t="bar"` → `false`
 **Example 3** — `s="paper", t="title"` → `true`
 
-**Constraints** — `1 ≤ n ≤ 5·10⁴`.
+**Constraints** — `1 ≤ n ≤ 5·10⁴`. Brute character-comparison across all pairs is O(n²) = 2.5·10⁹ ops. Bijection tracking is O(n) = 5·10⁴.
 
 
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
-  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
-  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+  hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For 'first duplicate', a `HashSet` and single-pass `add()` is enough."
 />
 ---
 
@@ -26,9 +26,32 @@ Return true iff there's a **bijection** of characters mapping `s → t`.
 
 
 
-## Approach — Two maps (canonical)
+## Approach 1 — Brute force (single one-way map)
 
-**Insight.** One-way map is insufficient — two source chars must not map to the same target. Track both `s→t` and `t→s`.
+**Intuition.** Walk both strings. Maintain a map `s → t`. If the mapping conflicts, return false.
+
+```java
+boolean isIsomorphicBrute(String s, String t) {
+    Map<Character, Character> m = new HashMap<>();
+    for (int i = 0; i < s.length(); i++) {
+        char a = s.charAt(i), b = t.charAt(i);
+        if (m.containsKey(a)) {
+            if (m.get(a) != b) return false;
+        } else {
+            m.put(a, b);
+        }
+    }
+    return true;
+}
+```
+
+**Complexity** — Time **O(n)**; Space **O(σ)**. **Wrong for `s="ab", t="aa"`** — one-way map allows two source chars to collide on the same target. *In an interview* recognize this and add the reverse map.
+
+---
+
+## Approach 2 — Two maps enforcing bijection (canonical)
+
+**Insight.** A bijection requires **both directions**: no two source chars share a target *and* no two targets come from the same source. Track both `fwd[a] = b` and `bwd[b] = a`; any inconsistency = false.
 
 ```java
 boolean isIsomorphic(String s, String t) {
@@ -54,11 +77,11 @@ boolean isIsomorphic(String s, String t) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(σ)**.
+**Complexity** — Time **O(n)**; Space **O(σ)**. *Say aloud in an interview:* "same bijection pattern as Word Pattern — one-way maps allow surjective, not bijective."
 
-## Alternative — first-index trick
+## Approach 3 — First-index trick (elegant one-liner)
 
-`s` and `t` isomorphic iff `firstIndex(s[i]) == firstIndex(t[i])` for all `i`.
+`s` and `t` isomorphic iff `firstIndex(s[i]) == firstIndex(t[i])` for all `i`. Different data structure, same asymptotic complexity, tighter proof.
 
 ---
 
@@ -70,8 +93,9 @@ boolean isIsomorphic(String s, String t) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Two maps | **O(n)** | O(σ) | canonical |
-| First-index | O(n) | O(σ) | elegant |
+| One-way map | O(n) | O(σ) | Wrong on collisions |
+| **Two maps** | **O(n)** | O(σ) | **Canonical** |
+| First-index | O(n) | O(σ) | Elegant alternative |
 
 ## When to use which
 

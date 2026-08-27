@@ -6,9 +6,11 @@
 
 Given a rooted tree of gene values `parents[]` and queries `[node, val]`, for each query return `max XOR(val, x)` over `x` in any ancestor of `node` (including `node` itself).
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; queries ≤ 3·10⁴.
+**Constraints** — `1 ≤ n ≤ 10⁵`; queries ≤ 3·10⁴; values ≤ 2¹⁸. Naive per-query walk up ancestors costs O(n·q·18) = 5·10¹⁰ ops. Offline DFS + binary trie is O((n+q)·18) ≈ 2·10⁶.
 
 **Example 1** — `parents=[-1,0,1,1], queries=[[0,2],[3,2],[2,5]]` → `[2,3,7]`
+**Example 2** — `parents=[3,7,-1,2,0,7,0,2], queries=[[4,6],[1,15],[0,5]]` → `[6,14,7]`
+**Example 3** — `parents=[-1], queries=[[0,10]]` → `[10]` (single-node tree)
 
 
 <Hints
@@ -24,9 +26,34 @@ Given a rooted tree of gene values `parents[]` and queries `[node, val]`, for ea
 
 
 
-## Approach — Offline DFS + binary trie with subtree insert/erase (canonical)
+## Approach 1 — Per-query naive walk up the tree
 
-**Insight.** Group queries by node. DFS from root; on entering a node, insert its value into a shared binary trie; on leaving, remove it. Answer each node's queries when the trie contains exactly the ancestor path.
+**Intuition.** For each query `[node, val]`, walk up from `node` to root; for every ancestor `a` compute `val ^ node_value[a]`; take max.
+
+```java
+int[] maxGeneticDifferenceBrute(int[] parents, int[][] queries) {
+    int[] ans = new int[queries.length];
+    for (int i = 0; i < queries.length; i++) {
+        int node = queries[i][0], val = queries[i][1];
+        int best = 0;
+        for (int u = node; u != -1; u = parents[u]) {
+            best = Math.max(best, val ^ u);
+        }
+        ans[i] = best;
+    }
+    return ans;
+}
+```
+
+**Complexity** — Time **O(n · q)** worst case; Space **O(1)**. For n=10⁵ q=3·10⁴, chain-shaped tree → 3·10⁹ ops = TLE. *In an interview* say "offline DFS + binary trie with insert-on-enter / erase-on-exit turns this into O((n+q)·18)."
+
+---
+
+## Approach 2 — Offline DFS + binary trie with subtree insert/erase (canonical)
+
+**Insight.** Group queries by node. Do a single DFS from root. **On entering** a node, insert its value into a shared binary trie. **On leaving**, erase (decrement count). At each node, answer its queries using the trie — which now contains exactly the ancestor path of that node.
+
+The trie tracks counts (not just existence) so that erase-on-exit works without allocating a new trie per subtree.
 
 ```java
 class Node { Node[] c = new Node[2]; int cnt; }
@@ -82,7 +109,7 @@ int queryMax(Node root, int v) {
   ]'
 />
 
-**Complexity** — Time **O((n + q) · 18)**; Space **O(n · 18)**.
+**Complexity** — Time **O((n + q) · 18)**; Space **O(n · 18)**. *Say aloud in an interview:* "offline DFS with add-on-enter / erase-on-exit — same pattern behind Mo's algorithm on trees. Every insert/erase costs one path down the binary trie."
 
 ---
 
@@ -94,7 +121,8 @@ int queryMax(Node root, int v) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Offline DFS + binary trie | **O((n+q)·18)** | O(n · 18) | canonical |
+| Per-query walk up | O(n · q) | O(1) | Reference; TLE on chain |
+| **Offline DFS + binary trie** | **O((n+q)·18)** | O(n · 18) | **Canonical** |
 
 ## When to use which
 
