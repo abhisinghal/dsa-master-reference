@@ -1,6 +1,6 @@
 # Mock Interview Transcripts
 
-*The Interview Playbook (Ch. 01) described the 6-phase loop abstractly. This chapter shows what those phases sound like when a real senior candidate is speaking. Nine transcripts spanning Easy → Hard across hashing, cache design, monotonic deque, DP, sort+sweep, graph traversal, BS-on-answer, trie+backtracking, and pure backtracking — annotated with what the interviewer is grading at each point.*
+*The Interview Playbook (Ch. 01) described the 6-phase loop abstractly. This chapter shows what those phases sound like when a real senior candidate is speaking. Twelve transcripts spanning Easy → Hard across hashing, cache design, monotonic deque, DP, sort+sweep, graph traversal, BS-on-answer, trie+backtracking, backtracking, union-find, topological sort, and two-pointer proofs — annotated with what the interviewer is grading at each point.*
 
 Read once for the shape, then again with the annotations covered — pretending you're the candidate — and see if you'd say the same things.
 
@@ -1007,6 +1007,277 @@ Traps:
 **Candidate**: Bitmask DP with the `cols | d1 | d2` bitmask as state — one 64-bit register handles n ≤ 32. Speedup mostly comes from bit tricks: `int free = ~(cols | d1 | d2) & mask; while (free != 0) { int p = free & -free; recurse(...); free ^= p; }`. Same asymptotic, ~10× constant factor faster.
 
 &gt; **What the interviewer sees:** Justified the "one queen per row" pruning as *the* insight, chose 3-array attack tracking with reasoning, called out the diagonal-offset trap before it happened, and answered both follow-ups without hesitation (including the bit-DP acceleration for the counting variant). Time: ~35 min. Hire, staff lean.
+
+---
+
+## Transcript 10 — Number of Provinces (Medium Union Find — should take 20–25 min)
+
+**Setup:** *"You are given an `n×n` adjacency matrix `isConnected` where `isConnected[i][j] = 1` iff cities i and j are directly connected. Return the number of provinces — connected components."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Is the graph undirected? So `isConnected[i][j] == isConnected[j][i]`?*
+
+**Interviewer**: Yes.
+
+*Is `isConnected[i][i]` always 1?*
+
+**Interviewer**: Yes, every city connects to itself.
+
+*Sizes?*
+
+**Interviewer**: `1 ≤ n ≤ 200`.
+
+*Can I mutate the input?*
+
+**Interviewer**: You can.
+
+---
+
+**Candidate**: Example. **[phase: examples]** `[[1,1,0],[1,1,0],[0,0,1]]` → 2 provinces (`{0,1}` and `{2}`). `[[1,0,0],[0,1,0],[0,0,1]]` → 3.
+
+---
+
+**Candidate**: Two natural approaches. **[phase: brute/optimize]**
+
+**Option A: DFS/BFS on the implicit graph.** For each city, if unvisited, run DFS marking all reachable cities. Count how many times we start. `O(n²)` time (each matrix cell touched once), `O(n)` space for the visited flag.
+
+**Option B: Union-Find.** For every pair `(i, j)` with `isConnected[i][j] == 1` and `i < j`, union them. Count distinct roots at the end. `O(n² · α(n))` time.
+
+Both are `O(n²)`. **DFS is slightly simpler for a one-shot count, Union-Find is preferred if the problem evolves — dynamic edges, path compression queries, "same component?" queries.**
+
+I'll do Union-Find. It shows the reusable structure. **[phase: optimize]**
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+
+
+```java
+int findCircleNum(int[][] isConnected) {
+    int n = isConnected.length;
+    int[] parent = new int[n];
+    int[] rank = new int[n];
+    for (int i = 0; i < n; i++) parent[i] = i;
+    int components = n;
+
+    for (int i = 0; i < n; i++)
+        for (int j = i + 1; j < n; j++)
+            if (isConnected[i][j] == 1 && union(parent, rank, i, j)) components--;
+
+    return components;
+}
+int find(int[] parent, int x) {
+    while (parent[x] != x) {
+        parent[x] = parent[parent[x]];               // path compression by halving
+        x = parent[x];
+    }
+    return x;
+}
+boolean union(int[] parent, int[] rank, int a, int b) {
+    int ra = find(parent, a), rb = find(parent, b);
+    if (ra == rb) return false;
+    if (rank[ra] < rank[rb]) { parent[ra] = rb; }
+    else if (rank[ra] > rank[rb]) { parent[rb] = ra; }
+    else { parent[rb] = ra; rank[ra]++; }
+    return true;
+}
+```
+
+
+
+Two nits I'd flag:
+1. `union` returns `boolean` — did a merge actually happen? Decrementing `components` only on real merges lets us skip a final "count distinct roots" pass. Interview-clean.
+2. Loop `j = i + 1`, not `j = 0`. The matrix is symmetric; iterating only the upper triangle halves work without missing anything.
+
+---
+
+**Candidate**: Trace `[[1,1,0],[1,1,0],[0,0,1]]`. **[phase: verify]** parent=[0,1,2], components=3. (0,1)=1 → union(0,1), roots differ → merge, components=2. (0,2)=0 skip. (1,2)=0 skip. Return 2. ✓
+
+**Interviewer**: If new "connections" arrive as events, would you rebuild every time?
+
+**Candidate**: No — that's the exact scenario Union-Find beats DFS. Keep the DSU alive, call `union` per event, maintain `components` counter, answer "how many provinces?" in `O(1)`. This is why I picked Union-Find over DFS for this problem's family.
+
+**Interviewer**: What about edge removal?
+
+**Candidate**: DSU doesn't support delete cheaply — you'd need Link-Cut trees or Euler-tour trees. If the interview is going there, I'd flag it as out of scope for the standard interview loop but describe LCT briefly.
+
+&gt; **What the interviewer sees:** Chose Union-Find with a forward-looking justification (dynamic edges), used path-compression-by-halving + union-by-rank, offered `union`-returns-`boolean` as an interview-clean idiom. Time: ~20 min. Strong hire.
+
+---
+
+## Transcript 11 — Course Schedule II (Medium Topological Sort — should take 25–30 min)
+
+**Setup:** *"There are `numCourses` courses (0 to n−1). `prerequisites[i] = [a, b]` means you must take `b` before `a`. Return any valid ordering, or `[]` if impossible."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Duplicates in `prerequisites`?*
+
+**Interviewer**: Possible, but no harmful — treat as same edge.
+
+*Self-loops (course requires itself)?*
+
+**Interviewer**: Assume none, but let's have your code detect any cycle.
+
+*Sizes?*
+
+**Interviewer**: `numCourses ≤ 2000`, `prerequisites.length ≤ 5000`.
+
+*Return format on impossible?*
+
+**Interviewer**: Empty array.
+
+---
+
+**Candidate**: Examples. **[phase: examples]**
+
+`n=2, prereq=[[1,0]]` → `[0,1]`. `n=4, prereq=[[1,0],[2,0],[3,1],[3,2]]` → `[0,1,2,3]` or `[0,2,1,3]` — either valid. `n=2, prereq=[[0,1],[1,0]]` → `[]` (cycle).
+
+---
+
+**Candidate**: This is textbook topological sort. **[phase: brute/optimize]** Two variants: **Kahn's** (BFS on nodes with in-degree 0) or **DFS with post-order + cycle detection via 3-color marking**. Both `O(V + E)`.
+
+I'll do Kahn's because it doubles as cycle detection: if the emitted count `< n`, there was a cycle. Simpler than 3-color DFS in an interview.
+
+**Algorithm.**
+1. Build adjacency list from `b → a` (prereq → dependent).
+2. Compute `indeg[a]` = # prereqs a still has.
+3. Enqueue every node with `indeg == 0`.
+4. Pop, add to output, decrement `indeg` of each dependent; enqueue if it drops to 0.
+5. If output length `< n`, return `[]` (cycle).
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+
+
+```java
+int[] findOrder(int numCourses, int[][] prerequisites) {
+    List<List<Integer>> adj = new ArrayList<>();
+    for (int i = 0; i < numCourses; i++) adj.add(new ArrayList<>());
+    int[] indeg = new int[numCourses];
+    for (int[] p : prerequisites) {
+        adj.get(p[1]).add(p[0]);                     // b → a
+        indeg[p[0]]++;
+    }
+    Deque<Integer> q = new ArrayDeque<>();
+    for (int i = 0; i < numCourses; i++) if (indeg[i] == 0) q.offer(i);
+
+    int[] order = new int[numCourses];
+    int idx = 0;
+    while (!q.isEmpty()) {
+        int u = q.poll();
+        order[idx++] = u;
+        for (int v : adj.get(u))
+            if (--indeg[v] == 0) q.offer(v);
+    }
+    return idx == numCourses ? order : new int[0];
+}
+```
+
+
+
+Two traps:
+1. **Edge direction.** The problem states `[a, b]` = "a depends on b", so the edge is `b → a`. Reversing this is the #1 wrong-answer trap. I always narrate it aloud.
+2. **`idx == numCourses`** check must happen after the loop — the "cycle" case is silent otherwise, and returning a half-filled array would be a subtle bug.
+
+---
+
+**Candidate**: Trace `n=4, prereq=[[1,0],[2,0],[3,1],[3,2]]`. **[phase: verify]** adj: 0→[1,2], 1→[3], 2→[3]. indeg: [0,1,1,2]. q=[0]. Pop 0, order=[0], decrement indeg[1]→0 (enqueue), indeg[2]→0 (enqueue). q=[1,2]. Pop 1, order=[0,1], indeg[3]→1. Pop 2, order=[0,1,2], indeg[3]→0 (enqueue). Pop 3, order=[0,1,2,3]. idx=4=n → return. ✓
+
+Trace cycle case `n=2, prereq=[[0,1],[1,0]]`. adj: 1→[0], 0→[1]. indeg: [1,1]. q=[] initially → loop never enters. idx=0 ≠ 2 → return `[]`. ✓
+
+**Interviewer**: If I wanted a *lexicographically smallest* topo order?
+
+**Candidate**: Replace `ArrayDeque` with a `PriorityQueue<Integer>` — always pop the smallest in-degree-0 node. Cost jumps from `O(V+E)` to `O(V log V + E log V)`. Widely asked follow-up.
+
+**Interviewer**: If the graph were huge and streamed?
+
+**Candidate**: Kahn's is streamable — indeg can be updated as edges arrive. DFS-based topo cannot.
+
+&gt; **What the interviewer sees:** Chose Kahn's specifically for its built-in cycle detection, narrated the edge-direction trap up front, correctly located the `idx == numCourses` check, offered a real follow-up (PQ for lexicographic order). Time: ~25 min. Strong hire.
+
+---
+
+## Transcript 12 — Container With Most Water (Medium two-pointer — should take 15–25 min)
+
+**Setup:** *"Given `height[n]`, find two lines that with the x-axis form a container. Return the max water it can hold: `min(height[i], height[j]) * (j - i)`."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Are heights non-negative? Zero allowed?*
+
+**Interviewer**: `0 ≤ height[i] ≤ 10⁴`.
+
+*Sizes?*
+
+**Interviewer**: `2 ≤ n ≤ 10⁵`.
+
+*Do I return the area or the two indices?*
+
+**Interviewer**: Just the max area.
+
+---
+
+**Candidate**: Example. **[phase: examples]** `[1,8,6,2,5,4,8,3,7]`. Best is `height[1]=8, height[8]=7` → area `= min(8,7) * (8-1) = 7 * 7 = 49`.
+
+---
+
+**Candidate**: Brute is `O(n²)` — every pair. **[phase: brute]** For `n = 10⁵` that's `10¹⁰` ops. TLE.
+
+Key insight: **start with the widest container (i=0, j=n-1). If we shrink the container by moving *the taller* side inward, the width strictly decreases and the height can't increase — because `min(h[i], h[j])` was pinned by the *shorter* side.** So moving the taller side can only make the area smaller. We must move the *shorter* side inward — the only move that *could* improve the answer. **[phase: optimize]**
+
+This gives a **two-pointer sweep**. Track the running max. Each pointer moves at most n times total, so `O(n)`.
+
+**Interviewer**: Prove the correctness — why does the two-pointer never miss the optimal pair?
+
+**Candidate**: Suppose the optimal pair is `(i*, j*)` with `h[i*] ≤ h[j*]`. Start `(l, r) = (0, n-1)`. If `l == i*`, we're done — the pointer will stay at `l` until r passes `j*`, and at some step `r == j*`, we compute the correct area. If `l < i*`, we need to show `l` will advance past all positions before `i*` without ever *first* moving `r` past `j*`. Because in the current state `l < i* ≤ j* < r`, `h[l]` must be ≤ `min(h[i*], h[j*])` (otherwise the pair `(l, r)` would already dominate the optimal). So `h[l] ≤ h[r]` too — and the algorithm advances `l`, not `r`. By induction, `l` reaches `i*` before `r` leaves `j*`. Symmetric if `h[i*] > h[j*]`.
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+
+
+```java
+int maxArea(int[] height) {
+    int l = 0, r = height.length - 1, best = 0;
+    while (l < r) {
+        int h = Math.min(height[l], height[r]);
+        best = Math.max(best, h * (r - l));
+        if (height[l] < height[r]) l++;
+        else r--;                                    // ties: either side
+    }
+    return best;
+}
+```
+
+
+
+Note on ties (`height[l] == height[r]`): moving either side is safe because moving *either* one strictly decreases the container's width and can't increase the height, so we can't miss a better pair by staying on the current bar.
+
+---
+
+**Candidate**: Trace `[1,8,6,2,5,4,8,3,7]`. **[phase: verify]** `(l=0, r=8)`: h=1, area=8. h[0]&lt;h[8] → l=1. `(1,8)`: h=7, area=49. h[1]&gt;h[8] → r=7. `(1,7)`: h=3, area=18. r=6. `(1,6)`: h=8, area=40. l=2 (tie either way; say we move l). `(2,6)`: h=6, area=24. l=3. `(3,6)`: h=2, area=6. l=4. `(4,6)`: h=5, area=10. l=5. `(5,6)`: h=4, area=4. l=6. Exit. Max = 49. ✓
+
+**Interviewer**: What if you asked for *k* containers (non-overlapping), maximising sum of areas?
+
+**Candidate**: That's DP: `dp[i][k]` = max sum of k non-overlapping containers using indices up to `i`. States `O(nk)`, transitions `O(n)` → `O(n²k)`. Not two-pointer anymore.
+
+**Interviewer**: What about the Trapping Rain Water variant?
+
+**Candidate**: Same shape (two pointers from ends), but the invariant is different — at each step you add water to the *shorter* side, tracking `max` seen on each side. Different loop body, same skeleton.
+
+&gt; **What the interviewer sees:** Stated the invariant (why the shorter side must move) *and proved it under interviewer probing*, offered the tie-break rationale unprompted, and mapped to related two-pointer problems. Time: ~20 min. Hire, staff lean if the proof is really that crisp live.
 
 ---
 
