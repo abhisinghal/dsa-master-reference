@@ -22,13 +22,16 @@ S.next(85);    // 6
 
 
 
-**Constraints** — `1 ≤ price ≤ 10⁵`; up to `10⁴` calls.
+**Example 2** — Monotonic decrease: `S.next(100); next(90); next(80)` → returns `1, 1, 1`.
+**Example 3** — Monotonic increase: `S.next(1); next(2); next(3); next(4)` → returns `1, 2, 3, 4`.
+
+**Constraints** — `1 ≤ price ≤ 10⁵`; up to `10⁴` calls. Naive per-call scan is O(n) each — worst-case O(n²) = 10⁸ across 10⁴ calls. Monotonic stack is amortized O(1) per call = 10⁴ ops total.
 
 
 <Hints
-  hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
-  hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
-  hint3="Contribution counting: instead of ’for each subarray find X’, ask ’for each element, how many subarrays does it contribute to?’"
+  hint1="What element does each `i` 'see' looking left or right? Nearest greater? Nearest smaller?"
+  hint2="Maintain a stack that's monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."
+  hint3="Contribution counting: instead of 'for each subarray find X', ask 'for each element, how many subarrays does it contribute to?'"
 />
 ---
 

@@ -6,9 +6,11 @@
 
 Given two sorted arrays, return the median in **O(log(min(m,n)))**.
 
-**Example** — `A=[1,3], B=[2]` → `2.0`
+**Example 1** — `A=[1,3], B=[2]` → `2.0`
+**Example 2** — `A=[1,2], B=[3,4]` → `2.5`
+**Example 3** — `A=[], B=[1]` → `1.0`
 
-**Constraints** — `0 ≤ n, m ≤ 1000`; total ≥ 1.
+**Constraints** — `0 ≤ n, m ≤ 1000`; total ≥ 1. Merge-then-median is O(m+n). The interviewer's log-bar demand exists because at scale (millions of records) the O(log) matters — real database `MEDIAN` operators use this trick.
 
 
 <Hints

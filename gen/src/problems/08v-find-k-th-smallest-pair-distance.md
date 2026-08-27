@@ -6,9 +6,11 @@
 
 Given `nums` and integer `k`, return the k-th smallest **absolute** distance among all pairs.
 
-**Example** — `nums=[1,3,1], k=1` → `0` (pair (1,1) has distance 0)
+**Example 1** — `nums=[1,3,1], k=1` → `0` (pair (1,1) has distance 0)
+**Example 2** — `nums=[1,1,1], k=2` → `0` (all pairs distance 0)
+**Example 3** — `nums=[1,6,1], k=3` → `5`
 
-**Constraints** — `n·(n-1)/2 ≥ k ≥ 1`; `2 ≤ n ≤ 10⁴`.
+**Constraints** — `2 ≤ n ≤ 10⁴`. Brute enumerate-and-sort is O(n² log n²) ≈ 5·10⁷ · 25 = 10⁹ ops = TLE. BS-on-answer + counting is O(n log n + log(max) · n) ≈ 10⁵.
 
 
 <Hints

@@ -6,15 +6,17 @@
 
 Merge `k` sorted linked lists into one sorted list.
 
-**Example** — `[[1,4,5],[1,3,4],[2,6]]` → `[1,1,2,3,4,4,5,6]`
+**Example 1** — `[[1,4,5],[1,3,4],[2,6]]` → `[1,1,2,3,4,4,5,6]`
+**Example 2** — `[[]]` → `[]`
+**Example 3** — `[[1],[2],[3],[4],[5]]` → `[1,2,3,4,5]`
 
-**Constraints** — `k ≤ 10⁴`; total nodes `N ≤ 10⁴`; values `-10⁴..10⁴`.
+**Constraints** — `k ≤ 10⁴`; total nodes `N ≤ 10⁴`; values `-10⁴..10⁴`. Naive collect-then-sort is O(N log N) — throws away that inputs are pre-sorted. Sequential merging is O(kN) — at k=N=10⁴ that's 10⁸ ops. Heap merge is O(N log k) ≈ 1.3·10⁵ — 750× faster.
 
 
 <Hints
   hint1="You have k sorted sequences. Which element is globally next?"
   hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."
-  hint3="For ’smallest range covering k lists’, track max-in-heap; window is [minInHeap, maxSeen]."
+  hint3="For 'smallest range covering k lists', track max-in-heap; window is [minInHeap, maxSeen]."
 />
 ---
 

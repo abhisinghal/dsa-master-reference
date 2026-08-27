@@ -7,8 +7,10 @@
 You have an `m × n` grid of water. Given `positions` where each `(r, c)` becomes land, return count of islands after each addition.
 
 **Example 1** — `m=3, n=3, positions=[[0,0],[0,1],[1,2],[2,1]]` → `[1,1,2,3]`
+**Example 2** — `m=1, n=1, positions=[[0,0]]` → `[1]`
+**Example 3** — `m=3, n=3, positions=[[0,0],[0,0]]` → `[1,1]` (duplicate placement is a no-op)
 
-**Constraints** — `1 ≤ m·n ≤ 10⁴`.
+**Constraints** — `1 ≤ m·n ≤ 10⁴`. Naive re-scan after every insert is O(k · mn) — k inserts × mn cells = 10⁸ ops = TLE. Union-Find is O(k · α(mn)) = 10⁴ · 4 = 4·10⁴.
 
 
 <Hints

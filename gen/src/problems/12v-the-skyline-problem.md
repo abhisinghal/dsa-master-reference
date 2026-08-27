@@ -7,13 +7,15 @@
 Given buildings `[left, right, height]`, return the skyline as key points `[x, y]` where the height changes.
 
 **Example 1** — `[[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]` → `[[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24,0]]`
+**Example 2** — `[[0,2,3],[2,5,3]]` → `[[0,3],[5,0]]` (adjacent same-height merged)
+**Example 3** — `[[1,2,1],[1,2,2],[1,2,3]]` → `[[1,3],[2,0]]` (nested; only outer max matters)
 
-**Constraints** — `1 ≤ n ≤ 10⁴`.
+**Constraints** — `1 ≤ n ≤ 10⁴`. Brute per-x-coordinate max is O(coord · n) = 10⁹ ops for a full-range n=10⁴. Sweep line + max-heap is O(n log n) = 10⁵.
 
 
 <Hints
-  hint1="Turn events into `(time, +1/-1)` pairs. What’s the ’active count’ or ’max concurrent’?"
-  hint2="Sort events by time; break ties consistently (end before start for ’meetings’, or vice versa)."
+  hint1="Turn events into `(time, +1/-1)` pairs. What's the 'active count' or 'max concurrent'?"
+  hint2="Sort events by time; break ties consistently (end before start for 'meetings', or vice versa)."
   hint3="Sweep; maintain a running count/set. Max active gives room count; drops give free slots."
 />
 ---

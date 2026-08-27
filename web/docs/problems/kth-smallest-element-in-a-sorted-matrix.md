@@ -6,9 +6,11 @@
 
 Given `n×n` matrix sorted row and column, return the k-th smallest element.
 
-**Example** — `matrix=[[1,5,9],[10,11,13],[12,13,15]], k=8` → `13`
+**Example 1** — `matrix=[[1,5,9],[10,11,13],[12,13,15]], k=8` → `13`
+**Example 2** — `matrix=[[-5]], k=1` → `-5`
+**Example 3** — `matrix=[[1,2],[1,3]], k=2` → `1`
 
-**Constraints** — `1 ≤ n ≤ 300`; `1 ≤ k ≤ n²`.
+**Constraints** — `1 ≤ n ≤ 300`; `1 ≤ k ≤ n²`. Brute flatten-and-sort is O(n² log n²) = 300² · log(9·10⁴) ≈ 10⁶ ops. BS-on-answer is O(n · log(max-min)) ≈ 300 · 32 = 10⁴.
 
 
 <Hints

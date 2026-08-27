@@ -6,21 +6,25 @@
 
 Design `TwoSum` supporting `add(x)` and `find(t)`.
 
-**Example** —
+**Example 1** —
 ```
 TwoSum ts = new TwoSum();
 ts.add(1); ts.add(3); ts.add(5);
-ts.find(4);  // true
+ts.find(4);  // true  (1 + 3)
 ts.find(7);  // false
 ```
 
-**Constraints** — up to 10⁴ ops.
+**Example 2** — Duplicate handling: `add(3); add(3); find(6)` → `true` (uses both 3s).
+
+**Example 3** — Empty: `find(10)` on a fresh TwoSum → `false`.
+
+**Constraints** — up to 10⁴ ops total. Naive O(n²) per-find would give 10⁸ ops; wisely chosen design gives ~10⁴.
 
 
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
-  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
-  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+  hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For 'first duplicate', a `HashSet` and single-pass `add()` is enough."
 />
 ---
 
@@ -32,7 +36,7 @@ ts.find(7);  // false
 
 ## Approach 1 — Fast add, slow find (canonical if adds dominate)
 
-Store counts; on `find`, iterate keys checking `t - k`. Handle duplicates.
+**Insight.** Store counts in a `HashMap`. On `add`, increment count in O(1). On `find`, iterate over each stored value `k` and check whether `t - k` also exists (with duplicate handling for `k == t/2`).
 
 ```java
 class TwoSum {
@@ -49,11 +53,25 @@ class TwoSum {
 }
 ```
 
-**add O(1); find O(n).**
+**Complexity** — add **O(1)**; find **O(n)**. *In an interview* say "ask the interviewer about the ratio of adds to finds — pick a design accordingly."
 
 ## Approach 2 — Fast find, slow add
 
-Precompute all pairwise sums into a set on `add`. `find` = O(1). `add` = O(n).
+**Precompute all pairwise sums** into a `HashSet` on `add`. `find = O(1)`, `add = O(n)`.
+
+```java
+class TwoSumFastFind {
+    List<Integer> nums = new ArrayList<>();
+    Set<Integer> sums = new HashSet<>();
+    void add(int x) {
+        for (int y : nums) sums.add(x + y);
+        nums.add(x);
+    }
+    boolean find(int t) { return sums.contains(t); }
+}
+```
+
+**Complexity** — add **O(n)**; find **O(1)**. *Say aloud in an interview:* "trade-space-for-time: sums grows to O(n²), fine at 10⁴ ops but explodes at 10⁶."
 
 ---
 
@@ -65,8 +83,8 @@ Precompute all pairwise sums into a set on `add`. `find` = O(1). `add` = O(n).
 
 | Approach | add | find | Grade |
 |---|---|---|---|
-| Fast add | O(1) | O(n) | adds dominate |
-| Fast find | O(n) | O(1) | finds dominate |
+| **Fast add** | **O(1)** | O(n) | **Canonical when adds dominate** |
+| Fast find | O(n) | O(1) | When finds dominate |
 
 ## When to use which
 

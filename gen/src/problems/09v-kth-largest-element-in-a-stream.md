@@ -16,13 +16,16 @@ kthLargest.add(9);   // returns 8
 kthLargest.add(4);   // returns 8
 ```
 
-**Constraints** — `1 ≤ k ≤ 10⁴`; `0 ≤ nums.length ≤ 10⁴`; `-10⁴ ≤ vals ≤ 10⁴`; at most `10⁴` `add` calls.
+**Example 2** — `KthLargest(1, [])` then `add(-3), add(-2), add(-4)` → `-3, -2, -2` (k=1 = running max).
+**Example 3** — `KthLargest(2, [1,1])` then `add(1)` → `1` (all equal).
+
+**Constraints** — `1 ≤ k ≤ 10⁴`; `0 ≤ nums.length ≤ 10⁴`; `-10⁴ ≤ vals ≤ 10⁴`; at most `10⁴` `add` calls. Naive re-sort on each add is O(n log n) per call = O(n² log n) total = 10¹⁰ ops = TLE. Min-heap of size k is O(log k) per add = 10⁴ · 14 = 10⁵ ops.
 
 
 <Hints
   hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
   hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."
-  hint3="For ’k closest’ or ’k most frequent’, the heap’s comparator holds the distance/frequency metric."
+  hint3="For 'k closest' or 'k most frequent', the heap's comparator holds the distance/frequency metric."
 />
 ---
 

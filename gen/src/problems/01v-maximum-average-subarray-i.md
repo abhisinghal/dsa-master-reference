@@ -6,13 +6,14 @@ Return the max average of any contiguous subarray of length exactly `k`.
 
 **Example 1** — `nums=[1,12,-5,-6,50,3], k=4` → `12.75`
 **Example 2** — `nums=[5], k=1` → `5.0`
+**Example 3** — `nums=[-1], k=1` → `-1.0`
 
-**Constraints** — `1 ≤ k ≤ n ≤ 10⁵`.
+**Constraints** — `1 ≤ k ≤ n ≤ 10⁵`. Brute per-window sum is O(nk) — at n=k=10⁵ that's 10¹⁰ ops (~5 min). Sliding is O(n).
 
 
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
-  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it's restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
 />
 ---
@@ -23,9 +24,29 @@ Return the max average of any contiguous subarray of length exactly `k`.
 
 
 
-## Approach — Fixed-window running sum (canonical)
+## Approach 1 — Brute per-window sum
 
-**Insight.** Max avg = max sum ÷ k over any size-k window.
+**Intuition.** For each window start, sum k items. Track max.
+
+```java
+double findMaxAverageBrute(int[] nums, int k) {
+    int best = Integer.MIN_VALUE;
+    for (int i = 0; i + k <= nums.length; i++) {
+        int sum = 0;
+        for (int j = i; j < i + k; j++) sum += nums[j];
+        best = Math.max(best, sum);
+    }
+    return best / (double) k;
+}
+```
+
+**Complexity** — Time **O(nk)**; Space **O(1)**. TLE at 10⁵. *In an interview* say "add-in, drop-out sliding sum → O(n)."
+
+---
+
+## Approach 2 — Fixed-window running sum (canonical)
+
+**Insight.** Consecutive windows share `k-1` items. Pre-sum once; slide with one add + one subtract per step.
 
 ```java
 double findMaxAverage(int[] nums, int k) {
@@ -52,7 +73,7 @@ double findMaxAverage(int[] nums, int k) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
+**Complexity** — Time **O(n)**; Space **O(1)**. *Say aloud in an interview:* "canonical fixed-window slide — same template as Diet Plan Performance and Contains Duplicate III."
 
 ---
 
@@ -64,7 +85,8 @@ double findMaxAverage(int[] nums, int k) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Fixed window | **O(n)** | O(1) | canonical |
+| Per-window sum brute | O(nk) | O(1) | Reference; TLE at 10⁵ |
+| **Fixed window slide** | **O(n)** | O(1) | **Canonical** |
 
 ## When to use which
 

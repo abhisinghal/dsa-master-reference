@@ -6,15 +6,17 @@
 
 Count connected components of `'1'`s in a binary grid.
 
-**Example 1** — Grid → count.
+**Example 1** — `grid=[["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]` → `1`
+**Example 2** — `grid=[["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]` → `3`
+**Example 3** — `grid=[["0"]]` → `0`
 
-**Constraints** — `1 ≤ m, n ≤ 300`.
+**Constraints** — `1 ≤ m, n ≤ 300`. Brute per-cell BFS/DFS is already O(mn) — the bottleneck is careful marking, not counting. For 300×300 = 9·10⁴ ops. Union-Find variant is O(mn · α(mn)) — same asymptotic but streaming-friendly.
 
 
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
-  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
-  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+  hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For 'first duplicate', a `HashSet` and single-pass `add()` is enough."
 />
 ---
 
@@ -26,7 +28,7 @@ Count connected components of `'1'`s in a binary grid.
 
 ## Approach 1 — DFS flood fill (canonical)
 
-Iterate cells; on unseen `'1'`, `count++`, DFS marking `'0'`.
+**Insight.** Iterate every cell. When you find an unseen `'1'`, increment the count and DFS to mark the *whole island* as `'0'` (so we never re-count).
 
 
 
@@ -48,12 +50,14 @@ void dfs(char[][] g, int i, int j) {
 
 
 ## Approach 2 — BFS
-Same idea, queue instead of recursion — avoids stack overflow on huge grids.
+
+**Same idea**, queue instead of recursion — avoids stack overflow on huge grids. For 300×300 = 9·10⁴ cells, DFS recursion depth can hit 9·10⁴ frames on a fully-connected grid — JVM default stack (512 KB, ~15,000 frames) blows. BFS never has that risk.
 
 ## Approach 3 — Union-Find
-Union adjacent `'1'`s; count components at end. Useful for streaming (Islands II).
 
-**Complexity** — Time **O(mn)**; Space **O(mn)**.
+Union adjacent `'1'`s; count distinct components at the end. Useful for the streaming variant *"grids arrive one cell at a time"* — see [Number of Islands II](/problems/number-of-islands-ii). O(mn · α) with path compression + union-by-rank.
+
+**Complexity** — Time **O(mn)** for DFS/BFS; **O(mn · α(mn))** for Union-Find; Space **O(mn)** for grid mark or O(min(m,n)) for BFS queue. *Say aloud in an interview:* "state DFS as the reference, mention BFS for stack-overflow safety on large grids, then say UF for streaming."
 
 ---
 
@@ -65,9 +69,9 @@ Union adjacent `'1'`s; count components at end. Useful for streaming (Islands II
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| DFS | O(mn) | O(mn) stack | canonical |
-| BFS | O(mn) | O(min(m,n)) queue | safer |
-| UF | O(mn·α) | O(mn) | streaming variant |
+| **DFS** | **O(mn)** | O(mn) stack | **Canonical** |
+| BFS | O(mn) | O(min(m,n)) queue | Safer on large grids |
+| UF | O(mn·α) | O(mn) | Streaming variant |
 
 ## When to use which
 
