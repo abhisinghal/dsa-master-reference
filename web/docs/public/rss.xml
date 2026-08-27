@@ -6,8 +6,64 @@
     <atom:link href="https://abhisinghal.github.io/dsa-master-reference/rss.xml" rel="self" type="application/rss+xml" />
     <description>Java-native DSA interview reference — patterns, canonical problems, animations, and interview-realism content for senior/staff engineers.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Aug 2026 06:07:53 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 27 Aug 2026 06:21:32 GMT</lastBuildDate>
     <ttl>1440</ttl>
+    <item>
+      <title>Wave 9: 205/205 problem pages elevated to STAR quality</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-27-wave-9-205-205-problem-pages-elevated-to-star-quality</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-27-Wave 9: 205/205 problem pages elevated t</guid>
+      <pubDate>Thu, 27 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>Two or three worked examples covering edge cases (empty, single, adversarial).</li><li>**Drama numbers** in the constraint line — the naive approach&apos;s TLE spelled out at concrete scale versus the canonical improvement.</li><li>A numbered `## Approach 1 — Brute …` with full working code, complexity, and an explicit &quot;then what&apos;s better&quot; transition.</li><li>Italicised *&quot;Say aloud in an interview: …&quot;* commentary on the canonical approach that maps it back to the algorithmic family.</li><li>A complexity ladder table marking the canonical solution in bold.</li></ul>]]></description>
+    </item>
+    <item>
+      <title>Wave 8: Flagship canonical walkthroughs</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-26-wave-8-flagship-canonical-walkthroughs</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-26-Wave 8: Flagship canonical walkthroughs</guid>
+      <pubDate>Wed, 26 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>Union Find, Topological Sort, Greedy, and Divide &amp; Conquer each got a full brute → intermediate → optimised flagship problem embedded in the chapter (`79afd41`).</li></ul>]]></description>
+    </item>
+    <item>
+      <title>Wave 7: Visual &amp; accessibility polish</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-26-wave-7-visual-accessibility-polish</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-26-Wave 7: Visual &amp; accessibility polis</guid>
+      <pubDate>Wed, 26 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>All 35 SVGs pass a fresh WCAG-AA audit; all 21 animations covered by global reduced-motion CSS; Playwright a11y suite added and green (`e7004fa`).</li></ul>]]></description>
+    </item>
+    <item>
+      <title>Wave 6: Historical grounding</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-26-wave-6-historical-grounding</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-26-Wave 6: Historical grounding</guid>
+      <pubDate>Wed, 26 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>Ten remaining chapters got a hand-written `## History` paragraph (Bellman 1952 for DP, Floyd 1967 for tortoise &amp; hare, Bentley&apos;s JDK binary-search bug, etc.). Coverage now 21/21 (`629b040`).</li></ul>]]></description>
+    </item>
+    <item>
+      <title>Wave 5: Callout enrichment</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-26-wave-5-callout-enrichment</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-26-Wave 5: Callout enrichment</guid>
+      <pubDate>Wed, 26 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>Every chapter carries ≥ 8 highlighted insights (3 keys + 3 traps + 2 invariants) with explicit interview-day triggers (`a70ca5c`).</li></ul>]]></description>
+    </item>
+    <item>
+      <title>Wave 4: Story-first opening rewrites</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-26-wave-4-story-first-opening-rewrites</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-26-Wave 4: Story-first opening rewrites</guid>
+      <pubDate>Wed, 26 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>Ten chapters rewritten to open with a &quot;you-scene&quot; + naive attempt + tension teaser instead of a definition (`c39f372`).</li></ul>]]></description>
+    </item>
+    <item>
+      <title>Wave 3: Interactive Vue components</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-26-wave-3-interactive-vue-components</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-26-Wave 3: Interactive Vue components</guid>
+      <pubDate>Wed, 26 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>Six new user-driven anim components shipped: `PrefixSumAnim`, `HashingAnim`, `MergeIntervalsAnim`, `TopoSortAnim`, `GreedyAnim`, `BitManipAnim`. All theme-token-driven, screen-reader friendly, respect `prefers-reduced-motion` (`9a0f1cd`).</li></ul>]]></description>
+    </item>
+    <item>
+      <title>Wave 1 &amp; 2: Narrative bones + anemic-chapter enrichment</title>
+      <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-26-wave-1-2-narrative-bones-anemic-chapter-enrichment</link>
+      <guid isPermaLink="false">dsa-master-reference-2026-08-26-Wave 1 &amp; 2: Narrative bones + anemic</guid>
+      <pubDate>Wed, 26 Aug 2026 12:00:00 GMT</pubDate>
+      <description><![CDATA[<ul><li>Ten chapters got the missing four sections (Why exists / When / When not / Templates / Traps). Four anemic chapters (Binary Search, BS on Answer, Bit Manip, Quickselect) grew from ~2.5k to ~4.5k words each (`2db68c6`).</li></ul>]]></description>
+    </item>
     <item>
       <title>Wave B1+B3 reader navigation additions</title>
       <link>https://abhisinghal.github.io/dsa-master-reference/appendix/changelog.html#2026-08-21-wave-b1-b3-reader-navigation-additions</link>

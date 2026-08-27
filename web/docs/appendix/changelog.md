@@ -4,6 +4,45 @@
 
 This changelog is curated from the `gen/src/` git history plus recent reader-facing additions. Entries are grouped by what a reader actually experiences.
 
+## August 2026 — Wave 9: Problem-page reference-bar quality
+
+### 2026-08-27 — Wave 9: 205/205 problem pages elevated to STAR quality
+
+All 205 problem pages now score ≥9/10 on a 10-flag rubric (LC link, ≥2 examples, hints widget, ≥2 numbered approaches, drama numbers, interview commentary, complexity table, when-to-use, related problems, ≥5 widgets).
+
+Every enriched page now has:
+
+- Two or three worked examples covering edge cases (empty, single, adversarial).
+- **Drama numbers** in the constraint line — the naive approach's TLE spelled out at concrete scale versus the canonical improvement.
+- A numbered `## Approach 1 — Brute …` with full working code, complexity, and an explicit "then what's better" transition.
+- Italicised *"Say aloud in an interview: …"* commentary on the canonical approach that maps it back to the algorithmic family.
+- A complexity ladder table marking the canonical solution in bold.
+
+Rolled out in six parts (`2ef479e`, `d75a798`, `8d1c983`, `665ba2a`, `f3744f7`, `155d2a6`), enriching 69 pages that had scored 7 or 8. Every family (arrays → quickselect) is now 100 % STAR.
+
+## August 2026 — Waves 1–8: Pattern-chapter reference-bar quality
+
+### 2026-08-26 — Wave 8: Flagship canonical walkthroughs
+- Union Find, Topological Sort, Greedy, and Divide & Conquer each got a full brute → intermediate → optimised flagship problem embedded in the chapter (`79afd41`).
+
+### 2026-08-26 — Wave 7: Visual & accessibility polish
+- All 35 SVGs pass a fresh WCAG-AA audit; all 21 animations covered by global reduced-motion CSS; Playwright a11y suite added and green (`e7004fa`).
+
+### 2026-08-26 — Wave 6: Historical grounding
+- Ten remaining chapters got a hand-written `## History` paragraph (Bellman 1952 for DP, Floyd 1967 for tortoise & hare, Bentley's JDK binary-search bug, etc.). Coverage now 21/21 (`629b040`).
+
+### 2026-08-26 — Wave 5: Callout enrichment
+- Every chapter carries ≥ 8 highlighted insights (3 keys + 3 traps + 2 invariants) with explicit interview-day triggers (`a70ca5c`).
+
+### 2026-08-26 — Wave 4: Story-first opening rewrites
+- Ten chapters rewritten to open with a "you-scene" + naive attempt + tension teaser instead of a definition (`c39f372`).
+
+### 2026-08-26 — Wave 3: Interactive Vue components
+- Six new user-driven anim components shipped: `PrefixSumAnim`, `HashingAnim`, `MergeIntervalsAnim`, `TopoSortAnim`, `GreedyAnim`, `BitManipAnim`. All theme-token-driven, screen-reader friendly, respect `prefers-reduced-motion` (`9a0f1cd`).
+
+### 2026-08-26 — Wave 1 & 2: Narrative bones + anemic-chapter enrichment
+- Ten chapters got the missing four sections (Why exists / When / When not / Templates / Traps). Four anemic chapters (Binary Search, BS on Answer, Bit Manip, Quickselect) grew from ~2.5k to ~4.5k words each (`2db68c6`).
+
 ## November 2026 — CEO plan execution
 
 ### 2026-11 — Round 20: Behavioral Interview Crash Course
