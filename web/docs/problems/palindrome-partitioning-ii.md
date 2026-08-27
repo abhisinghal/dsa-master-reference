@@ -6,15 +6,15 @@
 
 Min cuts so every part of `s` is palindrome.
 
-**Example 1** — `s="aab"` → `1`
+**Example 1** — `s="aab"` → `1` (`aa | b`)
 **Example 2** — `s="a"` → `0`
 **Example 3** — `s="ab"` → `1`
 
-**Constraints** — `1 ≤ n ≤ 2000`.
+**Constraints** — `1 ≤ n ≤ 2000`. Brute recursive-split is O(2ⁿ) — 10⁶⁰⁰ ops at n=2000, TLE past n=25. Two-DP is O(n²) = 4·10⁶ ops = ~50ms.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -26,11 +26,19 @@ Min cuts so every part of `s` is palindrome.
 
 
 
-## Approach — Two DPs (canonical)
+## Approach 1 — Brute recursive split
+
+**Intuition.** Try every cut position; recurse on the right side. O(2ⁿ) partitions.
+
+**Complexity** — Time **O(2ⁿ)**; Space **O(n)** stack. TLE past n=25. *In an interview* say "precompute pal[i][j] with 2D DP, then compute cuts[i] as 1D DP → O(n²)."
+
+---
+
+## Approach 2 — Two DPs (canonical)
 
 **Insight.**
-1. Precompute `pal[i][j]` = whether `s[i..j]` palindrome.
-2. `cuts[i]` = min cuts for `s[0..i]`. If `pal[0][i]`, 0; else `min(cuts[j] + 1)` for `j` with `pal[j+1][i]`.
+1. Precompute `pal[i][j]` = whether `s[i..j]` palindrome (interval DP).
+2. `cuts[i]` = min cuts for `s[0..i]`. If `pal[0][i]`, 0; else `min(cuts[j] + 1)` over `j` with `pal[j+1][i]`.
 
 
 
@@ -67,7 +75,7 @@ int minCut(String s) {
   ]'
 />
 
-**Complexity** — Time **O(n²)**; Space **O(n²)**.
+**Complexity** — Time **O(n²)**; Space **O(n²)**. *Say aloud in an interview:* "interval DP for palindrome table + linear DP over prefixes — canonical 2-stage pattern."
 
 ---
 
@@ -79,7 +87,8 @@ int minCut(String s) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Two-stage DP | **O(n²)** | O(n²) | canonical |
+| Brute split | O(2ⁿ) | O(n) | TLE past n=25 |
+| **Two-stage DP** | **O(n²)** | O(n²) | **Canonical** |
 
 ## When to use which
 

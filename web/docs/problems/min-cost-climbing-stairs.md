@@ -6,14 +6,15 @@
 
 Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end.
 
-**Example 1** — `cost=[10,15,20]` → `15`
-**Example 2** — `cost=[1,100,1,1,1,100,1,1,100,1]` → `6`
+**Example 1** — `cost=[10,15,20]` → `15` (start at 1, one step past → cost 15)
+**Example 2** — `cost=[1,100,1,1,1,100,1,1,100,1]` → `6` (skip the 100s)
+**Example 3** — `cost=[0,0,0,0]` → `0` (all free)
 
-**Constraints** — `2 ≤ n ≤ 1000`.
+**Constraints** — `2 ≤ n ≤ 1000`. Brute recursion is O(2ⁿ) ≈ 10³⁰¹ at n=1000. DP is O(n) = 1000.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -25,9 +26,17 @@ Each step has cost. Start at 0 or 1; step 1 or 2. Min cost to reach past-the-end
 
 
 
-## Approach — DP O(1) space (canonical)
+## Approach 1 — Brute recursion (no memo)
 
-**Insight.** `dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])`.
+**Intuition.** Recurse from each starting step; at each step, try +1 or +2. Return min.
+
+**Complexity** — Time **O(2ⁿ)**; Space **O(n)** stack. TLE past n=30. *In an interview* say "same subproblems retread — memoize on step index → O(n)."
+
+---
+
+## Approach 2 — DP O(1) space (canonical)
+
+**Insight.** `dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])`. Only need last two → constant space.
 
 
 
@@ -56,7 +65,7 @@ int minCostClimbingStairs(int[] cost) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
+**Complexity** — Time **O(n)**; Space **O(1)**. *Say aloud in an interview:* "same rolling-DP as Climbing Stairs and Fibonacci — 2-element rolling window."
 
 ---
 
@@ -68,7 +77,8 @@ int minCostClimbingStairs(int[] cost) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Rolling DP | **O(n)** | O(1) | canonical |
+| Brute recursion | O(2ⁿ) | O(n) | TLE past n=30 |
+| **Rolling DP** | **O(n)** | O(1) | **Canonical** |
 
 ## When to use which
 

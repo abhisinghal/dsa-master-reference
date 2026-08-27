@@ -6,14 +6,15 @@
 
 At most `k` transactions. Max profit.
 
-**Constraints** — `1 ≤ k ≤ 100`; `1 ≤ n ≤ 1000`.
+**Example 1** — `k=2, prices=[2,4,1]` → `2` (one trade: 2→4)
+**Example 2** — `k=2, prices=[3,2,6,5,0,3]` → `7` (2→6 gives 4, 0→3 gives 3)
+**Example 3** — `k=0, prices=[1,3,2]` → `0`
 
-**Example 1** — `k=2, prices=[2,4,1]` → `2`
-**Example 2** — `k=2, prices=[3,2,6,5,0,3]` → `7`
+**Constraints** — `1 ≤ k ≤ 100`; `1 ≤ n ≤ 1000`. Brute enumerates C(n,2k) buy/sell combos ≈ 10^300. 2k-state DP is O(n·k) ≤ 10⁵ ops = &lt;10ms.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -25,9 +26,17 @@ At most `k` transactions. Max profit.
 
 
 
-## Approach — 2k states DP with unlimited-k shortcut (canonical)
+## Approach 1 — Brute pair enumeration
 
-**Insight.** If `k ≥ n/2`, unlimited transactions → sum of positive diffs.
+**Intuition.** For each subset of up to k disjoint (buy, sell) pairs, sum profits. Exponential.
+
+**Complexity** — Time **O(C(n,2k))**; Space **O(k)**. TLE past n=20. *In an interview* say "state (day, transactions used, holding/not) collapses to 2k+2 variables → O(n·k) DP."
+
+---
+
+## Approach 2 — 2k states DP with unlimited-k shortcut (canonical)
+
+**Insight.** `buy[t]` = max profit after starting t-th buy; `sell[t]` = max profit after completing t-th sell. If `k ≥ n/2`, unlimited transactions → sum of positive daily diffs.
 
 
 
@@ -64,7 +73,7 @@ int maxProfit(int k, int[] prices) {
   ]'
 />
 
-**Complexity** — Time **O(n · k)**; Space **O(k)**.
+**Complexity** — Time **O(n · k)**; Space **O(k)**. *Say aloud in an interview:* "state-machine DP — same skeleton as Cooldown, With Fee, generalizes to any k."
 
 ---
 
@@ -76,7 +85,8 @@ int maxProfit(int k, int[] prices) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| 2k states DP | **O(n · k)** | O(k) | canonical |
+| Brute pair enum | O(C(n,2k)) | O(k) | TLE past n=20 |
+| **2k states DP** | **O(n · k)** | O(k) | **Canonical** |
 
 ## When to use which
 

@@ -7,8 +7,10 @@
 Given a list of distinct words, return all words that can be built as a concatenation of **at least two** shorter words from the same list.
 
 **Example 1** — `words=["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]` → `["catsdogcats","dogcatsdog","ratcatdogcat"]`
+**Example 2** — `words=["a","b","ab","abc"]` → `["ab"]` (`a+b`; `abc` cannot use `c`)
+**Example 3** — `words=["cat","dog"]` → `[]`
 
-**Constraints** — `1 ≤ n ≤ 10⁴`.
+**Constraints** — `1 ≤ n ≤ 10⁴`; each word up to 30 chars. Brute per-word all-splits recursion is O(N·2^L) ≈ 10⁴·10⁹ = TLE. DP-per-word with dict is O(N·L²) ≤ 10⁴·900 ≈ 10⁷ ops = ~1s.
 
 
 <Hints

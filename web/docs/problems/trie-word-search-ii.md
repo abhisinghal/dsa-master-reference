@@ -6,9 +6,11 @@
 
 Given `board[m][n]` of letters and a dictionary `words`, return all words in `words` that can be traced through adjacent cells (no cell reused within a single word).
 
-**Example** — `board=[[o,a,a,n],[e,t,a,e],[i,h,k,r],[i,f,l,v]], words=["oath","pea","eat","rain"]` → `["oath","eat"]`
+**Example 1** — `board=[[o,a,a,n],[e,t,a,e],[i,h,k,r],[i,f,l,v]], words=["oath","pea","eat","rain"]` → `["oath","eat"]`
+**Example 2** — `board=[["a","b"],["c","d"]], words=["abcb"]` → `[]` (needs cell reuse)
+**Example 3** — `board=[["a"]], words=["a"]` → `["a"]`
 
-**Constraints** — `1 ≤ m, n ≤ 12`; up to 3·10⁴ words.
+**Constraints** — `1 ≤ m, n ≤ 12`; up to 3·10⁴ words; each ≤ 10 chars. Brute DFS-per-word is O(k·m·n·4^L) = 3·10⁴·144·4^10 ≈ 4·10¹² ops = TLE (minutes). Trie collapses to a single DFS — O(m·n·4^L) = ~10⁸ ops = ~1s.
 
 
 <Hints

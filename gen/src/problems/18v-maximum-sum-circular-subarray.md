@@ -6,15 +6,15 @@
 
 Max subarray sum in a **circular** array.
 
-**Example 1** — `nums=[1,-2,3,-2]` → `3`
-**Example 2** — `nums=[5,-3,5]` → `10`
-**Example 3** — `nums=[-3,-2,-3]` → `-2`
+**Example 1** — `nums=[1,-2,3,-2]` → `3` (`[3]`, no wrap)
+**Example 2** — `nums=[5,-3,5]` → `10` (wrap: `[5]…[5]`)
+**Example 3** — `nums=[-3,-2,-3]` → `-2` (all-negative: must return single largest)
 
-**Constraints** — `1 ≤ n ≤ 3·10⁴`.
+**Constraints** — `1 ≤ n ≤ 3·10⁴`. Brute is O(n²) doubled-array Kadane — 10⁹ ops = TLE. Two-Kadane trick is O(n) = 3·10⁴ ops = <1ms.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -26,13 +26,21 @@ Max subarray sum in a **circular** array.
 
 
 
-## Approach — Kadane on both max and min (canonical)
+## Approach 1 — Brute doubled-array Kadane
+
+**Intuition.** Concatenate `nums` with itself, then run Kadane restricted to windows of size ≤ n. O(n²).
+
+**Complexity** — Time **O(n²)**; Space **O(n)**. TLE past n=3000. *In an interview* say "wrap-around = complement of a non-wrap minimum subarray → two-pass Kadane on max and min → O(n)."
+
+---
+
+## Approach 2 — Kadane on both max and min (canonical)
 
 **Insight.** Answer is either:
 - **Non-wrapping**: standard Kadane max.
-- **Wrapping**: `totalSum - minSubarraySum`.
+- **Wrapping**: `totalSum − minSubarraySum` (peel off the worst middle chunk).
 
-**Edge case.** If all negative, `total - minSubSum = 0` (empty) → return kadaneMax instead.
+**Edge case.** If all negative, `total − minSubSum = 0` (empty subarray) → return kadaneMax instead.
 
 ```java
 int maxSubarraySumCircular(int[] nums) {
@@ -60,7 +68,7 @@ int maxSubarraySumCircular(int[] nums) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
+**Complexity** — Time **O(n)**; Space **O(1)**. *Say aloud in an interview:* "same cyclic-to-linear reduction as House Robber II — two linear DPs cover both regimes."
 
 ---
 
@@ -72,7 +80,8 @@ int maxSubarraySumCircular(int[] nums) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Kadane × 2 + edge | **O(n)** | O(1) | canonical |
+| Doubled Kadane | O(n²) | O(n) | TLE past n=3000 |
+| **Kadane × 2 + edge** | **O(n)** | O(1) | **Canonical** |
 
 ## When to use which
 

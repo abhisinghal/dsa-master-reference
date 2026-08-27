@@ -6,14 +6,15 @@
 
 Smash pairs (larger becomes diff). Minimize final remaining weight.
 
-**Example 1** — `stones=[2,7,4,1,8,1]` → `1`
+**Example 1** — `stones=[2,7,4,1,8,1]` → `1` (equivalent to splitting into two groups with equal sums 11, 12)
 **Example 2** — `stones=[31,26,33,21,40]` → `5`
+**Example 3** — `stones=[1]` → `1`
 
-**Constraints** — `1 ≤ n ≤ 30`; `1 ≤ stones[i] ≤ 100`.
+**Constraints** — `1 ≤ n ≤ 30`; `1 ≤ stones[i] ≤ 100`. Brute is 3ⁿ smash orderings — 3³⁰ ≈ 2·10¹⁴ ops = TLE. DP is O(n·sum) ≤ 30·3000 = 10⁵ ops = 5ms.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -25,9 +26,17 @@ Smash pairs (larger becomes diff). Minimize final remaining weight.
 
 
 
-## Approach — Reduce to subset-sum closest to total/2 (canonical)
+## Approach 1 — Brute smash simulation
 
-**Insight.** Result = `|sum(+) - sum(-)| = |total - 2·subsetSum|`. Pick subset closest to `total/2`.
+**Intuition.** At each step pick any two stones, smash, insert diff back. Recurse over all orderings; return min final weight.
+
+**Complexity** — Time **O((n²)! )**; Space **O(n)** stack. Blows up past n=8. *In an interview* say "each stone is signed +/−; result is |sum(+) − sum(−)| → subset-sum problem → knapsack DP."
+
+---
+
+## Approach 2 — Reduce to subset-sum closest to total/2 (canonical)
+
+**Insight.** Every smash is equivalent to assigning +/− to each stone. Result = `|sum(+) − sum(−)| = |total − 2·subsetSum|`. Pick subset closest to `total/2`.
 
 
 
@@ -59,7 +68,7 @@ int lastStoneWeightII(int[] stones) {
   ]'
 />
 
-**Complexity** — Time **O(n · total)**; Space **O(total)**.
+**Complexity** — Time **O(n · total)**; Space **O(total)**. *Say aloud in an interview:* "0/1 knapsack in disguise — same as Partition Equal Subset Sum, Target Sum."
 
 ---
 
@@ -71,7 +80,8 @@ int lastStoneWeightII(int[] stones) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Reduce to subset-sum | **O(n · total)** | O(total) | canonical |
+| Brute smash | O((n²)!) | O(n) | TLE past n=8 |
+| **Reduce to subset-sum** | **O(n · total)** | O(total) | **Canonical** |
 
 ## When to use which
 

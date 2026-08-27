@@ -6,15 +6,15 @@
 
 n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 person; each person wears one. Count assignments (mod 1e9+7).
 
-**Constraints** — `1 ≤ n ≤ 10`.
-
-**Example 1** — `hats=[[3,4],[4,5],[5]]` → `1`
+**Example 1** — `hats=[[3,4],[4,5],[5]]` → `1` (one valid assignment)
 **Example 2** — `hats=[[3,5,1],[3,5]]` → `4`
-**Example 3** — `hats=[[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4]]` → `24`
+**Example 3** — `hats=[[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4]]` → `24` (4!)
+
+**Constraints** — `1 ≤ n ≤ 10`; hats ≤ 40. Brute over 40! hat assignments = 8·10⁴⁷ ops. Bitmask-on-people is O(40·2ⁿ·n) ≤ 40·1024·10 = 4·10⁵ ops.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -26,9 +26,17 @@ n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 
 
 
 
-## Approach — Bitmask DP iterating hats (canonical)
+## Approach 1 — Brute assignment enumeration
 
-**Insight.** `dp[h][mask]` = # ways to satisfy people in mask using hats 1..h. Transition: skip hat h, or give it to any person p in mask who likes it.
+**Intuition.** Try every hat→person assignment (or every person→hat with backtracking). Explodes with 40 hats and forbidden repeats.
+
+**Complexity** — Time **O(40ⁿ)** even with pruning; Space **O(n)**. TLE past n=7. *In an interview* say "n ≤ 10 → 2ⁿ ≤ 1024. Iterate over hats (large), keep 2ⁿ state over people (small)."
+
+---
+
+## Approach 2 — Bitmask DP iterating hats (canonical)
+
+**Insight.** `dp[h][mask]` = # ways to satisfy people in mask using hats 1..h. Transition: skip hat h, or give it to any person p in mask who likes it. Rolling 1D over mask.
 
 
 
@@ -67,7 +75,7 @@ int numberWays(List<List<Integer>> hats) {
   ]'
 />
 
-**Complexity** — Time **O(40 · 2ⁿ · n)**; Space **O(2ⁿ)**.
+**Complexity** — Time **O(40 · 2ⁿ · n)**; Space **O(2ⁿ)**. *Say aloud in an interview:* "always mask the smaller side — same trick as assignment problems, Beautiful Arrangement, k-partitions."
 
 ---
 
@@ -79,7 +87,8 @@ int numberWays(List<List<Integer>> hats) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Bitmask over people | **O(40·2ⁿ·n)** | O(2ⁿ) | canonical |
+| Brute enum | O(40ⁿ) | O(n) | TLE past n=7 |
+| **Bitmask over people** | **O(40·2ⁿ·n)** | O(2ⁿ) | **Canonical** |
 
 ## When to use which
 

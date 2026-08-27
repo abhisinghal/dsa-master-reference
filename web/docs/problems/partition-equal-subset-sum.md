@@ -6,14 +6,15 @@
 
 Can `nums` split into two subsets with equal sum?
 
-**Example 1** — `nums=[1,5,11,5]` → `true`
-**Example 2** — `nums=[1,2,3,5]` → `false`
+**Example 1** — `nums=[1,5,11,5]` → `true` (`[1,5,5]` vs `[11]`, sum=11 each)
+**Example 2** — `nums=[1,2,3,5]` → `false` (sum=11, odd → impossible)
+**Example 3** — `nums=[2,2]` → `true`
 
-**Constraints** — `1 ≤ n ≤ 200`.
+**Constraints** — `1 ≤ n ≤ 200`; `1 ≤ nums[i] ≤ 100`. Brute is 2ⁿ subsets — 2²⁰⁰ ops = universe-age. Knapsack DP is O(n·sum) ≤ 200·10⁴ = 2·10⁶ ops = 50ms.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -25,11 +26,19 @@ Can `nums` split into two subsets with equal sum?
 
 
 
-## Approach — Subset-sum DP (0/1 knapsack, canonical)
+## Approach 1 — Brute subset enumeration
 
-**Insight.** Possible iff sum even AND a subset sums to `sum/2`.
+**Intuition.** Try every subset; if its sum is `total/2`, return true. 2ⁿ combinations.
 
-**Trap** — iterate `j` **descending** for 0/1 knapsack.
+**Complexity** — Time **O(2ⁿ)**; Space **O(n)** stack. TLE past n=25. *In an interview* say "reduce to subset-sum feasibility — knapsack DP → O(n·sum)."
+
+---
+
+## Approach 2 — Subset-sum DP (0/1 knapsack, canonical)
+
+**Insight.** Possible iff sum even AND a subset sums to `sum/2`. Boolean DP `dp[j]` = "can we hit sum j?".
+
+**Trap** — iterate `j` **descending** for 0/1 knapsack (else you'd count each item multiple times).
 
 
 
@@ -61,7 +70,7 @@ boolean canPartition(int[] nums) {
   ]'
 />
 
-**Complexity** — Time **O(n · sum)**; Space **O(sum)**.
+**Complexity** — Time **O(n · sum)**; Space **O(sum)**. *Say aloud in an interview:* "canonical 0/1 knapsack — same skeleton as Target Sum, Last Stone Weight II."
 
 ## BitSet speedup
 `dp |= dp << x` on `BitSet` — word-parallel.
@@ -76,8 +85,9 @@ boolean canPartition(int[] nums) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| 0/1 knapsack DP | **O(n · sum)** | O(sum) | canonical |
-| BitSet | O(n · sum / 64) | O(sum) | polish |
+| Brute subsets | O(2ⁿ) | O(n) | TLE past n=25 |
+| **0/1 knapsack DP** | **O(n · sum)** | O(sum) | **Canonical** |
+| BitSet | O(n · sum / 64) | O(sum) | Polish |
 
 ## When to use which
 

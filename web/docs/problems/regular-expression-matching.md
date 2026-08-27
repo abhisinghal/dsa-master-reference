@@ -6,15 +6,16 @@
 
 Match `s` against `p` with `.` (any char) and `*` (0+ of prev char).
 
-**Example 1** — `s="aa", p="a"` → `false`
-**Example 2** — `s="aa", p="a*"` → `true`
-**Example 3** — `s="ab", p=".*"` → `true`
+**Example 1** — `s="aa", p="a"` → `false` (single `a` doesn't cover two)
+**Example 2** — `s="aa", p="a*"` → `true` (`a*` = 2 a's)
+**Example 3** — `s="ab", p=".*"` → `true` (`.*` = any string)
+**Example 4** — `s="", p="a*b*"` → `true` (0+0 chars)
 
-**Constraints** — `1 ≤ |s|, |p| ≤ 20`.
+**Constraints** — `1 ≤ |s|, |p| ≤ 20`. Brute regex backtracking is exponential — 3^20 ≈ 3.5·10⁹ paths worst case, TLE past 15 char patterns. 2D DP is O(mn) ≤ 400 ops = trivial.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -26,7 +27,15 @@ Match `s` against `p` with `.` (any char) and `*` (0+ of prev char).
 
 
 
-## Approach — 2D DP (canonical)
+## Approach 1 — Brute recursion
+
+**Intuition.** Backtrack: at each `*`, try consuming 0, 1, 2, … chars. Deeply overlapping subproblems.
+
+**Complexity** — Time **O(3^(m+n))**; Space **O(m+n)** stack. TLE past m+n≈15. *In an interview* say "memoize on (i, j) → 2D DP → O(mn)."
+
+---
+
+## Approach 2 — 2D DP (canonical)
 
 **Insight.** `dp[i][j]` = whether `s[..i]` matches `p[..j]`.
 - `p[j-1] == '*'`:
@@ -72,7 +81,7 @@ boolean matches(String s, String p, int i, int j) {
   ]'
 />
 
-**Complexity** — Time **O(mn)**; Space **O(mn)** (compressible).
+**Complexity** — Time **O(mn)**; Space **O(mn)** (compressible). *Say aloud in an interview:* "canonical 2-string DP — same shape family as Wildcard Matching, Edit Distance, LCS."
 
 ---
 
@@ -84,7 +93,8 @@ boolean matches(String s, String p, int i, int j) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| 2D DP | **O(mn)** | O(mn) | canonical |
+| Brute recursion | O(3^(m+n)) | O(m+n) | TLE past m+n≈15 |
+| **2D DP** | **O(mn)** | O(mn) | **Canonical** |
 
 ## When to use which
 

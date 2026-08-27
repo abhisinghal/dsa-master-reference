@@ -6,14 +6,15 @@
 
 Undirected graph. Shortest length path visiting every node (may reuse).
 
-**Constraints** — `1 ≤ n ≤ 12`.
-
-**Example 1** — `graph=[[1,2,3],[0],[0],[0]]` → `4`
+**Example 1** — `graph=[[1,2,3],[0],[0],[0]]` → `4` (star: hop out and back)
 **Example 2** — `graph=[[1],[0,2,4],[1,3,4],[2],[1,2]]` → `4`
+**Example 3** — `graph=[[1],[0]]` → `1`
+
+**Constraints** — `1 ≤ n ≤ 12`. Brute permutation of routes is O(n!·n) = 12!·12 ≈ 6·10⁹ ops = TLE. Bitmask BFS is O(n·2ⁿ·deg) ≤ 12·4096·12 = 6·10⁵ ops = &lt;10ms.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -25,9 +26,17 @@ Undirected graph. Shortest length path visiting every node (may reuse).
 
 
 
-## Approach — Bitmask BFS (canonical)
+## Approach 1 — Brute permutation
 
-**Insight.** State = `(node, visitedMask)`. BFS from all `(i, 1 << i)` starts.
+**Intuition.** Try every permutation of visit order; compute path length (BFS between consecutive pair). Return min.
+
+**Complexity** — Time **O(n!·n²)**; Space **O(n)**. TLE past n=9. *In an interview* say "state (node, visitedMask) collapses redundant orderings — bitmask BFS → O(n·2ⁿ)."
+
+---
+
+## Approach 2 — Bitmask BFS (canonical)
+
+**Insight.** State = `(node, visitedMask)`. BFS from all `(i, 1 << i)` starts simultaneously; first to hit `mask == full` wins.
 
 
 
@@ -70,7 +79,7 @@ int shortestPathLength(int[][] graph) {
   ]'
 />
 
-**Complexity** — Time **O(n · 2ⁿ · degree)**; Space **O(n · 2ⁿ)**.
+**Complexity** — Time **O(n · 2ⁿ · degree)**; Space **O(n · 2ⁿ)**. *Say aloud in an interview:* "bitmask-on-visited pattern — same as Traveling Salesman, Number of Ways to Wear Different Hats."
 
 ---
 
@@ -82,7 +91,8 @@ int shortestPathLength(int[][] graph) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Bitmask BFS | **O(n · 2ⁿ · deg)** | O(n · 2ⁿ) | canonical |
+| Brute permutation | O(n!·n²) | O(n) | TLE past n=9 |
+| **Bitmask BFS** | **O(n · 2ⁿ · deg)** | O(n · 2ⁿ) | **Canonical** |
 
 ## When to use which
 

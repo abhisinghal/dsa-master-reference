@@ -6,14 +6,15 @@
 
 Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 
-**Example 1** — `nums=[2,3,2]` → `3`
-**Example 2** — `nums=[1,2,3,1]` → `4`
+**Example 1** — `nums=[2,3,2]` → `3` (rob only house 1: `3`; can't rob 0 and 2 together — adjacent in circle)
+**Example 2** — `nums=[1,2,3,1]` → `4` (rob houses 0 and 2: `1+3=4`)
+**Example 3** — `nums=[1]` → `1`
 
-**Constraints** — `1 ≤ n ≤ 100`.
+**Constraints** — `1 ≤ n ≤ 100`. Brute 2ⁿ subset enumeration is 2¹⁰⁰ = universe-age. Two linear-DP runs is O(n) = 100 ops.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -25,9 +26,17 @@ Houses in a **circle** — first and last adjacent. Max rob without adjacent.
 
 
 
-## Approach — Two linear runs (canonical)
+## Approach 1 — Brute enumeration
 
-**Insight.** rob(first) forbids rob(last). Optimum = max of two subarrays: `[0..n-2]` and `[1..n-1]`.
+**Intuition.** For each subset, check if it's a valid pick (no adjacent in circle) and track max sum. `2ⁿ` states.
+
+**Complexity** — Time **O(2ⁿ · n)**; Space **O(n)**. Dies past n=25. *In an interview* say "linear DP twice: once excluding last house, once excluding first → O(n)."
+
+---
+
+## Approach 2 — Two linear runs (canonical)
+
+**Insight.** rob(first) forbids rob(last). So the optimum = max of two independent subproblems on subarrays: `[0..n-2]` (skip last) and `[1..n-1]` (skip first). Each is standard linear House Robber.
 
 
 
@@ -61,7 +70,7 @@ int linear(int[] nums, int lo, int hi) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
+**Complexity** — Time **O(n)**; Space **O(1)**. *Say aloud in an interview:* "reduce a cyclic problem to two acyclic subproblems — same technique in Circular Array Loop, Rotate Array."
 
 ---
 
@@ -73,7 +82,8 @@ int linear(int[] nums, int lo, int hi) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Two linear runs | **O(n)** | O(1) | canonical |
+| Brute subsets | O(2ⁿ · n) | O(n) | TLE past n=25 |
+| **Two linear runs** | **O(n)** | O(1) | **Canonical** |
 
 ## When to use which
 

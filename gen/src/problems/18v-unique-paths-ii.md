@@ -6,14 +6,15 @@
 
 Grid with obstacles. Count paths from top-left to bottom-right (right/down).
 
-**Example 1** — `[[0,0,0],[0,1,0],[0,0,0]]` → `2`
+**Example 1** — `[[0,0,0],[0,1,0],[0,0,0]]` → `2` (go around the center obstacle two ways)
 **Example 2** — `[[0,1],[0,0]]` → `1`
+**Example 3** — `[[1]]` → `0` (start blocked)
 
-**Constraints** — `1 ≤ m, n ≤ 100`.
+**Constraints** — `1 ≤ m, n ≤ 100`. Brute DFS is exponential (~2^(m+n) ≈ 10⁶⁰ at m=n=100). DP is O(mn) = 10⁴.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -25,9 +26,17 @@ Grid with obstacles. Count paths from top-left to bottom-right (right/down).
 
 
 
-## Approach — Grid DP with obstacle guard (canonical)
+## Approach 1 — Brute DFS
 
-**Insight.** `dp[i][j] = 0` if obstacle; else `dp[i-1][j] + dp[i][j-1]`.
+**Intuition.** From each cell try both moves (right, down); count paths that reach the end without stepping on obstacles.
+
+**Complexity** — Time **O(2^(m+n))**; Space **O(m+n)** stack. TLE past 15×15. *In an interview* say "many overlapping subpaths — memoize on (i, j) → O(mn)."
+
+---
+
+## Approach 2 — Grid DP with obstacle guard (canonical)
+
+**Insight.** `dp[i][j] = 0` if obstacle; else `dp[i-1][j] + dp[i][j-1]`. Compressed to a single row.
 
 ```java
 int uniquePathsWithObstacles(int[][] grid) {
@@ -55,7 +64,7 @@ int uniquePathsWithObstacles(int[][] grid) {
   ]'
 />
 
-**Complexity** — Time **O(mn)**; Space **O(n)**.
+**Complexity** — Time **O(mn)**; Space **O(n)**. *Say aloud in an interview:* "standard grid-DP skeleton — same as Unique Paths, Min Path Sum, and Dungeon Game (reverse direction)."
 
 ---
 
@@ -67,7 +76,8 @@ int uniquePathsWithObstacles(int[][] grid) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| 1D compressed DP | **O(mn)** | O(n) | canonical |
+| Brute DFS | O(2^(m+n)) | O(m+n) | TLE past 15×15 |
+| **1D compressed DP** | **O(mn)** | O(n) | **Canonical** |
 
 ## When to use which
 
