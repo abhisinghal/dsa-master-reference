@@ -8,9 +8,7 @@ Given a string `s` over `{a, b, c}`, return the number of substrings containing 
 **Example 2** — `s = "aaacb"` → `3`
 **Example 3** — `s = "abc"` → `1`
 
-**Constraints** — `3 ≤ n ≤ 5 · 10⁴`. `s[i] ∈ {a, b, c}`.
-
-
+**Constraints** — `3 ≤ n ≤ 5 · 10⁴`. `s[i] ∈ {a, b, c}`. Brute is O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Sliding window with the "shrink while valid" trick is O(n) = 10⁵ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

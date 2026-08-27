@@ -10,9 +10,7 @@ Given a positive-int array `nums` and target `target`, return the minimal length
 **Example 2** — `target = 4, nums = [1,4,4]` → `1` (single 4)
 **Example 3** — `target = 11, nums = [1,1,1,1,1,1,1,1]` → `0` (impossible)
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ nums[i], target ≤ 10⁴`. **All values positive.**
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ nums[i], target ≤ 10⁴`. **All values positive.**. Brute enumerates all subarrays in O(n²) = 10¹⁰ ops (TLE past n=10⁴). Sliding window is O(n) = 10⁵ ops = &lt;5 ms.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

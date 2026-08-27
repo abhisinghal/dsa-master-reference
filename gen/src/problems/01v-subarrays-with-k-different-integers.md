@@ -10,9 +10,7 @@ Given an integer array `nums` and integer `k`, return the number of contiguous s
 **Example 2** — `nums = [1,2,1,3,4], k = 3` → `3`
 **Example 3** — `nums = [1,1,1], k = 1` → `6` (each of `[1]`, `[1]`, `[1]`, `[1,1]`, `[1,1]`, `[1,1,1]`)
 
-**Constraints** — `1 ≤ n ≤ 2 · 10⁴`; `1 ≤ nums[i] ≤ n`; `1 ≤ k ≤ n`.
-
-
+**Constraints** — `1 ≤ n ≤ 2 · 10⁴`; `1 ≤ nums[i] ≤ n`; `1 ≤ k ≤ n`. Brute enumerates every subarray in O(n²) = 4·10⁸ ops at n=2·10⁴ (borderline TLE). Two sliding windows (`≤k` − `≤k−1`) run in O(n) = 2·10⁴ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

@@ -10,9 +10,7 @@ Given an array `fruits` where `fruits[i]` is a type of fruit, and 2 baskets each
 **Example 2** — `fruits = [0,1,2,2]` → `3` (last 3 use types {1,2})
 **Example 3** — `fruits = [1,2,3,2,2]` → `4` (last 4 use types {2,3})
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `fruits[i] ∈ [0, n−1]`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `fruits[i] ∈ [0, n−1]`. Brute enumerates every window in O(n²) = 10¹⁰ ops at n=10⁵ (TLE past ~30 s). Sliding window is O(n) = 10⁵ ops = &lt;10 ms.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

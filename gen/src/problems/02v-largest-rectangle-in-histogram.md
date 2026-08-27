@@ -9,9 +9,7 @@ Given bar heights, return the largest rectangle contained.
 **Example 1** — `heights=[2,1,5,6,2,3]` → `10`
 **Example 2** — `heights=[2,4]` → `4`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`. Brute enumerates every (l, r) window in O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Monotonic stack runs each index in amortised O(1) → O(n) = 10⁵ ops = <10 ms.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

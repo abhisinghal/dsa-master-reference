@@ -10,9 +10,7 @@ Given an integer array `nums` of length `n` and integer `target`, return the sum
 **Example 2** — `nums = [0,0,0], target = 1` → `0`
 **Example 3** — `nums = [1,1,1,0], target = -100` → `2`
 
-**Constraints** — `3 ≤ n ≤ 500`; `-10³ ≤ nums[i], target ≤ 10³`.
-
-
+**Constraints** — `3 ≤ n ≤ 500`; `-10³ ≤ nums[i], target ≤ 10³`. Brute enumerates every triple in O(n³) = 1.25·10⁸ ops at n=500 (borderline). Sort + two-pointer is O(n²) = 2.5·10⁵ ops.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

@@ -9,9 +9,7 @@ Count triplets `(i, j, k)` with `i < j < k` and `nums[i] + nums[j] + nums[k] < t
 **Example 1** — `nums=[-2,0,1,3], target=2` → `2`
 **Example 2** — `nums=[], target=0` → `0`
 
-**Constraints** — `0 ≤ n ≤ 3500`.
-
-
+**Constraints** — `0 ≤ n ≤ 3500`. Brute is O(n³) ≈ 4·10¹⁰ ops at n=3500 (TLE). Sort + two-pointer with count is O(n²) ≈ 1.2·10⁷ ops.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

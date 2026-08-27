@@ -10,9 +10,7 @@ Given a string `s` and integer `k`, return the length of the longest substring c
 **Example 2** — `s = "aa", k = 1` → `2`
 **Example 3** — `s = "a", k = 0` → `0`
 
-**Constraints** — `1 ≤ n ≤ 5 · 10⁴`; `0 ≤ k ≤ 50`.
-
-
+**Constraints** — `1 ≤ n ≤ 5 · 10⁴`; `0 ≤ k ≤ 50`. Brute expands every window in O(n²·k) = 10¹⁰·k ops at n=10⁵ (TLE). Sliding window with a freq map is O(n) = 10⁵ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

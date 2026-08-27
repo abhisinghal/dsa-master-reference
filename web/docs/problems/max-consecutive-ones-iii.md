@@ -10,9 +10,7 @@ Given a binary array `nums` and integer `k`, return the maximum length of a suba
 **Example 2** — `nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], k = 3` → `10`
 **Example 3** — `nums = [1,1,1,1], k = 0` → `4`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `nums[i] ∈ {0, 1}`; `0 ≤ k ≤ n`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `nums[i] ∈ {0, 1}`; `0 ≤ k ≤ n`. Brute expands every window in O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Sliding window with k-tolerance stays O(n) = 10⁵ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

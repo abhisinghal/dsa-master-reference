@@ -10,9 +10,7 @@ Given an array `nums` and integer `k`, return the number of contiguous subarrays
 **Example 2** — `nums = [2,4,6], k = 1` → `0`
 **Example 3** — `nums = [2,2,2,1,2,2,1,2,2,2], k = 2` → `16`
 
-**Constraints** — `1 ≤ n ≤ 5 · 10⁴`; `1 ≤ nums[i] ≤ 10⁵`; `1 ≤ k ≤ n`.
-
-
+**Constraints** — `1 ≤ n ≤ 5 · 10⁴`; `1 ≤ nums[i] ≤ 10⁵`; `1 ≤ k ≤ n`. Brute checks every subarray in O(n²) = 2.5·10⁹ ops at n=5·10⁴ (TLE). Sliding-window `atMost(k) − atMost(k−1)` is O(n) = 5·10⁴ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

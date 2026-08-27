@@ -10,9 +10,7 @@ Given strings `s1` and `s2`, return `true` iff `s2` contains any permutation of 
 **Example 2** — `s1 = "ab", s2 = "eidboaoo"` → `false`
 **Example 3** — `s1 = "adc", s2 = "dcda"` → `true` (`"dca"` at index 0)
 
-**Constraints** — `1 ≤ |s1|, |s2| ≤ 10⁴`. Lowercase English.
-
-
+**Constraints** — `1 ≤ |s1|, |s2| ≤ 10⁴`. Lowercase English. Brute compares every window against sorted target — O(n·k·log k) = 10⁴·10⁴·13 ≈ 1.3·10⁹ ops (TLE). Sliding-window frequency compare is O(n·26) = ~2·10⁵ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

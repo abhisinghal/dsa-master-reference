@@ -10,9 +10,7 @@ Given a binary array `nums` and integer `goal`, return the number of non-empty c
 **Example 2** — `nums = [0,0,0,0,0], goal = 0` → `15` (every subarray sums to 0)
 **Example 3** — `nums = [1,1,1], goal = 3` → `1`
 
-**Constraints** — `1 ≤ n ≤ 3 · 10⁴`; `nums[i] ∈ {0, 1}`; `0 ≤ goal ≤ n`.
-
-
+**Constraints** — `1 ≤ n ≤ 3 · 10⁴`; `nums[i] ∈ {0, 1}`; `0 ≤ goal ≤ n`. Brute is O(n²) = 9·10⁸ ops at n=3·10⁴ (TLE past 5 s). Sliding-window `atMost(goal) − atMost(goal−1)` runs in O(n) = 3·10⁴ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

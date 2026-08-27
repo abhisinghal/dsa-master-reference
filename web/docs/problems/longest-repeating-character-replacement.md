@@ -10,9 +10,7 @@ Given `s` (uppercase A–Z) and integer `k`, return the length of the longest su
 **Example 2** — `s = "AABABBA", k = 1` → `4` (window `AABA` → replace one `A` with `B`, or the reverse)
 **Example 3** — `s = "AAAA", k = 0` → `4` (already all same)
 
-**Constraints** — `1 ≤ n ≤ 10⁵`, `0 ≤ k ≤ n`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`, `0 ≤ k ≤ n`. Brute is O(n²·26) ≈ 2.6·10¹¹ ops at n=10⁵ (TLE). Sliding window (max-freq + k) is O(n·26) ≈ 2.6·10⁶ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

@@ -10,9 +10,7 @@ Given strings `s` and `p`, return all starting indices in `s` where a permutatio
 **Example 2** — `s = "abab", p = "ab"` → `[0, 1, 2]`
 **Example 3** — `s = "aaaaaaaaaa", p = "aaaa"` → `[0,1,2,3,4,5,6]`
 
-**Constraints** — `1 ≤ |s|, |p| ≤ 3 · 10⁴`. Lowercase English.
-
-
+**Constraints** — `1 ≤ |s|, |p| ≤ 3 · 10⁴`. Lowercase English. Brute sorts every window in O(n·k·log k) = 3·10⁴·10⁴·13 ≈ 4·10⁹ ops (TLE). Sliding-window freq compare is O(n·26) ≈ 8·10⁵ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
