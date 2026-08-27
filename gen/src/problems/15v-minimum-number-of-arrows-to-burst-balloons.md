@@ -7,15 +7,16 @@
 Balloons span `[xstart, xend]`. Arrow at x bursts every balloon whose span contains x. Min arrows.
 
 **Example 1** — `points=[[10,16],[2,8],[1,6],[7,12]]` → `2`
-**Example 2** — `points=[[1,2],[3,4],[5,6],[7,8]]` → `4`
+**Example 2** — `points=[[1,2],[3,4],[5,6],[7,8]]` → `4` (all disjoint)
+**Example 3** — `points=[[1,10],[2,3],[4,5]]` → `1` (all overlap the first)
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `-2³¹ ≤ x ≤ 2³¹−1`.
+**Constraints** — `1 ≤ n ≤ 10⁵`; `-2³¹ ≤ x ≤ 2³¹−1`. Brute try-every-arrow-position is O(n · range) = potentially 10⁵ · 2³² = 4·10¹⁴ ops. Sort + greedy is O(n log n) = 1.7·10⁶.
 
 
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
-  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+  hint3="If greedy fails, DP is likely needed. But prove greedy's correctness before writing it."
 />
 ---
 
@@ -25,7 +26,15 @@ Balloons span `[xstart, xend]`. Arrow at x bursts every balloon whose span conta
 
 
 
-## Approach — Sort by end + shoot at end of first alive (canonical)
+## Approach 1 — Brute try every subset of arrows
+
+**Intuition.** For each subset of endpoints, check if the arrows placed there burst every balloon. Return the smallest valid subset size.
+
+**Complexity** — Time **O(2ⁿ · n)** subset check; Space **O(n)**. TLE past n=20. Just state as reference: *"this is set-cover in disguise — greedy earliest-end wins."*
+
+---
+
+## Approach 2 — Sort by end + shoot at end of first alive (canonical)
 
 **Insight.** Sort by `xend`. Shoot the first balloon at its end. That arrow bursts every balloon starting ≤ end. Move to first balloon starting > end.
 
@@ -53,7 +62,7 @@ int findMinArrowShots(int[][] points) {
   ]'
 />
 
-**Complexity** — Time **O(n log n)**; Space **O(1)**.
+**Complexity** — Time **O(n log n)**; Space **O(1)**. *Say aloud in an interview:* "canonical activity-selection variant — sort by end, greedy pick. Same template as Non-overlapping Intervals and Meeting Rooms II counting."
 
 ---
 
@@ -65,7 +74,8 @@ int findMinArrowShots(int[][] points) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + shoot | **O(n log n)** | O(1) | canonical |
+| Brute subsets | O(2ⁿ · n) | O(n) | TLE past n=20 |
+| **Sort + shoot** | **O(n log n)** | O(1) | **Canonical** |
 
 ## When to use which
 

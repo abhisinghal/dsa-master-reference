@@ -8,12 +8,13 @@ Delete `x` to earn `x` points; also removes all `x-1` and `x+1`. Max points.
 
 **Example 1** — `nums=[3,4,2]` → `6`
 **Example 2** — `nums=[2,2,3,3,3,4]` → `9`
+**Example 3** — `nums=[1,1,1,2,4,5,5,5,6]` → `18`
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`.
+**Constraints** — `1 ≤ n ≤ 2·10⁴`; `1 ≤ nums[i] ≤ 10⁴`. Brute subset enumeration is 2ⁿ — impossible past n=25. Reduction to House Robber gives O(n + max) ≈ 4·10⁴.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -25,9 +26,17 @@ Delete `x` to earn `x` points; also removes all `x-1` and `x+1`. Max points.
 
 
 
-## Approach — Reduce to House Robber (canonical)
+## Approach 1 — Brute subset enumeration
 
-**Insight.** Bucket totals: `points[v] = v · count(v)`. Picking `v` forbids `v±1` — exactly House Robber on `points[]`.
+**Intuition.** For each subset of values in nums, check if any two are adjacent (differ by 1). If not, sum the values. Track max.
+
+**Complexity** — Time **O(2ⁿ · n)**; Space **O(n)**. TLE past n=20. *In an interview* say "the 'adjacent-value taboo' has the same structure as House Robber → O(n + max)."
+
+---
+
+## Approach 2 — Reduce to House Robber (canonical)
+
+**Insight.** Bucket totals: `points[v] = v · count(v)`. Picking bucket `v` forbids `v±1` — exactly **House Robber** on the `points[]` array indexed by value.
 
 ```java
 int deleteAndEarn(int[] nums) {
@@ -56,7 +65,7 @@ int deleteAndEarn(int[] nums) {
   ]'
 />
 
-**Complexity** — Time **O(n + max)**; Space **O(max)**.
+**Complexity** — Time **O(n + max)**; Space **O(max)**. *Say aloud in an interview:* "spot the reduction — every 'pick or skip with adjacency taboo' is House Robber wearing a different hat."
 
 ---
 
@@ -68,7 +77,8 @@ int deleteAndEarn(int[] nums) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Reduce to House Robber | **O(n + max)** | O(max) | canonical |
+| Brute subsets | O(2ⁿ · n) | O(n) | Reference; TLE past n=20 |
+| **Reduce to House Robber** | **O(n + max)** | O(max) | **Canonical** |
 
 ## When to use which
 

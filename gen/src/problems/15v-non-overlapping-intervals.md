@@ -10,13 +10,13 @@ Min intervals to remove so the rest are non-overlapping.
 **Example 2** — `intervals=[[1,2],[1,2],[1,2]]` → `2`
 **Example 3** — `intervals=[[1,2],[2,3]]` → `0`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`.
+**Constraints** — `1 ≤ n ≤ 10⁵`. Brute enumerating subsets is `2ⁿ = 10³⁰¹⁰³` — universe-age. Sort + greedy is O(n log n) = 10⁵ · 17 = 1.7·10⁶.
 
 
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
-  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+  hint3="If greedy fails, DP is likely needed. But prove greedy's correctness before writing it."
 />
 ---
 
@@ -26,9 +26,19 @@ Min intervals to remove so the rest are non-overlapping.
 
 
 
-## Approach — Sort by end + activity selection (canonical)
+## Approach 1 — Brute subset enumeration
 
-**Insight.** Equivalent to maximizing non-overlapping intervals; count to remove = n - maxKept. Sort by end; greedily keep intervals with start ≥ prev end.
+**Intuition.** Try every subset. For each, check non-overlapping. Return `n - max_valid_size`.
+
+**Complexity** — Time **O(2ⁿ · n log n)**; Space **O(n)**. TLE past n=20. Just state as the reference: "we're maximising a compatible subset, which is the *activity selection* pattern."
+
+---
+
+## Approach 2 — Sort by end + activity selection (canonical)
+
+**Insight.** Equivalent to maximizing non-overlapping intervals; count to remove = `n - maxKept`. Sort by **end** (not start!); greedily keep every interval whose start ≥ previous end.
+
+**Why end-sort works (exchange argument).** Take any optimal set. The first interval must end at some time `t`. If we swap it for the interval with the *earliest possible end*, the remaining budget is at least as generous. Repeat: optimal converges to greedy.
 
 ```java
 int eraseOverlapIntervals(int[][] intervals) {
@@ -51,7 +61,7 @@ int eraseOverlapIntervals(int[][] intervals) {
   ]'
 />
 
-**Complexity** — Time **O(n log n)**; Space **O(1)**.
+**Complexity** — Time **O(n log n)**; Space **O(1)**. *Say aloud in an interview:* "earliest-deadline-first is the canonical activity-selection template — same trick powers Minimum Arrows to Burst Balloons and Max Length of Pair Chain."
 
 ---
 
@@ -63,7 +73,8 @@ int eraseOverlapIntervals(int[][] intervals) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + activity | **O(n log n)** | O(1) | canonical |
+| Brute subsets | O(2ⁿ · n log n) | O(n) | Reference; TLE past n=20 |
+| **Sort by end + greedy** | **O(n log n)** | O(1) | **Canonical** |
 
 ## When to use which
 

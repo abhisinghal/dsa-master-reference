@@ -10,11 +10,11 @@ Count ways to make `amount` from `coins` (unlimited each, **unordered**).
 **Example 2** — `amount=3, coins=[2]` → `0`
 **Example 3** — `amount=10, coins=[10]` → `1`
 
-**Constraints** — `1 ≤ #coins ≤ 300`; `1 ≤ amount ≤ 5000`.
+**Constraints** — `1 ≤ #coins ≤ 300`; `1 ≤ amount ≤ 5000`. Brute recursion is O(k^amount) — for amount=100, k=10 that's 10¹⁰⁰. DP is O(A · C) = 5·10³ · 300 = 1.5·10⁶.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -26,9 +26,34 @@ Count ways to make `amount` from `coins` (unlimited each, **unordered**).
 
 
 
-## Approach — Unbounded knapsack counting (canonical)
+## Approach 1 — Brute recursion enumerating combos
 
-**Insight.** Outer loop = coins; inner = amount. This counts **unordered** combinations.
+**Intuition.** At each recursion, either use coin `c` (stay at `c`) or skip to next. Terminate at amount=0 or exhaust coins.
+
+
+
+```java
+int changeBrute(int amount, int[] coins) {
+    return dfs(amount, coins, 0);
+}
+int dfs(int rem, int[] coins, int idx) {
+    if (rem == 0) return 1;
+    if (rem < 0 || idx == coins.length) return 0;
+    return dfs(rem - coins[idx], coins, idx) + dfs(rem, coins, idx + 1);
+}
+```
+
+
+
+**Complexity** — Time exponential in amount/coin ratio; Space O(amount) stack. TLE past amount=25. *In an interview* say "memoize on (rem, idx) → O(A · C)."
+
+---
+
+## Approach 2 — Unbounded knapsack counting (canonical)
+
+**Insight.** `dp[amt]` = number of ways to make `amt`. Outer loop = coins, inner = amount. **This ordering counts unordered combinations** (each coin's contribution is decided *once* per outer iteration, so different orderings don't count separately).
+
+**Contrast.** Swap loop order → counts **ordered** sequences → [Combination Sum IV](/problems/combination-sum-iv).
 
 
 
@@ -57,9 +82,7 @@ int change(int amount, int[] coins) {
   ]'
 />
 
-**Contrast.** Swap loop order → counts **ordered** sequences → [Combination Sum IV](/problems/combination-sum-iv).
-
-**Complexity** — Time **O(amount · |coins|)**; Space **O(amount)**.
+**Complexity** — Time **O(amount · |coins|)**; Space **O(amount)**. *Say aloud in an interview:* "loop-order is the *only* thing that distinguishes 'count combinations' from 'count permutations' — same recurrence."
 
 ---
 
@@ -71,7 +94,8 @@ int change(int amount, int[] coins) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Unbounded knapsack | **O(A · C)** | O(A) | canonical |
+| Brute recursion | Exponential | O(A) | Reference; TLE past A=25 |
+| **Unbounded knapsack** | **O(A · C)** | O(A) | **Canonical** |
 
 ## When to use which
 
