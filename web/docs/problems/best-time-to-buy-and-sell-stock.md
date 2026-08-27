@@ -9,9 +9,7 @@ At most one buy + one sell. Max profit.
 **Example 1** — `prices=[7,1,5,3,6,4]` → `5`
 **Example 2** — `prices=[7,6,4,3,1]` → `0`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`. Brute compares every buy/sell pair in O(n²) = 10¹⁰ ops at n=10⁵ (TLE). One-pass tracking min-so-far and max profit is O(n) = 10⁵ ops = &lt;5 ms.
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."

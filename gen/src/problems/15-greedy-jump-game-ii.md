@@ -9,9 +9,7 @@ Given `nums[i]` = max jump length from index `i`, return the **minimum jumps** t
 **Example 1** — `[2,3,1,1,4]` → `2` (`0 → 1 → 4`)
 **Example 2** — `[2,3,0,1,4]` → `2`
 
-**Constraints** — `1 ≤ n ≤ 10⁴`; `0 ≤ nums[i] ≤ 1000`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`; `0 ≤ nums[i] ≤ 1000`. Brute DP with min-jumps[i] is O(n²) = 10⁸ ops at n=10⁴ (borderline). Greedy expanding-frontier ("BFS levels on an implicit graph") is O(n) = 10⁴ ops.
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."

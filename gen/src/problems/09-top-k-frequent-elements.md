@@ -9,9 +9,7 @@ Given `nums` and integer `k`, return the `k` most frequent elements (any order).
 **Example 1** — `nums=[1,1,1,2,2,3], k=2` → `[1,2]`
 **Example 2** — `nums=[1], k=1` → `[1]`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ #distinct`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ #distinct`. Brute sorts all n values by frequency in O(n log n) = 10⁵·17 ≈ 2·10⁶ ops. Heap of size k is O(n log k) — at k=10 that's 10⁵·4 = 4·10⁵ ops. Quickselect on frequency buckets is expected O(n) = 10⁵ ops.
 <Hints
   hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
   hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."

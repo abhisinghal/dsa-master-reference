@@ -10,9 +10,7 @@ Given binary array `nums`, return the length of the longest subarray with equal 
 **Example 2** — `nums = [0,1,0]` → `2`
 **Example 3** — `nums = [0,0,1,1,0]` → `4`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `nums[i] ∈ {0,1}`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `nums[i] ∈ {0,1}`. Brute is O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Rewrite as prefix-sum with 0/1→−1/+1, hashmap of first-seen index → O(n) = 10⁵ ops.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

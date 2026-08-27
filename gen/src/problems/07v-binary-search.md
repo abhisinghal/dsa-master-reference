@@ -10,9 +10,7 @@ Given a sorted array `nums` and an integer `target`, return the index of `target
 **Example 2** — `nums = [-1,0,3,5,9,12], target = 2` → `-1`
 **Example 3** — `nums = [5], target = 5` → `0`
 
-**Constraints** — `1 ≤ n ≤ 10⁴`; all distinct; sorted ascending.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`; all distinct; sorted ascending. Brute linear scan is O(n) — 10⁴ ops per query, dies with 10⁵ queries. Binary search is O(log n) = 14 comparisons even at n=10⁴; 30 comparisons at n=10⁹.
 <Hints
   hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
   hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."

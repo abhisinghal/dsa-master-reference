@@ -10,9 +10,7 @@ Given `numCourses` and `prerequisites[i] = [a, b]` meaning "to take `a` you must
 **Example 2** — `n=4, [[1,0],[2,0],[3,1],[3,2]]` → `[0,1,2,3]` or `[0,2,1,3]`
 **Example 3** — `n=2, [[1,0],[0,1]]` → `[]` (cycle)
 
-**Constraints** — `1 ≤ n ≤ 2000`; `0 ≤ #prereqs ≤ n·(n−1)/2`.
-
-
+**Constraints** — `1 ≤ n ≤ 2000`; `0 ≤ #prereqs ≤ n·(n−1)/2`. Brute repeatedly scans for zero-indegree nodes: O(V·(V+E)) = 2000·(2000+5000) = 1.4·10⁷ ops. Kahn's queue-based BFS is O(V+E) = 7·10³ ops with built-in cycle detection.
 <Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."

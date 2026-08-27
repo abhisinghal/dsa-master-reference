@@ -10,9 +10,7 @@ Given two sorted arrays, return the median in **O(log(min(m,n)))**.
 **Example 2** — `A=[1,2], B=[3,4]` → `2.5`
 **Example 3** — `A=[], B=[1]` → `1.0`
 
-**Constraints** — `0 ≤ n, m ≤ 1000`; total ≥ 1. Merge-then-median is O(m+n). The interviewer's log-bar demand exists because at scale (millions of records) the O(log) matters — real database `MEDIAN` operators use this trick.
-
-
+**Constraints** — `0 ≤ n, m ≤ 1000`; total ≥ 1. Merge-then-median is O(m+n) — at 10⁶ requests/day that becomes 2·10⁹ ops daily. The interviewer's log-bar demand exists because at scale (millions of records) the O(log) matters — real database `MEDIAN` operators use this trick. Partition-based binary search is O(log min(m,n)) — ~11 comparisons even at m,n = 10³.
 <Hints
   hint1="Can I write a `feasible(x)` check that returns true iff answer ≤ x (or ≥ x)?"
   hint2="If `feasible` is monotonic in x, binary search over the answer space `[lo, hi]`. Range: min possible value to max possible value."

@@ -10,9 +10,7 @@ Given a sorted array rotated at some unknown pivot, return the minimum. All valu
 **Example 2** — `nums = [4,5,6,7,0,1,2]` → `0`
 **Example 3** — `nums = [11,13,15,17]` → `11` (no rotation)
 
-**Constraints** — `1 ≤ n ≤ 5000`. Distinct values. Must run in **O(log n)**.
-
-
+**Constraints** — `1 ≤ n ≤ 5000`. Distinct values. Must run in **O(log n)**. Brute linear scan is O(n) = 5·10³ ops per call — at 10⁶ calls/sec that's ~5·10⁹ ops per second of load. Binary search comparing mid vs right pivot is O(log n) ≈ 13 comparisons.
 <Hints
   hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
   hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."

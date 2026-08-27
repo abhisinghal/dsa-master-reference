@@ -9,9 +9,7 @@ Given `nums[i]` = value at house `i`, return the max total value you can rob giv
 **Example 1** — `[2,7,9,3,1]` → `12` (rob 2 + 9 + 1)
 **Example 2** — `[2,1,1,2]` → `4` (rob 2 + 2)
 
-**Constraints** — `1 ≤ n ≤ 100`; `0 ≤ nums[i] ≤ 400`.
-
-
+**Constraints** — `1 ≤ n ≤ 100`; `0 ≤ nums[i] ≤ 400`. Brute recursion tries include-or-skip at each house — O(2ⁿ) = 10³⁰ ops at n=100. Even at 10⁹ ops/sec that's ~10¹³ years — 700× the age of the universe. DP with 2-variable rolling state is O(n) = 100 ops = trivial.
 <Hints
   hint1="What is the state? What are the transitions? What’s the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

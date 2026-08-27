@@ -9,9 +9,7 @@ Given a list of intervals, merge all overlapping ones and return the result.
 **Example 1** — `[[1,3],[2,6],[8,10],[15,18]]` → `[[1,6],[8,10],[15,18]]`
 **Example 2** — `[[1,4],[4,5]]` → `[[1,5]]` (touching = merging by convention)
 
-**Constraints** — `1 ≤ n ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`. Brute checks every pair for overlap in O(n²) = 10⁸ ops at n=10⁴. Sort by start (O(n log n)) then linear sweep with a single "current" interval is O(n log n) = ~10⁵ ops = &lt;10 ms.
 <Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."

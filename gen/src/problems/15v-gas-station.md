@@ -9,9 +9,7 @@ Circular route: at station `i` you gain `gas[i]`, pay `cost[i]` to reach `i+1`. 
 **Example 1** — `gas=[1,2,3,4,5], cost=[3,4,5,1,2]` → `3`
 **Example 2** — `gas=[2,3,4], cost=[3,4,3]` → `-1`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`. Brute tries every starting station in O(n²) = 10¹⁰ ops at n=10⁵ (TLE). One-pass greedy using "total tank ≥ 0 → answer exists; skip to i+1 whenever running tank goes negative" is O(n) = 10⁵ ops.
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."

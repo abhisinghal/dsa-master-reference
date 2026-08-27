@@ -10,9 +10,7 @@ Given an integer array `nums` (may contain negatives) and integer `k`, return th
 **Example 2** — `nums = [1,2,3], k = 3` → `2` (`[1,2]` and `[3]`)
 **Example 3** — `nums = [1,-1,0], k = 0` → `3` (`[1,-1]`, `[0]`, `[1,-1,0]`)
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`; `-10³ ≤ nums[i] ≤ 10³`.
-
-
+**Constraints** — `1 ≤ n ≤ 2·10⁴`; `-10³ ≤ nums[i] ≤ 10³`. Brute enumerates every subarray in O(n²) = 4·10⁸ ops at n=2·10⁴ (borderline TLE). Prefix-sum + hashmap of complements is O(n) = 2·10⁴ ops = &lt;2 ms.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

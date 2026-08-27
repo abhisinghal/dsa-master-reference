@@ -9,9 +9,7 @@ Given `isConnected[n][n]` (adjacency matrix; `1` if direct road), return the num
 **Example 1** — `[[1,1,0],[1,1,0],[0,0,1]]` → `2`
 **Example 2** — `[[1,0,0],[0,1,0],[0,0,1]]` → `3`
 
-**Constraints** — `1 ≤ n ≤ 200`.
-
-
+**Constraints** — `1 ≤ n ≤ 200`. Brute DFS/BFS from every city is O(n²) = 4·10⁴ ops at n=200 — repeated 10⁶ times per hour for a static-snapshot workload burns real CPU. Union-Find with path compression + union by rank is O(n²·α(n)) ≈ 4·10⁴ ops — same asymptote, but the DSU wins the moment edges start arriving dynamically.
 <Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."

@@ -10,9 +10,7 @@ Given the head of a linked list, return the node where the cycle begins, or `nul
 **Example 2** — `1→2→(back to 1)` → returns node `1`
 **Example 3** — `1` (no next) → returns `null`
 
-**Constraints** — `0 ≤ n ≤ 10⁴`; O(1) extra space required for the follow-up.
-
-
+**Constraints** — `0 ≤ n ≤ 10⁴`; O(1) extra space required for the follow-up. Brute stores every visited node in a HashSet — O(n) time but O(n) memory + hashing overhead. Floyd's tortoise & hare is O(n) time (~10⁶ pointer chases at max n) with O(1) extra memory — canonical since Floyd's 1967 paper.
 <Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."

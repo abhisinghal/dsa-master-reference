@@ -10,9 +10,7 @@ Given a rotated ascending array `nums` and `target`, return its index or `-1`. T
 **Example 2** — `nums=[4,5,6,7,0,1,2], target=3` → `-1`
 **Example 3** — `nums=[1], target=0` → `-1`
 
-**Constraints** — `1 ≤ n ≤ 5000`; values distinct.
-
-
+**Constraints** — `1 ≤ n ≤ 5000`; values distinct. Brute linear scan is O(n) = 10⁵ ops per query (fine one-off, dies with 10⁴ queries → 10⁹). Modified binary search on the "one half is sorted" invariant is O(log n) = 17 comparisons.
 <Hints
   hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
   hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."

@@ -9,9 +9,7 @@ Every element appears twice except one. Return that one, in **O(n)** time and **
 **Example 1** — `nums=[2,2,1]` → `1`
 **Example 2** — `nums=[4,1,2,1,2]` → `4`
 
-**Constraints** — `1 ≤ n ≤ 3·10⁴`; all fit in `int`.
-
-
+**Constraints** — `1 ≤ n ≤ 3·10⁴`; all fit in `int`. Brute HashMap of counts is O(n) time + O(n) space — GC cost dominates at ~10⁶ requests/sec. XOR-fold is O(n) time + O(1) space — 3·10⁴ XOR ops on the hot path, no allocations at all.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

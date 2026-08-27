@@ -8,9 +8,7 @@ Given `n` non-negative integer heights, find two vertical lines that form a cont
 
 **Example 1** — `heights = [1,8,6,2,5,4,8,3,7]` → `49` (indices 1 and 8: `min(8,7)*7`)
 **Example 2** — `heights = [1,1]` → `1`
-**Constraints** — `2 ≤ n ≤ 10⁵`, `0 ≤ h[i] ≤ 10⁴`.
-
-
+**Constraints** — `2 ≤ n ≤ 10⁵`, `0 ≤ h[i] ≤ 10⁴`. Brute enumerates every pair in O(n²) = 10¹⁰ ops at n=10⁵ (TLE past ~10 s). Two-pointer inward sweep — provably safe by monotonicity — is O(n) = 10⁵ ops = &lt;5 ms.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

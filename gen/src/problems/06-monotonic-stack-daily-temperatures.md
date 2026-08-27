@@ -9,9 +9,7 @@ Given `temps`, return `answer` where `answer[i]` is the number of days until a w
 **Example 1** — `temps=[73,74,75,71,69,72,76,73]` → `[1,1,4,2,1,1,0,0]`
 **Example 2** — `temps=[30,40,50,60]` → `[1,1,1,0]`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `30 ≤ temps[i] ≤ 100`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `30 ≤ temps[i] ≤ 100`. Brute searches forward for the next warmer day per element — O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Monotonic decreasing stack visits each index once → O(n) = 10⁵ ops with amortised O(1) per push/pop.
 <Hints
   hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
   hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."

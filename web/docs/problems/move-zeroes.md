@@ -9,7 +9,7 @@ Move all zeros to end preserving order of non-zeros. In-place.
 **Example 1** — `nums=[0,1,0,3,12]` → `[1,3,12,0,0]`
 **Example 2** — `nums=[0]` → `[0]`
 
-**Constraints** — `1 ≤ n ≤ 10⁴`. Brute (build a fresh array and copy back) is O(n) time + O(n) space. Two-pointer in-place stays O(n) = 10⁴ ops with O(1) extra space.
+**Constraints** — `1 ≤ n ≤ 10⁴`. Naive "build fresh array + copy back" is O(n) time but O(n) auxiliary memory — allocates twice, triggers GC pressure that costs ~5 min under stress. Two-pointer in-place stays O(n) = ~10⁶ pointer ops with O(1) extra space.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

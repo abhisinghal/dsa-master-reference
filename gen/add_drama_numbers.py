@@ -40,6 +40,49 @@ DRAMA = {
         'Brute enumerates every (l, r) window in O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Monotonic stack runs each index in amortised O(1) → O(n) = 10⁵ ops = <10 ms.',
     '02v-move-zeroes.md':
         'Brute (build a fresh array and copy back) is O(n) time + O(n) space. Two-pointer in-place stays O(n) = 10⁴ ops with O(1) extra space.',
+    # --- Batch 2: 20 canonical flagships + high-signal variants ---
+    '02-two-pointers-container-with-most-water.md':
+        'Brute enumerates every pair in O(n²) = 10¹⁰ ops at n=10⁵ (TLE past ~10 s). Two-pointer inward sweep — provably safe by monotonicity — is O(n) = 10⁵ ops = <5 ms.',
+    '03-fast-slow-linked-list-cycle-ii.md':
+        'Brute stores every visited node in a HashSet — O(n) time but O(n) memory + hashing overhead (heap allocations dominate cache misses). Floyd\'s tortoise & hare is O(n) time with O(1) extra memory — the canonical answer since 1967.',
+    '03v-linked-list-cycle.md':
+        'Brute is O(n) time + O(n) memory with a visited HashSet. Floyd\'s tortoise & hare is O(n) time + O(1) space — half a dozen pointer chases per node.',
+    '04-prefix-sum-subarray-sum-equals-k.md':
+        'Brute enumerates every subarray in O(n²) = 4·10⁸ ops at n=2·10⁴ (borderline TLE). Prefix-sum + hashmap of complements is O(n) = 2·10⁴ ops = <2 ms.',
+    '04v-contiguous-array.md':
+        'Brute is O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Rewrite as prefix-sum with 0/1→−1/+1, hashmap of first-seen index → O(n) = 10⁵ ops.',
+    '06-monotonic-stack-daily-temperatures.md':
+        'Brute searches forward for the next warmer day per element — O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Monotonic decreasing stack visits each index once → O(n) = 10⁵ ops with amortised O(1) per push/pop.',
+    '07-binary-search-rotated-sorted.md':
+        'Brute linear scan is O(n) = 10⁵ ops per query (fine one-off, dies with 10⁴ queries → 10⁹). Modified binary search on the "one half is sorted" invariant is O(log n) = 17 comparisons.',
+    '07v-binary-search.md':
+        'Brute linear scan is O(n) — 10⁴ ops per query, dies with 10⁵ queries. Binary search is O(log n) = 14 comparisons even at n=10⁴; 30 comparisons at n=10⁹.',
+    '07v-find-peak-element.md':
+        'Brute linear scan is O(n) = 10³ ops. Binary search on the "climb toward the higher neighbour" invariant is O(log n) ≈ 10 comparisons.',
+    '07v-find-minimum-in-rotated-sorted-array.md':
+        'Brute linear scan is O(n) = 5·10³ ops. Binary search comparing mid vs right pivot is O(log n) ≈ 13 comparisons.',
+    '08v-median-of-two-sorted-arrays.md':
+        'Merging both then indexing is O(m+n) = 2·10³ ops. The interviewer wants the O(log min(m,n)) partition-based binary search — ~11 comparisons even at m,n = 10³.',
+    '09-top-k-frequent-elements.md':
+        'Brute sorts all n values by frequency in O(n log n) = 10⁵·17 ≈ 2·10⁶ ops. Heap of size k is O(n log k) — at k=10 that\'s 10⁵·4 = 4·10⁵ ops. Quickselect on frequency buckets is expected O(n) = 10⁵ ops.',
+    '11-merge-intervals-classic.md':
+        'Brute checks every pair for overlap in O(n²) = 10⁸ ops at n=10⁴. Sort by start (O(n log n)) then linear sweep with a single "current" interval is O(n log n) = ~10⁵ ops = <10 ms.',
+    '13-topological-sort-course-schedule.md':
+        'Brute repeatedly scans for zero-indegree nodes: O(V·(V+E)) = 2000·(2000+5000) = 1.4·10⁷ ops. Kahn\'s queue-based BFS is O(V+E) = 7·10³ ops with built-in cycle detection.',
+    '14-union-find-number-of-provinces.md':
+        'Brute DFS/BFS from every city is O(n²) = 4·10⁴ ops at n=200. Union-Find with path compression + union by rank is O(n²·α(n)) ≈ 4·10⁴ ops — same asymptote, but the DSU wins the moment edges start arriving dynamically.',
+    '15-greedy-jump-game-ii.md':
+        'Brute DP with min-jumps[i] is O(n²) = 10⁸ ops at n=10⁴ (borderline). Greedy expanding-frontier ("BFS levels on an implicit graph") is O(n) = 10⁴ ops.',
+    '15v-best-time-to-buy-and-sell-stock.md':
+        'Brute compares every buy/sell pair in O(n²) = 10¹⁰ ops at n=10⁵ (TLE). One-pass tracking min-so-far and max profit is O(n) = 10⁵ ops = <5 ms.',
+    '15v-gas-station.md':
+        'Brute tries every starting station in O(n²) = 10¹⁰ ops at n=10⁵ (TLE). One-pass greedy using "total tank ≥ 0 → answer exists; skip to i+1 whenever running tank goes negative" is O(n) = 10⁵ ops.',
+    '18-dp-house-robber.md':
+        'Brute recursion tries include-or-skip at each house — O(2ⁿ) = 10³⁰ ops at n=100 (universe-age). DP with 2-variable rolling state is O(n) = 100 ops = trivial.',
+    '20-bit-manip-single-number.md':
+        'Brute HashMap of counts is O(n) time + O(n) space. XOR-fold is O(n) time + O(1) space — 3·10⁴ XOR operations for the full input.',
+    '21-quickselect-kth-largest.md':
+        'Brute sort is O(n log n) = 10⁵·17 ≈ 2·10⁶ ops. Heap of size k is O(n log k). Quickselect with random pivot is expected O(n) = 10⁵ ops, worst-case O(n²) (mitigated by median-of-medians for provable linear).',
 }
 
 

@@ -10,9 +10,7 @@ Given the head of a linked list, return `true` iff the list contains a cycle.
 **Example 2** — `head = [1,2]`, tail connects to index `0` → `true`
 **Example 3** — `head = [1]`, tail = null → `false`
 
-**Constraints** — `0 ≤ n ≤ 10⁴`.
-
-
+**Constraints** — `0 ≤ n ≤ 10⁴`. Brute is O(n) time + O(n) memory with a visited HashSet — GC pressure adds ~10⁶ ns overhead per node. Floyd's tortoise & hare is O(n) time + O(1) space — half a dozen pointer chases per node.
 <Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."

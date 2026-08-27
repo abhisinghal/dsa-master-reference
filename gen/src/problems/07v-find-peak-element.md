@@ -10,9 +10,7 @@ A peak is an element strictly greater than its neighbors. Given `nums` (with `nu
 **Example 2** — `nums = [1,2,1,3,5,6,4]` → `1` or `5` (both are peaks)
 **Example 3** — `nums = [1]` → `0`
 
-**Constraints** — `1 ≤ n ≤ 1000`; `-2³¹ ≤ nums[i] ≤ 2³¹ − 1`; adjacent values differ (no plateau).
-
-
+**Constraints** — `1 ≤ n ≤ 1000`; `-2³¹ ≤ nums[i] ≤ 2³¹ − 1`; adjacent values differ (no plateau). Brute linear scan is O(n) = 10³ ops one-off; but with 10⁶ streaming queries per hour that's 10⁹ ops (dead). Binary search on the "climb toward the higher neighbour" invariant is O(log n) ≈ 10 comparisons per query.
 <Hints
   hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
   hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."

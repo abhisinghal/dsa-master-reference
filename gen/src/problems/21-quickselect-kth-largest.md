@@ -9,9 +9,7 @@ Given `nums` and integer `k`, return the k-th **largest** element (1-indexed). O
 **Example 1** — `nums=[3,2,1,5,6,4], k=2` → `5`
 **Example 2** — `nums=[3,2,3,1,2,4,5,5,6], k=4` → `4`
 
-**Constraints** — `1 ≤ k ≤ n ≤ 10⁵`; `-10⁴ ≤ nums[i] ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ k ≤ n ≤ 10⁵`; `-10⁴ ≤ nums[i] ≤ 10⁴`. Brute sort is O(n log n) = 10⁵·17 ≈ 2·10⁶ ops. Heap of size k is O(n log k). Quickselect with random pivot is expected O(n) = 10⁵ ops, worst-case O(n²) (mitigated by median-of-medians for provable linear).
 <Hints
   hint1="You want the k-th element but not the sorted order. Sort is O(n log n) — can you do O(n) average?"
   hint2="Quickselect: pick a pivot, partition, recurse into the side containing index k."
