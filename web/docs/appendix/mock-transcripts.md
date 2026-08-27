@@ -1559,13 +1559,35 @@ Traps to flag aloud:
 
 ## What these transcripts reveal — the 6 senior signals
 
-Reading all three, the same signals appear:
+Reading all fifteen, the same six signals show up across every difficulty and every pattern family:
 
-1. **Clarify before coding.** Every one starts with 3–4 targeted questions.
-2. **Examples before code.** Traced by hand.
-3. **Brute force explicitly stated with complexity.** Not skipped.
-4. **Multiple optimization ladders.** "The map works, but what if it's sorted? Two pointers."
-5. **Trace after coding.** Caught bookkeeping errors.
-6. **Handled follow-ups by comparing to real-world tools.** "I'd use Caffeine." Shows judgment.
+1. **Clarify before coding.** Every transcript opens with 3–4 targeted questions — data types, ranges, tie behaviour, mutation policy. Never assume.
+2. **Trace examples before code.** By hand, with concrete inputs — including at least one edge case (empty / single / adversarial).
+3. **Brute force explicitly stated with complexity.** Not skipped. And the quantified TLE spelled out ("4·10¹² ops = dead" reads very differently from just "too slow").
+4. **Optimisation grounded in a named invariant or reformulation.** Two Sum → complement lookup. Coin Change → overlapping subproblems. Merge Intervals → sort-by-start makes `current.start ≤ prev.end` the sole overlap test. Koko → monotonicity of feasibility. Range Sum → prefix reformulation + merge-sort D&C. Never "let's binary-search it because the problem feels binary-search-y."
+5. **Trace after coding to catch bookkeeping bugs.** Union-Find's `union` return, prefix-sum's insert-order, N-Queens' diagonal offset — all caught by tracing, not by the interviewer.
+6. **Follow-ups answered by mapping to real-world tools or related families.** LRU → Caffeine. Range Sum → BIT + coord compression. Islands → sparse HashSet. Provinces → dynamic edges. Word Search II → Patricia trie. Signals judgment, not memorisation.
 
 Miss any three of these and you're a mid-level candidate no matter how correct your code is. Hit all six and you're staff-track — even if your code has minor bugs, because you'll debug them yourself in front of the interviewer.
+
+## Coverage by pattern family
+
+Every canonical DSA pattern in this book has at least one worked transcript:
+
+| # | Family | Transcript |
+|---|---|---|
+| 1 | Hashing | Two Sum |
+| 2 | Design (hashmap + DLL) | LRU Cache |
+| 3 | Monotonic deque | Sliding Window Maximum |
+| 4 | Unbounded-knapsack DP | Coin Change |
+| 5 | Sort + sweep | Merge Intervals |
+| 6 | Graph BFS / flood-fill | Number of Islands |
+| 7 | Binary Search on Answer | Koko Eating Bananas |
+| 8 | Trie + backtracking | Word Search II |
+| 9 | Pure backtracking + attack sets | N-Queens |
+| 10 | Union Find | Number of Provinces |
+| 11 | Topological Sort (Kahn) | Course Schedule II |
+| 12 | Two Pointers with correctness proof | Container With Most Water |
+| 13 | Prefix Sum + Hashmap | Subarray Sum Equals K |
+| 14 | Heap of size k vs Quickselect | K Closest Points |
+| 15 | Merge-sort Divide & Conquer | Count of Range Sum |
