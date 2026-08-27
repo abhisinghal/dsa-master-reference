@@ -1,7 +1,7 @@
-# Deep Audit & Modification Plan — 21 Core Patterns
+# Deep Audit & Modification Plan — 21 Core Patterns + Problem Pages
 
-**Date:** 2026-08-26
-**Status:** ✅ **ALL 8 WAVES SHIPPED**
+**Date:** 2026-08-26 (updated 2026-08-27)
+**Status:** ✅ **8 WAVES SHIPPED on pattern chapters; Wave 9 shipping on 205 problem pages**
 **Applied via the 3-lens mindset (stored in user notes):**
 1. **Senior SWE + DSA architect** — mentor engineers from 1yr → 10+yrs
 2. **FAANG PM** — product/visual quality, interactive experiences
@@ -12,6 +12,7 @@
 
 ## Execution summary
 
+### Pattern chapters (Waves 1-8) — COMPLETE
 | Wave | Content | Commit | Status |
 |---|---|---|---|
 | 1 | Narrative bones on 10 chapters (Why exists / When / Templates / Traps / History / Canonical walkthrough) | `2db68c6` | ✅ |
@@ -22,6 +23,35 @@
 | 6 | Historical grounding paragraphs on 10 remaining chapters (21/21 now covered) | `629b040` | ✅ |
 | 7 | Visual + a11y polish: 35/35 SVGs pass audit, 21 anims covered by global CSS, Playwright a11y suite added | `e7004fa` | ✅ |
 | 8 | 4 flagship canonical walkthroughs (Union Find, Topo Sort, Greedy, D&C) | `79afd41` | ✅ |
+
+### Problem pages (Wave 9) — IN PROGRESS
+
+**Goal**: bring all 205 problem pages to the same "reference-bar" quality.
+
+Audit tool: `gen/audit_problems.py` scores each page on 10 flags (P E H N D I C W R A).
+
+**Starting state (2026-08-27):** all pages ≥7/10; but drama numbers (D) present in only 10%, and 27% jumped straight to the canonical without a numbered brute Approach 1.
+
+| Wave | Focus | Pages enriched | Commit |
+|---|---|---|---|
+| 9 part 1 | 15 weakest (score 7): backtracking dedup family + DP state-machines + MST classifiers | 15 | `2ef479e` |
+| 9 part 2 | Next tier (score 8, missing N/D): sliding window + hashing + two-pointer + DP | 12 | `d75a798` |
+| 9 part 3 | Next tier: multi-family batch | 15 | `8d1c983` |
+| 9 part 4 | Greedy + DP tier | 5 | `665ba2a` |
+| 9 part 5 | Backtracking + Greedy + Hashing tier | 8 | `f3744f7` |
+
+**Progress after part 5:**
+- E ≥2 examples: 78% → **94%**
+- N ≥2 approaches numbered: 73% → **93%**
+- D drama numbers in prose: 10% → **26%**
+- All other flags (P H I C W R A): already 100%
+
+Each enrichment follows the shape:
+1. **Second and third examples** covering edge cases (empty / single / adversarial)
+2. **Drama numbers** in constraints line — naive TLE spelled out with concrete scale, canonical improvement
+3. **Numbered brute Approach 1** with complete code + complexity + "then what's better"
+4. **Interview commentary in italics** on canonical approach: *"Say aloud in an interview: ..."* mapping to the algorithmic family (activity selection, canonical-key hashing, monotonic deque, etc.)
+5. **Complexity ladder table** with a Grade column marking canonical
 
 ---
 
