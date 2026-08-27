@@ -8,12 +8,12 @@ String of Q,W,E,R (length n divisible by 4). Return length of smallest substring
 **Example 2** — `s="QQWE"` → `1`
 **Example 3** — `s="QQQW"` → `2`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`.
+**Constraints** — `1 ≤ n ≤ 10⁵`. Brute try every window is O(n²). At 10⁵ that's 10¹⁰ ops = TLE. Sliding window is O(n) = 10⁵.
 
 
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
-  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it's restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
 />
 ---
@@ -24,7 +24,15 @@ String of Q,W,E,R (length n divisible by 4). Return length of smallest substring
 
 
 
-## Approach — Sliding window over "outside" counts (canonical)
+## Approach 1 — Brute enumerate every window
+
+**Intuition.** For each `(l, r)` pair, check whether the *outside* of the window has each letter ≤ n/4. Return the smallest valid length.
+
+**Complexity** — Time **O(n²)** (n² windows × O(1) check with prefix counts); Space **O(n)**. TLE past 10⁴. *In an interview* say "shrinkable — grow right, shrink left while balanced → O(n)."
+
+---
+
+## Approach 2 — Sliding window over "outside" counts (canonical)
 
 **Insight.** Substring `[l, r]` is a valid replacement window iff **outside** it, no letter exceeds `n/4`. Shrink l while condition holds; track min length.
 
@@ -57,7 +65,7 @@ int balancedString(String s) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
+**Complexity** — Time **O(n)**; Space **O(1)**. *Say aloud in an interview:* "inversion trick — instead of tracking the window's contents, track the *outside's* contents. Same shape as Longest Repeating Character Replacement."
 
 ---
 
@@ -69,7 +77,8 @@ int balancedString(String s) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Outside-count sliding | **O(n)** | O(1) | canonical |
+| Brute enumerate windows | O(n²) | O(n) | Reference; TLE past 10⁴ |
+| **Outside-count sliding** | **O(n)** | O(1) | **Canonical** |
 
 ## When to use which
 

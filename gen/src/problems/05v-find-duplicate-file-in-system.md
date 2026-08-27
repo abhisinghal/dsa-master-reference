@@ -6,15 +6,17 @@
 
 Given `"dir file1.ext(content) file2.ext(content) …"` strings, group files with identical content.
 
-**Example 1** — Various paths → grouped by content.
+**Example 1** — `paths=["root/a 1.txt(abcd) 2.txt(efgh)","root/c 3.txt(abcd) 4.txt(efgh)"]` → `[["root/a/1.txt","root/c/3.txt"],["root/a/2.txt","root/c/4.txt"]]`
+**Example 2** — `paths=["root/a 1.txt(abcd) 2.txt(efgh)"]` → `[]` (no duplicates)
+**Example 3** — `paths=["a 1(x) 2(x)","b 3(x)"]` → `[["a/1","a/2","b/3"]]` (three files, same content)
 
-**Constraints** — total input ≤ 2·10⁷.
+**Constraints** — total input ≤ 2·10⁷ chars. Brute pairwise content comparison is O(N²) where N = total input size = 4·10¹⁴ — universe-age. Hash by content is O(N).
 
 
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
-  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
-  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+  hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For 'first duplicate', a `HashSet` and single-pass `add()` is enough."
 />
 ---
 
@@ -24,7 +26,17 @@ Given `"dir file1.ext(content) file2.ext(content) …"` strings, group files wit
 
 
 
-## Approach — Hash by content (canonical)
+## Approach 1 — Brute pairwise content comparison
+
+**Intuition.** Parse every file into `(path, content)`. Compare every pair.
+
+**Complexity** — Time **O(F² · L)** where F = file count, L = avg content length; Space **O(F)**. TLE past F=10⁴. *In an interview* say "hash the content once, group by hash → O(N)."
+
+---
+
+## Approach 2 — Hash by content (canonical)
+
+**Insight.** Parse once; for each file, compute a canonical key = content string. Insert into `Map<content, List<path>>`. Extract groups with size > 1.
 
 ```java
 List<List<String>> findDuplicate(String[] paths) {
@@ -45,7 +57,7 @@ List<List<String>> findDuplicate(String[] paths) {
 }
 ```
 
-**Complexity** — Time **O(total input)**; Space **O(total input)**.
+**Complexity** — Time **O(total input)**; Space **O(total input)**. *Say aloud in an interview:* "canonical-key hashing — same pattern as Group Anagrams (sort key), Group Shifted Strings (diff key), Group Isomorphic (first-index key)."
 
 ## Follow-ups
 
@@ -63,7 +75,8 @@ List<List<String>> findDuplicate(String[] paths) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Content hash | **O(N)** | O(N) | canonical |
+| Pairwise compare | O(F² · L) | O(F) | Reference; TLE past 10⁴ files |
+| **Content hash** | **O(N)** | O(N) | **Canonical** |
 
 ## When to use which
 

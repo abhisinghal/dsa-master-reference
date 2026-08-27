@@ -8,14 +8,15 @@ Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
 
 **Example 1** — `clips=[[0,2],[4,6],[8,10],[1,9],[1,5],[5,9]], T=10` → `3`
 **Example 2** — `clips=[[0,1],[1,2]], T=5` → `-1`
+**Example 3** — `clips=[[0,5],[0,5],[0,5]], T=5` → `1` (any one clip covers)
 
-**Constraints** — `1 ≤ n ≤ 100`; `0 ≤ T ≤ 100`.
+**Constraints** — `1 ≤ n ≤ 100`; `0 ≤ T ≤ 100`. Brute subset enumeration is 2ⁿ — at n=25 already 3·10⁷. Greedy is O(n log n) — trivially fast.
 
 
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."
-  hint3="If greedy fails, DP is likely needed. But prove greedy’s correctness before writing it."
+  hint3="If greedy fails, DP is likely needed. But prove greedy's correctness before writing it."
 />
 ---
 
@@ -25,7 +26,15 @@ Cover `[0, T]` with fewest clips `[a, b]`. Return `-1` if impossible.
 
 
 
-## Approach — Sort by start + farthest reach (canonical)
+## Approach 1 — Brute subset enumeration
+
+**Intuition.** Try every subset of clips. Check if they cover `[0, T]` (sort by start, verify each consecutive overlap).
+
+**Complexity** — Time **O(2ⁿ · n log n)**; Space **O(n)**. Dies past n=20. *In an interview* say "same shape as Jump Game II — farthest reach greedy → O(n log n)."
+
+---
+
+## Approach 2 — Sort by start + farthest reach (canonical)
 
 **Insight.** Same shape as Jump Game II. Sort by start. Maintain `curEnd`; while iterating clips with `start ≤ curEnd`, extend `farReach`. When exhausted, use one clip (advance `curEnd = farReach`).
 
@@ -59,7 +68,7 @@ int videoStitching(int[][] clips, int T) {
   ]'
 />
 
-**Complexity** — Time **O(n log n)**; Space **O(1)**.
+**Complexity** — Time **O(n log n)**; Space **O(1)**. *Say aloud in an interview:* "farthest-reach greedy — one of the classic 3 greedy templates (also: earliest-finish, sort-by-ratio)."
 
 ---
 
@@ -71,7 +80,8 @@ int videoStitching(int[][] clips, int T) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + reach | **O(n log n)** | O(1) | canonical |
+| Brute subsets | O(2ⁿ · n log n) | O(n) | TLE past n=20 |
+| **Sort + reach** | **O(n log n)** | O(1) | **Canonical** |
 
 ## When to use which
 

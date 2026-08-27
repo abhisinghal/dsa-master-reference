@@ -6,7 +6,7 @@
 
 Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cell exactly once.
 
-**Constraints** — grid ≤ 20 cells (n·m ≤ 20).
+**Constraints** — grid ≤ 20 cells (n·m ≤ 20). This tight cap is deliberate — Hamiltonian-path counting is NP-hard in general (no polynomial algorithm known). At 20 cells, `2²⁰ ≈ 10⁶` bitmask states are feasible; at 30 cells, `2³⁰ ≈ 10⁹` isn't.
 
 **Example 1** — `grid=[[1,0,0,0],[0,0,0,0],[0,0,2,-1]]` → `2`
 **Example 2** — `grid=[[1,0,0,0],[0,0,0,0],[0,0,0,2]]` → `4`
@@ -14,7 +14,7 @@ Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cel
 
 
 <Hints
-  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
 />
@@ -26,7 +26,15 @@ Grid: 1=start, 2=end, 0=empty, -1=obstacle. Count paths visiting every empty cel
 
 
 
-## Approach — Hamiltonian-path DFS with in-place marking (canonical)
+## Approach 1 — Bitmask DP `dp[cell][visited_mask]`
+
+**Intuition.** State = current cell + bitmask of visited empty cells. Transition = move to each unvisited neighbor. Count paths reaching end cell with all bits set.
+
+**Complexity** — Time **O(4 · mn · 2^cells)** ≈ O(80·10⁶) at 20 cells; Space **O(mn · 2^cells)** ≈ O(80MB) — tight on memory. *In an interview* say "DFS with in-place marking has same asymptotic but uses O(mn) space — mention DP as the general Hamiltonian-path template."
+
+---
+
+## Approach 2 — Hamiltonian-path DFS with in-place marking (canonical)
 
 **Insight.** Track remaining empty cells to visit. On end cell, count if remaining == 0. Mark visited by mutating (restore on return).
 
@@ -67,7 +75,7 @@ int dfs(int[][] g, int r, int c, int rem) {
   ]'
 />
 
-**Complexity** — Time exponential (~4^cells); n·m ≤ 20 makes it feasible.
+**Complexity** — Time exponential (~4^cells); Space O(mn). n·m ≤ 20 makes it feasible. *Say aloud in an interview:* "Hamiltonian path counting is NP-hard — the 20-cell cap is exactly what lets brute-force fit."
 
 ---
 
@@ -79,7 +87,8 @@ int dfs(int[][] g, int r, int c, int rem) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| DFS + in-place mark | **exponential** | O(m·n) | canonical |
+| Bitmask DP | O(mn · 2^cells) | O(mn · 2^cells) | General Hamiltonian template |
+| **DFS + in-place mark** | **~O(4^cells)** | O(mn) | **Canonical — least code** |
 
 ## When to use which
 

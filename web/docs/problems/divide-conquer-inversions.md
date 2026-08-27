@@ -6,9 +6,11 @@
 
 For each index `i`, return the number of `j > i` with `nums[j] < nums[i]`.
 
-**Example** — `nums=[5,2,6,1]` → `[2,1,1,0]`
+**Example 1** — `nums=[5,2,6,1]` → `[2,1,1,0]`
+**Example 2** — `nums=[-1]` → `[0]`
+**Example 3** — `nums=[-1,-1]` → `[0,0]` (equal, not strictly smaller)
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; values fit in `int`.
+**Constraints** — `1 ≤ n ≤ 10⁵`; values fit in `int`. Brute pair-count is O(n²) = 10¹⁰ ops = TLE. Merge-sort variant is O(n log n) ≈ 1.7·10⁶.
 
 
 <Hints

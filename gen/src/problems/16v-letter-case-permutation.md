@@ -7,12 +7,14 @@
 Return every case variant of letters (digits stay).
 
 **Example 1** — `s="a1b2"` → `["a1b2","a1B2","A1b2","A1B2"]`
+**Example 2** — `s="3z4"` → `["3z4","3Z4"]`
+**Example 3** — `s="12345"` → `["12345"]` (no letters — one variant)
 
-**Constraints** — `1 ≤ n ≤ 12`.
+**Constraints** — `1 ≤ n ≤ 12`. That constraint gives `2¹² = 4096` upper bound on output size — trivially fast.
 
 
 <Hints
-  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
 />

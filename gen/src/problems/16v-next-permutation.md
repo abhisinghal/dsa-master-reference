@@ -7,13 +7,14 @@
 Rearrange nums to the next lexicographic permutation in-place. If none, sort ascending.
 
 **Example 1** — `nums=[1,2,3]` → `[1,3,2]`
-**Example 2** — `nums=[3,2,1]` → `[1,2,3]`
+**Example 2** — `nums=[3,2,1]` → `[1,2,3]` (last perm → wrap to first)
+**Example 3** — `nums=[1,1,5]` → `[1,5,1]`
 
-**Constraints** — `1 ≤ n ≤ 100`.
+**Constraints** — `1 ≤ n ≤ 100`. Brute enumerate all n! permutations + sort + look up next is O(n! · n log n) — 100! is beyond universe. Classic in-place algorithm is O(n).
 
 
 <Hints
-  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
 />
@@ -25,12 +26,20 @@ Rearrange nums to the next lexicographic permutation in-place. If none, sort asc
 
 
 
-## Approach — Classic algorithm (canonical)
+## Approach 1 — Enumerate all n! permutations
 
-**Steps.**
-1. Scan from right; find first `i` with `nums[i] < nums[i+1]` (pivot). If none, reverse whole array.
-2. Scan from right; find first `j` with `nums[j] > nums[i]`. Swap.
-3. Reverse suffix from `i+1` to end (was decreasing → becomes increasing = smallest larger permutation).
+**Intuition.** Generate all permutations in lex order (or sort them). Find the current one. Return the next.
+
+**Complexity** — Time **O(n! · n)**; Space **O(n! · n)**. Beyond n=10. *In an interview* say "there's a beautiful O(n) in-place algorithm — pivot-swap-reverse."
+
+---
+
+## Approach 2 — Classic algorithm (canonical)
+
+**Insight — 3-step pivot-swap-reverse:**
+1. Scan from right; find first `i` with `nums[i] < nums[i+1]` (**pivot**). If none, whole array is decreasing → reverse to ascending.
+2. Scan from right; find first `j` with `nums[j] > nums[i]`. **Swap** `i` and `j`.
+3. **Reverse** suffix from `i+1` to end (was decreasing → becomes increasing = smallest larger permutation).
 
 ```java
 void nextPermutation(int[] nums) {
@@ -59,7 +68,7 @@ void reverse(int[] a, int l, int r) { while (l < r) swap(a, l++, r--); }
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
+**Complexity** — Time **O(n)**; Space **O(1)**. *Say aloud in an interview:* "same pattern in `std::next_permutation` in the C++ standard library, and `itertools.permutations`'s iterative production."
 
 ---
 
@@ -71,7 +80,8 @@ void reverse(int[] a, int l, int r) { while (l < r) swap(a, l++, r--); }
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Classic 3-step | **O(n)** | O(1) | canonical |
+| Enumerate all perms | O(n! · n) | O(n! · n) | Reference; fails past n=10 |
+| **Classic 3-step** | **O(n)** | O(1) | **Canonical** |
 
 ## When to use which
 
