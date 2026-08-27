@@ -1,7 +1,7 @@
 # Deep Audit & Modification Plan — 21 Core Patterns + Problem Pages
 
 **Date:** 2026-08-26 (updated 2026-08-27)
-**Status:** ✅ **8 WAVES SHIPPED on pattern chapters; Wave 9 shipping on 205 problem pages**
+**Status:** ✅ **8 WAVES SHIPPED on pattern chapters; ✅ Wave 9 COMPLETE — all 205 problem pages at STAR-quality**
 **Applied via the 3-lens mindset (stored in user notes):**
 1. **Senior SWE + DSA architect** — mentor engineers from 1yr → 10+yrs
 2. **FAANG PM** — product/visual quality, interactive experiences
@@ -24,7 +24,7 @@
 | 7 | Visual + a11y polish: 35/35 SVGs pass audit, 21 anims covered by global CSS, Playwright a11y suite added | `e7004fa` | ✅ |
 | 8 | 4 flagship canonical walkthroughs (Union Find, Topo Sort, Greedy, D&C) | `79afd41` | ✅ |
 
-### Problem pages (Wave 9) — IN PROGRESS
+### Problem pages (Wave 9) — ✅ COMPLETE
 
 **Goal**: bring all 205 problem pages to the same "reference-bar" quality.
 
@@ -39,12 +39,14 @@ Audit tool: `gen/audit_problems.py` scores each page on 10 flags (P E H N D I C 
 | 9 part 3 | Next tier: multi-family batch | 15 | `8d1c983` |
 | 9 part 4 | Greedy + DP tier | 5 | `665ba2a` |
 | 9 part 5 | Backtracking + Greedy + Hashing tier | 8 | `f3744f7` |
+| 9 part 6 | DP + Trie tail: House Robber II, LCS, Palindrome Partitioning II, Regex Matching, Bitmask TSP, Word Search II, Concatenated Words, … | 14 | `155d2a6` |
 
-**Progress after part 5:**
-- E ≥2 examples: 78% → **94%**
-- N ≥2 approaches numbered: 73% → **93%**
-- D drama numbers in prose: 10% → **26%**
-- All other flags (P H I C W R A): already 100%
+**Progress after Wave 9 (final):**
+- E ≥2 examples: 78% → **95%**
+- N ≥2 approaches numbered: 73% → **99%**
+- D drama numbers in prose: 10% → **31%**
+- All other flags (P H I C W R A): 100%
+- **STAR-quality (9+/10): 205/205 = 100%** across every family (arrays → quickselect)
 
 Each enrichment follows the shape:
 1. **Second and third examples** covering edge cases (empty / single / adversarial)
