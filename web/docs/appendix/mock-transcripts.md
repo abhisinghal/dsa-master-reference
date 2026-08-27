@@ -1,6 +1,6 @@
 # Mock Interview Transcripts
 
-*The Interview Playbook (Ch. 01) described the 6-phase loop abstractly. This chapter shows what those phases sound like when a real senior candidate is speaking. Three transcripts — Easy, Medium, Hard — annotated with what the interviewer is grading at each point.*
+*The Interview Playbook (Ch. 01) described the 6-phase loop abstractly. This chapter shows what those phases sound like when a real senior candidate is speaking. Six transcripts — Easy, Medium (LRU / Coin Change / Merge Intervals / Islands), Hard — annotated with what the interviewer is grading at each point.*
 
 Read once for the shape, then again with the annotations covered — pretending you're the candidate — and see if you'd say the same things.
 
@@ -405,6 +405,295 @@ Final: `[3, 3, 5, 5, 6, 7]`. ✓
 **Candidate**: Each index is pushed once and popped at most once → O(1) amortized per iteration → O(n) total. Space O(k) for the deque. This is optimal — you can't beat O(n) since you must output n-k+1 answers.
 
 &gt; **What the interviewer sees:** Candidate caught their own trace error and named the meta-lesson ("that's why I trace"). Stayed calm, delivered optimal solution. Named optimality bound at the end. Total time: ~40 minutes. Hire.
+
+---
+
+## Transcript 4 — Coin Change (Medium DP — should take 25–35 min)
+
+**Setup:** *"Given an integer array `coins` of denominations and an integer `amount`, return the fewest number of coins needed to make up `amount`. If it can't be made, return -1."*
+
+---
+
+**Candidate**: A few clarifying questions. **[phase: clarify]**
+
+*Can I use each coin an unlimited number of times, or is it 0/1?*
+
+**Interviewer**: Unlimited.
+
+*Can `amount` be zero?*
+
+**Interviewer**: Yes. Answer is 0 coins.
+
+*What are the constraint sizes?*
+
+**Interviewer**: `1 ≤ coins.length ≤ 12`, `1 ≤ amount ≤ 10⁴`, `1 ≤ coins[i] ≤ 2³¹−1`.
+
+*Any negative amounts or coins?*
+
+**Interviewer**: No, both positive.
+
+---
+
+**Candidate**: Let me trace two examples. **[phase: examples]** `coins=[1,2,5], amount=11` → I can do `5+5+1 = 3 coins`. `coins=[2], amount=3` → impossible → `-1`.
+
+**Interviewer**: Correct.
+
+---
+
+**Candidate**: A common instinct is greedy — always pick the largest coin ≤ remaining. **[phase: brute]** But that's wrong for arbitrary denominations. `coins=[1,3,4], amount=6` — greedy takes `4+1+1=3 coins`, but optimal is `3+3=2 coins`. So greedy is out.
+
+That means we need to explore. Brute force: recursive — `minCoins(a) = 1 + min(minCoins(a - c) for c in coins)`. That's exponential — for `amount = 10⁴` and coin `1`, the recursion depth alone is 10⁴, with branching 12 at each level. Won't finish in a lifetime.
+
+But **subproblems repeat**: `minCoins(3)` is called from `minCoins(6)`, `minCoins(7)`, `minCoins(8)`, etc. Classic overlapping subproblems → memoize. **[phase: optimize]**
+
+I'll do bottom-up DP. `dp[a]` = min coins to make amount `a`.
+- `dp[0] = 0`.
+- `dp[a] = 1 + min(dp[a - c] for c in coins if c ≤ a)`, or ∞ if unreachable.
+- Answer: `dp[amount]`, or `-1` if it stayed ∞.
+
+**Interviewer**: Complexity?
+
+**Candidate**: Time O(amount · |coins|). For 10⁴ × 12 = 1.2·10⁵ ops — trivial. Space O(amount).
+
+Alternative: BFS on amounts. Level = coin count, edges = coin subtractions. Same time, gives shortest-path semantics naturally. I'll code DP because it's shorter.
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+
+
+```java
+int coinChange(int[] coins, int amount) {
+    int[] dp = new int[amount + 1];
+    Arrays.fill(dp, amount + 1);        // sentinel > any real answer
+    dp[0] = 0;
+    for (int a = 1; a <= amount; a++)
+        for (int c : coins)
+            if (c <= a) dp[a] = Math.min(dp[a], dp[a - c] + 1);
+    return dp[amount] > amount ? -1 : dp[amount];
+}
+```
+
+
+
+Two things I want to explain:
+1. **Sentinel `amount + 1`** instead of `Integer.MAX_VALUE`. If I used `MAX_VALUE`, `dp[a-c] + 1` would overflow when unreachable. `amount + 1` is safe because a real answer never exceeds `amount` (all-ones case).
+2. The outer loop is over amounts, not coins. Either direction works for unbounded knapsack. Ascending amounts, ascending coins — both fine.
+
+---
+
+**Candidate**: Trace on `coins=[1,2,5], amount=11`. **[phase: verify]**
+
+`dp[0]=0`, `dp[1]=1` (via 1), `dp[2]=1` (via 2), `dp[3]=2` (1+2), `dp[4]=2` (2+2), `dp[5]=1` (5), … `dp[11]=3` (5+5+1). ✓
+
+**Interviewer**: What if I asked you to return the actual coin sequence, not just the count?
+
+**Candidate**: Store a parent array — `parent[a] = c` when `dp[a]` gets updated. Then walk back: start at `amount`, subtract `parent[a]`, repeat until 0. That reconstructs any *one* optimal sequence — not unique.
+
+**Interviewer**: What if `amount` was 10⁹ but `|coins|` still small?
+
+**Candidate**: DP is O(amount) — 10⁹ won't fit in memory. That's a matrix-exponentiation / number-theoretic territory. Or for the Frobenius-like case with just a few coins, closed-form after a threshold. If it's real interview scope, I'd say "this becomes a research problem and I'd flag it."
+
+&gt; **What the interviewer sees:** Ruled out greedy with a concrete counter-example, chose DP for the right reason (overlapping subproblems), justified the sentinel value, handled both follow-ups without panic. Time: ~30 min. Strong hire.
+
+---
+
+## Transcript 5 — Merge Intervals (Medium — should take 20–30 min)
+
+**Setup:** *"Given `intervals[][]` where each `intervals[i] = [start, end]`, merge all overlapping intervals and return the result."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Are intervals inclusive on both ends? So `[1,3]` and `[3,5]` — do they overlap?*
+
+**Interviewer**: Yes, both endpoints inclusive, so `[1,3]` and `[3,5]` overlap → `[1,5]`.
+
+*Is the input sorted?*
+
+**Interviewer**: No. Assume unsorted.
+
+*Sizes?*
+
+**Interviewer**: `n ≤ 10⁴`.
+
+*Can `start > end`? Or `start == end` (zero-length interval)?*
+
+**Interviewer**: Guaranteed `start ≤ end`. Zero-length is valid.
+
+---
+
+**Candidate**: Two examples. **[phase: examples]** `[[1,3],[2,6],[8,10],[15,18]]` → `[[1,6],[8,10],[15,18]]`. `[[1,4],[4,5]]` → `[[1,5]]` (touching counts as overlapping per your definition).
+
+---
+
+**Candidate**: Brute force. **[phase: brute]** For each pair, check overlap; merge; restart. O(n³) or worse depending on how many merges cascade. Bad.
+
+Observation: **if I sort by start, then two intervals overlap iff current.start ≤ prev.end**. That's the invariant. Sort → sweep once. **[phase: optimize]**
+
+- Sort by `start` — O(n log n).
+- Walk through. Keep a "current" interval. For each next: if it overlaps, extend `current.end = max(current.end, next.end)`. Else emit `current`, start fresh.
+- At end, emit the last current.
+
+**Interviewer**: Why is sorting by start sufficient? Why not by end?
+
+**Candidate**: Because after sort-by-start, if `intervals[i].start > intervals[i-1].end`, then `intervals[i].start` also exceeds all *earlier* ends — because `intervals[i-1].end ≥ prev-merged.end` by our extension rule. So one prev pointer is enough. Sort-by-end would work for "min meeting rooms" but not for merge — you'd lose the start ordering.
+
+&gt; **What the interviewer sees:** Candidate stated the invariant *before coding* and justified it against an alternative sort. That's the difference between "I've done this problem" and "I understand this problem."
+
+---
+
+**Candidate**: Coding. **[phase: code]**
+
+
+
+```java
+int[][] merge(int[][] intervals) {
+    if (intervals.length == 0) return intervals;
+    Arrays.sort(intervals, (a, b) -> a[0] - b[0]);       // stable enough here
+    List<int[]> out = new ArrayList<>();
+    int[] cur = intervals[0].clone();
+    for (int i = 1; i < intervals.length; i++) {
+        int[] nx = intervals[i];
+        if (nx[0] <= cur[1]) cur[1] = Math.max(cur[1], nx[1]);   // overlap
+        else { out.add(cur); cur = nx.clone(); }
+    }
+    out.add(cur);
+    return out.toArray(new int[0][]);
+}
+```
+
+
+
+Two nits I'd mention:
+1. `a[0] - b[0]` is fine only if starts fit in int without overflow. For unbounded, use `Integer.compare(a[0], b[0])`.
+2. Cloning `intervals[0]` protects against callers reusing the input array. Interview code — probably fine to skip, but I'd mention it.
+
+---
+
+**Candidate**: Trace `[[1,3],[2,6],[8,10],[15,18]]`. **[phase: verify]** Already sorted. `cur=[1,3]`, next `[2,6]`, overlap (`2 ≤ 3`) → `cur=[1,6]`. Next `[8,10]`, no overlap (`8 > 6`) → emit `[1,6]`, `cur=[8,10]`. Next `[15,18]`, no overlap → emit `[8,10]`, `cur=[15,18]`. Final emit `[15,18]`. Output `[[1,6],[8,10],[15,18]]`. ✓
+
+**Interviewer**: What if the array is enormous — say `n = 10⁹`? Sorting is O(n log n) memory.
+
+**Candidate**: Then intervals arrive as a stream and I'd use a **balanced BST keyed by start** (`TreeMap<Integer, Integer>` in Java). Insert `[s, e]`: find floor and ceiling in the map; merge overlapping; delete replaced entries; insert combined. Amortized O(log n) per insert. Total O(n log n) time, O(m) space where m is the number of surviving intervals — usually much smaller than n.
+
+**Interviewer**: What if I also want to know the total length covered, not just merged intervals?
+
+**Candidate**: Just accumulate `end - start` as I emit each merged interval. O(n) after the sort.
+
+&gt; **What the interviewer sees:** Named the invariant, justified sort choice, offered a scalable follow-up (TreeMap) and a natural extension (total length). Time: ~25 min. Strong hire.
+
+---
+
+## Transcript 6 — Number of Islands (Medium graph — should take 20–30 min)
+
+**Setup:** *"Given `grid[m][n]` of `'1'` (land) and `'0'` (water), return the number of connected islands. Diagonal cells don't connect."*
+
+---
+
+**Candidate**: Clarifying. **[phase: clarify]**
+
+*Can I mutate the input grid, or should I preserve it?*
+
+**Interviewer**: You can mutate it.
+
+*Grid dimensions?*
+
+**Interviewer**: `1 ≤ m, n ≤ 300`.
+
+*Is the grid guaranteed rectangular?*
+
+**Interviewer**: Yes.
+
+*Just 4-directional adjacency, no diagonals — confirmed?*
+
+**Interviewer**: Correct.
+
+---
+
+**Candidate**: Example. **[phase: examples]**
+
+
+
+```
+1 1 0 0 0
+1 1 0 0 0
+0 0 1 0 0
+0 0 0 1 1
+```
+
+
+
+Answer: 3 islands (top-left 4-cell blob, single `1` at `(2,2)`, right-bottom pair).
+
+---
+
+**Candidate**: Brute force is basically the answer here — this is the canonical flood-fill problem. **[phase: brute/optimize]** For every land cell we haven't visited, run a flood fill (DFS or BFS), mark all connected land as visited, increment counter.
+
+- Time: each cell visited O(1) times → O(m·n) total. Optimal — you can't do less than looking at every cell to know if it's land.
+- Space: DFS stack up to O(m·n) worst case (snake-shape island).
+
+**Interviewer**: Any concern with DFS vs BFS?
+
+**Candidate**: Recursive DFS in Java risks stack overflow at 300×300 = 90,000 cells in the worst case (single spiral island). Default JVM stack is ~512 KB, each frame ~64 bytes → maybe 8,000 frames. BFS with an explicit queue is safer. I'll use BFS.
+
+Alternative: **Union-Find**. Iterate cells, union each land cell with its right and down land neighbours. Count roots. Same O(m·n·α) time. I'd only reach for this if the problem needed *dynamic* islands — e.g. addLand queries streaming in (that's Number of Islands II).
+
+---
+
+**Candidate**: Coding BFS. **[phase: code]**
+
+
+
+```java
+static final int[][] DIRS = {{-1,0},{1,0},{0,-1},{0,1}};
+
+int numIslands(char[][] grid) {
+    int m = grid.length, n = grid[0].length, count = 0;
+    Deque<int[]> q = new ArrayDeque<>();
+    for (int i = 0; i < m; i++) for (int j = 0; j < n; j++) {
+        if (grid[i][j] != '1') continue;
+        count++;
+        q.offer(new int[]{i, j});
+        grid[i][j] = '0';                            // mark visited by mutation
+        while (!q.isEmpty()) {
+            int[] c = q.poll();
+            for (int[] d : DIRS) {
+                int ni = c[0] + d[0], nj = c[1] + d[1];
+                if (ni < 0 || ni >= m || nj < 0 || nj >= n) continue;
+                if (grid[ni][nj] != '1') continue;
+                grid[ni][nj] = '0';                  // mark BEFORE enqueue
+                q.offer(new int[]{ni, nj});
+            }
+        }
+    }
+    return count;
+}
+```
+
+
+
+Critical detail: **mark visited before enqueue, not on dequeue.** If you mark on dequeue, the same cell gets enqueued 4× from its 4 neighbours — memory blows up. I've seen candidates fail this problem on runtime because of it.
+
+---
+
+**Candidate**: Trace on my earlier example. **[phase: verify]** Scan row 0: `(0,0)=1` → BFS marks all of the top-left 4-cell blob, count=1. Continue scanning, all `0`s until `(2,2)=1` → BFS marks it alone, count=2. Continue, `(3,3)=1` → BFS marks `(3,3)` and `(3,4)`, count=3. Return 3. ✓
+
+**Interviewer**: What if the grid is 10⁶ × 10⁶ but sparse — 99.99% water?
+
+**Candidate**: Then O(m·n) is 10¹² — dead. I'd change the data model: store only the coordinates of land cells in a HashSet&lt;Long&gt; keyed by `i·n + j`. Iterate the set; for each unvisited land cell BFS through its neighbours (also HashSet lookups). Time O(L) where L is land count. That's the sparse-graph trick.
+
+**Interviewer**: What if you *can't* mutate the grid?
+
+**Candidate**: Parallel `boolean[m][n] visited` array. O(m·n) extra space. Same time complexity.
+
+**Interviewer**: How would Union-Find compare?
+
+**Candidate**: Same worst-case complexity but higher constant factor and more code — no reason to prefer it here. Union-Find shines when the graph structure changes over time (add/remove land cells).
+
+&gt; **What the interviewer sees:** Chose BFS over DFS with a stack-overflow justification, named the enqueue-time marking trap, gave two well-reasoned follow-ups (sparse via HashSet, immutable via visited array). Time: ~25 min. Strong hire.
 
 ---
 
