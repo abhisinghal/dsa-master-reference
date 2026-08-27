@@ -7,12 +7,14 @@
 All **unique** subsets when nums may contain duplicates.
 
 **Example 1** — `nums=[1,2,2]` → `[[],[1],[1,2],[1,2,2],[2],[2,2]]`
+**Example 2** — `nums=[0]` → `[[],[0]]`
+**Example 3** — `nums=[4,4,4,1,4]` → 10 unique subsets (naive gives 32, of which 22 are duplicates)
 
 **Constraints** — `1 ≤ n ≤ 10`.
 
 
 <Hints
-  hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
+  hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."
   hint3="Prune aggressively: sort input, skip duplicates at the same depth, and cut branches when partial sum/state exceeds target."
 />
@@ -24,9 +26,38 @@ All **unique** subsets when nums may contain duplicates.
 
 
 
-## Approach — Sort + skip equal-at-same-depth (canonical)
+## Approach 1 — Brute force (all 2ⁿ subsets + HashSet dedup)
 
-**Insight.** Sort. Standard subset backtracking, but skip duplicates in the outer loop: `if (i > start && nums[i] == nums[i-1]) continue`. Ensures each duplicate group contributes once per count.
+**Intuition.** Enumerate all 2ⁿ subsets via bitmask. Sort each and put it in a `HashSet<List<Integer>>` to dedupe.
+
+
+
+```java
+List<List<Integer>> subsetsWithDupBrute(int[] nums) {
+    Arrays.sort(nums);
+    Set<List<Integer>> seen = new LinkedHashSet<>();
+    int n = nums.length;
+    for (int mask = 0; mask < (1 << n); mask++) {
+        List<Integer> sub = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            if ((mask & (1 << i)) != 0) sub.add(nums[i]);
+        seen.add(sub);
+    }
+    return new ArrayList<>(seen);
+}
+```
+
+
+
+**Complexity** — Time **O(n · 2ⁿ)** for enumeration + O(n) per HashSet insert; Space **O(n · 2ⁿ)**. For `n=10` that's ~10,240 candidates — fine, but generates 22 duplicates on `[4,4,4,1,4]` for every 10 uniques. *In an interview* state it, then upgrade.
+
+---
+
+## Approach 2 — Sort + skip equal-at-same-depth (canonical)
+
+**Insight.** The brute force generates every ordering of every subset and dedupes at the end. If we sort first and prune duplicates at generation time, no duplicate is ever emitted.
+
+**Rule.** In the outer loop `for i = start..n-1`: `if (i > start && nums[i] == nums[i-1]) continue`. This skips the duplicate group's second and later members at each depth level, so each duplicate group contributes to at most one subset per count.
 
 
 
@@ -62,7 +93,7 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
   ]'
 />
 
-**Complexity** — Time **O(n · 2ⁿ)**; Space **O(n)**.
+**Complexity** — Time **O(n · 2ⁿ)**; Space **O(n)**. *Say aloud in an interview:* "the `i > start` check — not `i > 0` — is the entire dedup mechanism. It skips duplicates at *this level* but still allows them at deeper levels."
 
 ---
 
@@ -74,7 +105,8 @@ void dfs(int[] a, int start, List<Integer> path, List<List<Integer>> out) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Sort + skip | **O(n · 2ⁿ)** | O(n) | canonical |
+| Brute + HashSet dedup | O(n · 2ⁿ) | O(n · 2ⁿ) | Baseline reference |
+| **Sort + skip** | **O(n · 2ⁿ)** | O(n) | **Canonical** |
 
 ## When to use which
 

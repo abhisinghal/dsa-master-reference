@@ -7,8 +7,10 @@
 Given `n` houses, `wells[i]` = cost to dig a well at house `i`, and `pipes[i] = [a, b, cost]` = cost to build a pipe between houses. Provide water to all houses at min cost.
 
 **Example 1** — `n=3, wells=[1,2,2], pipes=[[1,2,1],[2,3,1]]` → `3` (dig at 1: 1; pipes 1-2:1 and 2-3:1)
+**Example 2** — `n=2, wells=[1,1], pipes=[]` → `2` (no pipes, dig both)
+**Example 3** — `n=5, wells=[46012,72474,64965,751,33304], pipes=[[2,1,6719],[3,2,75312],[5,3,44918]]` → `131704`
 
-**Constraints** — `2 ≤ n ≤ 10⁴`.
+**Constraints** — `2 ≤ n ≤ 10⁴`; `|pipes| ≤ 10⁴`. Brute force enumerating which houses to well vs pipe is 2ⁿ — impossible. Kruskal on n+1 nodes is O((n+E) log(n+E)) ≈ 3·10⁵.
 
 
 <Hints
@@ -24,9 +26,35 @@ Given `n` houses, `wells[i]` = cost to dig a well at house `i`, and `pipes[i] = 
 
 
 
-## Approach — Add virtual node + MST (canonical)
+## Approach 1 — Brute force: try every well subset
 
-**Insight.** Model wells as **virtual pipes from node 0** to each house. Now the problem is a standard MST over `n+1` nodes.
+**Intuition.** Enumerate every subset of houses that gets a well. For each subset, run a Steiner-tree-like MST connecting the rest to a well through pipes. Return the min.
+
+
+
+```java
+// Sketch only — exponential
+int bruteMinCost(int n, int[] wells, int[][] pipes) {
+    int best = Integer.MAX_VALUE;
+    for (int mask = 1; mask < (1 << n); mask++) {  // must have at least one well
+        int wellCost = wellsSum(mask, wells);
+        int connectCost = connectRestViaPipes(mask, n, pipes);
+        if (connectCost == UNREACHABLE) continue;
+        best = Math.min(best, wellCost + connectCost);
+    }
+    return best;
+}
+```
+
+
+
+**Complexity** — Time **O(2ⁿ · MST)**; Space **O(n)**. For `n=20`, `2²⁰ ≈ 10⁶` and each MST call is O(E log E) — feasible but slow. Past `n=25` fails. *In an interview* state this then flip the perspective.
+
+---
+
+## Approach 2 — Add virtual node + MST (canonical)
+
+**Insight.** Model **wells as pipes from a virtual node 0** to each house with weight `wells[i]`. Now the problem is exactly a standard MST over `n+1` nodes and (n + E) edges. The MST will pick the cheapest well-or-pipe combination automatically.
 
 
 
@@ -64,7 +92,7 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
   ]'
 />
 
-**Complexity** — Time **O((n + E) log(n + E))**; Space **O(n + E)**.
+**Complexity** — Time **O((n + E) log(n + E))**; Space **O(n + E)**. *Say aloud in an interview:* "the virtual-node trick — turning 'choose one from each group' into a standard MST — also solves Cheapest Flights With K Stops, Min Cost to Connect Islands, and Optimize Water Distribution."
 
 ---
 
@@ -76,7 +104,8 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Kruskal + virtual root | **O((n+E) log(n+E))** | O(n+E) | canonical |
+| Brute subset + MST | O(2ⁿ · E log E) | O(n) | Reference; TLE past n=25 |
+| **Virtual node + Kruskal** | **O((n+E) log(n+E))** | O(n+E) | **Canonical** |
 
 ## When to use which
 

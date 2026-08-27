@@ -6,13 +6,15 @@
 
 Unlimited transactions; each sell pays `fee`. Max profit.
 
-**Example 1** — `prices=[1,3,2,8,4,9], fee=2` → `8`
+**Example 1** — `prices=[1,3,2,8,4,9], fee=2` → `8` (buy 1, sell 8 → profit 7-2=5; buy 4, sell 9 → 5-2=3; total 8)
+**Example 2** — `prices=[1,3,7,5,10,3], fee=3` → `6`
+**Example 3** — `prices=[1,2,3,4,5], fee=1` → `3` (buy 1, sell 5 → 4 - 1 = 3, better than chained trades because fee eats them)
 
-**Constraints** — `1 ≤ n ≤ 5·10⁴`.
+**Constraints** — `1 ≤ n ≤ 5·10⁴`; `0 ≤ fee ≤ 5·10⁴`. For n=5·10⁴, brute force is O(2ⁿ) — the age of the universe. DP fits in 50µs.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -24,11 +26,39 @@ Unlimited transactions; each sell pays `fee`. Max profit.
 
 
 
-## Approach — State-machine DP (canonical)
+## Approach 1 — Brute force recursion
 
-**States.** `hold`, `cash`.
-- `hold = max(hold, cash - price)`
-- `cash = max(cash, hold + price - fee)`
+**Intuition.** At each day, try buy / sell / skip. Recurse on the remaining prefix.
+
+
+
+```java
+int maxProfitBrute(int[] prices, int fee) {
+    return dfs(prices, fee, 0, false);
+}
+int dfs(int[] p, int fee, int i, boolean holding) {
+    if (i == p.length) return 0;
+    int skip = dfs(p, fee, i + 1, holding);
+    int action = holding
+        ? (p[i] - fee) + dfs(p, fee, i + 1, false)
+        : -p[i] + dfs(p, fee, i + 1, true);
+    return Math.max(skip, action);
+}
+```
+
+
+
+**Complexity** — Time **O(2ⁿ)**; Space **O(n)** stack. For `n=50000`, universe-age. *In an interview* say "brute is O(2ⁿ), we can memoize on (day, holding) to O(n)."
+
+---
+
+## Approach 2 — State-machine DP (canonical)
+
+**Insight.** Two states — `cash` (idle, no share) and `hold` (own a share). Transitions:
+- `hold = max(hold, cash - price)` — either keep holding, or buy from cash
+- `cash = max(cash, hold + price - fee)` — either stay idle, or sell (net of fee)
+
+**The fee subtraction happens on sell**, not buy. Convention is arbitrary but must be consistent — if you subtract on buy, `hold` initializes to `-prices[0] - fee`.
 
 
 
@@ -58,7 +88,7 @@ int maxProfit(int[] prices, int fee) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
+**Complexity** — Time **O(n)**; Space **O(1)**. *Say aloud in an interview:* "fee is orthogonal to the state count — always 2 states — but it changes the sell transition. If fee &gt; average price swing, it forces fewer, larger transactions."
 
 ---
 
@@ -70,7 +100,8 @@ int maxProfit(int[] prices, int fee) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| State machine DP | **O(n)** | O(1) | canonical |
+| Brute recursion | O(2ⁿ) | O(n) | Reference; TLE past n=25 |
+| **State-machine DP** | **O(n)** | **O(1)** | **Canonical** |
 
 ## When to use which
 

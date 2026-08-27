@@ -7,14 +7,16 @@
 Group strings that are cyclic shifts of each other.
 
 **Example 1** — `strings=["abc","bcd","acef","xyz","az","ba","a","z"]` → `[["abc","bcd","xyz"],["acef"],["az","ba"],["a","z"]]`
+**Example 2** — `strings=["a"]` → `[["a"]]`
+**Example 3** — `strings=["abc","bcd","def"]` → `[["abc","bcd","def"]]` (all three shift-equivalent)
 
-**Constraints** — `1 ≤ #strings ≤ 200`.
+**Constraints** — `1 ≤ #strings ≤ 200`; string length ≤ 50. Brute pairwise-check is O(N²·L) = 200²·50 = 2·10⁶ — passes but fragile. Canonical key is O(Σ length) — a single linear scan.
 
 
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
-  hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
-  hint3="For ’first duplicate’, a `HashSet` and single-pass `add()` is enough."
+  hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."
+  hint3="For 'first duplicate', a `HashSet` and single-pass `add()` is enough."
 />
 ---
 
@@ -24,11 +26,31 @@ Group strings that are cyclic shifts of each other.
 
 
 
-## Approach — Canonical key = diff pattern (canonical)
+## Approach 1 — Brute force pairwise shift check
 
-**Insight.** Two strings are shifts iff their consecutive char-diffs (mod 26) match.
+**Intuition.** For each pair (s, t), check whether one is a shift of the other by trying all 26 shift amounts. Group them via union-find or grouping-by-first-member.
 
-**Trap** — Java `%` can be negative. Use `+ 26) % 26`. Delimit numbers so `"11"` doesn't collide with `"1,1"`.
+```java
+boolean isShift(String s, String t) {
+    if (s.length() != t.length()) return false;
+    int delta = (t.charAt(0) - s.charAt(0) + 26) % 26;
+    for (int i = 0; i < s.length(); i++) {
+        int d = (t.charAt(i) - s.charAt(i) + 26) % 26;
+        if (d != delta) return false;
+    }
+    return true;
+}
+```
+
+**Complexity** — Time **O(N²·L)** for the pairwise check; Space **O(N)** for group assignments. For `N=200, L=50` → 2·10⁶ — passes but O(N²) doesn't scale. *In an interview* say "canonical-key hashing collapses this to a linear scan."
+
+---
+
+## Approach 2 — Canonical key = diff pattern (canonical)
+
+**Insight.** Two strings are shifts iff their **consecutive character diffs mod 26** match. `"abc"` → `(1, 1)`; `"bcd"` → `(1, 1)`; `"xyz"` → `(1, 1)`. All hash to the same key.
+
+**Trap** — Java `%` can be negative on negative operands. Use `+ 26) % 26`. Delimit numbers so `"11"` doesn't collide with `"1,1"`.
 
 ```java
 List<List<String>> groupStrings(String[] strings) {
@@ -57,7 +79,7 @@ List<List<String>> groupStrings(String[] strings) {
   ]'
 />
 
-**Complexity** — Time **O(Σ length)**; Space **O(Σ length)**.
+**Complexity** — Time **O(Σ length)**; Space **O(Σ length)**. *Say aloud in an interview:* "canonical-key hashing is the pattern behind Group Anagrams, Isomorphic Strings, Group Shifted Strings — same three lines, different key function."
 
 ---
 
@@ -69,7 +91,8 @@ List<List<String>> groupStrings(String[] strings) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Canonical key | **O(Σ length)** | O(Σ length) | canonical |
+| Pairwise shift check | O(N²·L) | O(N) | Correct but O(N²) |
+| **Canonical diff-key** | **O(Σ length)** | O(Σ length) | **Canonical** |
 
 ## When to use which
 

@@ -7,12 +7,14 @@
 2D grid of heights; compute total water trapped.
 
 **Example 1** — `heightMap=[[1,4,3,1,3,2],[3,2,1,3,2,4],[2,3,3,2,3,1]]` → `4`
+**Example 2** — `heightMap=[[3,3,3,3,3],[3,2,2,2,3],[3,2,1,2,3],[3,2,2,2,3],[3,3,3,3,3]]` → `10` (a symmetric bowl)
+**Example 3** — `heightMap=[[1]]` → `0` (grid too small to trap anything)
 
-**Constraints** — `1 ≤ m, n ≤ 200`.
+**Constraints** — `1 ≤ m, n ≤ 200`. Brute per-cell BFS is O((mn)²) — for 200×200 that's 1.6·10⁹ ops. The heap solution is O(mn log(mn)) ≈ 4·10⁵ — 4000× faster.
 
 
 <Hints
-  hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
+  hint1="Sort first if the input isn't already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
   hint3="Skip duplicates at both boundaries when emitting results to avoid repeated triplets/pairs."
 />
@@ -24,9 +26,32 @@
 
 
 
-## Approach — Min-heap Dijkstra-style border expansion (canonical)
+## Approach 1 — Brute force per-cell BFS
 
-**Insight.** Water at any cell is bounded by the shortest wall on ANY path to the boundary. Grow a "reached" set from all border cells; always process the **lowest wall reachable** first. When we enter a lower neighbor, water = `current wall - height`; that neighbor becomes a wall at the higher level.
+**Intuition.** For each interior cell, find the minimum wall height on every path to the border. Water above the cell = max(0, min_max_path − cell height). Run BFS from every cell.
+
+```java
+int trapRainWaterBrute(int[][] h) {
+    int m = h.length, n = h[0].length, water = 0;
+    for (int r = 1; r < m - 1; r++)
+        for (int c = 1; c < n - 1; c++) {
+            int seal = maxWallOnEasiestPath(h, r, c);   // BFS/DFS to border
+            if (seal > h[r][c]) water += seal - h[r][c];
+        }
+    return water;
+}
+// maxWallOnEasiestPath omitted — Dijkstra-lite on max-of-min for each cell.
+```
+
+**Complexity** — Time **O((mn)² log(mn))** or worse per-cell BFS; Space **O(mn)** per query. For 200×200 = 40,000 cells, each with its own BFS across 40,000 cells — 1.6·10⁹ ops. TLE. *In an interview* state this then flip perspective.
+
+---
+
+## Approach 2 — Min-heap Dijkstra-style border expansion (canonical)
+
+**Insight.** Instead of asking "for each cell, what's the sealing wall?", grow a "sealed region" outward from the border. Always expand the **lowest current sealing wall** first (min-heap). When we enter a lower neighbor, water fills = `current wall - neighbor height`; that neighbor's *effective* wall becomes the higher of its own height or the sealing wall.
+
+Same shape as Dijkstra: nearest-uneaten cell first, monotone frontier, O(V log V) total.
 
 ```java
 int trapRainWater(int[][] h) {
@@ -67,7 +92,7 @@ int trapRainWater(int[][] h) {
   ]'
 />
 
-**Complexity** — Time **O(mn log(mn))**; Space **O(mn)**.
+**Complexity** — Time **O(mn log(mn))**; Space **O(mn)**. *Say aloud in an interview:* "same Dijkstra shape as swim-in-rising-water and path-with-min-effort — always process the current-lowest-wall cell first."
 
 ---
 
@@ -79,7 +104,8 @@ int trapRainWater(int[][] h) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Min-heap border expansion | **O(mn log(mn))** | O(mn) | canonical |
+| Per-cell BFS | O((mn)² log(mn)) | O(mn) | TLE past 40×40 |
+| **Min-heap border expansion** | **O(mn log(mn))** | O(mn) | **Canonical** |
 
 ## When to use which
 

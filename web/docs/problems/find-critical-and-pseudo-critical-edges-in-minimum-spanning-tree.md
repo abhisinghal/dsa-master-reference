@@ -8,9 +8,11 @@ Given a graph, classify each edge:
 - **Critical** — removing it makes MST cost strictly larger (or disconnects).
 - **Pseudo-critical** — appears in at least one MST but is not critical.
 
-**Example 1** — Return `[criticalEdges, pseudoCriticalEdges]`.
+**Example 1** — `n=5, edges=[[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]` → `[[0,1],[2,3,4,5]]` (edges 0,1 critical; 2-5 pseudo)
+**Example 2** — `n=4, edges=[[0,1,1],[1,2,1],[2,3,1],[0,3,1]]` → `[[],[0,1,2,3]]` (all four are pseudo — 4-cycle with equal weights)
+**Example 3** — `n=2, edges=[[0,1,5]]` → `[[0],[]]` (only one edge, must be critical)
 
-**Constraints** — `2 ≤ n ≤ 100`; `1 ≤ E ≤ min(200, C(n,2))`.
+**Constraints** — `2 ≤ n ≤ 100`; `1 ≤ E ≤ min(200, C(n,2))`. Naive Steiner-tree brute force is `2^E ≈ 10⁶⁰` — impossible. Per-edge MST runs is O(E² · α) ≈ 200² · 4 = 1.6·10⁵.
 
 
 <Hints
@@ -26,11 +28,21 @@ Given a graph, classify each edge:
 
 
 
-## Approach — Kruskal with per-edge experiments (canonical)
+## Approach 1 — Enumerate all spanning trees
 
-**Insight.** Compute MST cost baseline.
-- **Critical:** Skip edge `e`; compute MST cost. If larger (or spanning fails) → critical.
-- **Pseudo-critical:** Force `e` in first; compute MST. If cost equals baseline → pseudo-critical.
+**Intuition.** For each subset of `n-1` edges, check if it forms a spanning tree (connected + acyclic). Track the MST cost + which edges appear in some MST. Then classify each edge.
+
+**Complexity** — `C(E, n-1)` subsets. For `E=200, n=100`, `C(200, 99) ≈ 10⁵⁷` — universe-age. Only mentioned as the mental reference before flipping to the smart approach.
+
+---
+
+## Approach 2 — Kruskal with per-edge skip/force experiments (canonical)
+
+**Insight.** Compute the MST cost baseline. Then for each edge `e`, run Kruskal *twice*:
+- **Skip `e`.** If MST cost is larger than baseline (or spanning fails) → `e` was essential → **critical**.
+- **Force `e` first.** Start MST with `e` already included. If MST cost equals baseline → `e` participates in some MST → **pseudo-critical**.
+
+An edge is either critical (removing it hurts), pseudo-critical (some MST uses it), or unused (some MST cheaper without it).
 
 
 
@@ -71,7 +83,7 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 
 
 
-**Complexity** — Time **O(E² · α)**; Space **O(n + E)**.
+**Complexity** — Time **O(E² · α(n))**; Space **O(n + E)**. For `E=200`: 2·E MST runs = 400 Kruskals ≈ 40,000 union-finds. *Say aloud in an interview:* "the skip-force pattern generalises — same technique classifies critical edges in flow networks, and separators in graph decomposition."
 
 ---
 
@@ -83,7 +95,8 @@ int find(int[] p, int x) { return p[x] == x ? x : (p[x] = find(p, p[x])); }
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Per-edge skip/force MST | **O(E² · α)** | O(n + E) | canonical |
+| Spanning-tree enumeration | O(C(E, n-1)) | O(n) | Universe-age; reference only |
+| **Per-edge skip/force MST** | **O(E² · α)** | O(n + E) | **Canonical** |
 
 ## When to use which
 

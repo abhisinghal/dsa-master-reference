@@ -6,9 +6,11 @@
 
 Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the smallest sum). Maximize your piece's sweetness.
 
-**Example** — `sweetness=[1,2,3,4,5,6,7,8,9], k=5` → `6`
+**Example 1** — `sweetness=[1,2,3,4,5,6,7,8,9], k=5` → `6`
+**Example 2** — `sweetness=[5,6,7,8,9,1,2,3,4], k=8` → `1` (9 pieces, 1 each — you take min = 1)
+**Example 3** — `sweetness=[1,2,2,1,2,2,1,2,2], k=2` → `5` (3 pieces of sums [5, 5, 5])
 
-**Constraints** — `1 ≤ k+1 ≤ n ≤ 10⁴`; `1 ≤ sweetness[i] ≤ 10⁵`.
+**Constraints** — `1 ≤ k+1 ≤ n ≤ 10⁴`; `1 ≤ sweetness[i] ≤ 10⁵`. Answer range `[1, 10⁹]`. Brute enumeration of `C(n,k)` cuts is impossibly large; BS-on-answer is O(n log range) ≈ 3·10⁵ ops.
 
 
 <Hints
@@ -24,9 +26,35 @@ Divide `sweetness[]` into `k+1` contiguous pieces (you take the piece with the s
 
 
 
-## Approach — Binary search on the minimum
+## Approach 1 — Brute force: try every partition
 
-**Insight.** `feasible(cap)` = can we cut into ≥ k+1 pieces each with sum ≥ cap? Monotonic (bigger cap → fewer possible cuts). Range: `lo = 1`, `hi = sum / (k+1)` (or `sum`).
+**Intuition.** For each of the `C(n-1, k)` ways to place `k` cuts among `n-1` gaps, compute the minimum piece sum, keep the max.
+
+```java
+int maximizeSweetnessBrute(int[] a, int k) {
+    return tryPartition(a, k, 0, 0);
+}
+int tryPartition(int[] a, int k, int start, int cutsPlaced) {
+    if (cutsPlaced == k) return sumRange(a, start, a.length - 1);
+    int best = 0;
+    for (int end = start; end < a.length - (k - cutsPlaced); end++) {
+        int firstPiece = sumRange(a, start, end);
+        int rest = tryPartition(a, k, end + 1, cutsPlaced + 1);
+        best = Math.max(best, Math.min(firstPiece, rest));
+    }
+    return best;
+}
+```
+
+**Complexity** — Time **O(C(n-1, k))** which blows up; Space **O(k)** recursion. For `n=100, k=50`, `C(99,50) ≈ 10²⁹`. *In an interview* state this then flip to binary search on the answer.
+
+---
+
+## Approach 2 — Binary search on the minimum (canonical)
+
+**Insight.** `feasible(cap)` = can we cut into ≥ `k+1` pieces each with sum ≥ `cap`? **Monotone** — bigger `cap` → fewer possible cuts → harder. Find the largest `cap` where `feasible(cap)` still holds.
+
+Range: `lo = min(sweetness)` (a piece must contain at least one item), `hi = sum(sweetness)` (one giant piece).
 
 ```java
 int maximizeSweetness(int[] sweetness, int k) {
@@ -61,7 +89,7 @@ int maximizeSweetness(int[] sweetness, int k) {
   ]'
 />
 
-**Complexity** — Time **O(n log sum)**; Space **O(1)**.
+**Complexity** — Time **O(n log sum)**; Space **O(1)**. *Say aloud in an interview:* "for maximize-feasible, use the *upper* mid (`lo + (hi - lo + 1) / 2`) to avoid infinite loops. For minimize-feasible, use lower mid."
 
 ## Try it yourself
 
@@ -71,7 +99,8 @@ int maximizeSweetness(int[] sweetness, int k) {
 
 | Approach | Time | Space |
 |---|---|---|
-| BS on min | **O(n log sum)** | O(1) |
+| Brute enumeration | O(C(n-1, k)) | O(k) |
+| **BS on min** | **O(n log sum)** | O(1) |
 
 **Watch the mid formula.** For *maximize-feasible* BS, use `lo + (hi - lo + 1) / 2` (upper mid) to avoid infinite loops.
 

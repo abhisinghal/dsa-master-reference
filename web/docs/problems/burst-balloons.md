@@ -7,12 +7,14 @@
 Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r are alive neighbors. Max coins.
 
 **Example 1** — `nums=[3,1,5,8]` → `167`
+**Example 2** — `nums=[1,5]` → `10` (burst 5 → 1·5·1 = 5; burst 1 → 1·1·1 = 1; wait actually: burst 1 first → 1·1·5 = 5; burst 5 → 1·5·1 = 5; total 10)
+**Example 3** — `nums=[7]` → `7`
 
-**Constraints** — `1 ≤ n ≤ 300`.
+**Constraints** — `1 ≤ n ≤ 300`. Brute force is O(n!) — for `n=15` that's already 10¹²; DP is O(n³) = 2.7·10⁷ at n=300.
 
 
 <Hints
-  hint1="What is the state? What are the transitions? What’s the base case?"
+  hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."
   hint3="For grid: `dp[i][j] = min/max/sum of neighbors + weight`. For interval: iterate lengths, split by k."
 />
@@ -24,9 +26,42 @@ Burst balloons; when bursting `i`, gain `nums[l] * nums[i] * nums[r]` where l, r
 
 
 
-## Approach — Interval DP with "last to burst" trick (canonical)
+## Approach 1 — Brute force: try every burst order
 
-**Insight.** "First to burst" model fails — neighbors change unpredictably. Instead consider `i` as the **last** to burst in range `(l, r)`: its neighbors at that moment are fixed at `nums[l]` and `nums[r]`. Subproblems `(l, i)` and `(i, r)` are independent.
+**Intuition.** Enumerate all `n!` permutations of burst orders. Simulate each. Return the max coins.
+
+
+
+```java
+int maxCoinsBrute(int[] nums) {
+    List<Integer> alive = new ArrayList<>();
+    for (int x : nums) alive.add(x);
+    return dfs(alive);
+}
+int dfs(List<Integer> alive) {
+    if (alive.isEmpty()) return 0;
+    int best = 0;
+    for (int i = 0; i < alive.size(); i++) {
+        int L = i == 0 ? 1 : alive.get(i - 1);
+        int R = i == alive.size() - 1 ? 1 : alive.get(i + 1);
+        int gain = L * alive.get(i) * R;
+        int val = alive.remove(i);
+        best = Math.max(best, gain + dfs(alive));
+        alive.add(i, val);
+    }
+    return best;
+}
+```
+
+
+
+**Complexity** — Time **O(n!)**; Space **O(n)** stack. For `n=15`, `15! ≈ 10¹²` — infeasible. *In an interview* state this, then flip to the "last to burst" trick.
+
+---
+
+## Approach 2 — Interval DP with "last to burst" trick (canonical)
+
+**Insight.** "First to burst" model fails — after popping any balloon the neighbors change unpredictably, so subproblems aren't independent. **Flip the perspective**: consider `i` as the **last** to burst in range `(l, r)`. At that moment its neighbors are fixed at `nums[l]` and `nums[r]` (everything else already popped). Subproblems `(l, i)` and `(i, r)` are now genuinely independent.
 
 **Padding.** Prepend and append `1` so base neighbors are always defined.
 
@@ -63,7 +98,7 @@ int maxCoins(int[] nums) {
   ]'
 />
 
-**Complexity** — Time **O(n³)**; Space **O(n²)**.
+**Complexity** — Time **O(n³)**; Space **O(n²)**. *Say aloud in an interview:* "the 'last to burst' inversion is the entire trick. It's the same technique behind Matrix Chain Multiplication and Optimal BST."
 
 ---
 
@@ -75,7 +110,8 @@ int maxCoins(int[] nums) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Interval DP | **O(n³)** | O(n²) | canonical |
+| Brute permutations | O(n!) | O(n) | Reference; TLE past n=12 |
+| **Interval DP (last-to-burst)** | **O(n³)** | O(n²) | **Canonical** |
 
 ## When to use which
 

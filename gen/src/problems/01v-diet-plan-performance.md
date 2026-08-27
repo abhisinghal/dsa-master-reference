@@ -8,12 +8,12 @@ Fixed window of size `k` over calories. For each window: +1 if sum > upper; −1
 **Example 2** — `calories=[3,2], k=2, lower=0, upper=1` → `1`
 **Example 3** — `calories=[6,5,0,0], k=2, lower=1, upper=5` → `0`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`.
+**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`. Naive per-window sum is O(nk) — at n=k=10⁵ that's 10¹⁰ ops (~5 minutes). Sliding-window is O(n).
 
 
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
-  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it's restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
 />
 ---
@@ -24,9 +24,30 @@ Fixed window of size `k` over calories. For each window: +1 if sum > upper; −1
 
 
 
-## Approach — Fixed-window running sum (canonical)
+## Approach 1 — Brute force per-window sum
 
-**Insight.** Pre-sum first `k`; slide by adding right and subtracting left.
+**Intuition.** For each window start `i`, sum `k` items. Score.
+
+```java
+int dietPlanPerformanceBrute(int[] cal, int k, int lower, int upper) {
+    int score = 0;
+    for (int i = 0; i + k <= cal.length; i++) {
+        int sum = 0;
+        for (int j = i; j < i + k; j++) sum += cal[j];
+        if (sum > upper) score++;
+        else if (sum < lower) score--;
+    }
+    return score;
+}
+```
+
+**Complexity** — Time **O(nk)**; Space **O(1)**. For n=k=10⁵: 10¹⁰ ops = TLE. *In an interview* say "add-in, drop-out sliding sum → O(n)."
+
+---
+
+## Approach 2 — Fixed-window running sum (canonical)
+
+**Insight.** Consecutive windows share `k-1` items. Pre-sum the first `k`; then slide by *adding* the incoming right and *subtracting* the outgoing left — one add, one subtract per step.
 
 ```java
 int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
@@ -56,7 +77,7 @@ int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(1)**.
+**Complexity** — Time **O(n)**; Space **O(1)**. *Say aloud in an interview:* "fixed-window sliding is the simplest form of the pattern — every 'per-window aggregate' problem starts here."
 
 ---
 
@@ -68,7 +89,8 @@ int dietPlanPerformance(int[] cal, int k, int lower, int upper) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| Fixed window slide | **O(n)** | O(1) | canonical |
+| Per-window sum brute | O(nk) | O(1) | Reference; TLE at 10⁵ |
+| **Fixed window slide** | **O(n)** | O(1) | **Canonical** |
 
 ## When to use which
 

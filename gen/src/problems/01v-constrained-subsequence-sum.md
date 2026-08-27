@@ -10,12 +10,12 @@ Max sum of a subsequence where every two consecutive chosen indices differ by at
 **Example 2** — `nums=[-1,-2,-3], k=1` → `-1`
 **Example 3** — `nums=[10,-2,-10,-5,20], k=2` → `23`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`.
+**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ k ≤ n`. Naive DP is O(nk) — at n=k=10⁵ that's 10¹⁰ ops (~5 minutes). Deque trick is O(n).
 
 
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
-  hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."
+  hint2="Grow `right`. When the invariant breaks, shrink `left` until it's restored. Track the best answer inside the valid region."
   hint3="For counts, maintain a `have`/`need` counter to avoid O(σ) re-comparison at every step."
 />
 ---
@@ -26,9 +26,33 @@ Max sum of a subsequence where every two consecutive chosen indices differ by at
 
 
 
-## Approach — DP with monotonic deque (canonical)
+## Approach 1 — Brute DP with inner window scan
 
-**Insight.** `dp[i] = nums[i] + max(0, max(dp[i-k..i-1]))`. Window-max via deque of indices with **decreasing** `dp` values → front is window max.
+**Intuition.** `dp[i] = nums[i] + max(0, max(dp[i-k..i-1]))`. For each `i`, scan back `k` positions.
+
+```java
+int constrainedSubsetSumBrute(int[] nums, int k) {
+    int n = nums.length;
+    int[] dp = new int[n];
+    int best = Integer.MIN_VALUE;
+    for (int i = 0; i < n; i++) {
+        int maxPrev = 0;
+        for (int j = Math.max(0, i - k); j < i; j++)
+            maxPrev = Math.max(maxPrev, dp[j]);
+        dp[i] = nums[i] + maxPrev;
+        best = Math.max(best, dp[i]);
+    }
+    return best;
+}
+```
+
+**Complexity** — Time **O(nk)**; Space **O(n)**. For n=k=10⁵: 10¹⁰ ops = TLE. *In an interview* state this then reach for a monotonic deque.
+
+---
+
+## Approach 2 — DP with monotonic deque (canonical)
+
+**Insight.** The inner scan is a sliding-window max. Replace it with a monotonic deque of indices with **decreasing** `dp` values — the front is always the current window max in O(1) amortised.
 
 ```java
 int constrainedSubsetSum(int[] nums, int k) {
@@ -60,7 +84,7 @@ int constrainedSubsetSum(int[] nums, int k) {
   ]'
 />
 
-**Complexity** — Time **O(n)**; Space **O(k)**.
+**Complexity** — Time **O(n)**; Space **O(k)**. *Say aloud in an interview:* "same monotonic-deque pattern as Sliding Window Maximum and Jump Game VI — reusable across every 'DP with window max/min' problem."
 
 ---
 
@@ -72,7 +96,8 @@ int constrainedSubsetSum(int[] nums, int k) {
 
 | Approach | Time | Space | Grade |
 |---|---|---|---|
-| DP + monotonic deque | **O(n)** | O(k) | canonical |
+| Brute DP (window scan) | O(nk) | O(n) | Reference; TLE at 10⁵ |
+| **DP + monotonic deque** | **O(n)** | O(k) | **Canonical** |
 
 ## When to use which
 
