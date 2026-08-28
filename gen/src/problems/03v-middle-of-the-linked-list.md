@@ -10,9 +10,7 @@ Given the head of a singly linked list, return the middle node. If there are two
 **Example 2** — `1 → 2 → 3 → 4 → 5 → 6` → node with value `4` (second middle)
 **Example 3** — `1` → `1`
 
-**Constraints** — `1 ≤ n ≤ 100`.
-
-
+**Constraints** — `1 ≤ n ≤ 100`. Brute two-pass (count then walk) is O(n) time but two full traversals — hot service pays 2x cache misses. Fast/slow single pass is O(n) time, ~10⁶ pointer chases with one traversal.
 <Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."

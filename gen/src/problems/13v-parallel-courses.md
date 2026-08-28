@@ -9,9 +9,7 @@ Given `n` courses and prerequisites `[a, b]` (must take `a` before `b`), each se
 **Example 1** — `n=3, prerequisites=[[1,3],[2,3]]` → `2` (sem 1: {1,2}; sem 2: {3})
 **Example 2** — `n=3, prerequisites=[[1,2],[2,3],[3,1]]` → `-1` (cycle)
 
-**Constraints** — `1 ≤ n ≤ 5000`.
-
-
+**Constraints** — `1 ≤ n ≤ 5000`. Brute simulates semester-by-semester with O(n) scan per semester — O(n²) = 10⁴ ops at n=100 (fine), 10¹⁰ at n=10⁵. Kahn's BFS with per-layer count is O(n+E) = ~10⁶ ops.
 <Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."

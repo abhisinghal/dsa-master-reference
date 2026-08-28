@@ -9,9 +9,7 @@ Given an undirected tree of `n` nodes, return all nodes that when picked as root
 **Example 1** — `n=4, edges=[[1,0],[1,2],[1,3]]` → `[1]`
 **Example 2** — `n=6, edges=[[3,0],[3,1],[3,2],[3,4],[5,4]]` → `[3,4]`
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 2·10⁴`. Brute runs BFS from every node — O(n²) = 10⁸ ops at n=2·10⁴ (TLE). Peel leaves layer by layer (there are 1-2 centroids) is O(n) = 2·10⁴ ops.
 <Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."

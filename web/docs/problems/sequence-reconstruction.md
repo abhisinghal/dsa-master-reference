@@ -10,9 +10,7 @@ Given a target permutation `nums` and a list of subsequences `sequences`, return
 **Example 2** — `nums=[1,2,3], sequences=[[1,2],[1,3],[2,3]]` → `true`
 **Example 3** — `nums=[4,1,5,2,6,3], sequences=[[5,2,6,3],[4,1,5,2]]` → `true`
 
-**Constraints** — `1 ≤ n ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`. Brute checks every permutation against all sequences — O(n!·m) astronomical. Topo sort validation with "unique queue element per layer" is O(n+E) = ~10⁶ ops.
 <Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."

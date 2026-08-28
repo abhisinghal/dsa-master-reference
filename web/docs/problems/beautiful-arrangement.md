@@ -9,9 +9,7 @@ Count permutations of 1..n where for every position `i` (1-indexed), `a[i] % i =
 **Example 1** — `n=2` → `2`
 **Example 2** — `n=1` → `1`
 
-**Constraints** — `1 ≤ n ≤ 15`.
-
-
+**Constraints** — `1 ≤ n ≤ 15`. Brute enumerates n! permutations — 15! ≈ 10¹² ops = 20 min at 10⁹ ops/sec. Backtracking with divisibility pruning + bitmask visited is O(n·2ⁿ) ≈ 5·10⁵ ops at n=15.
 <Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

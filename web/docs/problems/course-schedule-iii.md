@@ -10,9 +10,7 @@ Each course `[duration, lastDay]`. Take max number of courses (one at a time). E
 **Example 2** — `courses=[[1,2]]` → `1`
 **Example 3** — `courses=[[3,2],[4,3]]` → `0` (each course exceeds its own deadline before others start)
 
-**Constraints** — `1 ≤ n ≤ 10⁴`. Brute enumeration of subsets is 2ⁿ = 10³⁰⁰⁰ — impossible. Greedy is O(n log n).
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`. Brute enumeration of subsets is 2ⁿ = 10³⁰⁰⁰ — impossible. Greedy is O(n log n). Brute enumerates 2ⁿ course subsets — 10⁹⁰³⁰ dies at n=10⁴. Sort by deadline + max-heap of chosen durations (swap when over) is O(n log n) = ~10⁶ ops.
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."

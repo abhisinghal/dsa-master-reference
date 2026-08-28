@@ -9,9 +9,7 @@ Given `n` cities and `connections[i] = [a, b, cost]`, return the minimum cost to
 **Example 1** — `n=3, connections=[[1,2,5],[1,3,6],[2,3,1]]` → `6` (pick [2,3,1] and [1,2,5])
 **Example 2** — `n=4, connections=[[1,2,3],[3,4,4]]` → `-1`
 
-**Constraints** — `1 ≤ n ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`. Brute checks every spanning tree — O(n^(n-2)) via Cayley (dies past n=12). Kruskal + Union-Find is O(E log E) = ~10⁶ ops at E=10⁴.
 <Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."

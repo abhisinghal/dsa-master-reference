@@ -10,9 +10,7 @@ Given trips `[numPassengers, from, to]` and car `capacity`, return `true` iff yo
 **Example 2** — `trips=[[2,1,5],[3,3,7]], capacity=5` → `true`
 **Example 3** — `trips=[[2,1,5],[3,5,7]], capacity=3` → `true` (drop-off at 5 before pickup at 5)
 
-**Constraints** — `1 ≤ trips.length ≤ 1000`; `0 ≤ from < to ≤ 1000`.
-
-
+**Constraints** — `1 ≤ trips.length ≤ 1000`; `0 ≤ from < to ≤ 1000`. Brute simulates every km — O(sum of trip lengths) = 10⁹ at max (TLE). Diff-array / bucket approach with 10³ stops uses O(trips + stops) = 2·10³ ops.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

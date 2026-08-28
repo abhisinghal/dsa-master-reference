@@ -10,9 +10,7 @@ Each boat carries ≤ 2 people totaling ≤ `limit`. Minimize boats.
 **Example 2** — `people=[3,2,2,1], limit=3` → `3`
 **Example 3** — `people=[3,5,3,4], limit=5` → `4`
 
-**Constraints** — `1 ≤ n ≤ 5·10⁴`. Brute enumeration of all pairings is `(n/2)! ≈ 10²⁰⁰⁰⁰` — impossible. Sort + two-pointer greedy is O(n log n).
-
-
+**Constraints** — `1 ≤ n ≤ 5·10⁴`. Brute enumeration of all pairings is `(n/2)! ≈ 10²⁰⁰⁰⁰` — impossible. Sort + two-pointer greedy is O(n log n). Brute pairs each person with every other — O(n²) = 2.5·10⁹ ops at n=5·10⁴ (TLE). Sort + two-pointer greedy is O(n log n) = ~10⁶ ops.
 <Hints
   hint1="Sort first if the input isn't already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

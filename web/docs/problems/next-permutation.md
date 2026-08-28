@@ -10,9 +10,7 @@ Rearrange nums to the next lexicographic permutation in-place. If none, sort asc
 **Example 2** — `nums=[3,2,1]` → `[1,2,3]` (last perm → wrap to first)
 **Example 3** — `nums=[1,1,5]` → `[1,5,1]`
 
-**Constraints** — `1 ≤ n ≤ 100`. Brute enumerate all n! permutations + sort + look up next is O(n! · n log n) — 100! is beyond universe. Classic in-place algorithm is O(n).
-
-
+**Constraints** — `1 ≤ n ≤ 100`. Brute enumerate all n! permutations + sort + look up next is O(n! · n log n) — 100! is beyond universe. Classic in-place algorithm is O(n). Brute generates all n! permutations then finds next — 10¹⁶⁵ ops at n=100 (dies). Linear scan from right to find pivot + swap + reverse suffix is O(n) = 100 ops.
 <Hints
   hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

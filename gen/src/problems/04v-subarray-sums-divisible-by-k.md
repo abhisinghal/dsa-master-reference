@@ -10,9 +10,7 @@ Count subarrays whose sum is divisible by `k`.
 **Example 2** — `nums = [5], k = 9` → `0`
 **Example 3** — `nums = [-1,2,9], k = 2` → `2`
 
-**Constraints** — `1 ≤ n ≤ 3·10⁴`; `2 ≤ k ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 3·10⁴`; `2 ≤ k ≤ 10⁴`. Brute checks every subarray — O(n²) = 10¹⁰ ops at n=3·10⁴ (TLE). Prefix sum + hashmap of remainders is O(n) = 3·10⁴ ops.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

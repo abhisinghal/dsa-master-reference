@@ -10,9 +10,7 @@ Given `n` flights and bookings `[first, last, seats]`, return an array where ind
 **Example 2** — `bookings=[[1,2,10],[2,2,15]], n=2` → `[10,25]`
 **Example 3** — `bookings=[[1,1,5]], n=3` → `[5,0,0]`
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`; `1 ≤ bookings.length ≤ 2·10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 2·10⁴`; `1 ≤ bookings.length ≤ 2·10⁴`. Brute applies each booking to a range — O(bookings·n) = 10⁵·2·10⁴ = 2·10⁹ ops (TLE). Difference-array + prefix sum is O(bookings + n) = 3·10⁵ ops = &lt;5 ms.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

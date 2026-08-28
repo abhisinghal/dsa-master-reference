@@ -8,9 +8,7 @@ Reverse the bits of a 32-bit unsigned integer.
 
 **Example 1** — `n = 0000...1010 (43261596)` → `0011...1001 (964176192)`
 
-**Constraints** — 32 bits.
-
-
+**Constraints** — 32 bits. Brute bit-by-bit reverse loop is O(32) = 32 ops. Divide-and-conquer swap adjacent / pairs / nibbles / bytes is 12 ops — ~10⁸ reversals/sec.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

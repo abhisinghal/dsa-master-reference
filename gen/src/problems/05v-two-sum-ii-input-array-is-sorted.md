@@ -10,9 +10,7 @@ Sorted array; return 1-indexed pair summing to target.
 **Example 2** — `numbers=[2,3,4], target=6` → `[1,3]`
 **Example 3** — `numbers=[-1,0], target=-1` → `[1,2]`
 
-**Constraints** — `2 ≤ n ≤ 3·10⁴`.
-
-
+**Constraints** — `2 ≤ n ≤ 3·10⁴`. Brute nested loop is O(n²) = 10⁸ ops at n=3·10⁴. Two-pointer inward sweep is O(n) = ~10⁶ pointer ops at scale.
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."

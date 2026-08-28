@@ -10,9 +10,7 @@ Count connected components of `'1'`s in a binary grid.
 **Example 2** — `grid=[["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]` → `3`
 **Example 3** — `grid=[["0"]]` → `0`
 
-**Constraints** — `1 ≤ m, n ≤ 300`. Brute per-cell BFS/DFS is already O(mn) — the bottleneck is careful marking, not counting. For 300×300 = 9·10⁴ ops. Union-Find variant is O(mn · α(mn)) — same asymptotic but streaming-friendly.
-
-
+**Constraints** — `1 ≤ m, n ≤ 300`. Brute per-cell BFS/DFS is already O(mn) — the bottleneck is careful marking, not counting. For 300×300 = 9·10⁴ ops. Union-Find variant is O(mn · α(mn)) — same asymptotic but streaming-friendly. Brute checks connectivity between every pair of land cells — O((m·n)²) = 10¹⁰ ops at max grid. BFS/DFS flood-fill visits each cell once → O(m·n) = 9·10⁴ ops = &lt;10 ms.
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."

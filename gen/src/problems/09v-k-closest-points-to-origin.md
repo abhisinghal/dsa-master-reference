@@ -10,9 +10,7 @@ Given `points[][2]` and integer `k`, return the `k` points closest to origin `(0
 **Example 2** — `points = [[3,3],[5,-1],[-2,4]], k = 2` → `[[3,3],[-2,4]]`
 **Example 3** — `points = [[0,0],[1,1]], k = 1` → `[[0,0]]`
 
-**Constraints** — `1 ≤ k ≤ n ≤ 10⁴`; `-10⁴ ≤ x, y ≤ 10⁴`. Any order accepted.
-
-
+**Constraints** — `1 ≤ k ≤ n ≤ 10⁴`; `-10⁴ ≤ x, y ≤ 10⁴`. Any order accepted. Brute sorts all n by distance — O(n log n) = 10⁴·14 ≈ 10⁵ ops at n=10⁴, ~10⁶ ops streaming 10 requests/sec for 1 min. Max-heap of size k is O(n log k) = 10⁴ ops per call; quickselect is expected O(n) = 10⁴ ops.
 <Hints
   hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
   hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."

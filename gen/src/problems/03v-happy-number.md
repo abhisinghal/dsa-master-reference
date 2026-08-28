@@ -10,9 +10,7 @@ A "happy number" transformation repeatedly replaces `n` by the sum of the square
 **Example 2** — `n = 2` → `false` (enters a cycle `4 → 16 → 37 → …`)
 **Example 3** — `n = 1` → `true`
 
-**Constraints** — `1 ≤ n ≤ 2³¹ − 1`.
-
-
+**Constraints** — `1 ≤ n ≤ 2³¹ − 1`. Brute HashSet of seen sums grows unbounded per unlucky start. Floyd tortoise/hare on the digit-square-sum function is O(log n) iterations for any input up to 10⁹.
 <Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."

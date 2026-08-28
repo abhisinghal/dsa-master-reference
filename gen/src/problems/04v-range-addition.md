@@ -9,9 +9,7 @@ Given length `n` and updates `[start, end, val]`, return the array after applyin
 **Example 1** — `n=5, updates=[[1,3,2],[2,4,3],[0,2,-2]]` → `[-2,0,3,5,3]`
 **Example 2** — `n=1, updates=[[0,0,5]]` → `[5]`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ updates.length ≤ 10⁴`; inclusive ranges.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ updates.length ≤ 10⁴`; inclusive ranges. Brute applies each update by writing every index — O(ops·n) = 10⁴·10⁵ = 10⁹ ops (TLE). Difference array + prefix sum is O(ops + n) = 1.1·10⁵ ops = <5 ms.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

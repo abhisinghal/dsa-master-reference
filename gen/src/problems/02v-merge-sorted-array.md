@@ -9,9 +9,7 @@ Merge `nums2` into `nums1` in-place; `nums1` has size `m+n` with last `n` slots 
 **Example 1** — `nums1=[1,2,3,0,0,0], m=3, nums2=[2,5,6], n=3` → `[1,2,2,3,5,6]`
 **Example 2** — `nums1=[1], m=1, nums2=[], n=0` → `[1]`
 
-**Constraints** — `nums1.length == m + n`.
-
-
+**Constraints** — `nums1.length == m + n`. Brute concat + sort is O((m+n) log(m+n)) — fine for 10² inputs, misses the point. In-place from-the-back three-pointer is O(m+n) = ~10⁶ pointer ops on real payload sizes.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

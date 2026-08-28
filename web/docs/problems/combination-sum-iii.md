@@ -10,9 +10,7 @@
 **Example 2** — `k=3, n=9` → `[[1,2,6],[1,3,5],[2,3,4]]`
 **Example 3** — `k=4, n=1` → `[]` (need k=4 distinct digits &gt;= 1+2+3+4 = 10, so no way to sum to 1)
 
-**Constraints** — `2 ≤ k ≤ 9`; `1 ≤ n ≤ 60`. Brute enumerate all `C(9, k)` subsets is at most `C(9, 4) = 126`. Backtracking with pruning is asymptotically the same but much faster in practice — dead-ends cut early.
-
-
+**Constraints** — `2 ≤ k ≤ 9`; `1 ≤ n ≤ 60`. Brute enumerate all `C(9, k)` subsets is at most `C(9, 4) = 126`. Backtracking with pruning is asymptotically the same but much faster in practice — dead-ends cut early. Brute enumerates C(9, k) subsets and checks sum — trivial (C(9,4)=126) but scales badly if we generalise. Backtracking with early-terminate on sum &gt; target is O(2⁹) = 512 leaves, ~10⁶ ops for related enumerations.
 <Hints
   hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

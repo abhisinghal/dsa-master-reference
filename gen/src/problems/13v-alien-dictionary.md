@@ -10,9 +10,7 @@ Given words sorted alphabetically in an alien language, return the character ord
 **Example 2** — `words=["z","x"]` → `"zx"`
 **Example 3** — `words=["z","x","z"]` → `""` (cycle)
 
-**Constraints** — `1 ≤ words.length ≤ 100`; `1 ≤ words[i].length ≤ 100`; lowercase English.
-
-
+**Constraints** — `1 ≤ words.length ≤ 100`; `1 ≤ words[i].length ≤ 100`; lowercase English. Brute enumerates 26! ≈ 4·10²⁶ character orderings — 10⁹ ops/sec means ~10¹⁰ year (dies before universe end). Topo sort of char-pair graph is O(N·L + 26²) = ~10⁴ ops per input, scales to ~10⁶ ops/sec dictionary validations.
 <Hints
   hint1="Directed graph? Prerequisites? You need topological order."
   hint2="Kahn’s BFS: start from nodes with indeg 0; when you pop, decrement neighbors’ indeg; add new zeros."

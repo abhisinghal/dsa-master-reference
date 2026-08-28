@@ -10,9 +10,7 @@ Given a numeric string `num` (no leading zeros unless it's `"0"`) and integer `k
 **Example 2** — `num = "10200", k = 1` → `"200"` (strip leading zero)
 **Example 3** — `num = "10", k = 2` → `"0"`
 
-**Constraints** — `1 ≤ k ≤ n ≤ 10⁵`.
-
-
+**Constraints** — `1 ≤ k ≤ n ≤ 10⁵`. Brute tries every combination of k removals — O(C(n,k)) explodes past k=10 (C(10⁵,50) ≈ 10²⁰⁰, ~10¹⁹¹ year dies). Monotonic stack pops digits greedily → O(n) = 10⁵ ops (~10⁶ pushes counting stack churn) = &lt;5 min under 10× throughput.
 <Hints
   hint1="What element does each `i` ’see’ looking left or right? Nearest greater? Nearest smaller?"
   hint2="Maintain a stack that’s monotonic in one direction. When the new element breaks monotonicity, pop and answer for popped items."

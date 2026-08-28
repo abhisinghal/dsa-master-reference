@@ -7,9 +7,7 @@ Return `true` iff **number of global inversions == number of local inversions**.
 **Example 1** — `nums=[1,0,2]` → `true`
 **Example 2** — `nums=[1,2,0]` → `false` (2 global: (1,0),(2,0); 1 local: (2,0))
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ nums[i] ≤ n − 1` (permutation).
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `0 ≤ nums[i] ≤ n − 1` (permutation). Brute counts every inversion pair — O(n²) = 2.5·10⁹ ops at n=5·10⁴. Observation: global = local iff no index differs from value by &gt; 1 → O(n) = 5·10⁴ ops.
 <Hints
   hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
   hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."

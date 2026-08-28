@@ -9,9 +9,7 @@ Given 2D `points`, connect all with min total Manhattan distance.
 **Example 1** — `points=[[0,0],[2,2],[3,10],[5,2],[7,0]]` → `20`
 **Example 2** — `points=[[3,12],[-2,5],[-4,1]]` → `18`
 
-**Constraints** — `1 ≤ n ≤ 1000`.
-
-
+**Constraints** — `1 ≤ n ≤ 1000`. Brute enumerates spanning trees — dies past n=12. Prim/Kruskal with Union-Find is O(n² log n) = 10⁶ ops at n=10³ = &lt;5 min at scale.
 <Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."

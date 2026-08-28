@@ -10,9 +10,7 @@ Given the head of a singly linked list, return `true` iff it's a palindrome.
 **Example 2** — `1 → 2` → `false`
 **Example 3** — `1` → `true`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`. Follow-up: O(n) time, O(1) space.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`. Follow-up: O(n) time, O(1) space. Brute copy to array + two-pointer is O(n) time + O(n) space. Fast/slow to midpoint + reverse-second-half + compare is O(n) time + O(1) space — ~10⁶ pointer ops.
 <Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."

@@ -9,9 +9,7 @@ Count pairs `(i, j)` with `i < j` and `nums[i] > 2 · nums[j]`.
 **Example 1** — `nums=[1,3,2,3,1]` → `2`
 **Example 2** — `nums=[2,4,3,5,1]` → `3`
 
-**Constraints** — `1 ≤ n ≤ 5·10⁴`; `-2³¹ ≤ nums[i] ≤ 2³¹−1`.
-
-
+**Constraints** — `1 ≤ n ≤ 5·10⁴`; `-2³¹ ≤ nums[i] ≤ 2³¹−1`. Brute nested-loop pair check is O(n²) = 2.5·10⁹ ops at n=5·10⁴ (TLE). Merge-sort D&C or BIT with coord compression is O(n log n) = ~10⁶ ops.
 <Hints
   hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
   hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."

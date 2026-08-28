@@ -10,9 +10,7 @@ Given meeting time intervals, return `true` iff a person can attend all.
 **Example 2** — `intervals=[[7,10],[2,4]]` → `true`
 **Example 3** — `intervals=[]` → `true`
 
-**Constraints** — `0 ≤ intervals.length ≤ 10⁴`.
-
-
+**Constraints** — `0 ≤ intervals.length ≤ 10⁴`. Brute checks every pair — O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Sort by start + linear scan for overlap is O(n log n) = ~10⁶ ops = <10 ms.
 <Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."

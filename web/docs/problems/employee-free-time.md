@@ -9,9 +9,7 @@ Given schedules (each a list of disjoint intervals), return the intersection of 
 **Example 1** — `schedule=[[[1,2],[5,6]],[[1,3]],[[4,10]]]` → `[[3,4]]`
 **Example 2** — `schedule=[[[1,3],[6,7]],[[2,4]],[[2,5],[9,12]]]` → `[[5,6],[7,9]]`
 
-**Constraints** — `1 ≤ #employees ≤ 50`; total intervals ≤ 10⁴.
-
-
+**Constraints** — `1 ≤ #employees ≤ 50`; total intervals ≤ 10⁴. Brute enumerates every pair of intervals — O((sum-of-N)²) = 10⁸ ops at total N=10⁴ (TLE). Min-heap sweep across all intervals is O(N log K) = ~10⁶ ops.
 <Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."

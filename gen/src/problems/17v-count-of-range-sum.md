@@ -9,9 +9,7 @@ Count subarrays whose sum lies in `[lower, upper]` (inclusive).
 **Example 1** — `nums=[-2,5,-1], lower=-2, upper=2` → `3`
 **Example 2** — `nums=[0], lower=0, upper=0` → `1`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `-2³¹ ≤ nums[i] ≤ 2³¹−1`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `-2³¹ ≤ nums[i] ≤ 2³¹−1`. Brute enumerates every (i, j) pair — O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Merge-sort D&C with two-pointer range count is O(n log n) = 1.7·10⁶ ops = <20 ms.
 <Hints
   hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
   hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."

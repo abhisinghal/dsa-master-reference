@@ -10,9 +10,7 @@ Return the longest palindromic substring of `s`.
 **Example 2** — `s="cbbd"` → `"bb"`
 **Example 3** — `s="a"` → `"a"`
 
-**Constraints** — `1 ≤ n ≤ 1000`.
-
-
+**Constraints** — `1 ≤ n ≤ 1000`. Brute checks every substring — O(n³) = 10⁹ ops at n=10³ (~20 min). Expand-around-center is O(n²) = 10⁶ ops; Manacher is O(n) = 10³ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

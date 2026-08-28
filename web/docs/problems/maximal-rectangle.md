@@ -10,9 +10,7 @@ Given a binary matrix, find the largest rectangle containing only `1`s.
 **Example 2** — `mat=[["0"]]` → `0`
 **Example 3** — `mat=[["1"]]` → `1`
 
-**Constraints** — `1 ≤ m, n ≤ 200`; entries `'0'`/`'1'`.
-
-
+**Constraints** — `1 ≤ m, n ≤ 200`; entries `'0'`/`'1'`. Brute enumerates every rectangle in O(m²·n²) = 10⁸ ops at m=n=100 (borderline). Reduce each row to histogram + monotonic stack is O(m·n) = 10⁴ ops = &lt;1 min even at 10⁵ queries.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

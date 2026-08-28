@@ -9,9 +9,7 @@ Given stones on a 2D plane, remove a stone if it shares a row/column with anothe
 **Example 1** — `stones=[[0,0],[0,1],[1,0],[1,2],[2,1],[2,2]]` → `5`
 **Example 2** — `stones=[[0,0]]` → `0`
 
-**Constraints** — `1 ≤ n ≤ 1000`.
-
-
+**Constraints** — `1 ≤ n ≤ 1000`. Brute checks every pair of stones — O(n²) = 10⁶ ops at n=10³. Union-Find on (row, col+10000) is O(n·α(n)) = ~10³ ops with 10⁵-way scaling.
 <Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."

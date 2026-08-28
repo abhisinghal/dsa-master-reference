@@ -20,9 +20,7 @@ w.search("b.."); // true
 
 
 
-**Constraints** — ≤ 25 chars/word; up to 10⁴ ops.
-
-
+**Constraints** — ≤ 25 chars/word; up to 10⁴ ops. Brute HashSet of words + brute-scan on wildcards — O(N·L) per wildcard search dies at 10⁵ queries. Trie + DFS for `.` wildcards is O(L·26^wildcards) per query — ~10⁶ ops even under load.
 <Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."

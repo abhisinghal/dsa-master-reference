@@ -9,9 +9,7 @@ Return the multi-set intersection (each element appears `min(cnt_a, cnt_b)` time
 **Example 1** — `nums1=[1,2,2,1], nums2=[2,2]` → `[2,2]`
 **Example 2** — `nums1=[4,9,5], nums2=[9,4,9,8,4]` → `[4,9]` or `[9,4]`
 
-**Constraints** — `1 ≤ n, m ≤ 1000`.
-
-
+**Constraints** — `1 ≤ n, m ≤ 1000`. Brute nested-loop is O(n·m) = 10⁶ ops at n,m=10³. HashMap of counts is O(n+m) = 2·10³ ops, generalises to streaming inputs of 10⁹ elements.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

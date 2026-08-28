@@ -10,9 +10,7 @@ Given an array `nums` of `n + 1` integers where each is in `[1, n]`, there is ex
 **Example 2** — `nums = [3,1,3,4,2]` → `3`
 **Example 3** — `nums = [1,1]` → `1`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ nums[i] ≤ n`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `1 ≤ nums[i] ≤ n`. Brute HashSet is O(n) time + O(n) space (breaks the "no modify + O(1) space" constraint). Floyd's cycle detection on the value-index graph is O(n) time + O(1) space — ~10⁶ pointer chases at n=10⁵.
 <Hints
   hint1="Two pointers moving at different speeds detect cycles without extra memory."
   hint2="Slow steps 1, Fast steps 2. If they ever meet, there’s a cycle. If Fast hits null, no cycle."

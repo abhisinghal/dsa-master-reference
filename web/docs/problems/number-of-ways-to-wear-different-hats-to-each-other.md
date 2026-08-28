@@ -10,9 +10,7 @@ n people (≤ 10), 40 hats. Each person has preferences. Each hat used by ≤ 1 
 **Example 2** — `hats=[[3,5,1],[3,5]]` → `4`
 **Example 3** — `hats=[[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4]]` → `24` (4!)
 
-**Constraints** — `1 ≤ n ≤ 10`; hats ≤ 40. Brute over 40! hat assignments = 8·10⁴⁷ ops. Bitmask-on-people is O(40·2ⁿ·n) ≤ 40·1024·10 = 4·10⁵ ops.
-
-
+**Constraints** — `1 ≤ n ≤ 10`; hats ≤ 40. Brute over 40! hat orderings ≈ 8·10⁴⁷ ops — 10⁹ ops/sec = 10³¹ year (dies). Bitmask DP over people (n ≤ 10 → 2ⁿ=1024 states) iterating hats is O(40·2ⁿ·n) = 4·10⁵ ops = &lt;1 min even under stress; ~10⁶ ops/sec throughput at production.
 <Hints
   hint1="What is the state? What are the transitions? What's the base case?"
   hint2="Write recurrence first: `dp[i] = f(dp[i-1], dp[i-2], …)`. Then convert top-down memo → bottom-up table → 1D rolling."

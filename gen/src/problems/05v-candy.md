@@ -10,9 +10,7 @@ Every child gets ≥1 candy; higher-rated than a neighbor must receive strictly 
 **Example 2** — `ratings=[1,2,2]` → `4` (candies = 1,2,1)
 **Example 3** — `ratings=[1,3,4,5,2]` → `11` (candies = 1,2,3,4,1)
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`. Brute enumeration is 2·10⁴ ! — impossible. Two-pass is O(n) = 2·10⁴ ops (~50 µs).
-
-
+**Constraints** — `1 ≤ n ≤ 2·10⁴`. Brute enumeration is 2·10⁴ ! — impossible. Two-pass is O(n) = 2·10⁴ ops (~50 µs). Brute repeatedly scans until no changes — O(n²) worst case = 4·10⁸ ops at n=2·10⁴. Two-pass left-then-right sweep is O(n) = 2·10⁴ ops on the hot path.
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."

@@ -9,9 +9,7 @@ Return squares of a sorted (possibly-negative) array, sorted.
 **Example 1** — `nums=[-4,-1,0,3,10]` → `[0,1,9,16,100]`
 **Example 2** — `nums=[-7,-3,2,3,11]` → `[4,9,9,49,121]`
 
-**Constraints** — `1 ≤ n ≤ 10⁴`; sorted ascending.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`; sorted ascending. Brute square-then-sort is O(n log n) = 10⁵·17 ≈ 2·10⁶ ops at n=10⁵. Two-pointer from ends (largest square is at one edge) is O(n) = 10⁵ ops.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

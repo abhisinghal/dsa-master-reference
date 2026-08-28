@@ -9,9 +9,7 @@ Count pairs `(i, j)` with `i < j` and `low ≤ nums[i] XOR nums[j] ≤ high`.
 **Example 1** — `nums=[1,4,2,7], low=2, high=6` → `6`
 **Example 2** — `nums=[9,8,4,2,1], low=5, high=14` → `8`
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`; `0 ≤ nums[i] ≤ 2·10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 2·10⁴`; `0 ≤ nums[i] ≤ 2·10⁴`. Brute enumerates every pair XOR — O(n²) = 4·10⁸ ops at n=2·10⁴ (TLE). Bit-trie + range decomposition is O(n·30·2) = ~10⁶ ops.
 <Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."

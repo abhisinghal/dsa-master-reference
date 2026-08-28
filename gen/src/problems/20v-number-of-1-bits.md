@@ -9,9 +9,7 @@ Return the popcount (number of set bits) of an unsigned 32-bit integer.
 **Example 1** — `n=00000000000000000000000000001011` → `3`
 **Example 2** — `n=11111111111111111111111111111101` → `31`
 
-**Constraints** — 32-bit unsigned.
-
-
+**Constraints** — 32-bit unsigned. Brute bit-shift loop is O(32) = 32 ops. `Integer.bitCount` is 1 hardware popcnt = ~1 CPU cycle → 10⁹ ops/sec.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

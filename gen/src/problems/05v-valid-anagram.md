@@ -10,9 +10,7 @@ Given two strings `s` and `t`, return `true` iff `t` is an anagram of `s`.
 **Example 2** — `s = "rat", t = "car"` → `false`
 **Example 3** — `s = "aa", t = "a"` → `false` (different lengths)
 
-**Constraints** — `1 ≤ n ≤ 5 · 10⁴`. Lowercase English.
-
-
+**Constraints** — `1 ≤ n ≤ 5 · 10⁴`. Lowercase English. Brute sort both then compare is O(n log n) = 10⁵·17 ≈ 2·10⁶ ops at n=10⁵. Frequency array of 26 chars is O(n) = 10⁵ ops with O(1) alphabet space.
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."

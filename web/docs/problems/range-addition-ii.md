@@ -8,9 +8,7 @@ Given matrix of zeros `m × n` and operations `[a, b]` that add 1 to every cell 
 **Example 2** — `m=3, n=3, ops=[]` → `9`
 **Example 3** — `m=3, n=3, ops=[[1,1]]` → `1`
 
-**Constraints** — `1 ≤ m, n ≤ 4·10⁴`; `0 ≤ ops.length ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ m, n ≤ 4·10⁴`; `0 ≤ ops.length ≤ 10⁴`. Brute applies each update to the full grid — O(ops·m·n) = 10⁴·10⁴·10⁴ = 10¹² ops (dead). Track only the intersection of all mins — O(ops) = 10⁴ ops.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

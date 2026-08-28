@@ -9,9 +9,7 @@ Return the number of positions where the bits of `x` and `y` differ.
 **Example 1** — `x=1, y=4` → `2`
 **Example 2** — `x=3, y=1` → `1`
 
-**Constraints** — `0 ≤ x, y ≤ 2³¹−1`.
-
-
+**Constraints** — `0 ≤ x, y ≤ 2³¹−1`. Brute char-by-char binary compare is O(32) = 32 ops. `Integer.bitCount(a ^ b)` is 1 XOR + 1 popcnt intrinsic = 2 CPU cycles — ~10⁹ ops/sec on modern hardware.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

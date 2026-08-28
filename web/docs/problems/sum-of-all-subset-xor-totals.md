@@ -9,9 +9,7 @@ Return the sum of XOR of every subset of `nums` (including empty).
 **Example 1** — `nums=[1,3]` → `6` (subsets: {},{1},{3},{1,3}; XORs: 0,1,3,2; sum 6)
 **Example 2** — `nums=[5,1,6]` → `28`
 
-**Constraints** — `1 ≤ n ≤ 12`.
-
-
+**Constraints** — `1 ≤ n ≤ 12`. Brute enumerates 2ⁿ subsets, XORs each — O(n·2ⁿ) = ~5·10⁴ ops at n=12. Bit-linearity trick: each bit contributes `sum·2^(n-1)` → O(n) = 12 ops, sub-microsec — scales to 10⁶ queries/sec.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

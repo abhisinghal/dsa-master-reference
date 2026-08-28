@@ -9,9 +9,7 @@ Sort a linked list in **O(n log n)** time, O(1) extra space (constant beyond rec
 **Example 1** — `4→2→1→3` → `1→2→3→4`
 **Example 2** — `-1→5→3→4→0` → `-1→0→3→4→5`
 
-**Constraints** — `0 ≤ n ≤ 5·10⁴`.
-
-
+**Constraints** — `0 ≤ n ≤ 5·10⁴`. Brute copy-to-array + `Arrays.sort` breaks the "sort in-place on linked list" constraint. Merge sort with slow/fast midpoint + iterative merge is O(n log n) = 5·10⁵·17 ≈ 10⁷ ops with O(log n) stack — ~1 hour at Facebook feed scale.
 <Hints
   hint1="Can I split the input in half, solve each half, then combine? Combine step is the trick."
   hint2="Merge sort framework: recurse left, recurse right, then merge with the counting/comparison logic on the boundary."

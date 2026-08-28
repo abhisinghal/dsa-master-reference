@@ -7,9 +7,7 @@ Find the min window in `s1` such that `s2` is a subsequence.
 **Example 1** — `s1="abcdebdde", s2="bde"` → `"bcde"`
 **Example 2** — `s1="jmeqksfrsdcmsiwvaovztaqenprpvnbstl", s2="k"` → `"k"`
 
-**Constraints** — `1 ≤ |s1| ≤ 2·10⁴`; `1 ≤ |s2| ≤ 100`.
-
-
+**Constraints** — `1 ≤ |s1| ≤ 2·10⁴`; `1 ≤ |s2| ≤ 100`. Brute enumerates windows and matches subseq — O(n²·m) = 10¹⁰ ops at n=2·10⁴ (TLE). Two-pointer scan with backwards refine is O(n·m) = ~4·10⁶ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

@@ -6,8 +6,7 @@
 
 Check partial Sudoku validity (no duplicates within row/col/box among filled cells).
 
-**Constraints** — 9×9 board.
-
+**Constraints** — 9×9 board. Brute nested triple-loop is O(9²·9) = 729 ops — trivial. Set-based row/col/box check is O(81) = 81 ops per full validation, ~10⁶ ops/sec for streaming boards.
 **Example 1** — Standard partially-filled 9×9 board → `true`
 **Example 2** — Same as 1 but with two `8`s in same column → `false`
 

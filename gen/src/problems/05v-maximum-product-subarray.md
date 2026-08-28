@@ -9,9 +9,7 @@ Return max product of a contiguous subarray.
 **Example 1** — `nums=[2,3,-2,4]` → `6`
 **Example 2** — `nums=[-2,0,-1]` → `0`
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 2·10⁴`. Brute enumerates every subarray — O(n²) = 4·10⁸ ops at n=2·10⁴ (TLE past ~5 sec). DP tracking min+max at each index (product sign can flip) is O(n) = 2·10⁴ ops.
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."

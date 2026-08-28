@@ -10,9 +10,7 @@ Sorted array rotated at unknown pivot, **may contain duplicates**. Return true i
 **Example 2** — `nums = [2,5,6,0,0,1,2], target = 3` → `false`
 **Example 3** — `nums = [1,0,1,1,1], target = 0` → `true`
 
-**Constraints** — `1 ≤ n ≤ 5000`; duplicates allowed.
-
-
+**Constraints** — `1 ≤ n ≤ 5000`; duplicates allowed. Brute linear scan is O(n) = 5·10³ ops per call. Modified binary search with duplicate-skip is O(log n) average, O(n) worst — still ~10⁶ queries/sec at scale.
 <Hints
   hint1="The input has a monotonic property somewhere — sorted, or piecewise-sorted."
   hint2="Use half-open `[lo, hi)` template. Invariant: answer lives in `[lo, hi)` throughout. Return `lo`."

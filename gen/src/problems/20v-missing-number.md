@@ -10,9 +10,7 @@ Given `nums` containing `n` distinct integers in `[0, n]`, return the missing on
 **Example 2** — `nums=[0,1]` → `2`
 **Example 3** — `nums=[9,6,4,2,3,5,7,0,1]` → `8`
 
-**Constraints** — `1 ≤ n ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`. Brute sort + scan is O(n log n) = ~10⁵ ops, sub-millisec but allocates O(1) sort buffer per call. XOR of [0..n] with the array is O(n) = 10⁴ ops with O(1) space and no allocations — ~10⁶ ops/sec throughput on hot infra.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

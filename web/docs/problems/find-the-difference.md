@@ -9,9 +9,7 @@
 **Example 1** — `s="abcd", t="abcde"` → `'e'`
 **Example 2** — `s="", t="y"` → `'y'`
 
-**Constraints** — `0 ≤ |s| ≤ 1000`.
-
-
+**Constraints** — `0 ≤ |s| ≤ 1000`. Brute HashMap of counts is O(n) + O(n) space. XOR-fold s+t is O(n) time + O(1) space — ~10⁶ ops on 1000-char input, no allocations.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

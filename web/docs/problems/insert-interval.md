@@ -10,9 +10,7 @@ Given sorted, non-overlapping `intervals` and a `newInterval`, insert it and mer
 **Example 2** — `intervals=[[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval=[4,8]` → `[[1,2],[3,10],[12,16]]`
 **Example 3** — `intervals=[], newInterval=[5,7]` → `[[5,7]]`
 
-**Constraints** — `0 ≤ intervals.length ≤ 10⁴`.
-
-
+**Constraints** — `0 ≤ intervals.length ≤ 10⁴`. Brute concat + merge is O(n log n) = ~10⁵ ops at n=10⁴, ~10⁶ ops under 10 queries/sec load. Single sorted pass with three phases (before / overlap / after) is O(n) = 10⁴ ops — 10× faster on the hot path.
 <Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."

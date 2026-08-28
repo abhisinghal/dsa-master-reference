@@ -9,9 +9,7 @@ Given digits 2-9, return all letter combinations.
 **Example 1** — `digits="23"` → `["ad","ae","af","bd","be","bf","cd","ce","cf"]`
 **Example 2** — `digits=""` → `[]`
 
-**Constraints** — `0 ≤ len ≤ 4`.
-
-
+**Constraints** — `0 ≤ len ≤ 4`. Brute nested-loop concat is fine for tiny inputs but scales badly. Backtracking (DFS across digit→letters map) is O(4ⁿ·n) = ~10⁶ ops at n=10 (max phone-number length).
 <Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

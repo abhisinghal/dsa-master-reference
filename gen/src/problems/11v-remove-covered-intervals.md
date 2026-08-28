@@ -9,9 +9,7 @@ Count intervals remaining after removing every interval covered by another.
 **Example 1** — `intervals=[[1,4],[3,6],[2,8]]` → `2` (only [3,6] is covered by [2,8])
 **Example 2** — `intervals=[[1,4],[2,3]]` → `1`
 
-**Constraints** — `1 ≤ intervals.length ≤ 1000`.
-
-
+**Constraints** — `1 ≤ intervals.length ≤ 1000`. Brute checks every pair (i, j) for coverage — O(n²) = 10⁸ ops at n=10⁴. Sort by start ascending, end descending → linear pass with running-max-end is O(n log n) = ~10⁵ ops.
 <Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."

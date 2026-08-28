@@ -10,9 +10,7 @@ Return **count** of distinct N-Queens solutions.
 **Example 2** — `n=1` → `1`
 **Example 3** — `n=8` → `92` (the classic 8-queens count)
 
-**Constraints** — `1 ≤ n ≤ 9`.
-
-
+**Constraints** — `1 ≤ n ≤ 9`. Brute checks C(64, 8) placements at n=8 — 4·10⁹ ops (TLE). Backtracking with cols/diag1/diag2 bitmask visits n! = 40320 valid states at n=8 — &lt;10 ms; scales to n=15 in ~10⁶ ops.
 <Hints
   hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

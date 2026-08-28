@@ -10,9 +10,7 @@ Return every case variant of letters (digits stay).
 **Example 2** — `s="3z4"` → `["3z4","3Z4"]`
 **Example 3** — `s="12345"` → `["12345"]` (no letters — one variant)
 
-**Constraints** — `1 ≤ n ≤ 12`. That constraint gives `2¹² = 4096` upper bound on output size — trivially fast.
-
-
+**Constraints** — `1 ≤ n ≤ 12`. That constraint gives `2¹² = 4096` upper bound on output size — trivially fast. Brute generates all 2ⁿ case-flip strings then filters — same complexity as the backtracking approach: O(2ⁿ) = ~10⁶ ops at n=20 for output size that many strings.
 <Hints
   hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

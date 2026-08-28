@@ -9,9 +9,7 @@ Two lists of **sorted, disjoint** intervals. Return their intersection.
 **Example 1** — `A=[[0,2],[5,10],[13,23],[24,25]], B=[[1,5],[8,12],[15,24],[25,26]]` → `[[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]`
 **Example 2** — `A=[], B=[[1,2]]` → `[]`
 
-**Constraints** — `0 ≤ A.length, B.length ≤ 1000`.
-
-
+**Constraints** — `0 ≤ A.length, B.length ≤ 1000`. Brute pairs every A×B — O(m·n) = 10⁶ ops at m=n=10³. Two-pointer sweep (advance the interval ending first) is O(m+n) = 2·10³ ops.
 <Hints
   hint1="Sort by start (or end, depending on the question)."
   hint2="Walk once; each interval either extends the current chunk (overlap) or starts a new one."

@@ -9,9 +9,7 @@ Given accounts `[name, email1, email2, …]`, merge accounts sharing any email i
 **Example 1** — Given John/Mary accounts with overlapping emails → merged into deduplicated groups.
 **Example 2** — All distinct → unchanged.
 
-**Constraints** — total emails ≤ 30·10³.
-
-
+**Constraints** — total emails ≤ 30·10³. Brute compares every pair of accounts on shared emails — O(A²·E) = 10⁸ ops at A=10³, E=10 (TLE). Union-Find keyed by email is O(A·E·α(A)) = 10⁴ ops.
 <Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."

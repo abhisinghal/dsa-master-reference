@@ -10,9 +10,7 @@ Return max sum `< k` from any pair, or `-1`.
 **Example 2** — `nums=[10,20,30], k=15` → `-1` (no pair fits under k)
 **Example 3** — `nums=[1,2,3,4,5], k=100` → `9` (4+5)
 
-**Constraints** — `1 ≤ n ≤ 100`. Brute is O(n²) = 10⁴ — passes easily here, but the sort+2p is cleaner and generalises to n=10⁵.
-
-
+**Constraints** — `1 ≤ n ≤ 100`. Brute is O(n²) = 10⁴ — passes easily here, but the sort+2p is cleaner and generalises to n=10⁵. Brute nested loop is O(n²) = 10⁶ ops at n=10³. Sort + two-pointer is O(n log n) = 10⁴ ops with cache-friendly pass.
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its 'canonical form' — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."

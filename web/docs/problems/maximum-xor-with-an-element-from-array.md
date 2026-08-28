@@ -8,9 +8,7 @@ Given `nums` and queries `[query_val, max_allowed]`. For each query return the m
 
 **Example** — `nums=[0,1,2,3,4], queries=[[3,1],[1,3],[5,6]]` → `[3,3,7]`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; nums, queries ≤ 10⁵.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; nums, queries ≤ 10⁵. Brute checks every pair — O(n·q) = 10¹⁰ ops at n=q=10⁵ (TLE). Offline sort + bit-trie insert-and-query is O((n+q)·31) = ~10⁶ ops.
 <Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."

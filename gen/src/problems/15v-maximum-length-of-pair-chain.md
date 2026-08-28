@@ -9,9 +9,7 @@ Pair `[a,b]` chains with next `[c,d]` iff `c > b`. Return longest chain length.
 **Example 1** — `pairs=[[1,2],[2,3],[3,4]]` → `2`
 **Example 2** — `pairs=[[1,2],[7,8],[4,5]]` → `3`
 
-**Constraints** — `1 ≤ n ≤ 1000`.
-
-
+**Constraints** — `1 ≤ n ≤ 1000`. Brute enumerates 2ⁿ chains — 10³⁰ ops at n=10². Sort by second-of-pair + linear pass (activity selection) is O(n log n) = ~10⁶ ops.
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."

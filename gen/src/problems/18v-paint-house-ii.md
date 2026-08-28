@@ -6,8 +6,7 @@
 
 `n` houses, `k` colors. cost to paint. No two adjacent same color. Min total.
 
-**Constraints** — `1 ≤ n·k ≤ 5000`.
-
+**Constraints** — `1 ≤ n·k ≤ 5000`. Brute recursion tries k colors at each of n houses — O(k^n) = k¹⁰⁰⁰⁰ at max, ~10⁹⁰⁰⁰ ops (dies before 10⁵⁰⁰⁰ year). DP with "best + second-best previous color" trick is O(n·k) ≤ 5·10³ ops, scales to ~10⁶ ops/sec queries.
 **Example 1** — `costs=[[1,5,3],[2,9,4]]` → `5`
 **Example 2** — `costs=[[1,3],[2,4]]` → `5`
 

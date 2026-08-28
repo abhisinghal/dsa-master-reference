@@ -9,9 +9,7 @@ Reorder `nums` so `a[0] < a[1] > a[2] < a[3] …` (strict inequality).
 **Example 1** — `nums=[1,5,1,1,6,4]` → `[1,6,1,5,1,4]` (or any valid arrangement)
 **Example 2** — `nums=[1,3,2,2,3,1]` → `[2,3,1,3,1,2]`
 
-**Constraints** — `1 ≤ n ≤ 5·10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 5·10⁴`. Brute sort + shuffle is O(n log n) = 10⁵·17 ≈ 2·10⁶ ops. Quickselect + virtual index trick is expected O(n) = 5·10⁴ ops in place.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

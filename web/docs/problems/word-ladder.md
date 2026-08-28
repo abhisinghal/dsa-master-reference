@@ -9,9 +9,7 @@ Transform `beginWord` → `endWord` by changing one letter at a time; each inter
 **Example 1** — `beginWord="hit", endWord="cog", wordList=["hot","dot","dog","lot","log","cog"]` → `5`
 **Example 2** — Same words minus "cog" → `0`
 
-**Constraints** — `1 ≤ L ≤ 10`; `1 ≤ #words ≤ 5000`.
-
-
+**Constraints** — `1 ≤ L ≤ 10`; `1 ≤ #words ≤ 5000`. Brute BFS over all pairs is O(N²·L) = 10¹⁰ ops at N=5·10³, L=10 (TLE). Bidirectional BFS with wildcard-bucket adjacency is O(N·L²·26) = ~10⁶ ops.
 <Hints
   hint1="What can you look up in O(1)? Complement, canonical key, or seen-before?"
   hint2="Map each element to its ’canonical form’ — sorted string for anagrams, letter-diff pattern for shifts, prefix sum for range problems."

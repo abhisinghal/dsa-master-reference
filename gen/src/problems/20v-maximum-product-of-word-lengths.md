@@ -9,9 +9,7 @@ Return `max(len(a) * len(b))` over pairs whose character sets are disjoint (no s
 **Example 1** — `words=["abcw","baz","foo","bar","xtfn","abcdef"]` → `16` (`"abcw"` × `"xtfn"`)
 **Example 2** — `words=["a","aa","aaa","aaaa"]` → `0`
 
-**Constraints** — `2 ≤ n ≤ 1000`; lowercase.
-
-
+**Constraints** — `2 ≤ n ≤ 1000`; lowercase. Brute compares every pair of words char-by-char — O(n²·L²) = 10⁹ ops at n=10³, L=10³ (TLE). Bitmask of 26-letter presence + AND==0 test is O(n²) = 10⁶ ops.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

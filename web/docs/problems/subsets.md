@@ -9,9 +9,7 @@ Given distinct integers `nums`, return all possible subsets (the power set).
 **Example 1** — `nums=[1,2,3]` → `[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]`
 **Example 2** — `nums=[0]` → `[[],[0]]`
 
-**Constraints** — `1 ≤ n ≤ 10`.
-
-
+**Constraints** — `1 ≤ n ≤ 10`. Brute recursive expansion is O(n·2ⁿ) = 10⁷ ops at n=20. Bitmask iteration over [0..2ⁿ) generating each subset directly is O(2ⁿ) = 10⁶ ops with better cache pattern.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

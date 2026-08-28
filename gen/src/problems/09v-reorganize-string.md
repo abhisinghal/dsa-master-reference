@@ -10,9 +10,7 @@ Given string `s`, rearrange characters so no two adjacent characters are the sam
 **Example 2** — `s = "aaab"` → `""` (a appears too often)
 **Example 3** — `s = "vvvlo"` → `"vlvov"` (one valid arrangement)
 
-**Constraints** — `1 ≤ n ≤ 500`. Lowercase English.
-
-
+**Constraints** — `1 ≤ n ≤ 500`. Lowercase English. Brute enumerates permutations — O(n!) = astronomical past n=15. Max-heap of char counts + greedy interleave is O(n log 26) = ~10⁶ ops on 500-char strings.
 <Hints
   hint1="You need the k largest/smallest. Sort is O(n log n). Can you do O(n log k)?"
   hint2="Maintain a heap of size k. Min-heap → k largest at root candidates; max-heap → k smallest."

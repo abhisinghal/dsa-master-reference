@@ -8,9 +8,7 @@ Design `StreamChecker`. `query(c)` returns true iff the last k chars form a word
 
 **Example** — with `dict = ["cd","f","kl"]`, streaming `a,b,c,d,e,f,g,h,i,j,k,l` returns `[F,F,F,T,F,T,F,F,F,F,F,T]`.
 
-**Constraints** — dict ≤ 2000 words, each ≤ 200 chars; up to 4·10⁴ queries.
-
-
+**Constraints** — dict ≤ 2000 words, each ≤ 200 chars; up to 4·10⁴ queries. Brute checks every dictionary word against each stream suffix — O(sum-of-word-lengths·stream-length) = 10⁹ ops (TLE). Reverse-trie walked with each new char is O(max-word-length) per char = 10⁶ ops for 4·10⁴ chars.
 <Hints
   hint1="Prefix operations? Word set lookups? Autocomplete?"
   hint2="Each node has ≤ σ children (26 for lowercase). Walk char-by-char; create nodes on insert; check `end` flag on search."

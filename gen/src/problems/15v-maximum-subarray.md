@@ -10,9 +10,7 @@ Max sum of a contiguous non-empty subarray.
 **Example 2** — `nums=[1]` → `1`
 **Example 3** — `nums=[5,4,-1,7,8]` → `23`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `-10⁴ ≤ nums[i] ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `-10⁴ ≤ nums[i] ≤ 10⁴`. Brute enumerates every subarray — O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Kadane's DP is O(n) = 10⁵ ops; divide & conquer variant is O(n log n) = 1.7·10⁶ ops.
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."

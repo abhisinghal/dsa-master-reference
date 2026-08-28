@@ -9,9 +9,7 @@ Given `k` sorted lists of integers, find the smallest range `[a, b]` that contai
 **Example 1** — `lists = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]` → `[20, 24]` (24-20=4)
 **Example 2** — `lists = [[1,2,3],[1,2,3],[1,2,3]]` → `[1, 1]`
 
-**Constraints** — `1 ≤ k ≤ 3500`; total elements ≤ 5·10⁴.
-
-
+**Constraints** — `1 ≤ k ≤ 3500`; total elements ≤ 5·10⁴. Brute enumerates every k-tuple across lists — O(prod-of-lengths) explodes past k=10. Min-heap of one-per-list + sliding-window max is O(N log k) = ~10⁶ ops at total N=10⁵.
 <Hints
   hint1="You have k sorted sequences. Which element is globally next?"
   hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."

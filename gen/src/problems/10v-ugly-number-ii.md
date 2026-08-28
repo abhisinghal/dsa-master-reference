@@ -10,9 +10,7 @@ An **ugly number** has only 2, 3, or 5 as prime factors. `1` is ugly by conventi
 **Example 2** — `n = 1` → `1`
 **Example 3** — `n = 11` → `15`
 
-**Constraints** — `1 ≤ n ≤ 1690`.
-
-
+**Constraints** — `1 ≤ n ≤ 1690`. Brute checks every integer for 2/3/5-only factorisation — O(N·log N) where N = the 1690th ugly number ≈ 2·10⁹ (dies past 1 min). Three-pointer merge from {2,3,5} is O(n) = 10³ ops = <1 microsec, scales to 10⁶ queries/sec.
 <Hints
   hint1="You have k sorted sequences. Which element is globally next?"
   hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."

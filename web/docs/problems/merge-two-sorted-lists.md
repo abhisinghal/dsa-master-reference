@@ -10,9 +10,7 @@ Given the heads of two sorted linked lists, merge them into one sorted list.
 **Example 2** — `l1 = [], l2 = []` → `[]`
 **Example 3** — `l1 = [], l2 = 0` → `0`
 
-**Constraints** — `0 ≤ len ≤ 50`; values in `[-100, 100]`; both sorted ascending.
-
-
+**Constraints** — `0 ≤ len ≤ 50`; values in `[-100, 100]`; both sorted ascending. Brute concat then sort is O((m+n) log(m+n)) = 10⁵·17 ≈ 2·10⁶ ops. Two-pointer merge is O(m+n) = 10⁵ ops with O(1) extra space.
 <Hints
   hint1="You have k sorted sequences. Which element is globally next?"
   hint2="Min-heap of size k, one head per list. Pop smallest, emit, push its successor from the same list."

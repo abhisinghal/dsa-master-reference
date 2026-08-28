@@ -9,9 +9,7 @@ Given `n` non-negative integers representing an elevation map, compute how much 
 **Example 1** — `height=[0,1,0,2,1,0,1,3,2,1,2,1]` → `6`
 **Example 2** — `height=[4,2,0,3,2,5]` → `9`
 
-**Constraints** — `1 ≤ n ≤ 2·10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 2·10⁴`. Brute computes per-column max-left/max-right in O(n²) = 10⁸ ops at n=10⁴ (borderline). Two-pointer with running max is O(n) = ~10⁶ ops on hot service.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

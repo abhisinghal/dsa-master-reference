@@ -6,8 +6,7 @@
 
 Robot API: `move()`, `turnLeft()`, `turnRight()`, `clean()`. No coordinates. Clean every reachable cell.
 
-**Constraints** — grid unknown; obstacles hidden. Grid ≤ 200×200.
-
+**Constraints** — grid unknown; obstacles hidden. Grid ≤ 200×200. Brute wanders randomly, no completion guarantee. DFS with visited set + right-hand rule + backtrack move-and-undo is O(rooms) — ~10⁶ ops for a 300×300 grid.
 **Example 1** — Room modeled as grid with obstacles; robot at `(row, col)`. Robot cleans every reachable cell.
 **Example 2** — Room is `[[1,1,1,1,1,0,1,1],[1,1,1,1,1,0,1,1],[1,0,1,1,1,1,1,1],[0,0,0,1,0,0,0,0],[1,1,1,1,1,1,1,1]]`, start=`(1,3)` → robot visits all `1`s reachable from start.
 **Example 3** — Sealed by obstacles at every direction → robot cleans only starting cell.

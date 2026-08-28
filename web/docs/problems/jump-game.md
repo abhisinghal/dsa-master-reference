@@ -10,9 +10,7 @@
 **Example 2** — `nums=[3,2,1,0,4]` → `false`
 **Example 3** — `nums=[0]` → `true`
 
-**Constraints** — `1 ≤ n ≤ 10⁴`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁴`. Brute DP tries every reachable index from each position — O(n²) = 10⁸ ops at n=10⁴. Greedy running-max-reach is O(n) = 10⁴ ops = &lt;1 ms.
 <Hints
   hint1="Is there a local rule that provably gives global optimum? (Exchange argument.)"
   hint2="Sort by the greedy criterion (deadline / end / cost). Iterate; make the locally best choice."

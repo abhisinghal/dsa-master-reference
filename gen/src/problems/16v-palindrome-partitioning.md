@@ -9,9 +9,7 @@ All partitions of `s` where every part is a palindrome.
 **Example 1** — `s="aab"` → `[["a","a","b"],["aa","b"]]`
 **Example 2** — `s="a"` → `[["a"]]`
 
-**Constraints** — `1 ≤ n ≤ 16`.
-
-
+**Constraints** — `1 ≤ n ≤ 16`. Brute enumerates 2ⁿ⁻¹ cuts, checks each part — O(2ⁿ·n) = 10⁶ ops at n=16. Backtracking with pal[][] cache is O(n·2ⁿ) ≈ 10⁶ ops but skips ~99% via pruning.
 <Hints
   hint1="You’re exploring a decision tree. What’s the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

@@ -10,9 +10,7 @@ Given matrix and integer `target`, count submatrices whose sum equals `target`.
 **Example 2** — `mat=[[1,-1],[-1,1]], target=0` → `5`
 **Example 3** — `mat=[[904]], target=0` → `0`
 
-**Constraints** — `1 ≤ m, n ≤ 100`; `-1000 ≤ mat[i][j] ≤ 1000`.
-
-
+**Constraints** — `1 ≤ m, n ≤ 100`; `-1000 ≤ mat[i][j] ≤ 1000`. Brute enumerates every submatrix — O(m²·n²) = 10¹⁰ ops at m=n=100 (TLE). Row-pair reduction to 1D subarray-sum-equals-k is O(m²·n) = 10⁶ ops = <100 ms.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

@@ -10,9 +10,7 @@ Smallest subarray sum ≥ `k`. **Array may contain negatives.**
 **Example 2** — `nums=[1,2], k=4` → `-1`
 **Example 3** — `nums=[2,-1,2], k=3` → `3`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`; `-10⁵ ≤ nums[i] ≤ 10⁵`.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`; `-10⁵ ≤ nums[i] ≤ 10⁵`. Brute enumerates all subarrays — O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Prefix sum + monotonic deque is O(n) = 10⁵ ops = <10 ms.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

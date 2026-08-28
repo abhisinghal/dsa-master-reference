@@ -9,9 +9,7 @@ Given an undirected graph that starts as a tree with `n` nodes and has **one** e
 **Example 1** — `edges=[[1,2],[1,3],[2,3]]` → `[2,3]`
 **Example 2** — `edges=[[1,2],[2,3],[3,4],[1,4],[1,5]]` → `[1,4]`
 
-**Constraints** — `3 ≤ n ≤ 1000`; `edges.length == n`.
-
-
+**Constraints** — `3 ≤ n ≤ 1000`; `edges.length == n`. Brute DFS-per-edge to check for a cycle is O(E²) = 10⁶ ops at E=10³. Union-Find incremental cycle detection is O(E·α(V)) = 10³ ops — the edge that closes a component is the answer.
 <Hints
   hint1="Are you grouping things by shared property? Adjacent lands, same friend circle, connected components?"
   hint2="Union-Find: `find(x)` returns root; `union(a, b)` merges. Path compression + union by rank gives α(n)."

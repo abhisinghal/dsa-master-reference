@@ -7,9 +7,7 @@ Find starting indices of substrings that are concatenations of every word in `wo
 **Example 1** — `s="barfoothefoobarman", words=["foo","bar"]` → `[0, 9]`
 **Example 2** — `s="wordgoodgoodgoodbestword", words=["word","good","best","word"]` → `[]`
 
-**Constraints** — `1 ≤ |s| ≤ 10⁴`; each word ≤ 30 chars.
-
-
+**Constraints** — `1 ≤ |s| ≤ 10⁴`; each word ≤ 30 chars. Brute checks every window against every permutation — O(n·k!·L) blows up past k=8. Sliding window with word-frequency map is O(n·L) = ~10⁶ ops.
 <Hints
   hint1="What does a valid window look like here? Define the invariant on the window contents before writing loops."
   hint2="Grow `right`. When the invariant breaks, shrink `left` until it’s restored. Track the best answer inside the valid region."

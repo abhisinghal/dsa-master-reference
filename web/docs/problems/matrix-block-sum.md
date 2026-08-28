@@ -9,9 +9,7 @@ Given matrix `mat[m][n]` and integer `k`, return `answer[i][j]` = sum of all ele
 **Example 1** — `mat=[[1,2,3],[4,5,6],[7,8,9]], k=1` → `[[12,21,16],[27,45,33],[24,39,28]]`
 **Example 2** — `mat=[[1,2,3],[4,5,6],[7,8,9]], k=2` → `[[45,45,45],[45,45,45],[45,45,45]]`
 
-**Constraints** — `1 ≤ m, n ≤ 100`; `1 ≤ k ≤ 100`.
-
-
+**Constraints** — `1 ≤ m, n ≤ 100`; `1 ≤ k ≤ 100`. Brute recomputes each block in O(k²) — O(m·n·k²) = 10⁴·10² = 10⁶ ops at m=n=100, k=10; blows up at larger k. 2D prefix sum is O(m·n) = 10⁴ ops with O(1) per query.
 <Hints
   hint1="Ask: can I answer `sum(i, j)` in O(1) given a preprocessed structure?"
   hint2="Prefix sums let you compute range sums as `pref[j+1] - pref[i]`. For ’count subarrays with property X on sum’, use a hash-map of prefix sums."

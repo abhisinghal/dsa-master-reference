@@ -10,9 +10,7 @@ Return true iff `n` is a positive power of two.
 **Example 2** — `n=16` → `true`
 **Example 3** — `n=3` → `false`
 
-**Constraints** — `-2³¹ ≤ n ≤ 2³¹−1`.
-
-
+**Constraints** — `-2³¹ ≤ n ≤ 2³¹−1`. Brute divide-by-2 loop is O(log n) = 30 iters at n=2³¹. Bit trick `n>0 && (n&(n-1))==0` is 2 ops = <1 ns — 10⁹ checks/sec.
 <Hints
   hint1="Is there a bit-level trick? XOR cancels duplicates, `n & (n-1)` clears the lowest bit, `n | (1 << k)` sets bit k."
   hint2="For subset problems: iterate `mask` from 0 to 2ⁿ−1; bit `i` set means element `i` chosen."

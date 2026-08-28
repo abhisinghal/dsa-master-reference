@@ -10,9 +10,7 @@ Given a string `s`, return `true` if it can become a palindrome by deleting **at
 **Example 2** — `s = "abca"` → `true` (delete `c` or `b`)
 **Example 3** — `s = "abc"` → `false`
 
-**Constraints** — `1 ≤ n ≤ 10⁵`. Lowercase ASCII.
-
-
+**Constraints** — `1 ≤ n ≤ 10⁵`. Lowercase ASCII. Brute tries deleting each char and re-checks — O(n²) = 10¹⁰ ops at n=10⁵ (TLE). Two-pointer with one delete-window is O(n) = 10⁵ ops = <5 ms.
 <Hints
   hint1="Sort first if the input isn’t already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."

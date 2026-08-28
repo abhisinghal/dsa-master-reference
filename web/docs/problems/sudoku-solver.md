@@ -10,9 +10,7 @@ Fill the 9×9 board so every row/col/box contains 1..9.
 **Example 2** — Sparse puzzle (17 clues, the minimum for unique-solution Sudokus): MRV heuristic solves in ~1ms.
 **Example 3** — Devil's Sudoku (crafted worst-case for naive backtracking): naive takes ~10 s, bitmask + MRV solves in ~50 ms.
 
-**Constraints** — 9×9 board, `.` for empty; guaranteed to have a unique solution.
-
-
+**Constraints** — 9×9 board, `.` for empty; guaranteed to have a unique solution. Brute tries 9^81 = 10⁷⁷ boards (dies before universe end). Backtracking with row/col/box bitmasks + MRV heuristic is O(9^empties) ≈ 10⁶ ops for hard puzzles.
 <Hints
   hint1="You're exploring a decision tree. What's the state at each depth? What choices are available?"
   hint2="Recursive DFS. On each call: check base case, then for each choice, mutate state, recurse, undo."

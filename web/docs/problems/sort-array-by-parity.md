@@ -10,9 +10,7 @@ Rearrange so all even values come before all odd. Any valid partition accepted.
 **Example 2** — `nums=[0]` → `[0]`
 **Example 3** — `nums=[1,3,5,2,4]` → `[2,4,5,3,1]` or `[4,2,3,5,1]`
 
-**Constraints** — `1 ≤ n ≤ 5000`. Brute allocation + copy is O(n) time + O(n) space. Two-pointer in-place is O(n) time + O(1) space.
-
-
+**Constraints** — `1 ≤ n ≤ 5000`. Brute allocation + copy is O(n) time + O(n) space. Two-pointer in-place is O(n) time + O(1) space. Brute two-pass (write evens, then odds) is O(n) time + O(n) space. In-place two-pointer partition is O(n) = ~10⁶ ops with O(1) space — the Dutch-flag pattern.
 <Hints
   hint1="Sort first if the input isn't already ordered. Two pointers rely on monotonicity."
   hint2="Place one pointer at each end. Move the one whose side is provably suboptimal for the target."
