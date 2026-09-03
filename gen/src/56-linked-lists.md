@@ -4,6 +4,135 @@ Linked-list problems aren't really about clever algorithms — they're about **p
 
 > [key] **Key Insight** — Almost every list problem reduces to carefully rewiring `next` while never losing your only reference to the rest of the list. Save `next` *before* you overwrite it.
 
+## Why linked lists exist — the story
+
+Imagine a music queue stored in an array. Inserting a new song at the front means shifting every existing song one position to the right. For 100,000 songs, one insertion can move 100,000 values. A linked list stores each song in its own node and connects nodes with references. Inserting at the front changes only two references, regardless of queue length:
+
+```text
+Before: head -> 20 -> 30 -> null
+Insert 10:
+        new.next = head
+        head = new
+After:  head -> 10 -> 20 -> 30 -> null
+```
+
+The trade-off is equally important: an array can jump directly to index `i`, but a linked list must follow references from `head` one node at a time. Linked lists exchange **O(1) local rewiring** for **O(n) positional access**.
+
+| Operation | Array / ArrayList | Singly linked list |
+|---|---:|---:|
+| Read index `i` | O(1) | O(n) |
+| Search by value | O(n) | O(n) |
+| Insert/remove at front | O(n) | O(1) |
+| Insert after a known node | O(n) | O(1) |
+| Append with a maintained tail | amortized O(1) | O(1) |
+
+> [note] **The interview reality** — Most linked-list questions do not ask you to implement a collection from scratch. They give you the first node, `head`, and ask you to return a node after traversing or rewiring the chain.
+
+## Meet `ListNode` before using it
+
+`ListNode` is not a Java built-in type. It is the conventional node class used by LeetCode and interview questions. LeetCode usually supplies the class for you; in a standalone program, define it yourself:
+
+```java
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this(val, null);
+    }
+
+    ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
+    }
+}
+```
+
+Each node has two parts:
+
+- `val` stores the payload.
+- `next` stores a reference to the next node, or `null` when this is the tail.
+- `head` is not a special node; it is the variable that references the first node.
+
+```mermaid
+flowchart LR
+  H["head"] --> A["val: 10 | next"]
+  A --> B["val: 20 | next"]
+  B --> C["val: 30 | next"]
+  C --> N["null"]
+```
+
+<div class="readfig"><b>How to read it:</b> <code>head</code> references the node containing 10. That node's <code>next</code> references 20, then 30, and the final <code>next</code> is <code>null</code>. The arrows are references, not copied values.</div>
+
+## Worked example — build and traverse `10 -> 20 -> 30`
+
+This complete example defines the node type, builds a three-node list, and visits every value:
+
+```java
+class LinkedListExample {
+    static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int val) {
+            this.val = val;
+        }
+    }
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(10);
+        head.next = new ListNode(20);
+        head.next.next = new ListNode(30);
+
+        for (ListNode cur = head; cur != null; cur = cur.next) {
+            System.out.println(cur.val);
+        }
+    }
+}
+```
+
+```text
+10
+20
+30
+```
+
+The traversal invariant is simple: at the start of each iteration, `cur` is the next unprocessed node. Reading `cur.val` processes it; assigning `cur = cur.next` advances exactly one link. The loop stops after the tail because its `next` is `null`.
+
+> [trap] **Reference assignment does not copy a list** — `ListNode cur = head` creates a second reference to the same first node. Mutating `cur.next` changes the original chain. Advancing `cur = cur.next` changes only the local reference, not `head`.
+
+## The four pointer moves
+
+Most interview solutions are combinations of these operations:
+
+| Move | Code shape | Why it is useful |
+|---|---|---|
+| Walk | `cur = cur.next` | traverse or search |
+| Save the suffix | `ListNode next = cur.next` | keep the remainder reachable before rewiring |
+| Rewire | `cur.next = prev` | reverse, delete, splice, or reorder |
+| Skip a node | `prev.next = cur.next` | remove `cur` when `prev` is known |
+
+For insertion or deletion near the first node, use a dummy node:
+
+```java
+ListNode dummy = new ListNode(0, head);
+// Perform rewiring through dummy.next.
+head = dummy.next;
+```
+
+The dummy gives every real node a predecessor, including the original head. That removes special-case branches such as "if deleting the first node."
+
+## When to use a linked list
+
+Use a linked list when the problem emphasizes local insertion/removal, stable node references, streaming one-way traversal, or explicit pointer manipulation. Prefer an array when you need random access, cache-friendly iteration, binary search, or frequent reads by index.
+
+Before changing any `next` reference, ask:
+
+1. What part of the list becomes unreachable after this assignment?
+2. Have I saved a reference to that part?
+3. Which node should be the head when the operation finishes?
+4. Can an empty list, one-node list, or head change break this logic?
+
 ## Reverse a Linked List <span class="diff diff-e">Easy</span>
 
 
