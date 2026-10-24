@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { withBase } from 'vitepress'
 
 const props = defineProps<{
   title?: string
@@ -10,6 +11,7 @@ const props = defineProps<{
 }>()
 
 const playing = ref(false)
+const siteHome = withBase('/')
 
 function play() { playing.value = true }
 </script>
@@ -30,7 +32,7 @@ function play() { playing.value = true }
           </template>
           <template v-else>
             🎬 Video walkthrough coming soon.
-            <a href="/dsa-master-reference/" @click.stop>Subscribe</a>
+            <a :href="siteHome" @click.stop>Subscribe</a>
             to be notified when it drops.
           </template>
         </div>

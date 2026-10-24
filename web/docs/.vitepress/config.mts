@@ -43,18 +43,27 @@ function nestedDataStructure(text: string, slug: string) {
     : { text, link: `/data-structures/${slug}` }
 }
 
+// Cloudflare Pages serves at the apex of a pages.dev subdomain (base '/'),
+// while GitHub Pages serves under /dsa-master-reference/. Cloudflare auto-sets
+// CF_PAGES=1 in its build environment; GitHub Actions does not.
+const isCloudflarePages = !!process.env.CF_PAGES
+const siteBase = isCloudflarePages ? '/' : '/dsa-master-reference/'
+const siteHostname = isCloudflarePages
+  ? (process.env.CF_PAGES_URL || 'https://dsa-master-reference.pages.dev') + '/'
+  : 'https://abhisinghal.github.io/dsa-master-reference/'
+
 export default withMermaid(defineConfig({
-  base: '/dsa-master-reference/',
+  base: siteBase,
   title: 'DSA Master Reference',
   description: 'Patterns, invariants, and problems for senior/staff DSA interviews (Java 17)',
   cleanUrls: true,
   ignoreDeadLinks: true,
   sitemap: {
-    hostname: 'https://abhisinghal.github.io/dsa-master-reference/'
+    hostname: siteHostname
   },
   head: [
-    ['link', { rel: 'icon', href: '/dsa-master-reference/favicon.svg' }],
-    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'DSA Master Reference changelog', href: '/dsa-master-reference/rss.xml' }],
+    ['link', { rel: 'icon', href: `${siteBase}favicon.svg` }],
+    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'DSA Master Reference changelog', href: `${siteBase}rss.xml` }],
     ['meta', { name: 'theme-color', content: '#2563eb' }]
     // Note: CheerpJ (cj3loader.js) is NOT included globally to avoid
     // ~15 MB of one-time client download on pages that never render <JavaRunner>.
