@@ -76,6 +76,15 @@ import RoadmapChecklist from './RoadmapChecklist.vue'
 import StudyPlanGenerator from './StudyPlanGenerator.vue'
 import PrerequisiteGraph from './PrerequisiteGraph.vue'
 import DiagnosticQuiz from './DiagnosticQuiz.vue'
+import PatternTemplateCard from './PatternTemplateCard.vue'
+import InvariantProof from './InvariantProof.vue'
+import AmortizedPanel from './AmortizedPanel.vue'
+import TemplateReveal from './TemplateReveal.vue'
+import RecognitionDrill from './RecognitionDrill.vue'
+import PatternSubVariationNav from './PatternSubVariationNav.vue'
+import WindowTraceStrip from './WindowTraceStrip.vue'
+import BinarySearchStepStrip from './BinarySearchStepStrip.vue'
+import PartitionStepStrip from './PartitionStepStrip.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import { runMigrations } from './lib/storage'
 import './style.css'
@@ -167,6 +176,15 @@ export default {
     app.component('StudyPlanGenerator', StudyPlanGenerator)
     app.component('PrerequisiteGraph', PrerequisiteGraph)
     app.component('DiagnosticQuiz', DiagnosticQuiz)
+    app.component('PatternTemplateCard', PatternTemplateCard)
+    app.component('InvariantProof', InvariantProof)
+    app.component('AmortizedPanel', AmortizedPanel)
+    app.component('TemplateReveal', TemplateReveal)
+    app.component('RecognitionDrill', RecognitionDrill)
+    app.component('PatternSubVariationNav', PatternSubVariationNav)
+    app.component('WindowTraceStrip', WindowTraceStrip)
+    app.component('BinarySearchStepStrip', BinarySearchStepStrip)
+    app.component('PartitionStepStrip', PartitionStepStrip)
     installSolvedCountBadges(router)
     if (typeof window !== 'undefined') {
       try { runMigrations() } catch { /* migration never crashes app */ }

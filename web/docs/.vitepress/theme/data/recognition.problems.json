@@ -1,0 +1,158 @@
+{
+  "_meta": {
+    "purpose": "Problem bank for RecognitionDrill. Each entry: statement (hide the pattern tag from the reader), pattern slug (correct answer), subVariation slug (optional, the specialization), distractors (other patterns the problem could plausibly be mistaken for). The reader is shown the statement with no tag and guesses pattern + subVariation.",
+    "schema": {
+      "statement": "problem statement string — must not name the pattern or sub-variation",
+      "pattern": "correct pattern slug (matches patterns.subvariations.json key)",
+      "subVariation": "optional sub-variation slug",
+      "distractors": "array of pattern slugs the problem could plausibly be mistaken for"
+    },
+    "lastEdited": "2026-10-24"
+  },
+
+  "binary-search": [
+    {
+      "statement": "Given a sorted integer array nums and a target value, return the index of target. If not present, return -1.",
+      "pattern": "binary-search",
+      "subVariation": "lower-upper-bound",
+      "distractors": ["hashing"]
+    },
+    {
+      "statement": "You are given a sorted array that has been rotated at some unknown pivot. Find a target value in O(log n) time.",
+      "pattern": "binary-search",
+      "subVariation": "rotated",
+      "distractors": ["two-pointers"]
+    },
+    {
+      "statement": "Find a peak element in an array where a peak is any element strictly greater than its neighbours. Multiple peaks may exist; return any index. Must be O(log n).",
+      "pattern": "binary-search",
+      "subVariation": "peak-bitonic",
+      "distractors": ["two-pointers", "divide-conquer"]
+    },
+    {
+      "statement": "You are given an m×n integer matrix where every row is sorted left-to-right AND the first number of each row is greater than the last of the previous row. Search for a target in O(log(mn)).",
+      "pattern": "binary-search",
+      "subVariation": "2d-matrix",
+      "distractors": ["two-pointers"]
+    },
+    {
+      "statement": "Given a sorted array with duplicates, return the leftmost and rightmost indices of a target value. Return [-1,-1] if absent.",
+      "pattern": "binary-search",
+      "subVariation": "first-last-position",
+      "distractors": ["two-pointers", "hashing"]
+    },
+    {
+      "statement": "Given a sorted array of N integers, return the smallest index i such that nums[i] >= target.",
+      "pattern": "binary-search",
+      "subVariation": "lower-upper-bound",
+      "distractors": ["two-pointers"]
+    },
+    {
+      "statement": "A conveyor belt processes packages. Given weights[] and D days, find the minimum belt capacity so that all packages ship within D days, in order.",
+      "pattern": "bs-on-answer",
+      "subVariation": "capacity-to-ship",
+      "distractors": ["binary-search", "greedy", "dp"]
+    },
+    {
+      "statement": "Koko eats bananas from piles[]. She eats k bananas per hour. If a pile has fewer than k, she eats all of them and stops for the hour. Find the smallest k that lets her finish in h hours.",
+      "pattern": "bs-on-answer",
+      "subVariation": "koko-bananas",
+      "distractors": ["binary-search", "greedy"]
+    },
+    {
+      "statement": "Given two sorted arrays of total size n+m, find the overall median in O(log(min(n,m))).",
+      "pattern": "bs-on-answer",
+      "subVariation": "median-two-sorted",
+      "distractors": ["binary-search", "two-pointers", "k-way-merge"]
+    },
+    {
+      "statement": "Given a mountain array (strictly increasing then strictly decreasing) and a target, find the smallest index with that value in O(log n).",
+      "pattern": "binary-search",
+      "subVariation": "peak-bitonic",
+      "distractors": ["two-pointers", "divide-conquer"]
+    }
+  ],
+
+  "sliding-window": [
+    {
+      "statement": "Given an integer array and k, find the contiguous subarray of length k that has the maximum average value.",
+      "pattern": "sliding-window",
+      "subVariation": "fixed-warmup",
+      "distractors": ["prefix-sum"]
+    },
+    {
+      "statement": "Given a positive integer array and target S, find the smallest contiguous subarray whose sum is at least S. Return its length (0 if none).",
+      "pattern": "sliding-window",
+      "subVariation": "smallest-sum-at-least",
+      "distractors": ["two-pointers", "prefix-sum", "bs-on-answer"]
+    },
+    {
+      "statement": "Given a string, find the length of the longest substring that contains no repeating characters.",
+      "pattern": "sliding-window",
+      "subVariation": "longest-substr-no-repeat",
+      "distractors": ["hashing", "two-pointers"]
+    },
+    {
+      "statement": "Given strings s and t, find the smallest window in s that contains every character of t (with multiplicity). Return \"\" if none.",
+      "pattern": "sliding-window",
+      "subVariation": "min-window-substring",
+      "distractors": ["hashing", "two-pointers"]
+    },
+    {
+      "statement": "You can change at most k characters in a string. Find the length of the longest substring containing one repeated letter after your changes.",
+      "pattern": "sliding-window",
+      "subVariation": "longest-repeating-replacement",
+      "distractors": ["dp", "greedy"]
+    },
+    {
+      "statement": "Given a positive integer array and k, count the number of contiguous subarrays whose product is strictly less than k.",
+      "pattern": "sliding-window",
+      "subVariation": "subarray-product-less-k",
+      "distractors": ["two-pointers", "prefix-sum"]
+    },
+    {
+      "statement": "Given an integer array and k, return the maximum of each contiguous window of size k in O(n) total time.",
+      "pattern": "sliding-window",
+      "subVariation": "sliding-window-maximum",
+      "distractors": ["monotonic-stack", "top-k-heap"]
+    },
+    {
+      "statement": "Given a sorted integer array, return a new array of the squares of each number, also sorted. Must be O(n).",
+      "pattern": "two-pointers",
+      "subVariation": "squaring-sorted",
+      "distractors": ["sliding-window", "divide-conquer"]
+    },
+    {
+      "statement": "Given an array of integers, find all unique triplets (a, b, c) such that a + b + c = 0.",
+      "pattern": "two-pointers",
+      "subVariation": "three-sum",
+      "distractors": ["hashing", "sliding-window"]
+    },
+    {
+      "statement": "Given a string of lowercase letters, find the length of the longest substring where every character appears at most twice.",
+      "pattern": "sliding-window",
+      "subVariation": "longest-substr-no-repeat",
+      "distractors": ["hashing", "two-pointers"]
+    }
+  ],
+
+  "two-pointers": [],
+  "fast-slow": [],
+  "prefix-sum": [],
+  "hashing": [],
+  "monotonic-stack": [],
+  "bs-on-answer": [],
+  "top-k-heap": [],
+  "k-way-merge": [],
+  "merge-intervals": [],
+  "sweep-line": [],
+  "topological-sort": [],
+  "union-find": [],
+  "greedy": [],
+  "backtracking": [],
+  "divide-conquer": [],
+  "dp": [],
+  "trie-pattern": [],
+  "bit-manip": [],
+  "quickselect": []
+}

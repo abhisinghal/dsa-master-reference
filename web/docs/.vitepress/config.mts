@@ -107,6 +107,13 @@ export default withMermaid(defineConfig({
       { text: 'Roadmap', link: '/foundations/roadmap' },
       { text: 'Diagnostic', link: '/diagnostic' },
       { text: 'Map', link: '/map' },
+      {
+        text: 'Drill',
+        items: [
+          { text: 'By pattern', link: '/recognize' },
+          { text: 'Mixed (all 21)', link: '/mixed-drill' },
+        ]
+      },
       { text: 'Patterns', link: '/patterns/' },
       { text: 'Data Structures', link: '/data-structures/' },
       { text: 'Practice', link: '/problems/' },

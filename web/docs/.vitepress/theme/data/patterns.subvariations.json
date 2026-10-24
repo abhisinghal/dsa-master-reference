@@ -1,0 +1,377 @@
+{
+  "$schema": "https://json.schemastore.org/base.json",
+  "_meta": {
+    "purpose": "Single source of truth for pattern sub-variations, required traps, amortized-complexity requirement, and OSS reference. Consumed by PatternSubVariationNav, RecognitionDrill, DueForReview, and the chapter CI smoke test.",
+    "generated": false,
+    "lastEdited": "2026-10-24"
+  },
+
+  "sliding-window": {
+    "slug": "sliding-window",
+    "title": "Sliding window",
+    "chapter": "/sliding-window",
+    "requiredTraps": 3,
+    "requiresAmortized": true,
+    "amortizedMethod": "aggregate",
+    "inTheWildSource": "java.util.concurrent.atomic.LongAdder rate-limit windows (JDK)",
+    "subVariations": [
+      { "slug": "fixed-warmup", "title": "Maximum Average Subarray I — fixed-window warm-up", "difficulty": "easy" },
+      { "slug": "smallest-sum-at-least", "title": "Smallest Subarray With Sum ≥ Target", "difficulty": "medium" },
+      { "slug": "longest-substr-no-repeat", "title": "Longest Substring Without Repeating Characters", "difficulty": "medium" },
+      { "slug": "min-window-substring", "title": "Minimum Window Substring", "difficulty": "hard" },
+      { "slug": "longest-repeating-replacement", "title": "Longest Repeating Character Replacement", "difficulty": "medium" },
+      { "slug": "subarray-product-less-k", "title": "Subarray Product Less Than K (counting trick)", "difficulty": "medium" },
+      { "slug": "sliding-window-maximum", "title": "Sliding Window Maximum (monotonic deque)", "difficulty": "hard" }
+    ]
+  },
+
+  "two-pointers": {
+    "slug": "two-pointers",
+    "title": "Two pointers",
+    "chapter": "/two-pointers",
+    "requiredTraps": 3,
+    "requiresAmortized": true,
+    "amortizedMethod": "aggregate",
+    "inTheWildSource": "PostgreSQL's merge-join operator (nodeMergejoin.c)",
+    "subVariations": [
+      { "slug": "pair-sum", "title": "Pair sum on sorted array (bare mechanic)", "difficulty": "easy" },
+      { "slug": "container-most-water", "title": "Container With Most Water", "difficulty": "medium" },
+      { "slug": "three-sum", "title": "3Sum", "difficulty": "medium" },
+      { "slug": "squaring-sorted", "title": "Squaring a Sorted Array", "difficulty": "easy" },
+      { "slug": "remove-duplicates", "title": "Remove Duplicates In-place", "difficulty": "easy" },
+      { "slug": "dutch-flag", "title": "Sort Colors (Dutch National Flag)", "difficulty": "medium" },
+      { "slug": "trapping-rain-water", "title": "Trapping Rain Water (two-pointer variant)", "difficulty": "hard" }
+    ]
+  },
+
+  "fast-slow": {
+    "slug": "fast-slow",
+    "title": "Fast + slow pointers",
+    "chapter": "/fast-slow",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "GNU libc malloc free-list cycle check",
+    "subVariations": [
+      { "slug": "cycle-detect", "title": "Linked List Cycle (Floyd's)", "difficulty": "easy" },
+      { "slug": "cycle-start", "title": "Linked List Cycle II — where the cycle starts", "difficulty": "medium" },
+      { "slug": "middle-node", "title": "Middle of a Linked List", "difficulty": "easy" },
+      { "slug": "nth-from-end", "title": "Nth Node From End", "difficulty": "medium" },
+      { "slug": "happy-number", "title": "Happy Number (sequence as linked list)", "difficulty": "easy" },
+      { "slug": "find-duplicate", "title": "Find the Duplicate Number", "difficulty": "medium" }
+    ]
+  },
+
+  "prefix-sum": {
+    "slug": "prefix-sum",
+    "title": "Prefix sum",
+    "chapter": "/prefix-sum",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "NumPy np.cumsum / TensorFlow tf.cumsum XLA kernel",
+    "subVariations": [
+      { "slug": "range-sum-1d", "title": "Range Sum (1D) — bare mechanic", "difficulty": "easy" },
+      { "slug": "subarray-sum-equals-k", "title": "Subarray Sum Equals K (prefix + hashmap)", "difficulty": "medium" },
+      { "slug": "diff-array-range-update", "title": "Difference Array (range updates)", "difficulty": "medium" },
+      { "slug": "two-d-prefix-sum", "title": "2D Prefix Sum (Range Sum Query 2D)", "difficulty": "medium" },
+      { "slug": "prefix-xor", "title": "Prefix XOR (parity queries)", "difficulty": "medium" },
+      { "slug": "prefix-mod", "title": "Prefix Mod (subarrays divisible by K)", "difficulty": "medium" }
+    ]
+  },
+
+  "hashing": {
+    "slug": "hashing",
+    "title": "Hashing",
+    "chapter": "/hashing",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "JDK 8 HashMap tree-ification threshold logic",
+    "subVariations": [
+      { "slug": "two-sum-one-pass", "title": "Two Sum (one-pass hashmap) — bare mechanic", "difficulty": "easy" },
+      { "slug": "two-sum-ii-sorted", "title": "Two Sum II (sorted → bridges to two-pointer)", "difficulty": "medium" },
+      { "slug": "group-anagrams", "title": "Group Anagrams (canonical-key hashing)", "difficulty": "medium" },
+      { "slug": "longest-consecutive", "title": "Longest Consecutive Sequence (hashset-of-starts trick)", "difficulty": "medium" },
+      { "slug": "subarray-sum-k-hashing", "title": "Subarray Sum Equals K (prefix-sum + hashmap)", "difficulty": "medium" },
+      { "slug": "top-k-frequent", "title": "Top K Frequent (bucket-sort hashmap)", "difficulty": "medium" }
+    ]
+  },
+
+  "monotonic-stack": {
+    "slug": "monotonic-stack",
+    "title": "Monotonic stack",
+    "chapter": "/monotonic-stack",
+    "requiredTraps": 3,
+    "requiresAmortized": true,
+    "amortizedMethod": "aggregate",
+    "inTheWildSource": "LLVM constant-propagation worklist",
+    "subVariations": [
+      { "slug": "nge-right", "title": "Next Greater Element to the Right — bare mechanic", "difficulty": "easy" },
+      { "slug": "nge-left", "title": "Next Greater Element to the Left", "difficulty": "easy" },
+      { "slug": "daily-temperatures", "title": "Daily Temperatures (= NGE-right with index diff)", "difficulty": "medium" },
+      { "slug": "stock-span", "title": "Stock Span (NGE-left variant)", "difficulty": "medium" },
+      { "slug": "largest-rectangle", "title": "Largest Rectangle in Histogram", "difficulty": "hard" },
+      { "slug": "remove-k-digits", "title": "Remove K Digits (lexicographic greedy via mono-stack)", "difficulty": "medium" },
+      { "slug": "132-pattern", "title": "132 Pattern (three-element variant)", "difficulty": "medium" }
+    ]
+  },
+
+  "binary-search": {
+    "slug": "binary-search",
+    "title": "Binary search",
+    "chapter": "/binary-search",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "java.util.Arrays.binarySearch (JDK)",
+    "subVariations": [
+      { "slug": "lower-upper-bound", "title": "Lower / upper bound", "difficulty": "easy" },
+      { "slug": "rotated", "title": "Rotated sorted array", "difficulty": "medium" },
+      { "slug": "peak-bitonic", "title": "Peak in bitonic array", "difficulty": "medium" },
+      { "slug": "2d-matrix", "title": "Search 2D matrix", "difficulty": "medium" },
+      { "slug": "first-last-position", "title": "First and last position", "difficulty": "medium" }
+    ]
+  },
+
+  "bs-on-answer": {
+    "slug": "bs-on-answer",
+    "title": "Binary search on the answer",
+    "chapter": "/bs-on-answer",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "Kubernetes scheduler bin-packing feasibility check",
+    "subVariations": [
+      { "slug": "capacity-to-ship", "title": "Capacity to Ship Within D Days — bare mechanic", "difficulty": "medium" },
+      { "slug": "koko-bananas", "title": "Koko Eating Bananas", "difficulty": "medium" },
+      { "slug": "smallest-divisor", "title": "Find the Smallest Divisor", "difficulty": "medium" },
+      { "slug": "split-array-largest-sum", "title": "Split Array Largest Sum / Book Allocation", "difficulty": "hard" },
+      { "slug": "median-two-sorted", "title": "Median of Two Sorted Arrays (partition BS)", "difficulty": "hard" }
+    ]
+  },
+
+  "top-k-heap": {
+    "slug": "top-k-heap",
+    "title": "Top-K heap",
+    "chapter": "/top-k-heap",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "Elasticsearch top-N aggregation",
+    "subVariations": [
+      { "slug": "top-k-smallest", "title": "Top-K Smallest (heap-of-K bare mechanic)", "difficulty": "medium" },
+      { "slug": "top-k-frequent-heap", "title": "Top K Frequent Elements", "difficulty": "medium" },
+      { "slug": "k-closest-points", "title": "K Closest Points to Origin", "difficulty": "medium" },
+      { "slug": "kth-largest", "title": "Kth Largest in Array", "difficulty": "medium" },
+      { "slug": "median-from-stream", "title": "Find Median from Data Stream (two-heap)", "difficulty": "hard" },
+      { "slug": "task-scheduler-heap", "title": "Task Scheduler (cross-link to greedy)", "difficulty": "medium" }
+    ]
+  },
+
+  "k-way-merge": {
+    "slug": "k-way-merge",
+    "title": "K-way merge",
+    "chapter": "/k-way-merge",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "PostgreSQL external sort step (tuplesort.c)",
+    "subVariations": [
+      { "slug": "merge-k-sorted-lists", "title": "Merge K Sorted Lists — bare mechanic", "difficulty": "hard" },
+      { "slug": "k-pairs-smallest-sums", "title": "Find K Pairs with Smallest Sums (Cartesian k-way)", "difficulty": "medium" },
+      { "slug": "median-from-stream-kway", "title": "Find Median from Data Stream (two-heap variant)", "difficulty": "hard" }
+    ]
+  },
+
+  "merge-intervals": {
+    "slug": "merge-intervals",
+    "title": "Merge intervals",
+    "chapter": "/merge-intervals",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "Google Calendar conflict-detection path",
+    "subVariations": [
+      { "slug": "classic-merge", "title": "Classic Merge Intervals — bare mechanic", "difficulty": "medium" },
+      { "slug": "insert-interval", "title": "Insert Interval (no sort needed)", "difficulty": "medium" },
+      { "slug": "non-overlapping", "title": "Non-overlapping Intervals (greedy by end)", "difficulty": "medium" },
+      { "slug": "meeting-rooms-i", "title": "Meeting Rooms I (boolean overlap)", "difficulty": "easy" }
+    ]
+  },
+
+  "sweep-line": {
+    "slug": "sweep-line",
+    "title": "Sweep line / events",
+    "chapter": "/sweep-line",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "Mapbox label-collision avoidance",
+    "subVariations": [
+      { "slug": "max-simultaneous", "title": "Max simultaneous overlap (bare mechanic)", "difficulty": "medium" },
+      { "slug": "meeting-rooms-ii", "title": "Meeting Rooms II (classic event sweep)", "difficulty": "medium" },
+      { "slug": "car-pooling", "title": "Car Pooling (diff-array sweep)", "difficulty": "medium" },
+      { "slug": "skyline", "title": "The Skyline Problem (sweep + max-heap)", "difficulty": "hard" },
+      { "slug": "employee-free-time", "title": "Employee Free Time (sweep over sorted lists)", "difficulty": "hard" }
+    ]
+  },
+
+  "topological-sort": {
+    "slug": "topological-sort",
+    "title": "Topological sort",
+    "chapter": "/topological-sort",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "Make / Bazel build-DAG scheduler",
+    "subVariations": [
+      { "slug": "course-schedule-i", "title": "Course Schedule I (cycle detect)", "difficulty": "medium" },
+      { "slug": "course-schedule-ii", "title": "Course Schedule II (one topo order)", "difficulty": "medium" },
+      { "slug": "alien-dictionary", "title": "Alien Dictionary (graph from string order)", "difficulty": "hard" },
+      { "slug": "minimum-height-trees", "title": "Minimum Height Trees (iterative leaf-trim)", "difficulty": "medium" },
+      { "slug": "parallel-courses", "title": "Parallel Courses (level-wise BFS gives min semesters)", "difficulty": "medium" },
+      { "slug": "sequence-reconstruction", "title": "Sequence Reconstruction (unique topo order check)", "difficulty": "medium" }
+    ]
+  },
+
+  "union-find": {
+    "slug": "union-find",
+    "title": "Union-find (DSU)",
+    "chapter": "/union-find",
+    "requiredTraps": 3,
+    "requiresAmortized": true,
+    "amortizedMethod": "potential",
+    "inTheWildSource": "Git object-reachability check during fetch",
+    "subVariations": [
+      { "slug": "basic-dsu", "title": "Basic DSU (bare mechanic)", "difficulty": "medium" },
+      { "slug": "number-provinces", "title": "Number of Provinces", "difficulty": "medium" },
+      { "slug": "redundant-connection", "title": "Redundant Connection (DSU detects cycle)", "difficulty": "medium" },
+      { "slug": "accounts-merge", "title": "Accounts Merge (DSU on string IDs)", "difficulty": "medium" },
+      { "slug": "kruskal-mst", "title": "Kruskal's MST + Union-Find", "difficulty": "medium" },
+      { "slug": "graph-valid-tree", "title": "Graph Valid Tree", "difficulty": "medium" },
+      { "slug": "swim-rising-water", "title": "Swim in Rising Water (Kruskal-style)", "difficulty": "hard" }
+    ]
+  },
+
+  "greedy": {
+    "slug": "greedy",
+    "title": "Greedy",
+    "chapter": "/greedy",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "Linux kernel CFS task scheduler (partly greedy on vruntime)",
+    "subVariations": [
+      { "slug": "activity-selection", "title": "Activity Selection (earliest-finish-first — bare mechanic)", "difficulty": "medium" },
+      { "slug": "non-overlapping-greedy", "title": "Non-overlapping Intervals", "difficulty": "medium" },
+      { "slug": "jump-game-ii", "title": "Jump Game II (farthest-reach greedy)", "difficulty": "medium" },
+      { "slug": "gas-station", "title": "Gas Station (prefix-balance greedy)", "difficulty": "medium" },
+      { "slug": "task-scheduler", "title": "Task Scheduler (heap + cooldown)", "difficulty": "medium" },
+      { "slug": "huffman", "title": "Huffman Encoding (greedy with proof archetype)", "difficulty": "medium" }
+    ]
+  },
+
+  "backtracking": {
+    "slug": "backtracking",
+    "title": "Backtracking",
+    "chapter": "/backtracking",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "PostgreSQL query planner join-order search (bounded backtracking)",
+    "subVariations": [
+      { "slug": "subsets", "title": "Subsets (pick/skip decision tree — bare mechanic)", "difficulty": "medium" },
+      { "slug": "combinations", "title": "Combinations", "difficulty": "medium" },
+      { "slug": "permutations-swap", "title": "Permutations (swap template)", "difficulty": "medium" },
+      { "slug": "permutations-used", "title": "Permutations (used[] template)", "difficulty": "medium" },
+      { "slug": "combination-sum", "title": "Combination Sum (reuse + pruning)", "difficulty": "medium" },
+      { "slug": "n-queens", "title": "N-Queens (constraint occupancy)", "difficulty": "hard" },
+      { "slug": "word-search", "title": "Word Search (grid backtracking)", "difficulty": "medium" },
+      { "slug": "letter-combinations-phone", "title": "Letter Combinations of a Phone Number", "difficulty": "medium" }
+    ]
+  },
+
+  "divide-conquer": {
+    "slug": "divide-conquer",
+    "title": "Divide & conquer",
+    "chapter": "/divide-conquer",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "NumPy FFT (Cooley-Tukey)",
+    "subVariations": [
+      { "slug": "merge-sort", "title": "Merge Sort (bare mechanic)", "difficulty": "medium" },
+      { "slug": "pow-x-n", "title": "Pow(x, n) by binary exponentiation", "difficulty": "medium" },
+      { "slug": "count-smaller-after-self", "title": "Count Smaller After Self (defer counting to merge)", "difficulty": "hard" },
+      { "slug": "majority-element-dc", "title": "Majority Element (D&C variant)", "difficulty": "easy" }
+    ]
+  },
+
+  "dp": {
+    "slug": "dp",
+    "title": "Dynamic programming",
+    "chapter": "/dp",
+    "requiredTraps": 3,
+    "requiresAmortized": true,
+    "amortizedMethod": "aggregate",
+    "amortizedScope": "space-optimization (rolling arrays)",
+    "inTheWildSource": "Levenshtein distance in git diff / SQLite likelihood()",
+    "subVariations": [
+      { "slug": "fib-1d", "title": "Fibonacci bottom-up (bare mechanic)", "difficulty": "easy" },
+      { "slug": "1d-linear", "title": "1D Linear DP — Climbing Stairs / House Robber", "difficulty": "medium" },
+      { "slug": "max-subarray-kadane", "title": "Maximum Subarray (Kadane) — running-optimum DP", "difficulty": "medium" },
+      { "slug": "knapsack-01", "title": "0/1 Knapsack & Subset-Sum", "difficulty": "medium" },
+      { "slug": "coin-change-unbounded", "title": "Coin Change (unbounded, min count)", "difficulty": "medium" },
+      { "slug": "grid-dp", "title": "Grid DP — Unique Paths / Min Path Sum", "difficulty": "medium" },
+      { "slug": "subsequence-dp", "title": "Subsequence DP — LIS / LCS / Edit Distance", "difficulty": "hard" },
+      { "slug": "interval-dp", "title": "Interval DP — Matrix Chain / Burst Balloons", "difficulty": "hard" },
+      { "slug": "state-machine-dp", "title": "State-Machine DP — stock trading with cooldown", "difficulty": "medium" },
+      { "slug": "bitmask-dp", "title": "Bitmask DP — TSP / assignment", "difficulty": "medium" },
+      { "slug": "tree-dp", "title": "Tree DP — House Robber III", "difficulty": "medium" }
+    ]
+  },
+
+  "trie-pattern": {
+    "slug": "trie-pattern",
+    "title": "Trie pattern",
+    "chapter": "/trie-pattern",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "java.util.jar.JarFile manifest trie",
+    "subVariations": [
+      { "slug": "implement-trie", "title": "Implement Trie (bare mechanic)", "difficulty": "medium" },
+      { "slug": "word-search-ii", "title": "Word Search II (trie + backtracking)", "difficulty": "hard" },
+      { "slug": "replace-words", "title": "Replace Words (shortest-prefix replacement)", "difficulty": "medium" },
+      { "slug": "map-sum-pairs", "title": "Map Sum Pairs (prefix-sum over values)", "difficulty": "medium" },
+      { "slug": "search-suggestions", "title": "Search Suggestions System (autocomplete top-3)", "difficulty": "medium" },
+      { "slug": "word-break-ii", "title": "Word Break II (trie + DP)", "difficulty": "hard" },
+      { "slug": "max-xor-binary-trie", "title": "Maximum XOR of Two Numbers (binary trie)", "difficulty": "medium" },
+      { "slug": "concatenated-words", "title": "Concatenated Words (DFS over trie)", "difficulty": "hard" }
+    ]
+  },
+
+  "bit-manip": {
+    "slug": "bit-manip",
+    "title": "Bit manipulation",
+    "chapter": "/bit-manip",
+    "requiredTraps": 3,
+    "requiresAmortized": false,
+    "inTheWildSource": "JDK Integer.bitCount with popcnt intrinsic",
+    "subVariations": [
+      { "slug": "low-bit-isolate", "title": "Isolate the low bit — bare mechanic", "difficulty": "easy" },
+      { "slug": "single-number-xor", "title": "Single Number (XOR cancellation)", "difficulty": "easy" },
+      { "slug": "single-number-ii-mod3", "title": "Single Number II (count-mod-3)", "difficulty": "medium" },
+      { "slug": "single-number-iii", "title": "Single Number III (two missing)", "difficulty": "medium" },
+      { "slug": "counting-bits-dp", "title": "Counting Bits (DP on bits)", "difficulty": "easy" },
+      { "slug": "reverse-bits", "title": "Reverse Bits", "difficulty": "easy" },
+      { "slug": "power-of-two", "title": "Power of Two check (x & (x-1) == 0)", "difficulty": "easy" },
+      { "slug": "subset-generation-masks", "title": "Subset generation via masks", "difficulty": "medium" },
+      { "slug": "swap-without-temp", "title": "Swap without temp (classic)", "difficulty": "easy" }
+    ]
+  },
+
+  "quickselect": {
+    "slug": "quickselect",
+    "title": "Quickselect",
+    "chapter": "/quickselect",
+    "requiredTraps": 3,
+    "requiresAmortized": true,
+    "amortizedMethod": "aggregate",
+    "amortizedScope": "expected (randomized pivot)",
+    "inTheWildSource": "NumPy np.partition",
+    "subVariations": [
+      { "slug": "kth-smallest-lomuto", "title": "Kth smallest (Lomuto partition — bare mechanic)", "difficulty": "medium" },
+      { "slug": "median-via-quickselect", "title": "Median via quickselect (two calls for even n)", "difficulty": "medium" },
+      { "slug": "top-k-quickselect", "title": "Top-K via quickselect vs heap-of-K", "difficulty": "medium" },
+      { "slug": "hoare-vs-lomuto", "title": "Hoare vs Lomuto pivot (invariants compared)", "difficulty": "medium" }
+    ]
+  }
+}
