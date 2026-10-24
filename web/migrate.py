@@ -395,32 +395,5 @@ def main():
             with open(idx, "w", encoding="utf-8") as f:
                 f.write(f"# {title}\n\nSelect a section from the sidebar to begin.\n")
 
-    # Cross-deploy base rewrite:
-    # Content (home page, chapters) sometimes contains hardcoded `/dsa-master-reference/...`
-    # paths — the historical GitHub Pages base. On Cloudflare Pages those 404 because the
-    # site is served at the apex of its pages.dev subdomain. When Cloudflare's auto-set
-    # CF_PAGES env var is present, rewrite those paths to `/...` across every markdown
-    # file in web/docs/ (both migrated and hand-maintained files like index.md).
-    if os.environ.get("CF_PAGES"):
-        rewrites = 0
-        files_touched = 0
-        for root, _dirs, files in os.walk(DST):
-            # Skip the generated VitePress output and theme/vue sources — only touch markdown
-            if os.path.normpath(root).endswith(os.path.join(".vitepress", "dist")):
-                continue
-            for name in files:
-                if not name.endswith(".md"):
-                    continue
-                path = os.path.join(root, name)
-                with open(path, encoding="utf-8") as f:
-                    original = f.read()
-                updated = original.replace("/dsa-master-reference/", "/")
-                if updated != original:
-                    with open(path, "w", encoding="utf-8") as f:
-                        f.write(updated)
-                    rewrites += original.count("/dsa-master-reference/")
-                    files_touched += 1
-        print(f"\nCloudflare Pages rewrite: {rewrites} path(s) across {files_touched} file(s)")
-
 if __name__ == "__main__":
     main()

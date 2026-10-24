@@ -58,6 +58,15 @@ export default withMermaid(defineConfig({
   description: 'Patterns, invariants, and problems for senior/staff DSA interviews (Java 17)',
   cleanUrls: true,
   ignoreDeadLinks: true,
+  // Final sweep on each generated page: when deploying to Cloudflare Pages
+  // (served at the apex of its pages.dev subdomain), rewrite the baked-in
+  // GitHub Pages base `/dsa-master-reference/` to `/` on asset and nav paths.
+  // We skip external URLs (github.com/abhisinghal/dsa-master-reference/...,
+  // abhisinghal.github.io/dsa-master-reference/...) by only matching bare
+  // `/dsa-master-reference/` segments that aren't preceded by a word char.
+  transformHtml: isCloudflarePages
+    ? (code) => code.replace(/(^|[^\w])\/dsa-master-reference\//g, '$1/')
+    : undefined,
   sitemap: {
     hostname: siteHostname
   },
@@ -96,6 +105,7 @@ export default withMermaid(defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Roadmap', link: '/foundations/roadmap' },
+      { text: 'Map', link: '/map' },
       { text: 'Patterns', link: '/patterns/' },
       { text: 'Data Structures', link: '/data-structures/' },
       { text: 'Practice', link: '/problems/' },

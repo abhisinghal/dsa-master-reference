@@ -74,6 +74,7 @@ import Bookmark from './Bookmark.vue'
 import BookmarksList from './BookmarksList.vue'
 import RoadmapChecklist from './RoadmapChecklist.vue'
 import StudyPlanGenerator from './StudyPlanGenerator.vue'
+import PrerequisiteGraph from './PrerequisiteGraph.vue'
 import { installSolvedCountBadges } from './SolvedCountBadge'
 import { runMigrations } from './lib/storage'
 import './style.css'
@@ -163,6 +164,7 @@ export default {
     app.component('BookmarksList', BookmarksList)
     app.component('RoadmapChecklist', RoadmapChecklist)
     app.component('StudyPlanGenerator', StudyPlanGenerator)
+    app.component('PrerequisiteGraph', PrerequisiteGraph)
     installSolvedCountBadges(router)
     if (typeof window !== 'undefined') {
       try { runMigrations() } catch { /* migration never crashes app */ }
