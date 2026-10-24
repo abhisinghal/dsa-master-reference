@@ -105,6 +105,7 @@ export default withMermaid(defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Roadmap', link: '/foundations/roadmap' },
+      { text: 'Diagnostic', link: '/diagnostic' },
       { text: 'Map', link: '/map' },
       { text: 'Patterns', link: '/patterns/' },
       { text: 'Data Structures', link: '/data-structures/' },
