@@ -186,32 +186,32 @@
     "inTheWildSource": "JDK 8 HashMap tree-ification threshold logic",
     "subVariations": [
       {
-        "slug": "two-sum-one-pass",
+        "slug": "two-sum-one-pass-hashmap-easy",
         "title": "Two Sum (one-pass hashmap) \u2014 bare mechanic",
         "difficulty": "easy"
       },
       {
-        "slug": "two-sum-ii-sorted",
+        "slug": "two-sum-ii-sorted-array-bridges-to-two-pointer-medium",
         "title": "Two Sum II (sorted \u2192 bridges to two-pointer)",
         "difficulty": "medium"
       },
       {
-        "slug": "group-anagrams",
+        "slug": "group-anagrams-medium",
         "title": "Group Anagrams (canonical-key hashing)",
         "difficulty": "medium"
       },
       {
-        "slug": "longest-consecutive",
+        "slug": "longest-consecutive-sequence-medium",
         "title": "Longest Consecutive Sequence (hashset-of-starts trick)",
         "difficulty": "medium"
       },
       {
-        "slug": "subarray-sum-k-hashing",
+        "slug": "subarray-sum-equals-k-medium",
         "title": "Subarray Sum Equals K (prefix-sum + hashmap)",
         "difficulty": "medium"
       },
       {
-        "slug": "top-k-frequent",
+        "slug": "top-k-frequent-elements-medium",
         "title": "Top K Frequent (bucket-sort hashmap)",
         "difficulty": "medium"
       }

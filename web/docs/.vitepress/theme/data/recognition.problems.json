@@ -377,7 +377,98 @@
     }
   ],
   "prefix-sum": [],
-  "hashing": [],
+  "hashing": [
+    {
+      "statement": "Given an array and target, return indices of two numbers summing to target.",
+      "pattern": "hashing",
+      "subVariation": "two-sum-one-pass",
+      "distractors": [
+        "two-pointers",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Given a SORTED array and target, return 1-indexed indices of two numbers summing to target.",
+      "pattern": "hashing",
+      "subVariation": "two-sum-ii-sorted",
+      "distractors": [
+        "two-pointers",
+        "binary-search"
+      ]
+    },
+    {
+      "statement": "Group words that are anagrams of each other.",
+      "pattern": "hashing",
+      "subVariation": "group-anagrams",
+      "distractors": [
+        "sorting",
+        "trie"
+      ]
+    },
+    {
+      "statement": "Find the length of the longest run of consecutive integers in an unsorted array (O(n)).",
+      "pattern": "hashing",
+      "subVariation": "longest-consecutive",
+      "distractors": [
+        "sorting",
+        "union-find"
+      ]
+    },
+    {
+      "statement": "Given an integer array and k, count subarrays whose sum equals k.",
+      "pattern": "hashing",
+      "subVariation": "subarray-sum-k-hashing",
+      "distractors": [
+        "sliding-window",
+        "prefix-sum"
+      ]
+    },
+    {
+      "statement": "Return the k most frequent elements of an integer array in O(n) expected time.",
+      "pattern": "hashing",
+      "subVariation": "top-k-frequent",
+      "distractors": [
+        "heap",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Decide whether two strings are isomorphic (one-to-one character mapping).",
+      "pattern": "hashing",
+      "subVariation": "group-anagrams",
+      "distractors": [
+        "signature-hashing",
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "Find all unique numbers that appear more than n/3 times in an array.",
+      "pattern": "hashing",
+      "subVariation": "top-k-frequent",
+      "distractors": [
+        "boyer-moore",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Given a long document, print the frequency of each word in descending order.",
+      "pattern": "hashing",
+      "subVariation": "top-k-frequent",
+      "distractors": [
+        "sorting",
+        "trie"
+      ]
+    },
+    {
+      "statement": "Given an array where each element appears twice except one, find that single element.",
+      "pattern": "hashing",
+      "subVariation": "two-sum-one-pass",
+      "distractors": [
+        "bit-manipulation",
+        "sorting"
+      ]
+    }
+  ],
   "monotonic-stack": [],
   "bs-on-answer": [],
   "top-k-heap": [],
