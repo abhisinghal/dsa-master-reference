@@ -807,12 +807,98 @@ public class BucketPriorityQueue extends PriorityQueue<Bucket> {
 
 ## False friends — when "top-k" doesn't need a heap
 
+The phrase "top-k" draws a lot of problems to the heap pattern, but the specific access pattern decides whether the heap is actually the right tool.
+
 - **Quickselect** is strictly better when you need **one** k-th value offline and don't care about the other k-1 boundary items. O(n) average vs. O(n log k).
 - **Bucket sort** beats heap when the ranking key has a small bounded range (e.g., frequency buckets 1..n for Top-K Frequent). O(n) time.
 - **TreeSet / sorted multiset** when you need **ordered** access to the entire top-k (not just the boundary). O(log k) per op, but with sorted iteration.
 - **Reservoir sampling** for streaming "k random items from an infinite stream" — a heap would require seeing all items, reservoir doesn't.
 - **Count-min sketch / top-k approximation** for streaming top-k on massive data (10^12+ items) where exact answers aren't needed. The heap approach needs enough memory for k winners.
 - **Plain scalar tracking** for k = 1 — just a `max` variable. No heap needed.
+
+### Visual 1: quickselect beats heap for one offline k-th value
+
+For "find the k-th largest" when the full array fits in memory and you don't need the other winners:
+
+
+
+```text
+   n = 10⁷ random integers, k = 1000
+
+   Heap approach (min-heap of size k):
+     for each of 10⁷ elements:  add to heap, if size > k pop min
+     cost: 10⁷ × log₂ 1000 ≈ 10⁷ × 10 = 10⁸ ops
+     bonus: heap at end gives you ALL top k, sorted by extraction
+
+   Quickselect approach (partition until the k-th position is fixed):
+     expected cost: O(n) = 10⁷ ops
+     bonus: NONE — only the k-th value is placed; everything else is just partitioned
+     downside: in-place mutation of input; worst case O(n²) without careful pivot
+
+   10× fewer ops in exchange for giving up the other k−1 values.
+```
+
+
+
+The decision: do you need **all top-k** values or just **the k-th**? Heap gives you all of them; quickselect gives you only the one, in less time. For streaming or online data you can't rewind, quickselect doesn't apply at all — the heap is forced. For an offline file you can read once, quickselect wins.
+
+### Visual 2: bucket sort beats heap on bounded frequency keys
+
+For `Top-K Frequent Elements`, the frequency `f` is bounded by `n`. That means you can bucket by frequency:
+
+
+
+```text
+   nums = [1,1,1,2,2,3,3,3,3,4,5,5],  n = 12,  k = 2 most frequent
+
+   Heap approach:
+     count freqs:    map = {1:3, 2:2, 3:4, 4:1, 5:2}       O(n)
+     min-heap of size k:                                     O(n log k)
+     for each (val, freq) in map:
+       heap.offer((val, freq)); if size > k, poll
+     result: [1, 3]                                          total: O(n log k) ≈ n · 10 for k=1024
+
+   Bucket-sort approach:
+     count freqs:    map = {1:3, 2:2, 3:4, 4:1, 5:2}       O(n)
+     bucket by freq: buckets[3]=[1], buckets[2]=[2,5], buckets[4]=[3], buckets[1]=[4]
+                                                             O(n)
+     walk buckets from high freq to low, collect top k:      O(n)
+     result: [3, 1]                                          total: O(n)
+```
+
+
+
+The trick: there are at most `n` possible frequency values, so you can index into a `bucket[]` of size `n+1` directly. No log factor. On problems where the "ranking key" is bounded by `n` or something small, bucket sort beats heap. Watch for this pattern — it comes up in "sort characters by frequency", "top-k frequent", "sort array by rank" problems.
+
+### Visual 3: streaming with no space budget → reservoir, not heap
+
+Problem: pick k uniformly random items from a stream of unknown length. A heap can't do this:
+
+
+
+```text
+   Stream: emit 10¹² items, we must choose k=100 uniformly at random
+
+   Heap approach (max-heap by random priority):
+     for each item x: give x a random priority p; heap.add((p,x)); if size>k poll
+     cost: 10¹² × log₂(100) ≈ 7 × 10¹² ops
+     memory: k = 100 items in the heap ✓ feasible
+     BUT: requires knowing we are "comparing by random priority" — essentially recreating reservoir
+          with heap overhead
+
+   Reservoir sampling (Algorithm R):
+     fill reservoir[0..k-1] with first k items
+     for each item i ≥ k:
+       j = random int in [0, i]
+       if j < k: reservoir[j] = item i
+     cost: 10¹² ops, no log factor
+     memory: k = 100 ✓
+     correctness: proved uniform over any stream prefix of length ≥ k
+```
+
+
+
+Both work, but reservoir is a 5-line loop with no heap and no log factor. The heap is extra machinery that doesn't earn its complexity for this access pattern. Reach for reservoir sampling specifically when you need **random k from a stream of unknown length**; use the heap when you need **top-k by rank from a stream**, where the comparison is a value, not a random priority.
 
 ## Recognition drill
 

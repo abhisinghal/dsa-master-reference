@@ -1461,12 +1461,102 @@ RelOptInfo *make_rels_by_joins(PlannerInfo *root, int level, List **joinrels) {
 
 ## When NOT to use it
 
+Backtracking's cost is exponential, so the question is always: does the problem's structure amortize that cost? Here's where it doesn't.
+
 - **The problem is decidable in polynomial time** — if there's a direct formula (e.g., "n-th Catalan number") or a greedy solution, don't reach for backtracking. Faster and simpler.
 - **The state space has overlapping subproblems** — DP with memoization amortizes work; pure backtracking retreads the same subtree many times. Coin Change is a classic DP problem, not a backtracking one.
 - **Depth is large (n &gt; 25) and no strong pruning exists** — 2^25 = 33M, tractable. 2^40 = 10¹² — impossible. If pruning removes only a constant fraction, exponential is exponential.
 - **The interviewer says "output the number of solutions modulo p"** — that's almost always DP, not backtracking. Backtracking enumerates individually; you don't want to enumerate 10¹⁰ solutions.
 - **The problem wants an *optimal* subset, not all valid ones** — branch-and-bound (backtracking with pruning by objective-function bound) is one option, but often DP or ILP is cleaner.
 - **You need to solve millions of small instances** — recursion has function-call overhead. For very short depths, iterative bitmask enumeration is 5-10× faster.
+
+### Visual 1: overlapping subproblems — pure backtracking retreads the same subtree
+
+Coin Change (how many ways to make amount) looks like backtracking but has massive subtree overlap:
+
+
+
+```text
+   coins = [1, 2],  amount = 4,  count distinct ways
+
+   Pure backtracking recursion tree:
+                        f(4)
+                 ┌──────┴──────┐
+              f(3,c=1)      f(2,c=2)
+             ┌───┴───┐     ┌───┴───┐
+          f(2,1)   f(1,2) f(1,2) f(0,2)
+          ┌─┴─┐     ...    ...     ...
+        f(1,1) f(0,2)        ← f(1,2) appears HERE
+           ...                ← and ALSO HERE
+                              ← and under f(2,2) too
+
+   Count of f(1,2) evaluations in the raw tree: 3+  (growing with amount)
+   Count of f(2,1), f(2,2) similarly repeated.
+
+   With memoization: each f(a, c_idx) computed EXACTLY ONCE.
+     total unique subproblems: amount × #coins = 4 × 2 = 8
+     DP cost: O(amount × #coins)
+   Without memo: exponential in amount, since every state is recomputed
+     at every path that reaches it.
+```
+
+
+
+The structural signal: the recursion's state is `(remaining, index_into_coins)`, and multiple paths can reach the same state. If the state space is polynomial but the paths through it are exponential, you want DP. The warning: if your backtracking has a `memo` or you find yourself writing `return cache.get(state)`, you're already doing DP — just use a table.
+
+### Visual 2: no pruning + depth &gt; 25 → combinatorial explosion
+
+Subsets of `[0..n-1]` with no constraints: pruning can't help because every subset is valid:
+
+
+
+```text
+   n = 20:   2²⁰ = 1,048,576 subsets    1 ms   ok
+   n = 25:   2²⁵ = 33,554,432 subsets   30 ms  getting slow
+   n = 30:   2³⁰ = 10⁹ subsets          30 sec  very slow
+   n = 40:   2⁴⁰ = 10¹² subsets         hours   impossible
+   n = 50:   2⁵⁰ = 10¹⁵ subsets         days    forget it
+   n = 100:  2¹⁰⁰ subsets               universe-age
+
+   The "pruning hope" fails here because there is no constraint to prune on.
+   Every branch is a valid subset; cutting a branch loses an answer.
+```
+
+
+
+Pruning only helps if there's a feasibility test that eliminates whole subtrees. "All subsets" has no such test — the entire enumeration is the point. For n &gt; 25-30 on an unconstrained enumeration, you need:
+- A **counting DP** instead of enumeration ("how many subsets have property P" → `dp[i][state]`, O(n · state_size))
+- A **direct formula** if one exists (Catalan numbers, binomial coefficients)
+- A **sampling approach** if approximation is OK (reservoir sampling, Monte Carlo)
+- A **meet-in-the-middle** split for problems where sqrt(2^n) helps (reduces 2^40 → 2^20 · 2^20 lookup)
+
+### Visual 3: "count modulo P" is almost always DP, not enumeration
+
+Returning the *count* of solutions mod 10⁹+7, you must never explicitly enumerate — you need a DP that accumulates the count:
+
+
+
+```text
+   Problem: count paths in an n×n grid from (0,0) to (n-1,n-1), moving only right/down, mod 10⁹+7
+
+   Naive backtracking enumeration:
+     path count on 20×20 grid = C(38,19) ≈ 1.75 × 10¹⁰
+     explicitly enumerate 1.75 × 10¹⁰ paths at ~100 ns each ≈ 30 minutes
+     memory: just the path, O(n+n)
+     ANSWER CORRECT but totally infeasible at 30×30+
+
+   DP (count accumulation):
+     dp[r][c] = number of paths to (r,c) = dp[r-1][c] + dp[r][c-1]
+     take result mod 10⁹+7 at every write (keeps numbers small)
+     total ops: n² = 400 on a 20×20 grid, 10⁶ on 1000×1000
+     memory: O(n²), can be O(n) with rolling row
+
+   Scaling: naive explodes at n=30; DP handles n=10⁴ comfortably.
+```
+
+
+
+The "modulo prime" phrasing is the dead giveaway: the number of solutions is astronomically large, so the problem *can't* want you to enumerate them. It wants the count. Counting is almost always DP — you combine subproblem counts additively (or multiplicatively, with modular arithmetic) rather than enumerating individual solutions. Reach for backtracking only when the problem genuinely wants *the solutions themselves*.
 
 ## When NOT to use it (extended)
 

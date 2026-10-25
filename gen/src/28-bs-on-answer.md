@@ -728,11 +728,85 @@ The `canFit` feasibility check is a **first-fit-decreasing** bin-pack simulation
 
 ## When NOT to use it
 
+Each failure here is a specific shape — the pattern looks like it should fit, but the feasibility predicate's structure breaks it.
+
 - **`feasible(x)` is not monotonic.** If some intermediate `x` fails but a smaller `x` succeeds, the boolean array is not sorted, and binary search silently returns garbage. **Verify monotonicity on paper before coding.** Common gotcha: "path with minimum effort" — is the feasibility of a max-effort threshold monotonic? Yes. Is "there exists a path of length ≥ k on a grid" monotonic in k? Also yes. But "the sum of digits equals k" is not monotonic in k.
 - **The answer isn't a number** — if the answer is a subset, a path, a permutation, or a graph, you can't binary-search a *value*. Combine with another technique.
 - **Feasibility itself requires solving another hard problem** — if `feasible(x)` needs an NP-hard subroutine, wrapping it in binary search doesn't rescue you.
 - **The answer range is tiny** — `1 ≤ x ≤ 50` and each check is O(n)? Just iterate. Binary search adds constants and cognitive load with no asymptotic benefit at that scale.
 - **You need all valid answers, not the boundary** — BS-on-answer returns one number. If the interviewer wants "all speeds that work", the pattern doesn't fit.
+
+### Visual 1: non-monotone feasibility silently returns garbage
+
+Problem: smallest `k` such that `k` has digit-sum exactly 7. The feasibility array is non-monotone:
+
+```text
+   k:         1  2  3  4  5  6  7  8  9  10  11  12  13  14  15  16  17  …
+   digitSum:  1  2  3  4  5  6  7  8  9   1   2   3   4   5   6   7   8  …
+   feasible?  F  F  F  F  F  F  T  F  F   F   F   F   F   F   F   T   F  …
+              ───────────────── ↑ ────────────────────────── ↑ ─
+                                 7                            16
+
+   Binary search behavior (lo=1, hi=20, looking for "first T"):
+     mid=10, feasible(10)=F → lo=11
+     mid=15, feasible(15)=F → lo=16
+     mid=18, feasible(18)=F → lo=19     ← walked past 16 without checking before
+     ...
+   Returns something larger than 7 even though 7 is a valid answer at a smaller k.
+```
+
+The algorithm assumes "once I see a True, all larger inputs are True" and vice versa. On a non-monotone predicate it eliminates half the space on faulty logic. The paper-test: write out `feasible(x)` for 10-15 values and check that the T→F boundary moves in one direction only. If not, you need a different algorithm (exhaustive search, DP, or math).
+
+### Visual 2: tiny answer range makes binary search slower than iteration
+
+For `1 ≤ x ≤ 50`, both BS and linear iteration touch roughly the same number of positions, but iteration has smaller constants:
+
+```text
+   Range 1..50, each feasibility check is O(n), n = 10⁴
+
+   Linear iteration (early-return on first True):
+     avg mid-range answer at x=25: calls = 25
+     each call: 10⁴ ops         total: 25 · 10⁴ = 2.5 · 10⁵  ops
+
+   Binary search:
+     calls = log₂ 50 ≈ 6
+     each call: 10⁴ ops         total: 6 · 10⁴ = 6 · 10⁴  ops
+
+   Binary search is 4× fewer feasibility calls, BUT:
+     + each BS call has branch mispredictions (hi/lo jumps)
+     + requires certifying monotonicity (dev time, bug risk)
+     - linear iteration is 1 line and obviously correct
+
+   For 10⁴ ops per call and n_calls < ~20, the dev-time and bug-risk
+   savings of linear iteration beat the modest runtime win.
+```
+
+The threshold rules of thumb: BS-on-answer pays off when the answer range is ≥ ~1000 and feasibility is O(n). Below that, the cognitive cost of proving monotonicity and the risk of off-by-one errors in a half-open BS loop outweigh the microseconds saved. Save the pattern for problems where it's genuinely needed.
+
+### Visual 3: the answer isn't a number
+
+BS-on-answer searches over a numeric predicate. If the "answer" is a complex object, you can't binary-search over it:
+
+```text
+   Problem: find the LONGEST increasing subsequence (not its length — the actual sequence).
+
+   Can we binary-search "is there an LIS of length ≥ k"?        monotonic in k, YES
+   Does that find the sequence?                                   NO — only the length
+
+   To get the sequence itself:
+     - Need parent-pointer tracking through the LIS DP
+     - Or patience-sort with explicit chain reconstruction
+     - Binary search tells you k = max length; it does not reveal WHICH elements
+
+   Problem: shortest Hamiltonian path.
+
+   Can we binary-search "is there a Hamiltonian path of cost ≤ C"?
+     - Would need to answer the decision problem, which is NP-complete
+     - Feasibility itself is the hard problem
+     - Wrapping it in binary search doesn't help you solve it
+```
+
+BS-on-answer is a *reduction*: it reduces "find the extremal value" to "answer feasibility". If feasibility is as hard as the original problem, the reduction doesn't buy anything. If the thing you want isn't the extremal value but the extremal object, you need to reconstruct the object separately (DP + parent pointers, or a dedicated algorithm like patience sort for LIS).
 
 ## Recognition drill
 
