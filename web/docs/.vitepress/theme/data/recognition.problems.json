@@ -2,7 +2,7 @@
   "_meta": {
     "purpose": "Problem bank for RecognitionDrill. Each entry: statement (hide the pattern tag from the reader), pattern slug (correct answer), subVariation slug (optional, the specialization), distractors (other patterns the problem could plausibly be mistaken for). The reader is shown the statement with no tag and guesses pattern + subVariation.",
     "schema": {
-      "statement": "problem statement string \u2014 must not name the pattern or sub-variation",
+      "statement": "problem statement string — must not name the pattern or sub-variation",
       "pattern": "correct pattern slug (matches patterns.subvariations.json key)",
       "subVariation": "optional sub-variation slug",
       "distractors": "array of pattern slugs the problem could plausibly be mistaken for"
@@ -36,7 +36,7 @@
       ]
     },
     {
-      "statement": "You are given an m\u00d7n integer matrix where every row is sorted left-to-right AND the first number of each row is greater than the last of the previous row. Search for a target in O(log(mn)).",
+      "statement": "You are given an m×n integer matrix where every row is sorted left-to-right AND the first number of each row is greater than the last of the previous row. Search for a target in O(log(mn)).",
       "pattern": "binary-search",
       "subVariation": "2d-matrix",
       "distractors": [
@@ -405,7 +405,7 @@
       ]
     },
     {
-      "statement": "Preprocess a 200\u00d7200 matrix so each sub-rectangle sum query answers in O(1).",
+      "statement": "Preprocess a 200×200 matrix so each sub-rectangle sum query answers in O(1).",
       "pattern": "prefix-sum",
       "subVariation": "two-d-prefix-sum",
       "distractors": [
@@ -459,7 +459,7 @@
       ]
     },
     {
-      "statement": "Count submatrices of a matrix whose sum equals k; matrix up to 100\u00d7100.",
+      "statement": "Count submatrices of a matrix whose sum equals k; matrix up to 100×100.",
       "pattern": "prefix-sum",
       "subVariation": "two-d-prefix-sum",
       "distractors": [
@@ -560,7 +560,93 @@
       ]
     }
   ],
-  "monotonic-stack": [],
+  "monotonic-stack": [
+    {
+      "statement": "Given an array of daily temperatures, for each day return the number of days you have to wait for a warmer temperature; 0 if none.",
+      "pattern": "monotonic-stack",
+      "subVariation": "nge-right",
+      "distractors": [
+        "sliding-window",
+        "binary-search"
+      ]
+    },
+    {
+      "statement": "Return an array where answer[i] is the next greater element to the right of nums[i], or -1 if none.",
+      "pattern": "monotonic-stack",
+      "subVariation": "nge-right",
+      "distractors": [
+        "sliding-window"
+      ]
+    },
+    {
+      "statement": "Given a circular integer array, find the next greater number for every element; the next greater number of x is the first larger number encountered when traversing the array moving forward.",
+      "pattern": "monotonic-stack",
+      "subVariation": "nge-right",
+      "distractors": [
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "Given a histogram where bar widths are 1, return the area of the largest rectangle that fits entirely under the bars.",
+      "pattern": "monotonic-stack",
+      "subVariation": "largest-rectangle",
+      "distractors": [
+        "dp",
+        "sliding-window"
+      ]
+    },
+    {
+      "statement": "Given a 2D binary matrix of 0s and 1s, find the largest rectangle containing only 1s.",
+      "pattern": "monotonic-stack",
+      "subVariation": "largest-rectangle",
+      "distractors": [
+        "dp"
+      ]
+    },
+    {
+      "statement": "Design a class that collects daily stock prices and returns the span of each day's price — the number of consecutive days ending today that had a price less than or equal to today's.",
+      "pattern": "monotonic-stack",
+      "subVariation": "stock-span",
+      "distractors": [
+        "sliding-window"
+      ]
+    },
+    {
+      "statement": "Given a non-negative integer num represented as a string, remove k digits from it so the resulting number is the smallest possible; return as a string.",
+      "pattern": "monotonic-stack",
+      "subVariation": "remove-k-digits",
+      "distractors": [
+        "greedy",
+        "dp"
+      ]
+    },
+    {
+      "statement": "Given a string s, return the lexicographically smallest subsequence of s that contains all the distinct characters of s exactly once.",
+      "pattern": "monotonic-stack",
+      "subVariation": "remove-k-digits",
+      "distractors": [
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Given an integer array nums, return true if there is a triplet (i, j, k) with i < j < k and nums[i] < nums[k] < nums[j].",
+      "pattern": "monotonic-stack",
+      "subVariation": "132-pattern",
+      "distractors": [
+        "dp",
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "Given an array of integers, for each element find the SUM of minimums over every contiguous subarray; return the total modulo 10^9+7.",
+      "pattern": "monotonic-stack",
+      "subVariation": "nge-right",
+      "distractors": [
+        "dp",
+        "sliding-window"
+      ]
+    }
+  ],
   "bs-on-answer": [
     {
       "statement": "Minimum truck capacity so that packages can be shipped in order within D days.",
@@ -581,7 +667,7 @@
       ]
     },
     {
-      "statement": "Smallest positive integer divisor so that the sum of ceilDiv(nums[i], d) is \u2264 threshold.",
+      "statement": "Smallest positive integer divisor so that the sum of ceilDiv(nums[i], d) is ≤ threshold.",
       "pattern": "bs-on-answer",
       "subVariation": "smallest-divisor",
       "distractors": [
@@ -644,7 +730,7 @@
       ]
     },
     {
-      "statement": "Find the maximum capacity load so a boat can ferry all passengers across in \u2264 T trips.",
+      "statement": "Find the maximum capacity load so a boat can ferry all passengers across in ≤ T trips.",
       "pattern": "bs-on-answer",
       "subVariation": "capacity-to-ship",
       "distractors": [
@@ -692,7 +778,7 @@
       ]
     },
     {
-      "statement": "Find the kth smallest element in an n\u00d7n matrix sorted ascending in both rows and columns.",
+      "statement": "Find the kth smallest element in an n×n matrix sorted ascending in both rows and columns.",
       "pattern": "k-way-merge",
       "subVariation": "merge-k-sorted-lists",
       "distractors": [
@@ -701,7 +787,7 @@
       ]
     },
     {
-      "statement": "Return the n-th ugly number \u2014 the n-th positive integer whose prime factors are only 2, 3, 5.",
+      "statement": "Return the n-th ugly number — the n-th positive integer whose prime factors are only 2, 3, 5.",
       "pattern": "k-way-merge",
       "subVariation": "k-pairs-smallest-sums",
       "distractors": [
@@ -1071,7 +1157,7 @@
       ]
     },
     {
-      "statement": "Place N queens on an N\u00d7N board with no two attacking.",
+      "statement": "Place N queens on an N×N board with no two attacking.",
       "pattern": "backtracking",
       "subVariation": "n-queens",
       "distractors": [
@@ -1107,7 +1193,7 @@
       ]
     },
     {
-      "statement": "Solve a 9\u00d79 Sudoku board by filling blank cells with 1-9 respecting row/column/box constraints.",
+      "statement": "Solve a 9×9 Sudoku board by filling blank cells with 1-9 respecting row/column/box constraints.",
       "pattern": "backtracking",
       "subVariation": "n-queens",
       "distractors": [
@@ -1255,7 +1341,7 @@
       ]
     },
     {
-      "statement": "Count unique paths from top-left to bottom-right of an m\u00d7n grid moving right or down.",
+      "statement": "Count unique paths from top-left to bottom-right of an m×n grid moving right or down.",
       "pattern": "dp",
       "subVariation": "grid-dp",
       "distractors": [
@@ -1300,7 +1386,7 @@
       ]
     },
     {
-      "statement": "Shortest tour visiting all n cities exactly once and returning to the start (n \u2264 20).",
+      "statement": "Shortest tour visiting all n cities exactly once and returning to the start (n ≤ 20).",
       "pattern": "dp",
       "subVariation": "bitmask-dp",
       "distractors": [

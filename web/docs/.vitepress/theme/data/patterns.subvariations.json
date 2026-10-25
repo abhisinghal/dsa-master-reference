@@ -227,37 +227,37 @@
     "inTheWildSource": "LLVM constant-propagation worklist",
     "subVariations": [
       {
-        "slug": "nge-right",
+        "slug": "next-greater-right-bare-mechanic-easy",
         "title": "Next Greater Element to the Right — bare mechanic",
         "difficulty": "easy"
       },
       {
-        "slug": "nge-left",
+        "slug": "next-greater-left-mirror-sweep-easy",
         "title": "Next Greater Element to the Left",
         "difficulty": "easy"
       },
       {
-        "slug": "daily-temperatures",
+        "slug": "daily-temperatures-nge-right-with-index-diff-medium",
         "title": "Daily Temperatures (= NGE-right with index diff)",
         "difficulty": "medium"
       },
       {
-        "slug": "stock-span",
+        "slug": "stock-span-nge-left-variant-medium",
         "title": "Stock Span (NGE-left variant)",
         "difficulty": "medium"
       },
       {
-        "slug": "largest-rectangle",
+        "slug": "largest-rectangle-in-histogram-hard",
         "title": "Largest Rectangle in Histogram",
         "difficulty": "hard"
       },
       {
-        "slug": "remove-k-digits",
+        "slug": "remove-k-digits-lexicographic-greedy-medium",
         "title": "Remove K Digits (lexicographic greedy via mono-stack)",
         "difficulty": "medium"
       },
       {
-        "slug": "132-pattern",
+        "slug": "_132-pattern-three-element-variant-medium",
         "title": "132 Pattern (three-element variant)",
         "difficulty": "medium"
       }

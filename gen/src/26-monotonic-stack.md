@@ -5,7 +5,154 @@
 
 <PatternProgress pattern-id="monotonic-stack" problems="monotonic-stack-daily-temperatures, next-greater-element-ii, online-stock-span, remove-k-digits, sum-of-subarray-minimums" />
 
+<script setup>
+const theTemplateSpecializations = [
+  { slug: `next-greater-right-bare-mechanic-easy`, title: `Next Greater (right) — bare mechanic` },
+  { slug: `next-greater-left-easy`, title: `Next Greater (left) — mirror sweep` },
+  { slug: `daily-temperatures-next-greater-element-medium`, title: `Daily Temperatures (= NGE-right with index diff)` },
+  { slug: `stock-span-nge-left-variant-medium`, title: `Stock Span (NGE-left variant)` },
+  { slug: `largest-rectangle-in-histogram-hard`, title: `Largest Rectangle in Histogram` },
+  { slug: `remove-k-digits-lexicographic-greedy-medium`, title: `Remove K Digits (lexicographic greedy)` },
+  { slug: `_132-pattern-three-element-variant-medium`, title: `132 Pattern (three-element variant)` },
+]
 
+const theTemplateCode = `// Next Greater Element to the right — THE template
+// Variants: flip < to > for next-smaller; iterate right-to-left for previous-* ;
+// walk 2n-1 times with "push only if i<n" for the circular variant.
+int[] nextGreater(int[] a) {
+    int n = a.length;
+    int[] res = new int[n];
+    Arrays.fill(res, -1);
+    Deque<Integer> stack = new ArrayDeque<>();   // INDICES, values decreasing bottom->top
+    for (int i = 0; i < n; i++) {
+        while (!stack.isEmpty() && a[stack.peek()] < a[i]) {
+            res[stack.pop()] = i;                 // the pop ANSWERS this index
+        }
+        stack.push(i);                            // i is now unresolved
+    }
+    return res;
+}`
+
+const nextGreaterLeftCode = `// Previous (next-greater-to-the-left) — mirror sweep: iterate RIGHT->LEFT.
+int[] previousGreater(int[] a) {
+    int n = a.length;
+    int[] res = new int[n];
+    Arrays.fill(res, -1);
+    Deque<Integer> stack = new ArrayDeque<>();
+    for (int i = n - 1; i >= 0; i--) {
+        while (!stack.isEmpty() && a[stack.peek()] < a[i]) {
+            res[stack.pop()] = i;                 // a[i] is their previous greater
+        }
+        stack.push(i);
+    }
+    return res;
+}`
+
+const stockSpanCode = `// Online Stock Span — streaming NGE-to-the-left variant.
+// span[i] = number of consecutive days ending today with price <= today's.
+class StockSpanner {
+    Deque<int[]> st = new ArrayDeque<>();         // (price, span) pairs
+
+    public int next(int price) {
+        int span = 1;
+        while (!st.isEmpty() && st.peek()[0] <= price) {
+            span += st.pop()[1];                  // absorb earlier spans whose prices this one dominates
+        }
+        st.push(new int[]{price, span});
+        return span;
+    }
+}`
+
+const removeKDigitsCode = `// Remove K Digits — pop while top is bigger than incoming (keep sequence lex-smallest).
+String removeKdigits(String num, int k) {
+    Deque<Character> st = new ArrayDeque<>();     // monotonically non-decreasing stack
+    for (char c : num.toCharArray()) {
+        while (k > 0 && !st.isEmpty() && st.peek() > c) {
+            st.pop(); k--;
+        }
+        st.push(c);
+    }
+    while (k-- > 0 && !st.isEmpty()) st.pop();    // extra budget → trim tail
+    // build result left-to-right from stack bottom, drop leading zeros
+    StringBuilder sb = new StringBuilder();
+    for (Character c : st) sb.append(c);
+    sb.reverse();
+    int i = 0;
+    while (i < sb.length() - 1 && sb.charAt(i) == '0') i++;
+    return sb.substring(i);
+}`
+
+const pattern132Code = `// 132 pattern — scan right-to-left, maintain stack of candidate "3" values,
+// and track the MAX popped value which will serve as the "2".
+boolean find132pattern(int[] a) {
+    Deque<Integer> stack = new ArrayDeque<>();    // candidate 3-values, decreasing bottom->top
+    int two = Integer.MIN_VALUE;                  // best "2" so far (largest popped)
+    for (int i = a.length - 1; i >= 0; i--) {
+        if (a[i] < two) return true;              // a[i] is the "1" we needed
+        while (!stack.isEmpty() && stack.peek() < a[i]) {
+            two = Math.max(two, stack.pop());     // this popped value becomes a candidate "2"
+        }
+        stack.push(a[i]);
+    }
+    return false;
+}`
+
+const amortizedExplanation = `Each index is pushed at most once and popped at most once across the entire sweep.
+The <strong>outer for-loop</strong> runs n times, so total pushes ≤ n. The <strong>inner
+while-loop</strong> only runs when it pops, and the total number of pops across the full
+run is bounded by total pushes ≤ n. Total work: at most 2n stack operations. Even though
+a single iteration of the outer loop can perform many pops, the pops are redistributed —
+"borrowed" from past iterations that paid the push cost. Aggregate argument: 2n stack ops
+over n outer iterations → <strong>O(1) amortized per element</strong>, <strong>O(n) total</strong>.`
+
+const mastery5 = [
+  {
+    q: `What's the AMORTIZED cost per element in a monotonic-stack sweep?`,
+    choices: [
+      { text: `O(1)`, correct: true, explanation: `Each element pushed and popped at most once → 2n total ops across n outer iterations.` },
+      { text: `O(log n)`, correct: false },
+      { text: `O(n) — because of the inner while-loop`, correct: false, explanation: `Classic trap. The inner while is bounded globally, not per iteration.` },
+      { text: `O(sqrt n)`, correct: false },
+    ],
+  },
+  {
+    q: `For "next GREATER" element to the right, which stack orientation do you maintain?`,
+    choices: [
+      { text: `Monotonically DECREASING from bottom to top`, correct: true, explanation: `A larger incoming element pops smaller unresolved predecessors — those just found their answer.` },
+      { text: `Monotonically increasing`, correct: false, explanation: `That's for "next smaller".` },
+      { text: `Not monotonic`, correct: false },
+      { text: `Sorted at insertion`, correct: false },
+    ],
+  },
+  {
+    q: `Why does Largest Rectangle in Histogram need a trailing SENTINEL bar of height 0?`,
+    choices: [
+      { text: `To flush bars still on the stack whose right boundary never materialized`, correct: true, explanation: `Without it, the tallest bars never see a strictly shorter bar on their right.` },
+      { text: `To handle negative heights`, correct: false, explanation: `Heights are non-negative.` },
+      { text: `To detect end-of-input`, correct: false },
+      { text: `For better cache behaviour`, correct: false },
+    ],
+  },
+  {
+    q: `Sum of Subarray Minimums uses "contribution counting". What's the key reformulation?`,
+    choices: [
+      { text: `For each element, count how many subarrays it is the min of (L × R span-counts)`, correct: true, explanation: `Turns "for each subarray find min" (O(n²)) into "for each element count contributions" (O(n)).` },
+      { text: `Just sort the array first`, correct: false },
+      { text: `Only iterate subarrays of length ≤ log n`, correct: false },
+      { text: `Precompute suffix sums and binary-search`, correct: false },
+    ],
+  },
+  {
+    q: `For Remove K Digits, the stack is monotonically NON-DECREASING. What does popping a larger top accomplish?`,
+    choices: [
+      { text: `Removes a digit at a position where a smaller digit is about to appear — producing a lex-smaller number`, correct: true, explanation: `Keeping the smaller digit earlier dominates the lex order; the budget k is the number of pops you're allowed.` },
+      { text: `Normalizes the number to base 10`, correct: false },
+      { text: `Only prevents overflow`, correct: false },
+      { text: `Is a bug — the stack should be strictly increasing`, correct: false, explanation: `Non-decreasing is correct — equal digits may stack.` },
+    ],
+  },
+]
+</script>
 
 ## Why monotonic stack exists — the story
 
@@ -57,100 +204,43 @@ If the problem asks about *the nearest X-satisfying element* or *a range bounded
 - **Range aggregate queries with unrestricted ranges** — sparse table, segment tree, or Fenwick tree.
 - **Very small n (n ≤ 100)** — brute force is simpler and equally fast in practice. Save monotonic stack for `n ≥ 1000`.
 
-## The templates
+## THE template
 
-### Template 1: Next Greater Element — decreasing stack
+Every monotonic-stack problem is a specialization of **"maintain a sorted stack of unresolved indices; a violation triggers a pop, and each pop resolves exactly one element."** Four parameters distinguish the family: push order (push value vs. push index), direction (left-to-right vs. right-to-left), comparison (`<` strict vs. `≤` lax), and what each pop computes.
 
-Given `a[]`, return `res[]` where `res[i]` = the *next* index `j > i` with `a[j] > a[i]`, or `-1` if none.
+<PatternTemplateCard
+  slug="monotonic-stack-nge-right"
+  title="Next Greater Element (right) — THE monotonic-stack template"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="{
+    statement: 'The stack holds indices in strictly decreasing order of a[]. Every index still on the stack has no next-greater element found yet; every index popped has res[i] set.',
+    initialization: 'Before iteration 0: stack is empty (trivially decreasing); res[] = -1 everywhere.',
+    maintenance: 'For iteration i: pop every top whose a[top] < a[i], setting res[top] = i (correct: a[i] is to their right and greater). The remaining stack is still decreasing because the popped tops were violating. Pushing i preserves the decreasing invariant because i was popped-until the top ≥ a[i].',
+    termination: 'After iteration n-1: every index not popped has no element to its right greater than it; res[i] remains -1, as required.',
+  }"
+  :complexity="{ time: 'O(n) amortized — 2n stack ops over n iterations', space: 'O(n) for the stack in a strictly decreasing input' }"
+  :specializations="theTemplateSpecializations"
+>
+  <template #amortized>
+<AmortizedPanel
+  method="aggregate"
+  bound="O(n) total across the entire sweep"
+  statement="Each index is pushed at most once and popped at most once, so total stack operations are at most 2n."
+  :workedExample="amortizedExplanation"
+/>
+  </template>
+</PatternTemplateCard>
 
-```java
-int[] nextGreater(int[] a) {
-    int n = a.length;
-    int[] res = new int[n];
-    Arrays.fill(res, -1);
-    Deque<Integer> stack = new ArrayDeque<>();      // stores INDICES, values decreasing
-    for (int i = 0; i < n; i++) {
-        // pop every earlier index whose value is beaten by a[i]
-        while (!stack.isEmpty() && a[stack.peek()] < a[i]) {
-            res[stack.pop()] = i;                    // answer found: a[i] is their next-greater
-        }
-        stack.push(i);                                // this index becomes unresolved
-    }
-    return res;
-}
-```
+The three canonical "flavors" are: **next-greater-right** (above — the base case), **next-greater-left** (iterate right-to-left, same logic), and **largest-rectangle in histogram** (increasing stack, each pop computes `height × width`, requires a trailing sentinel 0).
 
-**Invariant:** the stack holds indices whose `a[]` values are *strictly decreasing* from bottom to top; every index still on the stack has no next-greater found yet.
-**Complexity:** O(n) time (amortized — each index pushed and popped ≤ once), O(n) space.
-**Common variants:** flip `<` to `>` for next-smaller. Iterate right-to-left for previous-greater / previous-smaller.
+## False friends — not every stack-based sweep is monotonic
 
-### Template 2: Largest Rectangle in Histogram — increasing stack
-
-For each bar `i` of height `h[i]`, find the widest strip where `h[i]` is the *minimum*. Then `area = h[i] × width`. Take the max over all bars.
-
-```java
-int largestRectangle(int[] h) {
-    int n = h.length, max = 0;
-    Deque<Integer> stack = new ArrayDeque<>();      // increasing heights
-    for (int i = 0; i <= n; i++) {
-        int cur = (i == n) ? 0 : h[i];               // sentinel: flush stack at end
-        while (!stack.isEmpty() && h[stack.peek()] > cur) {
-            int top = stack.pop();
-            int left = stack.isEmpty() ? -1 : stack.peek();   // previous smaller (or -1)
-            int width = i - left - 1;                          // exclusive width
-            max = Math.max(max, h[top] * width);
-        }
-        stack.push(i);
-    }
-    return max;
-}
-```
-
-**Invariant:** heights on the stack are strictly increasing from bottom to top; when we pop, the popped bar's right boundary is the current index, its left boundary is the new stack top.
-**Trap:** the sentinel `i == n → cur = 0` is essential — otherwise bars remaining on the stack at the end are never processed.
-
-### Template 3: Circular array — walk twice
-
-For "Next Greater Element II" (circular array), iterate `2n - 1` times but only push during the first `n`.
-
-```java
-int[] nextGreaterCircular(int[] a) {
-    int n = a.length;
-    int[] res = new int[n];
-    Arrays.fill(res, -1);
-    Deque<Integer> stack = new ArrayDeque<>();
-    for (int i = 0; i < 2 * n - 1; i++) {
-        int idx = i % n;
-        while (!stack.isEmpty() && a[stack.peek()] < a[idx]) {
-            res[stack.pop()] = idx;
-        }
-        if (i < n) stack.push(idx);                  // only push in the first pass
-    }
-    return res;
-}
-```
-
-**Why it works:** the second pass simulates wrapping; the "only push in first pass" rule prevents infinite loops and double-answers.
-
-### Complexity summary
-
-| Template | Time | Space | Notes |
-|---|---|---|---|
-| Next greater / smaller | O(n) | O(n) | Amortized; each index visited ≤ twice |
-| Largest rectangle | O(n) | O(n) | Sentinel value needed to flush at end |
-| Circular variant | O(n) | O(n) | Iterate 2n - 1, push only first pass |
-
-## Traps & gotchas — the 5 that fail candidates on interview day
-
-> [trap] **Trap 1 — Storing values instead of indices.** If the stack holds values, you can't compute distances or widths. Every real problem needs the index — the value can be recovered as `a[stack.peek()]`. **Rule: always push the index; look up the value on demand.**
-
-> [trap] **Trap 2 — Wrong comparison direction (strict vs non-strict).** For "strictly next greater," use `<` inside the pop condition. For "next greater or equal," use `≤`. Getting this wrong on equal-value inputs (`[2, 2, 2]`) silently returns wrong answers. **Verify on paper with a `[2, 2, 2, 3]` input.**
-
-> [trap] **Trap 3 — Forgetting the sentinel in histogram / rectangle problems.** After the main loop, bars still on the stack have no "right boundary" and their areas are never computed. Push a virtual bar of height 0 at index `n` — or handle the flush in a post-loop while. Missing this bug is nearly universal in candidates seeing the pattern for the first time.
-
-> [trap] **Trap 4 — Not amortizing when analyzing complexity.** During interviews, candidates say "O(n²) because there's a while loop inside a for loop." Wrong. Each element is pushed once and popped at most once — total pops across all iterations of the outer loop is at most `n`. **Amortized O(n).** Say the word "amortized" out loud.
-
-> [trap] **Trap 5 — Using `java.util.Stack`.** Java's `Stack` extends `Vector` and is synchronized (a legacy from 1996). For high-performance code, use `ArrayDeque` as a stack — 3-5× faster, no synchronization overhead. **Rule: `Deque<Integer> stack = new ArrayDeque<>()`, never `new Stack<>()`.**
+- **Parentheses matching** uses a plain stack — no monotonic ordering. The invariant is "stack contents are the unmatched openers in LIFO order," not any value comparison. Don't call it monotonic.
+- **DFS-with-stack / iterative tree traversal** — the stack holds *frames*, not *values to compare*. The pop condition is "frame has no more children," not "incoming value violates ordering."
+- **Shunting-yard operator precedence** — the stack IS monotonic in precedence, so this is a monotonic stack. (This is where Nagao-Matsuyama originally found the pattern.)
+- **Expression trees / RPN** — plain stack of operands; no ordering.
+- **Sliding-window maximum** uses a monotonic *deque*, not stack — the max can be popped from either end. The flavor is similar but it's not quite the same tool.
 
 ## History — Nagao-Matsuyama, 1971
 
@@ -158,11 +248,65 @@ The monotonic stack technique was first formalized by **Makoto Nagao and Takahik
 
 The pattern also underlies **online query structures** in competitive programming — the "Cartesian tree" data structure, which represents an array as a heap-ordered binary tree, can be built in O(n) using exactly this stack technique. Interviewers who ask about "amortized analysis on a stack-based algorithm" are almost always testing whether you understand *this* pattern.
 
-## Canonical problem walkthrough — Daily Temperatures
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="monotonic-stack" />
+
+The sub-variations below walk the template through its canonical seven forms — bare mechanic, mirror sweep, index-diff variant, streaming span, histogram rectangle, lexicographic greedy, and the three-element 132-pattern. Each builds on the previous; by the end, they all read as "same template, different pop semantics."
+
+### Next Greater (right) — bare mechanic <span class="diff diff-e">Easy</span>
+
+The simplest instance of the pattern. Given `nums[]`, return `res[]` where `res[i]` is the next index `j > i` with `nums[j] > nums[i]`, or `-1` if none.
+
+> [inv] **Invariant** — The stack holds indices in strictly decreasing order of `nums[]`; every index still on the stack has no next-greater element found yet.
+
+<InvariantProof
+  statement="At the end of iteration i, (a) the stack is strictly decreasing in nums[], and (b) res[j] = i for every j popped during iteration i, where i is the smallest index > j with nums[i] > nums[j]."
+  initialization="Before iteration 0: empty stack (trivially decreasing); res[] = -1."
+  maintenance="During iteration i, pop every top whose nums[top] < nums[i], setting res[top] = i. Correctness: top was unresolved (no next-greater yet) with every subsequent index k in (top, i) having nums[k] ≤ nums[top] (else top would have been popped earlier). So i is the smallest index > top with nums[i] > nums[top]. The remaining stack stays decreasing; pushing i preserves it because we popped until the top ≥ nums[i]."
+  termination="Every index not popped by the end has no element to its right with a larger value — res[i] = -1, correct."
+/>
+
+> [key] **Blind-solve prompt** — *Before revealing the template, try to solve it:* given `nums[]`, return the array where each entry is the next-greater element to the right, or `-1`. Make it O(n).
+
+<TemplateReveal
+  slug="monotonic-stack-nge-right"
+  language="java"
+  :canonical="theTemplateCode"
+/>
+
+**Trace** on `nums=[2, 1, 2, 4, 3]`:
+
+| i | nums[i] | stack (indices) | pops | res after |
+|---|---|---|---|---|
+| 0 | 2 | [0] | — | `[-1, -1, -1, -1, -1]` |
+| 1 | 1 | [0, 1] | — | `[-1, -1, -1, -1, -1]` |
+| 2 | 2 | [0, 2] | pop 1 (res[1]=2) | `[-1, 2, -1, -1, -1]` |
+| 3 | 4 | [3] | pop 2 (res[2]=3), pop 0 (res[0]=3) | `[3, 2, 3, -1, -1]` |
+| 4 | 3 | [3, 4] | — | `[3, 2, 3, -1, -1]` |
+
+Final: `[3, 2, 3, -1, -1]` ✓
+
+### Next Greater (left) — mirror sweep <span class="diff diff-e">Easy</span>
+
+Same template, iterated **right-to-left**. The pop condition remains "stack top's value < nums[i]" — the only change is the loop direction. Every answer is now the first index to the *left* with a larger value.
+
+> [inv] **Invariant** — At iteration `i` (sweeping right-to-left), the stack holds indices in strictly decreasing order of `nums[]`; each popped index `top` is resolved with `res[top] = i` (its first-greater-to-the-left).
+
+<TemplateReveal
+  slug="previous-greater"
+  language="java"
+  :canonical="nextGreaterLeftCode"
+/>
+
+**Compare:** NGE-right finds `res[i] = j` where `j > i` and `nums[j] > nums[i]` is the *first* such `j`. NGE-left finds `res[i] = j` where `j < i` and `nums[j] > nums[i]` is the *first* such `j`. Choice of pass direction is the entire difference.
+
+<details>
+<summary><strong>Pedagogical: the 3-approach ladder for Daily Temperatures (brute → stack → reverse stack)</strong></summary>
 
 **Problem** ([↗ LeetCode](https://leetcode.com/problems/daily-temperatures/)): Given an array `temperatures` representing daily temperatures, return an array `answer` such that `answer[i]` is the *number of days* you have to wait after day `i` to get a warmer temperature. If there is no future warmer day, `answer[i] = 0`.
 
-### Approach 1 — Brute force
+#### Approach 1 — Brute force
 
 For each day, scan forward until warmer.
 
@@ -230,13 +374,15 @@ int[] dailyTemperaturesReverse(int[] t) {
 
 Same O(n) complexity. Pick whichever direction is more intuitive — both work.
 
-### Complexity ladder
+#### Complexity ladder
 
 | Approach | Time | Space | When |
 |---|---|---|---|
 | Brute force | O(n²) | O(1) | Reference / n ≤ 500 |
 | **Forward monotonic stack** | **O(n)** | **O(n)** | **Interview default** |
 | Reverse monotonic stack | O(n) | O(n) | Equivalent; use if it reads cleaner |
+
+</details>
 
 ---
 
@@ -308,7 +454,7 @@ You need *farthest* rather than *nearest* — or the comparison isn't a simple o
 
 ---
 
-## Daily Temperatures (Next Greater Element) <span class="diff diff-m">Medium</span>
+### Daily Temperatures (= NGE-right with index diff) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)*
 
@@ -476,7 +622,7 @@ A monotonic stack that "resolves" each element the moment a bigger/smaller one a
 | [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) | each element contributes `min × (countLeft × countRight)`; the monotonic stack gives those boundary counts | — |
 
 
-## Largest Rectangle in Histogram <span class="diff diff-h">Hard</span>
+### Largest Rectangle in Histogram <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)*
 
@@ -597,14 +743,205 @@ O(n), because an increasing histogram can push all indices before the sentinel f
 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | the valley dual — a decreasing stack resolves each trapped basin between a left and right wall | — |
 | [Remove K Digits / Largest Rectangle variants](https://leetcode.com/problems/remove-k-digits/) | a monotonic stack that greedily pops to keep the sequence as small/large as possible | — |
 
+### Stock Span (NGE-left variant) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Online Stock Span](https://leetcode.com/problems/online-stock-span/)*
+
+A **streaming** version of NGE-left. Each `next(price)` returns how many consecutive previous days (including today) had a price ≤ today's. The twist: we don't want to recompute spans from scratch; past spans can be **absorbed** when a bigger price dominates them.
+
+> [inv] **Invariant** — The stack holds `(price, span)` pairs in strictly decreasing price order; a popped pair's span is already included in the current `span` accumulator.
+
+<TemplateReveal
+  slug="stock-span"
+  language="java"
+  :canonical="stockSpanCode"
+/>
+
+**Trace** `next(100), next(80), next(60), next(70), next(60), next(75), next(85)`:
+
+| call | pops absorbed | span | stack after |
+|---|---|---|---|
+| 100 | — | 1 | `[(100,1)]` |
+| 80 | — | 1 | `[(100,1), (80,1)]` |
+| 60 | — | 1 | `[(100,1), (80,1), (60,1)]` |
+| 70 | (60,1) | 2 | `[(100,1), (80,1), (70,2)]` |
+| 60 | — | 1 | `[(100,1), (80,1), (70,2), (60,1)]` |
+| 75 | (60,1), (70,2) | 4 | `[(100,1), (80,1), (75,4)]` |
+| 85 | (75,4), (80,1) | 6 | `[(100,1), (85,6)]` |
+
+Each span absorption is **amortized**: a pair's span can only be absorbed once in its lifetime, so total absorptions over any sequence of N calls is ≤ N. **Amortized O(1) per call.**
+
+### Remove K Digits (lexicographic greedy) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Remove K Digits](https://leetcode.com/problems/remove-k-digits/)*
+
+Given a non-negative integer as a string `num` and an integer `k`, remove exactly `k` digits to produce the **lexicographically smallest** remaining number. The monotonic stack lets us greedily enforce the invariant "whenever we're about to append a digit, pop any larger digits from the right end of the current result (budget permitting)."
+
+> [key] **Blind-solve prompt** — *Before revealing:* why does popping a bigger `top` when a smaller `incoming` arrives always produce a lex-smaller result? Walk through `num = "1432219", k = 3` on paper.
+
+> [inv] **Invariant** — The stack is monotonically non-decreasing; it holds the smallest-prefix-of-result-so-far using at most (processed - popped) digits.
+
+<TemplateReveal
+  slug="remove-k-digits"
+  language="java"
+  :canonical="removeKDigitsCode"
+/>
+
+**Trace** `num = "1432219", k = 3`:
+
+| i | c | pops | stack after |
+|---|---|---|---|
+| 0 | '1' | — | `[1]` |
+| 1 | '4' | — | `[1, 4]` |
+| 2 | '3' | pop '4' (k=2) | `[1, 3]` |
+| 3 | '2' | pop '3' (k=1) | `[1, 2]` |
+| 4 | '2' | — | `[1, 2, 2]` |
+| 5 | '1' | pop '2' (k=0) | `[1, 2, 1]`  |
+| 6 | '9' | — | `[1, 2, 1, 9]` |
+
+k=0 after i=5, so we stop popping. Reading bottom-to-top: `"1219"`. ✓
+
+### 132 Pattern (three-element variant) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: 132 Pattern](https://leetcode.com/problems/132-pattern/)*
+
+Return `true` iff there exist indices `i < j < k` with `a[i] < a[k] < a[j]`. The clever reformulation: scan **right-to-left**, maintain a stack of candidates for the "3" position, and track the **largest value we've popped so far** as the "2" candidate. On the left, we just need any element < that "2".
+
+> [inv] **Invariant** — While scanning right-to-left, the stack holds decreasing values (candidate "3"s), and `two` is the maximum of all values that have ever been popped — the best candidate "2" compatible with some "3" to its right.
+
+<TemplateReveal
+  slug="pattern-132"
+  language="java"
+  :canonical="pattern132Code"
+/>
+
+**Why this works:** when `a[idx]` is popped, we know `a[idx] < a[curr]` where `curr` is some later element on the stack. That makes `(curr, a[idx])` a valid (3, 2) pair. Keeping `two` as the max popped value gives the loosest constraint on "1". If we later find any `a[i] < two`, we have `(a[i], two, something_in_stack)` — a valid 132.
+
+**Trace** on `nums = [3, 1, 4, 2]`:
+
+| i | a[i] | before pops | after pops | two | push |
+|---|---|---|---|---|---|
+| 3 | 2 | stack=[] | — | -∞ | stack=[2] |
+| 2 | 4 | stack=[2] | pop 2 (two=2) | 2 | stack=[4] |
+| 1 | 1 | stack=[4] | a[i]=1 < two=2 → **return true** | — | — |
+
+✓ The 132 pattern is `(1, 4, 2)` at indices `(1, 2, 3)`.
+
+## Traps & gotchas
+
+<TrapTrace
+  title="Trap 1 — Storing values instead of indices"
+  bug="t = [73, 74, 75]. Stack holds VALUES, not indices. When 74 arrives, pop 73 — but which index was that? Can't compute days-waited."
+  fix="Push INDICES. Compute distance on pop: res[j] = i - j. Look up values on demand via a[stack.peek()]."
+/>
+
+<TrapTrace
+  title="Trap 2 — Wrong strict/non-strict comparison on ties"
+  bug='nums = [2, 2, 2, 3] with pop condition "a[top] ≤ a[i]" (non-strict). The second and third 2s pop the first 2 unnecessarily — their "next greater" should still be 3, but you redirect them to each other first. Equal-value inputs silently misbehave.'
+  fix='Use strict "<" for "next STRICTLY greater" and "≤" only when the problem says "next greater OR EQUAL". Test every monotonic-stack solution on an all-equal input before claiming correctness.'
+/>
+
+<TrapTrace
+  title="Trap 3 — Forgetting the sentinel in histogram problems"
+  bug="heights = [2, 1, 5, 6, 2, 3]. The main loop ends with bars 1, 4, 5 still on the stack. Their rectangles (bars 4 and 5 could each extend some width) are never computed. Answer under-reports."
+  fix="Iterate i from 0 to n INCLUSIVE and use cur = (i == n ? 0 : h[i]). The virtual height-0 at index n flushes every remaining bar. Alternative: post-loop while-pop with right-boundary = n."
+/>
+
+## In the wild — LLVM's constant-propagation worklist & `java.util.ArrayDeque`
+
+**LLVM's `SCCP` pass** (Sparse Conditional Constant Propagation) uses a *monotonic-stack-like* worklist. The worklist holds "SSA values whose lattice state has not stabilized," ordered by the lattice height. Each pop either resolves a value (concrete constant) or pushes new consequences. The analysis is monotonic in the lattice (⊥ → constant → ⊤ only), ensuring termination in O(n) worklist operations — the same amortization argument we use for the array variant.
+
+```cpp
+// llvm/lib/Transforms/Scalar/SCCP.cpp — paraphrased
+void SCCPSolver::Solve() {
+  while (!InstWorkList.empty() || !OverdefinedInstWorkList.empty()) {
+    while (!OverdefinedInstWorkList.empty()) {
+      Instruction *I = OverdefinedInstWorkList.pop_back_val();
+      // Overdefined values can only transition DOWN the lattice (toward ⊤).
+      // Each instruction is pushed/popped at most O(1) times per lattice level,
+      // giving total work O(n × lattice_height) — same amortized trick.
+      for (User *U : I->users())
+        if (auto *UI = dyn_cast<Instruction>(U))
+          visit(*UI);
+    }
+    // ...
+  }
+}
+```
+
+**Four more real-world monotonic-stack sightings:**
+
+1. **PostgreSQL's `width_bucket()` histogram optimizer** — bucket boundary lookup uses an increasing-stack-like structure for O(1) amortized bucket assignment per row during bulk inserts.
+2. **Shunting-yard operator-precedence parsing** (Dijkstra, 1961) — the operator stack is kept in decreasing precedence; a higher-precedence incoming token pops lower-precedence operators. This is where Nagao & Matsuyama (1971) formalized the pattern.
+3. **Dynamic histogram equalization in image processing** — row-wise largest-rectangle under a 1-pixel-wide moving window; identical O(n) algorithm.
+4. **Protein folding dynamic programming** (NUPACK, Vienna RNA) — the "nearest unpaired base" lookup along a chain uses NGE-right internally for O(n) chain traversal.
+
+## Recognition drill
+
+<RecognitionDrill pattern="monotonic-stack" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if you need the next k-th greater element, not just the next?</strong></summary>
+
+The stack only remembers unresolved elements, so once popped, an answer is final — but you can push each element **k times** before resolving them, representing k "copies" of each unresolved answer slot. Alternatively, use a **persistent segment tree** or a Chtholly-tree-style structure for O(n log n). For k = 1, the monotonic stack is strictly better.
+</details>
+
+<details>
+<summary><strong>What if the array is streaming and you need to answer "next greater" on prefix queries?</strong></summary>
+
+**Persistent monotonic stack:** each version of the stack is kept, and the "next greater" query at time `t` references version `t`. Memory grows O(n), but query becomes O(log n). This is how competitive-programming "offline queries" are solved; a classic trick for CS problems.
+
+For truly online queries (answer "next greater of a[i]" after each a[i] is appended), a plain monotonic stack is enough: push and pop as in Daily Temperatures; keep an array of resolved answers.
+</details>
+
+<details>
+<summary><strong>What if the "monotonic" ordering is on a non-trivial key (e.g., 2D comparison)?</strong></summary>
+
+A stack is one-dimensional. For 2D ordering ("nearest element greater in BOTH height and weight"), you need a **2D sweep** (sort by one key, use a monotonic stack on the other) or a **segment tree on sorted key**. A monotonic stack alone is insufficient — the comparison needs to be a total order to maintain the invariant.
+
+Example: "Find the next element with higher score AND higher ranking" over students — sort by score, run a monotonic stack over ranking.
+</details>
+
+<details>
+<summary><strong>What if you need to UPDATE elements mid-stream?</strong></summary>
+
+The monotonic stack is one-shot — it processes left-to-right and never looks back. An update invalidates the whole stack. For an updatable version, use:
+- **Segment tree with lazy propagation** — O(log n) per update, O(log n) per "next greater" query.
+- **Treap or splay tree** — supports arbitrary updates and "greater-than" successor queries in O(log n) amortized.
+
+The monotonic stack trades flexibility for a constant-factor speedup on static arrays.
+</details>
+
+<details>
+<summary><strong>What if the problem has multiple pop conditions?</strong></summary>
+
+Example: "next greater element that is also at least 2 apart in index." The classic template fails because a popped element might have a valid "next greater" further down the array. The fix: delay the pop by one step, or use a **monotonic deque** that supports lookahead at both ends.
+
+In practice, 95% of interview problems have a single pop condition. If you see multiple, consider whether a two-pointer or segment-tree approach is cleaner.
+</details>
+
+### Breaking point
+
+Monotonic stack **stops being optimal** when:
+- The problem allows arbitrary queries at any index (segment tree is better).
+- The array is dynamic (updates mid-processing — segment tree or treap).
+- The ordering is not total (2D or multi-key — need a sweep + segment tree).
+- You need all k nearest-greater elements, not just the first.
+- The input is huge and must stream with constant memory (use a sliding-window maximum deque instead).
+
+### Three cross-pattern problems
+
+- [Maximum Width Ramp (962)](https://leetcode.com/problems/maximum-width-ramp/) — decreasing stack from the left + reverse sweep from the right; a non-obvious combination.
+- [Beautiful Towers II (2866)](https://leetcode.com/problems/beautiful-towers-ii/) — monotonic stack to find "nearest smaller to left/right" + prefix-sum arithmetic.
+- [Score of Parentheses (856)](https://leetcode.com/problems/score-of-parentheses/) — plain stack with monotonic-like depth tracking; a bridge to the parsing family.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="monotonic-stack"
-  :questions='[{"q": "What is the amortized cost per element in a monotonic-stack sweep?", "choices": [{"text": "O(1)", "correct": true, "explanation": "Each element pushed and popped at most once → 2n total operations."}, {"text": "O(log n)", "correct": false}, {"text": "O(n)", "correct": false}, {"text": "O(σ)", "correct": false}]}, {"q": "For \"next greater element\", which stack orientation do you maintain?", "choices": [{"text": "Monotonically decreasing from bottom to top", "correct": true, "explanation": "New larger element pops smaller predecessors — those find their answer."}, {"text": "Monotonically increasing", "correct": false, "explanation": "That is for \"next smaller\"."}, {"text": "Not monotonic", "correct": false}, {"text": "Sorted at insertion", "correct": false}]}, {"q": "Why does Largest Rectangle in Histogram benefit from a \"sentinel\" bar?", "choices": [{"text": "A trailing height-0 flushes any remaining stack cleanly", "correct": true, "explanation": "Otherwise you need special-case code after the loop."}, {"text": "To handle negative heights", "correct": false, "explanation": "Heights are non-negative."}, {"text": "For randomness", "correct": false}, {"text": "To detect end-of-input", "correct": false}]}, {"q": "Sum of Subarray Minimums uses \"contribution counting\". What is the key idea?", "choices": [{"text": "For each element, count how many subarrays it is minimum of (L·R spans)", "correct": true, "explanation": "Turn \"for each subarray find min\" into \"for each element count contributions\"."}, {"text": "Sum over all subarrays", "correct": false, "explanation": "That is O(n²)."}, {"text": "Only iterate subarrays of length ≤ log n", "correct": false}, {"text": "Sort the array first", "correct": false}]}, {"q": "For Online Stock Span, what does the stack store?", "choices": [{"text": "(price, span) pairs", "correct": true, "explanation": "On next price ≥ top, pop and accumulate span."}, {"text": "Only prices", "correct": false, "explanation": "Would lose the span info."}, {"text": "Only spans", "correct": false}, {"text": "All prices ever seen", "correct": false, "explanation": "Would defeat the amortization."}]}]'
-/>
+<Quiz pattern-id="monotonic-stack" :questions="mastery5" />
 
 <PrintButton />
 
