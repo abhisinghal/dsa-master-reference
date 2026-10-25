@@ -383,7 +383,98 @@
       ]
     }
   ],
-  "sweep-line": [],
+  "sweep-line": [
+    {
+      "statement": "Given a list of meeting intervals, find the minimum number of conference rooms required.",
+      "pattern": "sweep-line",
+      "subVariation": "meeting-rooms-ii",
+      "distractors": [
+        "merge-intervals",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Given a list of trips [passengers, from, to] and a car capacity, decide whether the car can pick up and drop off all passengers without exceeding capacity.",
+      "pattern": "sweep-line",
+      "subVariation": "car-pooling",
+      "distractors": [
+        "greedy",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Given the positions and heights of buildings, return the skyline silhouette as a list of key points.",
+      "pattern": "sweep-line",
+      "subVariation": "skyline",
+      "distractors": [
+        "segment-tree",
+        "divide-conquer"
+      ]
+    },
+    {
+      "statement": "Given each employee's busy time intervals, return the common free time across all employees.",
+      "pattern": "sweep-line",
+      "subVariation": "employee-free-time",
+      "distractors": [
+        "k-way-merge",
+        "merge-intervals"
+      ]
+    },
+    {
+      "statement": "At what moment in a day is the maximum number of users logged in simultaneously?",
+      "pattern": "sweep-line",
+      "subVariation": "max-simultaneous",
+      "distractors": [
+        "sorting",
+        "hashing"
+      ]
+    },
+    {
+      "statement": "Design a calendar that rejects triple-bookings; return whether an event can be added.",
+      "pattern": "sweep-line",
+      "subVariation": "meeting-rooms-ii",
+      "distractors": [
+        "tree-map",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Given train arrival and departure times, return the minimum platforms needed so no train waits.",
+      "pattern": "sweep-line",
+      "subVariation": "meeting-rooms-ii",
+      "distractors": [
+        "two-pointers",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Find the total length of the real line covered by at least one of n given intervals (coverage sweep).",
+      "pattern": "sweep-line",
+      "subVariation": "max-simultaneous",
+      "distractors": [
+        "merge-intervals",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Given rectangles aligned to the axes, compute their total covered area (Klee's problem, 1D of 2D sweep).",
+      "pattern": "sweep-line",
+      "subVariation": "skyline",
+      "distractors": [
+        "segment-tree",
+        "coordinate-compression"
+      ]
+    },
+    {
+      "statement": "Given a stream of booking intervals, after each booking report the current maximum number of overlapping events.",
+      "pattern": "sweep-line",
+      "subVariation": "meeting-rooms-ii",
+      "distractors": [
+        "tree-map",
+        "segment-tree"
+      ]
+    }
+  ],
   "topological-sort": [],
   "union-find": [],
   "greedy": [],

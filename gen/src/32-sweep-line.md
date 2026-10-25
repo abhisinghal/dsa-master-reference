@@ -3,9 +3,153 @@
 
 <PatternVideo pattern-name="Sweep Line" duration="8–12 min" />
 
-<PatternProgress pattern-id="sweep-line" problems="meeting-rooms-ii, my-calendar-ii, the-skyline-problem" />
+<PatternProgress pattern-id="sweep-line" problems="meeting-rooms-ii, my-calendar-ii, the-skyline-problem, car-pooling, employee-free-time" />
 
+<script setup>
+const bareTemplateCode = `# python — count sweep
+events = []
+for s, e in intervals:
+    events.append((s, +1))     # opening
+    events.append((e, -1))     # closing
+# tie-break: closings before openings at the same t (half-open semantics)
+events.sort(key=lambda ev: (ev[0], ev[1]))
+active, best = 0, 0
+for t, delta in events:
+    active += delta
+    best = max(best, active)
+return best`
 
+const bareInvariant = {
+  statement: `After processing all events with timestamp \`<= t\`, \`active\` equals the number of intervals that cover point \`t\` under half-open \`[s, e)\` semantics; \`best\` is the maximum \`active\` seen so far.`,
+  initialization: `Before entering the loop, \`active = 0\` and \`best = 0\`. No events processed, no intervals active — correct.`,
+  maintenance: `Each event is either \`+1\` (an interval starts) or \`-1\` (an interval ends). Adding the delta is the atomic change in membership at that timestamp. The sort order and tie-break (-1 before +1 at the same time) ensure that an interval ending at \`t\` releases its slot before another interval starting at \`t\` claims it, which encodes half-open semantics. After the update, \`best = max(best, active)\` keeps the running maximum current.`,
+  termination: `Once all events are consumed, \`active = 0\` (every \`+1\` has a matching \`-1\`) and \`best\` records the peak concurrency across the entire sweep.`
+}
+
+const bareComplexity = {
+  time: `O(n log n) — sorting dominates; the scan is O(n).`,
+  space: `O(n) for the event array.`
+}
+
+const templateSpecializations = [
+  { slug: `max-simultaneous-overlap-medium`, title: `Max simultaneous overlap` },
+  { slug: `meeting-rooms-ii-medium`, title: `Meeting Rooms II` },
+  { slug: `car-pooling-medium`, title: `Car Pooling` },
+  { slug: `the-skyline-problem-hard`, title: `Skyline` },
+  { slug: `employee-free-time-hard`, title: `Employee Free Time` }
+]
+
+const maxSimulInvariant = {
+  statement: `After processing all events with timestamp \`<= t\`, \`active\` equals the number of intervals covering \`t\`.`,
+  initialization: `Before the loop, \`active = 0\`. No intervals have started, so zero cover any point.`,
+  maintenance: `Each event is \`+1\` on an open or \`-1\` on a close. The sort places events in timestamp order; the tie-break puts closes before opens, encoding half-open semantics (end-touching-start is not an overlap). After adding the delta, \`active\` reflects the exact set covering \`t\`.`,
+  termination: `All events consumed. \`best\` is the max covering count ever seen; by the invariant, that's the max simultaneous overlap.`
+}
+
+const carPoolingCode = `# python — diff-array sweep over fixed 1001-stop route
+def car_pooling(trips, capacity):
+    diff = [0] * 1001
+    for passengers, start, end in trips:
+        diff[start] += passengers    # pick up
+        diff[end]   -= passengers    # drop off (half-open: no one is on at 'end')
+    load = 0
+    for d in diff:
+        load += d
+        if load > capacity:
+            return False
+    return True`
+
+const carPoolingInvariant = {
+  statement: `After the prefix sum reaches stop \`k\`, \`load\` equals the number of passengers currently in the car at the half-open interval \`[k, k+1)\`.`,
+  initialization: `At \`k = 0\` before the loop, \`load = 0\` — the car is empty.`,
+  maintenance: `\`diff[k]\` is the net passenger change at stop \`k\`: pickups add, drop-offs subtract. The prefix-sum step \`load += diff[k]\` applies that change. Because drop-offs are recorded at the drop-off stop (not drop-off+1), a trip \`[p, s, e]\` contributes \`+p\` to the running load only while \`s <= k < e\` — exactly the half-open semantics the problem specifies.`,
+  termination: `At the final stop, \`load = 0\` (every pickup has a matching drop-off). If \`load > capacity\` ever fired, we already returned \`False\`.`
+}
+
+const skylineCode = `# python — sweep + max-heap with lazy deletion
+import heapq
+def getSkyline(buildings):
+    events = []
+    for L, R, H in buildings:
+        events.append((L, -H, R))    # start: negative H for max-heap
+        events.append((R, 0, 0))     # end sentinel to force a check
+    events.sort()
+    out, heap = [], [(0, float('inf'))]   # (neg-height, right-edge)
+    for x, negH, R in events:
+        if negH != 0:
+            heapq.heappush(heap, (negH, R))
+        while heap[0][1] <= x:            # lazy pop expired buildings
+            heapq.heappop(heap)
+        cur_h = -heap[0][0]
+        if not out or out[-1][1] != cur_h:
+            out.append([x, cur_h])
+    return out`
+
+const skylineInvariant = {
+  statement: `At every sweep point \`x\`, the heap top (after lazy popping) is the tallest building whose x-span still covers \`x\`.`,
+  initialization: `Before the sweep, the heap contains only the sentinel \`(0, inf)\` representing "ground, extending forever."`,
+  maintenance: `When x passes an \`(L, -H, R)\` start event, that building \`(negH, R)\` is pushed; the heap top may change if \`-H\` beats the previous top. The while-loop lazily pops any \`(negH', R')\` with \`R' <= x\` — these buildings no longer cover \`x\`. After pushes and pops, the top is the max active height. If it differs from \`out[-1][1]\`, a skyline key point exists.`,
+  termination: `All events processed. The heap drains back to the ground sentinel; the final emitted point at the last right edge is at height 0.`
+}
+
+const freeTimeCode = `# python — merge all busy intervals via sweep, emit zero-active gaps
+def employeeFreeTime(schedule):
+    events = []
+    for employee in schedule:
+        for iv in employee:
+            events.append((iv.start, +1))
+            events.append((iv.end,   -1))
+    events.sort(key=lambda ev: (ev[0], ev[1]))
+    out, active, prev_end = [], 0, None
+    for t, delta in events:
+        if active == 0 and prev_end is not None and prev_end < t:
+            out.append(Interval(prev_end, t))     # a gap!
+        active += delta
+        if active == 0:
+            prev_end = t
+    return out`
+
+const freeTimeInvariant = {
+  statement: `At every moment during the sweep, \`active = 0\` iff NO employee is busy at that instant; \`prev_end\` is the last time \`active\` fell to 0.`,
+  initialization: `Before the sweep, \`active = 0\` and \`prev_end = None\` — no events seen, no "last fall to zero" yet.`,
+  maintenance: `At each event the delta is \`+1\` (an employee's interval opens) or \`-1\` (one closes). The running sum therefore equals the count of employees busy at that instant. Just before applying a \`+1\` event, if \`active = 0\` and \`prev_end\` is set, the open interval \`(prev_end, t)\` was free time for everyone — emit it. After applying, update \`prev_end\` on the way back down to 0.`,
+  termination: `All events consumed. All busy windows have been swept; every maximal interval during which \`active = 0\` has been emitted.`
+}
+
+const trapAcode = {
+  statement: `Tie-break at \`start == end\`: closings before openings for half-open \`[s,e)\`.`,
+  bug: `Meetings \`[1,5]\` and \`[5,10]\` — if the \`+1\` at 5 fires before the \`-1\` at 5, \`active\` momentarily becomes 2 and you report "need 2 rooms" when 1 would suffice.`,
+  fix: `In the sort key, make \`-1\` events sort first on equal timestamps. Python: \`events.sort(key=lambda ev: (ev[0], ev[1]))\` works because \`-1 < +1\`. Java: \`(a, b) -> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]\`. Decide if the problem is half-open before coding.`
+}
+
+const trapBcode = {
+  statement: `Reporting the aggregate before applying the event instead of after.`,
+  bug: `For max-concurrency, swapping \`active += delta\` and \`best = max(best, active)\` has you record the OLD state when the event causes a spike — you miss the peak by one.`,
+  fix: `For peak-max: update \`active\` first, then record \`best\`. For coverage-length (where you measure the segment BEFORE the event): record using OLD \`active\`, then update. Different problems need different orders — write out which "between-event state" you're measuring before coding.`
+}
+
+const trapCcode = {
+  statement: `Allocating an event-length array over coordinate space on huge or sparse coordinates.`,
+  bug: `Car Pooling restricts stops to 0..1000, so a 1001-cell diff-array works. But for timestamps in Unix seconds or geographic longitudes (\`10^9\` scale), the same approach OOMs or TLEs. You can't allocate a billion-cell array.`,
+  fix: `For dense small-domain coordinates (0..N): diff array is optimal. For sparse large-domain coordinates: event list sorted by timestamp (as in the canonical template), or a \`TreeMap<coord, delta>\` for online. Decide from the constraint, not habit.`
+}
+
+const quizQuestions = [
+  {q: "What events do you emit for the classic Meeting Rooms II problem?", choices: [{text: "(start, +1) and (end, -1)", correct: true, explanation: "Sweep time; maintain running count; max is the answer."}, {text: "(start, meeting)", correct: false}, {text: "(start, +1) only", correct: false}, {text: "Interval midpoints", correct: false}]},
+  {q: "For The Skyline Problem, what data structure processes active heights?", choices: [{text: "Max-heap (with lazy removal) or a TreeMap", correct: true, explanation: "You need max-active at each event."}, {text: "Min-heap", correct: false, explanation: "You want max, not min."}, {text: "Simple stack", correct: false}, {text: "Queue", correct: false}]},
+  {q: "In sweep events, why does the tie-break 'end before start at same time' matter for Meeting Rooms II?", choices: [{text: "A meeting ending exactly when another starts doesn't need a new room", correct: true, explanation: "End-first tie-break correctly reuses rooms."}, {text: "It doesn't matter", correct: false}, {text: "For alphabetical ordering", correct: false}, {text: "To avoid duplicates", correct: false}]},
+  {q: "For Car Pooling on constrained coordinates (0..1000), what structure is optimal?", choices: [{text: "Difference array indexed by stop", correct: true, explanation: "O(n + K) where K=1001; no sort needed."}, {text: "Sorted event list", correct: false, explanation: "Works but O((n+K) log n) is unnecessary."}, {text: "Segment tree", correct: false, explanation: "Overkill for a bounded 1D domain."}, {text: "Min-heap", correct: false}]},
+  {q: "Sweep Line vs Difference Array: when is Sweep Line preferred?", choices: [{text: "When coordinates are unbounded / very sparse", correct: true, explanation: "Diff arrays need contiguous integer coords; sweep works on any comparable timestamps."}, {text: "When coordinates are 1..n dense", correct: false, explanation: "Diff arrays are perfect there."}, {text: "Always", correct: false}, {text: "Never", correct: false}]}
+]
+
+const mrIIsolvePrompt = `Given meeting intervals, return the minimum number of rooms. Example: \`[[0,30],[5,10],[15,20]]\` → 2.`
+
+const carPoolingSolvePrompt = `Given trips \`[[passengers, start, end], ...]\` and a car \`capacity\`, decide whether the car can serve all trips. Stops are integers 0..1000.`
+
+const skylineSolvePrompt = `Given buildings \`[[L, R, H], ...]\`, return the skyline silhouette as key points \`[[x, height], ...]\` where the height changes.`
+
+const freeTimeSolvePrompt = `Given each employee's busy intervals, return the common free time (intervals where everyone is simultaneously free).`
+</script>
 
 ## Why sweep line exists — the story
 
@@ -19,56 +163,53 @@ The pattern is **sweep line**: turn intervals into a stream of events. A `driver
 
 The pattern gets its name from geometry: imagine a vertical line sweeping across a drawing from left to right. Whenever the line hits the start or end of an interval, your state changes. For meeting rooms the state is a count. For car pooling it is passengers in the car. For skyline it is a max-heap of active building heights. The reusable idea is always the same: sort the moments where state can change, then process them in order.
 
-For the meeting-rooms flavour of this: meetings scheduled as `[0,30]`, `[5,10]`, `[15,20]`. Events: `(0,+1)`, `(30,-1)`, `(5,+1)`, `(10,-1)`, `(15,+1)`, `(20,-1)`. Sort by time: active becomes `1` at time 0, `2` at time 5, back to `1` at time 10, `2` at time 15, `1` at time 20, `0` at time 30. Peak active is `2` → two rooms.
-
 > [key] **Key Insight** — Same input, different lens. Merge Intervals asks "which intervals overlap into which?"; sweep line asks "how many are active at time t?". The +1/−1 event stream answers the second in one linear pass.
 
+## The bare mechanic — simplest working example
+
+Three meetings: `[0,30]`, `[5,10]`, `[15,20]`. Turn each into two events, sort, scan:
+
+| event | time | delta | active after | best |
+|---|---|---|---|---|
+| start [0,30] | 0 | +1 | 1 | 1 |
+| start [5,10] | 5 | +1 | 2 | 2 |
+| end [5,10] | 10 | −1 | 1 | 2 |
+| start [15,20] | 15 | +1 | 2 | 2 |
+| end [15,20] | 20 | −1 | 1 | 2 |
+| end [0,30] | 30 | −1 | 0 | 2 |
+
 ```svg
-<svg role="img" width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" aria-label="turn intervals into sorted start/end events, then sweep left → right">
-  <defs>
-    <marker id="swp-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
-    <filter id="swp-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
-  </defs>
-  <rect x="0" y="0" width="720" height="240" fill="var(--dsa-bg)"/>
-  <text x="360" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-ink)">turn intervals into sorted start/end events, then sweep left → right</text>
-  <g font-size="11" fill="var(--dsa-neutral)" text-anchor="end">
-    <text x="62" y="58">[0,30]</text><text x="62" y="85">[5,10]</text><text x="62" y="112">[15,20]</text>
+<svg role="img" viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Bare mechanic sweep">
+  <rect x="0" y="0" width="400" height="180" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">+1 on start, -1 on end, scan sorted events</text>
+  <line x1="30" y1="60" x2="370" y2="60" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <g text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">
+    <text x="40" y="78">0</text><text x="100" y="78">5</text><text x="160" y="78">10</text><text x="220" y="78">15</text><text x="280" y="78">20</text><text x="360" y="78">30</text>
   </g>
-  <g filter="url(#swp-s1)">
-    <rect x="78" y="43" width="572" height="16" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/>
-    <rect x="180" y="70" width="110" height="16" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
-    <rect x="400" y="97" width="110" height="16" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)"/>
+  <g font-size="11" font-weight="700" text-anchor="middle">
+    <circle cx="40" cy="60" r="5" fill="var(--dsa-success)"/><text x="40" y="98" fill="var(--dsa-success)">+1</text>
+    <circle cx="100" cy="60" r="5" fill="var(--dsa-success)"/><text x="100" y="98" fill="var(--dsa-success)">+1</text>
+    <circle cx="160" cy="60" r="5" fill="var(--dsa-danger)"/><text x="160" y="98" fill="var(--dsa-danger)">-1</text>
+    <circle cx="220" cy="60" r="5" fill="var(--dsa-success)"/><text x="220" y="98" fill="var(--dsa-success)">+1</text>
+    <circle cx="280" cy="60" r="5" fill="var(--dsa-danger)"/><text x="280" y="98" fill="var(--dsa-danger)">-1</text>
+    <circle cx="360" cy="60" r="5" fill="var(--dsa-danger)"/><text x="360" y="98" fill="var(--dsa-danger)">-1</text>
   </g>
-  <line x1="70" y1="130" x2="662" y2="130" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#swp-ar-blue)"/>
-  <g font-size="11" text-anchor="middle" font-weight="700">
-    <circle cx="78" cy="130" r="5" fill="var(--dsa-success)"/><text x="78" y="151" fill="var(--dsa-success)">0 +1</text>
-    <circle cx="180" cy="130" r="5" fill="var(--dsa-success)"/><text x="180" y="151" fill="var(--dsa-success)">5 +1</text>
-    <circle cx="290" cy="130" r="5" fill="var(--dsa-danger)"/><text x="290" y="151" fill="var(--dsa-danger)">10 −1</text>
-    <circle cx="400" cy="130" r="5" fill="var(--dsa-success)"/><text x="400" y="151" fill="var(--dsa-success)">15 +1</text>
-    <circle cx="510" cy="130" r="5" fill="var(--dsa-danger)"/><text x="510" y="151" fill="var(--dsa-danger)">20 −1</text>
-    <circle cx="650" cy="130" r="5" fill="var(--dsa-danger)"/><text x="650" y="151" fill="var(--dsa-danger)">30 −1</text>
+  <text x="30" y="130" font-size="10" font-weight="700" fill="var(--dsa-neutral)">active:</text>
+  <g font-size="12" font-weight="700" text-anchor="middle" fill="var(--dsa-ink)">
+    <text x="40" y="132">1</text><text x="100" y="132">2</text><text x="160" y="132">1</text><text x="220" y="132">2</text><text x="280" y="132">1</text><text x="360" y="132">0</text>
   </g>
-  <line x1="180" y1="34" x2="180" y2="205" stroke="var(--dsa-primary)" stroke-width="2.5" stroke-dasharray="6 4"/>
-  <text x="194" y="42" font-size="11" font-weight="700" fill="var(--dsa-primary)">sweep line at t=5</text>
-  <text x="60" y="190" text-anchor="end" font-size="11" font-weight="700" fill="var(--dsa-neutral)">active</text>
-  <g filter="url(#swp-s1)" font-size="14" font-weight="700" text-anchor="middle">
-    <rect x="61" y="172" width="34" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="78" y="191" fill="var(--dsa-ink)">1</text>
-    <rect x="163" y="172" width="34" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="180" y="191" fill="var(--dsa-ink)">2</text>
-    <rect x="273" y="172" width="34" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="290" y="191" fill="var(--dsa-ink)">1</text>
-    <rect x="383" y="172" width="34" height="28" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="400" y="191" fill="var(--dsa-ink)">2</text>
-    <rect x="493" y="172" width="34" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="510" y="191" fill="var(--dsa-ink)">1</text>
-    <rect x="633" y="172" width="34" height="28" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><text x="650" y="191" fill="var(--dsa-ink)">0</text>
-  </g>
-  <text x="360" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-neutral)">peak active count = 2 rooms</text>
+  <text x="200" y="160" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">peak = 2 — two rooms needed</text>
 </svg>
 ```
-<div class="readfig"><b>How to read it:</b> Each interval becomes two events: green starts add <b>+1</b>, red ends add <b>−1</b>. The blue sweep line processes events in sorted order and maintains the running <code>active</code> count. The maximum value in that row is <b>2</b>, so two meetings overlap at peak and two rooms are required.</div>
 
-> [inv] **Invariant — running sum equals active count.** At every event time `t`, `active = Σ (+1 for starts ≤ t) − Σ (+1 for ends ≤ t)`. The running counter is the answer to "how many are active *at this instant*." Sanity check: `active` must be ≥ 0 at all times; a negative value means an end event fired without a matching start (data corruption).
-
-> [trap] **Trap — sorting starts and ends together loses the tie-break decision.** Meetings `[1,5]` and `[5,10]`: does the end at 5 fire *before* or *after* the start at 5? Answer changes the room count. **The rule for "sharing endpoints doesn't need a new room": sort so that end events precede start events on ties.** In Java: `Arrays.sort(events, (a, b) -> a.time != b.time ? a.time - b.time : a.type - b.type)` where `type = 0` for end, `1` for start.
-
-> [trap] **Trap — using ends as strictly less-than-start events.** The sweep produces the same peak whether you use `+1` at start / `−1` at (end + 1) OR `+1` at start / `−1` at end with the tie-break rule above. **Pick one convention and stick to it.** Mixing conventions across problems is the single most common sweep-line bug.
+<PatternTemplateCard
+  slug="sweep-line-bare"
+  language="python"
+  :code="bareTemplateCode"
+  :invariant="bareInvariant"
+  :complexity="bareComplexity"
+  problemShape="list of intervals; return peak overlap (count sweep)"
+  defaultRevealed />
 
 ## When to use it — and when not to
 
@@ -80,12 +221,8 @@ For the meeting-rooms flavour of this: meetings scheduled as `[0,30]`, `[5,10]`,
 - "skyline" — max height at every x-coordinate (event = building start/end).
 - many intervals where only endpoints matter; nothing changes inside an interval.
 
-
-<SweepLineAnim />
-
-
 ### When NOT to use it
-You need to *reconstruct which intervals were merged* rather than count activity. Use [Merge Intervals](#merge-intervals) instead. Also, if events arrive *online* (no chance to sort up front), reach for a TreeMap or segment tree instead of an event-array sweep.
+You need to *reconstruct which intervals were merged* rather than count activity. Use Merge Intervals instead. Also, if events arrive *online* (no chance to sort up front), reach for a TreeMap or segment tree instead of an event-array sweep.
 
 Also avoid the plain event sweep when:
 - intervals are not known in advance and you need instant answers after each insertion.
@@ -94,63 +231,68 @@ Also avoid the plain event sweep when:
 - endpoints have ambiguous inclusivity; decide whether `[1,5]` and `[5,10]` overlap before coding.
 - state cannot be updated by a simple add/remove; you may need a heap, multiset, or segment tree as the swept state.
 
-## How to use it — template
-
-```java
-List<int[]> events = new ArrayList<>();
-for (int[] in : intervals) {
-    events.add(new int[]{in[0], +1});        // opening event
-    events.add(new int[]{in[1], -1});        // closing event
-}
-events.sort((a, b) -> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]);
-int active = 0, best = 0;
-for (int[] e : events) {
-    active += e[1];
-    best = Math.max(best, active);
-}
-return best;
-```
-
-The first loop turns intervals into the only moments that matter: starts and ends. The sort creates the left-to-right sweep order. The tie-break is part of the problem definition: with `-1` before `+1`, a meeting ending at `5` frees the room before another meeting starting at `5` asks for one. The scan keeps the current aggregate in `active` and records whatever the problem asks for — maximum, total covered length, first overload, or a list of output segments.
-
-
-## Sweep-line flavors you should name out loud
-
-Not every sweep line uses the same state. Before coding, decide which flavor you are in:
-
-| Flavor | State carried while sweeping | Example question |
-|---|---|---|
-| Count sweep | `active += delta` | How many rooms/platforms are needed? |
-| Weighted sweep | `load += passengers` | Does car pooling exceed capacity? |
-| Coverage sweep | previous coordinate + active count | How many total units are covered by at least one interval? |
-| Extremum sweep | heap or multiset of active values | What is the skyline height at each x? |
-
-For coverage length, the scan records distance, not just state. If the previous coordinate was `prev` and current coordinate is `x`, then the segment `[prev, x)` had whatever active count you carried from the last event. If `active > 0`, add `x - prev` to covered length. Then apply all events at `x`. This tiny ordering detail is why sweep line feels subtle at first: the state between events describes the open segment after the previous coordinate, not the point itself.
-
-### Tie-breaks are part of the problem
-At equal coordinates, you must know whether an end and a start overlap. For meetings, `[1,5]` followed by `[5,10]` usually uses one room, so process the end before the start. For closed intervals where both endpoints count, touching intervals do overlap, so you may process starts before ends or shift end events by one in integer-coordinate problems. For skyline, starts and ends at the same x need special ordering by height so the silhouette does not briefly dip or spike. Do not treat the comparator as boilerplate; it encodes the interval semantics.
-
 ## History — Bentley-Ottmann sweep, 1979
 
 The sweep-line technique was formalized by **Jon Bentley and Thomas Ottmann in 1979** for the classical problem of finding *all* intersection points among `n` line segments in a 2D plane. Their algorithm sweeps a vertical line from left to right, maintaining a **binary search tree of active segments** ordered by their y-coordinate at the sweep line. When a segment starts, it's inserted; when it ends, it's removed; segment intersections happen precisely when adjacent segments in the BST swap order. Total complexity: **O((n + k) log n)** where `k` is the number of intersections — a huge win over the naive O(n²) brute force.
 
-The idea generalized beyond geometry. **Franco Preparata and Michael Shamos**'s foundational textbook *Computational Geometry* (1985) devoted an entire chapter to the pattern. Modern applications:
+The idea generalized beyond geometry. **Franco Preparata and Michael Shamos**'s foundational textbook *Computational Geometry* (1985) devoted an entire chapter to the pattern. Today, the "sweep as event-processing" metaphor is the mental model behind every event-driven state machine.
 
-- **CAD software** (AutoCAD, Fusion 360) sweeps to detect overlapping boundaries in real time as you draw.
-- **Chip design (VLSI CAD)** uses sweep to check for design-rule violations (are these two metal traces too close?) on billion-transistor circuits.
-- **Graphics engines** use "z-buffer sweeps" to determine which pixels are covered by which triangles.
-- **Databases** use interval-tree-like sweeps to compute date-range JOINs efficiently.
-- **Every "meeting rooms" / "concurrent sessions" / "peak users" question** on LeetCode is a 1D sweep. The 2D Bentley-Ottmann is where the pattern's name comes from.
+## THE template
 
-The "sweep as an event-processing metaphor" was originally *"a vertical line moving from left to right"* in Bentley's language. Today it's the mental model behind every event-driven state machine.
+Four flavors share one shape. The state you carry while sweeping decides which flavor you're in:
+
+| Flavor | State carried | Example question |
+|---|---|---|
+| Count sweep | `active += delta` | How many rooms are needed? |
+| Weighted sweep | `load += passengers` | Does car pooling exceed capacity? |
+| Extremum sweep | heap or multiset of active values | What is the skyline height at each x? |
+| Coverage sweep | previous coordinate + active flag | What length of the number line is covered? |
+
+<PatternTemplateCard
+  slug="sweep-line-canonical"
+  title="Sweep-line canonical event sweep"
+  language="python"
+  :code="bareTemplateCode"
+  :invariant="bareInvariant"
+  :complexity="bareComplexity"
+  :specializations="templateSpecializations"
+  problemShape="intervals → (start,+1)/(end,-1) events → sort → scan with running state" />
+
+## Interactive diagram
+
+<SweepLineAnim />
+
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="sweep-line" />
+
+### Max simultaneous overlap <span class="diff diff-m">Medium</span>
+
+The **bare mechanic** written as its own problem: "At what moment are the most intervals simultaneously active, and what is that count?"
+
+<InvariantProof
+  :statement="maxSimulInvariant.statement"
+  :initialization="maxSimulInvariant.initialization"
+  :maintenance="maxSimulInvariant.maintenance"
+  :termination="maxSimulInvariant.termination" />
+
+**Trace** on `[[1,5], [2,6], [8,10]]`:
+- Events sorted: `(1,+1), (2,+1), (5,-1), (6,-1), (8,+1), (10,-1)`.
+- active goes `0 → 1 → 2 → 1 → 0 → 1 → 0`. Peak = 2.
+
+This bare version is useful as a warm-up and shows up directly in: *"what's the most concurrent users on the platform during the hour?"*, *"what is the maximum vehicle count ever on this bridge?"*, *"when did my log file see the most open file handles?"*
+
+**Related sibling: total covered length.** Replace `best = max(best, active)` with a running `covered += (t - prev_t) if active > 0`. Measures the length of the number line that at least one interval covers.
 
 ---
 
-## Meeting Rooms II (Minimum Concurrent Intervals) <span class="diff diff-m">Medium</span>
+### Meeting Rooms II <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/)*
 
-<ProgressCheck id="meeting-rooms-ii-minimum-concurrent-intervals" />
+<ProgressCheck id="meeting-rooms-ii-medium" />
+
+> [key] **The twist:** half-open interval semantics. A meeting ending at `t` frees a room *before* another starting at `t` needs one. Two equivalent solutions: event sweep with end-before-start tie-break, OR a min-heap of end times.
 
 ```svg
 <svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Meeting Rooms II (Minimum Concurrent Intervals) Medium">
@@ -181,53 +323,12 @@ The "sweep as an event-processing metaphor" was originally *"a vertical line mov
 </svg>
 ```
 
-<div class="readfig"><b>How to read it:</b> Convert every start to +1 and every end to -1, sweep from left to right, and the largest active count is the number of rooms needed.</div>
+> [key] **Blind-solve first:** {{ mrIIsolvePrompt }}
 
-### Problem
-Given meeting time intervals, find the **minimum number of rooms** so that no two overlapping meetings share a room.
-
-**Constraints:** `1 ≤ n ≤ 10⁴`; `start < end`.
-
-**Example 1:** `[[0,30],[5,10],[15,20]]` → `2`.
-
-**Example 2:** `[[7,10],[2,4]]` → `1` because the meetings do not overlap.
-
-### Solution — brute force
-A direct baseline checks every interesting time and counts how many intervals cover it.
-
-```java
-// Pseudocode baseline:
-// best = 0
-// for each meeting m as a candidate time:
-//     active = number of intervals with interval.start <= m.start < interval.end
-//     best = max(best, active)
-```
-
-You only need to test meeting start times because the active count can increase only when a meeting starts. This still takes O(n²): for each of `n` starts, scan all `n` intervals. Sweep line compresses those repeated counts into one sorted event stream.
-
-```text
-best = 0
-for each meeting start t:
-    active = 0
-    for each interval [s, e):
-        if s <= t < e:
-            active++
-    best = max(best, active)
-return best
-```
-
-Brute force complexity: O(n²) time and O(1) extra space.
-
-### Solution — optimized
-Either a **min-heap of end times** or a **sweep of +1/−1 events**. Both compute the peak number of simultaneously active intervals.
-
-> [key] **Key Insight** — You need a new room only when the earliest-ending active meeting hasn't finished before the next starts. The heap top is that earliest end; reuse the room if it's free.
-
-> [inv] **Invariant (sweep)** — After sorting all start(+1)/end(−1) events by time, the running sum equals the number of active meetings at that instant; the maximum is the room count.
-
-#### Java (heap)
-```java
-int minMeetingRooms(int[][] meetings) {
+<TemplateReveal
+  slug="meeting-rooms-ii"
+  language="java"
+  :canonical="`int minMeetingRooms(int[][] meetings) {
     Arrays.sort(meetings, (a, b) -> a[0] - b[0]);          // by start
     PriorityQueue<Integer> ends = new PriorityQueue<>();   // min-heap of end times
     for (int[] m : meetings) {
@@ -235,10 +336,10 @@ int minMeetingRooms(int[][] meetings) {
         ends.offer(m[1]);
     }
     return ends.size();
-}
-```
+}`"
+  problemShape="meetings → sort by start → min-heap of end times" />
 
-> [note] **Trace it** — heap version on `[[0,30],[5,10],[15,20]]`.
+**Trace** on `[[0,30],[5,10],[15,20]]` (heap version):
 
 <CodeTrace
   title="Meeting Rooms II (heap) — meetings=[[0,30],[5,10],[15,20]]"
@@ -252,127 +353,221 @@ int minMeetingRooms(int[][] meetings) {
     { pointers: { i: 3 }, vars: { heap: "[20,30]", rooms: 2 }, note: "done. answer = 2 rooms" }
   ]'
 />
-#### Java (sweep, tie-break end before start)
-```java
-int minMeetingRoomsSweep(int[][] meetings) {
-    int n = meetings.length;
-    int[] starts = new int[n], ends = new int[n];
-    for (int i = 0; i < n; i++) { starts[i] = meetings[i][0]; ends[i] = meetings[i][1]; }
-    Arrays.sort(starts); Arrays.sort(ends);
-    int rooms = 0, best = 0, i = 0, j = 0;
-    while (i < n) {
-        if (starts[i] < ends[j]) { rooms++; i++; best = Math.max(best, rooms); }
-        else { rooms--; j++; }        // a meeting ended: free a room
-    }
-    return best;
-}
-```
 
-> [note] **Trace it** — two-array sweep on starts `[0,5,15]` and ends `[10,20,30]`.
-
-<CodeTrace
-  title="Meeting Rooms II (two-array sweep) — starts / ends sorted"
-  :values="[0,5,10,15,20,30]"
-  :windowKeys="['si','ei']"
-  :cellWidth="42"
-  :steps='[
-    { pointers: { si: 0, ei: 0 }, vars: { rooms: 1, peak: 1 }, note: "0 lt 10 → room+" },
-    { pointers: { si: 1, ei: 0 }, vars: { rooms: 2, peak: 2 }, note: "5 lt 10 → room+ (2 concurrent)" },
-    { pointers: { si: 2, ei: 0 }, vars: { rooms: 1, peak: 2 }, note: "15 ≥ 10 → advance end (5-10 done)" },
-    { pointers: { si: 2, ei: 1 }, vars: { rooms: 2, peak: 2 }, note: "15 lt 20 → room+" },
-    { pointers: { si: 3, ei: 2 }, vars: { rooms: 2, peak: 2 }, note: "starts exhausted. answer = 2 rooms" }
-  ]'
-/>
-### Time Complexity
-Time O(n log n). Sorting starts/ends or meetings dominates; each event or heap operation is processed once.
-
-### Space Complexity
-Space O(n). The heap can hold active meeting ends, and the two-array sweep stores all starts and ends.
-
-### Learning notes
-- Why store starts and ends separately? — it turns overlap counting into two sorted event streams.
-- Why `starts[i] < ends[j]`? — equal time means a room frees before the next meeting starts.
-- Why increment `rooms` on a start? — a new active meeting needs capacity right now.
-- Why decrement on an end? — that meeting no longer occupies a room.
-- Why track `best` instead of returning current rooms? — the answer is the peak concurrency over the whole sweep.
-- Why a min-heap alternative? — the smallest end time tells whether the earliest room is reusable.
-
-Additional notes:
-
-Time O(n log n) · Space O(n). The sort dominates. The heap version stores active room end times; the sweep version stores starts and ends.
-
-> [trap] **Common Trap** — Tie at `start == end`. *Example:* meetings `[1,5]` and `[5,10]`. If end-events sort **before** start-events, one room suffices (release, then acquire). If start sorts first, you need 2. LeetCode's *Meeting Rooms II* treats them as one — sort ends first on ties.
-
-<TrapTrace title="Tie at 'start == end'" input="[1,5]" bug="meetings '[1,5]' and '[5,10]'. If end-events sort **before** start-events, one room suffices (release, then acquire). If start sorts first, you need 2. LeetCode's *Meeting Rooms II* treats them as one — sort ends first on ties." fix="See the guidance in the trap description and the code snippet." />
-
-> [note] **Interview script** — First, I'd clarify whether a meeting ending at time `t` frees a room for another starting at `t`; here it does. The brute force is to count active intervals at every start time, which is O(n²). To optimize, I can either sort starts and ends as events or keep a min-heap of active end times. Both are O(n log n); the sweep makes the peak-concurrency idea especially explicit.
-
-> [pat] **Pattern Connection** — Peak-concurrency sweep also solves *Car Pooling*, *Minimum Number of Platforms*, and (with a heap keyed on height) *The Skyline Problem*.
+**Why either solution works:** the heap keeps only *active* meetings. When the next starts, if the earliest end has already passed, that room is free — pop it and reuse. The heap size at the end equals the peak concurrency. The event sweep achieves the same by sorting and scanning; both are O(n log n). The heap version is more memory-efficient when most intervals don't overlap (heap stays small).
 
 ---
 
-## Sweep Line — the general recipe
-<p class="secgoal"><b>What & why:</b> the event-sorting template behind interval and scheduling problems. Goal — turn any "how many overlap / when is it busiest" question into a sorted stream of +1/−1 events you scan once.</p>
+### Car Pooling <span class="diff diff-m">Medium</span>
 
-For any "at each coordinate, what is the aggregate of intervals covering it?" problem:
+*[↗ LeetCode: Car Pooling](https://leetcode.com/problems/car-pooling/)*
 
-```text
-1. Emit events: (start, +delta) and (end, -delta).
-2. Sort events by coordinate; break ties so closings that free capacity
-   are processed before openings when intervals touching should not overlap.
-3. Sweep left to right, maintaining a running aggregate (count / sum / heap).
-4. Record the aggregate (max, or per-segment) as you pass each coordinate.
+> [key] **The twist:** coordinates are bounded integers (stops 0..1000) and the sweep carries *weights*, not just a count. A fixed-size diff-array gives `O(n + K)` with no sort step at all — a specialization of event sweep that beats the sort when `K ≤ n log n`.
+
+<InvariantProof
+  :statement="carPoolingInvariant.statement"
+  :initialization="carPoolingInvariant.initialization"
+  :maintenance="carPoolingInvariant.maintenance"
+  :termination="carPoolingInvariant.termination" />
+
+```svg
+<svg role="img" viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Car Pooling diff-array sweep">
+  <rect x="0" y="0" width="400" height="180" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">trips = [[2,1,5], [3,3,7]], capacity = 4</text>
+  <line x1="30" y1="60" x2="370" y2="60" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <g text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">
+    <text x="60" y="78">1</text><text x="100" y="78">3</text><text x="190" y="78">5</text><text x="280" y="78">7</text>
+  </g>
+  <g font-size="10" fill="var(--dsa-ink)" text-anchor="middle">
+    <text x="60" y="100">+2</text><text x="100" y="100">+3</text><text x="190" y="100">-2</text><text x="280" y="100">-3</text>
+  </g>
+  <g text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-ink)">
+    <text x="80" y="130">load=2</text><text x="145" y="130">load=5 ✗</text><text x="235" y="130">load=3</text><text x="320" y="130">load=0</text>
+  </g>
+  <text x="200" y="160" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-danger)">load exceeds capacity between stops 3 and 5 → return False</text>
+</svg>
 ```
 
-> [key] **Key Insight** — Sweep line converts a 2D "which intervals overlap here" question into a 1D ordered event stream. The state you carry (counter, sum, or a heap of active heights) defines the problem.
+> [key] **Blind-solve first:** {{ carPoolingSolvePrompt }}
 
-### Choosing the swept state
-A counter is enough when every interval contributes the same `+1` while active. A running sum handles weighted intervals, like passengers in a car or CPU load from jobs. A heap or multiset is needed when you need the maximum active value, such as skyline height. A `TreeMap` of deltas is the online-friendly version: insert `+delta` and `-delta` as bookings arrive, then scan the ordered map to answer overlap.
+<TemplateReveal
+  slug="car-pooling"
+  language="python"
+  :canonical="carPoolingCode"
+  problemShape="trips [[p,s,e]...] on bounded stops → diff-array → prefix-sum sweep" />
 
-### Endpoint policy
-Most sweep bugs are endpoint bugs. Decide if intervals are half-open `[start,end)` or closed `[start,end]`. Meeting rooms usually behave like half-open intervals: a meeting ending at 10 does not overlap one starting at 10. Calendar booking problems may define overlap differently. Once you decide, encode it in the tie-break. For half-open counting, process end before start at the same coordinate.
+**Trace** on `trips = [[2,1,5],[3,3,7]]`, `capacity = 4`:
+- diff after pickups/drop-offs: `diff[1]=+2, diff[3]=+3, diff[5]=-2, diff[7]=-3`.
+- Prefix sum: at stop 1 load=2 ✓, stop 3 load=5 ✗ > capacity → return `False`.
 
-
-### Online sweep with `TreeMap`
-If the intervals arrive one booking at a time, you cannot sort a fresh event array after every call unless the constraints are tiny. The same idea becomes a difference map: add `+1` at `start`, add `-1` at `end`, then scan keys in order to compute the max prefix sum. This is how the My Calendar family is usually introduced. The map stores only coordinates where something changes, so it avoids allocating a giant timeline.
-
-The trade-off is that each query may still scan many keys unless you maintain extra segment-tree information. That distinction is useful in interviews: an event array is best for batch input; a `TreeMap` delta structure is best for moderate online input; a segment tree is for large online input with many queries.
-
-### Coverage example by hand
-For intervals `[1,4]` and `[2,6]` as half-open ranges, events are `(1,+1)`, `(4,-1)`, `(2,+1)`, `(6,-1)`. Sweep sorted coordinates `1,2,4,6`. From `1` to `2`, active is 1, so length 1 is covered. From `2` to `4`, active is 2, so length 2 is covered. From `4` to `6`, active is 1, so length 2 is covered. Total covered length is 5, representing `[1,6)`. Notice we never asked which interval owns each point; the active count was enough.
-
-> [note] **Interview script** — First, I'd convert the intervals into events because the active count changes only at endpoints. Then I'd sort the events, explicitly defining the tie-break for equal times. As I sweep left to right, the running count is the number of active intervals, and the maximum is the rooms needed. The brute force is O(n²); sorting events gives O(n log n) time and O(n) space.
-
-
-### Brute force to optimized, in one mental move
-The brute force asks, "for this time, how many intervals contain it?" Sweep line asks the same question for every time in sorted order, while carrying the answer forward. Between two adjacent event times, the active set cannot change, so there is no reason to rescan all intervals. This is the core optimization: replace repeated membership checks with incremental state updates.
-
-### Debugging checklist
-When a sweep solution is off by one room or one unit of coverage, check these in order: Are end events ordered before start events for half-open intervals? Are multiple events at the same coordinate grouped or at least processed with the correct tie-break? Are you recording the answer before or after applying the event? Are you using coordinate compression or a map instead of allocating an array from `0` to `10^9`? Most sweep bugs live in those four questions, not in the loop itself.
-
-> [pat] **Pattern Connection** — With a `TreeMap` as the event/difference structure, sweep handles *My Calendar I/II/III* (max booking overlap) online. With a max-heap of active building heights, it yields the skyline silhouette.
-
-### Same pattern, new tweaks
-
-"Turn intervals into +1/−1 events and track the running count" measures peak overlap everywhere:
-
-| Variation | The one thing that changes |
-|---|---|
-| [Car Pooling](https://leetcode.com/problems/car-pooling/) | +passengers at pickup, −passengers at drop-off; fail as soon as the running load exceeds capacity. |
-| [Minimum Number of Platforms](https://leetcode.com/problems/meeting-rooms-ii/) | Train arrival/departure times are just meeting starts/ends with railway names. |
-| [My Calendar II / III](https://leetcode.com/problems/my-calendar-ii/) | Use a `TreeMap` of deltas because bookings arrive one at a time. |
-| [The Skyline Problem](https://leetcode.com/problems/the-skyline-problem/) | Events add/remove building heights; the swept state is a max-heap or multiset, not a count. |
-| [Employee Free Time](https://leetcode.com/problems/employee-free-time/) | Sweep all busy intervals and record gaps where the active count is zero. |
+**When to prefer this over the generic event sweep:** when the problem gives you a bounded integer coordinate domain. Train scheduling where stops are 0..100, hour-of-day analytics on a 24-cell array, grid cells 0..1000 — all benefit from the diff-array specialization. For unbounded or sparse coordinates (Unix timestamps, geographic longitude), fall back to the sorted event list.
 
 ---
 
-## Check your understanding
+### The Skyline Problem <span class="diff diff-h">Hard</span>
+
+*[↗ LeetCode: The Skyline Problem](https://leetcode.com/problems/the-skyline-problem/)*
+
+> [key] **The twist:** the state carried isn't a count — it's a max-heap of active heights. At each event you need the tallest building still "alive" at this x. Lazy deletion (don't remove on the end event; discard when it bubbles to the top past its right edge) keeps each operation `O(log n)` amortized.
+
+<InvariantProof
+  :statement="skylineInvariant.statement"
+  :initialization="skylineInvariant.initialization"
+  :maintenance="skylineInvariant.maintenance"
+  :termination="skylineInvariant.termination" />
+
+```svg
+<svg role="img" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Skyline sweep">
+  <rect x="0" y="0" width="400" height="200" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">buildings = [[2,9,10], [3,7,15], [5,12,12]]</text>
+  <line x1="30" y1="170" x2="370" y2="170" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <rect x="50" y="110" width="140" height="60" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" opacity="0.5"/>
+  <rect x="75" y="65" width="100" height="105" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" opacity="0.6"/>
+  <rect x="125" y="88" width="175" height="82" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" opacity="0.5"/>
+  <polyline points="50,110 50,65 175,65 175,88 300,88 300,170" fill="none" stroke="var(--dsa-danger)" stroke-width="2.5"/>
+  <text x="200" y="192" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dsa-neutral)">red = silhouette key points at height changes</text>
+</svg>
+```
+
+> [key] **Blind-solve first:** {{ skylineSolvePrompt }}
+
+<TemplateReveal
+  slug="the-skyline-problem"
+  language="python"
+  :canonical="skylineCode"
+  problemShape="buildings → events → sweep + max-heap with lazy popping" />
+
+**Why the heap, not a count:** two buildings `[1,10,20]` and `[5,8,30]` overlap in `[5,8]`. At `x=5`, the count would just be 2, but the silhouette height is `max(20, 30) = 30`. You need the maximum height, not the number of overlapping buildings. The heap gives you that `O(log n)`.
+
+**Why lazy deletion:** removing an arbitrary heap element is `O(n)`. Instead, on the end event, do nothing; on each iteration pop entries from the top whose right-edge has passed. Each building is pushed once and popped once — amortized `O(log n)` per event.
+
+---
+
+### Employee Free Time <span class="diff diff-h">Hard</span>
+
+*[↗ LeetCode: Employee Free Time](https://leetcode.com/problems/employee-free-time/)*
+
+> [key] **The twist:** sweep over the union of all employees' intervals, then emit the gaps where `active = 0`. One sweep over `n = Σ|schedule[i]|` events; no k-way merge needed.
+
+<InvariantProof
+  :statement="freeTimeInvariant.statement"
+  :initialization="freeTimeInvariant.initialization"
+  :maintenance="freeTimeInvariant.maintenance"
+  :termination="freeTimeInvariant.termination" />
+
+> [key] **Blind-solve first:** {{ freeTimeSolvePrompt }}
+
+<TemplateReveal
+  slug="employee-free-time"
+  language="python"
+  :canonical="freeTimeCode"
+  problemShape="k sorted interval lists → merged events → emit zero-active gaps" />
+
+**Trace** on `schedule = [[[1,2],[5,6]], [[1,3]], [[4,10]]]`:
+- Events sorted: `(1,+1), (1,+1), (2,-1), (3,-1), (4,+1), (5,+1), (6,-1), (10,-1)`.
+- active trace: `1 → 2 → 1 → 0 (prev_end=3) → 1 → 2 → 1 → 0`. Gap emitted when active rises from 0 at `t=4`: free time = `[3, 4]`.
+- **Result:** `[[3,4]]`.
+
+**Alternative: k-way merge with a heap of pointers.** `O(n log k)` instead of `O(n log n)`; faster when `k` (number of employees) is much smaller than total intervals. The sweep is simpler to write; the k-way merge is strictly better when `k ≪ n`.
+
+---
+
+## Traps & gotchas
+
+<TrapTrace
+  :title="trapAcode.statement"
+  :bug="trapAcode.bug"
+  :fix="trapAcode.fix" />
+
+<TrapTrace
+  :title="trapBcode.statement"
+  :bug="trapBcode.bug"
+  :fix="trapBcode.fix" />
+
+<TrapTrace
+  :title="trapCcode.statement"
+  :bug="trapCcode.bug"
+  :fix="trapCcode.fix" />
+
+## In the wild — Mapbox label-collision avoidance
+
+Mapbox renders a vector map with city, street, POI, and road labels, all pushed from server-side tiles. On a zoomed-out view, 10,000+ candidate labels might fit in a 1024×1024 tile. Showing them all would be unreadable. **Label collision avoidance uses a 2D sweep line** to decide which labels get placed:
+
+1. Each label is represented by its bounding rectangle plus a priority score.
+2. Sort rectangles by priority (highest first).
+3. Sweep from top (lowest y) to bottom: maintain a **"skyline" of placed labels** per x-column.
+4. For each candidate, check if its rectangle intersects any already-placed label's rectangle via sweep line's active-set BST ordered by y-interval overlap.
+5. Place the label if no collision; otherwise discard.
+
+This runs on every pan/zoom gesture in real time at 60fps.
+
+Other named production uses:
+- **AutoCAD / Fusion 360** sweep lines to find overlapping boundaries while drawing — pure Bentley-Ottmann 2D sweep.
+- **Verilog chip-layout DRC** (design-rule check) uses sweep to find metal traces violating minimum-spacing constraints on billion-transistor circuits.
+- **Google Maps / Apple Maps** compute "where is traffic currently congested?" via a sweep over road-segment speed events.
+- **PostgreSQL's range-join operator** (`&&`) uses sweep plus a GiST index for `WHERE t1.period && t2.period`.
+
+## Recognition drill
+
+<RecognitionDrill pattern="sweep-line" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><b>What if events arrive online (one booking at a time)?</b></summary>
+
+Use a **`TreeMap<coord, delta>`** (Java) or **`std::map<int, int>`** (C++). Each booking does `map[start] += 1; map[end] -= 1;`. To query current peak-overlap, iterate keys in order with a running sum.
+
+For queries after every booking, that's `O(n)` per query; **My Calendar II/III** use this when `n` is small (≤ 1000). For large `n` with many queries, upgrade to a **segment tree with lazy propagation** indexed on compressed coordinates — `O(log n)` per update and per max query.
+</details>
+
+<details>
+<summary><b>What if coordinates are 10⁹ apart but you have only n = 10⁵ events?</b></summary>
+
+**Coordinate compression.** Collect all unique endpoints, sort them, map each to a dense index 0..2n. Then use a difference array or segment tree over the compressed space. `O(n log n)` time, `O(n)` space, no 10⁹-element allocation.
+
+Comes up in: GPS trajectory analytics (longitude 10⁹ precision but only `n` driver positions), financial tick-data (nanosecond timestamps), telemetry pipelines.
+</details>
+
+<details>
+<summary><b>What if intervals are weighted and you need total weighted coverage, not peak?</b></summary>
+
+The sweep carries a weighted sum. For intervals `[s, e, w]`, emit `(s, +w)` and `(e, -w)` events. Scan sorted events; between two adjacent event times `t1 < t2`, the segment `[t1, t2)` has whatever weighted sum you carried from the last event — add `(t2 - t1) * current_sum` to total weighted coverage.
+
+Used in: ad-impression billing (weighted by impressions per second), network bandwidth billing (weighted by bytes/sec served on each stream).
+</details>
+
+<details>
+<summary><b>What if intervals are 2D rectangles and you need total covered area?</b></summary>
+
+**Klee's problem.** The 1D sweep generalizes: sweep a vertical line across the plane. The *active set* is a set of y-intervals (one per rectangle whose x-range covers the sweep line). The 1D-covered-length of this active set, multiplied by the horizontal distance to the next event, is the area contributed. Maintain the active set with a **segment tree over compressed y-coordinates** supporting "add interval / remove interval / query total covered length." Overall `O(n log n)`.
+
+Used in: VLSI layout area counting, GIS urban-footprint analytics, graphics software for "selected area" measurement.
+</details>
+
+<details>
+<summary><b>Breaking point — when a plain sweep stops being enough.</b></summary>
+
+- **Dynamic intervals with mid-sweep insertions**: You can't un-sort. Use a `TreeMap` of deltas instead.
+- **Nested queries** (how many intervals contain point *p* AND satisfy some predicate on them): need a segment tree or interval tree with per-node metadata.
+- **Range updates with point queries** (e.g. "add 5 to all intervals covering [a,b]"): switch to segment tree with lazy propagation.
+- **Billions of intervals that don't fit in RAM**: external-memory sort of events, stream through with the sweep logic. Google uses this for ad-impression billing at scale.
+</details>
+
+### Cross-pattern problems
+
+| Problem | Primary pattern | What sweep contributes |
+|---|---|---|
+| [My Calendar III](https://leetcode.com/problems/my-calendar-iii/) | TreeMap sweep | each booking is a delta; max prefix sum is the answer |
+| [Rectangle Area II](https://leetcode.com/problems/rectangle-area-ii/) | 2D sweep + segment tree | Klee's problem; 2D area of union of rectangles |
+| [Falling Squares](https://leetcode.com/problems/falling-squares/) | sweep + segment tree | each new square's landing height is the max in its x-range |
+
+## Related patterns + Check your understanding
+
+<RelatedPatterns pattern-id="sweep-line" />
 
 <Quiz
   pattern-id="sweep-line"
-  :questions='[{"q": "What events do you emit for the classic Meeting Rooms II problem?", "choices": [{"text": "(start, +1) and (end, -1)", "correct": true, "explanation": "Sweep time; maintain running count; max is the answer."}, {"text": "(start, meeting)", "correct": false}, {"text": "(start, +1) only", "correct": false}, {"text": "Interval midpoints", "correct": false}]}, {"q": "For The Skyline Problem, what data structure processes active heights?", "choices": [{"text": "Max-heap (with lazy removal) or a TreeMap", "correct": true, "explanation": "You need max-active at each event."}, {"text": "Min-heap", "correct": false, "explanation": "You want max, not min."}, {"text": "Simple stack", "correct": false}, {"text": "Queue", "correct": false}]}, {"q": "In sweep events, why does the tie-break \"end before start at same time\" matter for Meeting Rooms II?", "choices": [{"text": "A meeting ending exactly when another starts doesn’t need a new room", "correct": true, "explanation": "End-first tie-break correctly reuses rooms."}, {"text": "It doesn’t matter", "correct": false}, {"text": "For alphabetical ordering", "correct": false}, {"text": "To avoid duplicates", "correct": false}]}, {"q": "For My Calendar II (no triple bookings), what is a clean approach?", "choices": [{"text": "Track singles + doubles; on new book check doubles first", "correct": true, "explanation": "Overlap with doubles = triple = reject."}, {"text": "Sort all events every book", "correct": false, "explanation": "O(n log n) per book."}, {"text": "Union-Find", "correct": false}, {"text": "DFS", "correct": false}]}, {"q": "Sweep Line vs Difference Array: when is Sweep Line preferred?", "choices": [{"text": "When coordinates are unbounded / very sparse", "correct": true, "explanation": "Diff arrays need contiguous integer coords; sweep works on any comparable timestamps."}, {"text": "When coordinates are 1..n dense", "correct": false, "explanation": "Diff arrays are perfect there."}, {"text": "Always", "correct": false}, {"text": "Never", "correct": false}]}]'
-/>
+  :questions="quizQuestions" />
 
 <PrintButton />
-
-<RelatedPatterns pattern-id="sweep-line" />
