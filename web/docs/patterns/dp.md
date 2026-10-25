@@ -495,6 +495,75 @@ const coinChangeDp = [0, 1, 1, 2, 2, 1, 2, 2]
 const coinChangeLabels = [0, 1, 2, 3, 4, 5, 6, 7]
 const coinChangeFillOrder = { '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7 }
 const coinChangeHighlights = [7]
+// Stock with Cooldown — two DpArrayAnim: hold and sold
+const stockPrices = [1, 2, 3, 0, 2]
+const stockHoldDp = [-1, -1, -1, 1, 1]
+const stockSoldDp = [0, 1, 2, 2, 3]
+const stockFillOrder = { '0': 0, '1': 1, '2': 2, '3': 3, '4': 4 }
+const stockHoldSteps = [
+  {
+    revealOrder: 0,
+    cell: 0,
+    deps: [],
+    formula: 'hold[0] = −prices[0] = −1',
+    description: 'Base: on day 0 the only way to "hold" is to buy, so hold[0] = −p[0]. Negative because our cash balance drops.'
+  },
+  {
+    revealOrder: 1,
+    cell: 1,
+    deps: [0],
+    formula: 'hold[1] = max(hold[0] = −1, sold[−1] − 2 = −2) = −1',
+    description: 'Keep holding yesterday\'s share (hold[i−1]) vs buy today after a cooldown (sold[i−2] − p[i]). Keeping wins.'
+  },
+  {
+    revealOrder: 3,
+    cell: 3,
+    deps: [1, 2],
+    formula: 'hold[3] = max(hold[2] = −1, sold[1] − 0 = 1) = 1',
+    result: 'buy on day 3',
+    description: 'Big jump: on day 3 prices dropped to 0, and sold[1] = 1 (we sold on day 1). Buying today after the cooldown gives hold[3] = 1.'
+  },
+  {
+    revealOrder: 4,
+    cell: 4,
+    deps: [2, 3],
+    formula: 'hold[4] = max(hold[3] = 1, sold[2] − 2 = 0) = 1',
+    description: 'Keep yesterday\'s hold — buying today at price 2 after sold[2]=2 would net 0, worse than our current 1.'
+  }
+]
+const stockSoldSteps = [
+  {
+    revealOrder: 0,
+    cell: 0,
+    deps: [],
+    formula: 'sold[0] = 0',
+    description: 'Base: nothing has been bought-and-sold yet, so no profit. sold[0] = 0 for every input.'
+  },
+  {
+    revealOrder: 1,
+    cell: 1,
+    deps: [0],
+    formula: 'sold[1] = max(sold[0] = 0, hold[0] + p[1] = −1 + 2 = 1) = 1',
+    result: 'sell on day 1',
+    description: 'Sell today earns hold[i−1] + p[i] = 1 (bought at 1, sold at 2). That beats "stay in sold with yesterday\'s 0".'
+  },
+  {
+    revealOrder: 2,
+    cell: 2,
+    deps: [1],
+    formula: 'sold[2] = max(sold[1] = 1, hold[1] + p[2] = −1 + 3 = 2) = 2',
+    description: 'Selling today (bought at 1, selling at 3) beats resting with yesterday\'s profit.'
+  },
+  {
+    revealOrder: 4,
+    cell: 4,
+    deps: [3],
+    formula: 'sold[4] = max(sold[3] = 2, hold[3] + p[4] = 1 + 2 = 3) = 3',
+    result: 'answer: 3',
+    description: 'Sell today: bought on day 3 at 0 (hold[3] = 1), selling at 2 → profit = 3. Max profit = sold[4] = 3.'
+  }
+]
+
 // Matrix Chain Multiplication — IntervalDpAnim with dims=[2,3,2,4]
 const matrixChainLabels = ['M₀', 'M₁', 'M₂']
 const matrixChainDp = [
@@ -2236,6 +2305,43 @@ Maximize profit over many buy/sell transactions, but after selling you must **co
 
 <ExamplePreview compact :input="['1']" :output="['0']" />
 
+<Callout kind="key" title="Two parallel arrays, each a state.">
+
+State-machine DPs track one 1D array per state. For stock-with-cooldown there are two: `hold[i]` = best profit if we own a share after day i, and `sold[i]` = best profit if we don't. The arrays *read each other* each step, which is the "machine" in state-machine.
+
+</Callout>
+
+**hold[i] — owning a share today**
+
+<DpArrayAnim
+  title="hold[i] = max(hold[i−1], sold[i−2] − prices[i])"
+  :length="5"
+  :dp="stockHoldDp"
+  :labels="stockPrices"
+  :fillOrder="stockFillOrder"
+  :baseCells="[0]"
+  :steps="stockHoldSteps"
+/>
+
+**sold[i] — not owning a share today**
+
+<DpArrayAnim
+  title="sold[i] = max(sold[i−1], hold[i−1] + prices[i])"
+  :length="5"
+  :dp="stockSoldDp"
+  :labels="stockPrices"
+  :fillOrder="stockFillOrder"
+  :baseCells="[0]"
+  :highlightCells="[4]"
+  :steps="stockSoldSteps"
+/>
+
+<Callout kind="note" title="Why the lookback of 2 on `hold`.">
+
+The cooldown rule says you must skip one day after selling before buying. So "buy today" reads `sold[i−2]`, not `sold[i−1]`. Remove the `−2` and you have the no-cooldown variant.
+
+</Callout>
+
 ### Solution — brute force
 Brute force recursion considers every legal action each day: buy, sell, rest, or cool down depending on the previous action. That creates an exponential decision tree and repeatedly revisits the same `(day, mode)` situations. The optimized state-machine DP keeps the best profit for each mode after each price, then rolls the states because only the previous day matters.
 
@@ -2371,6 +2477,67 @@ Max money a thief can rob from a tree of houses, no parent and child both robbed
 
 </Callout>
 
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating: House Robber III — tree DP, post-order fill, (rob, notRob) pairs at each node">
+  <rect x="0" y="0" width="720" height="360" rx="12" fill="var(--dsa-bg)"/>
+  <text x="360" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">Tree DP — post-order (rob, notRob) at each node; answer = max at root</text>
+  <g font-family="var(--dsa-font)" stroke="var(--dsa-neutral-line)" stroke-width="1.6">
+    <line x1="300" y1="92" x2="200" y2="162"/>
+    <line x1="300" y1="92" x2="420" y2="162"/>
+    <line x1="200" y1="186" x2="260" y2="252"/>
+    <line x1="420" y1="186" x2="480" y2="252"/>
+  </g>
+  <g font-family="var(--dsa-font)" text-anchor="middle">
+    <g>
+      <circle cx="300" cy="76" r="26" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2"/>
+      <text x="300" y="83" font-size="18" font-weight="800" fill="var(--dsa-primary)">3</text>
+      <text x="300" y="48" font-size="12" font-weight="700" fill="var(--dsa-ink)">root</text>
+      <text x="300" y="130" font-size="12" font-weight="700" fill="var(--dsa-ink)">(rob=7, notRob=6)</text>
+    </g>
+    <g>
+      <circle cx="200" cy="176" r="24" fill="var(--dsa-bg)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+      <text x="200" y="183" font-size="17" font-weight="800" fill="var(--dsa-ink)">2</text>
+      <text x="200" y="226" font-size="12" font-weight="700" fill="var(--dsa-ink)">(rob=2, notRob=3)</text>
+    </g>
+    <g>
+      <circle cx="420" cy="176" r="24" fill="var(--dsa-bg)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+      <text x="420" y="183" font-size="17" font-weight="800" fill="var(--dsa-ink)">3</text>
+      <text x="420" y="226" font-size="12" font-weight="700" fill="var(--dsa-ink)">(rob=3, notRob=1)</text>
+    </g>
+    <g>
+      <circle cx="260" cy="266" r="22" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+      <text x="260" y="273" font-size="16" font-weight="800" fill="var(--dsa-success)">3</text>
+      <text x="260" y="314" font-size="12" font-weight="700" fill="var(--dsa-ink)">(rob=3, notRob=0)</text>
+      <text x="260" y="334" font-size="11" font-style="italic" fill="var(--dsa-neutral)">leaf</text>
+    </g>
+    <g>
+      <circle cx="480" cy="266" r="22" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+      <text x="480" y="273" font-size="16" font-weight="800" fill="var(--dsa-success)">1</text>
+      <text x="480" y="314" font-size="12" font-weight="700" fill="var(--dsa-ink)">(rob=1, notRob=0)</text>
+      <text x="480" y="334" font-size="11" font-style="italic" fill="var(--dsa-neutral)">leaf</text>
+    </g>
+    <text x="620" y="196" font-size="12" font-weight="700" fill="var(--dsa-neutral)">answer = max(7, 6) = 7</text>
+  </g>
+</svg>
+</div>
+
+
+
+
+| Node (val) | Visit order (post-order) | `rob` | `notRob` | Reasoning |
+|---|---|---|---|---|
+| left leaf (3) | 1 | 3 | 0 | leaf: rob = val, notRob = 0 |
+| left node (2) | 2 | 2 + 0 = **2** | max(3, 0) = **3** | child must be skipped if we rob here; otherwise child picks best |
+| right leaf (1) | 3 | 1 | 0 | leaf |
+| right node (3) | 4 | 3 + 0 = **3** | max(1, 0) = **1** | same combiner |
+| root (3) | 5 | 3 + 3 + 1 = **7** | max(2, 3) + max(3, 1) = 3 + 3 = **6** | rob root → each child's notRob; skip root → each child's best |
+
+The fill order is post-order because each node needs **both** children's `(rob, notRob)` resolved before it computes its own. One pass over the tree, O(n). No table — the state lives on the recursion stack.
+
 <TemplateReveal
   slug="tree-dp"
   language="java"
@@ -2407,6 +2574,68 @@ Can the array be partitioned into **`k` subsets that all have equal sum**?
 **Example 2:** `n=1` cost matrix `[[0]]` → route cost `0`.
 
 <ExamplePreview compact :input="['1']" :output="['[[0]]']" />
+
+<Callout kind="key" title="State: (mask, endpoint).">
+
+Reading the DP table in two axes isn't quite right for bitmask — the "x-axis" is the set of visited nodes (ordered by popcount so smaller subsets fill first), and the "y-axis" is the current endpoint. Each cell reads cells with ONE fewer bit set.
+
+</Callout>
+
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram illustrating: Bitmask DP for 3-city TSP — dp[mask][last]">
+  <rect x="0" y="0" width="760" height="300" rx="12" fill="var(--dsa-bg)"/>
+  <text x="380" y="24" text-anchor="middle" font-family="var(--dsa-font)" font-size="13" font-weight="700" fill="var(--dsa-primary)">dp[mask][last] — TSP with 3 cities starting at 0</text>
+  <g font-family="var(--dsa-font)" text-anchor="middle">
+    <g font-size="12" font-weight="700" fill="var(--dsa-neutral)">
+      <text x="60" y="70">last ↓</text>
+      <text x="180" y="70">{0}</text>
+      <text x="300" y="70">{0,1}</text>
+      <text x="420" y="70">{0,2}</text>
+      <text x="560" y="70">{0,1,2}</text>
+      <text x="690" y="70">popcount</text>
+    </g>
+    <g font-size="15" font-weight="800" fill="var(--dsa-ink)">
+      <text x="60" y="112">0</text>
+      <text x="60" y="162">1</text>
+      <text x="60" y="212">2</text>
+    </g>
+    <g font-family="var(--dsa-font)" font-size="14" font-weight="700">
+      <rect x="140" y="88" width="80" height="38" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/><text x="180" y="113" text-anchor="middle" fill="var(--dsa-success)">0</text>
+      <rect x="260" y="138" width="80" height="38" rx="7" fill="var(--dsa-bg)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="300" y="163" text-anchor="middle" fill="var(--dsa-ink)">2</text>
+      <rect x="380" y="188" width="80" height="38" rx="7" fill="var(--dsa-bg)" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/><text x="420" y="213" text-anchor="middle" fill="var(--dsa-ink)">9</text>
+      <rect x="500" y="138" width="120" height="38" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2"/><text x="560" y="163" text-anchor="middle" fill="var(--dsa-primary)">15</text>
+      <rect x="500" y="188" width="120" height="38" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2"/><text x="560" y="213" text-anchor="middle" fill="var(--dsa-primary)">8</text>
+    </g>
+    <g font-size="11" font-weight="700" fill="var(--dsa-neutral)">
+      <text x="690" y="113">1</text>
+      <text x="690" y="163">2</text>
+      <text x="690" y="213">2</text>
+      <text x="690" y="153" transform="translate(0,15)">↓</text>
+      <text x="690" y="206">3</text>
+    </g>
+    <text x="380" y="263" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">
+      Cost matrix: cost[0][1]=2, cost[0][2]=9, cost[1][2]=6. Answer = min(15+2, 8+9) = 17.
+    </text>
+  </g>
+</svg>
+</div>
+
+
+
+
+| mask | last | dp value | Recurrence read |
+|---|---|---|---|
+| `{0}` | 0 | **0** | base: path of length 1 at city 0 |
+| `{0,1}` | 1 | **2** | dp[{0}][0] + cost[0][1] = 0 + 2 |
+| `{0,2}` | 2 | **9** | dp[{0}][0] + cost[0][2] = 0 + 9 |
+| `{0,1,2}` | 1 | **15** | dp[{0,2}][2] + cost[2][1] = 9 + 6 |
+| `{0,1,2}` | 2 | **8** | dp[{0,1}][1] + cost[1][2] = 2 + 6 |
+
+Each row reads cells with **one fewer bit** set. That's the fill order: by popcount of `mask`. For n=3 the DAG has 4 layers (popcount 1 → 2 → 3), 2ⁿ · n = 24 cells but only ~2ⁿ⁻¹ · n ≈ 12 reachable from city 0. The savings over O(n!) permutations grow quickly — at n=15, 2¹⁵·15 ≈ 500k vs 15! ≈ 10¹².
 
 ### Solution — brute force
 Brute force tries every order of visiting or assigning the `n` items, which is O(n!) time for TSP-style problems and O(n) path space. That is quickly impossible even around `n = 15`. The optimized bitmask DP replaces permutation history with a mask of used items plus the current endpoint, so each subset/endpoint state is solved once and extended by one unused bit.
