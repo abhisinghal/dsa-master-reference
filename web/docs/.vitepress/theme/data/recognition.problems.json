@@ -1016,7 +1016,98 @@
       ]
     }
   ],
-  "topological-sort": [],
+  "topological-sort": [
+    {
+      "statement": "You have numCourses courses labeled 0..numCourses-1 and prerequisite pairs [a,b] meaning you must finish b before a. Return true iff all courses can be finished.",
+      "pattern": "topological-sort",
+      "subVariation": "course-schedule-i",
+      "distractors": [
+        "union-find",
+        "dfs"
+      ]
+    },
+    {
+      "statement": "Given numCourses and prerequisite pairs, return a valid order to take all courses, or an empty array if a cycle exists.",
+      "pattern": "topological-sort",
+      "subVariation": "course-schedule-ii",
+      "distractors": [
+        "dfs",
+        "bfs"
+      ]
+    },
+    {
+      "statement": "Given a list of words sorted lexicographically according to an unknown alien alphabet, return the alphabet or an empty string if impossible.",
+      "pattern": "topological-sort",
+      "subVariation": "alien-dictionary",
+      "distractors": [
+        "sorting",
+        "hashing"
+      ]
+    },
+    {
+      "statement": "Given an undirected tree with n nodes, return all possible root choices such that the resulting tree has minimum height.",
+      "pattern": "topological-sort",
+      "subVariation": "minimum-height-trees",
+      "distractors": [
+        "bfs",
+        "dfs"
+      ]
+    },
+    {
+      "statement": "You have n courses and prerequisite relations [u, v] meaning u must be taken before v. If multiple courses may be taken in parallel each semester, return the minimum number of semesters to finish all courses.",
+      "pattern": "topological-sort",
+      "subVariation": "parallel-courses",
+      "distractors": [
+        "dp",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Given an original permutation of 1..n and a list of sub-sequences, verify that the original is the UNIQUE topological order consistent with all sub-sequences.",
+      "pattern": "topological-sort",
+      "subVariation": "sequence-reconstruction",
+      "distractors": [
+        "sorting",
+        "hashing"
+      ]
+    },
+    {
+      "statement": "You have a build system with files that depend on each other via include directives. Return a compilation order such that each file is compiled after all its dependencies, or detect that a circular dependency exists.",
+      "pattern": "topological-sort",
+      "subVariation": "course-schedule-ii",
+      "distractors": [
+        "dfs",
+        "bfs"
+      ]
+    },
+    {
+      "statement": "Given a project with tasks and their dependencies, each task takes 1 unit of time, and parallel execution is allowed. Return the minimum completion time or -1 if impossible.",
+      "pattern": "topological-sort",
+      "subVariation": "parallel-courses",
+      "distractors": [
+        "dp",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Given a directed graph, determine the longest path length. Edges are unweighted and the graph is guaranteed to be acyclic.",
+      "pattern": "topological-sort",
+      "subVariation": "course-schedule-ii",
+      "distractors": [
+        "dp",
+        "dfs"
+      ]
+    },
+    {
+      "statement": "You are given an undirected graph that forms a tree. For each query, you must find the root that minimizes the maximum depth. Return all such roots.",
+      "pattern": "topological-sort",
+      "subVariation": "minimum-height-trees",
+      "distractors": [
+        "bfs",
+        "two-pointers"
+      ]
+    }
+  ],
   "union-find": [
     {
       "statement": "You are given a 2D array isConnected where isConnected[i][j]=1 if city i and city j are directly connected; return the number of provinces (connected groups).",

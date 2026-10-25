@@ -5,7 +5,233 @@
 
 <PatternProgress pattern-id="topological-sort" problems="course-schedule, alien-dictionary, minimum-height-trees, parallel-courses, sequence-reconstruction" />
 
+<script setup>
+const theTemplateSpecializations = [
+  { slug: `course-schedule-i-cycle-detect-medium`, title: `Course Schedule I (cycle detect)` },
+  { slug: `course-schedule-ii-one-topo-order-medium`, title: `Course Schedule II (one topo order)` },
+  { slug: `alien-dictionary-graph-from-string-order-hard`, title: `Alien Dictionary` },
+  { slug: `minimum-height-trees-iterative-leaf-trim-medium`, title: `Minimum Height Trees (leaf-trim)` },
+  { slug: `parallel-courses-level-wise-bfs-gives-min-semesters-medium`, title: `Parallel Courses (wave count)` },
+  { slug: `sequence-reconstruction-unique-topo-order-check-medium`, title: `Sequence Reconstruction (unique order)` },
+]
 
+const theTemplateCode = `// Kahn's algorithm — THE topological-sort template.
+// Returns a valid topo order, or empty if a cycle exists.
+int[] topoSort(int n, int[][] edges) {
+    List&lt;List&lt;Integer&gt;&gt; adj = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; n; i++) adj.add(new ArrayList&lt;&gt;());
+    int[] indeg = new int[n];
+    for (int[] e : edges) {                              // e = {u, v} means u -&gt; v
+        adj.get(e[0]).add(e[1]);
+        indeg[e[1]]++;
+    }
+    Queue&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();
+    for (int i = 0; i &lt; n; i++) if (indeg[i] == 0) q.offer(i);
+    int[] order = new int[n];
+    int k = 0;
+    while (!q.isEmpty()) {
+        int u = q.poll();
+        order[k++] = u;
+        for (int v : adj.get(u)) {
+            if (--indeg[v] == 0) q.offer(v);             // v becomes ready
+        }
+    }
+    return k == n ? order : new int[0];                  // k &lt; n -&gt; cycle
+}`
+
+const dfsTopoCode = `// DFS post-order variant — same O(V+E), compact cycle detection via 3-coloring.
+int[] topoDFS(int n, int[][] edges) {
+    List&lt;List&lt;Integer&gt;&gt; adj = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; n; i++) adj.add(new ArrayList&lt;&gt;());
+    for (int[] e : edges) adj.get(e[0]).add(e[1]);
+    int[] color = new int[n];                            // 0=white, 1=gray, 2=black
+    Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
+    for (int i = 0; i &lt; n; i++) {
+        if (color[i] == 0 && !dfs(adj, color, stack, i)) return new int[0];
+    }
+    int[] order = new int[n];
+    int k = 0;
+    while (!stack.isEmpty()) order[k++] = stack.pop();
+    return order;
+}
+
+boolean dfs(List&lt;List&lt;Integer&gt;&gt; adj, int[] color, Deque&lt;Integer&gt; stack, int u) {
+    color[u] = 1;                                        // gray: in current DFS stack
+    for (int v : adj.get(u)) {
+        if (color[v] == 1) return false;                 // back-edge -&gt; cycle
+        if (color[v] == 0 && !dfs(adj, color, stack, v)) return false;
+    }
+    color[u] = 2;
+    stack.push(u);                                        // post-order
+    return true;
+}`
+
+const alienDictionaryCode = `// Alien Dictionary — build the precedence graph from first-differing char
+// of adjacent words, then topo-sort the alphabet.
+String alienOrder(String[] words) {
+    Map&lt;Character, Set&lt;Character&gt;&gt; adj = new HashMap&lt;&gt;();
+    Map&lt;Character, Integer&gt; indeg = new HashMap&lt;&gt;();
+    for (String w : words) {
+        for (char c : w.toCharArray()) {
+            indeg.putIfAbsent(c, 0);
+            adj.putIfAbsent(c, new HashSet&lt;&gt;());
+        }
+    }
+    for (int i = 0; i &lt; words.length - 1; i++) {
+        String a = words[i], b = words[i + 1];
+        if (a.length() &gt; b.length() && a.startsWith(b)) return "";  // invalid: "abc" before "ab"
+        for (int j = 0; j &lt; Math.min(a.length(), b.length()); j++) {
+            char x = a.charAt(j), y = b.charAt(j);
+            if (x != y) {
+                if (adj.get(x).add(y)) indeg.merge(y, 1, Integer::sum);
+                break;                                   // only first differing char matters
+            }
+        }
+    }
+    Queue&lt;Character&gt; q = new ArrayDeque&lt;&gt;();
+    for (var e : indeg.entrySet()) if (e.getValue() == 0) q.offer(e.getKey());
+    StringBuilder sb = new StringBuilder();
+    while (!q.isEmpty()) {
+        char u = q.poll();
+        sb.append(u);
+        for (char v : adj.get(u)) {
+            if (indeg.merge(v, -1, Integer::sum) == 0) q.offer(v);
+        }
+    }
+    return sb.length() == indeg.size() ? sb.toString() : "";
+}`
+
+const mhtCode = `// Minimum Height Trees — iterative leaf-trim on an UNDIRECTED tree.
+// At most 2 nodes remain; those are the roots of a min-height tree.
+List&lt;Integer&gt; findMinHeightTrees(int n, int[][] edges) {
+    if (n == 1) return Arrays.asList(0);
+    List&lt;Set&lt;Integer&gt;&gt; adj = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; n; i++) adj.add(new HashSet&lt;&gt;());
+    for (int[] e : edges) { adj.get(e[0]).add(e[1]); adj.get(e[1]).add(e[0]); }
+    List&lt;Integer&gt; leaves = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; n; i++) if (adj.get(i).size() == 1) leaves.add(i);
+    int remaining = n;
+    while (remaining &gt; 2) {
+        remaining -= leaves.size();
+        List&lt;Integer&gt; next = new ArrayList&lt;&gt;();
+        for (int leaf : leaves) {
+            int neighbor = adj.get(leaf).iterator().next();
+            adj.get(neighbor).remove(leaf);
+            if (adj.get(neighbor).size() == 1) next.add(neighbor);
+        }
+        leaves = next;
+    }
+    return leaves;
+}`
+
+const parallelCoursesCode = `// Parallel Courses — Kahn's with LEVEL-WISE processing.
+// Each wave can take all currently-ready courses simultaneously; count waves.
+int minimumSemesters(int n, int[][] relations) {
+    List&lt;List&lt;Integer&gt;&gt; adj = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt;= n; i++) adj.add(new ArrayList&lt;&gt;());
+    int[] indeg = new int[n + 1];
+    for (int[] r : relations) { adj.get(r[0]).add(r[1]); indeg[r[1]]++; }
+    Queue&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();
+    for (int i = 1; i &lt;= n; i++) if (indeg[i] == 0) q.offer(i);
+    int semesters = 0, taken = 0;
+    while (!q.isEmpty()) {
+        int size = q.size();                             // whole wave size
+        semesters++;
+        for (int i = 0; i &lt; size; i++) {
+            int u = q.poll();
+            taken++;
+            for (int v : adj.get(u)) if (--indeg[v] == 0) q.offer(v);
+        }
+    }
+    return taken == n ? semesters : -1;                  // -1 if cycle
+}`
+
+const sequenceReconstructionCode = `// Sequence Reconstruction — the queue must have EXACTLY ONE node at every
+// step for the topo order to be unique and match the given target.
+boolean sequenceReconstruction(int[] org, List&lt;List&lt;Integer&gt;&gt; seqs) {
+    int n = org.length;
+    Map&lt;Integer, Set&lt;Integer&gt;&gt; adj = new HashMap&lt;&gt;();
+    int[] indeg = new int[n + 1];
+    boolean[] seen = new boolean[n + 1];
+    for (List&lt;Integer&gt; seq : seqs) {
+        for (int x : seq) seen[x] = true;
+        for (int i = 1; i &lt; seq.size(); i++) {
+            int u = seq.get(i - 1), v = seq.get(i);
+            if (adj.computeIfAbsent(u, k -&gt; new HashSet&lt;&gt;()).add(v)) indeg[v]++;
+        }
+    }
+    for (int i = 1; i &lt;= n; i++) if (!seen[i]) return false;
+    Queue&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();
+    for (int i = 1; i &lt;= n; i++) if (indeg[i] == 0) q.offer(i);
+    int k = 0;
+    while (!q.isEmpty()) {
+        if (q.size() &gt; 1) return false;                   // ambiguous choice -&gt; not unique
+        int u = q.poll();
+        if (u != org[k++]) return false;
+        for (int v : adj.getOrDefault(u, Set.of())) {
+            if (--indeg[v] == 0) q.offer(v);
+        }
+    }
+    return k == n;
+}`
+
+const topoInvariant = {
+  statement: `At any point, every node already appended to the order has all its predecessors appended earlier. If the loop ends with k < V, the remaining nodes form a directed cycle.`,
+  initialization: `Before the loop: the queue holds exactly the nodes with indeg == 0 and the order is empty. The invariant holds vacuously — no node is appended yet.`,
+  maintenance: `Each pop appends u to the order. u is popped only when indeg[u] == 0, meaning all predecessors of u have already been popped (and thus appended) in prior iterations. For each outgoing edge u -> v, we decrement indeg[v]; v is enqueued only when its own indeg reaches 0, preserving the invariant that queued nodes are ready.`,
+  termination: `When the queue empties: if k == V, every node was appended after its predecessors — a valid topo order. If k < V, the remaining V - k nodes have positive indeg, meaning each has a predecessor that's also unprocessed. This chain of predecessors in a finite graph must contain a cycle.`,
+}
+
+const topoComplexity = { time: `O(V + E) — each node pushed/popped once; each edge decrements indeg once`, space: `O(V + E) for adjacency list, indegree array, and queue` }
+
+const mastery5 = [
+  {
+    q: `Kahn's algorithm starts by enqueueing which nodes?`,
+    choices: [
+      { text: `Those with indegree == 0`, correct: true, explanation: `No incoming edges = no prerequisites, so they can be emitted immediately.` },
+      { text: `Those with outdegree == 0`, correct: false, explanation: `Those are the sinks; they get emitted LAST.` },
+      { text: `All nodes`, correct: false, explanation: `Nodes with prerequisites must wait.` },
+      { text: `A random node`, correct: false },
+    ],
+  },
+  {
+    q: `How does Kahn's detect a cycle?`,
+    choices: [
+      { text: `The emitted count is less than V — some nodes never reached indeg 0`, correct: true, explanation: `Nodes in a cycle each have a predecessor also in the cycle, so none ever becomes ready.` },
+      { text: `A timeout`, correct: false },
+      { text: `Finds a back-edge during traversal`, correct: false, explanation: `That's DFS-based cycle detection.` },
+      { text: `Impossible in linear time`, correct: false, explanation: `Both Kahn and DFS detect in O(V+E).` },
+    ],
+  },
+  {
+    q: `For a UNIQUE topological order check (Sequence Reconstruction), what invariant must hold at every BFS step?`,
+    choices: [
+      { text: `The queue holds exactly ONE node — any choice would mean two valid orders exist`, correct: true, explanation: `A queue of size ≥ 2 means independent nodes could be swapped, so the order isn't unique.` },
+      { text: `The queue holds ≥ 1 node`, correct: false, explanation: `That's just "a valid order exists", not uniqueness.` },
+      { text: `The queue holds V nodes`, correct: false, explanation: `Only possible with 0 edges.` },
+      { text: `No invariant needed`, correct: false },
+    ],
+  },
+  {
+    q: `For Minimum Height Trees, why does iterative leaf-trimming find the tree center(s)?`,
+    choices: [
+      { text: `Leaves are the tree's "edges"; peeling them layer-by-layer converges on the median(s) of the longest path`, correct: true, explanation: `A tree has at most 2 centers (both are the middle of some longest path). Trimming leaves is equivalent to finding this center.` },
+      { text: `Random`, correct: false },
+      { text: `Via eccentricity computation`, correct: false, explanation: `Works but is O(V²), much slower.` },
+      { text: `Via BFS from any root`, correct: false, explanation: `That gives distances, not necessarily the center.` },
+    ],
+  },
+  {
+    q: `Alien Dictionary: given adjacent sorted words 'wrt' and 'wrf', which edge do you add?`,
+    choices: [
+      { text: `t -> f (first differing char: 't' at index 2 in both words, with 't' < 'f' in alien order)`, correct: true, explanation: `Only the FIRST differing char between adjacent words gives an ordering signal. All later chars reveal nothing.` },
+      { text: `w -> r, r -> t, t -> f`, correct: false, explanation: `Over-constrains; only the first differing pair is informative.` },
+      { text: `No edges — the words are sorted so no signal`, correct: false },
+      { text: `f -> t`, correct: false, explanation: `Direction wrong; 'wrt' before 'wrf' means t < f.` },
+    ],
+  },
+]
+</script>
 
 ## Why topological sort exists — the story
 
@@ -93,48 +319,37 @@ Also avoid it when:
 - prerequisites change online after every query; maintaining a topo order dynamically is a separate problem.
 - the input is really a tree parent relationship; a simple traversal may be enough.
 
-## How to use it — templates
+## THE template
 
-**Kahn's BFS template:**
+Every topological-sort problem is a specialization of **"maintain the indeg-zero frontier; pop one, decrement its outgoing edges' indegs, enqueue any that just hit zero."** The DFS variant is a mirror form; both are O(V+E). The sub-variations differ in *how* you build the graph (prerequisite pairs, char-order from adjacent words, undirected tree edges) and *what* you record (the order, a count of waves, uniqueness).
 
+<PatternTemplateCard
+  slug="topo-sort-kahn-template"
+  title="Kahn's BFS — THE topological-sort template"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="topoInvariant"
+  :complexity="topoComplexity"
+  :specializations="theTemplateSpecializations"
+/>
 
+**DFS post-order variant** (same O(V+E), compact cycle detection via 3-coloring):
 
-```java
-List<List<Integer>> adj = new ArrayList<>();
-int[] indeg = new int[n];
-for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
-for (int[] e : edges) { adj.get(e[0]).add(e[1]); indeg[e[1]]++; }
-Queue<Integer> q = new ArrayDeque<>();
-for (int i = 0; i < n; i++) if (indeg[i] == 0) q.offer(i);
-List<Integer> order = new ArrayList<>();
-while (!q.isEmpty()) {
-    int u = q.poll(); order.add(u);
-    for (int v : adj.get(u)) if (--indeg[v] == 0) q.offer(v);
-}
-boolean acyclic = order.size() == n;
-```
+<TemplateReveal
+  slug="topo-dfs"
+  language="java"
+  :canonical="dfsTopoCode"
+/>
 
+Prefer **Kahn** when the problem naturally talks about prerequisites, semesters, waves, or "available now" nodes. Prefer **DFS** when you are already doing graph recursion, need a compact cycle detector, or want post-order for DAG DP. The in-degree array makes Kahn's invariant visible (easier to debug); DFS gives a tight 3-color cycle detector.
 
+## False friends — not every DAG problem is topological sort
 
-**DFS post-order template:**
-
-
-
-```java
-boolean dfs(int u, List<List<Integer>> adj, int[] state, List<Integer> order) {
-    if (state[u] == 1) return false;        // back-edge: cycle
-    if (state[u] == 2) return true;         // already finished
-    state[u] = 1;
-    for (int v : adj.get(u)) if (!dfs(v, adj, state, order)) return false;
-    state[u] = 2;
-    order.add(u);                           // post-order
-    return true;
-}
-```
-
-
-
-Prefer Kahn when the problem naturally talks about prerequisites, semesters, waves, or "available now" nodes. Prefer DFS when you are already doing graph recursion, need a compact cycle detector, or want post-order for DAG DP. In Java interviews, Kahn is often easier to debug because the in-degree array makes the invariant visible.
+- **Shortest path in a DAG** uses topo order as the ITERATION order for the DP, but the structural answer is DP, not just the order. Mentioning "topo sort" alone misses the DP layer.
+- **Strongly Connected Components** (Tarjan, Kosaraju) is for *directed graphs that may have cycles*. Topo sort refuses to run on a cyclic graph; SCC decomposes it into DAG components first.
+- **Minimum Spanning Tree** is for undirected weighted graphs; precedence doesn't apply. Use Kruskal/Prim.
+- **Transitive closure** needs reachability from every node; topo sort gives an order but no reachability info. Use Floyd-Warshall or iterated BFS.
+- **Finding the longest path in a DAG** is tractable (unlike general graphs) BUT needs DP on topological order, not just the order itself.
 
 
 ## Kahn vs DFS — same answer, different proof
@@ -171,7 +386,48 @@ The DFS-based topological sort was popularized by **Robert Tarjan** in the 1970s
 
 When you tell an interviewer *"Kahn's algorithm, O(V+E), cycle detection as a side effect,"* you're citing the algorithm that powers essentially every build tool your company uses.
 
-## Canonical problem walkthrough — Course Schedule II
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="topological-sort" />
+
+The sub-variations walk the template through six canonical uses — cycle-only check, emit one order, infer the graph from strings, undirected leaf-trim, count waves (parallel semesters), and uniqueness check. Each uses the Kahn's BFS kernel; what changes is edge construction and what you record.
+
+### Course Schedule I (cycle detect) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Course Schedule](https://leetcode.com/problems/course-schedule/)*
+
+The simplest form: return `true` iff all courses can be finished (no cycle). You don't emit the order — just count successful pops. Same Kahn kernel; the result is `k == n`.
+
+
+
+```java
+boolean canFinish(int n, int[][] prereqs) {
+    List<List<Integer>> adj = new ArrayList<>();
+    for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+    int[] indeg = new int[n];
+    for (int[] p : prereqs) { adj.get(p[1]).add(p[0]); indeg[p[0]]++; }
+    Queue<Integer> q = new ArrayDeque<>();
+    for (int i = 0; i < n; i++) if (indeg[i] == 0) q.offer(i);
+    int k = 0;
+    while (!q.isEmpty()) {
+        int u = q.poll();
+        k++;
+        for (int v : adj.get(u)) if (--indeg[v] == 0) q.offer(v);
+    }
+    return k == n;
+}
+```
+
+
+
+### Course Schedule II (one topo order) <span class="diff diff-m">Medium</span>
+
+Return a valid topological order (the actual sequence of courses to take), or `[]` if impossible. This is the canonical form of the template — the pedagogical walkthrough below treats it in full.
+
+<details>
+<summary><strong>Pedagogical: the 3-approach ladder for Course Schedule II (naive scan → Kahn → DFS post-order)</strong></summary>
+
+#### Canonical problem walkthrough — Course Schedule II
 
 **Problem** ([↗ LeetCode](https://leetcode.com/problems/course-schedule-ii/)): There are `numCourses` courses labeled `0..numCourses-1`. Some courses have prerequisites — `prerequisites[i] = [a, b]` means "to take course `a`, you must first finish course `b`." Return **any valid ordering** in which you can take all courses. If it's impossible (cycle), return an empty array.
 
@@ -299,7 +555,7 @@ boolean dfs(List<List<Integer>> out, int[] color, Deque<Integer> stack, int u) {
 
 **Same complexity: O(V+E).** Choose DFS when the same traversal also does cycle detection, SCC decomposition, or timestamped exit analysis. Choose Kahn when the natural mental model is "process nodes as they become ready."
 
-### Complexity ladder
+#### Complexity ladder
 
 | Approach | Time | Space | When |
 |---|---|---|---|
@@ -307,9 +563,9 @@ boolean dfs(List<List<Integer>> out, int[] color, Deque<Integer> stack, int u) {
 | **Kahn's BFS** | **O(V + E)** | **O(V + E)** | **Interview default** |
 | DFS post-order (3-color) | O(V + E) | O(V + E) | If you also need cycle-edge details |
 
----
+</details>
 
-## Course Schedule (Topological Sort) <span class="diff diff-m">Medium</span>
+### Course Schedule II — walkthrough deep dive <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)*
 
@@ -535,14 +791,233 @@ If I choose DFS instead, I would say: "I mark a node as visiting when it enters 
 | [Parallel Courses](https://leetcode.com/problems/parallel-courses/) | Count Kahn "waves"; each wave is one semester of courses that can run together. |
 | [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/) | Require the queue to have exactly one choice at every step to prove the order is unique. |
 
+### Alien Dictionary (graph from string order) <span class="diff diff-h">Hard</span>
+
+*[↗ LeetCode: Alien Dictionary](https://leetcode.com/problems/alien-dictionary/)*
+
+Given a list of words sorted by an unknown alien alphabet, return the alphabet. The **graph is implicit**: for each pair of adjacent words, the first differing character gives one edge; everything after that difference is uninformative. Then topo-sort the chars.
+
+<Callout kind="key" title="Invalid input signal">
+
+If word `a` is longer than word `b`, `a` starts with `b`, but `a` appears first (e.g., `"abc"` before `"ab"`), no valid alphabet exists. Return `""`.
+
+</Callout>
+
+<Callout kind="inv" title="Invariant">
+
+The precedence graph edges are *exactly* the ordering constraints justified by adjacent-word comparisons; no edge is invented, none is missed.
+
+</Callout>
+
+<TemplateReveal
+  slug="alien-dictionary"
+  language="java"
+  :canonical="alienDictionaryCode"
+/>
+
+**Trace** on `["wrt", "wrf", "er", "ett", "rftt"]`:
+
+| Adjacent pair | First differing char | Edge added |
+|---|---|---|
+| wrt / wrf | t vs f | `t → f` |
+| wrf / er | w vs e | `w → e` |
+| er / ett | r vs t | `r → t` |
+| ett / rftt | e vs r | `e → r` |
+
+Alphabet: {w, r, t, f, e}. Indegrees: w=0, r=1, t=1, f=1, e=1. Kahn starts with `w`, then `e`, then `r`, then `t`, then `f`. Result: `"wertf"`.
+
+### Minimum Height Trees (iterative leaf-trim) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/)*
+
+Given an undirected tree with `n` nodes, find all root choices that minimize the resulting tree's height. The key insight: **the roots must be the tree's center(s)** — at most 2 nodes, both at the middle of some longest path. Find them by **peeling leaves layer-by-layer** until 1 or 2 remain. This is Kahn's algorithm on an undirected graph with the degree-1 frontier.
+
+<Callout kind="key" title="Why at most 2 centers?">
+
+A tree has a longest path (diameter). Its middle is a single node (odd-length path) or two adjacent nodes (even-length). Any other root choice would produce a taller tree.
+
+</Callout>
+
+<Callout kind="inv" title="Invariant">
+
+At the start of each layer, the remaining subtree is the subgraph induced by nodes not yet trimmed. Leaves of this subgraph are degree-1 under the remaining edges.
+
+</Callout>
+
+<TemplateReveal
+  slug="min-height-trees"
+  language="java"
+  :canonical="mhtCode"
+/>
+
+**Complexity:** O(V + E) — each node enters `leaves` exactly once, each edge is removed exactly once.
+
+### Parallel Courses (level-wise BFS gives min semesters) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Parallel Courses](https://leetcode.com/problems/parallel-courses/)*
+
+Return the minimum number of semesters to finish all courses, if **all currently-ready courses can run in parallel**. The twist: process the queue in **level-by-level waves** — each wave's size is the number of courses runnable this semester. The answer is the wave count.
+
+<Callout kind="inv" title="Invariant">
+
+At the start of semester `s`, the queue holds exactly the courses whose prerequisites were all finished by semester `s - 1`.
+
+</Callout>
+
+<TemplateReveal
+  slug="parallel-courses"
+  language="java"
+  :canonical="parallelCoursesCode"
+/>
+
+**Why `size = q.size()` is critical:** draining the queue in a plain loop would still work for the order, but you'd lose the wave boundary. Snapshotting `size` at the start of each wave ensures newly-enqueued nodes join the *next* wave, not the current one.
+
+### Sequence Reconstruction (unique topo order check) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/)*
+
+Given a target permutation `org` and a list of sub-sequences `seqs`, verify that `org` is the **unique** valid topological order of the implicit DAG built from `seqs`. The uniqueness check uses one subtle rule: **at every BFS step, the queue must hold exactly one node**.
+
+<Callout kind="key" title="Why `q.size() == 1` always?">
+
+If at any step the queue has ≥ 2 nodes, their indegrees are both 0 — meaning either could legally come next. That's two distinct valid topo orders, so the order is not unique.
+
+</Callout>
+
+<TemplateReveal
+  slug="sequence-reconstruction"
+  language="java"
+  :canonical="sequenceReconstructionCode"
+/>
+
+**Three failure modes:**
+
+| Check | Failure means |
+|---|---|
+| Every number 1..n appears in some seq | Target has an element not in the DAG |
+| `q.size() == 1` every step | Multiple valid orders exist |
+| Popped node matches `org[k++]` | Target doesn't match the (unique) order |
+
+## Traps & gotchas
+
+<TrapTrace
+  title="Trap 1 — Edge direction reversed"
+  bug="Course Schedule pair [a, b] means 'to take a, first finish b.' A buggy implementation adds edge a -> b (course points to prerequisite), builds a wrong indegree array, and finds a 'cycle' where none exists (or vice versa)."
+  fix="The unlock direction is b -> a: finishing b decrements the remaining prerequisite count of a. Mnemonic: 'prereq points to dependent.' Draw edges as arrows that flow in the compile order."
+/>
+
+<TrapTrace
+  title="Trap 2 — Not detecting cycles"
+  bug="prerequisites 0 -> 1 and 1 -> 0 form a cycle. Kahn starts with an empty queue (no indeg-0 node). A buggy implementation returns the partial order emitted so far (empty, or part), not reporting 'impossible.'"
+  fix="At the end of Kahn's loop, check k == V (or order.size() == n). If less, a cycle existed; return [] (or false for the boolean variant). Add this check even when you 'trust' the input to be a DAG."
+/>
+
+<TrapTrace
+  title="Trap 3 — DFS 2-state cycle detection missing back-edge/forward-edge distinction"
+  bug="DFS variant with just visited/unvisited (two states) flags re-visits as cycles. On the diamond A -> B, A -> C, B -> D, C -> D, the second visit to D looks like a 'cycle' but isn't — it's a forward edge from C."
+  fix="Use THREE states: 0=white (unvisited), 1=gray (in current DFS stack), 2=black (finished). A back-edge is a transition to a gray node. Transitions to black nodes are forward/cross edges — ignore them."
+/>
+
+## In the wild — Make, Bazel, and npm's dependency scheduler
+
+**`make`'s build engine** topologically sorts targets by their declared `#include` or explicit prerequisite dependencies. The Kahn-style scheduler is in `read.c`:
+
+
+
+```c
+/* make/read.c — paraphrased */
+struct file *topological_sort(struct file *targets) {
+    /* Build indeg per target; start from targets with no prerequisites.
+       Each ready target is emitted; its "dependents" (reverse of prerequisites)
+       get their indeg decremented. The order is the compile order.
+       The CYCLE check — "Error: circular dependency detected in Makefile" —
+       is the k != V check at the end. */
+    for (f = targets; f; f = f->next) {
+        if (f->indeg == 0) enqueue(f);
+    }
+    while (!queue_empty()) {
+        f = dequeue();
+        emit_target(f);
+        for (d = f->dependents; d; d = d->next) {
+            if (--d->indeg == 0) enqueue(d);
+        }
+    }
+}
+```
+
+
+
+**Four more real-world topological-sort sightings:**
+
+1. **Bazel's build DAG scheduler** processes 500k+ target DAGs in Google's monorepo; each worker emits a batch of indeg-0 targets, decrements their outgoing edges, repeats. Massively parallelized Kahn's.
+2. **npm's `arborist` package manager** topologically sorts npm-package dependencies before `install`, running package-lifecycle scripts in dependency order.
+3. **Apache Airflow DAG scheduler** picks the next task to run by maintaining the indeg-0 frontier of task dependencies. The DAG in "DAG scheduler" is literally this pattern.
+4. **Spreadsheet formula recalculation (Excel, Google Sheets)** builds a cell-dependency graph; when input changes, cells are recomputed in topological order to avoid re-evaluating stale values.
+
+## Recognition drill
+
+<RecognitionDrill pattern="topological-sort" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if the graph has cycles but you still need an ordering?</strong></summary>
+
+**SCC condensation.** Compute Strongly Connected Components (Tarjan or Kosaraju in O(V+E)), collapse each SCC into a single meta-node, and topo-sort the resulting DAG of meta-nodes. The output is an order where every SCC appears before all SCCs reachable from it. Inside each SCC, there's no inherent order — the meta-node is a "simultaneous" block.
+
+Used in: dataflow analyses on cyclic programs, deadlock resolution (process groups), feedback-arc-set approximation.
+</details>
+
+<details>
+<summary><strong>What if you need shortest/longest path in the DAG?</strong></summary>
+
+**Topological sort gives the iteration order for DP.** Compute topo order first, then process nodes in that order: `dist[v] = min/max(dist[u] + w(u,v))` for all incoming edges `u -> v`. This is O(V+E), beating Dijkstra for the DAG case (Dijkstra is O((V+E) log V)).
+
+Example: longest path in a DAG is NP-hard in general graphs, but O(V+E) in DAGs via topo-DP.
+</details>
+
+<details>
+<summary><strong>What if edges have deadlines or weights (critical path method)?</strong></summary>
+
+**Critical Path Method (CPM):** topo-order the DAG, then compute `earliestStart[v] = max(earliestStart[u] + duration(u))` for all `u -> v`. The *critical path* is the longest path from any source to any sink; it determines the project's minimum completion time. Any edge on the critical path has zero slack — delaying it delays the project.
+
+Used in: project management (MS Project, Jira), build-system optimization (which target should we parallelize first?).
+</details>
+
+<details>
+<summary><strong>What if the DAG is streaming — edges arrive online?</strong></summary>
+
+**Online topological sort** is a research topic (Bender, Fineman, Gilbert, Tarjan 2016). The naive approach — recompute from scratch — is O(V+E) per edge, O((V+E)²) amortized. Better schemes maintain the topo order incrementally in O(V^{1/2}) per edge, but the data structure is nontrivial. For interview problems, assume the graph is batch; mention online topo sort as a research direction.
+</details>
+
+<details>
+<summary><strong>What if the problem has multiple "goals" or "sources"?</strong></summary>
+
+The template handles this naturally: enqueue ALL indeg-0 nodes initially. Order between sources is arbitrary. If you need "find the shortest path from any source to a specific sink," use multi-source BFS on the DAG — same O(V+E).
+
+A twist: "find a topo order that MAXIMIZES some property per layer" (e.g., minimize the max-size wave). This is scheduling theory — NP-hard in general, but admits greedy approximations.
+</details>
+
+### Breaking point
+
+Topological sort **stops being optimal** when:
+- The graph has cycles (use SCC first).
+- You need shortest/longest paths with specific weights (topo-DP, not just topo order).
+- The graph is undirected (leaf-trimming for tree centers works, but Kahn on arbitrary undirected graphs is ill-defined).
+- Edge additions and queries interleave (online topo sort is required).
+- You need to count the number of distinct topo orders (NP-hard in general; #P-complete).
+
+### Three cross-pattern problems
+
+- [Course Schedule IV (1462)](https://leetcode.com/problems/course-schedule-iv/) — topo sort + transitive closure DP. Each node accumulates the set of its ancestors.
+- [Longest Path in a DAG](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) — grid variant: cells form a DAG by value-strict-less; longest path via topo-DP.
+- [Reconstruct Itinerary (332)](https://leetcode.com/problems/reconstruct-itinerary/) — Eulerian path on a directed graph; related to topo via Hierholzer's algorithm. Not pure topo, but shares the "post-order on a graph" intuition.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="topological-sort"
-  :questions='[{"q": "Kahn’s BFS toposort starts with nodes of what indeg?", "choices": [{"text": "0", "correct": true, "explanation": "No incoming edges → no prerequisites."}, {"text": "1", "correct": false}, {"text": "n-1", "correct": false}, {"text": "Max indeg", "correct": false}]}, {"q": "How does Kahn’s detect a cycle?", "choices": [{"text": "If the emitted count < n, some nodes were never freed → cycle", "correct": true, "explanation": "Cycle nodes always have indeg > 0."}, {"text": "Timeout", "correct": false}, {"text": "DFS gives back-edges", "correct": false, "explanation": "That is DFS-based; Kahn is BFS."}, {"text": "Impossible in linear time", "correct": false}]}, {"q": "For \"unique topological order\" check, what do you assert at every BFS step?", "choices": [{"text": "Queue size ≤ 1", "correct": true, "explanation": "Multiple nodes with indeg 0 simultaneously = ambiguous order."}, {"text": "Queue size ≥ 1", "correct": false}, {"text": "Queue size == n", "correct": false}, {"text": "Nothing", "correct": false}]}, {"q": "For Minimum Height Trees, why does leaf-peeling find the center(s)?", "choices": [{"text": "Tree centers are the innermost nodes after successively removing leaves", "correct": true, "explanation": "At most 2 remain (they are the median(s) of the longest path)."}, {"text": "Random", "correct": false}, {"text": "By eccentricity computation", "correct": false, "explanation": "Works but O(n²)."}, {"text": "By BFS from root", "correct": false}]}, {"q": "Alien Dictionary: what edges are added to the precedence graph?", "choices": [{"text": "First differing character between two adjacent words: a[i] → b[i]", "correct": true, "explanation": "That is the sole ordering signal."}, {"text": "Every char pair", "correct": false, "explanation": "Would over-constrain."}, {"text": "Random pairs", "correct": false}, {"text": "Alphabet order edges", "correct": false, "explanation": "Alphabet is unknown."}]}]'
-/>
+<Quiz pattern-id="topological-sort" :questions="mastery5" />
 
 <PrintButton />
 

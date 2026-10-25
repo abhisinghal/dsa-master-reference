@@ -472,32 +472,32 @@
     "inTheWildSource": "Make / Bazel build-DAG scheduler",
     "subVariations": [
       {
-        "slug": "course-schedule-i",
+        "slug": "course-schedule-i-cycle-detect-medium",
         "title": "Course Schedule I (cycle detect)",
         "difficulty": "medium"
       },
       {
-        "slug": "course-schedule-ii",
+        "slug": "course-schedule-ii-one-topo-order-medium",
         "title": "Course Schedule II (one topo order)",
         "difficulty": "medium"
       },
       {
-        "slug": "alien-dictionary",
+        "slug": "alien-dictionary-graph-from-string-order-hard",
         "title": "Alien Dictionary (graph from string order)",
         "difficulty": "hard"
       },
       {
-        "slug": "minimum-height-trees",
+        "slug": "minimum-height-trees-iterative-leaf-trim-medium",
         "title": "Minimum Height Trees (iterative leaf-trim)",
         "difficulty": "medium"
       },
       {
-        "slug": "parallel-courses",
+        "slug": "parallel-courses-level-wise-bfs-gives-min-semesters-medium",
         "title": "Parallel Courses (level-wise BFS gives min semesters)",
         "difficulty": "medium"
       },
       {
-        "slug": "sequence-reconstruction",
+        "slug": "sequence-reconstruction-unique-topo-order-check-medium",
         "title": "Sequence Reconstruction (unique topo order check)",
         "difficulty": "medium"
       }
