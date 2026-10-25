@@ -211,25 +211,14 @@ Three meetings: `[0,30]`, `[5,10]`, `[15,20]`. Turn each into two events, sort, 
   problemShape="list of intervals; return peak overlap (count sweep)"
   defaultRevealed />
 
-## When to use it — and when not to
+## When to use it — recognition signals
 
-### Recognize by
 - *peak concurrency* — "minimum meeting rooms", "maximum number of active sessions", "busiest moment".
 - total coverage / uncovered gap on a number line.
 - "can capacity ever be exceeded?" — passenger count, CPU load, bandwidth, reservations.
 - "timeline of changes" — starts add something, ends remove something.
 - "skyline" — max height at every x-coordinate (event = building start/end).
 - many intervals where only endpoints matter; nothing changes inside an interval.
-
-### When NOT to use it
-You need to *reconstruct which intervals were merged* rather than count activity. Use Merge Intervals instead. Also, if events arrive *online* (no chance to sort up front), reach for a TreeMap or segment tree instead of an event-array sweep.
-
-Also avoid the plain event sweep when:
-- intervals are not known in advance and you need instant answers after each insertion.
-- the query asks for membership of specific original intervals, not aggregate state.
-- coordinates are huge but sparse and you accidentally allocate an array over the coordinate range.
-- endpoints have ambiguous inclusivity; decide whether `[1,5]` and `[5,10]` overlap before coding.
-- state cannot be updated by a simple add/remove; you may need a heap, multiset, or segment tree as the swept state.
 
 ## History — Bentley-Ottmann sweep, 1979
 
@@ -506,6 +495,72 @@ Other named production uses:
 - **Verilog chip-layout DRC** (design-rule check) uses sweep to find metal traces violating minimum-spacing constraints on billion-transistor circuits.
 - **Google Maps / Apple Maps** compute "where is traffic currently congested?" via a sweep over road-segment speed events.
 - **PostgreSQL's range-join operator** (`&&`) uses sweep plus a GiST index for `WHERE t1.period && t2.period`.
+
+## When NOT to use it
+
+Having seen the four flavors in action, here's where "events ordered by coordinate, state updated on each" doesn't fit.
+
+- **You need to reconstruct which intervals were merged** rather than count activity — use Merge Intervals instead.
+- **Events arrive online** (no chance to sort up front) — reach for a TreeMap or segment tree instead of an event-array sweep.
+- **Intervals aren't known in advance** and you need instant answers after each insertion.
+- **The query asks for membership of specific original intervals**, not aggregate state.
+- **Coordinates are huge but sparse** and you accidentally allocate an array over the coordinate range.
+- **Endpoints have ambiguous inclusivity**; decide whether `[1,5]` and `[5,10]` overlap before coding.
+- **State can't be updated by a simple add/remove** — you may need a heap, multiset, or segment tree as the swept state.
+
+### Visual 1: sweep gives aggregate, not identity — doesn't say *which* intervals overlap
+
+Sweep tells you the active count at every point. It discards WHICH intervals contributed:
+
+```text
+   intervals = [(1, 5), (3, 7), (6, 10)]   each labeled A, B, C
+
+   events (sorted): (1, +A), (3, +B), (5, -A), (6, +C), (7, -B), (10, -C)
+   sweep:
+     at x=1:  active = {A},        count 1
+     at x=3:  active = {A, B},     count 2  ← peak concurrency starts
+     at x=5:  active = {B},        count 1
+     at x=6:  active = {B, C},     count 2  ← peak concurrency again
+     at x=7:  active = {C},        count 1
+     at x=10: active = {},         count 0
+
+   Peak = 2 (correct output of sweep).
+
+   But question: "which two intervals overlap?"
+     At x=3, A and B overlap.
+     At x=6, B and C overlap.
+   Plain count-sweep lost the labels. The output "2" doesn't name the overlappers.
+```
+
+To reconstruct identities, you have two options:
+1. **Merge Intervals** (chapter 31) — sort by start, group touching intervals, emit the merged ranges with their contributor list.
+2. **Sweep + membership set** — maintain `Set<Interval>` as the swept state (not just a count). Costs O(k) per event for set operations, but keeps the identities.
+
+Choose by what the problem asks for: aggregate stats → sweep; identities / merged groups → merge-intervals or sweep-with-set.
+
+### Visual 2: online events — sweep can't be used
+
+Sweep needs ALL events known up front so they can be sorted. If events arrive one at a time with queries interleaved, sorting is dead:
+
+```text
+   Timeline of arrivals (interleaved):
+     t = 1:   add interval (10, 20)                      "what's the current peak?"  →  1
+     t = 2:   add interval (15, 25)                      "what's the current peak?"  →  2
+     t = 3:   add interval (12, 18)                      "what's the current peak?"  →  3
+     t = 4:   REMOVE interval (10, 20)                   "what's the current peak?"  →  2
+
+   Plain sweep: can't start — we haven't seen all events yet.
+   If we re-sweep from scratch after each addition: O(n log n) per operation,
+     so n operations = O(n² log n). Dies at n = 10⁴.
+
+   Online structure (TreeMap<coord, delta> / segment tree):
+     add interval: 2 TreeMap updates — O(log n)
+     query peak:   iterate TreeMap in order, running sum — O(n) or O(log n)
+                   with a segment tree that stores max-prefix-sum per node
+     total: O(log n) per op, feasible at n = 10⁶
+```
+
+Sweep is an offline algorithm. The structural trade: offline sort gives O(n log n) once; online TreeMap/segment-tree gives O(log n) per op but with a heavier structure. Reach for the online structure the moment "query after each insertion" appears in the problem.
 
 ## Recognition drill
 

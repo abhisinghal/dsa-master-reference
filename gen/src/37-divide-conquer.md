@@ -232,9 +232,8 @@ Each level does O(n) total merge work; there are `log₂ n` levels; total O(n lo
   problemShape="split array into halves → solve independently → combine with a cheap O(n) step"
   defaultRevealed />
 
-## When to use it — and when not to
+## When to use it — recognition signals
 
-### Recognize by
 - "solve the halves, combine" — merge sort family.
 - "count inversions" / "count of smaller after self" / "reverse pairs".
 - "cross-boundary pairs" where left-half and right-half relationships matter.
@@ -242,16 +241,6 @@ Each level does O(n) total merge work; there are `log₂ n` levels; total O(n lo
 - "x^n in O(log n)", "a mod b^e" via binary exponentiation.
 - constraints around `10^5` where O(n²) pair checking is too slow but O(n log n) fits.
 - input can be split into independent subproblems after you define the right combine information.
-
-### When NOT to use it
-The two halves *depend on each other* (state flows across the split). Then you can't recurse independently — reach for DP with a state that captures the cross-half interaction. Also, if the combine step is O(n log n), your total becomes O(n log² n) — check if a single-pass approach exists.
-
-Also avoid it when:
-- a simple linear scan exists, such as Kadane for maximum subarray.
-- the split creates highly unbalanced recursion; you may fall toward O(n²).
-- the combine step has to re-scan too much hidden state from both halves.
-- the problem needs online updates; segment trees or Fenwick trees may be better.
-- recursion depth could exceed limits and an iterative structure is simpler.
 
 ## History — von Neumann 1945, Karatsuba 1962, Strassen 1969
 
@@ -491,6 +480,72 @@ Other named production uses of divide-and-conquer:
 - **Rust's `slice::sort`** uses Timsort-flavored stable merge sort.
 - **Postgres btree page split** on insertion: when a page overflows, split it in half and promote a separator key up — a D&C on the index tree.
 - **Hadoop/Spark `sortByKey`** uses external merge sort (D&C with k-way merge in the reduce phase, chapter 30).
+
+## When NOT to use it
+
+Having walked the four D&C flavors, here's where "split, solve halves, combine" is the wrong frame.
+
+- **The two halves depend on each other** (state flows across the split) — you can't recurse independently; reach for DP with a state that captures the cross-half interaction.
+- **The combine step is O(n log n)** — your total becomes O(n log² n); check if a single-pass approach exists.
+- **A simple linear scan exists** — Kadane for maximum subarray is O(n), D&C variant is O(n log n).
+- **The split creates highly unbalanced recursion** — you may fall toward O(n²).
+- **The combine step has to re-scan too much hidden state from both halves.**
+- **The problem needs online updates** — segment trees or Fenwick trees may be better.
+- **Recursion depth could exceed limits** and an iterative structure is simpler.
+
+### Visual 1: cross-half dependencies — D&C can't recurse independently
+
+Longest Increasing Subsequence (LIS) looks like it could D&C, but the halves share information:
+
+```text
+   nums = [3, 1, 4, 1, 5, 9, 2, 6]
+
+   Split: [3, 1, 4, 1]  |  [5, 9, 2, 6]
+                        ↑
+              LIS of left half = 3  (1, 4, ...)   missing: ends at what?
+              LIS of right half = 3 (2, 6, ...)   starts at what?
+
+   Can we combine? To know if a left-LIS can EXTEND into the right half,
+   we need to know the LAST value of every possible left-LIS. There are
+   many such LISs with different endings — the combine step would have
+   to track all of them.
+
+   Also: the LIS might not cross the boundary at all, OR it might reuse
+   a prefix of one left-LIS and a suffix of a specific right-LIS whose
+   first value exceeds the left-LIS's last value. The combine isn't
+   additive — it's a combinatorial match on endpoints.
+
+   The right algorithm: DP with dp[i] = LIS ending at i, or the
+   patience-sort variant with a `tails[]` array binary-searched for each
+   new element. Neither has D&C structure.
+```
+
+The D&C smell test: can you solve each half with a bounded summary (one number, a count, a boundary pair) and combine without re-examining the raw halves? Merge sort's answer is yes — the summary is "the sorted half". Inversion count's answer is yes — "count of inversions within + a merge-time cross-count". LIS says no — the summary would need to be the full set of per-endpoint LISs, which defeats the point.
+
+### Visual 2: unbalanced split degrades to O(n²)
+
+D&C's O(n log n) depends on the split being balanced. If the pivot is near the extreme every time, you get O(n²):
+
+```text
+   Quicksort on an already-sorted array, pivot = last element:
+
+     [1, 2, 3, 4, 5, 6, 7, 8]            pivot = 8   → partition: [1..7] | [8]
+     [1, 2, 3, 4, 5, 6, 7]               pivot = 7   → partition: [1..6] | [7]
+     [1, 2, 3, 4, 5, 6]                  pivot = 6   → partition: [1..5] | [6]
+     ...
+
+   Recursion depth: n (not log n)
+   Work per level: n, n-1, n-2, ..., 1  → total O(n²)
+
+   Balanced split would be:
+     [1..8]          split at 4-5         → O(1) partition
+     [1..4] [5..8]   split at 2-3, 6-7    → 2 subproblems
+     [1,2][3,4][5,6][7,8]                 → 4 subproblems
+     ...
+   Recursion depth: log n, total O(n log n)
+```
+
+The master theorem's `T(n) = aT(n/b) + f(n)` assumes `b > 1`. An unbalanced split has effective `b = 1 + ε/n`, which collapses `log_b n` to O(n). The fixes: randomize the pivot (median-of-three sampling), or switch to a different algorithm (merge sort has guaranteed O(n log n) because the split is positional, not value-dependent).
 
 ## Recognition drill
 

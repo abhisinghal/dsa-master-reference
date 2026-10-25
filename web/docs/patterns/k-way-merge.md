@@ -241,25 +241,14 @@ Three sorted lists: `[1,4,5]`, `[1,3,4]`, `[2,6]`. Seed the heap with their head
   problemShape="k sorted sequences → one sorted stream via min-heap of fronts"
   defaultRevealed />
 
-## When to use it — and when not to
+## When to use it — recognition signals
 
-### Recognize by
 - "merge k sorted lists / arrays / files" — several already-ordered sources must become one ordered result.
 - "smallest range covering elements from k lists" — you must keep one live value from each list.
 - "kth smallest in a sorted matrix" — each row or column can be treated as a sorted stream.
 - "external sort runs" — sorted chunks on disk are merged without loading everything.
 - "find k pairs with smallest sums" — the candidate pairs form ordered frontiers.
 - "always choose the next smallest available item among k sources" — a min-heap of fronts is likely.
-
-### When NOT to use it
-The k streams aren't sorted individually — a heap over the current fronts is meaningless if the fronts don't represent "smallest not-yet-emitted". Sort each stream first, or use a different approach.
-
-Also be careful when:
-- you only have one unsorted collection; use sorting or quickselect instead.
-- `k` is tiny and fixed, like 2; a direct two-pointer merge is simpler and faster.
-- you need random access by rank after many updates; a balanced tree or indexed structure may fit better.
-- the next item in a stream is expensive to fetch and you cannot prefetch; design the iterator boundary first.
-- duplicate handling changes the problem, such as needing distinct values only; add that policy explicitly after popping.
 
 ## History — von Neumann's tape sort, 1945
 
@@ -579,6 +568,75 @@ Other named production uses:
 - **Google Logs 'cat **/log.*.gz | sort'** idioms: multi-file sorted log merge for serving monitoring queries.
 - **ClickHouse `MergeTree`**: on-disk sorted data parts; background merges run k-way across parts.
 - **git log** (across packed revs): k-way merge of several commit date streams in `git/revision.c`.
+
+## When NOT to use it
+
+With the full k-way-merge toolkit in hand, here's where "min-heap over k ordered fronts" is the wrong tool.
+
+- **The k streams aren't sorted individually** — a heap over the current fronts is meaningless if the fronts don't represent "smallest not-yet-emitted". Sort each stream first, or use a different approach.
+- **One unsorted collection** — use sorting or quickselect instead; k-way-merge is overhead when there aren't k sorted sources to merge.
+- **k is tiny and fixed, like 2** — a direct two-pointer merge is simpler and faster.
+- **You need random access by rank after many updates** — a balanced tree or indexed structure may fit better.
+- **The next item in a stream is expensive to fetch and you cannot prefetch** — design the iterator boundary first.
+- **Duplicate handling changes the problem**, such as needing distinct values only — add that policy explicitly after popping.
+
+### Visual 1: unsorted streams give meaningless heap fronts
+
+A min-heap over k streams only works if each stream's current head IS the smallest-not-yet-emitted item of that stream:
+
+
+
+```text
+   Stream A (SORTED):     1 → 4 → 7 → 10
+   Stream B (SORTED):     2 → 5 → 8 → 11
+   Stream C (UNSORTED):   9 → 3 → 6 → 12       ← C's front is 9, but the actual
+                                                 smallest in C is 3
+
+   Heap state after init: [1 (A), 2 (B), 9 (C)]
+   Pop 1, advance A:  heap = [2 (B), 9 (C), 4 (A)]  → pop 2
+   Pop 2, advance B:  heap = [4 (A), 5 (B), 9 (C)]  → pop 4
+   Pop 4, advance A:  heap = [5 (B), 7 (A), 9 (C)]  → pop 5
+   Pop 5, advance B:  heap = [7 (A), 8 (B), 9 (C)]  → pop 7
+
+   Merged so far: 1, 2, 4, 5, 7       ← correct for A and B only
+   But C's values 3 and 6 should have come BEFORE 7, 8, 10, 11.
+   The heap can't see them — C's front hides them.
+
+   Correct result: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+   What we got:    1, 2, 4, 5, 7, 8, 9, 3, 6, 10, 11, 12   ← out of order
+```
+
+
+
+The guarantee is: the smallest overall item is at the front of SOME stream right now. That requires each stream to be sorted individually. If a stream isn't, you lose the invariant and the output is wrong. The fix: sort each stream first (if cheap) or switch to a different algorithm (`PriorityQueue` over all items, or an external sort if memory is tight).
+
+### Visual 2: k = 2 — just use two pointers, skip the heap
+
+For merging exactly two sorted lists, a heap is machinery you don't need:
+
+
+
+```text
+   A = [1, 4, 7, 10],  B = [2, 5, 8, 11]
+
+   Heap approach:
+     init:  heap = [(1,A), (2,B)]
+     each pop + push + heapify:  O(log k) = O(log 2) = O(1) but with constants
+     allocation: heap object, k entries
+     total:  2n ops × (~5-10 ns per heap op) = overhead
+
+   Two-pointer merge:
+     while i < |A| and j < |B|:
+       if A[i] ≤ B[j]: out.push(A[i++])
+       else:            out.push(B[j++])
+     while i < |A|: out.push(A[i++])
+     while j < |B|: out.push(B[j++])
+     total:  2n ops × (~1-2 ns per compare+assign)
+```
+
+
+
+The heap is 5-10× slower per op because of allocation, pointer chasing, and comparator calls. For k = 2 the plain two-pointer merge is simpler to write and faster to run. The crossover is roughly k ≥ 4; below that, two-pointer or recursive merge wins. Reach for the heap only when k is unknown or large.
 
 ## Recognition drill
 
