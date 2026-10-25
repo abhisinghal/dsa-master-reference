@@ -61,37 +61,37 @@
     "inTheWildSource": "PostgreSQL's merge-join operator (nodeMergejoin.c)",
     "subVariations": [
       {
-        "slug": "pair-sum",
+        "slug": "pair-sum-on-a-sorted-array-easy",
         "title": "Pair sum on sorted array (bare mechanic)",
         "difficulty": "easy"
       },
       {
-        "slug": "container-most-water",
+        "slug": "container-with-most-water-medium",
         "title": "Container With Most Water",
         "difficulty": "medium"
       },
       {
-        "slug": "three-sum",
+        "slug": "_3sum-medium",
         "title": "3Sum",
         "difficulty": "medium"
       },
       {
-        "slug": "squaring-sorted",
+        "slug": "squaring-a-sorted-array-easy",
         "title": "Squaring a Sorted Array",
         "difficulty": "easy"
       },
       {
-        "slug": "remove-duplicates",
+        "slug": "remove-duplicates-in-place-easy",
         "title": "Remove Duplicates In-place",
         "difficulty": "easy"
       },
       {
-        "slug": "dutch-flag",
+        "slug": "sort-colors-dutch-national-flag-medium",
         "title": "Sort Colors (Dutch National Flag)",
         "difficulty": "medium"
       },
       {
-        "slug": "trapping-rain-water",
+        "slug": "trapping-rain-water-hard",
         "title": "Trapping Rain Water (two-pointer variant)",
         "difficulty": "hard"
       }

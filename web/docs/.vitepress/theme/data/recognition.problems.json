@@ -191,7 +191,98 @@
       ]
     }
   ],
-  "two-pointers": [],
+  "two-pointers": [
+    {
+      "statement": "Given a sorted array and a target, return indices of two numbers summing to target (1-indexed).",
+      "pattern": "two-pointers",
+      "subVariation": "pair-sum",
+      "distractors": [
+        "hashing",
+        "binary-search"
+      ]
+    },
+    {
+      "statement": "Given an array of heights, pick two to form a container holding the most water with the x-axis.",
+      "pattern": "two-pointers",
+      "subVariation": "container-most-water",
+      "distractors": [
+        "sliding-window",
+        "monotonic-stack"
+      ]
+    },
+    {
+      "statement": "Find all unique triplets in nums that sum to zero.",
+      "pattern": "two-pointers",
+      "subVariation": "three-sum",
+      "distractors": [
+        "hashing",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Given a sorted array possibly containing negatives, return the sorted squares of each element in O(n).",
+      "pattern": "two-pointers",
+      "subVariation": "squaring-sorted",
+      "distractors": [
+        "sorting",
+        "math"
+      ]
+    },
+    {
+      "statement": "Remove duplicates from a sorted array in place and return the new length.",
+      "pattern": "two-pointers",
+      "subVariation": "remove-duplicates",
+      "distractors": [
+        "hashing",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Sort an array containing only 0s, 1s, and 2s in a single pass in place.",
+      "pattern": "two-pointers",
+      "subVariation": "dutch-flag",
+      "distractors": [
+        "sorting",
+        "counting-sort"
+      ]
+    },
+    {
+      "statement": "Given an elevation map, compute how much rainwater is trapped between the bars.",
+      "pattern": "two-pointers",
+      "subVariation": "trapping-rain-water",
+      "distractors": [
+        "monotonic-stack",
+        "dp"
+      ]
+    },
+    {
+      "statement": "Decide whether a string is a palindrome (ignoring non-alphanumerics and case).",
+      "pattern": "two-pointers",
+      "subVariation": "pair-sum",
+      "distractors": [
+        "sliding-window",
+        "stack"
+      ]
+    },
+    {
+      "statement": "Move all zeros in an integer array to the end while preserving the relative order of non-zero elements.",
+      "pattern": "two-pointers",
+      "subVariation": "remove-duplicates",
+      "distractors": [
+        "sorting",
+        "stack"
+      ]
+    },
+    {
+      "statement": "Given two sorted integer arrays, merge them into the first in place in O(m+n).",
+      "pattern": "two-pointers",
+      "subVariation": "squaring-sorted",
+      "distractors": [
+        "sorting",
+        "merge-intervals"
+      ]
+    }
+  ],
   "fast-slow": [
     {
       "statement": "Given the head of a singly linked list, return true if the list contains a cycle, else false.",
