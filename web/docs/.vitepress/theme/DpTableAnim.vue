@@ -46,6 +46,7 @@ const tableWidth = computed(() => props.xChars.length * props.cellSize)
 const tableHeight = computed(() => props.yChars.length * props.cellSize)
 
 const svgWidth = computed(() => Math.max(720, tableX.value + tableWidth.value + 220))
+const svgHeight = computed(() => Math.max(300, tableY + tableHeight.value + 100))
 
 const current = ref(0)
 const playing = ref(false)
@@ -154,14 +155,14 @@ onBeforeUnmount(stop)
       <svg
         class="anim-svg"
         :width="svgWidth"
-        height="300"
-        :viewBox="`0 0 ${svgWidth} 300`"
+        :height="svgHeight"
+        :viewBox="`0 0 ${svgWidth} ${svgHeight}`"
         xmlns="http://www.w3.org/2000/svg"
         font-family="var(--dsa-font)"
         role="img"
         :aria-label="`Interactive dynamic programming table animation for ${title}`"
       >
-        <rect x="0" y="0" :width="svgWidth" height="300" rx="12" class="surface" />
+        <rect x="0" y="0" :width="svgWidth" :height="svgHeight" rx="12" class="surface" />
 
         <g v-if="showCompare" class="compare-panel">
           <rect x="22" y="48" width="184" height="104" rx="10" />
@@ -222,15 +223,15 @@ onBeforeUnmount(stop)
         </g>
 
         <g class="legend" text-anchor="start">
-          <rect x="30" y="188" width="16" height="16" rx="4" class="legend-current" />
-          <text x="53" y="201">current</text>
-          <rect x="30" y="214" width="16" height="16" rx="4" class="legend-read" />
-          <text x="53" y="227">dependency</text>
-          <rect x="30" y="240" width="16" height="16" rx="4" class="legend-match" />
-          <text x="53" y="253">match</text>
+          <rect x="30" :y="svgHeight - 68" width="16" height="16" rx="4" class="legend-current" />
+          <text x="53" :y="svgHeight - 55">current</text>
+          <rect x="140" :y="svgHeight - 68" width="16" height="16" rx="4" class="legend-read" />
+          <text x="163" :y="svgHeight - 55">dependency</text>
+          <rect x="280" :y="svgHeight - 68" width="16" height="16" rx="4" class="legend-match" />
+          <text x="303" :y="svgHeight - 55">match</text>
         </g>
 
-        <text :x="svgWidth / 2" y="282" text-anchor="middle" class="svg-caption">
+        <text :x="svgWidth / 2" :y="svgHeight - 20" text-anchor="middle" class="svg-caption">
           Fill states only after their diagonal, top, or left dependencies are known.
         </text>
       </svg>
