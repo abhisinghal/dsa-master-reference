@@ -739,7 +739,98 @@
       ]
     }
   ],
-  "top-k-heap": [],
+  "top-k-heap": [
+    {
+      "statement": "Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.",
+      "pattern": "top-k-heap",
+      "subVariation": "top-k-frequent-heap",
+      "distractors": [
+        "sorting",
+        "hashing"
+      ]
+    },
+    {
+      "statement": "Given an array of points on a 2D plane, return the k points closest to the origin (0, 0) by Euclidean distance.",
+      "pattern": "top-k-heap",
+      "subVariation": "k-closest-points",
+      "distractors": [
+        "sorting",
+        "quickselect"
+      ]
+    },
+    {
+      "statement": "Design a class to find the kth largest element in a stream. The class has an add(val) method that returns the kth largest after inserting val.",
+      "pattern": "top-k-heap",
+      "subVariation": "kth-largest",
+      "distractors": [
+        "sorting",
+        "quickselect"
+      ]
+    },
+    {
+      "statement": "Given an unsorted array, find the kth largest element in the array (one-shot query, not streaming).",
+      "pattern": "top-k-heap",
+      "subVariation": "kth-largest",
+      "distractors": [
+        "quickselect",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Design a data structure that supports adding integers from a stream and returning the median of all elements added so far, with O(log n) add and O(1) findMedian.",
+      "pattern": "top-k-heap",
+      "subVariation": "median-from-stream",
+      "distractors": [
+        "sorting",
+        "binary-search"
+      ]
+    },
+    {
+      "statement": "Given a character array representing tasks and an integer n representing cooldown between identical tasks, return the minimum number of time units to complete all tasks.",
+      "pattern": "top-k-heap",
+      "subVariation": "task-scheduler-heap",
+      "distractors": [
+        "greedy",
+        "dp"
+      ]
+    },
+    {
+      "statement": "Given a list of words sorted by frequency ties broken alphabetically, return the k most frequent words.",
+      "pattern": "top-k-heap",
+      "subVariation": "top-k-frequent-heap",
+      "distractors": [
+        "sorting",
+        "trie"
+      ]
+    },
+    {
+      "statement": "Return the k smallest elements of an unsorted integer array in any order.",
+      "pattern": "top-k-heap",
+      "subVariation": "top-k-smallest",
+      "distractors": [
+        "sorting",
+        "quickselect"
+      ]
+    },
+    {
+      "statement": "You have k sorted linked lists. Merge all the linked lists into one sorted linked list and return it.",
+      "pattern": "top-k-heap",
+      "subVariation": "top-k-smallest",
+      "distractors": [
+        "divide-and-conquer",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Given a string s, rearrange the characters so that no two adjacent characters are the same. Return the rearranged string, or empty if impossible.",
+      "pattern": "top-k-heap",
+      "subVariation": "task-scheduler-heap",
+      "distractors": [
+        "greedy",
+        "hashing"
+      ]
+    }
+  ],
   "k-way-merge": [
     {
       "statement": "Given k sorted linked lists, merge them into one sorted list.",

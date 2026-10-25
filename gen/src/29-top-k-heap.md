@@ -5,7 +5,195 @@
 
 <PatternProgress pattern-id="top-k-heap" problems="top-k-frequent-elements, k-closest-points-to-origin, kth-largest-element-in-a-stream, reorganize-string" />
 
+<script setup>
+const theTemplateSpecializations = [
+  { slug: `top-k-smallest-heap-of-k-bare-mechanic-medium`, title: `Top-K Smallest (heap-of-K bare mechanic)` },
+  { slug: `top-k-frequent-elements-medium`, title: `Top K Frequent Elements` },
+  { slug: `k-closest-points-to-origin-medium`, title: `K Closest Points to Origin` },
+  { slug: `kth-largest-in-array-medium`, title: `Kth Largest in Array` },
+  { slug: `find-median-from-data-stream-two-heap-hard`, title: `Find Median from Data Stream (two-heap)` },
+  { slug: `task-scheduler-max-heap-greedy-medium`, title: `Task Scheduler (max-heap greedy)` },
+]
 
+const theTemplateCode = `// Top-K via size-k heap of the OPPOSITE polarity:
+//   k LARGEST  -> MIN-heap (root = weakest-of-winners, cheap to evict).
+//   k SMALLEST -> MAX-heap (root = largest-of-winners).
+// Each item is offered once; the heap stays bounded at size k.
+<Item> List<Item> topK(Iterable<Item> items, int k, Comparator<Item> worstFirst) {
+    PriorityQueue<Item> heap = new PriorityQueue<>(worstFirst);
+    for (Item item : items) {
+        heap.offer(item);
+        if (heap.size() > k) {
+            heap.poll();                         // evict the worst-of-winners
+        }
+    }
+    List<Item> out = new ArrayList<>();
+    while (!heap.isEmpty()) out.add(heap.poll());
+    return out;                                   // worst-to-best order
+}`
+
+const topKSmallestCode = `// Top-K Smallest — MAX-heap of size k; root = largest kept = next to evict.
+int[] topKSmallest(int[] nums, int k) {
+    PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
+    for (int x : nums) {
+        maxHeap.offer(x);
+        if (maxHeap.size() > k) maxHeap.poll();  // drop the largest kept
+    }
+    int[] out = new int[k];
+    for (int i = k - 1; i >= 0; i--) out[i] = maxHeap.poll();
+    return out;
+}`
+
+const topKFrequentCode = `// Top K Frequent Elements — MIN-heap of size k keyed on frequency.
+int[] topKFrequent(int[] nums, int k) {
+    Map<Integer, Integer> freq = new HashMap<>();
+    for (int x : nums) freq.merge(x, 1, Integer::sum);
+    PriorityQueue<Integer> pq = new PriorityQueue<>(
+        (a, b) -> Integer.compare(freq.get(a), freq.get(b)));
+    for (int key : freq.keySet()) {
+        pq.offer(key);
+        if (pq.size() > k) pq.poll();            // drop least-frequent kept
+    }
+    int[] res = new int[k];
+    for (int i = k - 1; i >= 0; i--) res[i] = pq.poll();
+    return res;
+}`
+
+const kClosestPointsCode = `// K Closest Points to Origin — MAX-heap of size k keyed on squared distance.
+// sqrt is monotone so compare on squared distance to avoid floating-point.
+int[][] kClosest(int[][] points, int k) {
+    PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> {
+        int da = a[0]*a[0] + a[1]*a[1], db = b[0]*b[0] + b[1]*b[1];
+        return Integer.compare(db, da);           // farthest at root
+    });
+    for (int[] p : points) {
+        heap.offer(p);
+        if (heap.size() > k) heap.poll();         // evict the farthest
+    }
+    int[][] res = new int[k][2];
+    for (int i = 0; i < k; i++) res[i] = heap.poll();
+    return res;
+}`
+
+const kthLargestStreamCode = `// Kth Largest in a Stream — size-k MIN-heap kept alive across add() calls.
+class KthLargest {
+    private final int k;
+    private final PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+    public KthLargest(int k, int[] nums) {
+        this.k = k;
+        for (int x : nums) add(x);
+    }
+
+    public int add(int val) {
+        pq.offer(val);
+        if (pq.size() > k) pq.poll();
+        return pq.peek();                         // root of min-heap = k-th largest
+    }
+}`
+
+const medianStreamCode = `// Find Median from Data Stream — TWO heaps:
+//   low  = max-heap of the smaller half (root = largest of the small half)
+//   high = min-heap of the larger half (root = smallest of the large half)
+// Invariant: size(low) == size(high) or size(low) == size(high)+1.
+class MedianFinder {
+    private final PriorityQueue<Integer> low  = new PriorityQueue<>((a, b) -> b - a);
+    private final PriorityQueue<Integer> high = new PriorityQueue<>();
+
+    public void addNum(int num) {
+        low.offer(num);                           // tentative add to low half
+        high.offer(low.poll());                   // move its max to high
+        if (high.size() > low.size()) {
+            low.offer(high.poll());               // rebalance so low has ceil(n/2)
+        }
+    }
+
+    public double findMedian() {
+        return low.size() == high.size()
+            ? (low.peek() + high.peek()) / 2.0
+            : low.peek();
+    }
+}`
+
+const taskSchedulerCode = `// Task Scheduler — greedy max-heap: pick the most-frequent runnable task.
+// Cooldown enforced by a holding queue that releases tasks back when cooldown expires.
+int leastInterval(char[] tasks, int n) {
+    int[] counts = new int[26];
+    for (char c : tasks) counts[c - 'A']++;
+    PriorityQueue<Integer> heap = new PriorityQueue<>((a, b) -> b - a);
+    for (int c : counts) if (c > 0) heap.offer(c);
+    Deque<int[]> cooldown = new ArrayDeque<>();   // (releaseAt, remainingCount)
+    int time = 0;
+    while (!heap.isEmpty() || !cooldown.isEmpty()) {
+        time++;
+        if (!heap.isEmpty()) {
+            int c = heap.poll() - 1;
+            if (c > 0) cooldown.offer(new int[]{time + n, c});
+        }
+        if (!cooldown.isEmpty() && cooldown.peek()[0] == time) {
+            heap.offer(cooldown.poll()[1]);
+        }
+    }
+    return time;
+}`
+
+const topKInvariant = {
+  statement: `After processing any prefix of the input, the heap contains EXACTLY the best min(k, prefix_size) elements seen so far. The root is the worst-of-the-winners — the next candidate to evict if a better one arrives.`,
+  initialization: `Before iteration 0: heap is empty. The invariant holds vacuously (prefix size is 0, no winners yet).`,
+  maintenance: `Each iteration offers the new item (heap size temporarily becomes previous_best + 1). If this exceeds k, poll the root — which, by heap ordering, is the worst-of-the-winners under the current comparator. Correctness: either (a) the new item was better than the root and now kicks out the old-root as planned, or (b) the new item IS the current worst and gets kicked out immediately. In both cases, the heap holds exactly the best k.`,
+  termination: `After processing all n items, the heap contains the globally-best k items. Successive polls yield them in worst-to-best order (reverse this if the caller wants best-to-worst).`,
+}
+
+const topKComplexity = { time: `O(n log k) — n insertions each O(log k) on a bounded heap`, space: `O(k) for the heap plus any extra bookkeeping (freq map for Top-K Frequent)` }
+
+const mastery5 = [
+  {
+    q: `For "k LARGEST" with the heap-of-k template, which polarity do you use?`,
+    choices: [
+      { text: `MIN-heap — the root is the smallest of the current top-k, cheap to evict`, correct: true, explanation: `Opposite-polarity rule: the root should be "the next thing I would throw away." For k largest, that's the smallest kept.` },
+      { text: `MAX-heap — put the largest at the root`, correct: false, explanation: `That gives you k SMALLEST, not k largest.` },
+      { text: `MIN-heap of size n`, correct: false, explanation: `Wasteful — defeats the point of heap-of-k.` },
+      { text: `A BST`, correct: false, explanation: `Also works but with worse constants and more code.` },
+    ],
+  },
+  {
+    q: `Time complexity of maintaining top-k over n elements with the heap-of-k template?`,
+    choices: [
+      { text: `O(n log k) — n insertions each on a bounded size-k heap`, correct: true, explanation: `Each offer/poll is O(log(current_size)) which stays ≤ O(log k). Beats O(n log n) full sort when k ≪ n.` },
+      { text: `O(n log n)`, correct: false, explanation: `That's full sort — wasteful when k ≪ n.` },
+      { text: `O(k log n)`, correct: false },
+      { text: `O(n + k)`, correct: false },
+    ],
+  },
+  {
+    q: `For Find Median from Data Stream, why TWO heaps?`,
+    choices: [
+      { text: `A max-heap on the smaller half + min-heap on the larger half; the roots give O(1) median access`, correct: true, explanation: `Each addNum rebalances both heaps so their sizes differ by at most 1. Median is low.peek() (odd total) or (low.peek() + high.peek()) / 2 (even total).` },
+      { text: `For redundancy — one validates the other`, correct: false },
+      { text: `One for even positions, one for odd`, correct: false },
+      { text: `To support concurrent reads`, correct: false },
+    ],
+  },
+  {
+    q: `For streaming "Kth Largest Element in a Stream", what does the heap root hold at any point?`,
+    choices: [
+      { text: `The current k-th largest value — the min of the k best seen so far`, correct: true, explanation: `Min-heap root is the smallest of the k winners, which is exactly the k-th largest overall.` },
+      { text: `The largest value ever seen`, correct: false, explanation: `That's the 1st largest, not k-th.` },
+      { text: `The newest value`, correct: false },
+      { text: `A sentinel`, correct: false },
+    ],
+  },
+  {
+    q: `Quickselect vs size-k Heap for OFFLINE top-k (order irrelevant, k ~ n/2): which is better on average?`,
+    choices: [
+      { text: `Quickselect, O(n) average — avoids the O(log k) heap factor`, correct: true, explanation: `When k ≈ n/2, O(n log k) ≈ O(n log n), losing the heap advantage. Quickselect's expected O(n) wins. Heap remains the safer worst-case choice.` },
+      { text: `Heap, always`, correct: false, explanation: `Heap is bounded worst-case but slower on average when k is not small.` },
+      { text: `Both equal`, correct: false },
+      { text: `Merge sort`, correct: false, explanation: `Full sort is strictly worse than both.` },
+    ],
+  },
+]
+</script>
 
 ## Why top-k heaps exist — the story
 
@@ -38,49 +226,48 @@ You need the k-th value **once** and don't care about the other k−1 boundary i
 
 Also avoid a heap when you need the complete sorted order of all values; then sorting is simpler and honest. If the key range is tiny or bounded, bucket sort can beat the heap: for frequencies from 0 to n, buckets often give O(n). If `k` is close to `n`, O(n log k) becomes close to O(n log n), so the benefit shrinks.
 
-## How to use it — template
+## THE template
 
-```java
-PriorityQueue<Item> heap = new PriorityQueue<>((a, b) -> compareWorstFirst(a, b));
-for (Item item : items) {
-    heap.offer(item);
-    if (heap.size() > k) {
-        heap.poll();        // remove the worst of the kept items
-    }
-}
-List<Item> answer = new ArrayList<>();
-while (!heap.isEmpty()) {
-    answer.add(heap.poll());
-}
-return answer;
-```
+Every Top-K-heap problem is a specialization of **"maintain a size-k heap of the OPPOSITE polarity to the goal; the root is the worst-of-the-winners, cheap to evict."** Four parameters distinguish the sub-variations: what's being ranked (value, frequency, distance), what the ranking key is derived from (direct, aux map), whether the heap stays alive across queries (streaming), and whether you need two heaps (median).
 
-Fill in `compareWorstFirst` based on what "worst among the winners" means. For k largest, the smallest value is worst, so Java's default min-heap works. For k smallest, the largest value is worst, so reverse the comparator. For k most frequent, the lowest frequency is worst, so order by `freq.get(x)`. The loop invariant is simple: after processing any prefix of the input, the heap contains the best `k` items from that prefix, or all items if fewer than `k` have appeared.
+<PatternTemplateCard
+  slug="top-k-heap-template"
+  title="Size-k heap with opposite-polarity root"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="topKInvariant"
+  :complexity="topKComplexity"
+  :specializations="theTemplateSpecializations"
+/>
 
-> [inv] **Invariant — heap size is exactly `min(k, elements_seen_so_far)`.** Never grows beyond `k`, never shrinks. The "grow then trim" one-liner `offer; if (size > k) poll;` maintains this exactly. If size drifts, the algorithm silently returns the wrong top-k.
+## False friends — when "top-k" doesn't need a heap
 
-> [inv] **Invariant — the heap root is the *weakest* of the winners.** For k-largest with a min-heap, the root is the smallest current winner — it's the one to compare a new candidate against. If `candidate > root`, evict root and add candidate. If `candidate <= root`, the candidate can never be in the top-k, so discard. This one comparison per element is what makes it O(n log k) instead of O(n log n).
+- **Quickselect** is strictly better when you need **one** k-th value offline and don't care about the other k-1 boundary items. O(n) average vs. O(n log k).
+- **Bucket sort** beats heap when the ranking key has a small bounded range (e.g., frequency buckets 1..n for Top-K Frequent). O(n) time.
+- **TreeSet / sorted multiset** when you need **ordered** access to the entire top-k (not just the boundary). O(log k) per op, but with sorted iteration.
+- **Reservoir sampling** for streaming "k random items from an infinite stream" — a heap would require seeing all items, reservoir doesn't.
+- **Count-min sketch / top-k approximation** for streaming top-k on massive data (10^12+ items) where exact answers aren't needed. The heap approach needs enough memory for k winners.
+- **Plain scalar tracking** for k = 1 — just a `max` variable. No heap needed.
 
-## When NOT to use it
+## Traps & gotchas
 
-- **You need the top k *in sorted order relative to each other*** — the heap doesn't guarantee internal order, only that the root is the worst-of-the-winners. Extract with successive polls if order matters.
-- **k is very close to n (say k = n/2)** — the heap approach becomes O(n log(n/2)) ≈ O(n log n), same as full sort. Just sort.
-- **You need to answer many top-k queries with different k on the same data** — use quickselect once to partition, or sort once and slice.
-- **Elements arrive as a stream and you need to remove arbitrary items later** — a plain heap can't remove non-root elements in O(log n). Use `TreeSet` or an indexed heap.
-- **k = 1** — you don't need a heap. Just track a running max / min with a scalar. Simpler, faster, no allocation.
-- **The comparator involves floating-point tolerance** — heap operations don't tolerate `NaN` or unstable comparators. Wrap in integer keys where possible.
+<TrapTrace
+  title="Trap 1 — Wrong heap polarity"
+  bug="For 'k LARGEST', instinct says 'max-heap'. nums=[3,1,5,2,4], k=2 with a MAX-heap of all 5: builds then pops 2 times to extract {5,4} — that's O(n log n) work. Also, with the opposite polarity used as a size-k heap, the algorithm silently returns the WRONG values (keeps the smallest instead of the largest)."
+  fix="Rule: 'the root is the next thing I would throw away.' k largest → smallest kept is next to go → MIN-heap. k smallest → MAX-heap. Say the polarity aloud before writing the comparator. Size-k heap stays O(n log k)."
+/>
 
-## Traps & gotchas — the 5 that fail candidates on interview day
+<TrapTrace
+  title="Trap 2 — Subtraction comparator overflow on int keys"
+  bug="PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a); — looks correct for max-heap. But when a = Integer.MIN_VALUE and b = 1, b - a overflows to Integer.MIN_VALUE + 1 (negative), inverting the comparison. On adversarial inputs the heap order is corrupted and the top-k result is wrong."
+  fix="Always use Integer.compare(b, a) for max-heap or Integer.compare(a, b) for min-heap. The compare method handles the full int range correctly. Same rule for Long.compare, Double.compare."
+/>
 
-> [trap] **Trap 1 — Wrong heap polarity.** For k *largest*, use a **min**-heap (worst-of-winners at root). Candidates instinctively reach for max-heap and end up popping the wrong elements. Say the polarity rule aloud before writing: *"k largest → min-heap; k smallest → max-heap."*
-
-> [trap] **Trap 2 — Adding *then* checking, vs checking then adding.** The clean template is `offer(item); if (heap.size() > k) poll();`. Some candidates write `if (heap.size() < k) offer(item); else if (item beats root) { poll(); offer(item); }`. Both work but the second is bug-prone (need to compare item to root correctly). Prefer the first.
-
-> [trap] **Trap 3 — Using `Collections.reverseOrder()` on custom comparators.** For primitives it's fine: `new PriorityQueue<>(Collections.reverseOrder())` gives a max-heap of Integers. For custom classes, wrap the natural comparator: `new PriorityQueue<>((a, b) -> b.value - a.value)` — and beware `int` subtraction overflow when values span `Integer.MIN_VALUE`. Use `Integer.compare(b.value, a.value)`.
-
-> [trap] **Trap 4 — Building the answer in the wrong order.** After the loop, `poll()` returns the *worst* of the winners first. If the interviewer wants "top k in descending order", you'll need to reverse the extracted list — or use a max-heap from the start with size `n` and poll `k` times (O(n + k log n), often faster).
-
-> [trap] **Trap 5 — Autoboxing tax in hot code.** Java's `PriorityQueue<Integer>` boxes every int into an Integer. For `n = 10⁷`, that's 10⁷ heap allocations for the boxed keys alone. In performance-critical contexts, use a primitive heap (from Eclipse Collections or write your own on a `long[]`). Interviews rarely test this, but staff-level candidates should mention it.
+<TrapTrace
+  title="Trap 3 — Streaming add() after batch-filling misses the heap-size invariant"
+  bug="class KthLargest { PriorityQueue<Integer> pq = new PriorityQueue<>(); public KthLargest(int k, int[] nums) { for (int x : nums) pq.offer(x); } public int add(int v) { pq.offer(v); return pq.peek(); } } — if the initial array has 10 items and k=3, the heap holds 10 (not 3), and the root is the OVERALL min, not the 3rd largest. Returns the wrong answer."
+  fix="Trim to k during BOTH the constructor and add(): after every offer, if (pq.size() > k) pq.poll(). The invariant 'size == min(k, items_seen)' must hold at all times, not just steady-state."
+/>
 
 ## History — Williams's heap, 1964
 
@@ -90,11 +277,80 @@ The **k-way merge** algorithm — used in every external sort since von Neumann'
 
 The specific Top-K-on-a-stream pattern was formalized in the **NIST Text REtrieval Conference (TREC)** benchmarks in the late 1990s as *"top-K retrieval,"* and later applied to trending / recommendation systems at Google, Facebook, and Twitter. Every "top trending topic" list you see is a Top-K heap in disguise.
 
-## Canonical problem walkthrough — K Closest Points to Origin
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="top-k-heap" />
+
+The sub-variations below walk the template through six canonical uses — bare mechanic (top-k smallest with max-heap), frequency-keyed selection, geometry-keyed selection, streaming kth-largest, two-heap median, and max-heap greedy for scheduling. Each uses the opposite-polarity-root rule; what changes is the ranking key and whether the heap persists across queries.
+
+### Top-K Smallest (heap-of-K bare mechanic) <span class="diff diff-m">Medium</span>
+
+The simplest instance of the template. Given `nums[]` and `k`, return the `k` smallest values in any order. Keep a size-`k` **max-heap**: the root is the largest kept — if a new item is smaller, evict the root; otherwise discard the new item.
+
+> [inv] **Invariant** — After processing each new element, the max-heap holds exactly the `min(k, elements_seen)` smallest values seen so far. Its root is the largest among the kept, which is the next candidate for eviction.
+
+<InvariantProof
+  statement="At the end of any iteration i, the heap contains the k smallest values from nums[0..i], and the root is the largest among them (the worst-of-winners)."
+  initialization="Before iteration 0: heap is empty. The invariant holds vacuously (no winners yet)."
+  maintenance="Iteration i offers nums[i]. If the heap size exceeds k, poll the root (max-heap root = largest kept). Correctness: either (a) nums[i] was smaller than the previous root and the previous root is now correctly evicted, or (b) nums[i] IS the current worst and is immediately evicted. In both cases the heap holds the k smallest of nums[0..i]."
+  termination="After iteration n-1, the heap holds the k smallest values of nums[]. Successive polls yield them in largest-to-smallest order."
+/>
+
+> [key] **Blind-solve prompt** — *Before revealing:* given `nums=[3,2,1,5,6,4]` and `k=3`, return the 3 smallest. Trace the heap state after each insertion. Why does the opposite-polarity rule mean "max-heap for k smallest"?
+
+<TemplateReveal
+  slug="top-k-smallest"
+  language="java"
+  :canonical="topKSmallestCode"
+/>
+
+**Trace** on `nums=[3,2,1,5,6,4]`, `k=3`:
+
+| i | nums[i] | after offer | after poll (if size>k) | heap holds |
+|---|---|---|---|---|
+| 0 | 3 | `[3]` | — | `{3}` |
+| 1 | 2 | `[3,2]` | — | `{3,2}` |
+| 2 | 1 | `[3,2,1]` | — | `{3,2,1}` |
+| 3 | 5 | `[5,3,1,2]` | pop 5 | `{3,2,1}` |
+| 4 | 6 | `[6,3,1,2]` wait — root was 3, offer(6) → `[6,3,1,2,...]`. Actually: after step 3 heap = `{3,2,1}` (root=3). offer(6): heap=`[6,3,1,2]`. poll: pop 6 | `{3,2,1}` |
+| 5 | 4 | `[4,3,1,2]` | pop 4 | `{3,2,1}` |
+
+Final: `{3,2,1}` ✓ — the 3 smallest.
+
+### Top K Frequent Elements <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)*
+
+Return the `k` most frequent values. First count frequencies, then keep a size-`k` **min-heap** keyed on frequency: the root is the least frequent kept — a candidate with higher frequency arrives, evict the root.
+
+> [inv] **Invariant** — After processing each distinct key, the heap holds the `k` highest-frequency keys seen so far; its root is the least-frequent survivor.
+
+<TemplateReveal
+  slug="top-k-frequent"
+  language="java"
+  :canonical="topKFrequentCode"
+/>
+
+**Alternative — bucket sort for O(n)**: since frequencies are integers in `[1, n]`, create buckets where `bucket[f]` = list of values with frequency `f`. Walk `f` from `n` down to `1`, collecting until you've gathered `k` values. Beats the heap when frequencies span a bounded range.
+
+### K Closest Points to Origin <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)*
+
+Return the `k` points closest to `(0,0)`. Keep a size-`k` **max-heap** keyed on **squared** Euclidean distance (`x² + y²`) — `sqrt` is monotone, so comparing squared distances preserves the ordering while avoiding floating-point.
+
+<TemplateReveal
+  slug="k-closest-points"
+  language="java"
+  :canonical="kClosestPointsCode"
+/>
+
+<details>
+<summary><strong>Pedagogical: the 3-approach ladder for K Closest Points (sort → heap → quickselect)</strong></summary>
 
 **Problem** ([↗ LeetCode](https://leetcode.com/problems/k-closest-points-to-origin/)): Given an array of points on a 2D plane, return the `k` closest points to the origin. Distance is Euclidean; the order of the returned points doesn't matter.
 
-### Approach 1 — Full sort by distance
+#### Approach 1 — Full sort by distance
 
 ```java
 int[][] kClosestSort(int[][] points, int k) {
@@ -163,7 +419,7 @@ void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
 
 **When to reach for it:** contest programming or when you know `k` is close to `n/2`. Interview trade-off — quickselect is faster asymptotically but more code, and interviewers occasionally distrust the "expected O(n)" claim.
 
-### Complexity ladder
+#### Complexity ladder
 
 | Approach | Time | Space | When |
 |---|---|---|---|
@@ -171,11 +427,74 @@ void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
 | **Max-heap of size k** | **O(n log k)** | **O(k)** | **Interview default when k ≪ n** |
 | Quickselect | O(n) avg / O(n²) worst | O(1) in-place | Contest / follow-up "make it O(n)" |
 
+</details>
 
+### Kth Largest in Array <span class="diff diff-m">Medium</span>
 
----
+*[↗ LeetCode: Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)* / *[↗ Kth Largest in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/)*
 
-## Kth Largest / Top K Frequent <span class="diff diff-m">Medium</span>
+Return the `k`-th largest value. The size-`k` **min-heap** approach stays alive across stream `add()` calls: `pq.peek()` is always the current `k`-th largest. For the one-shot array version, Quickselect's O(n) average is faster when input is batch, but the heap wins on streams.
+
+> [key] **Why min-heap root = k-th largest?** The heap holds the `k` largest values seen so far. The smallest of those `k` is at the root — which is the `k`-th largest overall.
+
+<TemplateReveal
+  slug="kth-largest-stream"
+  language="java"
+  :canonical="kthLargestStreamCode"
+/>
+
+**Example sequence:** `KthLargest(3, [4, 5, 8, 2])` then `add(3), add(5), add(10), add(9), add(4)`:
+
+| op | heap (size ≤ 3) | peek (k-th largest) |
+|---|---|---|
+| init | `{4, 5, 8}` (pushed and polled to size 3) | 4 |
+| add(3) | `{4, 5, 8}` (3 pushed, polled) | 4 |
+| add(5) | `{5, 5, 8}` | 5 |
+| add(10) | `{5, 8, 10}` | 5 |
+| add(9) | `{8, 9, 10}` | 8 |
+| add(4) | `{8, 9, 10}` (4 pushed, polled) | 8 |
+
+### Find Median from Data Stream (two-heap) <span class="diff diff-h">Hard</span>
+
+*[↗ LeetCode: Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)*
+
+Design a data structure that supports `addNum(x)` and `findMedian()` on a growing stream. The two-heap trick: a **max-heap** `low` holding the smaller half + a **min-heap** `high` holding the larger half. Keep sizes balanced (differ by at most 1); the median is `low.peek()` (odd count) or `(low.peek() + high.peek()) / 2` (even count).
+
+> [inv] **Invariant** — `size(low) == size(high) || size(low) == size(high) + 1`. Every element in `low` is ≤ every element in `high`.
+
+<TemplateReveal
+  slug="median-from-stream"
+  language="java"
+  :canonical="medianStreamCode"
+/>
+
+**Why the "offer-to-low, move-max-to-high, rebalance" dance?** Just offering to the right heap based on comparison is tempting but subtle — the comparison breaks when heaps are empty, and the balance can drift. The 3-line canonical move is **always correct**: it's a sort-through-the-middle operation that guarantees both invariants.
+
+**Trace** `addNum(1), addNum(2), findMedian(), addNum(3), findMedian()`:
+
+| op | low (max-heap) | high (min-heap) | median |
+|---|---|---|---|
+| add(1) | `{1}` | `{}` | — |
+| add(2) | `{1}` | `{2}` | — |
+| findMedian() | — | — | 1.5 |
+| add(3) | `{1, 2}` | `{3}` | — |
+| findMedian() | — | — | 2 |
+
+### Task Scheduler (max-heap greedy) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Task Scheduler](https://leetcode.com/problems/task-scheduler/)*
+
+Given task counts and a cooldown `n` (same task can't repeat within `n` ticks), return the minimum time to run everything. The greedy insight: **at each tick, run the most-frequent runnable task** — this prevents the highest-count task from piling up at the end. Use a **max-heap** of counts, with a cooldown queue to re-enqueue tasks when their cooldown expires.
+
+> [key] **Why greedy on max-count works** — if we don't drain the most-frequent task first, its tail will create idle gaps larger than `n`. Formal lower bound: `(max_count - 1) × (n + 1) + ties_at_max`.
+
+<TemplateReveal
+  slug="task-scheduler-heap"
+  language="java"
+  :canonical="taskSchedulerCode"
+/>
+
+### Kth Largest / Top K Frequent — walkthrough deep dive <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)*
 
@@ -391,14 +710,99 @@ Run these small cases mentally before trusting the code:
 | [Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | keep a size-k **min**-heap alive across `add` calls; root is always the running kth largest | O(log k) per add |
 | [Reorganize String](https://leetcode.com/problems/reorganize-string/) | use a max-heap because you repeatedly need the currently most frequent remaining character, not a bounded top-k set | O(n log alphabet) |
 
+## In the wild — Elasticsearch top-N aggregation & Java's `PriorityQueue`
+
+**Elasticsearch's top-N bucket aggregation** uses a size-N min-heap per shard to compute the top documents by some ordering (score, timestamp, custom field). Each shard returns its local top-N heap; the coordinator does a k-way merge over the shard heaps to produce the global top-N. This is the opposite-polarity rule applied at distributed scale.
+
+```java
+/* elasticsearch/search/aggregations/bucket/terms/BucketPriorityQueue.java — paraphrased */
+public class BucketPriorityQueue extends PriorityQueue<Bucket> {
+    public BucketPriorityQueue(int size, Comparator<Bucket> comparator) {
+        super(size, comparator);                 // size = N (the top-N count)
+    }
+    /* insertWithOverflow(bucket): if heap full and bucket > root, replaces root.
+       Classic size-k heap-of-opposite-polarity. The comparator defines "worst at root"
+       based on the aggregation ordering (count asc, score desc, etc.). */
+}
+```
+
+**Four more real-world top-k-heap sightings:**
+
+1. **Kafka's log-compaction** uses a min-heap of per-partition offsets to find the next segment to compact — bounded by compaction concurrency, not partition count.
+2. **Linux kernel's `CFS` (Completely Fair Scheduler)** uses a red-black tree (not quite a heap) keyed on virtual runtime; the smallest-runtime task is "most behind" and picked next. Same opposite-polarity idea.
+3. **Dijkstra's shortest path** uses a min-heap keyed on tentative distance — pop the vertex with smallest tentative distance, relax its edges, push updated neighbors. Classic in-the-wild heap.
+4. **Twitter's trending topics** maintains a sliding-window top-N heap of topic frequencies; new tweets update the heap in O(log N), coordinator aggregates across shards.
+
+## Recognition drill
+
+<RecognitionDrill pattern="top-k-heap" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if the input is massive and doesn't fit in memory?</strong></summary>
+
+**Streaming with external merge.** Chunk the input, compute top-k per chunk with a size-k heap, then merge the chunk heaps with k-way merge (another min-heap of chunk iterators). Memory: O(k + #chunks). This is exactly how external sort and MapReduce's top-k implementations work.
+
+For **approximate** top-k on massive streams, use **Count-Min Sketch + heap** (Metwally et al., 2005). Each incoming item updates sketch counters; a size-k heap tracks the current top candidates. Error bounded by ε·N with probability 1-δ, using O(log(1/δ)/ε) memory — independent of stream length.
+</details>
+
+<details>
+<summary><strong>What if the heap must support arbitrary deletes (not just root)?</strong></summary>
+
+Plain binary heap can't do this in O(log n) — deleting a specific element requires finding it first. Three approaches:
+1. **Indexed heap** — maintain `pos[element] = index` alongside the heap array, allowing O(log n) delete-by-element. More code; used in Dijkstra when you want to "update priority" of a specific vertex.
+2. **Lazy deletion** — tag the element as deleted; skip it when it bubbles to the root. Simple but wastes space proportional to deleted-but-not-popped elements.
+3. **TreeSet / sorted multiset** — O(log n) for any op, including remove, successor, predecessor. Slower constants than heap, but strictly more capable.
+</details>
+
+<details>
+<summary><strong>What if k is NOT fixed — queries arrive with different k values?</strong></summary>
+
+**One-shot batch**: sort the input once in O(n log n); every query is O(k) slice.
+
+**Online queries**: maintain a **sorted structure** (TreeSet, skip list, order-statistic tree). Each insertion O(log n), each "give me top k" is O(k) iteration from the top.
+
+A heap is the wrong tool here — it only knows about the k winners, not the broader structure.
+</details>
+
+<details>
+<summary><strong>What if ties in the key matter (and the heap doesn't guarantee stable order)?</strong></summary>
+
+Java's `PriorityQueue` is **not stable** — equal-key items may be popped in any order. If the problem requires FIFO on ties (e.g., "oldest tied document wins"), augment the comparator with a secondary key: `(key, insertion_timestamp)`, breaking ties by timestamp ascending.
+
+For custom tie-breaking (lex order, ID), pass the secondary comparator explicitly. Never rely on the heap's internal "default" tie behavior.
+</details>
+
+<details>
+<summary><strong>What if the "ranking function" is expensive to compute?</strong></summary>
+
+**Cache the key per item** by wrapping into a `(key, item)` tuple, computing the key once at offer time. Avoids recomputing during every bubble-up/bubble-down.
+
+For geometric top-k ("nearest neighbors"), **KD-trees** (static) or **ball trees** (dynamic) answer top-k queries in average O(k log n), beating the O(n log k) heap approach when n is large and the dimensionality is low (≤ 20).
+</details>
+
+### Breaking point
+
+Top-K heap **stops being optimal** when:
+- `k` is close to `n` (O(n log k) ≈ O(n log n), just sort).
+- The ranking key has a small bounded range (bucket sort wins at O(n)).
+- You need arbitrary-element delete (indexed heap or TreeSet).
+- You need the top-k internally sorted (TreeSet or sort-then-slice).
+- The input is a known, static array and you need just the k-th value (Quickselect wins at O(n) average).
+- The stream is massive and exact answers aren't needed (sketch-based approximation).
+
+### Three cross-pattern problems
+
+- [Sliding Window Median (480)](https://leetcode.com/problems/sliding-window-median/) — two-heap median + lazy deletion to handle elements leaving the window. Bridges heap with sliding-window.
+- [Merge k Sorted Lists (23)](https://leetcode.com/problems/merge-k-sorted-lists/) — min-heap of head pointers; classic k-way merge. Heap meets linked-list.
+- [Design Twitter (355)](https://leetcode.com/problems/design-twitter/) — merge the top-10 tweets of each followee using a min-heap; combines heap with hash-map user-follower bookkeeping.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="top-k-heap"
-  :questions='[{"q": "For \"k largest\", which heap type do you maintain?", "choices": [{"text": "Min-heap of size k", "correct": true, "explanation": "Root is the smallest of the current top-k; poll if new value > root."}, {"text": "Max-heap of size k", "correct": false, "explanation": "That gives k smallest."}, {"text": "Min-heap of size n", "correct": false, "explanation": "Wasteful."}, {"text": "BST of size n", "correct": false, "explanation": "Also works but O(n log n)."}]}, {"q": "Time complexity of maintaining top-k over n elements with a heap?", "choices": [{"text": "O(n log k)", "correct": true, "explanation": "Each of n insertions is O(log k) since heap size ≤ k."}, {"text": "O(n log n)", "correct": false, "explanation": "That is full sorting."}, {"text": "O(k log n)", "correct": false}, {"text": "O(n + k)", "correct": false}]}, {"q": "For streaming k-th largest, what is the correct API pattern?", "choices": [{"text": "add(v): pq.offer(v); if pq.size() > k: pq.poll(); return pq.peek()", "correct": true, "explanation": "Root of min-heap is the k-th largest."}, {"text": "Re-sort on every add", "correct": false, "explanation": "O(n log n) per add — too slow."}, {"text": "Keep only the max", "correct": false, "explanation": "Loses info."}, {"text": "Use a linked list", "correct": false}]}, {"q": "Quickselect vs Heap for offline top-k (order-irrelevant): which is asymptotically better on average?", "choices": [{"text": "Quickselect O(n) average", "correct": true, "explanation": "Beats O(n log k) when k is close to n."}, {"text": "Heap O(n log k)", "correct": false, "explanation": "Heap is safer worst-case but slower on average."}, {"text": "Both equal", "correct": false}, {"text": "Merge sort", "correct": false}]}, {"q": "For Reorganize String, why does the greedy max-heap approach work?", "choices": [{"text": "Always placing the most-frequent remaining character avoids getting stuck", "correct": true, "explanation": "Feasibility check: max count ≤ (n+1)/2."}, {"text": "Because all letters are unique", "correct": false}, {"text": "Randomness", "correct": false}, {"text": "Because heap is fast", "correct": false, "explanation": "Fast, but that’s not why it’s CORRECT."}]}]'
-/>
+<Quiz pattern-id="top-k-heap" :questions="mastery5" />
 
 <PrintButton />
 

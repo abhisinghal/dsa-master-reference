@@ -342,32 +342,32 @@
     "inTheWildSource": "Elasticsearch top-N aggregation",
     "subVariations": [
       {
-        "slug": "top-k-smallest",
+        "slug": "top-k-smallest-heap-of-k-bare-mechanic-medium",
         "title": "Top-K Smallest (heap-of-K bare mechanic)",
         "difficulty": "medium"
       },
       {
-        "slug": "top-k-frequent-heap",
+        "slug": "top-k-frequent-elements-medium",
         "title": "Top K Frequent Elements",
         "difficulty": "medium"
       },
       {
-        "slug": "k-closest-points",
+        "slug": "k-closest-points-to-origin-medium",
         "title": "K Closest Points to Origin",
         "difficulty": "medium"
       },
       {
-        "slug": "kth-largest",
+        "slug": "kth-largest-in-array-medium",
         "title": "Kth Largest in Array",
         "difficulty": "medium"
       },
       {
-        "slug": "median-from-stream",
+        "slug": "find-median-from-data-stream-two-heap-hard",
         "title": "Find Median from Data Stream (two-heap)",
         "difficulty": "hard"
       },
       {
-        "slug": "task-scheduler-heap",
+        "slug": "task-scheduler-max-heap-greedy-medium",
         "title": "Task Scheduler (cross-link to greedy)",
         "difficulty": "medium"
       }
