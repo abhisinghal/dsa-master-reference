@@ -570,7 +570,98 @@
   "union-find": [],
   "greedy": [],
   "backtracking": [],
-  "divide-conquer": [],
+  "divide-conquer": [
+    {
+      "statement": "Sort an array of n integers in O(n log n) worst case, stable, using O(n) extra space.",
+      "pattern": "divide-conquer",
+      "subVariation": "merge-sort",
+      "distractors": [
+        "quicksort",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Compute x^n for real x and integer n (positive or negative) in O(log n) multiplications.",
+      "pattern": "divide-conquer",
+      "subVariation": "pow-x-n",
+      "distractors": [
+        "math",
+        "recursion"
+      ]
+    },
+    {
+      "statement": "For each element, return how many elements to its right are strictly smaller.",
+      "pattern": "divide-conquer",
+      "subVariation": "count-smaller-after-self",
+      "distractors": [
+        "fenwick-tree",
+        "merge-sort"
+      ]
+    },
+    {
+      "statement": "Given an array where some element appears more than n/2 times, return that majority element.",
+      "pattern": "divide-conquer",
+      "subVariation": "majority-element-dc",
+      "distractors": [
+        "boyer-moore",
+        "hashing"
+      ]
+    },
+    {
+      "statement": "Count the total number of inversions (i<j with a[i]>a[j]) in an array of n integers.",
+      "pattern": "divide-conquer",
+      "subVariation": "count-smaller-after-self",
+      "distractors": [
+        "fenwick-tree",
+        "merge-sort"
+      ]
+    },
+    {
+      "statement": "Count pairs (i,j) with i<j and a[i] > 2*a[j] in an integer array.",
+      "pattern": "divide-conquer",
+      "subVariation": "count-smaller-after-self",
+      "distractors": [
+        "two-pointers",
+        "merge-sort"
+      ]
+    },
+    {
+      "statement": "Compute a mod exponent b^e mod m efficiently (log e multiplications).",
+      "pattern": "divide-conquer",
+      "subVariation": "pow-x-n",
+      "distractors": [
+        "math",
+        "cryptography"
+      ]
+    },
+    {
+      "statement": "Sort a singly-linked list in O(n log n) time and O(log n) stack space.",
+      "pattern": "divide-conquer",
+      "subVariation": "merge-sort",
+      "distractors": [
+        "sorting",
+        "linked-list"
+      ]
+    },
+    {
+      "statement": "Count the number of subarrays whose sum lies in [lower, upper].",
+      "pattern": "divide-conquer",
+      "subVariation": "count-smaller-after-self",
+      "distractors": [
+        "prefix-sum",
+        "merge-sort"
+      ]
+    },
+    {
+      "statement": "A tournament dataset shows one candidate on >50% of ballots. Find that candidate.",
+      "pattern": "divide-conquer",
+      "subVariation": "majority-element-dc",
+      "distractors": [
+        "hashing",
+        "sorting"
+      ]
+    }
+  ],
   "dp": [],
   "trie-pattern": [],
   "bit-manip": [],
