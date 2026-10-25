@@ -19,6 +19,7 @@ import DpFillAnim from './DpFillAnim.vue'
 import DpTableAnim from './DpTableAnim.vue'
 import GridPathAnim from './GridPathAnim.vue'
 import DpArrayAnim from './DpArrayAnim.vue'
+import IntervalDpAnim from './IntervalDpAnim.vue'
 import TrieWalkAnim from './TrieWalkAnim.vue'
 import BinarySearchAnim from './BinarySearchAnim.vue'
 import HeapAnim from './HeapAnim.vue'
@@ -122,6 +123,7 @@ export default {
     app.component('DpTableAnim', DpTableAnim)
     app.component('GridPathAnim', GridPathAnim)
     app.component('DpArrayAnim', DpArrayAnim)
+    app.component('IntervalDpAnim', IntervalDpAnim)
     app.component('TrieWalkAnim', TrieWalkAnim)
     app.component('BinarySearchAnim', BinarySearchAnim)
     app.component('HeapAnim', HeapAnim)

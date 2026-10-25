@@ -495,6 +495,55 @@ const coinChangeDp = [0, 1, 1, 2, 2, 1, 2, 2]
 const coinChangeLabels = [0, 1, 2, 3, 4, 5, 6, 7]
 const coinChangeFillOrder = { '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7 }
 const coinChangeHighlights = [7]
+// Matrix Chain Multiplication — IntervalDpAnim with dims=[2,3,2,4]
+const matrixChainLabels = ['M₀', 'M₁', 'M₂']
+const matrixChainDp = [
+  [0, 12, 28],
+  [0, 0, 24],
+  [0, 0, 0]
+]
+const matrixChainFillOrder = {
+  '0-0': 0, '1-1': 0, '2-2': 0,
+  '0-1': 1,
+  '1-2': 2,
+  '0-2': 3
+}
+const matrixChainSteps = [
+  {
+    revealOrder: 0,
+    cell: null,
+    formula: 'dp[i][i] = 0 — a single matrix has no multiplications',
+    description: 'Base cases sit on the main diagonal. The axes are l (left endpoint) and r (right endpoint); only cells with l ≤ r are used.'
+  },
+  {
+    revealOrder: 1,
+    cell: { l: 0, r: 1 },
+    splits: [{ k: 0, left: { l: 0, r: 0 }, right: { l: 1, r: 1 }, cost: '0 + 0 + 2·3·2 = 12' }],
+    formula: 'dp[0][1] = dp[0][0] + dp[1][1] + p₀·p₁·p₂',
+    result: 'min = 12',
+    description: 'Length-2 interval: only one split point (k=0). Multiplying M₀ (2×3) by M₁ (3×2) costs 2·3·2 = 12 scalar multiplications.'
+  },
+  {
+    revealOrder: 2,
+    cell: { l: 1, r: 2 },
+    splits: [{ k: 1, left: { l: 1, r: 1 }, right: { l: 2, r: 2 }, cost: '0 + 0 + 3·2·4 = 24' }],
+    formula: 'dp[1][2] = dp[1][1] + dp[2][2] + p₁·p₂·p₃',
+    result: 'min = 24',
+    description: 'The other length-2 interval. Multiplying M₁ (3×2) by M₂ (2×4) costs 3·2·4 = 24.'
+  },
+  {
+    revealOrder: 3,
+    cell: { l: 0, r: 2 },
+    splits: [
+      { k: 0, left: { l: 0, r: 0 }, right: { l: 1, r: 2 }, cost: '0 + 24 + 2·3·4 = 48' },
+      { k: 1, left: { l: 0, r: 1 }, right: { l: 2, r: 2 }, cost: '12 + 0 + 2·2·4 = 28' }
+    ],
+    formula: 'dp[0][2] = min over k ∈ {0, 1}',
+    result: 'min = 28 (at k=1)',
+    description: 'Length-3 interval has TWO split points. Picking k=1 — i.e. compute M₁·M₂ first — costs 28 vs 48 for k=0. The parenthesization matters.'
+  }
+]
+
 const coinChangeSteps = [
   {
     revealOrder: 0,
@@ -2025,6 +2074,21 @@ Bursting balloon `i` earns `nums[left]·nums[i]·nums[right]` (its current neigh
 **Example 2:** `[1,5]` → `10` (burst 1 then 5 with boundary 1s gives 5 + 5).
 
 <ExamplePreview compact :input="['1', '5']" :output="['10']" />
+
+<IntervalDpAnim
+  title="Matrix Chain: dims=[2,3,2,4] — three matrices M₀, M₁, M₂"
+  :n="3"
+  :labels="matrixChainLabels"
+  :dp="matrixChainDp"
+  :fillOrder="matrixChainFillOrder"
+  :steps="matrixChainSteps"
+/>
+
+<Callout kind="key" title="Why intervals, not prefixes.">
+
+The 1D DPs above iterate left-to-right because each state depends only on *previous* states. Interval DP's state is a *range* [l, r], and the split k partitions it into two sub-ranges that must both be solved first. That's why fill order is by increasing length (all intervals of length 1, then length 2, …) and the table is triangular, not rectangular. Burst Balloons uses the same shape but with a trickier recurrence (choose which balloon to burst *last*, so the boundary nums stay fixed).
+
+</Callout>
 
 ### Solution — brute force
 Brute force tries every possible order of operations, such as every balloon bursting order or every parenthesization of a matrix product. That is exponential because choosing the first action changes the neighboring context and creates many repeated intervals. The optimized interval DP flips the thinking: choose the last action inside an interval, combine already-solved left and right subintervals, and iterate by increasing length.
