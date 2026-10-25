@@ -309,6 +309,237 @@ const editDistanceSteps = [
     description: 'The dp table bottoms out at dp[3][3] = 1 — one substitution (t → r) transforms "cat" into "car".'
   }
 ]
+
+// Fibonacci — 1D rolling demo for DpArrayAnim
+const fibDp = [0, 1, 1, 2, 3, 5, 8, 13]
+const fibLabels = [0, 1, 2, 3, 4, 5, 6, 7]
+const fibFillOrder = { '0': 0, '1': 0, '2': 1, '3': 2, '4': 3, '5': 4, '6': 5, '7': 6 }
+const fibSteps = [
+  {
+    revealOrder: 0,
+    cell: null,
+    deps: [],
+    formula: 'dp[0] = 0, dp[1] = 1',
+    description: 'Base cases hand-set. Fibonacci is defined by its two smallest states — every other state is a sum of two previous ones.'
+  },
+  {
+    revealOrder: 1,
+    cell: 2,
+    deps: [0, 1],
+    formula: 'dp[2] = dp[1] + dp[0] = 1 + 0 = 1',
+    description: 'The recurrence reads exactly two cells to the left. The DAG of dependencies has width 2, which is why Fibonacci collapses to O(1) space with a rolling pair.'
+  },
+  {
+    revealOrder: 3,
+    cell: 4,
+    deps: [2, 3],
+    formula: 'dp[4] = dp[3] + dp[2] = 2 + 1 = 3',
+    description: 'Each new state reuses the two freshly-computed cells. Nothing further left is read — the "window" of needed state is width 2 forever.'
+  },
+  {
+    revealOrder: 6,
+    cell: 7,
+    deps: [5, 6],
+    formula: 'dp[7] = dp[6] + dp[5] = 8 + 5 = 13',
+    result: 'answer: 13',
+    description: 'fib(7) = 13. The animation is iterative DP; the top-down memoized version builds the same values but demand-driven.'
+  }
+]
+
+// House Robber — DpArrayAnim with nums=[2,7,9,3,1]
+const houseRobberDp = [2, 7, 11, 11, 12]
+const houseRobberLabels = [2, 7, 9, 3, 1]
+const houseRobberFillOrder = { '0': 0, '1': 0, '2': 1, '3': 2, '4': 3 }
+const houseRobberSteps = [
+  {
+    revealOrder: 0,
+    cell: null,
+    deps: [],
+    formula: 'dp[0] = 2, dp[1] = max(2, 7) = 7',
+    description: 'Houses are shown as values along the top. Base cases: with one house take it; with two, take the larger.'
+  },
+  {
+    revealOrder: 1,
+    cell: 2,
+    deps: [0, 1],
+    formula: 'dp[2] = max(dp[1] = 7, dp[0] + 9 = 11) = 11',
+    result: 'rob house 2',
+    description: 'Each house asks: skip me (keep dp[i-1]) or take me plus the best up to i-2. Here taking wins — 2 + 9 beats 7.'
+  },
+  {
+    revealOrder: 2,
+    cell: 3,
+    deps: [1, 2],
+    formula: 'dp[3] = max(dp[2] = 11, dp[1] + 3 = 10) = 11',
+    result: 'skip house 3',
+    description: 'Skipping wins — the running best (11) is larger than the 10 you would get by robbing house 3.'
+  },
+  {
+    revealOrder: 3,
+    cell: 4,
+    deps: [2, 3],
+    formula: 'dp[4] = max(dp[3] = 11, dp[2] + 1 = 12) = 12',
+    result: 'answer: 12',
+    description: 'Robbing house 4 wins: dp[2] + 1 = 12 beats 11. Robbery route: houses 0, 2, 4 → values 2 + 9 + 1 = 12.'
+  }
+]
+
+// Kadane — DpArrayAnim with nums=[-2,1,-3,4,-1,2]
+const kadaneDp = [-2, 1, -2, 4, 3, 5]
+const kadaneLabels = [-2, 1, -3, 4, -1, 2]
+const kadaneFillOrder = { '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5 }
+const kadaneHighlights = [5]
+const kadaneSteps = [
+  {
+    revealOrder: 0,
+    cell: 0,
+    deps: [],
+    formula: 'dp[0] = nums[0] = -2',
+    description: 'dp[i] = best contiguous-subarray sum ENDING at i. Base: dp[0] is just nums[0], there is nowhere else to end.'
+  },
+  {
+    revealOrder: 1,
+    cell: 1,
+    deps: [0],
+    formula: 'dp[1] = max(nums[1] = 1, dp[0] + 1 = -1) = 1',
+    result: 'restart',
+    description: 'The one-cell dependency: "extend or restart?" Here restart wins — carrying a -2 running sum hurts more than starting fresh.'
+  },
+  {
+    revealOrder: 3,
+    cell: 3,
+    deps: [2],
+    formula: 'dp[3] = max(nums[3] = 4, dp[2] + 4 = 2) = 4',
+    result: 'restart',
+    description: 'Another restart. Any time nums[i] alone beats dp[i-1] + nums[i], the running sum is a liability — drop it.'
+  },
+  {
+    revealOrder: 5,
+    cell: 5,
+    deps: [4],
+    formula: 'dp[5] = max(nums[5] = 2, dp[4] + 2 = 5) = 5',
+    result: 'answer: 5',
+    description: 'Final extend step. Max subarray sum = max(dp[*]) = 5, achieved by the subarray [4, -1, 2] ending at index 5.'
+  }
+]
+
+// 0/1 Knapsack — DpTableAnim with items=[(w=1,v=1),(w=2,v=3)], capacity=3
+const knapsackXChars = ['', 'i₁', 'i₂']
+const knapsackYChars = ['', '1', '2', '3']
+const knapsackDp = [
+  [0, 0, 0, 0],
+  [0, 1, 1, 1],
+  [0, 1, 3, 4]
+]
+const knapsackFillOrder = {
+  '1-1': 1, '1-2': 2, '1-3': 3,
+  '2-1': 4, '2-2': 5, '2-3': 6
+}
+const knapsackSteps = [
+  {
+    revealBase: true,
+    revealOrder: 0,
+    cell: null,
+    deps: [],
+    formula: 'dp[0][*] = dp[*][0] = 0',
+    result: 'base',
+    description: 'Row/column axes: items considered (across) and capacity remaining (down). With no items or no capacity the best value is 0.'
+  },
+  {
+    revealBase: true,
+    revealOrder: 1,
+    cell: { i: 1, j: 1 },
+    deps: [{ i: 0, j: 0 }, { i: 0, j: 1 }],
+    formula: 'item₁ (w=1, v=1), cap=1: max(skip=dp[0][1]=0, take=dp[0][0]+1=1) = 1',
+    result: 'take item 1',
+    description: 'Each cell is a binary choice: skip (read directly above) or take (read above-and-left by weight, add value). Here taking wins.'
+  },
+  {
+    revealBase: true,
+    revealOrder: 3,
+    cell: { i: 1, j: 3 },
+    deps: [{ i: 0, j: 3 }],
+    formula: 'cap=3 still only one item of value 1 available: dp[1][3] = 1',
+    description: 'Row 1 is uniform — a single item of value 1 caps the max value at 1 no matter the capacity.'
+  },
+  {
+    revealBase: true,
+    revealOrder: 4,
+    cell: { i: 2, j: 1 },
+    deps: [{ i: 1, j: 1 }],
+    formula: 'item₂ (w=2) exceeds cap=1 → skip: dp[2][1] = dp[1][1] = 1',
+    description: 'When the current item does not fit, the only read is "skip" — directly above.'
+  },
+  {
+    revealBase: true,
+    revealOrder: 5,
+    cell: { i: 2, j: 2 },
+    deps: [{ i: 1, j: 2 }, { i: 1, j: 0 }],
+    formula: 'cap=2: max(skip=1, take=dp[1][0]+3=3) = 3',
+    result: 'take item 2',
+    description: 'With cap=2 item 2 fits — the "take" branch jumps left by its weight and adds its value.'
+  },
+  {
+    revealBase: true,
+    revealOrder: 6,
+    cell: { i: 2, j: 3 },
+    deps: [{ i: 1, j: 3 }, { i: 1, j: 1 }],
+    formula: 'cap=3: max(skip=1, take=dp[1][1]+3=4) = 4',
+    result: 'answer: 4',
+    description: 'Final cell. Taking item 2 (uses 2 of 3 capacity) plus item 1 (uses the last 1) totals 4. The dependency pattern is "skip-above or take-left-by-weight".'
+  }
+]
+
+// Coin Change — DpArrayAnim with coins=[1,2,5], amount=7
+const coinChangeDp = [0, 1, 1, 2, 2, 1, 2, 2]
+const coinChangeLabels = [0, 1, 2, 3, 4, 5, 6, 7]
+const coinChangeFillOrder = { '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7 }
+const coinChangeHighlights = [7]
+const coinChangeSteps = [
+  {
+    revealOrder: 0,
+    cell: null,
+    deps: [],
+    formula: 'dp[0] = 0 (zero coins make amount 0)',
+    description: 'dp[a] = minimum coins to make amount a. The only base case: making amount 0 needs 0 coins.'
+  },
+  {
+    revealOrder: 1,
+    cell: 1,
+    deps: [0],
+    formula: 'dp[1] = 1 + dp[1 − 1] = 1 + dp[0] = 1',
+    description: 'Only coin 1 fits. dp[a] = 1 + min(dp[a−coin]) over coins that fit — one coin plus the best way to make the remainder.'
+  },
+  {
+    revealOrder: 2,
+    cell: 2,
+    deps: [0, 1],
+    formula: 'dp[2] = 1 + min(dp[1], dp[0]) = 1 + 0 = 1',
+    description: 'Two coins fit (1 and 2). Using one coin-2 beats using two coin-1s — min over the arcs picks the best.'
+  },
+  {
+    revealOrder: 3,
+    cell: 3,
+    deps: [1, 2],
+    formula: 'dp[3] = 1 + min(dp[2], dp[1]) = 1 + 1 = 2',
+    description: 'Two options: a 1-coin on top of dp[2], or a 2-coin on top of dp[1]. Both give 2.'
+  },
+  {
+    revealOrder: 5,
+    cell: 5,
+    deps: [0, 3, 4],
+    formula: 'dp[5] = 1 + min(dp[4], dp[3], dp[0]) = 1 + 0 = 1',
+    description: 'The coin-5 arc jumps all the way to dp[0] — it reaches amount 5 in a single coin, beating any multi-coin combination.'
+  },
+  {
+    revealOrder: 7,
+    cell: 7,
+    deps: [2, 5, 6],
+    formula: 'dp[7] = 1 + min(dp[6], dp[5], dp[2]) = 1 + 1 = 2',
+    result: 'answer: 2',
+    description: 'Amount 7 in 2 coins: a 5 and a 2. The three arcs are the three coin denominations, each reading dp at (amount − coin).'
+  }
+]
 </script>
 
 
@@ -478,6 +709,16 @@ Compute fib(n) in O(n) time, O(1) space.
 At iteration `i`, `(prev, curr)` holds `(fib(i-1), fib(i))`. The recurrence `next = prev + curr` writes `fib(i+1)`; the shift `prev = curr; curr = next` restores the invariant for the next step.
 
 </Callout>
+
+<DpArrayAnim
+  title="Fibonacci: dp[i] = dp[i-1] + dp[i-2]"
+  :length="8"
+  :dp="fibDp"
+  :labels="fibLabels"
+  :fillOrder="fibFillOrder"
+  :baseCells="[0, 1]"
+  :steps="fibSteps"
+/>
 
 **Why Fibonacci is the entry point to every DP topic:**
 1. **State** — a single index `i`.
@@ -708,6 +949,16 @@ Subproblems don't repeat — pure recursion is fine. Also skip when a **greedy**
 
 <div class="readfig"><b>How to read it:</b> take or skip; look 2 back.</div>
 
+<DpArrayAnim
+  title="House Robber: dp[i] = max(dp[i−1], dp[i−2] + nums[i])"
+  :length="5"
+  :dp="houseRobberDp"
+  :labels="houseRobberLabels"
+  :fillOrder="houseRobberFillOrder"
+  :baseCells="[0, 1]"
+  :steps="houseRobberSteps"
+/>
+
 ### Problem
 Rob houses in a line to maximize loot, but you **can't rob two adjacent** houses.
 
@@ -907,6 +1158,17 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
 
 <div class="readfig"><b>How to read it:</b> current = max(a[i], current + a[i]); best tracks global peak.</div>
 
+<DpArrayAnim
+  title="Kadane: dp[i] = max(nums[i], dp[i−1] + nums[i])"
+  :length="6"
+  :dp="kadaneDp"
+  :labels="kadaneLabels"
+  :fillOrder="kadaneFillOrder"
+  :baseCells="[0]"
+  :highlightCells="kadaneHighlights"
+  :steps="kadaneSteps"
+/>
+
 ### Problem
 Find the contiguous subarray with the **largest sum** and return that sum (the array can contain negatives).
 
@@ -1058,6 +1320,23 @@ Can the array be split into **two subsets with equal sum**?
 **Example 2:** `[1,2,3,5]` → `false` because total is 11 (odd).
 
 <ExamplePreview compact :input="['1', '2', '3', '5']" :output="['false']" />
+
+<DpTableAnim
+  title="0/1 Knapsack: items (w=1,v=1) and (w=2,v=3), capacity 3"
+  :xChars="knapsackXChars"
+  :yChars="knapsackYChars"
+  :dp="knapsackDp"
+  :fillOrder="knapsackFillOrder"
+  :steps="knapsackSteps"
+  compareLabel="choice"
+  :showCompare="false"
+/>
+
+<Callout kind="key" title="Two reads per cell.">
+
+Each state asks "skip me" (read dp[i−1][cap] directly above) vs "take me" (read dp[i−1][cap − weightᵢ] + valueᵢ, i.e. the row above shifted left by this item's weight). The 0/1 part is that each item appears in exactly one row — unbounded knapsack re-reads the SAME row for "take me" to allow repeats.
+
+</Callout>
 
 ### Solution — brute force
 Brute force chooses include or exclude for every number, then checks whether any selected subset reaches the target sum. That is O(2ⁿ) time and O(n) recursion space, and it repeats equivalent partial sums many times. The optimized boolean knapsack DP records which sums are reachable after each item; iterating capacities downward enforces the 0/1 rule that each item is used at most once.
@@ -1251,6 +1530,17 @@ Edit the Java code below and click **▶ Run tests** to check it against real ex
 
 
 <div class="readfig"><b>How to read it:</b> coins outer prevents double-counting; O(coins·amount).</div>
+
+<DpArrayAnim
+  title="Coin Change: dp[a] = 1 + min(dp[a − coin]) for each coin ≤ a"
+  :length="8"
+  :dp="coinChangeDp"
+  :labels="coinChangeLabels"
+  :fillOrder="coinChangeFillOrder"
+  :baseCells="[0]"
+  :highlightCells="coinChangeHighlights"
+  :steps="coinChangeSteps"
+/>
 
 ### Problem
 Given coin denominations (each reusable) and an amount, return the **fewest coins** that make the amount, or -1 if impossible.
