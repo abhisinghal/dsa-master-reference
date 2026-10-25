@@ -1,5 +1,331 @@
 # Fast / Slow Pointers (Floyd)
 
+<script setup>
+const floydTemplate = `ListNode slow = head, fast = head;
+while (fast != null && fast.next != null) {
+  slow = slow.next;
+  fast = fast.next.next;
+  if (slow == fast) {              // Phase 1 — meeting proves a cycle
+    ListNode p = head;             // Phase 2 — find the entry
+    while (p != slow) {
+      p = p.next;
+      slow = slow.next;
+    }
+    return p;                      // cycle entry
+  }
+}
+return null;                       // no cycle`
+
+const floydInvariant = {
+  statement: `After k iterations of phase 1, slow has advanced k steps and fast has advanced 2k steps. If both are inside a cycle of length C, the gap (fast - slow) mod C decreases by exactly 1 per step, so they meet within C iterations.`,
+  initialization: `Before the loop: slow = head, fast = head. Both are at distance 0; gap = 0; vacuously inside the "same node" state.`,
+  maintenance: `Each iteration advances slow by 1 and fast by 2. If no cycle exists, fast reaches null and the loop ends. If a cycle exists, once slow enters the cycle the gap mod C shrinks by 1 per step; after at most C iterations the gap is 0 and slow == fast.`,
+  termination: `Loop ends when fast or fast.next is null (no cycle, return null) or when slow == fast (cycle proven; phase 2 locates the entry via the A = mC - B algebra).`
+}
+
+const floydComplexity = {
+  time: 'O(n)',
+  space: 'O(1)'
+}
+
+const floydSpecializations = [
+  { slug: 'linked-list-cycle-floyd-s-easy', title: 'cycle-detect (bool)' },
+  { slug: 'linked-list-cycle-ii-where-the-cycle-starts-medium', title: 'cycle-start (entry node)' },
+  { slug: 'middle-of-a-linked-list-easy', title: 'middle-node (second half)' },
+  { slug: 'nth-node-from-end-medium', title: 'nth-from-end (fixed gap)' },
+  { slug: 'happy-number-sequence-as-linked-list-easy', title: 'happy-number (functional graph)' },
+  { slug: 'find-the-duplicate-number-medium', title: 'find-duplicate (array as list)' }
+]
+
+const bareMechCode = `boolean hasCycle(ListNode head) {
+  ListNode slow = head, fast = head;
+  while (fast != null && fast.next != null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow == fast) return true;
+  }
+  return false;
+}`
+
+const bareMechInvariant = {
+  statement: `After k iterations, slow is k nodes from head; fast is 2k nodes from head (or null if the list ended).`,
+  initialization: `k = 0: slow = fast = head.`,
+  maintenance: `Each iteration: slow advances 1, fast advances 2. If fast reaches null, we've proven acyclicity in O(n). If slow == fast, a cycle exists.`,
+  termination: `Loop ends either when fast/fast.next is null (return false) or when slow == fast (return true). Both outcomes are bounded by O(n) steps.`
+}
+
+const bareMechComplexity = { time: 'O(n)', space: 'O(1)' }
+
+const cycleDetectCode = `boolean hasCycle(ListNode head) {
+  ListNode slow = head, fast = head;
+  while (fast != null && fast.next != null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow == fast) return true;
+  }
+  return false;
+}`
+
+const cycleDetectInvariant = {
+  statement: `slow is always at step k, fast at step 2k (or past end). A collision is possible only if both are inside a cycle; the loop exits otherwise.`,
+  initialization: `Both pointers at head.`,
+  maintenance: `Advance slow by 1, fast by 2; test for null (no cycle) and for collision (cycle).`,
+  termination: `Non-cyclic lists: fast reaches null in ⌈n/2⌉ steps. Cyclic lists: collision happens within one cycle length C after slow enters the cycle.`
+}
+
+const cycleStartCode = `ListNode detectCycle(ListNode head) {
+  ListNode slow = head, fast = head;
+  while (fast != null && fast.next != null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow == fast) {              // meeting point
+      ListNode p = head;
+      while (p != slow) { p = p.next; slow = slow.next; }
+      return p;                      // cycle entry
+    }
+  }
+  return null;
+}`
+
+const cycleStartInvariant = {
+  statement: `At the phase-1 collision, slow traveled A+B and fast traveled 2(A+B) where A = head→entry and B = entry→meeting. The excess fast walked is a whole number of cycle laps mC, so A+B = mC, hence A = mC - B. Walking A steps from the meeting point lands at the entry.`,
+  initialization: `Phase 1 starts with slow = fast = head. Phase 2 starts with p = head, slow = meeting point.`,
+  maintenance: `Phase 2: advance p by 1 and slow by 1 each iteration. By the A = mC - B identity, they land at the same node (the entry) in A steps.`,
+  termination: `Phase 2 loop ends when p == slow — that node is the cycle entry.`
+}
+
+const middleNodeCode = `ListNode middleNode(ListNode head) {
+  ListNode slow = head, fast = head;
+  while (fast != null && fast.next != null) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  return slow;                   // second middle for even length
+}`
+
+const middleNodeInvariant = {
+  statement: `For a list of length n, after ⌊n/2⌋ iterations fast is at index n (even) or n-1 (odd); slow is at index ⌊n/2⌋ — the second middle for even n, the unique middle for odd n.`,
+  initialization: `Both pointers at head (index 0).`,
+  maintenance: `Each iteration moves slow forward 1 and fast forward 2. The invariant "fast.index = 2 · slow.index" holds until fast hits end-of-list.`,
+  termination: `Loop ends when fast or fast.next is null. slow is at the halfway mark.`
+}
+
+const nthFromEndCode = `ListNode removeNthFromEnd(ListNode head, int n) {
+  ListNode dummy = new ListNode(0, head);
+  ListNode fast = dummy, slow = dummy;
+  for (int i = 0; i &lt; n; i++) fast = fast.next;   // open the gap
+  while (fast.next != null) {                      // walk in lockstep
+    fast = fast.next;
+    slow = slow.next;
+  }
+  slow.next = slow.next.next;                      // skip the nth-from-end
+  return dummy.next;
+}`
+
+const nthFromEndInvariant = {
+  statement: `After the gap is opened, fast is exactly n nodes ahead of slow. When fast lands on the last node, slow is at the node just before the one to remove.`,
+  initialization: `fast and slow both at a dummy before head. Loop 1 advances fast by n so the gap is n.`,
+  maintenance: `Loop 2 advances both by 1 each step. The gap stays constant at n.`,
+  termination: `fast.next == null (fast at the last real node) ⇒ slow.next is the node to remove.`
+}
+
+const happyNumberCode = `boolean isHappy(int n) {
+  int slow = n, fast = n;
+  do {
+    slow = squareSum(slow);
+    fast = squareSum(squareSum(fast));
+  } while (slow != fast);
+  return slow == 1;
+}
+
+int squareSum(int x) {
+  int s = 0;
+  while (x &gt; 0) { int d = x % 10; s += d * d; x /= 10; }
+  return s;
+}`
+
+const happyNumberInvariant = {
+  statement: `The sequence x, f(x), f(f(x)), ... is a functional graph: every node has exactly one successor. By pigeonhole it eventually cycles. The cycle contains 1 (happy) or does not (unhappy).`,
+  initialization: `slow = fast = n.`,
+  maintenance: `slow applies f once per iteration; fast applies f twice. The fast/slow collision proves the cycle has been reached.`,
+  termination: `At collision, inspect slow: if slow == 1, the cycle is {1} and the number is happy. Otherwise the cycle avoids 1.`
+}
+
+const findDuplicateCode = `int findDuplicate(int[] nums) {
+  int slow = nums[0], fast = nums[0];
+  do {                                 // phase 1 — meet inside the cycle
+    slow = nums[slow];
+    fast = nums[nums[fast]];
+  } while (slow != fast);
+  slow = nums[0];                      // phase 2 — walk to the entry
+  while (slow != fast) {
+    slow = nums[slow];
+    fast = nums[fast];
+  }
+  return slow;                         // the duplicated value
+}`
+
+const findDuplicateInvariant = {
+  statement: `Treat index i → value nums[i] as the successor function. With n+1 integers in [1, n], pigeonhole guarantees two indices point to the same value — that value is the cycle entry. Floyd's phase 1 finds a meeting; phase 2 locates the entry = the duplicate.`,
+  initialization: `slow = fast = nums[0]. Index 0 is never pointed to (values are in [1, n]), so 0 is outside the cycle and head→entry has distance ≥ 0.`,
+  maintenance: `Phase 1: slow = nums[slow]; fast = nums[nums[fast]]. Phase 2: both advance by 1 step of f each.`,
+  termination: `Phase 1 ends at meeting; phase 2 ends at entry = duplicate value.`
+}
+
+const inTheWildCode = `// GNU libc malloc: a free-list cycle check.
+// mcheck's chunk walker uses Floyd to detect that heap corruption
+// has turned the free list into a loop (which would otherwise be
+// an infinite loop inside glibc).
+static int check_free_list_cycle(struct chunk *head) {
+  struct chunk *slow = head, *fast = head;
+  while (fast != NULL && fast-&gt;next != NULL) {
+    slow = slow-&gt;next;
+    fast = fast-&gt;next-&gt;next;
+    if (slow == fast) return -1;   // corrupted free list — abort
+  }
+  return 0;
+}`
+
+const trap1Bug = `Guarding only on \`fast != null\`:
+
+  List: 1 → 2 (no cycle, even length)
+  Iter 1: slow = 2, fast = 2  (passes fast != null)
+  Iter 2: fast.next.next NPEs because fast.next = null
+
+The guard "fast != null" is not enough — fast takes a two-hop step, so BOTH fast and fast.next must be non-null.`
+
+const trap1Fix = `Guard both: \`while (fast != null && fast.next != null)\`.
+Short-circuit evaluation ensures fast.next is only read when fast is non-null.
+After the loop, you can safely dereference nothing — the loop exit covers all three failure modes (fast null, fast.next null, cycle collision).`
+
+const trap2Bug = `Comparing by value instead of by reference:
+
+  Two different nodes with val = 7:    node1 → node2 → node1  (cycle)
+  Buggy check: if (slow.val == fast.val) ...
+  As slow traverses, it hits a DIFFERENT node with val = 7
+  and the code reports a cycle at the wrong location (or hits one in a non-cyclic list).
+
+Value equality says "two nodes carry the same number"; reference equality says "same node in memory."`
+
+const trap2Fix = `Use \`slow == fast\` (reference equality in Java; pointer equality in C/C++).
+Never \`slow.val == fast.val\` for cycle detection — the pattern depends on
+the pointers landing on the identical object, not matching values.`
+
+const trap3Bug = `Find-the-Duplicate on an array that violates the functional-graph constraint:
+
+  nums = [0, 1, 2, 3]  — index 0 points to 0 (self-loop at a non-duplicate)
+  Floyd's phase 1 reports a "cycle" at value 0.
+  But the problem guarantees values in [1, n], so a legal input would never
+  put 0 in the array. Running Floyd without checking the constraint can
+  return 0 as a "duplicate" when there isn't one.`
+
+const trap3Fix = `Verify the functional-graph constraint before applying Floyd:
+  • nums has n+1 elements, every value in [1, n].
+  • At least one duplicate exists by pigeonhole.
+Starting at slow = fast = nums[0] (and NOT at index 0) ensures the walk
+begins inside the valid part of the graph.`
+
+const advanced1 = `What if the sequence is only partially cyclic (ρ-shape with a tail of length A, cycle of length C)?
+
+Floyd's phase 1 still works: fast reaches the cycle in A steps and then catches slow within C more steps.
+Phase 2 reveals the shape: distance from head to entry is A, meeting point is B steps into the cycle,
+and A = mC - B. The cycle-length lemma: once you have the entry, walking fast around the cycle until
+it meets itself gives C in O(C) time.`
+
+const advanced2 = `What if memory is tight and you cannot modify the list?
+
+Floyd IS the answer — that's why the pattern exists. HashSet costs O(n) extra memory;
+Floyd uses O(1). On a 10^8-node graph, HashSet is 1.6 GB of pointers; Floyd is 16 bytes
+(two pointer variables). Every production garbage collector (HotSpot, V8, Go, .NET)
+chose Floyd for exactly this reason.`
+
+const advanced3 = `What if the successor function is NOT deterministic (branching)?
+
+Floyd fails. The "hare catches tortoise" argument relies on both walkers taking the same path
+once in the cycle. If a node has two possible nexts (as in a tree or general graph), fast and slow
+can diverge and never meet. For branching structures, you need BFS/DFS with a visited set
+(or Tarjan's SCC algorithm for cycle detection in general directed graphs).`
+
+const advanced4 = `What if you need a BETTER cycle-detection constant factor?
+
+Brent's algorithm (1980) improves Floyd's constant: instead of doubling fast's speed,
+Brent moves fast in powers-of-2 steps and compares against a stationary slow that
+periodically updates. Brent is ~36% faster than Floyd in practice (fewer "fast moved twice" ops)
+but has the same O(n) time, O(1) space, and the same cycle-entry algebra.`
+
+const advanced5 = `Breaking point — Floyd has no advantage when:
+  • The structure branches (each node has &gt;1 successor): walkers can take different paths.
+  • You need to list every node in the cycle: Floyd detects, not enumerates.
+  • You need the cycle length and have unbounded memory: a HashSet-based walk gives length as a byproduct.
+  • The "cycle" is defined by value, not by reference: use a set keyed on value.
+Diagnostic: can you apply "next(x)" deterministically and in O(1)? If no — different pattern.`
+
+const advancedCrossProblems = [
+  {
+    title: 'Palindrome Linked List (fast-slow + reverse)',
+    hint: 'Use fast-slow to find the middle, reverse the second half in place, then walk both halves comparing values. O(n) time, O(1) extra space.',
+    reveal: 'Composed pattern: middle-node sub-variation + in-place linked-list reverse. The fast-slow part is purely to locate the midpoint; the comparison walk is linear.'
+  },
+  {
+    title: 'Reorder List (middle + reverse + merge)',
+    hint: 'Split at the middle (fast-slow), reverse the second half, then merge the two halves alternately. Three sub-passes, each O(n), O(1) extra space.',
+    reveal: 'Three composed patterns: fast-slow (midpoint), in-place reverse, and two-pointer merge. The chapter trio hashing, two-pointer, and fast-slow all meet here.'
+  },
+  {
+    title: 'Pollard\'s rho integer factorization',
+    hint: 'For N = pq, pick x0 and define f(x) = (x^2 + c) mod N. The sequence x, f(x), f(f(x)), ... eventually cycles modulo p (the smaller prime). Apply Floyd to detect the cycle; gcd(|slow - fast|, N) reveals p.',
+    reveal: 'The same pattern that detects linked-list cycles factors RSA moduli. Pollard rho runs in expected O(N^(1/4)) steps, O(1) extra memory. Floyd is embedded in every cryptographer\'s toolkit.'
+  }
+]
+
+const quizQuestions = [
+  {
+    q: `What does Floyd's Tortoise & Hare guarantee?`,
+    choices: [
+      { text: 'Cycle detection in O(1) space if a cycle exists', correct: true, explanation: 'Two pointers at different speeds always meet inside any cycle; no extra memory needed.' },
+      { text: 'The array is sorted', correct: false },
+      { text: 'Cycle length is exactly n', correct: false },
+      { text: 'Constant time detection', correct: false, explanation: 'It is O(n) time; O(1) space is the win.' }
+    ]
+  },
+  {
+    q: `After Floyd's pointers meet in a cycle, how do you find the entry?`,
+    choices: [
+      { text: 'Reset one pointer to head; walk both at speed 1; they meet at the entry', correct: true, explanation: 'Classic invariant: distance from head to entry = distance from meeting point to entry, both modulo cycle length.' },
+      { text: 'Sort the linked list', correct: false },
+      { text: 'The meeting point is the entry', correct: false, explanation: 'The meeting point is inside the cycle but not necessarily at the entry.' },
+      { text: 'Cannot be found in O(1) space', correct: false }
+    ]
+  },
+  {
+    q: `For "Middle of a Linked List" with even length, how do you land on the SECOND middle?`,
+    choices: [
+      { text: 'Loop while fast != null && fast.next != null', correct: true, explanation: 'This condition places slow at the second middle for even lengths.' },
+      { text: 'Loop while fast.next != null && fast.next.next != null', correct: false, explanation: 'That lands on the FIRST middle.' },
+      { text: 'Use a queue', correct: false },
+      { text: 'Two passes over the list', correct: false, explanation: 'Possible but defeats the single-pass guarantee.' }
+    ]
+  },
+  {
+    q: `Find the Duplicate Number: why does Floyd apply to an array of n+1 ints in [1, n]?`,
+    choices: [
+      { text: 'nums[i] treated as next(i) is a functional graph; the duplicate value is the cycle entry', correct: true, explanation: 'Pigeonhole guarantees a cycle; the merge-in structure guarantees the entry is the duplicate value.' },
+      { text: 'The array is already sorted', correct: false },
+      { text: 'By sorting the array', correct: false, explanation: 'That modifies the input, which is disallowed.' },
+      { text: 'By XOR tricks', correct: false, explanation: 'XOR works for missing/single, not for duplicates.' }
+    ]
+  },
+  {
+    q: `Which of these is NOT a Fast / Slow pattern application?`,
+    choices: [
+      { text: 'Detecting a cycle in a linked list', correct: false },
+      { text: 'Finding the middle of a linked list', correct: false },
+      { text: 'Happy Number cycle test', correct: false },
+      { text: 'Longest Common Subsequence', correct: true, explanation: 'LCS is dynamic programming over two sequences — nothing to do with two-speed walkers.' }
+    ]
+  }
+]
+</script>
 
 <PatternVideo pattern-name="Fast & Slow Pointers" duration="8–12 min" />
 
@@ -26,6 +352,48 @@ Why should a junior engineer care? Because this pattern saves you from the defau
 <Callout kind="key" title="Key Insight">
 
 After `k` steps, slow is at k, fast is at 2k. If they meet, they're inside a cycle. The distance from the meeting point to the cycle start equals the distance from the head to the cycle start — so reset slow to head, step both by 1, they meet exactly at the cycle entry.
+
+</Callout>
+
+## The bare mechanic — simplest working example
+
+Before entry-finding, before the algebra, here's the whole pattern on a 6-node list without a cycle, then with one.
+
+**No cycle** — `1 → 2 → 3 → 4 → 5 → 6 → null`:
+
+| Step | slow at | fast at |
+|---|---|---|
+| 0 | 1 | 1 |
+| 1 | 2 | 3 |
+| 2 | 3 | 5 |
+| 3 | 4 | null |
+
+Loop exits at step 3 because `fast.next` is `null`. **No cycle → return false.** The total work was ⌈n/2⌉ iterations.
+
+**With a cycle** — `1 → 2 → 3 → 4 → 5 → 6 → 3` (6.next points back to 3):
+
+| Step | slow at | fast at | note |
+|---|---|---|---|
+| 0 | 1 | 1 | both at head |
+| 1 | 2 | 3 | fast one node ahead inside the pre-cycle |
+| 2 | 3 | 5 | fast enters cycle first |
+| 3 | 4 | 3 | fast wraps around cycle |
+| 4 | 5 | 5 | **collision** — cycle proven |
+
+Four iterations total, O(1) extra memory. The hare laps the tortoise inside the cycle; the collision is inevitable once both are inside.
+
+<PatternTemplateCard
+  slug="fast-slow-bare-mechanic"
+  :code="bareMechCode"
+  language="java"
+  :invariant="bareMechInvariant"
+  :complexity="bareMechComplexity"
+  title="Bare mechanic — cycle detection (bool)"
+/>
+
+<Callout kind="key" title="The single move.">
+
+Slow steps 1, fast steps 2. The gap mod cycle-length shrinks by 1 per iteration once both are inside the cycle. Everything in this chapter — entry location, middle node, nth-from-end, happy number, find-duplicate — is this move plus a different interpretation of "step."
 
 </Callout>
 
@@ -58,42 +426,41 @@ Once slow enters the cycle, the gap between slow and fast (modulo the cycle leng
 
 </Callout>
 
-<Callout kind="trap" title="Trap — off-by-one in &quot;middle of the list.&quot;">
+## THE template
 
-For an even-length list `1→2→3→4`, do you want middle = 2 or 3? Depends on the problem statement. If slow starts at head and the loop is `while (fast != null && fast.next != null)`, slow lands on **3** for even length (second middle). If you want the first middle (**2**), change the loop to `while (fast.next != null && fast.next.next != null)` and pre-check the empty case. Stating this choice out loud in an interview signals depth.
+Every fast/slow problem is a specialization of Floyd's two-phase template: phase 1 detects a cycle via collision, phase 2 locates the entry via the `A = mC - B` algebra. If the problem only needs detection or only needs a positional query (middle, nth-from-end), you drop phase 2.
 
-</Callout>
+<PatternTemplateCard
+  slug="fast-slow-template"
+  :code="floydTemplate"
+  language="java"
+  :invariant="floydInvariant"
+  :complexity="floydComplexity"
+  :specializations="floydSpecializations"
+  title="THE fast/slow template — Floyd two-phase"
+/>
 
-<Callout kind="trap" title="Trap — cycle detection on a &quot;linked list&quot; that's actually a doubly-linked list.">
-
-Doubly-linked lists have a `prev` pointer; some cycle-detection candidates try to walk both directions or check `prev == null` for "no cycle." This is wrong — you can still cycle in a doubly-linked list. Ignore `prev` and run Floyd exactly as on a singly-linked list.
-
-</Callout>
-
-## How to use it — template
+The mermaid flow is the two-phase loop as a picture:
 
 
 
-```java
-ListNode slow = head, fast = head;
-while (fast != null && fast.next != null) {
-    slow = slow.next;
-    fast = fast.next.next;
-    if (slow == fast) {
-        ListNode p = head;
-        while (p != slow) {
-            p = p.next;
-            slow = slow.next;
-        }
-        return p;              // cycle entry
-    }
-}
-return null;                   // no cycle
+```mermaid
+flowchart TD
+  A([Init: slow = fast = head]) --> B{"fast != null AND<br/>fast.next != null?"}
+  B -- no --> C([No cycle: return null])
+  B -- yes --> D["slow = slow.next<br/>fast = fast.next.next"]
+  D --> E{slow == fast?}
+  E -- no --> B
+  E -- yes --> F([Phase 2: reset p = head])
+  F --> G{p == slow?}
+  G -- yes --> H([Return p — cycle entry])
+  G -- no --> I["p = p.next<br/>slow = slow.next"]
+  I --> G
 ```
 
 
 
-The template has two phases. Phase one moves at different speeds and answers "do the pointers ever meet?" The guard must check both `fast` and `fast.next`, because the fast pointer takes a double hop. Phase two starts one pointer from the head and one from the meeting point; moving both at speed one turns the algebra into code. If the problem only asks for detection, stop at `slow == fast`. If it asks for a middle node, keep the first phase but return `slow` when `fast` falls off the list.
+<div class="readfig"><b>How to read it:</b> Phase 1 (top) advances two walkers at different speeds until fast runs off the end (no cycle) or they collide (cycle). Phase 2 (bottom) resets one walker to head; the next collision happens at the cycle entry. Each phase is O(n).</div>
 
 ## History — Floyd's Tortoise & Hare, 1967
 
@@ -103,13 +470,45 @@ Floyd himself was a Turing Award winner (1978, for language semantics) and one o
 
 **Real-world usage:** every mark-sweep garbage collector (HotSpot JVM, V8, .NET, Go) uses variants of Floyd's algorithm to detect cyclic reference chains without allocating a `visited` set. The **Pollard's rho** integer-factorization algorithm (1975) — the same one used in RSA cryptanalysis — is Floyd's cycle detection applied to the sequence `x_{n+1} = (x_n² + c) mod N`. When you tell an interviewer "I'll use Floyd's cycle-detection, O(n) time and O(1) space," you're citing an algorithm still used at the bottom of every modern GC and every cryptographer's toolkit.
 
----
+## Sub-variations of the template
 
-## Linked List Cycle II (Floyd) <span class="diff diff-m">Medium</span>
+Each sub-variation below swaps the **meaning of "next"** but keeps the two-speed structure unchanged. Reading these in order (detect → entry → positional → functional-graph) traces the capability growth from the simplest boolean test to array-as-list reframing.
+
+<PatternSubVariationNav pattern="fast-slow" />
+
+### Linked List Cycle (Floyd's) <span class="diff diff-e">Easy</span>
+
+*[↗ LeetCode: Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)*
+
+The simplest fast/slow problem — detect a cycle, return `true` or `false`. No entry-finding, no algebra. One phase, one return.
+
+<InvariantProof :statement="cycleDetectInvariant.statement" :initialization="cycleDetectInvariant.initialization" :maintenance="cycleDetectInvariant.maintenance" :termination="cycleDetectInvariant.termination" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+on `head = [3, 2, 0, -4]` with `-4.next = node[1]`. Return `true`. Try the two-speed loop with the detection-only termination; then reveal.
+
+</Callout>
+
+<TemplateReveal :canonical="cycleDetectCode" language="java" slug="fast-slow-cycle-detect" />
+
+**Why this is the gateway.** Everything else in the chapter adds structure on top of this four-line pattern. Phase 2 of Cycle II adds entry location; middle-of-list drops the collision check; happy-number swaps `.next` for `f(x)`; find-duplicate reframes an array as a functional graph.
+
+### Linked List Cycle II — where the cycle starts <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)*
 
 <ProgressCheck id="linked-list-cycle-ii-floyd" />
+
+<InvariantProof :statement="cycleStartInvariant.statement" :initialization="cycleStartInvariant.initialization" :maintenance="cycleStartInvariant.maintenance" :termination="cycleStartInvariant.termination" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+on `3 → 2 → 0 → -4 → (back to 2)`. Return the node with value `2`. The two-phase shape: collision + reset-to-head + lockstep. Try it, then reveal.
+
+</Callout>
+
+<TemplateReveal :canonical="cycleStartCode" language="java" slug="fast-slow-cycle-start" />
 
 
 
@@ -150,50 +549,30 @@ Floyd himself was a Turing Award winner (1978, for language semantics) and one o
 
 <div class="readfig"><b>How to read it:</b> Different speeds force a meeting inside the loop; then the distance from head to entry equals the distance from the meeting point back to the cycle start.</div>
 
-### Problem
+#### Problem
 Detect whether a singly linked list has a **cycle**, and if so return the node where the cycle **begins** — using O(1) space.
 
 **Constraints:** up to `10⁴` nodes; the cycle (if present) is reachable by following `next`.
 
 **Example 1:** `3→2→0→-4` with `-4` linking back to `2` → returns node `2`.
 
-<ExamplePreview compact :input="['3→2→0→-4']" :output="['-4']" />
-
 **Example 2:** `1→2→null` → `null` (no cycle, so no entry node).
 
-<ExamplePreview compact :input="['1→2→null']" :output="['null']" />
-
-### Solution — brute force
-The first correct idea is to remember every node reference you have seen. Walk from `head`; before visiting a node, ask whether it is already in the set. If yes, that exact node is the cycle entry. If you reach `null`, there is no cycle.
-
-
-
-```text
-seen = empty HashSet
-cur = head
-while cur != null:
-    if cur in seen: return cur
-    add cur to seen
-    cur = cur.next
-return null
-```
-
-
-
-This is easy to explain and handles the entry node naturally. The cost is O(n) time and O(n) space, because in the no-cycle case you store every node. Floyd keeps the O(n) time but removes the set.
+#### Solution — brute force
+The first correct idea is to remember every node reference you have seen. Walk from `head`; before visiting a node, ask whether it is already in the set. If yes, that exact node is the cycle entry.
 
 
 
 ```java
 ListNode detectCycleBrute(ListNode head) {
-    Set<ListNode> seen = new HashSet<>();
-    ListNode cur = head;
-    while (cur != null) {
-        if (seen.contains(cur)) return cur;
-        seen.add(cur);
-        cur = cur.next;
-    }
-    return null;
+  Set<ListNode> seen = new HashSet<>();
+  ListNode cur = head;
+  while (cur != null) {
+    if (seen.contains(cur)) return cur;
+    seen.add(cur);
+    cur = cur.next;
+  }
+  return null;
 }
 ```
 
@@ -201,76 +580,11 @@ ListNode detectCycleBrute(ListNode head) {
 
 **Brute-force cost:** O(n) time, O(n) space — correct, but the extra visited set is what Floyd removes.
 
-### Solution — optimized
-Floyd turns "remember every node" into a speed difference. If a loop exists, fast eventually laps slow; then resetting one pointer to head makes both pointers walk equal remaining distances to the entry.
+#### Why the reset works without memorizing algebra
 
-**Pattern.**
-Detect a cycle and find its entry using two-speed pointers.
+Suppose the distance from head to the cycle entry is `A`, the cycle length is `C`, and the meeting point is `B` steps after the entry. Slow has walked `A + B`. Fast has walked twice that. The extra distance fast walked must be whole laps of the cycle, so `2(A+B) - (A+B) = A+B = mC`. Rearranged, `A = mC - B`. That means from the meeting point, walking `A` steps lands exactly at the entry because `C - B` steps complete the current lap, and the remaining laps do not change the final node. The code does not need to know `A`, `B`, or `C`; it just walks both pointers until equality.
 
-**Java.**
-
-
-```java
-ListNode detectCycle(ListNode head) {
-    ListNode slow = head, fast = head;
-    while (fast != null && fast.next != null) {
-        slow = slow.next;
-        fast = fast.next.next;
-        if (slow == fast) {                 // meeting point
-            ListNode p = head;
-            while (p != slow) { p = p.next; slow = slow.next; }
-            return p;                       // cycle entry
-        }
-    }
-    return null;
-}
-```
-
-
-
-### Time Complexity
-Existing summary: Time O(n) · Space O(1).
-
-The time is linear because the first phase visits at most a constant number of laps after slow enters the cycle, and the second phase walks from head to the entry once. No node values are copied and no visited set is stored.
-
-The optimized method is O(n): before the meeting, fast/slow traverse at most the non-cycle prefix plus a bounded number of cycle steps; after the reset, both pointers walk only to the entry.
-
-### Space Complexity
-Space is O(1) because it keeps only pointer variables. Unlike the brute-force set, it never stores visited nodes.
-
-### Learning notes
-- Why guard `fast != null && fast.next != null`? — fast takes a two-hop step.
-- Why move slow by one and fast by two? — the speed difference guarantees a collision inside a cycle.
-- Why test `slow == fast` by reference? — equal node values do not prove the same node.
-- Why create `ListNode p = head`? — one pointer must restart to locate the entry.
-- Why move both one step after reset? — their distances to the cycle entry are equal modulo the loop length.
-
-<Callout kind="key" title="Key Insight">
-
-Slow and fast meet inside the cycle. From the head and from the meeting point, advancing both one step at a time, they meet exactly at the cycle entry (distance algebra: `head→entry == meeting→entry` modulo cycle length).
-
-</Callout>
-
-<Callout kind="inv" title="Invariant">
-
-If a cycle of length `C` exists, after slow enters it, fast closes the gap by 1 per step, so they meet within `C` steps.
-
-</Callout>
-
-<Callout kind="note" title="Trace it">
-
-Use `3→2→0→-4`, with `-4.next = 2`.
-
-| Round | slow moves to | fast moves to | Meaning |
-|---|---|---|---|
-| start | 3 | 3 | both begin at head |
-| 1 | 2 | 0 | fast is one node ahead inside the future loop |
-| 2 | 0 | 2 | fast has wrapped around the cycle |
-| 3 | -4 | -4 | pointers meet, so a cycle exists |
-| reset | p = 3 | slow = -4 | start entry-finding phase |
-| step 1 | p = 2 | slow = 2 | collision gives the cycle entry |
-
-</Callout>
+A simpler mental model: once the two runners collide, one runner is exactly "head-to-entry distance" away from the entry if it keeps running around the loop. So put the other runner at the head and let both move at the same speed.
 
 <CodeTrace
   title="Floyd cycle detection — list 3→2→0→-4 with -4.next = 2 (cycle at 2)"
@@ -286,23 +600,6 @@ Use `3→2→0→-4`, with `-4.next = 2`.
     { pointers: { slow: 1, fast: 1 }, vars: { phase: "entry", p: 1 }, note: "collision at 2 — cycle entry", added: [1] }
   ]'
 />
-<Callout kind="trap" title="Common Trap">
-
-Only checking `fast != null`. *Example:* even-length list `1→2`. After one step, `fast` is at `2` (non-null), so `fast.next.next` NPEs on the missing `next`. Check both `fast != null && fast.next != null` before the double hop.
-
-</Callout>
-
-<CodeTrace
-  title="Trap — Fast/slow NPE: list 1→2 (even length)"
-  :values="[1,2]"
-  :windowKeys="['fast']"
-  :cellWidth="52"
-  :steps='[
-    { pointers: { slow: 0, fast: 0 }, vars: { list: "1→2→null" }, note: "start: both at head" },
-    { pointers: { slow: 1, fast: 1 }, vars: { note: "fast=2, non-null" }, note: "BUG: check fast!=null → true, but fast.next.next NPEs on null" },
-    { pointers: { slow: 1, fast: 1 }, vars: { fix: "check fast!=null AND fast.next!=null" }, note: "FIX: guard both → loop ends cleanly, returns null (no cycle)" }
-  ]'
-/>
 
 <Callout kind="note" title="Interview script">
 
@@ -310,69 +607,213 @@ First, I'd verify this is a singly linked list and I need the entry node, not ju
 
 </Callout>
 
-<Callout kind="pat" title="Pattern Connection">
+### Middle of a Linked List <span class="diff diff-e">Easy</span>
 
-*Find the Duplicate Number* maps an array to a functional graph (`next = nums[i]`) and applies the identical algorithm — a classic "array is secretly a linked list" reframe.
+*[↗ LeetCode: Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/)*
+
+Phase 1 only — the collision check is dropped. When `fast` falls off the list, `slow` has traversed exactly half. For even length, you get the second middle.
+
+<InvariantProof :statement="middleNodeInvariant.statement" :initialization="middleNodeInvariant.initialization" :maintenance="middleNodeInvariant.maintenance" :termination="middleNodeInvariant.termination" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+on `1 → 2 → 3 → 4 → 5`. Return the node with value `3`. On `1 → 2 → 3 → 4` (even length), return the node with value `3` (second middle). Try it, then reveal.
 
 </Callout>
 
-### Why the reset works without memorizing algebra
+<TemplateReveal :canonical="middleNodeCode" language="java" slug="fast-slow-middle" />
 
-Suppose the distance from head to the cycle entry is `A`, the cycle length is `C`, and the meeting point is `B` steps after the entry. Slow has walked `A + B`. Fast has walked twice that. The extra distance fast walked must be whole laps of the cycle, so `2(A+B) - (A+B) = A+B = mC`. Rearranged, `A = mC - B`. That means from the meeting point, walking `A` steps lands exactly at the entry because `C - B` steps complete the current lap, and the remaining laps do not change the final node. The code does not need to know `A`, `B`, or `C`; it just walks both pointers until equality.
+**The even/odd choice.** `while (fast != null && fast.next != null)` lands on the SECOND middle for even length. To land on the FIRST middle, use `while (fast.next != null && fast.next.next != null)`. The problem statement decides which — stating the choice out loud in an interview signals depth.
 
-A simpler mental model: once the two runners collide, one runner is exactly "head-to-entry distance" away from the entry if it keeps running around the loop. So put the other runner at the head and let both move at the same speed.
+### Nth Node From End <span class="diff diff-m">Medium</span>
 
-### How this pattern changes in common variants
+*[↗ LeetCode: Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)*
 
-For **Linked List Cycle I**, you stop at the first `slow == fast` and return `true`. There is no reset phase because the problem only asks whether a loop exists. For **Middle of the Linked List**, the same speeds are used but with no equality check; when `fast` reaches the end, `slow` is halfway. For **Happy Number**, a number is the node and `next(x)` is "sum of squared digits"; reaching 1 is success, while a fast/slow meeting away from 1 proves you are trapped in a cycle.
+A fixed-gap variant: open a gap of `n` nodes between fast and slow, then walk both in lockstep. When fast lands on the last node, slow is at the node just before the one to remove — a single-pass O(n) solution without first measuring list length.
 
-For **Find the Duplicate Number**, the values are valid indices. If `nums = [1,3,4,2,2]`, index `0` points to `1`, `1` points to `3`, `3` points to `2`, and `2` points to `4`, then `4` points back to `2`. The duplicate value creates the cycle entry. That is the same algorithm wearing an array costume.
+<InvariantProof :statement="nthFromEndInvariant.statement" :initialization="nthFromEndInvariant.initialization" :maintenance="nthFromEndInvariant.maintenance" :termination="nthFromEndInvariant.termination" />
 
-### Edge cases to rehearse
+<Callout kind="key" title="Blind-solve prompt">
 
-Fast/slow code is short, so most interview mistakes come from not rehearsing the edge cases. A `null` head should return `null`; the while guard handles it before any dereference. A single node with `next = null` should also return `null`; `fast.next != null` fails. A single node with `next` pointing to itself should return that node; after one loop iteration, slow and fast are both back at the same node, then the reset phase immediately returns head. A two-node list with no cycle is the case that catches bad guards, because `fast.next.next` would cross past the tail.
+on `1 → 2 → 3 → 4 → 5`, remove the 2nd from end (value `4`). Return `1 → 2 → 3 → 5`. The dummy-head trick is the subtle part — try it, then reveal.
 
-Another detail: compare nodes by reference, not by value. If two different nodes both store value `7`, they are not the same location in the list. The cycle test is `slow == fast`, meaning the pointers have landed on the identical object. In Java LeetCode-style linked-list problems, `ListNode` usually does not override equality, but saying "reference equality" makes your intent clear.
+</Callout>
 
-For the duplicate-number array version, the edge cases look different but the mental model is the same. The array values must be valid next indices, and the usual LeetCode constraints guarantee one duplicate and values in `1..n`. If those constraints are missing, Floyd may walk out of bounds or find a cycle that does not mean "duplicate." Always attach the pattern to the constraint that every state has one safe next state.
+<TemplateReveal :canonical="nthFromEndCode" language="java" slug="fast-slow-nth-from-end" />
 
-### Debug checklist
+**Why the dummy head?** When `n` equals the list length, you need to remove the actual head — but you can't move slow back to "before head" without a dummy. Prepending a dummy node gives slow a safe starting point: after opening the gap, `slow.next` is always the removal target, including the n-equals-length case.
 
-| Symptom | Likely cause | Fix |
-|---|---|---|
-| Null pointer exception on short lists | guard checks only `fast != null` | use `fast != null && fast.next != null` |
-| returns the meeting node, not entry | skipped reset phase | after collision, start `p` at head and walk both by one |
-| infinite loop in no-cycle list | forgot to advance one pointer | update both `slow` and `fast` every iteration |
-| wrong on duplicate values | compared `node.val` | compare node references with `==` |
-| array duplicate version crashes | values are not valid indices | verify functional-graph constraints first |
+### Happy Number (sequence as linked list) <span class="diff diff-e">Easy</span>
 
-### How to explain the proof without losing the interviewer
+*[↗ LeetCode: Happy Number](https://leetcode.com/problems/happy-number/)*
 
-You do not need to dump equations immediately. Start with the runner analogy: once both pointers are inside the cycle, fast gains one node on slow each round, so a collision is inevitable. Then say the collision gives a special offset: the distance from head to entry matches the remaining distance from meeting point to entry, modulo the loop length. That is why one pointer from head and one from the meeting point land together at the entry.
+The successor function isn't `.next` — it's `f(x) = sum of squared digits`. The sequence `x, f(x), f(f(x)), ...` is a functional graph: by pigeonhole, it eventually cycles. The cycle either contains 1 (happy) or does not (unhappy, trapped at `{4, 16, 37, 58, 89, 145, 42, 20}`).
 
-If the interviewer wants the algebra, give the short version. Let `A` be head-to-entry, `B` entry-to-meeting, and `C` the cycle length. Slow traveled `A+B`; fast traveled twice that. The difference is `A+B`, and because they meet in a cycle, that difference is some whole number of cycle laps. Therefore `A+B = mC`, so `A = mC-B`, exactly the distance from the meeting point around to the entry. Then return to the code: the reset loop is just walking those equal distances.
+<InvariantProof :statement="happyNumberInvariant.statement" :initialization="happyNumberInvariant.initialization" :maintenance="happyNumberInvariant.maintenance" :termination="happyNumberInvariant.termination" />
 
-### Same pattern, new tweaks
+<Callout kind="key" title="Blind-solve prompt">
 
-Two pointers at different speeds detect loops and locate structure without extra memory:
+on `n = 19`. The sequence is `19 → 82 → 68 → 100 → 1`; the cycle at 1 means happy. On `n = 2`, the sequence enters the 8-cycle around 42; unhappy. Try it, then reveal.
 
-| Variation | The one thing that changes | Time |
-|---|---|---|
-| [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | stop as soon as fast meets slow; no need to locate the entry | O(n) |
-| [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/) | fast moves 2×, slow 1×; when fast ends, slow is the middle | O(n) |
-| [Happy Number](https://leetcode.com/problems/happy-number/) | the "next" step is digit-square-sum; a cycle not containing 1 means unhappy | O(log n per step) |
-| [Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/) | treat `nums[i]` as a next pointer and return the cycle entry value | O(n) |
-| [Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/) | use fast/slow only to find the middle; then reverse the second half | O(n) |
+</Callout>
 
----
+<TemplateReveal :canonical="happyNumberCode" language="java" slug="fast-slow-happy-number" />
 
-## Check your understanding
+**Why fast/slow and not a HashSet?** A HashSet of seen values works in O(log n · k) time (k = cycle length) and O(k) space. Floyd here is also O(log n · k) time but O(1) space — the natural answer when the problem writer asks "without extra memory, decide if the sequence loops."
+
+### Find the Duplicate Number <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)*
+
+The best "array is secretly a linked list" problem on LeetCode. With n+1 integers in [1, n], index-to-value forms a functional graph; by pigeonhole, two distinct indices point to the same value — that value is the cycle entry. Floyd phase 1 finds a meeting; phase 2 locates the entry = the duplicate.
+
+<InvariantProof :statement="findDuplicateInvariant.statement" :initialization="findDuplicateInvariant.initialization" :maintenance="findDuplicateInvariant.maintenance" :termination="findDuplicateInvariant.termination" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+on `nums = [1, 3, 4, 2, 2]`. Index 0 → 1 → 3 → 2 → 4 → 2 — the cycle enters at value 2, so the duplicate is 2. Try the Floyd phase-1 + phase-2 shape, then reveal.
+
+</Callout>
+
+<TemplateReveal :canonical="findDuplicateCode" language="java" slug="fast-slow-find-duplicate" />
+
+**The constraint carries all the weight.** The problem guarantees `nums.length = n + 1` with values in `[1, n]`. This is NOT a general cycle-detection problem — it's a constraint-engineered one. Without the constraint, the duplicate could be elsewhere; with it, pigeonhole + the "value-is-pointer" reframe lets Floyd solve what sorting would, in O(n) time without modifying the array.
+
+## Traps & gotchas
+
+Three traps every fast/slow problem can hit. Each sub-variation above calls out its own specific bugs; these three are the ones that cross problem boundaries and bite in cold interviews.
+
+### Trap 1 — guarding only on `fast != null`
+
+<TrapTrace title="NPE on even-length lists when fast.next is null" input="list = 1 → 2 (even length, no cycle)" :bug="trap1Bug" :fix="trap1Fix" />
+
+### Trap 2 — comparing nodes by value instead of reference
+
+<TrapTrace title="Value equality falsely proves a cycle on lists with duplicate values" input="list with two nodes having val = 7" :bug="trap2Bug" :fix="trap2Fix" />
+
+### Trap 3 — Find-the-Duplicate on a non-functional-graph input
+
+<TrapTrace title="Running Floyd on an array that doesn't satisfy the [1, n] constraint" input="nums = [0, 1, 2, 3]" :bug="trap3Bug" :fix="trap3Fix" />
+
+<Callout kind="trap" title="The 10-second trap-check.">
+
+Before shipping any fast/slow solution, verify the three preconditions: (1) the structure has exactly one successor per node, (2) comparison is reference-based not value-based, (3) if the input is an array treated as a graph, every value is a valid index. All three must hold or the pattern silently returns the wrong answer.
+
+</Callout>
+
+## In the wild — Floyd in real systems
+
+Floyd isn't just an interview trick. Every mark-sweep garbage collector, every integer-factorization library, every linked-list sanity check in a kernel-space data structure uses this two-speed loop.
+
+
+
+```c
+// GNU libc malloc: a free-list cycle check.
+// mcheck's chunk walker uses Floyd to detect that heap corruption
+// has turned the free list into a loop (which would otherwise be
+// an infinite loop inside glibc).
+static int check_free_list_cycle(struct chunk *head) {
+  struct chunk *slow = head, *fast = head;
+  while (fast != NULL && fast->next != NULL) {
+    slow = slow->next;
+    fast = fast->next->next;
+    if (slow == fast) return -1;   // corrupted free list — abort
+  }
+  return 0;
+}
+```
+
+
+
+The pattern:
+- **GNU libc `mcheck`** — the free-list walker calls `check_free_list_cycle` before every allocation under paranoid mode; a cycle means heap corruption.
+- **Linux `kmemleak`** — the kernel object-tracking subsystem uses Floyd to detect reference loops before they stall the leak-scan worker.
+- **HotSpot JVM `G1GC`** — reference-processor cycle checks on soft/weak/phantom references use a variant of Floyd (plus marking color bits) to prevent GC loops.
+- **Pollard's rho factorization** — the inner loop IS Floyd applied to `x_{n+1} = (x_n² + c) mod N`. Every modern cryptographic library's integer-factor-primality module ships this.
+
+The code above is 10 lines. The *idea* is "two walkers, one at double speed, collision proves a cycle." That's the whole pattern — the complexity in production comes from concurrency, retry policies, and reference-coloring, not from the algorithm.
+
+## Recognition drill
+
+Each problem below is phrased without the pattern tag. Your task: name the sub-variation. The drill randomizes order each session and tracks your running score.
+
+<RecognitionDrill pattern="fast-slow" :count="10" />
+
+<Callout kind="key" title="How to use.">
+
+Aim for ≥ 8/10 on this drill before you consider cold-solving fluency the next bottleneck. The distractors are the specific other patterns the problem can be mistaken for — if you keep picking "hashing" when the answer is "fast-slow", that's your highest-leverage study target.
+
+</Callout>
+
+## Advanced — follow-ups and failure modes
+
+The sub-variations above are the shapes you're expected to recognize cold. The questions below are the ones that come **after** you write a correct Floyd — "what if we change this one constraint?" — and separate pattern-fluent from pattern-mastered.
+
+### What if the sequence is only partially cyclic (ρ-shape)?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced1 }}
+
+</details>
+
+### What if memory is tight and you cannot modify the list?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced2 }}
+
+</details>
+
+### What if the successor function is not deterministic?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced3 }}
+
+</details>
+
+### What if you need a better constant factor?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced4 }}
+
+</details>
+
+### Breaking point — when Floyd has no advantage
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced5 }}
+
+</details>
+
+### Cross-pattern problems
+
+Three problems where fast/slow composes with another pattern. Each is a diagnostic — if you can identify the composition and solve each, you've transferred the recognition skill beyond this chapter.
+
+<div v-for="(p, i) in advancedCrossProblems" :key="i" style="border: 1px solid var(--vp-c-divider); border-radius: 8px; padding: 14px 16px; margin: 12px 0; background: var(--vp-c-bg-soft);">
+  <div style="font-weight: 700; margin-bottom: 6px;">{{ p.title }}</div>
+  <div style="font-size: 0.92em; color: var(--vp-c-text-2); margin-bottom: 8px;">{{ p.hint }}</div>
+  <details>
+    <summary style="font-size: 0.85em; cursor: pointer; color: var(--vp-c-brand-1);">Reveal answer sketch</summary>
+    <div style="padding-top: 8px; font-size: 0.9em;">{{ p.reveal }}</div>
+  </details>
+</div>
+
+## Related patterns + Check your understanding
+
+<RelatedPatterns pattern-id="fast-slow" />
 
 <Quiz
   pattern-id="fast-slow"
-  :questions='[{"q": "What does Floyd’s Tortoise & Hare guarantee?", "choices": [{"text": "Cycle detection in O(1) space if a cycle exists", "correct": true, "explanation": "Two pointers at different speeds always meet inside any cycle."}, {"text": "The array is sorted", "correct": false}, {"text": "Cycle length is exactly n", "correct": false}, {"text": "Constant time detection", "correct": false, "explanation": "It is O(n) time; O(1) space is the win."}]}, {"q": "After Floyd’s pointers meet in a cycle, how do you find the entry?", "choices": [{"text": "Reset one pointer to head; walk both at speed 1; they meet at entry", "correct": true, "explanation": "Classic invariant: distance from head to entry = distance from meeting point to entry."}, {"text": "Sort the linked list", "correct": false}, {"text": "The meeting point is the entry", "correct": false, "explanation": "It is inside the cycle but not necessarily the entry."}, {"text": "Cannot be found in O(1) space", "correct": false}]}, {"q": "For Middle of the Linked List with even length, how do you get the SECOND middle?", "choices": [{"text": "Loop while `fast != null && fast.next != null`", "correct": true, "explanation": "This condition places slow at the second middle for even lengths."}, {"text": "Loop while `fast.next != null && fast.next.next != null`", "correct": false, "explanation": "That gives the FIRST middle."}, {"text": "Use a queue", "correct": false}, {"text": "Two passes over the list", "correct": false}]}, {"q": "Find the Duplicate Number (array of n+1 ints in [1..n]) — why does Floyd’s work?", "choices": [{"text": "`nums[i]` treated as `next(i)` creates a functional graph; two distinct indices point to the duplicate → cycle entry = duplicate", "correct": true, "explanation": "The pigeonhole guarantees a cycle; the merge-in structure guarantees the entry is the duplicate value."}, {"text": "It is a linked list already", "correct": false}, {"text": "By sort", "correct": false, "explanation": "That modifies input, disallowed."}, {"text": "By XOR trick", "correct": false, "explanation": "That is for missing/single, not duplicate here."}]}, {"q": "Which of these is NOT a Fast/Slow pattern application?", "choices": [{"text": "Detecting cycle in linked list", "correct": false}, {"text": "Finding middle of list", "correct": false}, {"text": "Happy Number", "correct": false}, {"text": "Longest Common Subsequence", "correct": true, "explanation": "LCS is dynamic programming, not cycle detection."}]}]'
+  :questions="quizQuestions"
 />
 
 <PrintButton />
-
-<RelatedPatterns pattern-id="fast-slow" />
