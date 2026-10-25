@@ -5,6 +5,132 @@
 
 <PatternProgress pattern-id="greedy" problems="jump-game-ii, jump-game, gas-station, best-time-to-buy-and-sell-stock, maximum-subarray, non-overlapping-intervals, minimum-number-of-arrows-to-burst-balloons, course-schedule-iii, maximum-length-of-pair-chain, video-stitching, jump-game-iii" />
 
+<script setup>
+const theTemplateCode = `// The greedy skeleton: pick a sort key, sweep once, commit each locally-safe choice.
+Collections.sort(items, byKey);              // the SORT KEY is the whole thing
+Result best = seed();
+State state = initialState();
+for (Item x : items) {
+    if (compatible(x, state)) {              // locally safe?
+        state = commit(x, state);            // yes — commit, never look back
+        best = update(best, x);
+    }
+    // otherwise skip (counts as a decision too)
+}
+return best;
+
+// Correctness: prove the exchange argument.
+//   Any optimal OPT differs from greedy at some first choice c.
+//   Swap OPT's c for greedy's c without reducing the objective.
+//   Repeat; OPT converges to greedy.`
+
+const theTemplateInvariant = {
+  statement: `At every step the state represents a "best-feasible prefix of commitments": every element already committed is part of SOME optimal solution, and every element skipped so far cannot be in any solution that includes the committed prefix.`,
+  initialization: `Sort by the problem-specific key (earliest finish for activity selection; largest frequency for Huffman; farthest-reach for jump game — the key encodes which local choice is provably safe).`,
+  maintenance: `When we commit element x, the exchange argument proves that any optimal solution OPT disagreeing with greedy on x can swap x in without reducing the objective. So "greedy-so-far" extends to "some optimal solution".`,
+  termination: `After the sweep, no uncommitted element can improve the objective (would've violated the invariant on an earlier step). The committed set is optimal.`
+}
+
+const theTemplateComplexity = {
+  time: `O(n log n) when the sort dominates; O(n) when the key is already a prefix-balance or farthest-reach`,
+  space: `O(1) besides sorting`
+}
+
+const theTemplateSpecializations = [
+  { slug: `activity-selection-medium`,     title: `Activity Selection (medium)` },
+  { slug: `non-overlapping-intervals-medium`, title: `Non-overlapping Intervals (medium)` },
+  { slug: `jump-game-ii-medium`,           title: `Jump Game II (medium)` },
+  { slug: `gas-station-medium`,            title: `Gas Station (medium)` },
+  { slug: `task-scheduler-medium`,         title: `Task Scheduler (medium)` },
+  { slug: `huffman-encoding-medium`,       title: `Huffman Encoding (medium)` },
+]
+
+const theTemplateProblemShape = `A locally-safe decision at each step produces a globally optimal result. The sort key (or frequency-max tally) encodes which "best right now" is provably safe via an exchange argument.`
+
+const activitySelectionCode = `// Interval Scheduling Maximization (ISM) — the ur-greedy.
+// Given n activities (start, end), pick the max number that don't overlap.
+int maxActivities(int[][] activities) {
+    Arrays.sort(activities, (a, b) -&gt; Integer.compare(a[1], b[1]));   // SORT BY END
+    int count = 0, lastEnd = Integer.MIN_VALUE;
+    for (int[] a : activities) {
+        if (a[0] &gt;= lastEnd) {           // compatible with the last committed
+            count++;
+            lastEnd = a[1];
+        }
+    }
+    return count;
+}`
+
+const huffmanCode = `// Huffman encoding — the greedy proof archetype.
+// Given character frequencies, build a prefix-free binary code minimizing Σ freq[c] * depth[c].
+record Node(int freq, Node left, Node right) {}
+
+Node buildHuffman(Map&lt;Character, Integer&gt; freq) {
+    PriorityQueue&lt;Node&gt; pq = new PriorityQueue&lt;&gt;(Comparator.comparingInt(n -&gt; n.freq));
+    for (var e : freq.entrySet()) {
+        pq.offer(new Node(e.getValue(), null, null));
+    }
+    while (pq.size() &gt; 1) {
+        Node a = pq.poll();              // SMALLEST frequency
+        Node b = pq.poll();              // SECOND SMALLEST
+        pq.offer(new Node(a.freq + b.freq, a, b));   // merge; cost += a.freq + b.freq
+    }
+    return pq.poll();                     // the root
+}
+
+// Correctness proof (sketch): the two LEAST-frequent characters are always leaves at
+// MAXIMUM depth in SOME optimal tree. Merging them is a safe commitment —
+// Huffman's 1952 exchange argument swaps them in without raising cost.`
+
+const mastery5 = [
+  {
+    q: `What distinguishes a correct greedy algorithm from a greedy heuristic that happens to work on your test cases?`,
+    choices: [
+      { text: `A proof — usually an exchange argument — that the local choice can always be swapped into some optimal solution`, correct: true, explanation: `Without a proof, you have "greedy on the test cases I thought of" — not an algorithm.` },
+      { text: `Running in O(n log n) time`, correct: false, explanation: `Many greedy heuristics have the right time complexity and the wrong answer.` },
+      { text: `Sorting the input first`, correct: false, explanation: `Not all greedy algorithms sort (Gas Station doesn't).` },
+      { text: `Being implementable in under 10 lines`, correct: false, explanation: `Code length isn't a correctness criterion.` }
+    ]
+  },
+  {
+    q: `Which problem has NO correct greedy solution and must be solved with DP?`,
+    choices: [
+      { text: `Coin Change with arbitrary denominations (e.g. coins = {1,3,4}, amount = 6)`, correct: true, explanation: `Greedy largest-first takes 4+1+1=3, but optimal is 3+3=2. The greedy-choice property fails.` },
+      { text: `Activity Selection`, correct: false, explanation: `Earliest-finish-first is provably optimal.` },
+      { text: `Huffman Encoding`, correct: false, explanation: `The merge-two-smallest greedy is provably optimal.` },
+      { text: `Kruskal's MST`, correct: false, explanation: `Matroid-greedy, provably optimal.` }
+    ]
+  },
+  {
+    q: `For Non-overlapping Intervals (minimum removals), why sort by END time instead of START?`,
+    choices: [
+      { text: `Finishing earliest leaves the maximum room for future compatible intervals`, correct: true, explanation: `This is the exact exchange argument — swap any kept later-end for an earlier-end and future feasibility can only improve.` },
+      { text: `Sorting by start would be O(n²)`, correct: false, explanation: `Both sorts are O(n log n).` },
+      { text: `End times are usually smaller numbers`, correct: false, explanation: `Not a correctness consideration.` },
+      { text: `It avoids ties`, correct: false, explanation: `Both can tie.` }
+    ]
+  },
+  {
+    q: `For Gas Station on a circular route, after you find that start = 3 works locally, what else must you verify?`,
+    choices: [
+      { text: `Σ gas ≥ Σ cost — total feasibility is a separate global check`, correct: true, explanation: `A local reset can look promising even when the total is infeasible; you'd return a start that fails the loop.` },
+      { text: `That gas[3] ≥ cost[3]`, correct: false, explanation: `A single stop's balance isn't enough; depletion can happen mid-route.` },
+      { text: `Nothing — if the reset finished, the start is valid`, correct: false, explanation: `False for total-infeasible inputs.` },
+      { text: `That the array is sorted`, correct: false }
+    ]
+  },
+  {
+    q: `In Jump Game II, when should you increment the jump counter during the sweep?`,
+    choices: [
+      { text: `Only when i == currentEnd (we exhaust the current BFS layer and must commit a jump)`, correct: true, explanation: `Each "layer" is the set of indices reachable in the same number of jumps.` },
+      { text: `At every index`, correct: false, explanation: `Gives n jumps for an input needing 2.` },
+      { text: `Only when farthest > currentEnd`, correct: false, explanation: `Doesn't match the layer boundary.` },
+      { text: `At the end of the loop (just once)`, correct: false, explanation: `Loses the per-layer accounting.` }
+    ]
+  }
+]
+</script>
+
 
 
 ## Why greedy exists — the story
@@ -55,113 +181,97 @@ The mathematical foundation is even older. **Hassler Whitney's 1935 paper *"On t
 
 When you tell an interviewer *"I'll prove correctness with an exchange argument,"* you're citing Kruskal's 1956 proof technique — still the gold standard for greedy-algorithm proofs 70 years later.
 
-## Canonical problem walkthrough — Jump Game II
+## THE template — sort by a safe key, sweep once
 
-**Problem** ([↗ LeetCode](https://leetcode.com/problems/jump-game-ii/)): Given an array of non-negative integers `nums`, you are initially at index 0. Each element `nums[i]` is the *maximum jump length* from position `i`. Return the **minimum number of jumps** to reach the last index. Assume you can always reach the last index.
+<PatternTemplateCard
+  slug="greedy"
+  title="Greedy"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="theTemplateInvariant"
+  :complexity="theTemplateComplexity"
+  :specializations="theTemplateSpecializations"
+  :problemShape="theTemplateProblemShape"
+/>
 
-### Approach 1 — Brute force recursion
+<InvariantProof
+  :statement="theTemplateInvariant.statement"
+  :initialization="theTemplateInvariant.initialization"
+  :maintenance="theTemplateInvariant.maintenance"
+  :termination="theTemplateInvariant.termination"
+/>
 
-From index 0, try every possible jump length. Return `1 + min(recursions from each landing)`.
+### The exchange argument — the proof you *must* carry into the interview
 
+For every greedy problem below, the correctness proof is the same shape:
+1. Suppose there's an optimal solution OPT that differs from greedy's commitments.
+2. Find the earliest step where they differ. OPT has choice `c`, greedy has choice `g`.
+3. Show that swapping `c → g` in OPT yields a solution no worse than OPT.
+4. Repeat until OPT matches greedy. Contradiction with "OPT is strictly better" means greedy IS optimal.
 
+If you can't construct this swap, **greedy is wrong on this problem — switch to DP**. Classic failure: Coin Change with `{1,3,4}`, amount `6` — largest-coin-first gives `4+1+1=3`, optimal is `3+3=2`.
 
-```java
-int jumpBrute(int[] nums) {
-    return dfs(nums, 0);
-}
+## When the mechanic breaks — three failure modes
 
-int dfs(int[] nums, int i) {
-    if (i >= nums.length - 1) return 0;
-    int best = Integer.MAX_VALUE;
-    for (int step = 1; step <= nums[i]; step++) {
-        int sub = dfs(nums, i + step);
-        if (sub != Integer.MAX_VALUE) best = Math.min(best, sub + 1);
-    }
-    return best;
-}
-```
+<TrapTrace
+  title="Wrong sort key — locally best isn't globally safe"
+  bug="Non-overlapping Intervals with input [[1,100],[2,3],[3,4]], sorted by START: first commit is [1,100], which blocks both short intervals → kept = 1, removed = 2. Right answer is kept = 2, removed = 1 (keep [2,3] and [3,4], drop [1,100])."
+  fix="For max non-overlapping intervals, sort by END time. The exchange argument: any kept interval with a later end can be swapped for an earlier-end compatible one without reducing count. Start-time sort has no such exchange proof — a locally bad commit forecloses globally better options."
+/>
 
+<TrapTrace
+  title="Skipping the total-feasibility check in Gas Station"
+  bug="For gas=[1,2,3,4], cost=[2,3,4,5], Σ gas = 10 < Σ cost = 14. A local reset finds candidate start = 3 (tank: 4−5 = −1 → bad; shifts to start = 0 → bad), returns 0, which fails the full loop. The local greedy only guarantees 'if any valid start exists, this is it' — not 'a valid start exists'."
+  fix="Keep a running total alongside the local tank. After the sweep, return start only if total ≥ 0; otherwise return -1. The two counters cost nothing extra and gate the greedy against infeasible inputs."
+/>
 
+<TrapTrace
+  title="Counting commitments at every step instead of at the frontier"
+  bug="In Jump Game II with nums=[2,3,1,1,4], if you increment jumps at every index you get 5. The intended BFS-layer semantics: jumps is 'minimum hops to reach i', and all indices in one layer share a jump count — you commit a new jump only when i exhausts the current layer's rightmost reach."
+  fix="Maintain two frontiers: currentEnd (right edge of the current BFS layer) and farthest (right edge of the layer below). Increment jumps and set currentEnd = farthest ONLY when i == currentEnd. The code is three lines; the mental model is one layer at a time."
+/>
 
-**Complexity:** O(k^n) where k = max value. Exponential blowup for `n > 20`. Useful as a mental reference for "we're minimizing jumps."
+## Sub-variations of the template
 
-### Approach 2 — Dynamic programming
+<PatternSubVariationNav pattern="greedy" />
 
-Bottom-up: `dp[i] = minimum jumps to reach the last index from position i`. Base case: `dp[n-1] = 0`. Fill from right to left.
+### Activity Selection <span class="diff diff-m">Medium</span>
 
+*[↗ LeetCode: Non-overlapping Intervals (companion)](https://leetcode.com/problems/non-overlapping-intervals/)*
 
+The bare mechanic. Given `n` activities with start/end times, pick the maximum number of non-overlapping activities. Sort by end time, sweep, keep every compatible one.
 
-```java
-int jumpDP(int[] nums) {
-    int n = nums.length;
-    int[] dp = new int[n];
-    Arrays.fill(dp, Integer.MAX_VALUE);
-    dp[n - 1] = 0;
-    for (int i = n - 2; i >= 0; i--) {
-        for (int step = 1; step <= nums[i] && i + step < n; step++) {
-            if (dp[i + step] != Integer.MAX_VALUE) {
-                dp[i] = Math.min(dp[i], dp[i + step] + 1);
-            }
-        }
-    }
-    return dp[0];
-}
-```
+#### Why this is the ur-greedy
 
+Activity Selection (also called **Interval Scheduling Maximization**) was the first problem shown to be solvable by a provably-correct greedy — the classical 1972 paper by Horn, and the standard proof in Kleinberg & Tardos. Its exchange argument is template for the entire chapter.
 
+**Exchange proof sketch:** Suppose OPT picks activity `a` at step k. Greedy picks `g` (the earliest-ending compatible). If `a ≠ g`, then `g.end ≤ a.end` (greedy picked the earliest-finishing). Any activity OPT can pick after `a` can also be picked after `g` (its start time ≥ a.end ≥ g.end). So swapping `a → g` keeps OPT optimal. Repeat.
 
-**Complexity:** O(n²) time, O(n) space. For `n = 10⁴`, that's 10⁸ ops — passes but at the edge. Correct, but does more work than needed.
+<Callout kind="key">
 
-### Approach 3 — Farthest-reach greedy (the interview answer)
+Pick the maximum number of pairwise non-overlapping activities.
 
-The insight: **at any position, the best "next jump" is the one that reaches the farthest.** Track two pointers:
-- `currentEnd`: the farthest index reachable with the *current* number of jumps
-- `farthest`: the farthest index reachable using *one more* jump from anywhere in `[current position, currentEnd]`
+</Callout>
 
-When `i == currentEnd`, we must commit to a new jump: increment count, set `currentEnd = farthest`.
+<TemplateReveal
+  slug="activity-selection"
+  language="java"
+  :canonical="activitySelectionCode"
+/>
 
+<Callout kind="inv" title="Invariant">
 
+After the sweep, every committed activity is in SOME optimal solution. The sort-by-end order makes each commit locally-safe (earliest finish dominates all later-finish compatibles).
 
-```java
-int jump(int[] nums) {
-    int jumps = 0;
-    int currentEnd = 0;
-    int farthest = 0;
-    for (int i = 0; i < nums.length - 1; i++) {         // don't iterate past last index
-        farthest = Math.max(farthest, i + nums[i]);
-        if (i == currentEnd) {                            // must jump now
-            jumps++;
-            currentEnd = farthest;
-            if (currentEnd >= nums.length - 1) break;     // reached the end
-        }
-    }
-    return jumps;
-}
-```
+</Callout>
 
+**Trace** — activities `[(1,3), (2,4), (3,5), (0,6), (5,7), (8,9), (5,9)]`. Sorted by end: `(1,3),(2,4),(3,5),(0,6),(5,7),(8,9),(5,9)`. Sweep: keep `(1,3)` → `lastEnd = 3`. Skip `(2,4)` (`2 < 3`). Keep `(3,5)` → `lastEnd = 5`. Skip `(0,6)` and `(5,7)` is compatible (`5 >= 5`) → keep → `lastEnd = 7`. Skip `(5,9)` → `lastEnd = 7`. Keep `(8,9)` → `lastEnd = 9`. Count = **4**.
 
+**Complexity:** O(n log n) sort + O(n) sweep.
 
-**Complexity:** O(n) time, O(1) space. For `n = 10⁴`, ~10⁴ ops — trivially fast.
+**Classic companion problem:** [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) — same mechanic, different objective (`removals = n − maxKept`).
 
-**Why is greedy correct here?** *Exchange argument:* suppose some optimal solution jumps to `j` at step k, and greedy jumps to `g` at step k with `g > j`. Any subsequent optimal jump from `j` reaches some position `p`. Since `g > j` and greedy's next-step farthest depends on positions in `[current, g]` ⊇ `[current, j]`, greedy can reach `p` (or farther) in the same number of steps. Swap `j → g` in optimal; still optimal. Repeat: optimal converges to greedy.
-
-**Interview commentary:**
-- *"DP is O(n²). We can do O(n) with greedy."*
-- *"At every position, track the farthest we can reach with one more jump. When we exhaust the current jump's range, commit to another jump."*
-- *"Correctness proof: exchange argument. Any position optimal can reach in k jumps, greedy can also reach in k jumps because greedy's next range dominates optimal's."*
-- *"Loop bound is `n-1` because we never *land* jumping *from* the last index."*
-
-### Complexity ladder
-
-| Approach | Time | Space | When |
-|---|---|---|---|
-| Recursion | O(k^n) | O(n) | Reference / n ≤ 20 |
-| DP | O(n²) | O(n) | Correct but O(n²) at edge of TLE |
-| **Farthest-reach greedy** | **O(n)** | **O(1)** | **Interview default** |
-
----
-
-## Jump Game II (Farthest-Reach Greedy) <span class="diff diff-m">Medium</span>
+### Jump Game II <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Jump Game II](https://leetcode.com/problems/jump-game-ii/)*
 
@@ -341,7 +451,7 @@ This is BFS on an implicit graph collapsed to O(n). *Jump Game I* (reachability)
 | [Video Stitching / Minimum Number of Taps](https://leetcode.com/problems/video-stitching/) | the same "cover the line in fewest intervals" farthest-reach greedy | — |
 | [Minimum Number of Arrows](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | the interval-cover cousin (sort by end) | — |
 
-## Gas Station (Prefix-Balance Greedy) <span class="diff diff-m">Medium</span>
+### Gas Station <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Gas Station](https://leetcode.com/problems/gas-station/)*
 
@@ -522,7 +632,7 @@ Skipping the total check. *Example:* `gas=[1,2,3,4]`, `cost=[2,3,4,5]`. Total ga
 | [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | track the min price so far and the best profit against it | — |
 | [Gas Station](https://leetcode.com/problems/gas-station/) | reset the start to `i+1` when the tank dips below 0, with a global feasibility gate | — |
 
-## Task Scheduler / Activity Selection (Sort-Driven Greedy) <span class="diff diff-m">Medium</span>
+### Task Scheduler <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Task Scheduler](https://leetcode.com/problems/task-scheduler/)*
 
@@ -622,7 +732,7 @@ Space O(A) for the frequency table.
 - Why `Math.max(tasks.length, frame)`? — other tasks can fill idles, but the answer can never be shorter than the task count.
 - Why earliest-finish for activity selection? — finishing sooner leaves the most room for future compatible intervals.
 
-## When greedy fails → DP
+### When greedy fails → DP
 <p class="secgoal"><b>What & why:</b> the tell-tale signs that a locally optimal choice is <i>not</i> globally safe. Goal — decide fast between a greedy one-pass and a DP, and back the call with a counterexample or an exchange argument.</p>
 
 *Coin Change* with arbitrary denominations breaks greedy (largest-coin-first fails for coins `{1,3,4}`, amount 6: greedy 4+1+1=3 coins vs optimal 3+3=2). *0/1 Knapsack* breaks greedy (value/weight ratio is optimal only for the fractional version). The tell: a locally best choice can foreclose a better global combination.
@@ -634,7 +744,7 @@ Greedy is safe iff you can prove the exchange argument. No proof, construct a sm
 </Callout>
 
 
-## Non-overlapping Intervals (Interval Scheduling) <span class="diff diff-m">Medium</span>
+### Non-overlapping Intervals <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)*
 
@@ -757,14 +867,155 @@ Sort by **end time** and greedily keep the earliest-finishing compatible interva
 | [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | removals = total − (max non-overlapping kept) | — |
 | [Course Schedule III](https://leetcode.com/problems/course-schedule-iii/) | sort by deadline; greedily take courses, dropping the longest with a max-heap when you overrun | — |
 
+### Huffman Encoding <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Minimum Cost to Connect Sticks (closest LeetCode variant)](https://leetcode.com/problems/minimum-cost-to-connect-sticks/)*
+
+#### Problem
+Given character frequencies, build a **prefix-free binary code** minimizing the weighted total bit-length Σ `freq[c] · depth[c]`. This is the compression algorithm powering ZIP, PNG, JPEG, MP3, and brotli.
+
+#### The move — repeatedly merge the two LEAST frequent
+
+The counterintuitive insight: at any point, the two characters currently of least frequency are **always** at maximum depth in some optimal tree. So merging them (making them siblings under a new internal node) is a safe commitment. Repeat until one tree remains.
+
+<Callout kind="key">
+
+Build a prefix-code minimizing Σ freq × depth; always merge the two smallest-frequency subtrees.
+
+</Callout>
+
+<TemplateReveal
+  slug="huffman"
+  language="java"
+  :canonical="huffmanCode"
+/>
+
+<Callout kind="inv" title="Invariant">
+
+The priority queue always holds optimal subtrees for the characters/subtrees it contains. Merging the two smallest adds `a.freq + b.freq` to the total cost — which equals the sum of all merge costs = Σ freq × depth over the final tree.
+
+</Callout>
+
+**Why this is the proof archetype.** Huffman (1952) is the first greedy algorithm whose correctness was proved before the algorithm existed. The proof:
+
+1. **Lowest-frequency leaves have maximum depth.** In any optimal tree, if a lowest-freq leaf `a` were at depth `d` and some other leaf `b` with `freq(b) ≥ freq(a)` were at depth `d' > d`, swapping them changes the cost by `(freq(a) - freq(b))(d' - d) ≤ 0` — never worsens.
+2. **The two lowest-freq leaves can be siblings.** Both at max depth means they're on the same bottom level; adjacent siblings are a valid rearrangement.
+3. **Merging them is safe.** Replace `{a, b}` with a merged node of frequency `freq(a) + freq(b)` — the problem shrinks to one fewer leaf, and the merge cost added equals exactly the extra depth savings from treating them as siblings.
+4. **Induct.** The subproblem (one fewer character) has the same shape; greedy continues.
+
+**Complexity:** O(n log n) — each merge is one heap push and two pops.
+
+**In the wild — DEFLATE's canonical Huffman.** gzip, PNG, and ZIP use a *canonical* Huffman code (same code lengths as the greedy tree, but code bits are assigned in a deterministic order) so the decoder only needs the code lengths — not the tree. The algorithmic core is still greedy; the serialization is the extra engineering.
+
+## In the wild — Linux CFS task scheduler
+
+The Linux kernel's **Completely Fair Scheduler** (`kernel/sched/fair.c`, since 2.6.23 in 2007) uses a partly-greedy approach to pick the next task to run. Every runnable task has a **virtual runtime** (`vruntime`) — the time it has consumed, weighted by priority. CFS picks the task with the lowest vruntime next:
+
+
+
+```c
+/* kernel/sched/fair.c (paraphrased, slightly simplified) */
+static struct sched_entity *pick_next_entity(struct cfs_rq *cfs_rq) {
+    /* The red-black tree holds all runnable tasks, keyed by vruntime.
+       The leftmost node is the task with the LEAST vruntime so far.
+       Greedy choice: pick the task with the smallest vruntime next. */
+    struct sched_entity *left = __pick_first_entity(cfs_rq);
+
+    /* Exception: respect a currently-running task if its vruntime
+       is close enough to left's — avoids thrashing on context switches. */
+    if (cfs_rq->curr && entity_before(cfs_rq->curr, left))
+        return cfs_rq->curr;
+
+    return left;
+}
+```
+
+
+
+**Why this is "partly greedy":** the vruntime-smallest pick is the greedy commitment. The red-black tree gives O(log n) insert/delete, so maintaining the sorted order has amortized cost comparable to a heap. But CFS has edge cases (sleep bonus, group scheduling, nice-value weighting) where strict greedy would thrash — those are the "partly" caveats.
+
+**Correctness intuition:** if every task is picked exactly when its vruntime is smallest, no task runs more than ε ahead of any other, i.e. no task is systematically starved. That's the *fairness* in CFS — a property that falls out of the greedy choice when weighted by nice value.
+
+**Other production greedy algorithms:**
+1. **gzip / brotli / Zstandard compression** — Huffman coding (greedy merge of smallest-frequency subtrees).
+2. **TCP congestion control (New Reno, Cubic)** — AIMD slow-start is greedy on the window-size parameter; packet-loss triggers exponential backoff.
+3. **GPU shader compiler register allocation** — graph-coloring heuristic is a greedy pick-the-highest-saturation-degree algorithm (Chaitin-Briggs).
+4. **Google's Chubby / etcd leader election** — once a quorum forms, the greedy node with highest known term wins; ties broken by node ID.
+
+## Recognition drill
+
+<RecognitionDrill pattern="greedy" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if the exchange argument fails for some problem?</strong></summary>
+
+Three paths:
+- **Switch to DP** — the sub-problem optimality + overlapping sub-problems structure gives correctness where greedy fails.
+- **Greedy + proof of approximation ratio** — for NP-hard problems like Set Cover, the natural greedy (pick the set covering the most uncovered elements) gives an `O(log n)` approximation, provably within log n of optimal.
+- **Randomized greedy** — e.g. randomized rounding of LP relaxations gives expected approximation guarantees for problems like Max-SAT.
+
+Example: Coin Change with `{1, 3, 4}` and amount 6 — greedy gives 3 coins (4+1+1); DP gives 2 (3+3). No exchange argument exists.
+</details>
+
+<details>
+<summary><strong>What if the "cost" is multi-dimensional (Pareto frontier)?</strong></summary>
+
+Greedy on one dimension can be arbitrarily bad on another. Options:
+- **Lagrangian dualization** — combine dimensions into one weighted sum, binary-search the weight (as in [BS-on-answer](/patterns/bs-on-answer)).
+- **Pareto-front sweep** — maintain the set of non-dominated commitments; the Pareto front has size ≤ `product(dim_sizes)` in the worst case.
+- **ILP / branch-and-bound** — exact solution, exponential worst case but often fast in practice.
+</details>
+
+<details>
+<summary><strong>What if the input arrives online (one element at a time) and you can't sort?</strong></summary>
+
+**Online algorithms** replace "sort first" with "maintain the sorted structure incrementally":
+- **Online Interval Scheduling** — maintain the committed intervals in a sorted set; on each new interval, binary-search for compatibility and update. Competitive ratio depends on adversary model.
+- **Online Huffman (adaptive Huffman)** — rebalance the tree after each character; worst case `O(n log n)` per character, O(n) total extra space. Used in Vitter's algorithm.
+
+The greedy choice is the same; the data structure cost absorbs the lack of sort.
+</details>
+
+<details>
+<summary><strong>What if the exchange argument requires a non-obvious swap?</strong></summary>
+
+Some greedy algorithms need a **regret** or **lookahead** swap:
+- **Course Schedule III** — sort by deadline, greedily take each course; if the schedule overruns, drop the LONGEST course taken so far (regret the greediest earlier commit).
+- **Job Sequencing with Deadlines** — sort by profit; greedily place each job at the latest free slot before its deadline.
+- **Interval Covering with Minimum Points** — sort by end; place a point at every uncovered end.
+
+The regret swap preserves feasibility while strictly improving the objective — it's an exchange argument with a different swap target.
+</details>
+
+<details>
+<summary><strong>What if greedy gives the right answer but you can't prove it?</strong></summary>
+
+The honest answer in an interview is to **say so**: *"I believe this greedy works because [intuition], but I haven't fully proved the exchange argument. If the interviewer wants the proof I can walk through it; if they're OK with the intuition I'll proceed."* The failure mode is a wrong-but-plausible greedy that passes test cases and fails on the interviewer's edge case.
+
+**Rules of thumb:** if the "safe choice" involves a priority queue + a frequency table (Task Scheduler, Huffman), the exchange argument is usually clean. If it involves hand-picked ordering heuristics ("sort by this weird key"), suspect DP.
+</details>
+
+### Breaking point
+
+Greedy **stops being correct** when:
+- The greedy-choice property fails — a locally optimal commit forecloses a globally better combination.
+- The problem has overlapping sub-problems with sub-structure that greedy can't commit to irrevocably — hallmark of DP.
+- The objective is multi-dimensional and the dimensions trade off.
+- The input is adversarial online — competitive ratio drops below the offline optimum.
+
+### Three cross-pattern problems
+
+- [Coin Change (322)](https://leetcode.com/problems/coin-change/) — the canonical "looks greedy, actually DP" trap problem.
+- [Minimum Cost to Hire K Workers (857)](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/) — sorts + priority queue, but the sorting key is the *quality ratio* — bridges greedy with ratio-based proofs.
+- [Patching Array (330)](https://leetcode.com/problems/patching-array/) — a non-obvious greedy where you double the reach each time; the exchange argument is subtle.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="greedy"
-  :questions='[{"q": "What is the risk of a greedy algorithm?", "choices": [{"text": "Local optimum may not equal global optimum", "correct": true, "explanation": "Must prove correctness — usually via exchange argument."}, {"text": "It is always slow", "correct": false, "explanation": "Greedy is usually fastest."}, {"text": "Uses too much memory", "correct": false}, {"text": "Doesn’t terminate", "correct": false}]}, {"q": "For Jump Game (reachability), what does the greedy track?", "choices": [{"text": "Farthest index reachable so far", "correct": true, "explanation": "If i > farthest, we’re stuck."}, {"text": "Number of jumps used", "correct": false, "explanation": "That is Jump Game II."}, {"text": "Sum of nums", "correct": false}, {"text": "Min-heap of jumps", "correct": false}]}, {"q": "For Course Schedule III, what makes the \"regret\" greedy correct?", "choices": [{"text": "Sort by deadline; swap out longest past-taken course when infeasible", "correct": true, "explanation": "Preserves feasibility while maximizing count."}, {"text": "Sort by duration", "correct": false, "explanation": "Doesn’t enforce deadlines."}, {"text": "Random", "correct": false}, {"text": "DP", "correct": false, "explanation": "Works but slower."}]}, {"q": "For Non-overlapping Intervals (minimum removes), sort by:", "choices": [{"text": "End ascending", "correct": true, "explanation": "Choosing earliest end leaves maximal room — classic activity selection."}, {"text": "Start ascending", "correct": false, "explanation": "That is Merge Intervals."}, {"text": "Length descending", "correct": false}, {"text": "Random", "correct": false}]}, {"q": "For Gas Station (circular route), what allows the O(n) reset trick?", "choices": [{"text": "If tank < 0 at index i, no start in [candidateStart..i] works — reset to i+1", "correct": true, "explanation": "Any start ≤ i would have failed by i too."}, {"text": "Sort by cost", "correct": false}, {"text": "Total sum trick only", "correct": false, "explanation": "Also needed but not the reset itself."}, {"text": "DP", "correct": false}]}]'
-/>
+<Quiz pattern-id="greedy" :questions="mastery5" />
 
 <PrintButton />
 

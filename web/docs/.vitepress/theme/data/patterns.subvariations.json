@@ -558,34 +558,34 @@
     "inTheWildSource": "Linux kernel CFS task scheduler (partly greedy on vruntime)",
     "subVariations": [
       {
-        "slug": "activity-selection",
-        "title": "Activity Selection (earliest-finish-first \u2014 bare mechanic)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "activity-selection-medium",
+        "title": "Activity Selection (earliest-finish-first \u2014 bare mechanic)"
       },
       {
-        "slug": "non-overlapping-greedy",
-        "title": "Non-overlapping Intervals",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "non-overlapping-intervals-medium",
+        "title": "Non-overlapping Intervals"
       },
       {
-        "slug": "jump-game-ii",
-        "title": "Jump Game II (farthest-reach greedy)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "jump-game-ii-medium",
+        "title": "Jump Game II (farthest-reach greedy)"
       },
       {
-        "slug": "gas-station",
-        "title": "Gas Station (prefix-balance greedy)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "gas-station-medium",
+        "title": "Gas Station (prefix-balance greedy)"
       },
       {
-        "slug": "task-scheduler",
-        "title": "Task Scheduler (heap + cooldown)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "task-scheduler-medium",
+        "title": "Task Scheduler (heap + cooldown)"
       },
       {
-        "slug": "huffman",
-        "title": "Huffman Encoding (greedy with proof archetype)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "huffman-encoding-medium",
+        "title": "Huffman Encoding (greedy with proof archetype)"
       }
     ]
   },

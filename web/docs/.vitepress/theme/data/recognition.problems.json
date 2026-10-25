@@ -932,7 +932,98 @@
   ],
   "topological-sort": [],
   "union-find": [],
-  "greedy": [],
+  "greedy": [
+    {
+      "statement": "Pack the maximum number of non-overlapping meetings into one conference room.",
+      "pattern": "greedy",
+      "subVariation": "activity-selection",
+      "distractors": [
+        "dp",
+        "sweep-line"
+      ]
+    },
+    {
+      "statement": "Minimum intervals to remove so remaining don't overlap.",
+      "pattern": "greedy",
+      "subVariation": "non-overlapping-greedy",
+      "distractors": [
+        "dp",
+        "sweep-line"
+      ]
+    },
+    {
+      "statement": "Reach the last index with the fewest jumps where each cell is a max step length.",
+      "pattern": "greedy",
+      "subVariation": "jump-game-ii",
+      "distractors": [
+        "bfs",
+        "dp"
+      ]
+    },
+    {
+      "statement": "Pick the starting fuel station on a circular route so you can complete the loop.",
+      "pattern": "greedy",
+      "subVariation": "gas-station",
+      "distractors": [
+        "kadane",
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "Schedule tasks with cooldown n between identical labels; minimize total time including idles.",
+      "pattern": "greedy",
+      "subVariation": "task-scheduler",
+      "distractors": [
+        "heap",
+        "dp"
+      ]
+    },
+    {
+      "statement": "Build a prefix code that minimizes the weighted total bit-length over character frequencies.",
+      "pattern": "greedy",
+      "subVariation": "huffman",
+      "distractors": [
+        "dp",
+        "trie"
+      ]
+    },
+    {
+      "statement": "Fewest arrows to pop all balloons each pinned to an interval of x-coordinates.",
+      "pattern": "greedy",
+      "subVariation": "non-overlapping-greedy",
+      "distractors": [
+        "sweep-line",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Max profit on one buy/sell transaction given daily stock prices.",
+      "pattern": "greedy",
+      "subVariation": "gas-station",
+      "distractors": [
+        "dp",
+        "kadane"
+      ]
+    },
+    {
+      "statement": "Longest chain of pairs where next pair's first > previous pair's second.",
+      "pattern": "greedy",
+      "subVariation": "non-overlapping-greedy",
+      "distractors": [
+        "dp",
+        "lis"
+      ]
+    },
+    {
+      "statement": "Fewest video clips to cover [0, T] from an unsorted set of intervals.",
+      "pattern": "greedy",
+      "subVariation": "jump-game-ii",
+      "distractors": [
+        "sweep-line",
+        "dp"
+      ]
+    }
+  ],
   "backtracking": [],
   "divide-conquer": [
     {
