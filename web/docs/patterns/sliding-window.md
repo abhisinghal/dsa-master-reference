@@ -1,5 +1,412 @@
 # Sliding Window
 
+<script setup>
+const fixedTemplate = `long sum = 0; long best = Long.MIN_VALUE;
+for (int right = 0; right &lt; a.length; right++) {
+  sum += a[right];                       // include newcomer
+  if (right &gt;= k - 1) {                  // window is exactly size k
+    best = Math.max(best, sum);          // record
+    sum -= a[right - (k - 1)];           // drop the leaver
+  }
+}
+return best;`
+
+const variableTemplate = `int left = 0, best = 0;                 // (Integer.MAX_VALUE for shortest)
+// state: whatever tracks the rule — sum, count[], HashMap, ...
+for (int right = 0; right &lt; a.length; right++) {
+  // 1. include a[right] in the state
+  while (!isValid(/* state */)) {        // 2. shrink until valid
+    // exclude a[left] from the state
+    left++;
+  }
+  // 3. record:
+  //   longest  → best = max(best, right - left + 1) after the while
+  //   shortest → best = min(best, right - left + 1) inside the while
+  //   count    → count += right - left + 1
+}
+return best;`
+
+const templateComplexity = {
+  time: 'O(n) amortized',
+  space: 'O(1) or O(alphabet)'
+}
+
+const bareMechComplexity = {
+  time: 'O(n)',
+  space: 'O(1)'
+}
+
+const templateInvariant = {
+  statement: `At the start of each outer-loop iteration, the window [left, right-1] satisfies the problem's validity predicate; 0 ≤ left ≤ right ≤ n.`,
+  initialization: `Before the loop: left = 0, right = 0 — the window is empty, vacuously valid.`,
+  maintenance: `Expand: include a[right] in the state. If the predicate breaks, the inner while advances left (updating state) until validity returns. By the inner loop's postcondition, [left, right] is valid again.`,
+  termination: `Each iteration increments right by 1 so right reaches n in n steps. left only increments and cannot exceed right, so it advances ≤ n times total — ≤ 2n operations overall, O(n) amortized.`
+}
+
+const templateSpecializations = [
+  { slug: 'maximum-average-subarray-i-fixed-size-warm-up', title: 'fixed-size k' },
+  { slug: 'smallest-subarray-with-sum--target', title: 'shortest-variable' },
+  { slug: 'longest-substring-without-repeating-characters', title: 'longest-variable' },
+  { slug: 'minimum-window-substring', title: 'longest + hashmap state' },
+  { slug: 'longest-repeating-character-replacement', title: 'longest + lazy max' },
+  { slug: 'subarray-product-less-than-k-counting--at-most-k-trick', title: 'counting (atMost trick)' },
+  { slug: 'sliding-window-maximum-monotonic-deque', title: 'fixed + extremum (deque)' }
+]
+
+const amortizedArgument = `Aggregate method.
+
+Total work across all n outer iterations:
+  • right advances exactly n times (once per outer iteration).
+  • left advances at most n times total — it only increments and cannot exceed right.
+Each advance does O(1) work (one add, one state update, one validity check).
+∴ Total ≤ 2n · O(1) = O(n).`
+
+const amortizedWorkedExample = `On [2,3,1,2,4,3] with target=7 (shortest-sum ≥ k):
+
+  right advances: 0,1,2,3,4,5     → 6 steps
+  left advances:  0→0→0→0→2→3→5   → 5 shrinks total (not per step; cumulative)
+  Total ops:      6 + 5 = 11 ≤ 2·6 = 12  ✓
+
+The inner while can shrink by 2 in one iteration (step right=5)
+but across the whole scan left advances ≤ n times.`
+
+const bareMechCode = `long sum = a[0] + a[1] + a[2];        // first window of size 3
+long best = sum;
+for (int i = 3; i &lt; a.length; i++) {
+  sum += a[i] - a[i - 3];             // one add + one subtract
+  best = Math.max(best, sum);
+}
+return best;`
+
+const bareMechFrames = [
+  { l: 0, r: 2, caption: 'first full window', info: 'sum=8 (prime)' },
+  { l: 1, r: 3, caption: '+a[3]=1, -a[0]=2', info: 'sum=7' },
+  { l: 2, r: 4, caption: '+a[4]=3, -a[1]=1', info: 'sum=9 (NEW BEST)' },
+  { l: 3, r: 5, caption: '+a[5]=2, -a[2]=5', info: 'sum=6' }
+]
+
+const bareMechValues = [2,1,5,1,3,2]
+
+const subv1Values = [1,12,-5,-6,50,3]
+const subv2Values = [2,3,1,2,4,3]
+const subv3Values = ['a','b','c','a','b','c','b','b']
+const subv4Values = ['A','D','O','B','E','C','O','D','E','B','A','N','C']
+const subv5Values = ['A','B','B','A','B','B']
+const subv6Values = [10,5,2,6]
+const subv7Values = [1,3,-1,-3,5,3,6,7]
+
+const bareMechInvariant = {
+  statement: 'After step i (where i ≥ 2), sum equals a[i-2] + a[i-1] + a[i] — the exact window of size 3 ending at i.',
+  initialization: 'Before the loop, i = 2 and sum = a[0]+a[1]+a[2] which is a[i-2]+a[i-1]+a[i].',
+  maintenance: 'Each iteration does sum += a[i] - a[i-3], which replaces a[i-3] with a[i] in the sum. The new sum equals a[i-2]+a[i-1]+a[i] for the new i.',
+  termination: 'When i = n, the loop ends. best holds the max over all n-2 size-3 windows.'
+}
+
+const subv1Code = `double findMaxAverage(int[] nums, int k) {
+  long sum = 0, best = Long.MIN_VALUE;
+  int left = 0;
+  for (int right = 0; right &lt; nums.length; right++) {
+    sum += nums[right];
+    if (right &gt;= k - 1) {
+      best = Math.max(best, sum);
+      sum -= nums[left++];
+    }
+  }
+  return best / (double) k;
+}`
+
+const subv1Invariant = {
+  statement: 'After the right-th iteration, sum equals the sum of the elements in [left, right]; whenever right ≥ k-1, that interval has exactly k elements.',
+  initialization: 'left=0, sum=0 before loop — vacuous.',
+  maintenance: 'Expand: sum += nums[right]. When right ≥ k-1, record then shrink: sum -= nums[left++] to prepare the next k-window.',
+  termination: 'right = n ends loop; best holds max over all n-k+1 full windows.'
+}
+
+const subv1Frames = [
+  { l: 0, r: 3, caption: 'first full window', info: 'sum=2, best=2' },
+  { l: 1, r: 4, caption: '+50, -1 → NEW BEST', info: 'sum=51, best=51' },
+  { l: 2, r: 5, caption: '+3, -12', info: 'sum=42, best=51' }
+]
+
+const subv2Code = `int minSubArrayLen(int target, int[] a) {
+  int left = 0, best = Integer.MAX_VALUE;
+  long windowSum = 0;
+  for (int right = 0; right &lt; a.length; right++) {
+    windowSum += a[right];
+    while (windowSum &gt;= target) {
+      best = Math.min(best, right - left + 1);
+      windowSum -= a[left++];
+    }
+  }
+  return best == Integer.MAX_VALUE ? 0 : best;
+}`
+
+const subv2Invariant = {
+  statement: 'windowSum equals the sum of [left, right]. For every right, best records the min length over all valid windows ending at or before right.',
+  initialization: 'left=0, windowSum=0, best=∞.',
+  maintenance: 'Expand: windowSum += a[right]. Shrink while windowSum ≥ target, recording length and advancing left. After the while, windowSum &lt; target so no shorter window ending at right is valid.',
+  termination: 'right = n; best is global min, or 0 if ∞ (no window found).'
+}
+
+const subv2Frames = [
+  { l: 0, r: 2, caption: 'growing', info: 'sum=6, best=∞' },
+  { l: 2, r: 3, caption: 'sum reached 8 → shrunk to 5', info: 'sum=5, best=3' },
+  { l: 4, r: 5, caption: '[4,3] sum=7 — min len 2', info: 'sum=7, best=2' }
+]
+
+const subv3Code = `int lengthOfLongestSubstring(String s) {
+  int[] last = new int[128];
+  Arrays.fill(last, -1);
+  int left = 0, best = 0;
+  for (int right = 0; right &lt; s.length(); right++) {
+    char c = s.charAt(right);
+    if (last[c] &gt;= left) left = last[c] + 1;   // jump past duplicate
+    last[c] = right;
+    best = Math.max(best, right - left + 1);
+  }
+  return best;
+}`
+
+const subv3Invariant = {
+  statement: '[left, right] contains distinct characters; last[c] stores the latest index of c seen so far (or -1).',
+  initialization: 'last[c] = -1 for all c, left = 0.',
+  maintenance: 'When s[right] has last[c] ≥ left (duplicate inside the window), left jumps to last[c]+1 — the duplicate is now excluded. Then last[c] = right.',
+  termination: 'right = n; best = longest distinct-char window ever seen.'
+}
+
+const subv3Frames = [
+  { l: 0, r: 2, caption: 'window abc distinct', info: 'best=3' },
+  { l: 1, r: 3, caption: 'duplicate a → jump left past old a', info: 'best=3' },
+  { l: 7, r: 7, caption: 'bb forces 1-wide windows', info: 'best=3' }
+]
+
+const subv4Code = `String minWindow(String s, String t) {
+  if (s.length() &lt; t.length()) return "";
+  int[] need = new int[128];
+  for (char c : t.toCharArray()) need[c]++;
+  int required = 0;
+  for (int c = 0; c &lt; 128; c++) if (need[c] &gt; 0) required++;
+  int[] have = new int[128];
+  int left = 0, matched = 0, bestL = -1, bestLen = Integer.MAX_VALUE;
+  for (int right = 0; right &lt; s.length(); right++) {
+    char c = s.charAt(right);
+    have[c]++;
+    if (need[c] &gt; 0 && have[c] == need[c]) matched++;
+    while (matched == required) {
+      if (right - left + 1 &lt; bestLen) {
+        bestLen = right - left + 1; bestL = left;
+      }
+      char lc = s.charAt(left++);
+      have[lc]--;
+      if (need[lc] &gt; 0 && have[lc] &lt; need[lc]) matched--;
+    }
+  }
+  return bestL &lt; 0 ? "" : s.substring(bestL, bestL + bestLen);
+}`
+
+const subv4Invariant = {
+  statement: 'have[c] = count of c in [left, right]; matched = number of required chars whose have[c] ≥ need[c]. Window is valid iff matched == required.',
+  initialization: 'need[] from T; have[] = 0; matched = 0; left = 0.',
+  maintenance: 'Expand right: have[s[right]]++; if that pushes have[c] up to need[c], matched++. Shrink left while matched == required, recording the shortest valid window; when have[c] drops below need[c], matched--.',
+  termination: 'right = n; (bestL, bestLen) describes the shortest valid window, or "" if none.'
+}
+
+const subv4Frames = [
+  { l: 0, r: 5, caption: 'first valid ADOBEC', info: 'matched=3/3, len=6' },
+  { l: 9, r: 12, caption: 'shrunk to minimum BANC', info: 'matched=3/3, len=4' }
+]
+
+const subv5Code = `int characterReplacement(String s, int k) {
+  int[] count = new int[26];
+  int left = 0, best = 0, maxCount = 0;
+  for (int right = 0; right &lt; s.length(); right++) {
+    count[s.charAt(right) - 'A']++;
+    maxCount = Math.max(maxCount, count[s.charAt(right) - 'A']);
+    while ((right - left + 1) - maxCount &gt; k) {
+      count[s.charAt(left) - 'A']--;
+      left++;
+    }
+    best = Math.max(best, right - left + 1);
+  }
+  return best;
+}`
+
+const subv5Invariant = {
+  statement: 'For [left, right], windowLen - maxCount ≤ k, where maxCount is the all-time max count of any single char seen in ANY window variant (lazy — not necessarily this window maximum).',
+  initialization: 'count[] = 0, maxCount = 0, left = 0.',
+  maintenance: 'Expand: count[s[right]]++; maxCount = max(maxCount, count[s[right]]). If windowLen - maxCount &gt; k, shrink by one. Note: maxCount is never decreased during shrink — that is correct because best only improves when a strictly larger maxCount appears.',
+  termination: 'right = n; best = longest valid window.'
+}
+
+const subv5Frames = [
+  { l: 0, r: 3, caption: 'all 4 fit (k=2)', info: 'maxCount=2, best=4' },
+  { l: 0, r: 5, caption: 'replace 2 A→B', info: 'maxCount=4, best=6' }
+]
+
+const subv6Code = `int numSubarrayProductLessThanK(int[] nums, int k) {
+  if (k &lt;= 1) return 0;
+  int left = 0, count = 0;
+  long product = 1;
+  for (int right = 0; right &lt; nums.length; right++) {
+    product *= nums[right];
+    while (product &gt;= k) product /= nums[left++];
+    count += right - left + 1;
+  }
+  return count;
+}`
+
+const subv6Invariant = {
+  statement: 'product = product of [left, right]; count += (right - left + 1) adds every subarray ending at right whose product &lt; k.',
+  initialization: 'left = 0, product = 1, count = 0.',
+  maintenance: 'Expand: product *= a[right]. Shrink while product ≥ k: product /= a[left++]. Then count += (right - left + 1).',
+  termination: 'right = n; count = total subarrays with product &lt; k.'
+}
+
+const subv6Frames = [
+  { l: 0, r: 0, caption: '[10] &lt; 100', info: 'product=10, count=1' },
+  { l: 0, r: 2, caption: 'product hit 100 → shrink', info: 'product=10, count=6' },
+  { l: 1, r: 3, caption: 'final', info: 'product=60, count=8' }
+]
+
+const subv7Code = `int[] maxSlidingWindow(int[] a, int k) {
+  int n = a.length;
+  int[] out = new int[n - k + 1];
+  Deque&lt;Integer&gt; dq = new ArrayDeque&lt;&gt;();
+  for (int right = 0; right &lt; n; right++) {
+    while (!dq.isEmpty() && a[dq.peekLast()] &lt;= a[right]) dq.pollLast();
+    dq.offerLast(right);
+    if (dq.peekFirst() &lt;= right - k) dq.pollFirst();
+    if (right &gt;= k - 1) out[right - k + 1] = a[dq.peekFirst()];
+  }
+  return out;
+}`
+
+const subv7Invariant = {
+  statement: 'The deque holds indices in strictly increasing order with values in strictly decreasing order, all within [right-k+1, right]. dq.peekFirst() is the index of the current window max.',
+  initialization: 'dq empty, out = [].',
+  maintenance: 'For each right: (1) pollLast while a[dq.peekLast()] ≤ a[right] — those indices can never be the max again; (2) offerLast(right); (3) if peekFirst() ≤ right-k, pollFirst — expired; (4) if right ≥ k-1, record a[dq.peekFirst()].',
+  termination: 'right = n; out holds n-k+1 window maxes.'
+}
+
+const subv7Frames = [
+  { l: 0, r: 2, caption: 'first window', info: 'dq idx [1,2] vals [3,-1], out=[3]' },
+  { l: 2, r: 4, caption: '5 popped all; 3 expired', info: 'dq idx [4] val [5], out=[3,3,5]' },
+  { l: 5, r: 7, caption: 'end', info: 'dq idx [7] val [7], out=[3,3,5,5,6,7]' }
+]
+
+const inTheWildCode = `// java.util.concurrent.atomic.LongAdder-style per-second counter
+// — a fixed sliding window of 60 one-second buckets, slid every second.
+public final class RateWindow {
+  private final long[] buckets = new long[60];   // 60-second window
+  private volatile int head;                      // "right" edge
+  private long total;                             // live sum of all buckets
+
+  public synchronized void slide(long newest) {
+    int next = (head + 1) % 60;
+    total += newest - buckets[next];              // one add + one subtract
+    buckets[next] = newest;
+    head = next;
+  }
+
+  public long count() { return total; }
+}`
+
+const trap1Bug = `nums=[1,-2,3], target=3 — plain sliding window on "shortest subarray with sum ≥ 3":
+  right=0: sum=1 &lt; 3  (grow)
+  right=1: sum=-1 &lt; 3 (grow — but we just added a negative!)
+  right=2: sum=2 &lt; 3  (grow — still invalid)
+  Loop ends — returns 0 (no window found).
+Actual answer: [1,-2,3] has sum 2, also invalid. But [3] has sum 3 — answer is 1.
+We MISSED it because the shrink never ran.`
+
+const trap1Fix = `Monotonicity test fails whenever adding a[right] can DECREASE the aggregate
+(negatives for sum, zeros for product, etc.). Switch to:
+  • prefix-sum + hashmap (count of subarrays with sum = k)
+  • prefix-sum + monotonic deque (shortest ≥ k with negatives)
+  • split at zeros (product problems)`
+
+const trap2Bug = `In Longest Repeating Char Replacement, resetting maxCount to the TRUE window-max on every shrink:
+  s="AABABBA", k=1
+  right=5: window "AABABB", count={A:3,B:3}, maxCount=3 (correct)
+  shrink by 1 → "ABABB", count={A:2,B:3}
+  BUG: recompute maxCount = max(count) = 3 (unchanged! but we wasted O(26) work)
+  Worse — if you reset maxCount AND let it decrease, future valid windows get rejected.`
+
+const trap2Fix = `Keep maxCount monotone non-decreasing — "lazy" maxCount.
+Correctness: best only improves when windowLen &gt; maxCount + k, which requires a NEW real max.
+A stale maxCount can only make the "valid" check STRICTER (more windows rejected),
+never looser — so stale maxCount cannot inflate best.`
+
+const trap3Bug = `Sliding Window Maximum, storing VALUES in the deque instead of indices:
+  nums=[1,3,-1,-3,5,3,6,7], k=3
+  right=0..2: dq (vals) = [3, -1] (after popping 1), out=[3] ✓
+  right=3: dq (vals) = [3, -1, -3], out=[3, 3] ✓
+  right=4: val 5 pops all, dq = [5]. But is 3 (the old front at idx 1) still in-window?
+  With VALUES only, we cannot answer — no way to compare index 1 vs right-k = 1.`
+
+const trap3Fix = `Store INDICES. a[dq.peekFirst()] gives the max value;
+peekFirst() ≤ right - k signals expiry → pollFirst().
+The deque holds candidate indices in strictly increasing index order
+with strictly decreasing values.`
+
+const advanced1 = `Reservoir sampling on an unbounded stream. The "fixed window of last 60 seconds" invariant breaks when the input is infinite — we cannot keep every element. Standard fix: reservoir sampling of size k, where each new element replaces a random reservoir slot with probability k/i. The window becomes PROBABILISTIC — approximate O(1) memory, exact answers only on expectation.`
+
+const advanced2 = `Window must support max/min in O(1): monotonic deque (already in sub-variation 7). Window must support median: TWO heaps (max-heap of lower half, min-heap of upper half) with lazy deletion as elements expire from the window. Window must support kth-smallest: TreeMap with running insert/remove, kth lookup O(log k) per step.`
+
+const advanced3 = `Validity predicate not monotone in window length. Example: "longest subarray with sum ≤ K AND no two consecutive negatives." Shrinking left can re-break the "no two consecutive negatives" rule, so the sliding window no longer works — switch to DP where dp[i] = longest valid ending at i. The monotonicity requirement is strict: EITHER both grow and shrink preserve validity direction, OR you need a different pattern.`
+
+const advanced4 = `Stream of events, not an array. Window of TIME, not of index — need bucketed count-min sketch (approximate frequency over last T seconds) or exponentially-weighted moving average. The underlying structure (one in, one out) is the same; the eviction policy changes from "oldest index" to "oldest timestamp" and buckets quantize time.`
+
+const advanced5 = `Breaking point. Sliding window has NO advantage when: (1) validity check is Θ(k) per step and non-incremental (hashmap rebuild every slide); (2) the state cannot be reversed on shrink (median of general multiset without heaps); (3) problem allows non-contiguous selections (subsequences, not subarrays). Diagnostic: can you add one element in O(1) AND remove one element in O(1)? If no — different pattern.`
+
+const quizQuestions = [
+  {
+    q: 'Which invariant characterizes a Sliding Window solution?',
+    choices: [
+      { text: 'The array is sorted', correct: false, explanation: 'That is Binary Search.' },
+      { text: 'A monotone-in-window-length property holds', correct: true, explanation: 'Sliding Window works when validity is monotone: once a window is valid, extending or shrinking preserves the invariant predictably.' },
+      { text: 'The problem asks for shortest path', correct: false, explanation: 'That is BFS.' },
+      { text: 'Recursion is used', correct: false, explanation: 'Sliding Window is iterative.' }
+    ]
+  },
+  {
+    q: 'For "exactly k distinct" subarray count, what is the standard trick?',
+    choices: [
+      { text: 'Sort and binary search', correct: false },
+      { text: 'atMost(k) - atMost(k-1)', correct: true, explanation: 'Direct "exactly k" is hard to slide. atMost slides cleanly; subtract to isolate exactly-k.' },
+      { text: 'Brute force n²', correct: false },
+      { text: 'Hash map of prefixes', correct: false, explanation: 'That is Prefix Sum family.' }
+    ]
+  },
+  {
+    q: 'Time complexity of the canonical variable-size sliding window template?',
+    choices: [
+      { text: 'O(n²)', correct: false },
+      { text: 'O(n log n)', correct: false },
+      { text: 'O(n) amortized', correct: true, explanation: 'Each index enters and leaves the window at most once, so total work is 2n.' },
+      { text: 'O(σ · n)', correct: false, explanation: 'Only if you scan the full alphabet each step; canonical uses O(1) per step.' }
+    ]
+  },
+  {
+    q: 'Why does "lazy maxCount" work in Longest Repeating Character Replacement?',
+    choices: [
+      { text: 'The window can only grow when a strictly-larger max appears — stale maxCount can never inflate the answer', correct: true, explanation: 'Correctness is preserved because we only accept new bests when a new real max is seen.' },
+      { text: 'It does not work — you must recompute max every shrink', correct: false },
+      { text: 'Character frequencies never decrease', correct: false },
+      { text: 'Random luck', correct: false }
+    ]
+  },
+  {
+    q: 'For "shortest subarray with sum ≥ k" WITH negatives, why does plain sliding fail?',
+    choices: [
+      { text: 'Because sums are not monotone in window size once negatives are allowed', correct: true, explanation: 'Sliding requires that shrinking left strictly decreases the running metric. Negatives break that; use monotonic deque on prefix sums.' },
+      { text: 'Because k might be too large', correct: false },
+      { text: 'Because the array might be empty', correct: false },
+      { text: 'Because there might be no answer', correct: false }
+    ]
+  }
+]
+</script>
 
 <PatternVideo pattern-name="Sliding Window" duration="8–12 min" />
 
@@ -84,6 +491,39 @@ a 5-10 minute Loom will be embedded here once recorded. If you'd like to be noti
 
 </Callout>
 
+## The bare mechanic — simplest working example
+
+Before flavors, templates, or recognition cues, here's the whole trick on a 6-element array with a window of 3. Memorize this trace; everything else in the chapter is a specialization of it.
+
+Input: `[2, 1, 5, 1, 3, 2]`, window size `k = 3`.
+
+**Step 0 (prime).** Compute the first window directly: `sum = 2+1+5 = 8`.
+
+**Step 1.** Slide right by one. Incoming `a[3] = 1`; outgoing `a[0] = 2`. New `sum = 8 + 1 - 2 = 7`.
+
+**Step 2.** Slide. In: `a[4] = 3`, out: `a[1] = 1`. `sum = 7 + 3 - 1 = 9`. **New best.**
+
+**Step 3.** Slide. In: `a[5] = 2`, out: `a[2] = 5`. `sum = 9 + 2 - 5 = 6`.
+
+Final: `best = 9` (the window `[5, 1, 3]`).
+
+<WindowTraceStrip :frames="bareMechFrames" :input="bareMechValues" />
+
+<PatternTemplateCard
+  slug="sliding-window-bare-mechanic"
+  :code="bareMechCode"
+  language="java"
+  :invariant="bareMechInvariant"
+  :complexity="bareMechComplexity"
+  title="Bare mechanic — fixed window of 3"
+/>
+
+<Callout kind="key" title="The single move.">
+
+On every slide the window gains the newcomer on the right and loses the oldest on the left. That is the pattern. Everything below — fixed vs variable, longest vs shortest, hashmap state vs monotonic deque — is this move plus different *rules for what counts as valid* and different *things kept in the state*.
+
+</Callout>
+
 ## When to use it — the four flavors
 
 Every sliding-window problem falls into one of four flavors. Naming the flavor in the first 30 seconds tells you which template to write.
@@ -113,11 +553,11 @@ The sliding-window idea for fixed-size windows appears in Knuth's *The Art of Co
 
 The variable-size sliding-window pattern (shrink-when-invariant-breaks) was formalized in competitive programming circles around **2010**, when Codeforces problems began systematically requiring it. LeetCode's *Longest Substring Without Repeating Characters* (2014) made it interview-standard. Every real-time monitoring system, from Prometheus recording rules to Datadog's aggregation pipeline, does sliding-window computation over time-series windows — exactly the CDN scene we opened with.
 
-## How to use it — the two templates
+## THE template
 
-Every sliding-window solution boils down to one of two loops. Memorize the shape; fill in the state.
+Every sliding-window solution is one of two loop skeletons: fixed size, or variable size (longest/shortest/count). Memorize both; the sub-variations below fill in the state and the validity rule.
 
-**Template 1 — fixed size k:**
+**The fixed-size k skeleton** (used by Max Avg Subarray I, Find All Anagrams, Permutation in String):
 
 
 
@@ -135,29 +575,19 @@ return best;
 
 
 
-**Template 2 — variable size (longest / shortest / count):**
+**The variable-size skeleton** is the one you'll see in interviews most often — it's the "longest / shortest / count" shape:
 
+<PatternTemplateCard
+  slug="sliding-window-template"
+  :code="variableTemplate"
+  language="java"
+  :invariant="templateInvariant"
+  :complexity="templateComplexity"
+  :specializations="templateSpecializations"
+  title="THE sliding-window template — variable size"
+/>
 
-
-```java
-int left = 0, best = 0;                                 // (Integer.MAX_VALUE for shortest)
-// state: whatever tracks the rule — sum, count[], HashMap, ...
-for (int right = 0; right < a.length; right++) {
-    // 1. include a[right] in the state
-    while (!isValid(/* state */)) {                     // 2. shrink until valid
-        // exclude a[left] from the state
-        left++;
-    }
-    // 3. record: longest → best = max(best, right-left+1) after the while
-    //           shortest → best = min(best, right-left+1) inside the while
-    //           count   → count += right - left + 1
-}
-return best;
-```
-
-
-
-The mermaid flow below is literally these two `for`/`while` loops as a picture:
+The mermaid flow is literally the `for`/`while` loops as a picture:
 
 
 
@@ -174,7 +604,33 @@ flowchart TD
 ```
 
 
-<div class="readfig"><b>How to read it:</b> Start with an empty window. Each round you <b>grow</b> from the right (top box). If that breaks the rule (the diamond), you <b>shrink</b> from the left until it's valid again — the little loop back to the diamond. Whenever the window is valid you <b>record</b> the answer, then keep going until the right edge reaches the end. Every index enters once and leaves at most once → O(n) amortized.</div>
+<div class="readfig"><b>How to read it:</b> Each round you <b>grow</b> from the right (top box). If that breaks the rule (the diamond), you <b>shrink</b> from the left until it's valid again. Whenever the window is valid you <b>record</b> the answer, then keep going until <code>right</code> reaches the end.</div>
+
+### Why it's O(n) — the amortized argument
+
+The outer `for` is clearly O(n), but the inner `while` makes a naive reader worry about O(n²). It isn't — here's the proof.
+
+<AmortizedPanel
+  method="aggregate"
+  bound="O(n) total"
+  statement="Each index enters the window exactly once and leaves at most once — total work ≤ 2n operations."
+  :workedExample="amortizedWorkedExample"
+>
+
+Total work across all n outer iterations:
+
+- `right` advances exactly n times (once per outer iteration).
+- `left` advances at most n times total — it only increments and cannot exceed `right`.
+
+Each advance does O(1) work (one add, one state update, one validity check).
+
+∴ Total ≤ 2n · O(1) = **O(n)**, which is **O(1) amortized per step**.
+
+The outer `for` is clearly O(n), but the inner `while` makes a naive reader worry about O(n²). The amortized argument shows it isn't — the inner loop's total iterations across the entire scan are bounded, not per-step.
+
+</AmortizedPanel>
+
+This same argument powers [§22 two-pointers](/patterns/two-pointers) (sum of `l`-advances + `r`-advances ≤ 2n) and underlies the "pay once per index" intuition in [§29 monotonic-stack](/patterns/monotonic-stack) and [§31 union-find](/patterns/union-find). If you see a loop whose inner body looks like it could run n times, check whether a **monotone counter** bounds the total — that is sliding-window's complexity signature.
 
 ## When *not* to use it — the monotonicity test
 
@@ -227,9 +683,27 @@ Now let's walk through the canonical shapes, from the simplest fixed-size warm-u
 <SlidingWindowAnim />
 
 
-## Maximum Average Subarray I (fixed-size warm-up) <span class="diff diff-e">Easy</span>
+## Sub-variations of the template
+
+Each sub-variation below swaps the **state** and the **validity rule** but keeps the template skeleton unchanged. Reading these in order (fixed → shortest → longest → longest-with-hashmap → longest-with-lazy-max → counting → fixed-with-extremum) traces the capability growth from the simplest form to the composed sliding-window + monotonic-deque.
+
+<PatternSubVariationNav pattern="sliding-window" />
+
+### Maximum Average Subarray I (fixed-size warm-up) <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Maximum Average Subarray I](https://leetcode.com/problems/maximum-average-subarray-i/)*
+
+<InvariantProof :statement="subv1Invariant.statement" :initialization="subv1Invariant.initialization" :maintenance="subv1Invariant.maintenance" :termination="subv1Invariant.termination" />
+
+<WindowTraceStrip :frames="subv1Frames" :input="subv1Values" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+on `nums=[1,12,-5,-6,50,3]`, `k=4`. The canonical shape is one `for`-loop with "add newcomer, record when window is full, drop leaver." Try it, then reveal.
+
+</Callout>
+
+<TemplateReveal :canonical="subv1Code" language="java" slug="sliding-window-max-avg" />
 
 <ProgressCheck id="maximum-average-subarray-i-fixed-size-warm-up" />
 
@@ -433,9 +907,21 @@ Any fixed-size aggregate — sum, product (with careful zero handling), min/max 
 | [Permutation in String](https://leetcode.com/problems/permutation-in-string/) | same as above; return true on the first match | O(n) |
 | [Diet Plan Performance](https://leetcode.com/problems/diet-plan-performance/) | classify each window by sum thresholds; sum score | O(n) |
 
-## Smallest Subarray With Sum ≥ Target <span class="diff diff-m">Medium</span>
+### Smallest Subarray With Sum ≥ Target <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)*
+
+<InvariantProof :statement="subv2Invariant.statement" :initialization="subv2Invariant.initialization" :maintenance="subv2Invariant.maintenance" :termination="subv2Invariant.termination" />
+
+<WindowTraceStrip :frames="subv2Frames" :input="subv2Values" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+`target=7`, `a=[2,3,1,2,4,3]`. The shortest-variable shape: grow until valid, then greedily shrink **while still valid**, recording min length.
+
+</Callout>
+
+<TemplateReveal :canonical="subv2Code" language="java" slug="sliding-window-min-subarray" />
 
 <ProgressCheck id="smallest-subarray-with-sum-target" />
 
@@ -579,11 +1065,23 @@ The "shrink-to-minimize" twin of Minimum Window Substring (which minimizes over 
 | [Replace the Substring for Balanced String](https://leetcode.com/problems/replace-the-substring-for-balanced-string/) | shrink while the outside-window counts are already balanced | — |
 | [Shortest Subarray with Sum ≥ K (negatives allowed)](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) | the window breaks with negatives → switch to prefix sums + a monotonic deque | — |
 
-## Longest Substring Without Repeating Characters <span class="diff diff-m">Medium</span>
+### Longest Substring Without Repeating Characters <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)*
 
-### Try it yourself
+<InvariantProof :statement="subv3Invariant.statement" :initialization="subv3Invariant.initialization" :maintenance="subv3Invariant.maintenance" :termination="subv3Invariant.termination" />
+
+<WindowTraceStrip :frames="subv3Frames" :input="subv3Values" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+on `s = "abcabcbb"`. The longest-variable shape with "no duplicate" invariant — remember to **clamp** `left` (never retreat) when the duplicate was already outside the window.
+
+</Callout>
+
+<TemplateReveal :canonical="subv3Code" language="java" slug="sliding-window-longest-distinct" />
+
+#### Try it yourself
 
 Edit the Java code below and click **▶ Run tests** to check it against real examples. Powered by [Judge0](https://ce.judge0.com); your code auto-saves in your browser.
 
@@ -795,9 +1293,21 @@ Once you own this "grow, and shrink when a rule breaks" loop, a whole family ope
 | [Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/) | over a 0/1 array, shrink only when the number of zeros in the window exceeds `K` (you may flip `K` zeros) | — |
 | [Permutation in String / Find All Anagrams](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | a **fixed-size** window plus exact character counts — slide a window the length of the pattern and check the counts match | — |
 
-## Minimum Window Substring <span class="diff diff-h">Hard</span>
+### Minimum Window Substring <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)*
+
+<InvariantProof :statement="subv4Invariant.statement" :initialization="subv4Invariant.initialization" :maintenance="subv4Invariant.maintenance" :termination="subv4Invariant.termination" />
+
+<WindowTraceStrip :frames="subv4Frames" :input="subv4Values" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+`S = "ADOBECODEBANC"`, `T = "ABC"`. The canonical sliding-window + hashmap: `need[]` from T, `have[]` from the window, a `matched` counter for the "all required chars covered" check.
+
+</Callout>
+
+<TemplateReveal :canonical="subv4Code" language="java" slug="sliding-window-min-window" />
 
 <ProgressCheck id="minimum-window-substring" />
 
@@ -953,9 +1463,21 @@ A `need`/`have` counter that tells you when the window "covers" a required set:
 | [Minimum Window Subsequence](https://leetcode.com/problems/minimum-window-subsequence/) | the target must appear in order (not just as a multiset), so track progress through the pattern instead of counts | — |
 | [Substring with Concatenation of All Words](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) | the "characters" are whole words of equal length | — |
 
-## Longest Repeating Character Replacement <span class="diff diff-m">Medium</span>
+### Longest Repeating Character Replacement <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)*
+
+<InvariantProof :statement="subv5Invariant.statement" :initialization="subv5Invariant.initialization" :maintenance="subv5Invariant.maintenance" :termination="subv5Invariant.termination" />
+
+<WindowTraceStrip :frames="subv5Frames" :input="subv5Values" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+`s = "AABABBA"`, `k = 1`. The "lazy maxCount" twist: `maxCount` is monotone non-decreasing — you never recompute it on shrink. Correctness depends on this; think about why before writing the shrink step.
+
+</Callout>
+
+<TemplateReveal :canonical="subv5Code" language="java" slug="sliding-window-char-replace" />
 
 <ProgressCheck id="longest-repeating-character-replacement" />
 
@@ -1159,9 +1681,21 @@ int characterReplacement(String s, int k) {
 | [Get Equal Substrings Within Budget](https://leetcode.com/problems/get-equal-substrings-within-budget/) | shrink when the total change-cost inside the window exceeds the budget | — |
 | [Frequency of the Most Frequent Element](https://leetcode.com/problems/frequency-of-the-most-frequent-element/) | sort, then window where `windowLen·max − windowSum ≤ k` operations | — |
 
-## Subarray Product Less Than K (counting + at-most-K trick) <span class="diff diff-m">Medium</span>
+### Subarray Product Less Than K (counting + at-most-K trick) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)*
+
+<InvariantProof :statement="subv6Invariant.statement" :initialization="subv6Invariant.initialization" :maintenance="subv6Invariant.maintenance" :termination="subv6Invariant.termination" />
+
+<WindowTraceStrip :frames="subv6Frames" :input="subv6Values" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+`nums=[10,5,2,6]`, `k=100`. The counting shape: for each `right`, `(right - left + 1)` is the count of subarrays ending at `right` whose product `< k`. Requires strictly positive integers — zeros and negatives break it.
+
+</Callout>
+
+<TemplateReveal :canonical="subv6Code" language="java" slug="sliding-window-prod-lt-k" />
 
 <ProgressCheck id="subarray-product-less-than-k-counting-at-most-k-trick" />
 
@@ -1303,9 +1837,21 @@ for problems of the form "count subarrays with **exactly** K …", write `exactl
 | [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/) | same trick, "sum = S" over a 0/1 array | O(n) |
 | [Number of Substrings Containing All Three Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/) | count from the *shrinking* side: `count += left` at each valid `right` | O(n) |
 
-## Sliding Window Maximum (Monotonic Deque) <span class="diff diff-h">Hard</span>
+### Sliding Window Maximum (Monotonic Deque) <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)*
+
+<InvariantProof :statement="subv7Invariant.statement" :initialization="subv7Invariant.initialization" :maintenance="subv7Invariant.maintenance" :termination="subv7Invariant.termination" />
+
+<WindowTraceStrip :frames="subv7Frames" :input="subv7Values" />
+
+<Callout kind="key" title="Blind-solve prompt">
+
+`nums=[1,3,-1,-3,5,3,6,7]`, `k=3`. Sliding-window composed with monotonic-deque: deque holds indices in increasing order with values in decreasing order. Store **indices**, not values — that's the whole trick.
+
+</Callout>
+
+<TemplateReveal :canonical="subv7Code" language="java" slug="sliding-window-max" />
 
 <ProgressCheck id="sliding-window-maximum-monotonic-deque" />
 
@@ -1468,13 +2014,144 @@ A deque that keeps only "still-useful" candidates in monotone order, dropping ex
 
 ---
 
-## Check your understanding
+## Traps & gotchas
+
+Three traps every sliding-window problem can hit. Each sub-variation above calls out its own specific bugs; these three are the ones that cross problem boundaries and bite in cold interviews.
+
+### Trap 1 — plain sliding on non-monotone input
+
+<TrapTrace title="Negatives + 'shortest subarray with sum ≥ k' silently returns wrong answer" input="nums=[1,-2,3], target=3" :bug="trap1Bug" :fix="trap1Fix" />
+
+### Trap 2 — recomputing lazy maxCount on shrink
+
+<TrapTrace title="Longest Repeating Char Replacement: resetting maxCount wastes O(26) per shrink and risks correctness" input="s=&quot;AABABBA&quot;, k=1" :bug="trap2Bug" :fix="trap2Fix" />
+
+### Trap 3 — storing values instead of indices in Sliding Window Maximum
+
+<TrapTrace title="Monotonic deque: no way to detect expiry without indices" input="nums=[1,3,-1,-3,5,3,6,7], k=3" :bug="trap3Bug" :fix="trap3Fix" />
+
+<Callout kind="trap" title="The 10-second trap-check.">
+
+Before shipping any sliding-window solution, run the extension test on one adversarial example: add a negative value (sum problems), a zero (product problems), or a repeating character (distinct-count problems) and verify the window still produces the right answer. The pattern is unforgiving about monotonicity violations — but each violation has a specific, named replacement in the table in [§False friends](#false-friends-problems-that-look-like-sliding-window-but-arent).
+
+</Callout>
+
+## In the wild — sliding windows in real systems
+
+Sliding windows aren't just an interview trick. Every rate-limiter, every observability aggregation, every network protocol with per-connection stats uses this exact one-add-one-subtract loop over bucketed time.
+
+
+
+```java
+// java.util.concurrent.atomic.LongAdder-style per-second counter
+// — a fixed sliding window of 60 one-second buckets, slid every second.
+public final class RateWindow {
+  private final long[] buckets = new long[60];   // 60-second window
+  private volatile int head;                      // "right" edge
+  private long total;                             // live sum of all buckets
+
+  public synchronized void slide(long newest) {
+    int next = (head + 1) % 60;
+    total += newest - buckets[next];              // one add + one subtract
+    buckets[next] = newest;
+    head = next;
+  }
+
+  public long count() { return total; }
+}
+```
+
+
+
+The pattern:
+- **Nginx `limit_req` module** — token bucket backed by a 60-slot rolling counter per client IP; one slide every second.
+- **Linux `nf_conntrack` tracker** — windowed packet counts per connection; the eviction loop IS this `slide()` call.
+- **Prometheus recording rules** — `rate()` over a `[5m]` window is a bucketed sliding sum, exact to the resolution of your scrape interval.
+- **CDN edge WAF rules** — the exact scenario the "Why" story opens with.
+
+The code above is 15 lines. The *idea* is one add + one subtract per slide. That's the whole pattern — the complexity in production comes from concurrency (atomics, lock-free rings), not from the algorithm.
+
+## Recognition drill
+
+Each problem below is phrased without the pattern tag. Your task: name the sub-variation. The drill randomizes order each session and tracks your running score.
+
+<RecognitionDrill pattern="sliding-window" :count="10" />
+
+<Callout kind="key" title="How to use.">
+
+Aim for ≥ 8/10 on this drill before you consider cold-solving fluency the next bottleneck. The distractors are the specific other patterns the problem can be mistaken for — if you keep picking "two-pointers" when the answer is "sliding-window-shortest", that's your highest-leverage study target.
+
+</Callout>
+
+## Advanced — follow-ups and failure modes
+
+The sub-variations above are the shapes you're expected to recognize cold. The questions below are the ones that come **after** you write a correct sliding window — "what if we change this one constraint?" — and separate pattern-fluent from pattern-mastered.
+
+### What if the stream is unbounded?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced1 }}
+
+</details>
+
+### What if the window must support max / min / median / kth-smallest?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced2 }}
+
+</details>
+
+### What if the validity predicate is not monotone?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced3 }}
+
+</details>
+
+### What if the input is a stream of events, not an array?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced4 }}
+
+</details>
+
+### Breaking point — when sliding window has no advantage
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced5 }}
+
+</details>
+
+### Cross-pattern problems
+
+Three problems where sliding-window composes with another pattern. Each is a diagnostic — if you can identify the composition and solve each, you've transferred the recognition skill beyond this chapter.
+
+<div v-for="(p, i) in advancedCrossProblems" :key="i" style="border: 1px solid var(--vp-c-divider); border-radius: 8px; padding: 14px 16px; margin: 12px 0; background: var(--vp-c-bg-soft);">
+  <div style="font-weight: 700; margin-bottom: 6px;">{{ p.title }}</div>
+  <div style="font-size: 0.92em; color: var(--vp-c-text-2); margin-bottom: 8px;">{{ p.hint }}</div>
+  <details>
+    <summary style="font-size: 0.85em; cursor: pointer; color: var(--vp-c-brand-1);">Reveal answer sketch</summary>
+    <div style="padding-top: 8px; font-size: 0.9em;">{{ p.reveal }}</div>
+  </details>
+</div>
+
+## Related patterns + Check your understanding
+
+<RelatedPatterns pattern-id="sliding-window" />
 
 <Quiz
   pattern-id="sliding-window"
-  :questions='[{"q": "Which invariant characterizes a Sliding Window solution?", "choices": [{"text": "The array is sorted", "correct": false, "explanation": "That is Binary Search."}, {"text": "A monotone-in-window-length property holds", "correct": true, "explanation": "Sliding Window works when validity is monotone: once a window is valid, extending or shrinking preserves the invariant predictably."}, {"text": "The problem asks for shortest path", "correct": false, "explanation": "That is BFS."}, {"text": "Recursion is used", "correct": false, "explanation": "Sliding Window is iterative."}]}, {"q": "For \"exactly k distinct\" subarray count, what is the standard trick?", "choices": [{"text": "Sort and binary search", "correct": false}, {"text": "atMost(k) - atMost(k-1)", "correct": true, "explanation": "Direct \"exactly k\" is hard to slide. `atMost` slides cleanly; subtract to isolate exactly-k."}, {"text": "Brute force n²", "correct": false}, {"text": "Hash map of prefixes", "correct": false, "explanation": "That is Prefix Sum family."}]}, {"q": "Time complexity of the canonical variable-size sliding window template?", "choices": [{"text": "O(n²)", "correct": false}, {"text": "O(n log n)", "correct": false}, {"text": "O(n) amortized", "correct": true, "explanation": "Each index enters and leaves the window at most once, so total work is 2n."}, {"text": "O(σ · n)", "correct": false, "explanation": "Only if you scan the full alphabet each step; canonical uses O(1) per step."}]}, {"q": "Why does \"lazy maxCount\" work in Longest Repeating Character Replacement?", "choices": [{"text": "The window can only grow when a strictly-larger max appears — stale maxCount can never inflate the answer", "correct": true, "explanation": "Correctness is preserved because we only accept new bests when a new real max is seen."}, {"text": "It doesn’t work — you must recompute max every shrink", "correct": false}, {"text": "Character frequencies never decrease", "correct": false}, {"text": "Random luck", "correct": false}]}, {"q": "For \"shortest subarray with sum ≥ k\" WITH negatives, why does plain sliding fail?", "choices": [{"text": "Because sums are not monotone in window size once negatives are allowed", "correct": true, "explanation": "Sliding requires that shrinking left strictly decreases the running metric. Negatives break that; use monotonic deque on prefix sums."}, {"text": "Because k might be too large", "correct": false}, {"text": "Because the array might be empty", "correct": false}, {"text": "Because there might be no answer", "correct": false}]}]'
+  :questions="quizQuestions"
 />
 
 <PrintButton />
-
-<RelatedPatterns pattern-id="sliding-window" />
