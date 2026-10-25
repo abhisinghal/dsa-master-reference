@@ -5,6 +5,189 @@
 
 <PatternProgress pattern-id="dp" problems="house-robber, climbing-stairs, house-robber-ii, delete-and-earn, min-cost-climbing-stairs, coin-change, coin-change-ii, longest-increasing-subsequence, longest-common-subsequence, edit-distance, longest-palindromic-subsequence, partition-equal-subset-sum, target-sum, unique-paths-ii, maximal-square, burst-balloons, regular-expression-matching, palindrome-partitioning-ii, best-time-to-buy-and-sell-stock-with-cooldown, best-time-to-buy-and-sell-stock-with-transaction-fee, best-time-to-buy-and-sell-stock-iv, partition-to-k-equal-sum-subsets, perfect-squares, maximum-sum-circular-subarray, dungeon-game, paint-house-ii, minimum-falling-path-sum, shortest-path-visiting-all-nodes, find-the-shortest-superstring, number-of-ways-to-wear-different-hats-to-each-other, last-stone-weight-ii, minimum-cost-to-merge-stones" />
 
+<script setup>
+const theTemplateCode = `// The DP skeleton: name the state, derive the transition, iterate in dependency order.
+// Four decisions:
+//   1. STATE      — what parameters identify a subproblem?       dp[s] = ?
+//   2. TRANSITION — how does a state combine smaller states?    dp[s] = f(dp[&lt;s])
+//   3. BASE CASE  — the smallest states, answered directly.
+//   4. ORDER      — iterate so every dependency is computed first.
+//      (+ SPACE   — collapse dimensions the recurrence doesn't need.)
+
+// Example: Fibonacci, O(n) time, O(1) space.
+long fib(int n) {
+    if (n &lt; 2) return n;
+    long prev = 0, curr = 1;              // dp[0] = 0, dp[1] = 1
+    for (int i = 2; i &lt;= n; i++) {
+        long next = prev + curr;          // dp[i] = dp[i-1] + dp[i-2]
+        prev = curr;
+        curr = next;                      // SPACE collapse: only last 2 states matter
+    }
+    return curr;
+}`
+
+const theTemplateInvariant = {
+  statement: `After iteration i, dp[0..i] holds the correct answer for every subproblem of size ≤ i. The recurrence only reads dp[<i], so by induction every value we compute is correct the moment we write it.`,
+  initialization: `Base case(s) hand-set: dp[0], dp[1], or similar — "the smallest state answered directly". Pick the sentinel for "impossible" states carefully (Integer.MAX_VALUE / 2 to avoid overflow when adding, or amount + 1 for "fewer than any valid count").`,
+  maintenance: `At step i, dp[i] = f(dp[<i]) where f is the recurrence. The invariant holds because the loop order guarantees dp[<i] is already written (bottom-up) or already memoized (top-down).`,
+  termination: `The final answer is dp[target_state] — often dp[n], dp[n][m], or min/max over dp[*]. Space-optimizing by collapsing dimensions preserves this invariant on the LAST row/column.`
+}
+
+const theTemplateComplexity = {
+  time: `O(states × transition_cost) — most DPs are O(n), O(n²), or O(n·k)`,
+  space: `O(states), often collapsible to O(single row) or O(1) via rolling arrays`
+}
+
+const theTemplateSpecializations = [
+  { slug: `fibonacci-bare-mechanic-easy`,                              title: `Fibonacci (easy)` },
+  { slug: `1d-dp-climbing-stairs-house-robber-medium`,                 title: `1D DP (medium)` },
+  { slug: `maximum-subarray-kadane-the-running-optimum-dp-medium`,     title: `Kadane (medium)` },
+  { slug: `0-1-knapsack-subset-sum-family-medium`,                     title: `0/1 Knapsack (medium)` },
+  { slug: `coin-change-unbounded-min-count-medium`,                    title: `Coin Change (medium)` },
+  { slug: `grid-dp-unique-paths-minimum-path-sum-medium`,              title: `Grid DP (medium)` },
+  { slug: `subsequence-dp-lis-lcs-edit-distance-hard`,                 title: `Subsequence DP (hard)` },
+  { slug: `interval-dp-matrix-chain-burst-balloons-hard`,              title: `Interval DP (hard)` },
+  { slug: `state-machine-dp-stock-trading-with-cooldown-medium`,       title: `State-Machine DP (medium)` },
+  { slug: `bitmask-dp-travelling-salesman-assignment-medium`,          title: `Bitmask DP (medium)` },
+  { slug: `tree-dp-house-robber-iii-medium`,                           title: `Tree DP (medium)` },
+]
+
+const theTemplateProblemShape = `Overlapping subproblems with optimal substructure. "Minimum/maximum X", "count number of ways", "longest/shortest subsequence/substring", "can we partition/cover" — the state captures what varies as you recurse; the transition combines smaller states.`
+
+const fibCode = `// Fibonacci — THE bare mechanic of DP. Three implementations, same O(n) idea.
+
+// (1) Memoized recursion (top-down) — closest to the mathematical definition.
+long fibMemo(int n, long[] memo) {
+    if (n &lt; 2) return n;
+    if (memo[n] != 0) return memo[n];
+    return memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);
+}
+// Call: fibMemo(n, new long[n + 1]). O(n) time, O(n) space.
+
+// (2) Bottom-up table (iterative) — one array, no recursion.
+long fibTab(int n) {
+    if (n &lt; 2) return n;
+    long[] dp = new long[n + 1];
+    dp[0] = 0; dp[1] = 1;
+    for (int i = 2; i &lt;= n; i++) dp[i] = dp[i-1] + dp[i-2];
+    return dp[n];
+}
+// O(n) time, O(n) space.
+
+// (3) Rolling-pair (space-optimized) — the recurrence only reads the last 2 states.
+long fib(int n) {
+    if (n &lt; 2) return n;
+    long prev = 0, curr = 1;
+    for (int i = 2; i &lt;= n; i++) {
+        long next = prev + curr;
+        prev = curr;
+        curr = next;
+    }
+    return curr;
+}
+// O(n) time, O(1) space. The space collapse is the AmortizedPanel insight below.`
+
+const treeDPCode = `// Tree DP — subproblems indexed by subtree root.
+// Canonical: House Robber III. Can't rob a node AND its direct children.
+// For each node, dp returns a 2-tuple: {max if root is robbed, max if root is not}.
+
+record Pair(int robbed, int skipped) {}
+
+int rob(TreeNode root) {
+    Pair result = dfs(root);
+    return Math.max(result.robbed(), result.skipped());
+}
+
+Pair dfs(TreeNode node) {
+    if (node == null) return new Pair(0, 0);
+    Pair L = dfs(node.left);
+    Pair R = dfs(node.right);
+
+    // If I rob this node: children MUST be skipped.
+    int robbed = node.val + L.skipped() + R.skipped();
+
+    // If I skip this node: each child independently picks its max.
+    int skipped = Math.max(L.robbed(), L.skipped())
+                + Math.max(R.robbed(), R.skipped());
+
+    return new Pair(robbed, skipped);
+}
+// O(n) time (visit each node once), O(h) stack = O(n) worst case.
+
+// Pattern: tree DP returns a tuple per node encoding every "decision at this node".
+// Variants: longest path in a tree (diameter), tree coloring, counting substructures.`
+
+const amortizedExplanation = `For most 1D DPs the recurrence only reads the last K states (K = 1, 2, or a small constant). Rolling the storage from O(n) down to O(K) is the single most-common space optimization in DP.
+
+**The derivation (amortized argument):**
+
+- Total work: O(n) iterations, each O(1) → **O(n) total time**.
+- Peak storage used per iteration: K cells (prev, curr, next for Fibonacci-style; one row for LCS-style).
+- Amortized storage per iteration: **O(1)** (K is a problem-independent constant).
+
+**When it works:** the recurrence \`dp[i] = f(dp[i-1], ..., dp[i-K])\` doesn't look further back than K. For 2D grid DP, you can collapse one dimension (the row OR the column, keeping the smaller) → O(min(m,n)) space.
+
+**When it doesn't work:** the recurrence reads \`dp[i-1]\`, \`dp[j]\` for arbitrary \`j < i\` (e.g. LIS O(n²), where \`dp[i] = max over j<i of (dp[j] + 1 if a[j]<a[i])\`). The whole dp array must stay resident → no space collapse.
+
+**Classic examples:**
+- Fibonacci: O(n) → O(1) (keep 2 cells).
+- House Robber: O(n) → O(1) (keep prev, curr).
+- Climbing Stairs: O(n) → O(1).
+- LCS: O(mn) → O(min(m,n)) (keep one row).
+- 0/1 Knapsack by weight: O(nW) → O(W) (iterate items outer, weight inner RIGHT-TO-LEFT to avoid self-reads).
+- Grid DP (Unique Paths, Min Path Sum): O(mn) → O(min(m,n)).
+
+**Not amortized savings:** this is a straight O(n) → O(1) constant-factor improvement on space. Called "amortized" here because the amortized argument is the standard framing for rolling-storage proofs.`
+
+const mastery5 = [
+  {
+    q: `What two preconditions must hold for a problem to be solvable by DP?`,
+    choices: [
+      { text: `Overlapping subproblems AND optimal substructure`, correct: true, explanation: `Overlapping = same subproblem recurs → memoize. Optimal substructure = optimal answer combines from optimal sub-answers → recurrence makes sense.` },
+      { text: `Monotone objective + bounded answer range`, correct: false, explanation: `That's binary-search-on-answer.` },
+      { text: `Sorted input + a safe local choice`, correct: false, explanation: `That's greedy.` },
+      { text: `Exponential state space`, correct: false, explanation: `DP is useful when the state space is POLYNOMIAL, not exponential.` }
+    ]
+  },
+  {
+    q: `For 0/1 Knapsack with dp[w] = max value at capacity w, in what weight-loop order must you iterate to avoid double-counting an item?`,
+    choices: [
+      { text: `RIGHT-TO-LEFT: for (w = W; w >= weight[i]; w--) — reads dp[w - weight[i]] from the PREVIOUS item`, correct: true, explanation: `Left-to-right would read dp[w - weight[i]] AFTER this item has already been considered at that smaller weight, counting the item twice.` },
+      { text: `LEFT-TO-RIGHT: for (w = weight[i]; w <= W; w++)`, correct: false, explanation: `That's correct for UNBOUNDED knapsack (unlimited reuse), WRONG for 0/1.` },
+      { text: `Any order works`, correct: false, explanation: `False — the direction matters for 0/1.` },
+      { text: `Sorted by weight`, correct: false, explanation: `Doesn't affect correctness.` }
+    ]
+  },
+  {
+    q: `For Coin Change (fewest coins to reach amount), what's the sentinel for "impossible"?`,
+    choices: [
+      { text: `amount + 1 — strictly larger than any valid count (max valid is amount, using all 1-coins)`, correct: true, explanation: `Avoids both overflow in dp[a-c]+1 AND confusion with 0 as "zero coins = valid answer for amount 0".` },
+      { text: `Integer.MAX_VALUE`, correct: false, explanation: `Overflows when adding 1 in the transition.` },
+      { text: `0`, correct: false, explanation: `Collides with the valid base case dp[0] = 0.` },
+      { text: `-1`, correct: false, explanation: `Hard to compare with min() unless you special-case.` }
+    ]
+  },
+  {
+    q: `In Longest Increasing Subsequence with the O(n²) DP, dp[i] represents:`,
+    choices: [
+      { text: `Length of the LIS ENDING at index i (not necessarily including the last element overall)`, correct: true, explanation: `Final answer is max over all dp[i]. Ending AT i is the state detail that lets the recurrence read dp[j] for j<i with a[j]<a[i].` },
+      { text: `Length of the LIS up to index i (anywhere, not forced to end at i)`, correct: false, explanation: `This state doesn't support the transition — you can't tell which smaller dp[j] values can extend.` },
+      { text: `Length of the LIS strictly starting at i`, correct: false, explanation: `Needs reverse iteration; equivalent but less common.` },
+      { text: `Count of elements less than a[i]`, correct: false }
+    ]
+  },
+  {
+    q: `For a 1D DP where dp[i] only depends on dp[i-1] and dp[i-2], what's the space optimization?`,
+    choices: [
+      { text: `Keep two variables (prev, curr) and roll them each iteration — O(1) space`, correct: true, explanation: `This is the Fibonacci / House Robber / Climbing Stairs rolling-pair pattern.` },
+      { text: `Keep the full dp[] array — can't optimize`, correct: false, explanation: `You CAN optimize; the recurrence looks only 2 steps back.` },
+      { text: `Convert to top-down with memoization`, correct: false, explanation: `Memo table is O(n), not better.` },
+      { text: `Compress the state with bitmasks`, correct: false, explanation: `Doesn't apply — states aren't boolean.` }
+    ]
+  }
+]
+</script>
+
 
 
 ## Why dynamic programming exists — the story
@@ -72,140 +255,75 @@ Trigger phrases: *"maximum sum", "minimum cost", "count ways", "longest / shorte
 - **State transitions depend on future information** — DP works only when subproblems form a DAG. If dependencies cycle, need SCC decomposition first or a different approach.
 - **You have huge state (memory &gt; 1 GB)** — even O(n²) at n = 10⁵ is 10¹⁰ entries — infeasible. Reformulate with a smaller state or use divide-and-conquer optimization.
 
-## The four DP archetypes
+## THE template — state → transition → base case → order
 
-Every DP problem is a variant of one of four archetypes. Learning them is 80% of the pattern.
+<PatternTemplateCard
+  slug="dp"
+  title="Dynamic Programming"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="theTemplateInvariant"
+  :complexity="theTemplateComplexity"
+  :specializations="theTemplateSpecializations"
+  :problemShape="theTemplateProblemShape"
+>
+  <template #amortized>
 
-### Archetype 1: 1D DP (Fibonacci-like)
+<AmortizedPanel
+  method="aggregate"
+  bound="O(1) space for 1D rolling pair · O(min(m,n)) for 2D rolling row"
+  statement="Space collapse for recurrences that look back only a constant number of states"
+>
 
+{{ amortizedExplanation }}
 
+</AmortizedPanel>
 
-```java
-// House Robber: max money robbing houses, no two adjacent
-int rob(int[] nums) {
-    int prev = 0, curr = 0;
-    for (int x : nums) {
-        int next = Math.max(curr, prev + x);   // skip or take
-        prev = curr;
-        curr = next;
-    }
-    return curr;
-}
-```
+  </template>
+</PatternTemplateCard>
 
+<InvariantProof
+  :statement="theTemplateInvariant.statement"
+  :initialization="theTemplateInvariant.initialization"
+  :maintenance="theTemplateInvariant.maintenance"
+  :termination="theTemplateInvariant.termination"
+/>
 
+### The four DP archetypes
 
-**State:** `dp[i] = max money robbing among houses 0..i`.
-**Transition:** `dp[i] = max(dp[i-1], dp[i-2] + nums[i])`.
-**Space collapse:** only need last 2 values → O(1) space.
+Each sub-variation below is a specialization of one of these. Learning them is 80% of the pattern.
 
-### Archetype 2: 2D DP on strings (LCS, edit distance)
+| Archetype | State shape | Example |
+|---|---|---|
+| **1D linear** | `dp[i]` indexed by position/count | Fibonacci, Climbing Stairs, House Robber, Kadane |
+| **2D on sequences** | `dp[i][j]` indexed by two sequence prefixes | LCS, Edit Distance, Interleaving String |
+| **DP on decisions** | `dp[state][option]` | Buy/Sell Stock with cooldown, Coin Change |
+| **Interval DP** | `dp[lo][hi]` indexed by subarray endpoints | Matrix Chain, Burst Balloons, Palindrome Partitioning |
 
+Plus three specialized dimensions:
+- **Grid DP** — `dp[r][c]` on a 2D grid (Unique Paths, Min Path Sum, Dungeon Game).
+- **Tree DP** — `dp[node]` is a tuple per subtree root (House Robber III, Tree Diameter).
+- **Bitmask DP** — `dp[mask][last]` where mask indicates which items are used (TSP, Hamiltonian Path).
 
+## When the mechanic breaks — three failure modes
 
-```java
-// Longest Common Subsequence
-int lcs(String a, String b) {
-    int m = a.length(), n = b.length();
-    int[][] dp = new int[m + 1][n + 1];
-    for (int i = 1; i <= m; i++)
-        for (int j = 1; j <= n; j++)
-            dp[i][j] = a.charAt(i-1) == b.charAt(j-1)
-                     ? dp[i-1][j-1] + 1
-                     : Math.max(dp[i-1][j], dp[i][j-1]);
-    return dp[m][n];
-}
-```
+<TrapTrace
+  title="The state is too small"
+  bug="You define dp[i] = 'max profit at day i' for Buy/Sell Stock with Cooldown. The interviewer's test case fails: dp[5] expects a different value depending on whether you hold stock at day 4 or not — information you discarded. State is missing a 'holding' dimension."
+  fix="Before coding, enumerate every variable the subproblem depends on. If two subproblems that reach the same dp[i] can produce different downstream decisions, add a dimension: dp[i][holding] or dp[i][k_transactions_left]. Rule of thumb: when the recurrence can't be derived without 'knowing' something besides dp[i-1], that something is a missing state."
+/>
 
+<TrapTrace
+  title="Iteration order breaks dependencies"
+  bug="For 0/1 Knapsack with dp[w] = max value at capacity w, inner loop LEFT-TO-RIGHT reads dp[w - weight[i]] AFTER this iteration has already updated it with item i → item counted twice → wrong answer. Classic 0/1-vs-unbounded confusion."
+  fix="Draw the dependency arrows on paper. For 0/1 Knapsack: inner loop RIGHT-TO-LEFT (reads from previous-item dp[w - weight[i]]). For unbounded: left-to-right is correct (deliberately reuses current-item dp[w - weight[i]]). For 2D DP that reads dp[i-1][j-1], dp[i-1][j], dp[i][j-1]: iterate i and j both forward."
+/>
 
-
-**State:** `dp[i][j] = LCS of a[0..i) and b[0..j)`.
-**Transition:** match → diagonal + 1; else max of left and up.
-**Space collapse:** only need previous row → O(min(m, n)) space.
-
-### Archetype 3: DP on decisions (buy-and-sell-stock, coin change)
-
-
-
-```java
-// Coin Change: fewest coins to reach amount
-int coinChange(int[] coins, int amount) {
-    int[] dp = new int[amount + 1];
-    Arrays.fill(dp, amount + 1);           // sentinel for "impossible"
-    dp[0] = 0;
-    for (int a = 1; a <= amount; a++)
-        for (int c : coins)
-            if (c <= a) dp[a] = Math.min(dp[a], dp[a - c] + 1);
-    return dp[amount] > amount ? -1 : dp[amount];
-}
-```
-
-
-
-**State:** `dp[a] = fewest coins to make amount a`.
-**Transition:** `dp[a] = 1 + min over c of dp[a-c]`.
-**Base case:** `dp[0] = 0`.
-
-### Archetype 4: Interval DP (matrix chain, Burst Balloons)
-
-
-
-```java
-// Burst Balloons: max coins from choosing burst order
-int maxCoins(int[] nums) {
-    int n = nums.length;
-    int[] arr = new int[n + 2];
-    arr[0] = arr[n + 1] = 1;
-    for (int i = 0; i < n; i++) arr[i + 1] = nums[i];
-    int[][] dp = new int[n + 2][n + 2];
-    for (int len = 1; len <= n; len++)              // interval length
-        for (int lo = 1; lo + len - 1 <= n; lo++) {
-            int hi = lo + len - 1;
-            for (int k = lo; k <= hi; k++)          // last balloon to burst
-                dp[lo][hi] = Math.max(dp[lo][hi],
-                    dp[lo][k-1] + arr[lo-1]*arr[k]*arr[hi+1] + dp[k+1][hi]);
-        }
-    return dp[1][n];
-}
-```
-
-
-
-**State:** `dp[lo][hi] = max coins from bursting all balloons in [lo, hi]`.
-**Transition:** iterate over `k` = which balloon is burst LAST in the interval.
-**Order:** by interval length, smallest to largest.
-
-## Traps & gotchas — the 5 that fail candidates on interview day
-
-<Callout kind="trap" title="Trap 1 — State is too small.">
-
-You define `dp[i] = best answer up to index i`, but the "best answer" depends on some extra fact — you're holding stock or not, you've used k coins so far, you have j characters remaining. If the interviewer's follow-up test case breaks your DP, the state is usually missing a dimension. **Rule: before coding, enumerate every state a subproblem depends on. If two states differ in something not captured, add a dimension.**
-
-</Callout>
-
-<Callout kind="trap" title="Trap 2 — Iteration order breaks dependencies.">
-
-For LCS you fill `dp[i][j]` using `dp[i-1][j-1]`, `dp[i-1][j]`, `dp[i][j-1]` — those must be *already computed*. If you iterate `for (i = n; i >= 0; i--)` when the recurrence needs `dp[i-1]`, you read garbage. **Rule: draw the dependency arrow on paper first.**
-
-</Callout>
-
-<Callout kind="trap" title="Trap 3 — Off-by-one in base cases.">
-
-`dp[0]` often means "empty prefix" — value 0, or "impossible" (large sentinel). Getting this wrong shifts every answer by 1. **Rule: write the English sentence for `dp[0]` before writing any recurrence.**
-
-</Callout>
-
-<Callout kind="trap" title="Trap 4 — Integer overflow in &quot;count number of ways&quot; problems.">
-
-Path-counting DPs can produce astronomical values. `dp[i][j] = dp[i-1][j] + dp[i][j-1]` for a 30×30 grid hits `2 · 10¹⁶` — outside `int`. **Rule: use `long`, or take modulo per problem statement.**
-
-</Callout>
-
-<Callout kind="trap" title="Trap 5 — Memoized top-down is easier to debug but slower.">
-
-For competitive programming, iterative bottom-up is 2-5× faster (no function-call overhead, better cache behavior). For interviews, whichever is easier to explain. **Rule: prototype with top-down memoization, convert to bottom-up if performance matters.**
-
-</Callout>
+<TrapTrace
+  title="Integer overflow and the wrong sentinel"
+  bug="Two interchangeable sins: (1) 'count number of ways' DP uses int, hits 2^31 at a 30×30 grid, silently returns negative. (2) Coin Change initializes dp[] to Integer.MAX_VALUE; the transition dp[a-c] + 1 overflows for impossible states, flips negative, suddenly looks like a GREAT path."
+  fix="(1) For 'count' problems, use long OR take modulo per problem statement (usually 10^9 + 7). (2) For 'min count' problems, use amount + 1 as the sentinel (strictly larger than any valid count — amount coins of value 1 — and safe against +1 overflow). Alternative: Integer.MAX_VALUE / 2 to leave headroom for arithmetic."
+/>
 
 ## History — Bellman, 1952, and the hostile boss
 
@@ -219,11 +337,63 @@ Bellman also formalized the **principle of optimality**: *"An optimal policy has
 
 Modern DP applications range from **Viterbi's algorithm** (1967, used in every phone modem and speech-recognition engine ever built) to **CYK parsing** (context-free-grammar recognition) to **dynamic time warping** (Netflix video encoding, audio alignment). Every autocomplete engine and every spell-checker on Earth is Levenshtein distance — pure edit-distance DP.
 
-## Canonical problem walkthrough — Coin Change
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="dp" />
+
+### Fibonacci (bare mechanic) <span class="diff diff-e">Easy</span>
+
+*[↗ LeetCode: Fibonacci Number](https://leetcode.com/problems/fibonacci-number/)*
+
+The ur-DP. Three implementations (memo, tabulation, rolling-pair) at O(n) time; the rolling-pair variant is O(1) space — the amortized panel above explains why.
+
+<Callout kind="key">
+
+Compute fib(n) in O(n) time, O(1) space.
+
+</Callout>
+
+<TemplateReveal
+  slug="fibonacci"
+  language="java"
+  :canonical="fibCode"
+/>
+
+<Callout kind="inv" title="Invariant">
+
+At iteration `i`, `(prev, curr)` holds `(fib(i-1), fib(i))`. The recurrence `next = prev + curr` writes `fib(i+1)`; the shift `prev = curr; curr = next` restores the invariant for the next step.
+
+</Callout>
+
+**Why Fibonacci is the entry point to every DP topic:**
+1. **State** — a single index `i`.
+2. **Transition** — one line: `dp[i] = dp[i-1] + dp[i-2]`.
+3. **Base case** — `dp[0] = 0, dp[1] = 1`.
+4. **Order** — forward.
+5. **Space collapse** — the recurrence only reads the last 2 states → O(1) rolling pair.
+
+Every other DP in this chapter adds complexity to one of these five decisions. Grid DP adds a 2D state. Interval DP changes the iteration order. Bitmask DP changes what "state" means. But the skeleton stays.
+
+**Complexity ladder:**
+
+| Approach | Time | Space |
+|---|---|---|
+| Naive recursion | O(2^n) | O(n) stack — one year at n=60 |
+| Memoized recursion | O(n) | O(n) + O(n) stack |
+| Bottom-up tabulation | O(n) | O(n) |
+| **Rolling pair** | **O(n)** | **O(1)** |
+| Matrix exponentiation | O(log n) | O(1) | — for competitive-programming scale (fib n = 10^18) |
+
+### Canonical Coin Change — the 3-approach ladder
+
+(Historical reference — the Coin Change sub-variation H3 below is the active walkthrough.)
+
+<details>
+<summary><strong>Expand: brute-force recursion → memoization → bottom-up tabulation</strong></summary>
 
 **Problem** ([↗ LeetCode](https://leetcode.com/problems/coin-change/)): You have unlimited coins of denominations `coins = [1, 2, 5]`. Return the **fewest number of coins** needed to make amount `n`. If it's not possible, return -1.
 
-### Approach 1 — Brute-force recursion
+#### Approach 1 — Brute-force recursion
 
 Try every coin at every step.
 
@@ -313,7 +483,7 @@ int coinChange(int[] coins, int amount) {
 | Top-down memoization | O(n·k) | O(n) + O(n) stack | If iterating up is unnatural |
 | **Bottom-up tabulation** | **O(n·k)** | **O(n)** | **Interview default** |
 
----
+</details>
 
 **Grokking arc:** The motivating problem is recursion that asks the same smaller question again and again. Brute force branches over choices. **Can we do better?** Name the repeated state, cache or tabulate it once, then choose an order where dependencies are already known.
 
@@ -379,7 +549,7 @@ Subproblems don't repeat — pure recursion is fine. Also skip when a **greedy**
 
 ---
 
-## 1D DP — Climbing Stairs &amp; House Robber <span class="diff diff-m">Medium</span>
+### 1D DP — Climbing Stairs & House Robber <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: House Robber](https://leetcode.com/problems/house-robber/)*
 
@@ -556,7 +726,7 @@ O(1): only `prev2`, `prev1`, and `cur` are kept.
 - Why no full `dp[]` array? — the recurrence needs only the two previous states.
 - Why `return prev1`? — after the last update, it represents the best loot through all houses.
 
-## Maximum Subarray (Kadane) — the running-optimum DP <span class="diff diff-m">Medium</span>
+### Maximum Subarray (Kadane) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)*
 
@@ -756,7 +926,7 @@ O(1): only `cur` and `best` are stored.
 - Why update `best` after `cur`? — the best subarray may end at the current index.
 - Why no window shrink loop? — validity is not monotone; this is a DP choice to extend or restart.
 
-## 0/1 Knapsack &amp; Subset-Sum family <span class="diff diff-m">Medium</span>
+### 0/1 Knapsack & Subset-Sum <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)*
 
@@ -900,7 +1070,7 @@ O(target): one boolean row of reachable sums.
 - Why iterate `w` downward? — each number may be used at most once; downward order prevents reusing it in the same item pass.
 - Why `dp[w] |= dp[w - x]`? — sum `w` is reachable if it was already reachable or if `w-x` was reachable before this item.
 
-## Coin Change (unbounded, min count) <span class="diff diff-m">Medium</span>
+### Coin Change <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Coin Change](https://leetcode.com/problems/coin-change/)*
 
@@ -1104,7 +1274,7 @@ O(amount): one array stores the best answer for each amount.
 - Why guard `if (c <= a)`? — negative indexes are invalid and a too-large coin cannot help this amount.
 - Why return `-1` when `dp[amount] > amount`? — the sentinel survived, so no combination reached the amount.
 
-## Grid DP — Unique Paths &amp; Minimum Path Sum <span class="diff diff-m">Medium</span>
+### Grid DP — Unique Paths & Min Path Sum <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Unique Paths](https://leetcode.com/problems/unique-paths/)*
 
@@ -1236,7 +1406,7 @@ O(C): the rolling row stores one value per column.
 - Why is `dp[c]` the above value? — before overwriting it, it still holds the previous row's answer for this column.
 - Why is `dp[c-1]` the left value? — left-to-right iteration has already updated it for the current row.
 
-## Subsequence DP — LIS, LCS, Edit Distance <span class="diff diff-h">Hard</span>
+### Subsequence DP — LIS, LCS, Edit Distance <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Edit Distance](https://leetcode.com/problems/edit-distance/)*
 
@@ -1400,7 +1570,7 @@ LIS optimized: O(n) for `tails`. LCS/Edit: O(mn), reducible to O(min(m,n)) with 
 - Why `dp[i][0] = i` in edit distance? — converting a prefix to empty requires deleting every character.
 - Why use diagonal on matching characters? — equal last characters need no edit, so the answer is the smaller prefix pair.
 
-## Interval DP — Matrix Chain / Burst Balloons <span class="diff diff-h">Hard</span>
+### Interval DP — Matrix Chain / Burst Balloons <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Burst Balloons](https://leetcode.com/problems/burst-balloons/)*
 
@@ -1546,7 +1716,7 @@ O(n²): the table stores every interval answer.
 - Why use `dp[i][k-1] + ... + dp[k+1][j]`? — the last burst splits the interval into independent left and right subproblems.
 - Why `Math.max`? — this variant maximizes coins; matrix-chain variants often use `Math.min`.
 
-## State-Machine DP — Stock trading with cooldown <span class="diff diff-m">Medium</span>
+### State-Machine DP — Stock trading with cooldown <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)*
 
@@ -1679,19 +1849,49 @@ O(1): only `hold`, `sold`, `rest`, and `prevSold` are kept.
 - Why `hold = Math.max(hold, rest - p)`? — you either keep holding or buy only from a free/rest state.
 - Why return `Math.max(sold, rest)`? — ending while holding stock leaves unrealized profit, so only not-holding states count.
 
-## Tree DP &amp; Digit DP (pointers)
-<p class="secgoal"><b>What & why:</b> signposts to two specialized DP flavours covered in their own chapters. Goal — recognize when a problem is tree-shaped DP or digit-constrained counting, and know where to turn for the full treatment.</p>
+### Tree DP — House Robber III <span class="diff diff-m">Medium</span>
 
-- **Tree DP** — return a per-node state tuple, combine at the parent (see *House Robber III* in the Trees chapter). Also *Binary Tree Cameras*, *Diameter*.
-- **Digit DP** — count numbers ≤ N with a property by DPing over digit positions with a `tight` flag (prefix equals N's prefix) and carried state (sum, remainder, last digit). State: `(pos, tight, ...)`.
+*[↗ LeetCode: House Robber III](https://leetcode.com/problems/house-robber-iii/)*
 
-<Callout kind="key" title="Key Insight">
+#### Problem
+Houses arranged in a **binary tree**. The thief can't rob both a parent and its direct children (silent-alarm constraint). Return the maximum money.
 
-The `tight` flag is digit DP's crux: while tight, the current digit is capped by N's digit; once you place something smaller, all lower positions are free (0–9).
+#### The move — one state tuple per subtree
+
+For each node, DP returns `(robbed, skipped)`:
+- `robbed` = max if THIS node is robbed → children MUST be skipped.
+- `skipped` = max if THIS node is skipped → each child independently picks its best.
+
+The parent combines children by rule above. Post-order traversal gives the natural bottom-up iteration.
+
+<Callout kind="key">
+
+Max money a thief can rob from a tree of houses, no parent and child both robbed.
 
 </Callout>
 
-## Bitmask DP — Travelling Salesman / assignment <span class="diff diff-m">Medium</span>
+<TemplateReveal
+  slug="tree-dp"
+  language="java"
+  :canonical="treeDPCode"
+/>
+
+<Callout kind="inv" title="Invariant">
+
+At each `dfs(node)` call, the returned `Pair(robbed, skipped)` represents the optimal choice **assuming the subtree rooted at node is considered in isolation**. Parent combines them without re-examining grandchildren.
+
+</Callout>
+
+**Complexity:** O(n) time (visit each node once), O(h) stack = O(n) worst case.
+
+**Variations with the same shape (tuple-per-subtree DP):**
+- [Binary Tree Cameras](https://leetcode.com/problems/binary-tree-cameras/) — state: `{need_camera, has_camera, covered}`. More states, same idea.
+- [Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) — return `max_depth`; also track global `diameter`.
+- [Longest Univalue Path](https://leetcode.com/problems/longest-univalue-path/) — return `longest_from_here_matching_parent`; track global answer.
+
+**Related — Digit DP (brief pointer):** count numbers ≤ N with a property by DPing over digit positions with a `tight` flag (prefix equals N's prefix) and carried state. State: `(pos, tight, ...)`. See LeetCode Discuss for the pattern — it's specialized enough to live outside this chapter.
+
+### Bitmask DP — TSP / assignment <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)*
 
 ### Problem
@@ -1825,19 +2025,18 @@ O(2ⁿ·n): one value for every visited-set mask and ending node.
 - Why test `(mask & (1 << u)) == 0`? — you can only be at `u` if `u` is already in the visited set.
 - Why set `mask | (1 << v)`? — adding node `v` creates the next visited-set state.
 
-## DP recognition summary
-<p class="secgoal"><b>What & why:</b> a compact recap of the DP sub-families and their state shapes. Goal — map a new problem to its closest DP archetype (1-D, grid, subsequence, interval, state-machine, bitmask) fast.</p>
+### DP recognition summary — pick the right archetype in 30 seconds
 
-| Family | State | Transition tell |
-|---|---|---|
-| 1D linear | `dp[i]` | depends on `dp[i-1], dp[i-2]` |
-| Knapsack | `dp[w]` | pick/skip; loop direction = reuse rule |
-| Grid | `dp[r][c]` | from up/left (or reverse) |
-| Subsequence | `dp[i][j]` | match → diagonal; else max of neighbors |
-| Interval | `dp[i][j]` | split on last/first action `k`; length order |
-| State machine | `dp[i][state]` | legal mode transitions |
-| Tree | tuple per node | combine children at parent |
-| Bitmask | `dp[mask][i]` | add one unused bit; `n ≤ 20` |
+| Family | State | Transition tell | Space collapse? |
+|---|---|---|---|
+| 1D linear | `dp[i]` | depends on `dp[i-1], dp[i-2]` | O(1) rolling pair |
+| Knapsack | `dp[w]` | pick/skip; loop direction = reuse rule | O(W) |
+| Grid | `dp[r][c]` | from up/left (or reverse) | O(min(m,n)) |
+| Subsequence | `dp[i][j]` | match → diagonal; else max of neighbors | O(min(m,n)) |
+| Interval | `dp[i][j]` | split on last/first action `k`; length order | NO (random access) |
+| State machine | `dp[i][state]` | legal mode transitions | O(#states) rolling |
+| Tree | tuple per node | combine children at parent | O(h) stack |
+| Bitmask | `dp[mask][i]` | add one unused bit; `n ≤ 20` | NO (random mask access) |
 
 <Callout kind="inv" title="Invariant (debugging DP)">
 
@@ -1845,14 +2044,120 @@ If answers are wrong, verify in order: (1) does the state capture all future-rel
 
 </Callout>
 
+## In the wild — Levenshtein distance in git diff & SQLite's `likelihood()`
+
+**git's `diff` command** uses a variant of the Myers' O((N+M)·D) diff algorithm, which is **edit-distance DP with a space optimization**. The classical Wagner-Fischer edit-distance is O(mn); Myers reformulates as "find the shortest edit script" and runs in O((N+M)·D) where D is the number of edits — fast when files are mostly the same (D ≪ N+M).
+
+
+
+```c
+/* diff/xdiff/xdiffi.c — Myers' O(ND) algorithm (highly paraphrased) */
+int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xdfenv_t *xe) {
+    /* d = number of edits; k = diagonal offset; furthest_x[k, d] = DP state.
+       At each d, extend each diagonal as far as possible along matching lines.
+       First d where furthest_x covers both file lengths = minimum edit distance.
+       The classical Levenshtein DP skeleton — minimum ops to transform one string to another —
+       applied to lines of text instead of characters. */
+    for (d = 0; d <= xdf_max_d; d++) {
+        for (k = -d; k <= d; k += 2) {
+            x = (k == -d || (k != d && furthest_x[k-1] < furthest_x[k+1]))
+                ? furthest_x[k+1]            /* DOWN: delete from left file */
+                : furthest_x[k-1] + 1;       /* RIGHT: insert from right file */
+            y = x - k;
+            /* snake: extend diagonally while lines match (no edit cost) */
+            while (x < n1 && y < n2 && match(line1[x], line2[y])) { x++; y++; }
+            furthest_x[k] = x;
+            if (x >= n1 && y >= n2) return d;    /* reached both file ends */
+        }
+    }
+}
+```
+
+
+
+**SQLite's `likelihood(X, Y)` function** uses a DP-based cost estimator for query planning: how likely is this filter to match? The planner precomputes `cost[filter_combination]` with memoization — classic top-down DP over subsets of filters, with the "subset DP over bitmask" variant from this chapter.
+
+**Other production DP:**
+1. **Netflix's video encoding** uses dynamic time warping (DTW) — O(mn) DP on time series — to align scenes against a reference encoding.
+2. **Chrome's autocorrect** is Levenshtein edit distance with a cost matrix that weights adjacent-key swaps less than arbitrary substitutions.
+3. **Compiler register allocation** uses interval graph coloring; the DP variant handles short programs where graph-coloring heuristics are overkill.
+4. **TensorFlow's `tf.nn.ctc_loss`** (speech recognition) computes alignment probabilities via forward-backward DP on a lattice of states.
+5. **CPython's `difflib.SequenceMatcher`** uses Ratcliff-Obershelp, a divide-and-conquer variant of LCS DP.
+
+## Recognition drill
+
+<RecognitionDrill pattern="dp" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if the state space is too big to tabulate?</strong></summary>
+
+Three paths:
+- **Memoize with a sparse map** (`HashMap<Long, Integer>` keyed by encoded state). Only populate reachable states — often ≪ full state space.
+- **Compress the state** — e.g. Bitmask DP works only for `n ≤ 20` because `2^n` fits in memory. For `n = 30` you'd need `2^30 = 10^9` cells — infeasible.
+- **Reformulate** — some DPs have hidden monotone structure that lets you use binary search or SMAWK matrix search for O(n log n) instead of O(n²). See "Divide and Conquer DP Optimization" on cp-algorithms.
+</details>
+
+<details>
+<summary><strong>What if the input is online (one element at a time)?</strong></summary>
+
+**Online DP** maintains the DP table incrementally. For 1D DPs this is straightforward — process each new element in O(1) using the existing dp[]. For 2D DPs it's harder: adding a new row requires updating every column.
+
+Example: online LIS with `TreeMap` — each new element binary-searches the "patience sort" array in O(log n). Total O(n log n), same as offline LIS.
+</details>
+
+<details>
+<summary><strong>What if you need the DP's actual solution path, not just the cost?</strong></summary>
+
+**Parent pointers** — alongside `dp[i]`, store `parent[i]` = which transition reached this state. After computing, walk `parent[target]` back to `parent[base]` to reconstruct.
+
+For LCS: `parent[i][j] ∈ {diagonal, up, left}`. For Coin Change: `parent[a]` = which coin was last added. Memory doubles; cost pointer path is the reconstructed solution.
+
+For bitmask DP (TSP): parent-tracking adds a `prev` array of size `2^n × n` — same memory as `dp`.
+</details>
+
+<details>
+<summary><strong>What if some transitions have a cost that depends on the whole prefix?</strong></summary>
+
+**Convex hull trick (CHT)** or **Li Chao tree** — when `dp[i] = min over j < i of (dp[j] + cost(j, i))` and `cost` is linear in `i`, the transition becomes O(log n) via maintaining lines. Reduces O(n²) to O(n log n).
+
+Example: *Longest Palindromic Subsequence* has `dp[i][j]` cost O(1), so CHT doesn't apply. But *Divide Chocolate / Minimum Cost to Merge Stones* with weighted intervals has non-constant cost — SMAWK or Knuth's optimization reduces O(n³) to O(n²).
+
+Deep rabbit hole — don't go there in an interview; just mention "this looks like CHT/Knuth territory for competitive programming."
+</details>
+
+<details>
+<summary><strong>What if the problem wants ALL optimal solutions, not just one?</strong></summary>
+
+**DP + path enumeration:**
+1. Compute dp[] normally.
+2. From `dp[target]`, recursively enumerate every predecessor `j` with `dp[j] + cost(j, target) == dp[target]`.
+3. Each path is one optimal solution.
+
+Memory: O(#solutions × solution_length). Can blow up — in LCS of two identical strings, there are 2^n optimal paths.
+</details>
+
+### Breaking point
+
+DP **stops being optimal** when:
+- The state space is super-polynomial (2^n for n &gt; 25) — switch to approximations or specialized algorithms.
+- Transitions require solving another hard subproblem — DP wrapping another NP-hard problem doesn't rescue you.
+- The problem has a closed-form solution — Fibonacci via Binet's formula is O(1); don't DP.
+- The subproblem graph has cycles — reformulate as SCC or shortest-path.
+- Memory doesn't fit — even O(n²) at n = 10⁵ is 10^10 cells; need rolling arrays or a different algorithm.
+
+### Three cross-pattern problems
+
+- [Russian Doll Envelopes (354)](https://leetcode.com/problems/russian-doll-envelopes/) — looks like 2D DP; is actually LIS after sorting (one-dimensional).
+- [Maximal Rectangle (85)](https://leetcode.com/problems/maximal-rectangle/) — DP on rows + Largest Rectangle in Histogram (monotonic stack); bridges DP with the stack pattern.
+- [Longest Palindromic Substring (5)](https://leetcode.com/problems/longest-palindromic-substring/) — classical O(n²) DP; Manacher's algorithm beats it at O(n) but is specialized.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="dp"
-  :questions='[{"q": "What are the FOUR components of a DP formulation?", "choices": [{"text": "State, Transition, Base case, Order", "correct": true, "explanation": "Miss any one and the DP doesn’t work."}, {"text": "Array, Loop, If, Return", "correct": false}, {"text": "Sort, Search, Store", "correct": false}, {"text": "Just recursion", "correct": false}]}, {"q": "For 0/1 knapsack DP, why iterate weight DESCENDING?", "choices": [{"text": "To prevent using the same item twice in one iteration", "correct": true, "explanation": "Ascending order would let item[i] extend a state that already included item[i]."}, {"text": "For cache efficiency", "correct": false}, {"text": "To handle negative weights", "correct": false}, {"text": "It doesn’t matter", "correct": false}]}, {"q": "Coin Change II: count unordered combinations. What is the loop order?", "choices": [{"text": "Outer: coins; Inner: amount", "correct": true, "explanation": "Fixes coin usage order → unordered."}, {"text": "Outer: amount; Inner: coins", "correct": false, "explanation": "That counts ordered sequences (Combination Sum IV)."}, {"text": "Random", "correct": false}, {"text": "Nested both", "correct": false}]}, {"q": "For Burst Balloons, why does \"last to burst\" (not \"first\") work?", "choices": [{"text": "The last one’s neighbors are fixed at the sub-range boundaries", "correct": true, "explanation": "This isolates subproblems into independent intervals."}, {"text": "Random", "correct": false}, {"text": "For symmetry", "correct": false}, {"text": "It doesn’t work; must use first", "correct": false, "explanation": "First fails — this is the trick."}]}, {"q": "For Best Time to Buy/Sell Stock IV (k transactions), when does k allow unlimited?", "choices": [{"text": "When k ≥ n/2", "correct": true, "explanation": "You can capture every increasing step → sum of positive diffs."}, {"text": "k = n", "correct": false}, {"text": "k = 1", "correct": false, "explanation": "Then O(n) single-tx algorithm."}, {"text": "Never", "correct": false}]}]'
-/>
+<Quiz pattern-id="dp" :questions="mastery5" />
 
 <PrintButton />
 

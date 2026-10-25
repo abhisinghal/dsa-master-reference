@@ -16,12 +16,12 @@
     "subVariations": [
       {
         "slug": "maximum-average-subarray-i-fixed-size-warm-up-easy",
-        "title": "Maximum Average Subarray I \u2014 fixed-window warm-up",
+        "title": "Maximum Average Subarray I — fixed-window warm-up",
         "difficulty": "easy"
       },
       {
         "slug": "smallest-subarray-with-sum-target-medium",
-        "title": "Smallest Subarray With Sum \u2265 Target",
+        "title": "Smallest Subarray With Sum ≥ Target",
         "difficulty": "medium"
       },
       {
@@ -112,7 +112,7 @@
       },
       {
         "slug": "linked-list-cycle-ii-where-the-cycle-starts-medium",
-        "title": "Linked List Cycle II \u2014 where the cycle starts",
+        "title": "Linked List Cycle II — where the cycle starts",
         "difficulty": "medium"
       },
       {
@@ -148,7 +148,7 @@
       {
         "difficulty": "easy",
         "slug": "range-sum-1d-easy",
-        "title": "Range Sum 1D \u2014 bare mechanic"
+        "title": "Range Sum 1D — bare mechanic"
       },
       {
         "difficulty": "medium",
@@ -187,12 +187,12 @@
     "subVariations": [
       {
         "slug": "two-sum-one-pass-hashmap-easy",
-        "title": "Two Sum (one-pass hashmap) \u2014 bare mechanic",
+        "title": "Two Sum (one-pass hashmap) — bare mechanic",
         "difficulty": "easy"
       },
       {
         "slug": "two-sum-ii-sorted-array-bridges-to-two-pointer-medium",
-        "title": "Two Sum II (sorted \u2192 bridges to two-pointer)",
+        "title": "Two Sum II (sorted → bridges to two-pointer)",
         "difficulty": "medium"
       },
       {
@@ -228,7 +228,7 @@
     "subVariations": [
       {
         "slug": "nge-right",
-        "title": "Next Greater Element to the Right \u2014 bare mechanic",
+        "title": "Next Greater Element to the Right — bare mechanic",
         "difficulty": "easy"
       },
       {
@@ -308,7 +308,7 @@
     "subVariations": [
       {
         "slug": "capacity-to-ship-within-d-days-medium",
-        "title": "Capacity to Ship Within D Days \u2014 bare mechanic",
+        "title": "Capacity to Ship Within D Days — bare mechanic",
         "difficulty": "medium"
       },
       {
@@ -383,7 +383,7 @@
     "subVariations": [
       {
         "slug": "merge-k-sorted-lists-hard",
-        "title": "Merge K Sorted Lists \u2014 bare mechanic",
+        "title": "Merge K Sorted Lists — bare mechanic",
         "difficulty": "hard"
       },
       {
@@ -408,7 +408,7 @@
     "subVariations": [
       {
         "slug": "classic-merge-intervals-medium",
-        "title": "Classic Merge Intervals \u2014 bare mechanic",
+        "title": "Classic Merge Intervals — bare mechanic",
         "difficulty": "medium"
       },
       {
@@ -560,7 +560,7 @@
       {
         "difficulty": "medium",
         "slug": "activity-selection-medium",
-        "title": "Activity Selection (earliest-finish-first \u2014 bare mechanic)"
+        "title": "Activity Selection (earliest-finish-first — bare mechanic)"
       },
       {
         "difficulty": "medium",
@@ -600,7 +600,7 @@
       {
         "difficulty": "medium",
         "slug": "subsets-medium",
-        "title": "Subsets (pick/skip decision tree \u2014 bare mechanic)"
+        "title": "Subsets (pick/skip decision tree — bare mechanic)"
       },
       {
         "difficulty": "medium",
@@ -680,58 +680,58 @@
     "inTheWildSource": "Levenshtein distance in git diff / SQLite likelihood()",
     "subVariations": [
       {
-        "slug": "fib-1d",
+        "slug": "fibonacci-bare-mechanic-easy",
         "title": "Fibonacci bottom-up (bare mechanic)",
         "difficulty": "easy"
       },
       {
-        "slug": "1d-linear",
-        "title": "1D Linear DP \u2014 Climbing Stairs / House Robber",
+        "slug": "_1d-dp-climbing-stairs-house-robber-medium",
+        "title": "1D Linear DP — Climbing Stairs / House Robber",
         "difficulty": "medium"
       },
       {
-        "slug": "max-subarray-kadane",
-        "title": "Maximum Subarray (Kadane) \u2014 running-optimum DP",
+        "slug": "maximum-subarray-kadane-medium",
+        "title": "Maximum Subarray (Kadane) — running-optimum DP",
         "difficulty": "medium"
       },
       {
-        "slug": "knapsack-01",
+        "slug": "_0-1-knapsack-subset-sum-medium",
         "title": "0/1 Knapsack & Subset-Sum",
         "difficulty": "medium"
       },
       {
-        "slug": "coin-change-unbounded",
+        "slug": "coin-change-medium",
         "title": "Coin Change (unbounded, min count)",
         "difficulty": "medium"
       },
       {
-        "slug": "grid-dp",
-        "title": "Grid DP \u2014 Unique Paths / Min Path Sum",
+        "slug": "grid-dp-unique-paths-min-path-sum-medium",
+        "title": "Grid DP — Unique Paths / Min Path Sum",
         "difficulty": "medium"
       },
       {
-        "slug": "subsequence-dp",
-        "title": "Subsequence DP \u2014 LIS / LCS / Edit Distance",
+        "slug": "subsequence-dp-lis-lcs-edit-distance-hard",
+        "title": "Subsequence DP — LIS / LCS / Edit Distance",
         "difficulty": "hard"
       },
       {
-        "slug": "interval-dp",
-        "title": "Interval DP \u2014 Matrix Chain / Burst Balloons",
+        "slug": "interval-dp-matrix-chain-burst-balloons-hard",
+        "title": "Interval DP — Matrix Chain / Burst Balloons",
         "difficulty": "hard"
       },
       {
-        "slug": "state-machine-dp",
-        "title": "State-Machine DP \u2014 stock trading with cooldown",
+        "slug": "state-machine-dp-stock-trading-with-cooldown-medium",
+        "title": "State-Machine DP — stock trading with cooldown",
         "difficulty": "medium"
       },
       {
-        "slug": "bitmask-dp",
-        "title": "Bitmask DP \u2014 TSP / assignment",
+        "slug": "bitmask-dp-tsp-assignment-medium",
+        "title": "Bitmask DP — TSP / assignment",
         "difficulty": "medium"
       },
       {
-        "slug": "tree-dp",
-        "title": "Tree DP \u2014 House Robber III",
+        "slug": "tree-dp-house-robber-iii-medium",
+        "title": "Tree DP — House Robber III",
         "difficulty": "medium"
       }
     ]
@@ -797,7 +797,7 @@
       {
         "difficulty": "easy",
         "slug": "isolate-the-low-bit-easy",
-        "title": "Isolate the low bit \u2014 bare mechanic"
+        "title": "Isolate the low bit — bare mechanic"
       },
       {
         "difficulty": "easy",
@@ -853,7 +853,7 @@
     "subVariations": [
       {
         "slug": "kth-smallest-lomuto-partition-bare-mechanic-medium",
-        "title": "Kth smallest (Lomuto partition \u2014 bare mechanic)",
+        "title": "Kth smallest (Lomuto partition — bare mechanic)",
         "difficulty": "medium"
       },
       {

@@ -1208,7 +1208,116 @@
       ]
     }
   ],
-  "dp": [],
+  "dp": [
+    {
+      "statement": "Compute Fibonacci numbers in O(n) time, O(1) space using a rolling pair.",
+      "pattern": "dp",
+      "subVariation": "fib-1d",
+      "distractors": [
+        "recursion",
+        "matrix-exp"
+      ]
+    },
+    {
+      "statement": "Count the ways to climb n stairs taking 1 or 2 steps at a time.",
+      "pattern": "dp",
+      "subVariation": "1d-linear",
+      "distractors": [
+        "recursion",
+        "combinatorics"
+      ]
+    },
+    {
+      "statement": "Maximum sum of a contiguous subarray in a signed integer array (Kadane).",
+      "pattern": "dp",
+      "subVariation": "max-subarray-kadane",
+      "distractors": [
+        "sliding-window",
+        "divide-conquer"
+      ]
+    },
+    {
+      "statement": "Given item weights/values and a capacity, maximize value with each item 0/1 included.",
+      "pattern": "dp",
+      "subVariation": "knapsack-01",
+      "distractors": [
+        "greedy",
+        "backtracking"
+      ]
+    },
+    {
+      "statement": "Fewest coins (unlimited supply of each denomination) that sum to an amount.",
+      "pattern": "dp",
+      "subVariation": "coin-change-unbounded",
+      "distractors": [
+        "greedy",
+        "bfs"
+      ]
+    },
+    {
+      "statement": "Count unique paths from top-left to bottom-right of an m\u00d7n grid moving right or down.",
+      "pattern": "dp",
+      "subVariation": "grid-dp",
+      "distractors": [
+        "combinatorics",
+        "backtracking"
+      ]
+    },
+    {
+      "statement": "Length of the longest increasing subsequence in an integer array.",
+      "pattern": "dp",
+      "subVariation": "subsequence-dp",
+      "distractors": [
+        "patience-sorting",
+        "binary-search"
+      ]
+    },
+    {
+      "statement": "Minimum operations (insert/delete/replace) to transform one string into another.",
+      "pattern": "dp",
+      "subVariation": "subsequence-dp",
+      "distractors": [
+        "dfs",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Minimize the cost of multiplying a chain of matrices by choosing parenthesization.",
+      "pattern": "dp",
+      "subVariation": "interval-dp",
+      "distractors": [
+        "recursion",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Max profit from unlimited stock buy/sell transactions with a 1-day cooldown between sells.",
+      "pattern": "dp",
+      "subVariation": "state-machine-dp",
+      "distractors": [
+        "greedy",
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "Shortest tour visiting all n cities exactly once and returning to the start (n \u2264 20).",
+      "pattern": "dp",
+      "subVariation": "bitmask-dp",
+      "distractors": [
+        "branch-bound",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Max money a thief can rob from a tree of houses, no parent and child both robbed.",
+      "pattern": "dp",
+      "subVariation": "tree-dp",
+      "distractors": [
+        "bfs",
+        "greedy"
+      ]
+    }
+  ],
   "trie-pattern": [],
   "bit-manip": [
     {
