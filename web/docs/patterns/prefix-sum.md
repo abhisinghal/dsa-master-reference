@@ -913,11 +913,79 @@ The exact code was the subject of Harris, Sengupta & Owens' GPU Gems 3 chapter �
 
 ## When NOT to use it
 
+Now that you've seen the mechanic across its sub-variations, here's where "precompute once, query in O(1)" is the wrong tool.
+
 - **You need range operations other than sum** — prefix sum extends to prefix-max only for immutable arrays; prefix-min/max with updates is a **segment tree**, not prefix sum.
 - **The array is dynamic (values change between queries)** — prefix sum recomputes from scratch after every update. If you have thousands of updates interleaved with queries, use a **Fenwick tree (BIT)** or **segment tree** for O(log n) both.
 - **Just one query on the whole array** — prefix sum's prep cost equals the query cost. Just accumulate in a single loop.
 - **Multi-dimensional ranges beyond 2D** — 3D prefix sum works but memory is O(nmp) and inclusion-exclusion has 8 terms. Consider whether the problem really needs that dimensionality.
 - **The subarray-sum target is 0 and the array is all zeros** — degenerate case; the count blows up quadratically. Handle explicitly.
+
+### Visual 1: a single update invalidates the whole prefix table
+
+Prefix sum is a cache. One write at index `k` dirties every prefix from `k` onward:
+
+```text
+   arr = [3, 1, 4, 1, 5, 9, 2]
+   pre = [0, 3, 4, 8, 9, 14, 23, 25]    ← built in O(n), one query is O(1)
+
+   Now mutate: arr[2] = 100  (was 4)
+                         ↓
+   pre = [0, 3, 4, ?, ?, ?, ?, ?]      ← pre[3..7] all wrong
+
+   To fix: pre[3] += 96, pre[4] += 96, …, pre[7] += 96    O(n − k) per update
+   For 10³ updates on an n = 10⁵ array: 10⁸ ops.          dead in the water.
+```
+
+
+
+A Fenwick tree does both the point update and the range query in O(log n), total O((n + q) log n). The crossover: if updates and queries are both common and interleaved, prefix sum loses the moment update ratio exceeds ~1/log(n). The fix is a different data structure, not a tighter prefix-sum loop.
+
+### Visual 2: prefix-max doesn't support the "subtraction trick"
+
+Prefix sum answers range sum by subtracting two prefixes. Prefix-max can't — max isn't invertible:
+
+
+
+```text
+   arr = [3, 7, 2, 8, 1]
+   preSum = [0, 3, 10, 12, 20, 21]      sum of arr[2..3] = preSum[4] − preSum[2] = 20 − 10 = 10  ✓
+   preMax = [0, 3,  7,  7,  8,  8]      max of arr[2..3] =    ???
+                                         preMax[4] − preMax[2] = 8 − 7 = 1  ← MEANINGLESS
+
+   max of arr[2..3] is actually max(2, 8) = 8, but there is no "subtract prefix-max from prefix-max"
+   operation. Max does not have an inverse (not a group), so this trick does not work.
+```
+
+
+
+For range-max/min queries over an immutable array, you want a **sparse table** (O(n log n) build, O(1) query). For range-max/min with updates, you want a **segment tree** (O(log n) both). The "precompute then subtract" trick only works for operations that form a group — sum, XOR, count — not for max, min, GCD, or OR.
+
+### Visual 3: zero-target degeneracy blows up pair counting
+
+The classic "count subarrays with sum = K" uses `HashMap<prefix, count>`. For K = 0 and a lot of zeros, the count blows up quadratically:
+
+
+
+```text
+   arr = [0, 0, 0, 0, 0],  target K = 0
+
+   Prefix sums: [0, 0, 0, 0, 0, 0]       all identical (= 0)
+
+   HashMap state as we scan:
+     after seeing pre=0 (initial):  map = {0: 1}
+     after pre=0 at i=0:  count += 1,  map = {0: 2}
+     after pre=0 at i=1:  count += 2,  map = {0: 3}
+     after pre=0 at i=2:  count += 3,  map = {0: 4}
+     after pre=0 at i=3:  count += 4,  map = {0: 5}
+     after pre=0 at i=4:  count += 5,  map = {0: 6}
+
+   total = 15 = C(6, 2) = 15 pairs — correct, but Θ(n²) hidden in a "linear" count.
+```
+
+
+
+Nothing wrong with the algorithm — the number of valid subarrays genuinely IS Θ(n²), and no technique can enumerate them faster than that. The point is: don't assume "prefix sum + hashmap" is always O(n). On adversarial inputs the OUTPUT size dominates. Watch for int32 overflow when K=0 and zeros are frequent.
 
 ## Recognition drill
 
@@ -929,6 +997,8 @@ The exact code was the subject of Harris, Sengupta & Owens' GPU Gems 3 chapter �
 <summary><strong>What if the array has point updates between queries?</strong></summary>
 
 Prefix sum becomes O(n) per update — unacceptable at `Q = 10^5`. Switch to a **Fenwick tree (BIT)** for `O(log n)` update + `O(log n)` prefix. The invariant mutates from "snapshot" to "incrementally maintained running total":
+
+
 
 ```java
 void update(int i, long delta) {           // 1-indexed

@@ -861,12 +861,63 @@ void SCCPSolver::Solve() {
 
 ## When NOT to use it
 
+With the full flavor set under your belt, here's where "stack of unresolved elements" doesn't apply.
+
 - **You need the k-th greater / k-th smaller** — the stack only remembers unresolved elements, not history. Use a heap or a sorted structure.
 - **The array is sorted** — monotonic stack shines on *unsorted* input where you need to discover local extremes. On sorted input, plain scanning is cheaper.
 - **You need updates in the middle of the array** — the stack processes left-to-right in one pass. If elements change mid-processing, you need a segment tree instead.
 - **The "monotonic" comparison is on multiple fields** — a stack is one-dimensional. For "nearest element that is both taller and heavier," a 2D structure is needed.
 - **Range aggregate queries with unrestricted ranges** — sparse table, segment tree, or Fenwick tree.
 - **Very small n (n ≤ 100)** — brute force is simpler and equally fast in practice. Save monotonic stack for `n ≥ 1000`.
+
+### Visual 1: the stack forgets elements once they're resolved
+
+Each pop *finalizes* an element — its "next greater" is now known, and it's gone from state. Asking "k-th greater" needs state the stack discarded:
+
+```text
+   arr = [5, 2, 8, 1, 9]
+   target: for each i, the 2nd greater element to its right
+
+   NGE-right scan with monotonic stack:
+     i=0 (5): stack=[]       push 5
+     i=1 (2): stack=[5]      push 2  (2 < 5, stack keeps shrinking order)
+     i=2 (8): stack=[5,2]    8 > 2 → pop 2, NGE(2) = 8     ← 2 is GONE now
+                             8 > 5 → pop 5, NGE(5) = 8     ← 5 is GONE too
+                             push 8
+     i=3 (1): stack=[8]      push 1
+     i=4 (9): stack=[8,1]    9 > 1 → pop 1, NGE(1) = 9
+                             9 > 8 → pop 8, NGE(8) = 9
+
+   Can we now say "2nd greater element of 5"?
+   First greater was 8, but 5 is already popped. We never knew 9 > 5 — we didn't check.
+   The information was discarded when 5 was popped at i=2.
+```
+
+The pattern commits to "first unresolved match". For "k-th greater" you need a structure that keeps **all** elements seen so far ordered — a sorted multiset (`TreeMap` or `std::multiset`) with O(log n) per op, or a persistent segment tree. The monotonic stack's O(n) amortization *is* the forgetting; you can't have both.
+
+### Visual 2: two-field monotonicity isn't a stack
+
+A stack maintains one-dimensional order. Asking for "nearest taller AND heavier" requires 2D dominance:
+
+```text
+   people = [(h=5, w=50), (h=4, w=70), (h=6, w=60), (h=3, w=80), (h=7, w=65)]
+
+   Query at each i: nearest j > i where h[j] > h[i] AND w[j] > w[i]
+
+   A 1D monotonic stack by h:   stack maintained in decreasing h
+   A 1D monotonic stack by w:   stack maintained in decreasing w
+                                 ↑ neither captures the conjunction
+
+   Element (5, 50) needs the nearest (>5, >50). Candidates to its right:
+     (4, 70):  h fails
+     (6, 60):  both pass → answer = (6, 60)
+     ...
+
+   A single monotonic stack can't filter by both axes simultaneously —
+   popping on h may remove candidates that would have mattered for w.
+```
+
+The right structure is **2D dominance** territory: coordinate-compress one axis, sort by the other, and use a Fenwick tree over the compressed axis. Each query is O(log n) instead of O(1). Or if the problem has a special structure (axis-aligned nested, or one of the axes is already sorted), you may still get a 1D sweep — but it's not a plain monotonic stack.
 
 ## False friends — not every stack-based sweep is monotonic
 

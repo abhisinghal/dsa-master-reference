@@ -553,11 +553,68 @@ Other named production uses of hashing:
 
 ## When NOT to use it
 
+HashMap feels like a universal "O(1) lookup" hammer; here's where it's the wrong tool.
+
 - **Keyspace is a small dense integer range** — arrays are faster. Counting sort, radix sort, and array-indexed lookups beat HashMap for ASCII-character-frequency problems.
 - **You need ordered iteration or range queries** — hash maps are unordered by contract. Use `TreeMap` (O(log n) but ordered) or maintain a parallel sorted structure.
 - **Memory is tight** — HashMap entries are ~48 bytes each (hash int, key ref, value ref, next ref). A primitive `int[]` beats it 100× on memory.
 - **You need worst-case O(1)** — hash maps are *average* O(1), *worst-case* O(n) if all keys collide. For adversarial contexts use `TreeMap` (O(log n) worst-case) or cryptographically strong hashing.
 - **The comparison you want isn't equality** — hashing keys by equality doesn't help "find the closest match" or "range query." Use a BST or interval tree.
+
+### Visual 1: array beats HashMap on a small dense keyspace
+
+Counting ASCII character frequencies over `n = 10⁶` chars — HashMap vs `int[128]`:
+
+```text
+   HashMap<Character, Integer> freq:
+     per char: hashCode(Character) → bucket → chain walk → autobox int → unbox → put
+     per op: ~50-80 ns   (10⁶ chars × 70 ns ≈ 70 ms)
+     memory: ~60 bytes per unique key   (~128 keys × 60 B ≈ 8 KB; HashMap overhead on top)
+
+   int[128] arr:
+     per char: arr[c]++      (bounds check + load + add + store)
+     per op: ~1-2 ns         (10⁶ chars × 1.5 ns ≈ 1.5 ms)
+     memory: 128 × 4 bytes = 512 B
+```
+
+~40× faster, ~16× less memory. The HashMap is doing a hash + collision check + autoboxing on every op — all unnecessary when the key space is `0..127`. The rule: **if the key is a small dense integer, index it directly**. The warning sign: typing `HashMap<Integer, …>` where the integers have a known bounded range.
+
+### Visual 2: HashMap worst-case O(n) under adversarial input
+
+Imagine an attacker who knows your hash function. They send `n` keys that all collide:
+
+```text
+   HashMap<String, Int>.put(key, value):
+
+   Average case:                                      Adversarial case:
+     bucket = hash(key) % capacity                      every key hashes to bucket 0
+     chain in bucket is length 1 (amortized)            chain in bucket 0 is length n
+     put = O(1)                                         put = O(n)
+
+   10⁵ puts, each O(n):   10¹⁰ ops   →  ~30 seconds, likely timeout
+```
+
+This is the famous "HashMap collision DoS" vulnerability — in 2011 a Java/PHP/Python disclosure showed web servers could be DoS'd with ~1 MB of crafted POST params. Java 8+ fixes it partially by tree-ifying chains of ≥ 8 (chain → red-black tree, worst-case O(log n)) but requires the keys to be `Comparable`. For *provably* bounded worst-case, use `TreeMap` (O(log n) guaranteed) or a cryptographic hash the adversary can't invert.
+
+### Visual 3: closest-match isn't an equality query
+
+HashMap only answers "exact match". For "closest key ≤ k" you need an ordered structure:
+
+```text
+   data = { 10 → 'A', 25 → 'B', 50 → 'C', 100 → 'D' }
+
+   Query: "value for the largest key ≤ 42"
+   Expected answer: 'B' (key 25)
+
+   HashMap approach:
+     map.get(42)       → null, no exact match
+     linear scan all keys, find the largest ≤ 42       O(n)       ✗ slow
+
+   TreeMap approach:
+     map.floorEntry(42)       → (25, 'B')             O(log n)   ✓ clean
+```
+
+The whole point of a hash map is to lose the ordering so you can achieve average O(1). If you need to come back to the ordering, you need a different structure. TreeMap/TreeSet (Java), `std::map` (C++), SortedDict (Python's `sortedcontainers`) all give O(log n) for ordered queries while still giving O(log n) for `put` and `remove`.
 
 ## Recognition drill
 
