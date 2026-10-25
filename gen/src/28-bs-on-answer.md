@@ -5,6 +5,120 @@
 
 <PatternProgress pattern-id="bs-on-answer" problems="koko-bananas, capacity-to-ship-packages-within-d-days, split-array-largest-sum, median-of-two-sorted-arrays, kth-smallest-element-in-a-sorted-matrix, find-k-th-smallest-pair-distance, minimize-max-distance-to-gas-station, path-with-minimum-effort, divide-chocolate" />
 
+<script setup>
+const theTemplateCode = `int searchOnAnswer(int lo, int hi) {
+    while (lo < hi) {                      // half-open convention
+        int mid = lo + (hi - lo) / 2;      // Bloch overflow fix
+        if (feasible(mid)) hi = mid;       // works — but maybe smaller works too
+        else               lo = mid + 1;   // doesn't work — need bigger
+    }
+    return lo;                             // smallest feasible answer
+}`
+
+const theTemplateInvariant = {
+  statement: `Every value x < lo has been proven infeasible; every value x ≥ hi is guaranteed feasible. On exit lo == hi, which is the smallest feasible answer (the first-true boundary).`,
+  initialization: `Pick lo as the smallest value that could plausibly work, hi as any value you can prove is feasible. feasible(lo) may be false; feasible(hi) must be true.`,
+  maintenance: `At each step mid = lo + (hi - lo) / 2 (overflow-safe). If feasible(mid), tighten hi = mid (mid might be the answer). If not, bump lo = mid + 1 (everything ≤ mid is infeasible).`,
+  termination: `Each iteration halves (hi - lo). After ⌈log₂(hi - lo)⌉ iterations lo == hi, and by the invariant that value is both proven infeasible-below and feasible.`
+}
+
+const theTemplateComplexity = {
+  time: `O(log(hi − lo) · f(n))  — f(n) is one feasibility check`,
+  space: `O(1) for the search; feasibility may add its own`
+}
+
+const theTemplateSpecializations = [
+  { slug: `capacity-to-ship-within-d-days-medium`,  title: `Capacity to Ship (medium)` },
+  { slug: `koko-eating-bananas-medium`,             title: `Koko Eating Bananas (medium)` },
+  { slug: `find-the-smallest-divisor-medium`,       title: `Smallest Divisor (medium)` },
+  { slug: `split-array-largest-sum-hard`,           title: `Split Array Largest Sum (hard)` },
+  { slug: `median-of-two-sorted-arrays-hard`,       title: `Median of Two Sorted Arrays (hard)` },
+]
+
+const theTemplateProblemShape = `Minimize/maximize a numeric answer subject to a monotone feasibility predicate — "smallest x where feasible(x) is true" or "largest x where feasible(x) is true". Each feasibility probe is a greedy or simulated O(n)/O(n log n) check.`
+
+const capacityToShipCode = `int shipWithinDays(int[] weights, int days) {
+    int lo = 0, hi = 0;
+    for (int w : weights) { lo = Math.max(lo, w); hi += w; }
+    while (lo < hi) {
+        int cap = lo + (hi - lo) / 2;
+        if (daysNeeded(weights, cap) <= days) hi = cap;
+        else                                   lo = cap + 1;
+    }
+    return lo;
+}
+
+int daysNeeded(int[] weights, int cap) {
+    int days = 1, load = 0;
+    for (int w : weights) {
+        if (load + w > cap) { days++; load = w; }
+        else                 load += w;
+    }
+    return days;
+}`
+
+const smallestDivisorCode = `int smallestDivisor(int[] nums, int threshold) {
+    int lo = 1, hi = 0;
+    for (int x : nums) hi = Math.max(hi, x);
+    while (lo < hi) {
+        int d = lo + (hi - lo) / 2;
+        long sum = 0;
+        for (int x : nums) sum += (x + d - 1) / d;    // ceil division
+        if (sum <= threshold) hi = d;                  // feasible → try smaller d
+        else                  lo = d + 1;              // infeasible → bigger d
+    }
+    return lo;
+}`
+
+const mastery5 = [
+  {
+    q: `What TWO ingredients are required to apply "Binary Search on the Answer"?`,
+    choices: [
+      { text: `A monotonic feasibility predicate + a bounded answer range`, correct: true, explanation: `Without monotonicity you can't eliminate halves. Without bounds you can't initialize the search.` },
+      { text: `A sorted input array`, correct: false, explanation: `The INPUT need not be sorted. The ANSWER space is monotone.` },
+      { text: `The answer must be an integer`, correct: false, explanation: `Real-valued answers work with epsilon convergence.` },
+      { text: `A recursive feasibility check`, correct: false }
+    ]
+  },
+  {
+    q: `For Koko Eating Bananas, if feasible(k) returns "is total hours ≤ h" and feasible(1) is false, feasible(max(piles)) is true, which direction tightens on feasible = true?`,
+    choices: [
+      { text: `hi = mid — try smaller k, because true at this k means true at every larger k`, correct: true, explanation: `We want the smallest feasible k. If k works, maybe k-1 does too.` },
+      { text: `lo = mid + 1 — need faster speed`, correct: false, explanation: `That's the direction on feasible = false.` },
+      { text: `lo = mid, since mid might be the answer`, correct: false, explanation: `Breaks the half-open convention and can loop forever.` },
+      { text: `hi = mid - 1, excluding mid from the range`, correct: false, explanation: `Excludes a potential answer.` }
+    ]
+  },
+  {
+    q: `What's the overall complexity of binary-searching an integer answer in [1, R] where each feasibility check is O(n)?`,
+    choices: [
+      { text: `O(n log R)`, correct: true, explanation: `log₂ R probes × O(n) per probe.` },
+      { text: `O(n R)`, correct: false, explanation: `That's "try every answer".` },
+      { text: `O(log n log R)`, correct: false },
+      { text: `O(n²)`, correct: false }
+    ]
+  },
+  {
+    q: `For Median of Two Sorted Arrays, which array should you binary-search the partition on?`,
+    choices: [
+      { text: `The SHORTER array — bounds the search range to O(log min(m,n))`, correct: true, explanation: `Also keeps j = half - i within the longer array's valid range.` },
+      { text: `The LONGER array — more partition options`, correct: false, explanation: `Blows up the search range unnecessarily.` },
+      { text: `Either — asymptotically identical`, correct: false, explanation: `log m vs log n differs; pick the min for a tighter bound.` },
+      { text: `Whichever is sorted ascending`, correct: false, explanation: `Both are sorted.` }
+    ]
+  },
+  {
+    q: `A real-valued BS on answer (e.g. Minimize Max Distance to Gas Station). What termination condition?`,
+    choices: [
+      { text: `Iterate until hi - lo < ε for a chosen ε, OR fix 100 iterations (each halves)`, correct: true, explanation: `Fixed 100 iterations gives precision 2^-100 ≈ 10^-30 of the initial range — safe for doubles.` },
+      { text: `while (lo < hi) — the integer loop`, correct: false, explanation: `Infinite loop on doubles.` },
+      { text: `while (lo != hi) — exact equality on doubles`, correct: false, explanation: `Floating-point equality after halving is unreliable.` },
+      { text: `Cast everything to int`, correct: false, explanation: `Loses precision.` }
+    ]
+  }
+]
+</script>
+
 
 
 ## Why binary search on the answer exists — the story
@@ -50,56 +164,67 @@ The problem statement almost always contains one of these clue phrases:
 - **The answer range is tiny** — `1 ≤ x ≤ 50` and each check is O(n)? Just iterate. Binary search adds constants and cognitive load with no asymptotic benefit at that scale.
 - **You need all valid answers, not the boundary** — BS-on-answer returns one number. If the interviewer wants "all speeds that work", the pattern doesn't fit.
 
-## The template — one loop, two moving parts
+## THE template — one loop, two moving parts
 
-```java
-int searchOnAnswer(int lo, int hi) {              // lo = min plausible, hi = max plausible
-    while (lo < hi) {                              // half-open convention
-        int mid = lo + (hi - lo) / 2;              // Bloch overflow fix
-        if (feasible(mid)) hi = mid;               // works — but maybe smaller works too
-        else               lo = mid + 1;           // doesn't work — need bigger
-    }
-    return lo;                                     // smallest feasible answer
-}
-```
+<PatternTemplateCard
+  slug="bs-on-answer"
+  title="Binary Search on the Answer"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="theTemplateInvariant"
+  :complexity="theTemplateComplexity"
+  :specializations="theTemplateSpecializations"
+  :problemShape="theTemplateProblemShape"
+/>
 
-**Invariant:** every `x < lo` is *proven infeasible*; every `x ≥ hi` is *proven feasible*. On exit `lo == hi` is the boundary.
-**Setup checklist before you write the loop:**
-1. Pick `lo` conservatively — the smallest value that *could* possibly work.
-2. Pick `hi` generously — a value you know for certain works. Overshooting `hi` costs only one extra `log₂` step; undershooting `hi` returns the wrong answer.
-3. Write `feasible(mid)` as a helper. Test it on paper for `mid = lo`, `mid = hi`, and a middle value. Verify monotonicity.
+<InvariantProof
+  :statement="theTemplateInvariant.statement"
+  :initialization="theTemplateInvariant.initialization"
+  :maintenance="theTemplateInvariant.maintenance"
+  :termination="theTemplateInvariant.termination"
+/>
 
-### The four canonical problems in this pattern
+### The five canonical problems in this pattern
 
 | Problem | `feasible(x)` | `lo` | `hi` |
 |---|---|---|---|
+| **Capacity to Ship** | packing in order at capacity `x` uses `≤ D` days | `max(weights)` | `sum(weights)` |
 | Koko Bananas | eating at `x`/hr finishes in `≤ H` hrs | `1` | `max(piles)` |
-| Ship in D days | packing greedily at capacity `x` uses `≤ D` days | `max(weights)` | `sum(weights)` |
+| Smallest Divisor | `Σ ceilDiv(a[i], x) ≤ threshold` | `1` | `max(nums)` |
 | Split Array Largest Sum | greedy splits with cap `x` produce `≤ k` groups | `max(nums)` | `sum(nums)` |
-| Median of Two Sorted Arrays | count of values `≤ x` is `≥ (n+1)/2` | `min` of both arrays | `max` of both |
+| Median of Two Sorted Arrays | count of values `≤ x` is `≥ (n+1)/2` | `min` of both | `max` of both |
 
-Note the pattern: `lo` and `hi` are almost always `max(inputs)` and `sum(inputs)`, or the smallest/largest values in the input range. Get these bounds right and the rest is mechanical.
+Pattern: `lo` and `hi` are almost always `max(inputs)` and `sum(inputs)`, or the smallest/largest values in the input range. Get these bounds right and the rest is mechanical.
 
-### Complexity summary
+### Complexity ladder
 
 | Approach | Time | Space | When to use |
 |---|---|---|---|
 | Brute try-every-answer | O(R · f(n)) | O(1) | Only if R is small (≤ 1000) |
-| Binary search on answer | O(log R · f(n)) | O(1) | Every real interview answer |
+| **Binary search on answer** | **O(log R · f(n))** | **O(1)** | **Every real interview answer** |
 
-Where `R = hi - lo` and `f(n)` is one feasibility check.
+Where `R = hi - lo` and `f(n)` is one feasibility check — typically O(n) for pack/greedy, O(log n) for a partition BS, O(n log n) when feasibility sorts.
 
-## Traps & gotchas — the 5 that fail candidates on interview day
+## When the mechanic breaks — three failure modes
 
-> [trap] **Trap 1 — `feasible(x)` isn't monotonic.** The single most fatal mistake. Interviewers *love* to disguise non-monotone problems as BS-on-answer. **Before coding, evaluate `feasible(lo)` and `feasible(hi)` on paper.** If both are true (or both false), the predicate isn't monotone in the direction you think.
+<TrapTrace
+  title="feasible(x) isn't monotonic"
+  bug="The single most fatal mistake. Interviewers love to disguise non-monotone problems as BS-on-answer. For 'count of distinct values ≤ k that are prime' the predicate oscillates with k. The binary search returns garbage with zero runtime signal."
+  fix="Before coding, evaluate feasible(lo), feasible(hi), and feasible(mid) on paper. If both lo and hi are true (or both false), the predicate isn't monotone in the direction you think. If feasible flips multiple times across the range, binary search doesn't apply — iterate or re-formulate."
+/>
 
-> [trap] **Trap 2 — Wrong `lo` bound.** If the smallest possible answer is `max(weights)` (a single item must fit in one truck) but you set `lo = 1`, the loop still works but wastes iterations. If you set `lo = 10` and the actual minimum is `7`, you return the wrong answer. **Always ask: what's the smallest input that could possibly make `feasible` true?**
+<TrapTrace
+  title="Feasibility check has an off-by-one — the ceiling-division trap"
+  bug="In Koko Bananas or Smallest Divisor, the hours (or divisions) needed for a pile of p at speed k is ceil(p / k). Writing p / k gives integer floor and underestimates hours — feasibility incorrectly returns true, and you shrink hi too aggressively, returning a speed that doesn't actually work."
+  fix="Use (p + k - 1) / k or Math.ceilDiv(p, k) for positive integers. Test it: ceilDiv(10, 3) = 4, not 3. If values can be negative or zero, handle those cases explicitly before the division."
+/>
 
-> [trap] **Trap 3 — `hi` too small.** If the true answer is `500` but you set `hi = 400`, you return `400` — a value that fails `feasible`. **Always ask: what's a value I'm certain works?** For sum-of-inputs problems, `hi = sum(all)` is a safe default: ship everything in one day.
+<TrapTrace
+  title="Wrong bounds — hi too small or lo wrong direction"
+  bug="For Split Array Largest Sum with weights that overflow int, you set hi = sum(all) as int → overflow → hi comes out negative → loop exits immediately with lo = hi returning garbage. Separately: if you set lo = 1 when the true minimum is max(weights), the loop still works (just wastes 20 iterations) — but if lo > true answer, you return the wrong answer."
+  fix="Use long for lo/hi/mid whenever sum(inputs) could exceed 2·10^9. Pick lo as the SMALLEST input that could make feasible true (max(weights) for shipping; 1 for divisors). Pick hi as any value you can prove is feasible (sum(weights) ships everything in one day). Overshooting hi costs one log step; undershooting it returns a value that fails feasibility."
+/>
 
-> [trap] **Trap 4 — Feasibility check has an off-by-one.** In Koko Bananas, the number of hours to eat a pile of `p` bananas at speed `x` is `ceil(p / x)`, which in Java is `(p + x - 1) / x` or `Math.ceilDiv(p, x)`. Writing `p / x` gives integer floor and quietly underestimates hours — feasibility incorrectly returns true, and you shrink `hi` too aggressively. **Test the ceiling helper on `p = 10, x = 3` — must be 4, not 3.**
-
-> [trap] **Trap 5 — Off-by-one at exit.** After `while (lo < hi)` exits with `lo == hi`, is that the answer, or `lo - 1`? For "smallest feasible", the answer is `lo`. For "largest feasible", flip the predicate or use a mirrored template. **Never mix templates in one function.**
 
 ## History — Megiddo's parametric search, 1979
 
@@ -107,90 +232,50 @@ The technique of turning an optimization problem into a decision problem was for
 
 In competitive programming, the technique was popularized on Codeforces and TopCoder in the mid-2000s under the informal name **"binary search on the answer."** LeetCode problems like Koko Eating Bananas (2019) and Capacity to Ship Packages Within D Days (2019) turned it into an interview staple.
 
-## Canonical problem walkthrough — Koko Eating Bananas
+## Sub-variations of the template
 
-**Problem** ([↗ LeetCode](https://leetcode.com/problems/koko-eating-bananas/)): Koko has `piles` of bananas and `h` hours before the guards return. Each hour, she picks one pile and eats up to `k` bananas from it (if the pile is smaller, she stops early and doesn't eat from another pile that hour). Return the **smallest** `k` such that she finishes all piles within `h` hours.
+<PatternSubVariationNav pattern="bs-on-answer" />
 
-### Approach 1 — Try every k
+### Capacity to Ship Within D Days <span class="diff diff-m">Medium</span>
 
-```java
-int minEatingSpeedBrute(int[] piles, int h) {
-    int max = 0;
-    for (int p : piles) max = Math.max(max, p);
-    for (int k = 1; k <= max; k++) {
-        if (hoursNeeded(piles, k) <= h) return k;
-    }
-    return max;
-}
+*[↗ LeetCode: Capacity to Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/)*
 
-long hoursNeeded(int[] piles, int k) {
-    long hours = 0;
-    for (int p : piles) hours += (p + k - 1) / k;    // ceiling division
-    return hours;
-}
-```
+The bare mechanic as a sub-variation. Packages must ship **in order** — so feasibility is a one-pass greedy count of days.
 
-**Complexity:** O(max(piles) · n). For `max = 10⁹, n = 10⁴`, that's `10¹³` operations — **hours**. State this to signal you understand the naive path, then move on.
+#### Problem
+A conveyor belt has `weights` in a fixed order; a ship with capacity `cap` must take them in order, filling the ship each day up to `cap`. Return the minimum `cap` that finishes in `D` days.
 
-### Approach 2 — Binary search on k
+**Constraints:** `1 ≤ weights.length ≤ 5·10^4`; `1 ≤ weights[i] ≤ 500`; `1 ≤ D ≤ weights.length`.
 
-The predicate `feasible(k) = hoursNeeded(piles, k) ≤ h` is monotonically **non-increasing** in `k` (bigger `k` → fewer or equal hours). We want the smallest `k` for which it's true.
+#### Solution — brute force
 
-```java
-int minEatingSpeed(int[] piles, int h) {
-    int lo = 1;
-    int hi = 0;
-    for (int p : piles) hi = Math.max(hi, p);        // hi = max pile: certainly finishes in n hours ≤ h
-    while (lo < hi) {
-        int mid = lo + (hi - lo) / 2;
-        if (hoursNeeded(piles, mid) <= h) hi = mid;  // mid works, try smaller
-        else                              lo = mid + 1;  // mid too slow, need bigger
-    }
-    return lo;
-}
+Try every capacity from `max(weights)` to `sum(weights)`, simulate for each: O(R · n) ≈ O(sum · n) ≈ 10^9 — too slow.
 
-long hoursNeeded(int[] piles, int k) {
-    long hours = 0;
-    for (int p : piles) hours += (p + k - 1) / k;
-    return hours;
-}
-```
+#### Solution — optimized
 
-**Complexity:** O(n · log(max(piles))). For the same inputs, that's `10⁴ · 30 ≈ 3·10⁵` operations — under a millisecond.
+Monotone predicate: larger capacity → fewer-or-equal days. Greedy feasibility packs each day up to `cap` and counts days.
 
-**Interview commentary to voice out loud:**
-- *"I define `feasible(k)` as `hoursNeeded ≤ h`."*
-- *"Monotonicity check: at `k = 1`, hours could be huge; at `k = max(piles)`, hours is exactly `n`. So `feasible(1)` may be false, `feasible(max)` is true. Monotone."*
-- *"Bounds: `lo = 1` (smallest meaningful speed), `hi = max(piles)` (guaranteed to work in `n` hours if `h ≥ n`)."*
-- *"Total: O(n log(max)), well under the constraint."*
+> [key] Minimum ship capacity so the packages (in order) deliver in D days.
 
-### Approach 3 — Tightening bounds (micro-optimization)
+<TemplateReveal
+  slug="capacity-to-ship"
+  language="java"
+  :canonical="capacityToShipCode"
+/>
 
-A tighter `hi` is `max(⌈sum(piles) / h⌉, max(piles))` — you can't possibly go slower than "total bananas divided by hours". Rarely helps in practice (only saves ~1-2 iterations), mention as a follow-up.
+> [inv] **Invariant** — `lo` tracks the smallest capacity that *might* work (every smaller cap proven infeasible). `hi` tracks a capacity that definitely works (`sum(weights)` ships everything in one day). After the loop, `lo == hi` is the first-true boundary.
 
-### Complexity ladder
+**Why `lo = max(weights)` and not 1?** A single package must fit in one day's load. If `cap < max(weights)`, no number of days helps — the predicate is undefined, not just false. Setting `lo = max(weights)` avoids testing nonsense capacities.
 
-| Approach | Time | Space | When |
-|---|---|---|---|
-| Try every k | O(max · n) | O(1) | Reference only |
-| Binary search on k | O(n log max) | O(1) | Interview default |
-| Tightened bounds | O(n log max) | O(1) | Contest / follow-up |
+**Trace** — `weights=[1,2,3,4,5,6,7,8,9,10], D=5`. `lo = 10, hi = 55`. Mid = 32: feasible with 2 days → tighten hi. Mid = 21: 2 days → tighten. Mid = 15: 3 days → tighten. Mid = 12: 4 days → tighten. Mid = 11: 5 days → tighten. Mid = 10: 10 days > 5 → loosen. Converges on **15**.
 
----
+**Complexity:** O(n log(sum - max)) time, O(1) space.
 
+**Classic variants** (same mechanic, different feasibility):
+- [Aggressive Cows / Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) — maximize the *minimum* gap between placed objects. Flip the search: `feasible(d) = can place ≥ k balls with every pair ≥ d apart`. Binary-search the largest `d`.
+- [Boats to Save People](https://leetcode.com/problems/boats-to-save-people/) — technically a two-pointer problem; added here because the problem statement sounds identical.
 
-- phrases like "minimum capacity to ship in D days", "slowest speed to finish", "largest minimum gap"
-
-
-<BinarySearchAnim />
-
-
-### When NOT to use it
-The feasibility predicate isn't monotone — you can find an x where `feasible(x)` is true but `feasible(x+1)` is false. Then you're not searching a single flip point; the search space has multiple boundaries and this technique gives the wrong answer.
-
----
-
-## Koko Eating Bananas (Search on Answer — rate) <span class="diff diff-m">Medium</span>
+### Koko Eating Bananas <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)*
 
@@ -342,7 +427,42 @@ O(1), because the search stores only bounds and the running `hours` counter.
 | [Split Array Largest Sum / Book Allocation](https://leetcode.com/problems/split-array-largest-sum/) | guess a max segment sum; feasibility = "≤ m parts needed?" | — |
 | [Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/) | guess a distance; feasibility counts how many stations you'd have to add (works on real numbers, so fix an iteration count or epsilon) | — |
 
-## Split Array Largest Sum / Book Allocation (Search on Answer — partition) <span class="diff diff-h">Hard</span>
+### Find the Smallest Divisor <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Find the Smallest Divisor Given a Threshold](https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/)*
+
+#### Problem
+Given an integer array `nums` and `threshold`, find the smallest **positive integer divisor** `d` such that `Σ ⌈nums[i] / d⌉ ≤ threshold`.
+
+**Constraints:** `1 ≤ nums.length ≤ 5·10^4`; `nums[i] ≤ 10^6`; `nums.length ≤ threshold ≤ 10^6`.
+
+**Example:** `nums=[1,2,5,9], threshold=6` → `5` (sum = ⌈1/5⌉ + ⌈2/5⌉ + ⌈5/5⌉ + ⌈9/5⌉ = 1+1+1+2 = 5 ≤ 6).
+
+#### Why this is a BS-on-answer problem
+
+The feasibility `Σ⌈nums[i]/d⌉ ≤ threshold` is monotone in `d`: larger `d` → smaller (or equal) sum, since each `⌈nums[i]/d⌉` is non-increasing in `d`. The answer space `[1, max(nums)]` is bounded and finite.
+
+> [key] Smallest positive integer d so the sum of ceilDiv(nums[i], d) is ≤ threshold.
+
+<TemplateReveal
+  slug="smallest-divisor"
+  language="java"
+  :canonical="smallestDivisorCode"
+/>
+
+> [inv] **Invariant** — `lo` is the smallest divisor that *might* work (every smaller d has `Σ⌈nums[i]/d⌉ > threshold`). `hi` is a divisor that definitely works (at `d = max(nums)` every term is 1, sum = n ≤ threshold by constraint). Loop maintains the half-open window.
+
+**Why `lo = 1`, not `max(nums)`?** Here the problem accepts any positive integer; small `d` is meaningful (just makes the sum big). Contrast with Capacity to Ship: there `lo = max(weights)` because smaller caps are *undefined*. The lower bound depends on whether sub-range values make feasibility well-defined.
+
+**Why `hi = max(nums)` and not `sum(nums)`?** At `d = max(nums)` every `⌈nums[i]/d⌉ = 1`, so sum = `n ≤ threshold` by the problem's constraint. Any larger `d` gives the same answer. No need to extend `hi` further.
+
+**Complexity:** O(n log(max(nums))) time, O(1) space. For `n = 5·10^4` and `max = 10^6`, that's ~`10^6` ops — microseconds.
+
+**Variations** (same monotone sum, different operation):
+- [Nth Magical Number](https://leetcode.com/problems/nth-magical-number/) — binary-search the value whose count of multiples hits N.
+- [Minimum Time to Complete Trips](https://leetcode.com/problems/minimum-time-to-complete-trips/) — binary-search the time; feasibility is `Σ ⌊t / time[i]⌋ ≥ totalTrips`.
+
+### Split Array Largest Sum <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/)*
 
@@ -460,7 +580,7 @@ O(1), because the optimized algorithm uses only bounds and the current segment s
 | [Divide Chocolate / Maximize the Minimum](https://leetcode.com/problems/divide-chocolate/) | flip it — maximize the smallest piece, so `feasible(x)` = "can make ≥ k pieces each ≥ x." | — |
 | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | binary-search the max allowed step height; feasibility is a BFS/DFS connectivity check | — |
 
-## Median of Two Sorted Arrays (Partition Binary Search) <span class="diff diff-h">Hard</span>
+### Median of Two Sorted Arrays <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)*
 
@@ -584,14 +704,123 @@ O(1), because the algorithm stores boundary indices and values without building 
 | [Median of a Row-wise Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) | binary-search the value and count how many are ≤ mid | — |
 | [Find K-th Smallest Pair Distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance/) | binary-search the distance; feasibility counts pairs within it via a sliding window | — |
 
+## In the wild — Kubernetes bin-packing feasibility
+
+The Kubernetes scheduler must decide, at pod-admission time, whether a new pod with a resource request fits onto some node. For **cluster autoscaler**, the question flips to: *"What's the minimum number of nodes of type T we need to add so this pending workload fits?"* The scheduler's `ClusterAutoscaler.estimateNodeCount()` runs a monotone bin-packing feasibility and binary-searches the node count:
+
+```go
+// kubernetes/autoscaler/cluster-autoscaler/estimator/binpacking_estimator.go (paraphrased)
+func (e *BinpackingEstimator) Estimate(pods []*v1.Pod, nodeTemplate *schedulerframework.NodeInfo) int {
+    lo, hi := 1, len(pods)                             // bounds: 1 node ≤ answer ≤ one node per pod
+    for lo < hi {
+        mid := lo + (hi-lo)/2
+        if canFit(pods, nodeTemplate, mid) {           // feasibility: first-fit-decreasing packing
+            hi = mid                                    // mid works — can we do fewer?
+        } else {
+            lo = mid + 1                                // mid doesn't fit — need more
+        }
+    }
+    return lo
+}
+```
+
+The `canFit` feasibility check is a **first-fit-decreasing** bin-pack simulation: sort pods by resource request, assign greedily to the mid-count virtual nodes. If every pod fits, mid is feasible. Monotonicity holds because adding a node can never make a feasible packing infeasible.
+
+**Why BS-on-answer here instead of a greedy single-pass count?** Because resources are multi-dimensional (CPU, memory, GPU, pods-per-node), first-fit-decreasing can leave gaps a second pass can't recover. BS on the node count treats each feasibility probe as an independent repack.
+
+**Other production uses of the same mechanic:**
+1. **PostgreSQL's `pg_bulkload`** — binary-searches the optimal `buffer_size` for streaming inserts; feasibility = "did the load complete without disk flush during this window?"
+2. **Linux kernel `tcp_bbr`** congestion control — binary-searches the sending rate; feasibility = "did RTT stay under probe target during this interval?"
+3. **TensorFlow's `tf.config.experimental.set_memory_growth`** on GPU allocators — binary-searches the initial `block_size`; feasibility = "no OOM during the first N allocations?"
+4. **Spark's `DAGScheduler.shuffleWriteBufferSize`** — binary-searches the per-partition write buffer; feasibility = "did the shuffle complete within the deadline?"
+
+## Recognition drill
+
+<RecognitionDrill pattern="bs-on-answer" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if the answer is a real number?</strong></summary>
+
+Switch from `while (lo < hi)` to one of:
+- **Epsilon convergence** — `while (hi - lo > 1e-7)`, where `1e-7` matches the problem's tolerance.
+- **Fixed-iteration halving** — `for (int i = 0; i < 100; i++)` → precision `2^-100 ≈ 10^-30` of initial range. Preferred for competitive programming — no `while` termination to prove.
+
+Rewrite the loop body:
+
+```java
+double lo = ..., hi = ...;
+for (int it = 0; it < 100; it++) {
+    double mid = lo + (hi - lo) / 2;      // never (lo + hi) / 2 — overflow on doubles too (close to MAX_VALUE)
+    if (feasible(mid)) hi = mid;
+    else                lo = mid;
+}
+return lo;
+```
+
+Example: *Median of a sorted matrix with real values*, *Minimize Max Distance to Gas Station*.
+</details>
+
+<details>
+<summary><strong>What if feasible is non-monotone but has a known shape?</strong></summary>
+
+If `feasible` is **unimodal** (one peak or one valley), ternary search works in O(log n) with twice the probes per step. Each iteration splits into thirds, discards the end farthest from the current best. Used for continuous convex optimization in low dimensions.
+
+If `feasible` has `k` monotone intervals, each ≥ `n/k` wide, binary-search each interval separately. If `k` is unknown, this doesn't help.
+</details>
+
+<details>
+<summary><strong>What if the feasibility check itself is a BS?</strong></summary>
+
+You get **nested BS** — common when the inner search is on a value and the outer is on a count. Example: *Kth Smallest Pair Distance*: outer BS on the pair-distance answer; inner is a sorted-array two-pointer that counts pairs within a given distance. Total: O(n log(max_pair_distance)) because the inner is linear, not log.
+
+If both layers are BS, you'd get O(log² ...). Try to flatten by replacing one with a greedy count.
+</details>
+
+<details>
+<summary><strong>What if the answer space is a 2D parameter (e.g., choose x AND y)?</strong></summary>
+
+Binary search doesn't generalize to 2D. Reach for:
+- **Lagrangian relaxation** — binary-search the dual multiplier (one dimension) and solve the primal (other dimension) exactly for each probe.
+- **Grid search → gradient-free optimization** (CMA-ES, Nelder-Mead) when the surface is smooth.
+- **Direct DP** when the parameters are small-integer.
+
+Example: *Allocate k items to m bins minimizing max load, with per-bin capacity limits* — Lagrangian on the capacity shadow price.
+</details>
+
+<details>
+<summary><strong>What if monotonicity breaks only at a few points (floating-point artifacts)?</strong></summary>
+
+Common with real-valued feasibility: `feasible(x)` is a Monte-Carlo simulation whose output flickers near the boundary. Fixes:
+
+- **Hysteresis** — treat a flip as "feasible" only if 3 consecutive probes agree.
+- **Decrease epsilon** — probe at `mid ± δ` and require both to agree.
+- **Deterministic feasibility** — swap the stochastic check for a conservative upper bound that's deterministic even if looser.
+
+Example: *Optimal GPU batch size by binary-searching OOM risk* — feasibility is stochastic because of fragmentation; use a conservative headroom instead.
+</details>
+
+### Breaking point
+
+Binary search on the answer **stops being optimal** when:
+- `feasible` isn't monotone — single most-common failure mode.
+- Each feasibility check costs more than O(n log n) — the log factor from BS might not amortize.
+- The answer is a structure, not a scalar.
+- The answer range is small (`≤ 1000`) and each check is cheap — simple iteration is simpler.
+- The problem has a closed-form solution — e.g. median of a sorted array is `a[n/2]`, don't BS.
+
+### Three cross-pattern problems
+
+- [Allocate Mailboxes](https://leetcode.com/problems/allocate-mailboxes/) — looks like BS on answer; actually a DP (the feasibility isn't monotone in a useful way).
+- [Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/) — BS on quality ratio paired with a priority queue; demonstrates nested feasibility.
+- [Erect the Fence](https://leetcode.com/problems/erect-the-fence/) — convex hull, NOT a BS problem; included because the "minimize enclosing area" phrasing sounds BS-shaped.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="bs-on-answer"
-  :questions='[{"q": "What TWO ingredients are required to apply \"Binary Search on the Answer\"?", "choices": [{"text": "A monotonic feasibility predicate + bounded answer range", "correct": true, "explanation": "Without monotonicity you can’t eliminate halves."}, {"text": "The array must be sorted", "correct": false, "explanation": "The array need not be sorted."}, {"text": "The answer must be an integer", "correct": false, "explanation": "It can be a real number with epsilon convergence."}, {"text": "Recursion", "correct": false}]}, {"q": "For Koko Eating Bananas, what is the feasibility function?", "choices": [{"text": "Given eating speed k, can we finish within h hours?", "correct": true, "explanation": "Monotone: larger k → fewer hours required."}, {"text": "Is k the smallest pile?", "correct": false}, {"text": "Is k a divisor of h?", "correct": false}, {"text": "Is k > max(piles)?", "correct": false}]}, {"q": "For Split Array Largest Sum, what does `feasible(cap)` check?", "choices": [{"text": "Can we split into ≤ m parts each with sum ≤ cap?", "correct": true, "explanation": "Larger cap → fewer parts needed."}, {"text": "Is cap ≥ max(nums)?", "correct": false, "explanation": "That is the lower bound of the search, not the check."}, {"text": "Is cap divisible by m?", "correct": false}, {"text": "Nothing", "correct": false}]}, {"q": "What is the total complexity of BS on Answer with an O(n) feasibility check over range [lo, hi]?", "choices": [{"text": "O(n log(hi - lo))", "correct": true, "explanation": "log iterations × O(n) per check."}, {"text": "O(n²)", "correct": false}, {"text": "O(log n)", "correct": false}, {"text": "O(hi - lo)", "correct": false}]}, {"q": "For real-valued BS on Answer (e.g., minimize max distance to gas station), how do you terminate?", "choices": [{"text": "Iterate until `hi - lo < epsilon` for some small threshold", "correct": true, "explanation": "Integer BS uses `lo < hi`; real-valued uses epsilon convergence."}, {"text": "Loop 1000 times", "correct": false, "explanation": "Fragile; use epsilon."}, {"text": "Never — infinite loop", "correct": false}, {"text": "Cast to int", "correct": false}]}]'
-/>
+<Quiz pattern-id="bs-on-answer" :questions="mastery5" />
 
 <PrintButton />
 

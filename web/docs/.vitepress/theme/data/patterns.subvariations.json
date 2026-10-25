@@ -307,27 +307,27 @@
     "inTheWildSource": "Kubernetes scheduler bin-packing feasibility check",
     "subVariations": [
       {
-        "slug": "capacity-to-ship",
+        "slug": "capacity-to-ship-within-d-days-medium",
         "title": "Capacity to Ship Within D Days \u2014 bare mechanic",
         "difficulty": "medium"
       },
       {
-        "slug": "koko-bananas",
+        "slug": "koko-eating-bananas-medium",
         "title": "Koko Eating Bananas",
         "difficulty": "medium"
       },
       {
-        "slug": "smallest-divisor",
+        "slug": "find-the-smallest-divisor-medium",
         "title": "Find the Smallest Divisor",
         "difficulty": "medium"
       },
       {
-        "slug": "split-array-largest-sum",
+        "slug": "split-array-largest-sum-hard",
         "title": "Split Array Largest Sum / Book Allocation",
         "difficulty": "hard"
       },
       {
-        "slug": "median-two-sorted",
+        "slug": "median-of-two-sorted-arrays-hard",
         "title": "Median of Two Sorted Arrays (partition BS)",
         "difficulty": "hard"
       }

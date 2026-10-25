@@ -561,7 +561,98 @@
     }
   ],
   "monotonic-stack": [],
-  "bs-on-answer": [],
+  "bs-on-answer": [
+    {
+      "statement": "Minimum truck capacity so that packages can be shipped in order within D days.",
+      "pattern": "bs-on-answer",
+      "subVariation": "capacity-to-ship",
+      "distractors": [
+        "greedy",
+        "dp"
+      ]
+    },
+    {
+      "statement": "Minimum eating speed k so Koko finishes all piles within H hours (one pile per hour).",
+      "pattern": "bs-on-answer",
+      "subVariation": "koko-bananas",
+      "distractors": [
+        "greedy",
+        "simulation"
+      ]
+    },
+    {
+      "statement": "Smallest positive integer divisor so that the sum of ceilDiv(nums[i], d) is \u2264 threshold.",
+      "pattern": "bs-on-answer",
+      "subVariation": "smallest-divisor",
+      "distractors": [
+        "greedy",
+        "math"
+      ]
+    },
+    {
+      "statement": "Split an array into m contiguous subarrays to minimize the largest subarray sum.",
+      "pattern": "bs-on-answer",
+      "subVariation": "split-array-largest-sum",
+      "distractors": [
+        "dp",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Find the median of two sorted arrays in O(log(min(m,n))).",
+      "pattern": "bs-on-answer",
+      "subVariation": "median-two-sorted",
+      "distractors": [
+        "two-pointers",
+        "heap"
+      ]
+    },
+    {
+      "statement": "Place K cows in stalls on a line so the minimum distance between any two cows is maximized.",
+      "pattern": "bs-on-answer",
+      "subVariation": "capacity-to-ship",
+      "distractors": [
+        "greedy",
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "Smallest max working-hours per subarray when splitting workers into K teams of contiguous tasks.",
+      "pattern": "bs-on-answer",
+      "subVariation": "split-array-largest-sum",
+      "distractors": [
+        "dp",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Minimum number of days needed to make m bouquets of k adjacent flowers each.",
+      "pattern": "bs-on-answer",
+      "subVariation": "koko-bananas",
+      "distractors": [
+        "sliding-window",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Find the K-th smallest pair distance in an unsorted integer array.",
+      "pattern": "bs-on-answer",
+      "subVariation": "median-two-sorted",
+      "distractors": [
+        "heap",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Find the maximum capacity load so a boat can ferry all passengers across in \u2264 T trips.",
+      "pattern": "bs-on-answer",
+      "subVariation": "capacity-to-ship",
+      "distractors": [
+        "greedy",
+        "two-pointers"
+      ]
+    }
+  ],
   "top-k-heap": [],
   "k-way-merge": [
     {
