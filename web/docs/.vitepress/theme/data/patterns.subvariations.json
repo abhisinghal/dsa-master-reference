@@ -795,49 +795,49 @@
     "inTheWildSource": "JDK Integer.bitCount with popcnt intrinsic",
     "subVariations": [
       {
-        "slug": "low-bit-isolate",
-        "title": "Isolate the low bit \u2014 bare mechanic",
-        "difficulty": "easy"
+        "difficulty": "easy",
+        "slug": "isolate-the-low-bit-easy",
+        "title": "Isolate the low bit \u2014 bare mechanic"
       },
       {
-        "slug": "single-number-xor",
-        "title": "Single Number (XOR cancellation)",
-        "difficulty": "easy"
+        "difficulty": "easy",
+        "slug": "single-number-xor-easy",
+        "title": "Single Number (XOR cancellation)"
       },
       {
-        "slug": "single-number-ii-mod3",
-        "title": "Single Number II (count-mod-3)",
-        "difficulty": "medium"
+        "difficulty": "easy",
+        "slug": "single-number-ii-easy",
+        "title": "Single Number II (count-mod-3)"
       },
       {
-        "slug": "single-number-iii",
-        "title": "Single Number III (two missing)",
-        "difficulty": "medium"
+        "difficulty": "easy",
+        "slug": "single-number-iii-easy",
+        "title": "Single Number III (two missing)"
       },
       {
-        "slug": "counting-bits-dp",
-        "title": "Counting Bits (DP on bits)",
-        "difficulty": "easy"
+        "difficulty": "easy",
+        "slug": "counting-bits-easy",
+        "title": "Counting Bits (DP on bits)"
       },
       {
-        "slug": "reverse-bits",
-        "title": "Reverse Bits",
-        "difficulty": "easy"
+        "difficulty": "easy",
+        "slug": "reverse-bits-easy",
+        "title": "Reverse Bits"
       },
       {
-        "slug": "power-of-two",
-        "title": "Power of Two check (x & (x-1) == 0)",
-        "difficulty": "easy"
+        "difficulty": "easy",
+        "slug": "power-of-two-easy",
+        "title": "Power of Two check (x & (x-1) == 0)"
       },
       {
-        "slug": "subset-generation-masks",
-        "title": "Subset generation via masks",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "subset-generation-via-masks-medium",
+        "title": "Subset generation via masks"
       },
       {
-        "slug": "swap-without-temp",
-        "title": "Swap without temp (classic)",
-        "difficulty": "easy"
+        "difficulty": "easy",
+        "slug": "swap-without-temp-easy",
+        "title": "Swap without temp (classic)"
       }
     ]
   },

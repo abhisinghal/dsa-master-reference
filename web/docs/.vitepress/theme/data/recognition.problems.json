@@ -1210,7 +1210,98 @@
   ],
   "dp": [],
   "trie-pattern": [],
-  "bit-manip": [],
+  "bit-manip": [
+    {
+      "statement": "Extract the lowest set bit of an integer in O(1).",
+      "pattern": "bit-manip",
+      "subVariation": "low-bit-isolate",
+      "distractors": [
+        "loop-shift",
+        "lookup"
+      ]
+    },
+    {
+      "statement": "Find the unique number in an array where every other number appears twice.",
+      "pattern": "bit-manip",
+      "subVariation": "single-number-xor",
+      "distractors": [
+        "hashing",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Find the unique number where every other number appears three times.",
+      "pattern": "bit-manip",
+      "subVariation": "single-number-ii-mod3",
+      "distractors": [
+        "hashing",
+        "bitcount-mod"
+      ]
+    },
+    {
+      "statement": "Find the two unique numbers where every other number appears twice.",
+      "pattern": "bit-manip",
+      "subVariation": "single-number-iii",
+      "distractors": [
+        "xor-split",
+        "hashing"
+      ]
+    },
+    {
+      "statement": "Count the number of set bits in each integer from 0 to n.",
+      "pattern": "bit-manip",
+      "subVariation": "counting-bits-dp",
+      "distractors": [
+        "bitcount-per",
+        "lookup"
+      ]
+    },
+    {
+      "statement": "Reverse the 32 bits of an unsigned integer.",
+      "pattern": "bit-manip",
+      "subVariation": "reverse-bits",
+      "distractors": [
+        "string-reverse",
+        "lookup-table"
+      ]
+    },
+    {
+      "statement": "Determine if a non-negative integer is a power of two in O(1).",
+      "pattern": "bit-manip",
+      "subVariation": "power-of-two",
+      "distractors": [
+        "log2",
+        "loop-divide"
+      ]
+    },
+    {
+      "statement": "Enumerate all 2^n subsets of an n-element set using integer masks 0..2^n-1.",
+      "pattern": "bit-manip",
+      "subVariation": "subset-generation-masks",
+      "distractors": [
+        "backtracking",
+        "recursion"
+      ]
+    },
+    {
+      "statement": "Swap two integers without using a temporary variable.",
+      "pattern": "bit-manip",
+      "subVariation": "swap-without-temp",
+      "distractors": [
+        "temp",
+        "add-subtract"
+      ]
+    },
+    {
+      "statement": "Count the total number of set bits across all integers 0..n efficiently.",
+      "pattern": "bit-manip",
+      "subVariation": "counting-bits-dp",
+      "distractors": [
+        "naive",
+        "math"
+      ]
+    }
+  ],
   "quickselect": [
     {
       "statement": "Find the k-th largest element in an unsorted array in expected O(n) time without doing a full sort.",

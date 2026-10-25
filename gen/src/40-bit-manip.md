@@ -5,6 +5,191 @@
 
 <PatternProgress pattern-id="bit-manip" problems="single-number, missing-number, find-the-difference, number-of-1-bits, hamming-distance, power-of-two, reverse-bits, maximum-product-of-word-lengths, sum-of-all-subset-xor-totals, subsets" />
 
+<script setup>
+const theTemplateCode = `// The bit-manip "template" is really a catalog of identities.
+// Memorize these and 90% of problems collapse to one line.
+int lowBit        = x & -x;              // isolate the lowest set bit
+int clearLowest   = x & (x - 1);         // clear the lowest set bit
+boolean kthBit    = ((x >> k) & 1) == 1; // read bit k
+int setK          = x | (1 << k);        // set bit k
+int clearK        = x & ~(1 << k);       // clear bit k
+int toggleK       = x ^ (1 << k);        // toggle bit k
+int bits          = Integer.bitCount(x); // hardware popcnt (~1ns)
+// XOR cancellation: a ^ a == 0, a ^ 0 == a, XOR is commutative and associative`
+
+const theTemplateInvariant = {
+  statement: `A bit-manipulation algorithm maintains an INTEGER as the whole state. Each identity (AND / OR / XOR / shift) transforms the state in O(1), and the algorithm's correctness rests on a loop invariant stated over the bits of that integer — "after step i, bits 0..i-1 are correct" or "after step i, running XOR cancels every value seen an even number of times".`,
+  initialization: `Start with 0 (XOR identity) or ~0 / (1 << n) - 1 (all-bits-set complement). The initial value is the identity element of the dominant operation.`,
+  maintenance: `Each step applies one identity to update the integer. The invariant is a per-bit claim (bit k is correct) or a cross-bit claim (popcount parity, lowest set bit position).`,
+  termination: `When the loop exits, the integer holds the answer — the surviving XOR, the counted bit, or the final mask. No separate "extract" step needed.`
+}
+
+const theTemplateComplexity = {
+  time: `O(1) per identity · O(n) for a one-pass over an array · O(2^n) for enumerating all subset masks`,
+  space: `O(1) — the integer IS the state`
+}
+
+const theTemplateSpecializations = [
+  { slug: `isolate-the-low-bit-easy`,           title: `Isolate the low bit (easy)` },
+  { slug: `single-number-xor-easy`,             title: `Single Number (XOR) (easy)` },
+  { slug: `single-number-ii-easy`,              title: `Single Number II (easy)` },
+  { slug: `single-number-iii-easy`,             title: `Single Number III (easy)` },
+  { slug: `counting-bits-easy`,                 title: `Counting Bits (easy)` },
+  { slug: `reverse-bits-easy`,                  title: `Reverse Bits (easy)` },
+  { slug: `power-of-two-easy`,                  title: `Power of Two (easy)` },
+  { slug: `subset-generation-via-masks-medium`, title: `Subset generation (medium)` },
+  { slug: `swap-without-temp-easy`,             title: `Swap without temp (easy)` },
+]
+
+const theTemplateProblemShape = `Operations on sets, flags, or integers that reduce to a sequence of AND / OR / XOR / shift primitives — each O(1) on hardware, each with a one-line identity.`
+
+const lowBitCode = `// Isolate the lowest set bit — the ur-bit-trick.
+// How it works: two's-complement means -x = ~x + 1 bit-for-bit.
+// So x & -x keeps only the lowest 1-bit (everything else flipped).
+int lowBit(int x) {
+    return x & -x;
+}
+
+// Example: x = 0b1011_0000 → low = 0b0001_0000
+// Example: x = 0b0000_1100 → low = 0b0000_0100
+// Example: x = 0 → low = 0 (no set bits)
+
+// Common uses:
+// - popcount via loop: while (x != 0) { x ^= lowBit(x); count++; }
+// - Fenwick (BIT) traversal: i += i & -i
+// - clear lowest set bit:   x & (x - 1)  (the complementary identity)`
+
+const reverseBitsCode = `// Reverse the 32 bits of an unsigned integer.
+// Approach: butterfly-swap halves/quarters/eighths/sixteenths with precomputed masks.
+int reverseBits(int n) {
+    n = ((n & 0xFFFF0000) >>> 16) | ((n & 0x0000FFFF) << 16);
+    n = ((n & 0xFF00FF00) >>> 8)  | ((n & 0x00FF00FF) << 8);
+    n = ((n & 0xF0F0F0F0) >>> 4)  | ((n & 0x0F0F0F0F) << 4);
+    n = ((n & 0xCCCCCCCC) >>> 2)  | ((n & 0x33333333) << 2);
+    n = ((n & 0xAAAAAAAA) >>> 1)  | ((n & 0x55555555) << 1);
+    return n;
+}
+// O(1) in operations (5 masks, 10 shifts, 5 ORs).
+// Note the >>> (unsigned shift) — >> would propagate the sign bit and corrupt the result.`
+
+const powerOfTwoCode = `// Is x a power of two? (positive integer only)
+boolean isPowerOfTwo(int x) {
+    return x > 0 && (x & (x - 1)) == 0;
+}
+// Logic: a power of two has exactly ONE set bit. x & (x-1) clears the lowest set bit;
+// if the result is 0, x had exactly one set bit. The x > 0 guard excludes 0 and negatives.
+
+// Example: x = 8 = 0b1000, x - 1 = 7 = 0b0111, x & (x-1) = 0 ✓
+// Example: x = 6 = 0b0110, x - 1 = 5 = 0b0101, x & (x-1) = 0b0100 ≠ 0 ✗
+// Example: x = 0 → 0 > 0 fails, returns false ✓
+// Example: x = -8 → -8 > 0 fails, returns false ✓ (two's complement of -8 has bit-31 set)`
+
+const swapNoTempCode = `// Swap two integers without a temporary variable.
+void swap(int[] a, int i, int j) {
+    if (i == j) return;                   // CRITICAL — otherwise a[i] gets zeroed
+    a[i] ^= a[j];                         // a[i] = a[i] ^ a[j]
+    a[j] ^= a[i];                         // a[j] = a[j] ^ (a[i] ^ a[j]) = a[i]
+    a[i] ^= a[j];                         // a[i] = (a[i] ^ a[j]) ^ a[i] = a[j]
+}
+
+// Why the i == j guard matters:
+// If i == j, the first line sets a[i] = a[i] ^ a[i] = 0.
+// Then a[j] = 0, a[i] = 0. The original value is destroyed.
+// Interview-day failure if omitted.
+
+// In practice: never use this in production code — modern CPUs do swap with
+// one XCHG instruction, and a temp-based swap is clearer. Only interesting
+// as a brainteaser or in constrained-memory assembly.`
+
+const singleNumberXorCode = `// Single Number: every element appears twice except one; find the loner.
+int singleNumber(int[] nums) {
+    int x = 0;
+    for (int n : nums) x ^= n;            // duplicates cancel, loner survives
+    return x;
+}
+// O(n) time, O(1) space. Beats HashSet (O(n) space).
+// Correctness: XOR is commutative + associative + self-inverse, so pairs cancel
+// regardless of order.`
+
+const singleNumberIICode = `// Single Number II: every element appears THREE times except one; find the loner.
+// Approach: for each bit position, count occurrences across all nums. The loner's
+// bit is 1 iff its count mod 3 is 1.
+int singleNumberII(int[] nums) {
+    int ones = 0, twos = 0;
+    for (int n : nums) {
+        ones = (ones ^ n) & ~twos;        // bit set in 'ones' iff seen 1 (mod 3) times
+        twos = (twos ^ n) & ~ones;        // bit set in 'twos' iff seen 2 (mod 3) times
+    }
+    return ones;                          // bits seen 3 (mod 3) == 0 times vanish from both
+}
+// O(n) time, O(1) space. Beats bit-by-bit counting (O(32n) time).`
+
+const singleNumberIIICode = `// Single Number III: every element appears twice EXCEPT two distinct loners; find both.
+// Approach: XOR all → result is a ^ b where a, b are the two loners. a != b implies
+// a ^ b has at least one set bit — pick any one (the lowest) as a discriminator.
+// Partition nums into two groups by that bit; XOR each group separately.
+int[] singleNumberIII(int[] nums) {
+    int xor = 0;
+    for (int n : nums) xor ^= n;
+    int diff = xor & -xor;                // lowest set bit — a differs from b here
+    int a = 0, b = 0;
+    for (int n : nums) {
+        if ((n & diff) == 0) a ^= n;      // group where this bit is 0
+        else                 b ^= n;      // group where this bit is 1
+    }
+    return new int[]{a, b};
+}
+// O(n) time, O(1) space. Each loner is isolated in its own group; duplicates cancel.`
+
+const mastery5 = [
+  {
+    q: `Why does XOR cancellation (ones ^= n for every n) solve "Single Number" (every other element appears twice)?`,
+    choices: [
+      { text: `XOR is commutative, associative, and self-inverse: x ^ x = 0, so duplicate pairs cancel regardless of order`, correct: true, explanation: `This is the entire theorem. Reorder the array into pairs + loner: pairs cancel to 0, loner stays.` },
+      { text: `XOR is a hash function with no collisions`, correct: false, explanation: `XOR has many collisions (a ^ b = c ^ d is common).` },
+      { text: `The problem guarantees unique values`, correct: false, explanation: `There are duplicates — that's the whole premise.` },
+      { text: `By coincidence; it only works for powers of two`, correct: false }
+    ]
+  },
+  {
+    q: `What does x & -x compute, and why?`,
+    choices: [
+      { text: `The lowest set bit of x — because in two's complement, -x inverts bits above the lowest 1 and keeps the lowest 1 set`, correct: true, explanation: `Specifically -x = ~x + 1. AND-ing with x isolates only the single bit position where both agree, which is the lowest 1 of x.` },
+      { text: `The absolute value of x`, correct: false, explanation: `Math.abs doesn't use bit tricks for arbitrary x.` },
+      { text: `The highest set bit`, correct: false, explanation: `Lowest, not highest. Highest set bit needs Integer.highestOneBit.` },
+      { text: `Nothing meaningful`, correct: false }
+    ]
+  },
+  {
+    q: `Why does Java's "1 << 31" give a NEGATIVE number?`,
+    choices: [
+      { text: `int is signed 32-bit; bit 31 is the sign bit. 1 << 31 = 0x80000000 = Integer.MIN_VALUE`, correct: true, explanation: `Use 1L << 31 to get 2^31 as a long.` },
+      { text: `Shifts always produce negatives`, correct: false },
+      { text: `Java has a bug in <<`, correct: false },
+      { text: `It's a floating-point rounding error`, correct: false, explanation: `No floats involved.` }
+    ]
+  },
+  {
+    q: `For the XOR swap (a[i] ^= a[j]; a[j] ^= a[i]; a[i] ^= a[j]), what fails if i == j?`,
+    choices: [
+      { text: `The first line sets a[i] = 0 (self-XOR), destroying the value — subsequent XORs can't recover it`, correct: true, explanation: `Always guard with if (i == j) return; before the three-step swap.` },
+      { text: `An ArithmeticException`, correct: false, explanation: `XOR of two ints is total — never throws.` },
+      { text: `An infinite loop`, correct: false, explanation: `The swap is straight-line.` },
+      { text: `Nothing — Java has special-case handling for i == j`, correct: false }
+    ]
+  },
+  {
+    q: `In Single Number II (every element appears 3× except one), the two-state (ones, twos) trick computes:`,
+    choices: [
+      { text: `For each bit position, the count mod 3 of occurrences — using 'ones' + 'twos' as a 2-bit counter per position`, correct: true, explanation: `Base-3 counting via two base-2 variables; third occurrence resets both. The loner's bits persist in 'ones'.` },
+      { text: `A hash of all seen values`, correct: false },
+      { text: `The XOR of alternating elements`, correct: false, explanation: `That solves Single Number I, not II.` },
+      { text: `A sum modulo 3`, correct: false, explanation: `Would overflow for large values.` }
+    ]
+  }
+]
+</script>
+
 
 
 ## Why bit manipulation exists — the story
@@ -65,96 +250,75 @@ x ^ (1 << k)    // toggle bit k
 - **Cross-language / cross-platform code where signed/unsigned mismatch matters** — Java's signed shifts differ from C's, from JavaScript's, from Python's arbitrary-precision. Bit-level code doesn't port cleanly.
 - **A team member cannot read the code in 30 seconds** — comment aggressively or use a helper method. Bit tricks are a maintainability tax.
 
-## The templates
+## THE template — the identity catalog
 
-### Template 1: Iterate all set bits (Kernighan's trick)
+<PatternTemplateCard
+  slug="bit-manip"
+  title="Bit Manipulation"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="theTemplateInvariant"
+  :complexity="theTemplateComplexity"
+  :specializations="theTemplateSpecializations"
+  :problemShape="theTemplateProblemShape"
+/>
 
+<InvariantProof
+  :statement="theTemplateInvariant.statement"
+  :initialization="theTemplateInvariant.initialization"
+  :maintenance="theTemplateInvariant.maintenance"
+  :termination="theTemplateInvariant.termination"
+/>
+
+### The identities in one place
+
+The sub-variations below are each a one-identity theorem. Memorize these and 90% of bit-trick interview questions collapse to one line.
+
+| Operation | Identity | Example |
+|---|---|---|
+| Isolate low bit | `x & -x` | `0b1010 → 0b0010` |
+| Clear low bit | `x & (x - 1)` | `0b1010 → 0b1000` |
+| Set bit k | `x | (1 << k)` | `0b0000 | 1<<2 → 0b0100` |
+| Clear bit k | `x & ~(1 << k)` | `0b1111 & ~(1<<2) → 0b1011` |
+| Toggle bit k | `x ^ (1 << k)` | `0b1010 ^ 1<<1 → 0b1000` |
+| Read bit k | `(x >> k) & 1` | reads bit at position k |
+| Hardware popcount | `Integer.bitCount(x)` | 1 CPU cycle on x86-64 |
+
+**Iterate subsets of a mask (3^n total work across all masks):**
 ```java
-int popcount(int x) {
-    int count = 0;
-    while (x != 0) {
-        x &= (x - 1);                       // clear lowest set bit
-        count++;
-    }
-    return count;
-}
-// or: Integer.bitCount(x) — hardware popcnt, ~1 ns
+for (int sub = mask; sub != 0; sub = (sub - 1) & mask) { /* ... */ }
 ```
 
-**Why Kernighan wins:** each iteration removes one bit, so loop runs exactly popcount(x) times — not 32 times. For sparse bitmasks (few 1s), this is faster than shifting-and-testing every bit.
-
-### Template 2: Iterate all subsets of a mask
-
-```java
-for (int sub = mask; sub != 0; sub = (sub - 1) & mask) {
-    // sub is now a non-empty subset of mask
-    process(sub);
-}
-// Total iterations across all masks: 3^n (each of n bits is either in mask-not-sub, in-sub, or absent from both)
-```
-
-**Trick:** `(sub - 1) & mask` skips values that would violate the subset property. Classic subset-DP over a mask.
-
-### Template 3: XOR cancellation (Single Number)
-
-```java
-int singleNumber(int[] nums) {
-    int x = 0;
-    for (int n : nums) x ^= n;              // duplicates cancel, single survives
-    return x;
-}
-```
-
-**Complexity:** O(n) time, O(1) space. Compare with hash-set: O(n) time, O(n) space. Bit trick is strictly better here.
-
-### Template 4: Bitmask DP (traveling salesman skeleton)
-
-```java
-int tsp(int[][] dist) {
-    int n = dist.length;
-    int[][] dp = new int[1 << n][n];         // dp[mask][last] = min cost to visit mask, ending at last
-    for (int[] row : dp) Arrays.fill(row, Integer.MAX_VALUE / 2);
-    dp[1][0] = 0;                             // start at city 0
-    for (int mask = 1; mask < (1 << n); mask++)
-        for (int last = 0; last < n; last++) {
-            if ((mask & (1 << last)) == 0 || dp[mask][last] == Integer.MAX_VALUE / 2) continue;
-            for (int next = 0; next < n; next++)
-                if ((mask & (1 << next)) == 0) {
-                    int newMask = mask | (1 << next);
-                    dp[newMask][next] = Math.min(dp[newMask][next], dp[mask][last] + dist[last][next]);
-                }
-        }
-    int best = Integer.MAX_VALUE;
-    for (int last = 1; last < n; last++)
-        best = Math.min(best, dp[(1 << n) - 1][last] + dist[last][0]);   // return to start
-    return best;
-}
-```
-
-**Complexity:** O(2^n · n^2) time, O(2^n · n) space. For n ≤ 20, tractable.
-
-### Complexity summary
+### Complexity reference
 
 | Operation | Time | Space |
 |---|---|---|
 | Read/set/clear/toggle bit | O(1) | O(1) |
-| Popcount (via Kernighan) | O(popcount) | O(1) |
+| Popcount (Kernighan loop) | O(popcount) | O(1) |
 | Popcount (hardware) | O(1) | O(1) |
 | Iterate subsets of mask | O(2^popcount) per mask | O(1) |
 | Bitmask DP (TSP-style) | O(2^n · n^2) | O(2^n · n) |
 | XOR-cancellation | O(n) | O(1) |
 
-## Traps & gotchas — the 5 that fail candidates on interview day
+## When the mechanic breaks — three failure modes
 
-> [trap] **Trap 1 — Signed vs. unsigned shift.** In Java, `>>` preserves the sign bit — for negative numbers, `-1 >> 1 == -1` (fills with 1s). `>>>` zero-fills — `-1 >>> 1 == Integer.MAX_VALUE`. For bit counting on 32-bit ints of arbitrary sign, always use `>>>`. **Rule: if in doubt, use `>>>`.**
+<TrapTrace
+  title="Signed vs. unsigned shift"
+  bug="In Java, >> preserves the sign bit: -1 >> 1 == -1 (fills with 1s). For negative numbers passed into bit-counting or reverse-bits logic, >> propagates the sign and never terminates (or returns wrong). Reverse Bits with >> on bit 31 corrupts every lower result."
+  fix="Use >>> (unsigned shift, zero-fills) whenever the value could be negative OR you're treating it as a bitmask. The one exception: arithmetic right-shift (dividing by 2^k with sign preservation) — then >> is correct. Rule: if the semantics are 'bitmask', use >>>."
+/>
 
-> [trap] **Trap 2 — `1 << 31` overflow.** `int` is signed 32-bit, so `1 << 31` is `Integer.MIN_VALUE == -2147483648`. If you meant "the value 2^31 = 2147483648," use `1L << 31`. **Rule: if the shift result might reach or exceed bit 31, use `long`.**
+<TrapTrace
+  title="1 << 31 overflow and operator precedence"
+  bug="Two bugs that corrupt silently: (1) 1 << 31 is Integer.MIN_VALUE, not 2^31 — if you need the positive value, use 1L << 31. (2) if (x & mask == 0) parses as if (x & (mask == 0)) because == binds tighter than & — the compiler flags the type mismatch, but if the expression is in a context where booleans auto-convert, it compiles and silently returns wrong."
+  fix="For (1): use long whenever a shift result might reach bit 31+. For (2): ALWAYS parenthesize bitwise comparisons: if ((x & mask) == 0). The parentheses are not optional — operator precedence is the single biggest source of bit-manip bugs in Java/C/C++."
+/>
 
-> [trap] **Trap 3 — Wrong precedence of `&` vs. `==`.** `if (x & mask == 0)` parses as `if (x & (mask == 0))` — checking whether `mask == 0` gives boolean 0, then AND-ing with `x`, then implicit conversion. Almost never what you want. **Rule: always parenthesize: `if ((x & mask) == 0)`.**
-
-> [trap] **Trap 4 — Iterating all 32 bits when the value is sparse.** `for (int i = 0; i < 32; i++) if ((x >> i) & 1)` is O(32) regardless of the popcount. `while (x != 0) { x &= x - 1; count++; }` is O(popcount) — sometimes 1 iteration. **Rule: use Kernighan's trick when iteration count depends on popcount.**
-
-> [trap] **Trap 5 — Assuming XOR undoes any operation.** XOR undoes XOR (`x ^ y ^ y == x`), but doesn't undo AND or OR. Candidates sometimes write `x = x ^ mask` when they mean `x = x & ~mask`. **Rule: be explicit about the operation: `set = |`, `clear = & ~`, `toggle = ^`.**
+<TrapTrace
+  title="XOR swap without the i == j guard"
+  bug="The three-line XOR swap (a[i] ^= a[j]; a[j] ^= a[i]; a[i] ^= a[j]) destroys the value when i == j: first line sets a[i] = a[i] ^ a[i] = 0, and the rest cannot recover it. Common surprise in in-place algorithms that call swap(a, i, j) without checking indices."
+  fix="Guard with if (i == j) return; at the top of swap. In practice, don't use XOR swap in production: modern CPUs have an XCHG instruction, and a temp-based swap is clearer. XOR swap is a brainteaser, not an optimization."
+/>
 
 ## History — Kernighan's popcount trick (1988) and popcnt hardware (2000)
 
@@ -165,6 +329,41 @@ In **2000**, Intel added the `popcnt` instruction as part of SSE4.2 — a single
 **Cryptography** has always been the largest consumer of bit tricks: SHA-256 mixes bits via 64 rounds of XOR, AND, OR, rotates, and additions. AES uses `xtime` — a specific `<< 1 XOR 0x1b` operation — to walk finite-field elements. In the compiler world, **register allocation** uses bitmask interference graphs to decide which variables can share a register.
 
 Google's **Roaring Bitmap** (2013) is a compressed bitmap format used in Apache Lucene, Elasticsearch, Druid, Spark, and Snowflake for indexing sparse boolean columns. It combines the ideas from this chapter — bit tricks, bitmask iteration, popcount — into a real production data structure that indexes trillion-row datasets.
+
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="bit-manip" />
+
+### Isolate the Low Bit <span class="diff diff-e">Easy</span>
+
+The bare mechanic — one identity, one line. **`x & -x` returns the integer with only the lowest set bit of `x` kept, all other bits zeroed.**
+
+> [key] Isolate the lowest set bit in O(1).
+
+<TemplateReveal
+  slug="low-bit"
+  language="java"
+  :canonical="lowBitCode"
+/>
+
+#### Why it works
+
+In two's-complement representation, `-x = ~x + 1`. Walk from the lowest bit upward:
+1. Bits strictly below the lowest set bit of `x`: in `x` they are 0; in `~x` they are 1; adding 1 to `~x` propagates a carry through them, flipping them back to 0.
+2. The lowest set bit of `x`: in `x` it is 1; in `~x` it is 0; the carry from below flips it to 1 in `-x`.
+3. Bits strictly above: in `x` the value; in `~x` the complement; adding 1 doesn't propagate past the lowest 1, so they stay complemented in `-x`.
+
+Hence `x` and `-x` agree only on the lowest set bit; `x & -x` keeps it.
+
+**Production uses:**
+- **Fenwick tree (BIT) traversal** — `i += i & -i` for prefix sum, `i -= i & -i` for update. Every competitive-programming BIT.
+- **`Integer.lowestOneBit(x)`** in Java 1.5+ compiles to exactly this.
+- **Popcount via Kernighan loop** — `while (x != 0) { x ^= x & -x; count++; }` iterates once per set bit.
+
+---
+
+<details>
+<summary><strong>Historical: the Single Number 3-approach ladder (HashSet → Sort → XOR)</strong></summary>
 
 ## Canonical problem walkthrough — Single Number
 
@@ -229,13 +428,37 @@ int singleNumber(int[] nums) {
 | Sort + scan | O(n log n) | O(1) | Violates linear-time constraint |
 | **XOR cancellation** | **O(n)** | **O(1)** | **Interview default** |
 
----
+</details>
+
+### Single Number (XOR) <span class="diff diff-e">Easy</span>
+
+*[↗ LeetCode: Single Number](https://leetcode.com/problems/single-number/)*
+
+The ur-XOR-cancellation. Every element appears twice except one; find the loner in O(n) time, O(1) space.
+
+> [key] Find the unique number in an array where every other number appears twice.
+
+<TemplateReveal
+  slug="single-number-xor"
+  language="java"
+  :canonical="singleNumberXorCode"
+/>
+
+> [inv] **Invariant** — At every iteration, running `x` equals the XOR of all values seen so far. Pairs cancel (`a ^ a = 0`); after the full sweep, only the loner remains.
+
+**Trace** — `nums = [4,1,2,1,2]`. XOR accumulator: `0 → 4 → 5 → 7 → 6 → 4`. Pairs `1^1` and `2^2` cancel; the loner `4` survives.
+
+**Complexity:** O(n) time, O(1) space. Strictly beats HashSet (O(n) space).
+
+**Companion problems:**
+- [Missing Number](https://leetcode.com/problems/missing-number/) — XOR all values 0..n AND all input values; the missing one is the XOR survivor.
+- [Find the Difference](https://leetcode.com/problems/find-the-difference/) — same mechanic with chars.
+
+### Core identities reference
 
 **Grokking arc:** The motivating problem is representing tiny sets, parity, or binary properties without bulky data structures.
 
----
-
-## Core identities
+#### Core identities
 <p class="secgoal"><b>What & why:</b> the handful of bit tricks that most bit problems reduce to. Goal — memorize them so operations like "lowest set bit", "clear it", "toggle", and parity become one-liners.</p>
 
 | Trick | Expression | Use |
@@ -253,9 +476,34 @@ int singleNumber(int[] nums) {
 
 > [key] **Key Insight** — Two workhorses: `x & (x-1)` **removes** the lowest set bit (Brian Kernighan's popcount, power-of-two test), and `x & -x` **isolates** it (Fenwick tree indexing). XOR's self-cancellation (`a^a=0`) makes it the tool for "find the unpaired element."
 
-## Single Number I / II / III (XOR) <span class="diff diff-e">Easy</span>
+### Single Number II <span class="diff diff-e">Easy</span>
 
-*[↗ LeetCode: Single Number](https://leetcode.com/problems/single-number/)*
+*[↗ LeetCode: Single Number II](https://leetcode.com/problems/single-number-ii/)*
+
+Every element appears **three** times except one. Find the loner.
+
+#### The move — base-3 counting in two base-2 variables
+
+For each bit position, we want to know "mod 3, how often has this bit been set?" If a bit's count is 1 mod 3, that bit belongs to the loner; else it's part of a triple that cancels. Build this per-bit mod-3 counter using two int variables (`ones`, `twos`) that together track 2-bit per-position state (0, 1, or 2 — the third set resets).
+
+> [key] Find the unique number where every other appears three times.
+
+<TemplateReveal
+  slug="single-number-ii"
+  language="java"
+  :canonical="singleNumberIICode"
+/>
+
+**State table per bit:** after seeing a bit `b`:
+- Prev `(ones, twos) = (0, 0)`, `b = 1`: `(ones, twos) → (1, 0)` — seen once.
+- Prev `(1, 0)`, `b = 1`: `(ones, twos) → (0, 1)` — seen twice.
+- Prev `(0, 1)`, `b = 1`: `(ones, twos) → (0, 0)` — seen three times, both reset.
+
+The two formulas `ones = (ones ^ b) & ~twos` and `twos = (twos ^ b) & ~ones` encode this truth table exactly.
+
+**Complexity:** O(n) time, O(1) space. Beats bit-by-bit counting (O(32n)) because the whole 32-bit state updates per element.
+
+**Generalization — "every element appears K times except one":** maintain `K-1` state variables and apply the same per-bit mod-K counting. For non-prime K, you can also sort + grab-every-Kth. See LeetCode Discuss for the finite-automaton derivation.
 
 <ProgressCheck id="single-number-i-ii-iii-xor" />
 
@@ -386,7 +634,31 @@ O(1): one accumulator.
 - Why does the loner survive? — it is the only value with odd count in the base problem.
 - Why isolate one bit for Single Number III? — the two loners differ on that bit, so it separates them into different XOR groups.
 
-## Counting Bits (DP on bits) <span class="diff diff-e">Easy</span>
+### Single Number III <span class="diff diff-e">Easy</span>
+
+*[↗ LeetCode: Single Number III](https://leetcode.com/problems/single-number-iii/)*
+
+Every element appears twice except **two distinct** loners. Return both (any order).
+
+#### The move — XOR all, then split by one differing bit
+
+XOR-ing everything gives `a ^ b` (duplicates cancel; the two loners are the only odd-count values). Since `a ≠ b`, `a ^ b` has at least one set bit — pick any (lowest is cheapest via `x & -x`). That bit is 0 in one loner and 1 in the other. Partition the input by that bit and XOR each partition separately — each loner is now alone in its group; duplicates still cancel inside their group.
+
+> [key] Find the two unique numbers where every other appears twice.
+
+<TemplateReveal
+  slug="single-number-iii"
+  language="java"
+  :canonical="singleNumberIIICode"
+/>
+
+**Trace** — `nums = [1,2,1,3,2,5]`. XOR all = `3 ^ 5 = 6 = 0b110`. Lowest set bit of 6 is `2 = 0b010`. Partition: group where bit 1 is 0 = `[1,1,5]` → XOR = `5`. Group where bit 1 is 1 = `[2,2,3]` → XOR = `3`. Return `[5, 3]`.
+
+**Complexity:** O(n) time, O(1) space.
+
+**Companion:** [Missing Numbers I/II](https://leetcode.com/problems/missing-number/) — same mechanic, but XOR against 0..n to find the missing one.
+
+### Counting Bits <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Counting Bits](https://leetcode.com/problems/counting-bits/)*
 
@@ -486,7 +758,55 @@ O(n): the returned `dp` array is the output.
 - Why is this DP? — every `dp[i]` reuses the answer for `i/2` instead of recounting bits.
 - Why not call `Integer.bitCount` repeatedly in the teaching version? — the recurrence exposes the reusable subproblem and avoids per-number bit loops.
 
-## Subset generation via masks <span class="diff diff-m">Medium</span>
+### Reverse Bits <span class="diff diff-e">Easy</span>
+
+*[↗ LeetCode: Reverse Bits](https://leetcode.com/problems/reverse-bits/)*
+
+Reverse the 32 bits of an unsigned integer. The butterfly-swap approach does it in O(1) operations (5 masks, 10 shifts, 5 ORs) — strictly better than a 32-iteration loop.
+
+> [key] Reverse the 32 bits of an unsigned integer.
+
+<TemplateReveal
+  slug="reverse-bits"
+  language="java"
+  :canonical="reverseBitsCode"
+/>
+
+**Why it works** — each line swaps `n`-bit halves at a given granularity. First line swaps the two 16-bit halves. Second swaps 8-bit halves within each 16-bit half. And so on down to adjacent bits (`0xAAAAAAAA / 0x55555555`). After five halving stages, every bit has moved to its mirror position.
+
+**Trap: use `>>>` not `>>`** — `>>` propagates the sign bit; on a negative input (bit 31 set) the first stage would corrupt bits by filling in 1s instead of 0s.
+
+### Power of Two <span class="diff diff-e">Easy</span>
+
+*[↗ LeetCode: Power of Two](https://leetcode.com/problems/power-of-two/)*
+
+A positive integer is a power of two iff it has **exactly one set bit**. `x & (x - 1)` clears the lowest set bit; if the result is 0, the input had exactly one. One line.
+
+> [key] Determine if an integer is a positive power of two in O(1).
+
+<TemplateReveal
+  slug="power-of-two"
+  language="java"
+  :canonical="powerOfTwoCode"
+/>
+
+**Variations** — "is `x` a power of four?" → `x > 0 && (x & (x-1)) == 0 && (x & 0x55555555) != 0`. The second AND requires the single set bit to be at an even position.
+
+### Swap Without Temp <span class="diff diff-e">Easy</span>
+
+The XOR-swap brainteaser. Three XORs swap two integers with no temp — but destroys the value when both indices are the same.
+
+> [key] Swap two integers using only XOR; guard against the self-swap trap.
+
+<TemplateReveal
+  slug="swap-no-temp"
+  language="java"
+  :canonical="swapNoTempCode"
+/>
+
+**Production verdict:** don't use this in real code. Modern CPUs do swap in one `XCHG` instruction; a temp-based swap compiles to the same thing with better clarity. XOR-swap is an interview brainteaser about understanding XOR self-cancellation plus edge cases — not an optimization.
+
+### Subset generation via masks <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)*
 
@@ -587,14 +907,102 @@ O(n·2ⁿ) for output; O(n) temporary subset per mask.
 - Why create a new `sub` for each mask? — each output subset needs its own list object.
 - Why cap this around `n ≤ 20`? — 2ⁿ output size explodes beyond interview-feasible limits.
 
+## In the wild — JDK `Integer.bitCount` with `popcnt` intrinsic
+
+Java's `Integer.bitCount(int)` is the production path for popcount. The source in `java.base/share/classes/java/lang/Integer.java` is a well-known **SWAR (SIMD Within A Register)** algorithm:
+
+```java
+/* java.base/share/classes/java/lang/Integer.java (JDK 21) */
+public static int bitCount(int i) {
+    // HD, Figure 5-2
+    i = i - ((i >>> 1) & 0x55555555);                              // pairs of bits summed
+    i = (i & 0x33333333) + ((i >>> 2) & 0x33333333);               // nibbles summed
+    i = (i + (i >>> 4)) & 0x0f0f0f0f;                              // bytes summed
+    return (i * 0x01010101) >>> 24;                                // high byte is total
+}
+```
+
+**Why `(i * 0x01010101) >>> 24`?** The multiply-and-shift trick: multiplying by `0x01010101` adds four byte-sized counts into the high byte. The shift extracts it. One multiply replaces three adds.
+
+**And then the HotSpot JIT replaces the whole thing** with a single `POPCNT` instruction when the CPU supports it (`-XX:UseCountTrailingZerosInstruction` is on by default on x86-64 since 2010). The Java bytecode calls `Integer.bitCount`; the native generated code emits one instruction. The library implementation is only used on CPUs lacking POPCNT (rare).
+
+**Other production bit-manip:**
+1. **Roaring Bitmaps (2013)** — Apache Lucene, Elasticsearch, Druid, Spark, Snowflake use roaring bitmaps for sparse boolean columns. Each container is a bitmap or sorted array; union/intersection use SIMD-accelerated bit operations. Google's benchmarks: 10×–100× faster than `java.util.BitSet`.
+2. **Linux's `__builtin_ctz` / `__builtin_clz`** (count trailing / leading zeros) compile to `BSF`/`BSR` x86 instructions. Used in every bitmap allocator, every low-level graph algorithm.
+3. **TCP's window-scale option** — the receiving window is a 16-bit value scaled by `1 << scale` (negotiated during handshake). All receive-window updates are literal `<< scale` operations in the kernel.
+4. **Chrome's V8 small-integer representation (SMIs)** — JS numbers that fit in 31 bits are tagged by the low bit. Every arithmetic operation does a bit-check on the tag; this is how V8 avoids boxing for integer arithmetic.
+
+## Recognition drill
+
+<RecognitionDrill pattern="bit-manip" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if the problem is "find K unique numbers where every other appears M times"?</strong></summary>
+
+Generalize Single Number II/III:
+- **M = 2, K = 1** → XOR all, result is the loner.
+- **M = 2, K = 2** → XOR all, split by one differing bit (Single Number III).
+- **M = 3, K = 1** → base-3 counting with 2 int variables (Single Number II).
+- **M = K = anything** → bit-by-bit counting: for each bit position, count occurrences across all `n`; divide by `M` and look at the remainder.
+
+The specialized versions are O(n) time + O(1) space; the generic O(32n) bit-by-bit is always available as a fallback.
+</details>
+
+<details>
+<summary><strong>What if you need popcount on a 64-bit integer in Java?</strong></summary>
+
+`Long.bitCount(long)` is the direct answer — same SWAR algorithm extended to 64 bits, compiled to `POPCNT r64` on x86-64. 2-3 ns.
+
+If you're on a platform without hardware popcount (ARM Cortex-M, old MIPS), hand-write the SWAR version — never loop. For arrays of longs, `java.util.stream.LongStream.of(arr).map(Long::bitCount).sum()` auto-vectorizes with Vector API in recent JDKs.
+</details>
+
+<details>
+<summary><strong>What if the bitmask doesn't fit in 64 bits (n > 64)?</strong></summary>
+
+Use `java.util.BitSet` for arbitrary-size bitmaps. It's a long[] under the hood with the same identities — `and`, `or`, `xor`, `cardinality` (popcount), `nextSetBit`. For sparse bitmaps use **Roaring Bitmaps** (3rd-party RoaringBitmap library); for compressed storage with fast ops.
+
+For bitmask DP where `n > 32`, split the mask into high and low halves and store `dp[maskHi][maskLo][...]`. Memory explodes fast; `n ≤ 25` is the practical ceiling.
+</details>
+
+<details>
+<summary><strong>What if the problem wants the HIGHEST set bit, not the lowest?</strong></summary>
+
+`Integer.highestOneBit(x)` returns the integer with only the highest set bit kept. It compiles to `BSR` (bit scan reverse) on x86-64.
+
+For log₂(x) rounded down: `31 - Integer.numberOfLeadingZeros(x)`. Faster than `Math.log(x) / Math.log(2)` and exact.
+
+For "round up to next power of 2": there's a classic sequence `x--; x |= x >> 1; x |= x >> 2; x |= x >> 4; x |= x >> 8; x |= x >> 16; x++;` — fills all bits below the highest set bit, then adds 1. O(1), no branches.
+</details>
+
+<details>
+<summary><strong>What if performance matters and you need SIMD-level popcount throughput?</strong></summary>
+
+For arrays of integers, batch popcount with Harley-Seal's algorithm or AVX-512's `VPOPCNTQ` (counts popcount of 8 longs in parallel). HotSpot's Vector API (JDK 16+) exposes these. Benchmark before: for arrays < 100 ints, scalar `Integer.bitCount` wins due to overhead.
+
+Papers to read: Mula/Lemire 2016 "Faster Population Counts Using AVX2 Instructions." Used in Lemire's SIMDJson parser for CSV-counting commas and quotes.
+</details>
+
+### Breaking point
+
+Bit manipulation **stops being useful** when:
+- `n > 25` and the algorithm is bitmask DP — 2^n explodes.
+- The set membership has structure (ordering, counts) that `bool` can't capture.
+- Cross-language code where signed/unsigned semantics differ — bugs that only show up on specific inputs.
+- The team can't read the trick in 30 seconds — the maintainability tax exceeds the perf win.
+
+### Three cross-pattern problems
+
+- [Sum of Two Integers](https://leetcode.com/problems/sum-of-two-integers/) — no `+`/`-` allowed; implement full-adder via XOR + AND + shift.
+- [Maximum Product of Word Lengths](https://leetcode.com/problems/maximum-product-of-word-lengths/) — 26-bit mask per word; `mask[i] & mask[j] == 0` iff words share no letters.
+- [Bitwise AND of Numbers Range](https://leetcode.com/problems/bitwise-and-of-numbers-range/) — classical trick: find the common prefix of `m` and `n` by right-shifting until they match, then left-shift back.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="bit-manip"
-  :questions='[{"q": "What does `n & (n-1)` do?", "choices": [{"text": "Clears the lowest set bit", "correct": true, "explanation": "Foundation for Kernighan’s popcount and power-of-2 tests."}, {"text": "Sets the lowest bit", "correct": false}, {"text": "Flips all bits", "correct": false}, {"text": "Nothing", "correct": false}]}, {"q": "How do you test if n is a power of 2?", "choices": [{"text": "n > 0 && (n & (n-1)) == 0", "correct": true, "explanation": "Exactly one bit set."}, {"text": "n % 2 == 0", "correct": false, "explanation": "Even, not power of 2."}, {"text": "n / 2 == 0", "correct": false}, {"text": "log2(n) is integer", "correct": false, "explanation": "Works but FP-risky."}]}, {"q": "XOR of all numbers 0..n missing exactly one equals:", "choices": [{"text": "The missing number", "correct": true, "explanation": "Pairs cancel; missing survives."}, {"text": "0", "correct": false}, {"text": "n", "correct": false}, {"text": "Sum(0..n) - sum(nums)", "correct": false, "explanation": "That is Gauss sum, works too but overflow risk."}]}, {"q": "For subset enumeration on n ≤ 20 items, what pattern is used?", "choices": [{"text": "Iterate mask 0..(1<<n)-1; bit i set means item i chosen", "correct": true, "explanation": "Bitmask enumeration; often paired with DP."}, {"text": "Recursion only", "correct": false, "explanation": "Works but slower."}, {"text": "Sort", "correct": false}, {"text": "HashSet", "correct": false}]}, {"q": "For Maximum Product of Word Lengths, how do you check \"no shared letter\" in O(1)?", "choices": [{"text": "26-bit mask per word; `mask[i] & mask[j] == 0`", "correct": true, "explanation": "Single AND is O(1) regardless of word length."}, {"text": "Iterate every character", "correct": false, "explanation": "O(L) per pair."}, {"text": "HashSet intersection", "correct": false, "explanation": "Works but slower."}, {"text": "Sort both words", "correct": false}]}]'
-/>
+<Quiz pattern-id="bit-manip" :questions="mastery5" />
 
 <PrintButton />
 
