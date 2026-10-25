@@ -206,14 +206,6 @@ Reach for prefix sum (or its variants) when:
 - **Contiguous subarray with equal 0s and 1s** — remap `0 → -1`, then a subarray sums to 0 iff `pre[l] == pre[r]`. This is the *equal-partition* trick.
 - **Sliding window doesn't work because values can be negative** — a window can't reliably shrink when the sum can go up or down. Prefix sums + hashing is the escape hatch.
 
-## When NOT to use it
-
-- **You need range operations other than sum** — prefix sum extends to prefix-max only for immutable arrays; prefix-min/max with updates is a **segment tree**, not prefix sum.
-- **The array is dynamic (values change between queries)** — prefix sum recomputes from scratch after every update. If you have thousands of updates interleaved with queries, use a **Fenwick tree (BIT)** or **segment tree** for O(log n) both.
-- **Just one query on the whole array** — prefix sum's prep cost equals the query cost. Just accumulate in a single loop.
-- **Multi-dimensional ranges beyond 2D** — 3D prefix sum works but memory is O(nmp) and inclusion-exclusion has 8 terms. Consider whether the problem really needs that dimensionality.
-- **The subarray-sum target is 0 and the array is all zeros** — degenerate case; the count blows up quadratically. Handle explicitly.
-
 ## The bare mechanic — Range Sum 1D
 
 Before any variation, see the mechanic naked. One array, one running total, one subtraction per query:
@@ -918,6 +910,14 @@ The exact code was the subject of Harris, Sengupta & Owens' GPU Gems 3 chapter �
 2. **PostgreSQL's `width_bucket` on sorted histogram boundaries** is a prefix-sum lookup over bucket counts.
 3. **Linux kernel's `__percpu` counter batching** uses the difference-array trick: each CPU accumulates deltas locally; a periodic prefix-reduce updates the global counter without cross-CPU locks on every write.
 4. **Pandas' `rolling().sum()` fast path** on numeric columns picks between a running-sum loop and a prefix-sum table based on `window / len` ratio; XLA's codegen for `jnp.cumsum` is the same algorithm applied one dimension at a time.
+
+## When NOT to use it
+
+- **You need range operations other than sum** — prefix sum extends to prefix-max only for immutable arrays; prefix-min/max with updates is a **segment tree**, not prefix sum.
+- **The array is dynamic (values change between queries)** — prefix sum recomputes from scratch after every update. If you have thousands of updates interleaved with queries, use a **Fenwick tree (BIT)** or **segment tree** for O(log n) both.
+- **Just one query on the whole array** — prefix sum's prep cost equals the query cost. Just accumulate in a single loop.
+- **Multi-dimensional ranges beyond 2D** — 3D prefix sum works but memory is O(nmp) and inclusion-exclusion has 8 terms. Consider whether the problem really needs that dimensionality.
+- **The subarray-sum target is 0 and the array is all zeros** — degenerate case; the count blows up quadratically. Handle explicitly.
 
 ## Recognition drill
 

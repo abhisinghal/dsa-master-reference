@@ -269,15 +269,6 @@ Binary search applies when your input has any of these shapes:
 
 If the problem statement contains *"sorted"*, *"monotonic"*, *"minimum X such that ..."*, or *"maximum X such that ..."*, binary search is your first hypothesis.
 
-## When NOT to use it
-
-- **Unsorted data with no monotonic predicate** — sorting to enable binary search costs O(n log n), worse than O(n) hash-map lookup. Only sort-then-search if you'll do many queries.
-- **You need every match, not the first** — plain iteration, or `lower_bound` + `upper_bound`, is simpler.
-- **The array is small (`n ≤ 32`)** — linear scan wins in practice: branch predictor loves it, cache-friendly, `log₂ 32 = 5` comparisons plus overhead loses to a straight loop.
-- **Duplicates and you want *all* occurrences** — do lower-bound + linear expansion, or two binary searches (lower + upper). Don't hack it inside one loop.
-- **Non-monotone feasibility** — e.g., "smallest `x` such that some bitonic metric is minimized." Binary search silently returns the wrong answer; verify monotonicity on paper first.
-- **Floating-point ranges without a stopping criterion** — the loop never terminates. Fix an ε tolerance or an iteration cap.
-
 ## THE template
 
 One canonical loop. Every sub-variation below is a specialization of this exact shape.
@@ -542,6 +533,15 @@ Source: [openjdk/jdk `src/java.base/share/classes/java/util/Arrays.java`](https:
 <BinarySearchAnim />
 
 The animation shows the half-open loop on a sorted array. Watch the `[lo, hi)` window shrink; note that at every step the candidate answer (if any) lies inside the yellow range. Try: a value in the array (watch it converge in `log₂ n` steps), a value smaller than all elements (lo stays at 0, hi walks down to 0), a value larger than all (lo walks up to n). The three cases cover the full behavior.
+
+## When NOT to use it
+
+- **Unsorted data with no monotonic predicate** — sorting to enable binary search costs O(n log n), worse than O(n) hash-map lookup. Only sort-then-search if you'll do many queries.
+- **You need every match, not the first** — plain iteration, or `lower_bound` + `upper_bound`, is simpler.
+- **The array is small (`n ≤ 32`)** — linear scan wins in practice: branch predictor loves it, cache-friendly, `log₂ 32 = 5` comparisons plus overhead loses to a straight loop.
+- **Duplicates and you want *all* occurrences** — do lower-bound + linear expansion, or two binary searches (lower + upper). Don't hack it inside one loop.
+- **Non-monotone feasibility** — e.g., "smallest `x` such that some bitonic metric is minimized." Binary search silently returns the wrong answer; verify monotonicity on paper first.
+- **Floating-point ranges without a stopping criterion** — the loop never terminates. Fix an ε tolerance or an iteration cap.
 
 ## Recognition drill
 

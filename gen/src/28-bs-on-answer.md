@@ -156,14 +156,6 @@ The problem statement almost always contains one of these clue phrases:
 - **You can build a `feasible(x)` function that runs in ≤ O(n log n).** If checking a candidate takes exponential time, this pattern doesn't help.
 - **The naive "try every answer" is too slow.** If the answer range is ≤ ~1,000 and each check is O(n), maybe don't bother — plain iteration might be simpler. It's only when the answer range is 10⁶ or 10⁹ that BS-on-answer pays for the extra complexity.
 
-## When NOT to use it
-
-- **`feasible(x)` is not monotonic.** If some intermediate `x` fails but a smaller `x` succeeds, the boolean array is not sorted, and binary search silently returns garbage. **Verify monotonicity on paper before coding.** Common gotcha: "path with minimum effort" — is the feasibility of a max-effort threshold monotonic? Yes. Is "there exists a path of length ≥ k on a grid" monotonic in k? Also yes. But "the sum of digits equals k" is not monotonic in k.
-- **The answer isn't a number** — if the answer is a subset, a path, a permutation, or a graph, you can't binary-search a *value*. Combine with another technique.
-- **Feasibility itself requires solving another hard problem** — if `feasible(x)` needs an NP-hard subroutine, wrapping it in binary search doesn't rescue you.
-- **The answer range is tiny** — `1 ≤ x ≤ 50` and each check is O(n)? Just iterate. Binary search adds constants and cognitive load with no asymptotic benefit at that scale.
-- **You need all valid answers, not the boundary** — BS-on-answer returns one number. If the interviewer wants "all speeds that work", the pattern doesn't fit.
-
 ## THE template — one loop, two moving parts
 
 <PatternTemplateCard
@@ -733,6 +725,14 @@ The `canFit` feasibility check is a **first-fit-decreasing** bin-pack simulation
 2. **Linux kernel `tcp_bbr`** congestion control — binary-searches the sending rate; feasibility = "did RTT stay under probe target during this interval?"
 3. **TensorFlow's `tf.config.experimental.set_memory_growth`** on GPU allocators — binary-searches the initial `block_size`; feasibility = "no OOM during the first N allocations?"
 4. **Spark's `DAGScheduler.shuffleWriteBufferSize`** — binary-searches the per-partition write buffer; feasibility = "did the shuffle complete within the deadline?"
+
+## When NOT to use it
+
+- **`feasible(x)` is not monotonic.** If some intermediate `x` fails but a smaller `x` succeeds, the boolean array is not sorted, and binary search silently returns garbage. **Verify monotonicity on paper before coding.** Common gotcha: "path with minimum effort" — is the feasibility of a max-effort threshold monotonic? Yes. Is "there exists a path of length ≥ k on a grid" monotonic in k? Also yes. But "the sum of digits equals k" is not monotonic in k.
+- **The answer isn't a number** — if the answer is a subset, a path, a permutation, or a graph, you can't binary-search a *value*. Combine with another technique.
+- **Feasibility itself requires solving another hard problem** — if `feasible(x)` needs an NP-hard subroutine, wrapping it in binary search doesn't rescue you.
+- **The answer range is tiny** — `1 ≤ x ≤ 50` and each check is O(n)? Just iterate. Binary search adds constants and cognitive load with no asymptotic benefit at that scale.
+- **You need all valid answers, not the boundary** — BS-on-answer returns one number. If the interviewer wants "all speeds that work", the pattern doesn't fit.
 
 ## Recognition drill
 

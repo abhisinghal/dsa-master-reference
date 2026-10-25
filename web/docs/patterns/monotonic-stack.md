@@ -199,15 +199,6 @@ Reach for a monotonic stack when the problem says:
 
 If the problem asks about *the nearest X-satisfying element* or *a range bounded by extremes*, the answer is almost certainly a monotonic stack.
 
-## When NOT to use it
-
-- **You need the k-th greater / k-th smaller** — the stack only remembers unresolved elements, not history. Use a heap or a sorted structure.
-- **The array is sorted** — monotonic stack shines on *unsorted* input where you need to discover local extremes. On sorted input, plain scanning is cheaper.
-- **You need updates in the middle of the array** — the stack processes left-to-right in one pass. If elements change mid-processing, you need a segment tree instead.
-- **The "monotonic" comparison is on multiple fields** — a stack is one-dimensional. For "nearest element that is both taller and heavier," a 2D structure is needed.
-- **Range aggregate queries with unrestricted ranges** — sparse table, segment tree, or Fenwick tree.
-- **Very small n (n ≤ 100)** — brute force is simpler and equally fast in practice. Save monotonic stack for `n ≥ 1000`.
-
 ## THE template
 
 Every monotonic-stack problem is a specialization of **"maintain a sorted stack of unresolved indices; a violation triggers a pop, and each pop resolves exactly one element."** Four parameters distinguish the family: push order (push value vs. push index), direction (left-to-right vs. right-to-left), comparison (`<` strict vs. `≤` lax), and what each pop computes.
@@ -237,14 +228,6 @@ Every monotonic-stack problem is a specialization of **"maintain a sorted stack 
 </PatternTemplateCard>
 
 The three canonical "flavors" are: **next-greater-right** (above — the base case), **next-greater-left** (iterate right-to-left, same logic), and **largest-rectangle in histogram** (increasing stack, each pop computes `height × width`, requires a trailing sentinel 0).
-
-## False friends — not every stack-based sweep is monotonic
-
-- **Parentheses matching** uses a plain stack — no monotonic ordering. The invariant is "stack contents are the unmatched openers in LIFO order," not any value comparison. Don't call it monotonic.
-- **DFS-with-stack / iterative tree traversal** — the stack holds *frames*, not *values to compare*. The pop condition is "frame has no more children," not "incoming value violates ordering."
-- **Shunting-yard operator precedence** — the stack IS monotonic in precedence, so this is a monotonic stack. (This is where Nagao-Matsuyama originally found the pattern.)
-- **Expression trees / RPN** — plain stack of operands; no ordering.
-- **Sliding-window maximum** uses a monotonic *deque*, not stack — the max can be popped from either end. The flavor is similar but it's not quite the same tool.
 
 ## History — Nagao-Matsuyama, 1971
 
@@ -990,6 +973,23 @@ void SCCPSolver::Solve() {
 2. **Shunting-yard operator-precedence parsing** (Dijkstra, 1961) — the operator stack is kept in decreasing precedence; a higher-precedence incoming token pops lower-precedence operators. This is where Nagao & Matsuyama (1971) formalized the pattern.
 3. **Dynamic histogram equalization in image processing** — row-wise largest-rectangle under a 1-pixel-wide moving window; identical O(n) algorithm.
 4. **Protein folding dynamic programming** (NUPACK, Vienna RNA) — the "nearest unpaired base" lookup along a chain uses NGE-right internally for O(n) chain traversal.
+
+## When NOT to use it
+
+- **You need the k-th greater / k-th smaller** — the stack only remembers unresolved elements, not history. Use a heap or a sorted structure.
+- **The array is sorted** — monotonic stack shines on *unsorted* input where you need to discover local extremes. On sorted input, plain scanning is cheaper.
+- **You need updates in the middle of the array** — the stack processes left-to-right in one pass. If elements change mid-processing, you need a segment tree instead.
+- **The "monotonic" comparison is on multiple fields** — a stack is one-dimensional. For "nearest element that is both taller and heavier," a 2D structure is needed.
+- **Range aggregate queries with unrestricted ranges** — sparse table, segment tree, or Fenwick tree.
+- **Very small n (n ≤ 100)** — brute force is simpler and equally fast in practice. Save monotonic stack for `n ≥ 1000`.
+
+## False friends — not every stack-based sweep is monotonic
+
+- **Parentheses matching** uses a plain stack — no monotonic ordering. The invariant is "stack contents are the unmatched openers in LIFO order," not any value comparison. Don't call it monotonic.
+- **DFS-with-stack / iterative tree traversal** — the stack holds *frames*, not *values to compare*. The pop condition is "frame has no more children," not "incoming value violates ordering."
+- **Shunting-yard operator precedence** — the stack IS monotonic in precedence, so this is a monotonic stack. (This is where Nagao-Matsuyama originally found the pattern.)
+- **Expression trees / RPN** — plain stack of operands; no ordering.
+- **Sliding-window maximum** uses a monotonic *deque*, not stack — the max can be popped from either end. The flavor is similar but it's not quite the same tool.
 
 ## Recognition drill
 

@@ -352,15 +352,6 @@ Every Trie-pattern problem is a specialization of **"walk a path through the tri
   :canonical="binaryTrieCode"
 />
 
-## False friends — when "prefix lookup" doesn't want a trie
-
-- **Exact-match lookup, no prefix queries** — `HashSet<String>` is faster (one hash) and uses less memory (no per-character node overhead). Only switch to trie when prefix / wildcard / streaming semantics matter.
-- **Substring or suffix search** — tries are prefix-first. Use **suffix automaton**, **suffix array**, or **Aho-Corasick** for substring queries. Reversing the inserted strings lets you do suffix queries, but only in the simplest cases.
-- **Range queries over whole words** — `TreeMap<String, V>` / `TreeSet<String>` supports `subMap(from, to)` in O(log n), cleaner than DFS over trie subtrees.
-- **Massive alphabet (Unicode)** — 26-pointer arrays explode. Use `HashMap<Character, Node>` per node (sparse) or a **ternary search tree** (3 pointers per node, 10× memory savings).
-- **Memory-critical with lots of duplicate suffixes** — **DAWG / DAFSA** merges equivalent suffixes, cutting memory 10-100× for English word lists.
-- **Just one or two lookups** — the trie build cost (O(total characters)) is wasted. Linear scan is fine.
-
 ## Traps & gotchas
 
 <TrapTrace
@@ -901,6 +892,15 @@ class JarVerifier {
 2. **Ethereum's state tree** is a **Merkle Patricia trie** — each node also stores a cryptographic hash of its subtree, enabling O(log n) proof-of-inclusion for any account state.
 3. **Bash/Zsh tab-completion** uses an in-memory trie of filesystem paths and command names, walked once per keystroke to generate suggestions.
 4. **Aho-Corasick string matching** (used by `grep -F` and most antivirus pattern matchers) builds a trie of patterns, augmented with "failure links" that generalize KMP to multiple patterns simultaneously.
+
+## False friends — when "prefix lookup" doesn't want a trie
+
+- **Exact-match lookup, no prefix queries** — `HashSet<String>` is faster (one hash) and uses less memory (no per-character node overhead). Only switch to trie when prefix / wildcard / streaming semantics matter.
+- **Substring or suffix search** — tries are prefix-first. Use **suffix automaton**, **suffix array**, or **Aho-Corasick** for substring queries. Reversing the inserted strings lets you do suffix queries, but only in the simplest cases.
+- **Range queries over whole words** — `TreeMap<String, V>` / `TreeSet<String>` supports `subMap(from, to)` in O(log n), cleaner than DFS over trie subtrees.
+- **Massive alphabet (Unicode)** — 26-pointer arrays explode. Use `HashMap<Character, Node>` per node (sparse) or a **ternary search tree** (3 pointers per node, 10× memory savings).
+- **Memory-critical with lots of duplicate suffixes** — **DAWG / DAFSA** merges equivalent suffixes, cutting memory 10-100× for English word lists.
+- **Just one or two lookups** — the trie build cost (O(total characters)) is wasted. Linear scan is fine.
 
 ## Recognition drill
 

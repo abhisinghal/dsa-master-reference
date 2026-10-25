@@ -219,24 +219,6 @@ Backtracking fits when the problem asks for:
 
 Trigger phrases: *"all combinations", "return all solutions", "count arrangements", "generate all", "find any", "place N objects such that..."*
 
-## When NOT to use it
-
-- **The problem is decidable in polynomial time** — if there's a direct formula (e.g., "n-th Catalan number") or a greedy solution, don't reach for backtracking. Faster and simpler.
-- **The state space has overlapping subproblems** — DP with memoization amortizes work; pure backtracking retreads the same subtree many times. Coin Change is a classic DP problem, not a backtracking one.
-- **Depth is large (n &gt; 25) and no strong pruning exists** — 2^25 = 33M, tractable. 2^40 = 10¹² — impossible. If pruning removes only a constant fraction, exponential is exponential.
-- **The interviewer says "output the number of solutions modulo p"** — that's almost always DP, not backtracking. Backtracking enumerates individually; you don't want to enumerate 10¹⁰ solutions.
-- **The problem wants an *optimal* subset, not all valid ones** — branch-and-bound (backtracking with pruning by objective-function bound) is one option, but often DP or ILP is cleaner.
-- **You need to solve millions of small instances** — recursion has function-call overhead. For very short depths, iterative bitmask enumeration is 5-10× faster.
-
-## When NOT to use it (extended)
-
-The specific interviewer red flags:
-
-- *"n can be up to 10⁶"* — never backtracking.
-- *"expected time complexity is O(n²)"* — never backtracking.
-- *"return the count modulo 10⁹ + 7"* — almost always DP.
-- *"find the shortest / minimum X"* — often BFS on state space, not backtracking.
-
 ## THE template — choose, recurse, un-choose
 
 <PatternTemplateCard
@@ -1476,6 +1458,24 @@ RelOptInfo *make_rels_by_joins(PlannerInfo *root, int level, List **joinrels) {
 2. **DPLL / CDCL SAT solvers (MiniSat, Glucose)** — modern SAT uses backtracking with learned-clause pruning. Powers formal verification tools and symbolic execution engines.
 3. **GHC's type-class resolution** — Haskell's type inference backtracks over instance-head unification candidates when multiple instances match.
 4. **Z3 theorem prover** — backtracking on model assignments with theory propagation; underpins Microsoft's static analyzers and Facebook's Infer.
+
+## When NOT to use it
+
+- **The problem is decidable in polynomial time** — if there's a direct formula (e.g., "n-th Catalan number") or a greedy solution, don't reach for backtracking. Faster and simpler.
+- **The state space has overlapping subproblems** — DP with memoization amortizes work; pure backtracking retreads the same subtree many times. Coin Change is a classic DP problem, not a backtracking one.
+- **Depth is large (n &gt; 25) and no strong pruning exists** — 2^25 = 33M, tractable. 2^40 = 10¹² — impossible. If pruning removes only a constant fraction, exponential is exponential.
+- **The interviewer says "output the number of solutions modulo p"** — that's almost always DP, not backtracking. Backtracking enumerates individually; you don't want to enumerate 10¹⁰ solutions.
+- **The problem wants an *optimal* subset, not all valid ones** — branch-and-bound (backtracking with pruning by objective-function bound) is one option, but often DP or ILP is cleaner.
+- **You need to solve millions of small instances** — recursion has function-call overhead. For very short depths, iterative bitmask enumeration is 5-10× faster.
+
+## When NOT to use it (extended)
+
+The specific interviewer red flags:
+
+- *"n can be up to 10⁶"* — never backtracking.
+- *"expected time complexity is O(n²)"* — never backtracking.
+- *"return the count modulo 10⁹ + 7"* — almost always DP.
+- *"find the shortest / minimum X"* — often BFS on state space, not backtracking.
 
 ## Recognition drill
 

@@ -299,14 +299,6 @@ Reach for two pointers when the problem has any of the following shapes:
 
 If you catch yourself writing `for i in range(n): for j in range(i+1, n):` on a sorted or sortable input, stop. Two pointers is almost certainly the O(n) fix.
 
-## When NOT to use it
-
-- **Unsorted input where sorting destroys needed information** (e.g. original-index outputs). Pair with index first, or switch to hashing.
-- **"Count all pairs"** rather than "find one." Two pointers finds the frontier; counting may need combining with range-counting tricks or a different tool.
-- **Contiguous-subarray** problems with size/sum constraints — that's **Sliding Window** (chapter 21), not two pointers.
-- **Streams and singly-linked lists without random access** — only the fast/slow variant (chapter 23) applies; opposite-end pointers require O(1) index access.
-- **Lookups by value while pointing** — a HashMap is the right tool; two pointers only compares the values *under* the pointers.
-
 ## History — Dijkstra's flag, 1976
 
 The three-way partition variant of two pointers has a name: **Dutch National Flag**. Edsger Dijkstra published it in 1976 as a teaching example — three regions (red, white, blue, in Dutch flag order), swap items until the flag is sorted. It became the canonical pivot step of every modern quicksort implementation, including Java's `Arrays.sort` on primitive types. The two-index opposite-end pattern is older still, appearing informally in Knuth's *Sorting and Searching* (1973) as a merge subroutine.
@@ -789,6 +781,14 @@ Other named production uses of two pointers:
 - **Rust `slice::partition`**: direct two-pointer scheme, used by `select_nth_unstable` and `sort_unstable`.
 - **Chrome V8 `Array.prototype.sort` (for small arrays)**: insertion sort with a two-pointer write-vs-shift inner loop.
 - **grep / ripgrep**: when scanning two sorted file-offset lists (match positions and `--include` filter positions), two-pointer intersection runs linearly.
+
+## When NOT to use it
+
+- **Unsorted input where sorting destroys needed information** (e.g. original-index outputs). Pair with index first, or switch to hashing.
+- **"Count all pairs"** rather than "find one." Two pointers finds the frontier; counting may need combining with range-counting tricks or a different tool.
+- **Contiguous-subarray** problems with size/sum constraints — that's **Sliding Window** (chapter 21), not two pointers.
+- **Streams and singly-linked lists without random access** — only the fast/slow variant (chapter 23) applies; opposite-end pointers require O(1) index access.
+- **Lookups by value while pointing** — a HashMap is the right tool; two pointers only compares the values *under* the pointers.
 
 ## Recognition drill
 

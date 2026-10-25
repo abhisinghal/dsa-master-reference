@@ -291,14 +291,6 @@ Every Union-Find problem is a specialization of **"path-compressed, rank-balance
   </template>
 </PatternTemplateCard>
 
-## False friends — when "connectivity" doesn't mean DSU
-
-- **Shortest-path queries** (which "connect" nodes in a graph) — DSU answers "same component?" but has no distance info. Use BFS, Dijkstra, or Floyd-Warshall.
-- **Dynamic connectivity with deletions** — DSU doesn't support edge removal. For "add and remove edges, answer connectivity queries," use **Link-Cut Trees** or **offline reverse processing**.
-- **Articulation points / bridges** — these are static structural queries about an existing graph. Use Tarjan's SCC-style DFS, not DSU.
-- **Weighted / directional connectivity** — DSU is unweighted and undirected. For "connected by a path of specific weight parity," use **weighted DSU** (variant with a `diff[]` array). For directed, use SCC decomposition.
-- **Finding all paths between two nodes** — DSU reduces to a yes/no answer; it doesn't track paths.
-
 ## When to use it — dynamic connectivity
 
 ### Recognize by
@@ -880,6 +872,14 @@ int in_merge_bases_many(struct commit *commit, int nr_reference, ...) {
 2. **Linux kernel's `cgroup` subsystem** — process group membership checks are DSU-backed; forking a process is a union of the child with the parent's cgroup.
 3. **Postgres' deadlock detector** — resource-holding tuples are unioned by shared-lock groups; a cycle (union returning false on a specific pair) triggers deadlock detection.
 4. **TensorFlow's graph-partitioning pass** — subgraph "colors" (which device the op runs on) are a DSU over op nodes; same-color ops are placed together for better locality.
+
+## False friends — when "connectivity" doesn't mean DSU
+
+- **Shortest-path queries** (which "connect" nodes in a graph) — DSU answers "same component?" but has no distance info. Use BFS, Dijkstra, or Floyd-Warshall.
+- **Dynamic connectivity with deletions** — DSU doesn't support edge removal. For "add and remove edges, answer connectivity queries," use **Link-Cut Trees** or **offline reverse processing**.
+- **Articulation points / bridges** — these are static structural queries about an existing graph. Use Tarjan's SCC-style DFS, not DSU.
+- **Weighted / directional connectivity** — DSU is unweighted and undirected. For "connected by a path of specific weight parity," use **weighted DSU** (variant with a `diff[]` array). For directed, use SCC decomposition.
+- **Finding all paths between two nodes** — DSU reduces to a yes/no answer; it doesn't track paths.
 
 ## Recognition drill
 

@@ -242,14 +242,6 @@ The whole pattern is **check first, then insert**. Insertion before the check wo
 - **"Top k frequent"** — hashmap for counts, then bucket-sort by frequency or heap by count.
 - **"Random access on arbitrary-shaped keys"** — arrays only key by integer; hash maps key by anything with `hashCode` + `equals`.
 
-## When NOT to use it
-
-- **Keyspace is a small dense integer range** — arrays are faster. Counting sort, radix sort, and array-indexed lookups beat HashMap for ASCII-character-frequency problems.
-- **You need ordered iteration or range queries** — hash maps are unordered by contract. Use `TreeMap` (O(log n) but ordered) or maintain a parallel sorted structure.
-- **Memory is tight** — HashMap entries are ~48 bytes each (hash int, key ref, value ref, next ref). A primitive `int[]` beats it 100× on memory.
-- **You need worst-case O(1)** — hash maps are *average* O(1), *worst-case* O(n) if all keys collide. For adversarial contexts use `TreeMap` (O(log n) worst-case) or cryptographically strong hashing.
-- **The comparison you want isn't equality** — hashing keys by equality doesn't help "find the closest match" or "range query." Use a BST or interval tree.
-
 ## History — Dumey's 1956 memo at IBM
 
 The hash-table idea was first written down in an internal IBM memo by **Arnold Dumey in 1956**, titled *"Indexing for rapid random-access memory systems."* Dumey proposed dividing the address space into "buckets" indexed by a key's remainder modulo a prime — the exact structure every modern hash table still uses. The technique was formalized by **Wesley Peterson** in 1957 and became a standard entry in Knuth's *Sorting and Searching* (1973).
@@ -627,6 +619,14 @@ Other named production uses of hashing:
 - **Git's object store** (`.git/objects/`): SHA-1 content-addressable storage — a hash maps content to filename.
 - **Google BigTable / Spanner / Bigtable's shard key**: hash of the row key spreads load across tablet servers.
 - **Chrome's cookie jar**: `(domain, name)` tuple hashed into a map; the LRU eviction when the jar is full uses this map's iteration order.
+
+## When NOT to use it
+
+- **Keyspace is a small dense integer range** — arrays are faster. Counting sort, radix sort, and array-indexed lookups beat HashMap for ASCII-character-frequency problems.
+- **You need ordered iteration or range queries** — hash maps are unordered by contract. Use `TreeMap` (O(log n) but ordered) or maintain a parallel sorted structure.
+- **Memory is tight** — HashMap entries are ~48 bytes each (hash int, key ref, value ref, next ref). A primitive `int[]` beats it 100× on memory.
+- **You need worst-case O(1)** — hash maps are *average* O(1), *worst-case* O(n) if all keys collide. For adversarial contexts use `TreeMap` (O(log n) worst-case) or cryptographically strong hashing.
+- **The comparison you want isn't equality** — hashing keys by equality doesn't help "find the closest match" or "range query." Use a BST or interval tree.
 
 ## Recognition drill
 

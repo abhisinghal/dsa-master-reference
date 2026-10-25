@@ -343,15 +343,6 @@ Every topological-sort problem is a specialization of **"maintain the indeg-zero
 
 Prefer **Kahn** when the problem naturally talks about prerequisites, semesters, waves, or "available now" nodes. Prefer **DFS** when you are already doing graph recursion, need a compact cycle detector, or want post-order for DAG DP. The in-degree array makes Kahn's invariant visible (easier to debug); DFS gives a tight 3-color cycle detector.
 
-## False friends — not every DAG problem is topological sort
-
-- **Shortest path in a DAG** uses topo order as the ITERATION order for the DP, but the structural answer is DP, not just the order. Mentioning "topo sort" alone misses the DP layer.
-- **Strongly Connected Components** (Tarjan, Kosaraju) is for *directed graphs that may have cycles*. Topo sort refuses to run on a cyclic graph; SCC decomposes it into DAG components first.
-- **Minimum Spanning Tree** is for undirected weighted graphs; precedence doesn't apply. Use Kruskal/Prim.
-- **Transitive closure** needs reachability from every node; topo sort gives an order but no reachability info. Use Floyd-Warshall or iterated BFS.
-- **Finding the longest path in a DAG** is tractable (unlike general graphs) BUT needs DP on topological order, not just the order itself.
-
-
 ## Kahn vs DFS — same answer, different proof
 
 Kahn's algorithm proves validity from the front of the order. When a node leaves the queue, every prerequisite has already been emitted, because its in-degree has dropped to zero. DFS proves validity from the back of the order. A DFS call appends `u` only after every node reachable from `u` has already been appended, so reversing the post-order places `u` before its dependents.
@@ -953,6 +944,14 @@ struct file *topological_sort(struct file *targets) {
 2. **npm's `arborist` package manager** topologically sorts npm-package dependencies before `install`, running package-lifecycle scripts in dependency order.
 3. **Apache Airflow DAG scheduler** picks the next task to run by maintaining the indeg-0 frontier of task dependencies. The DAG in "DAG scheduler" is literally this pattern.
 4. **Spreadsheet formula recalculation (Excel, Google Sheets)** builds a cell-dependency graph; when input changes, cells are recomputed in topological order to avoid re-evaluating stale values.
+
+## False friends — not every DAG problem is topological sort
+
+- **Shortest path in a DAG** uses topo order as the ITERATION order for the DP, but the structural answer is DP, not just the order. Mentioning "topo sort" alone misses the DP layer.
+- **Strongly Connected Components** (Tarjan, Kosaraju) is for *directed graphs that may have cycles*. Topo sort refuses to run on a cyclic graph; SCC decomposes it into DAG components first.
+- **Minimum Spanning Tree** is for undirected weighted graphs; precedence doesn't apply. Use Kruskal/Prim.
+- **Transitive closure** needs reachability from every node; topo sort gives an order but no reachability info. Use Floyd-Warshall or iterated BFS.
+- **Finding the longest path in a DAG** is tractable (unlike general graphs) BUT needs DP on topological order, not just the order itself.
 
 ## Recognition drill
 

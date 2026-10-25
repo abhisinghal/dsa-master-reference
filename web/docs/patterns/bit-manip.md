@@ -245,15 +245,6 @@ x ^ (1 << k)    // toggle bit k
 - **Fast integer arithmetic simulations** — multiplying by 2^k is `<< k`; dividing is `>>> k`.
 - **Parity or checksum problems** — XOR is its own inverse, so parity computations are one line.
 
-## When NOT to use it
-
-- **n &gt; 25 or so** — 2^25 = 33M is barely tractable; 2^30 = 10^9 explodes. Bitmask DP over subsets is dead beyond that.
-- **The set has real semantic complexity** — bit manipulation shines when set membership is a clean boolean. If you need weights, counts, or ordering, use `HashMap` or `SortedSet`.
-- **Bit tricks that yield the same asymptotic complexity as a HashSet** — cleverness has readability cost. Only reach for the trick when the O(1) bitmap operation is genuinely a bottleneck win.
-- **You're solving a real cryptographic problem** — the identities here are the *building blocks*, not the algorithm. Roll your own crypto with these primitives and you'll ship a vulnerability.
-- **Cross-language / cross-platform code where signed/unsigned mismatch matters** — Java's signed shifts differ from C's, from JavaScript's, from Python's arbitrary-precision. Bit-level code doesn't port cleanly.
-- **A team member cannot read the code in 30 seconds** — comment aggressively or use a helper method. Bit tricks are a maintainability tax.
-
 ## THE template — the identity catalog
 
 <PatternTemplateCard
@@ -1074,6 +1065,15 @@ public static int bitCount(int i) {
 2. **Linux's `__builtin_ctz` / `__builtin_clz`** (count trailing / leading zeros) compile to `BSF`/`BSR` x86 instructions. Used in every bitmap allocator, every low-level graph algorithm.
 3. **TCP's window-scale option** — the receiving window is a 16-bit value scaled by `1 << scale` (negotiated during handshake). All receive-window updates are literal `<< scale` operations in the kernel.
 4. **Chrome's V8 small-integer representation (SMIs)** — JS numbers that fit in 31 bits are tagged by the low bit. Every arithmetic operation does a bit-check on the tag; this is how V8 avoids boxing for integer arithmetic.
+
+## When NOT to use it
+
+- **n &gt; 25 or so** — 2^25 = 33M is barely tractable; 2^30 = 10^9 explodes. Bitmask DP over subsets is dead beyond that.
+- **The set has real semantic complexity** — bit manipulation shines when set membership is a clean boolean. If you need weights, counts, or ordering, use `HashMap` or `SortedSet`.
+- **Bit tricks that yield the same asymptotic complexity as a HashSet** — cleverness has readability cost. Only reach for the trick when the O(1) bitmap operation is genuinely a bottleneck win.
+- **You're solving a real cryptographic problem** — the identities here are the *building blocks*, not the algorithm. Roll your own crypto with these primitives and you'll ship a vulnerability.
+- **Cross-language / cross-platform code where signed/unsigned mismatch matters** — Java's signed shifts differ from C's, from JavaScript's, from Python's arbitrary-precision. Bit-level code doesn't port cleanly.
+- **A team member cannot read the code in 30 seconds** — comment aggressively or use a helper method. Bit tricks are a maintainability tax.
 
 ## Recognition drill
 

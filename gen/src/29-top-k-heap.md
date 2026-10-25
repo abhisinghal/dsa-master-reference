@@ -240,15 +240,6 @@ Every Top-K-heap problem is a specialization of **"maintain a size-k heap of the
   :specializations="theTemplateSpecializations"
 />
 
-## False friends — when "top-k" doesn't need a heap
-
-- **Quickselect** is strictly better when you need **one** k-th value offline and don't care about the other k-1 boundary items. O(n) average vs. O(n log k).
-- **Bucket sort** beats heap when the ranking key has a small bounded range (e.g., frequency buckets 1..n for Top-K Frequent). O(n) time.
-- **TreeSet / sorted multiset** when you need **ordered** access to the entire top-k (not just the boundary). O(log k) per op, but with sorted iteration.
-- **Reservoir sampling** for streaming "k random items from an infinite stream" — a heap would require seeing all items, reservoir doesn't.
-- **Count-min sketch / top-k approximation** for streaming top-k on massive data (10^12+ items) where exact answers aren't needed. The heap approach needs enough memory for k winners.
-- **Plain scalar tracking** for k = 1 — just a `max` variable. No heap needed.
-
 ## Traps & gotchas
 
 <TrapTrace
@@ -732,6 +723,15 @@ public class BucketPriorityQueue extends PriorityQueue<Bucket> {
 2. **Linux kernel's `CFS` (Completely Fair Scheduler)** uses a red-black tree (not quite a heap) keyed on virtual runtime; the smallest-runtime task is "most behind" and picked next. Same opposite-polarity idea.
 3. **Dijkstra's shortest path** uses a min-heap keyed on tentative distance — pop the vertex with smallest tentative distance, relax its edges, push updated neighbors. Classic in-the-wild heap.
 4. **Twitter's trending topics** maintains a sliding-window top-N heap of topic frequencies; new tweets update the heap in O(log N), coordinator aggregates across shards.
+
+## False friends — when "top-k" doesn't need a heap
+
+- **Quickselect** is strictly better when you need **one** k-th value offline and don't care about the other k-1 boundary items. O(n) average vs. O(n log k).
+- **Bucket sort** beats heap when the ranking key has a small bounded range (e.g., frequency buckets 1..n for Top-K Frequent). O(n) time.
+- **TreeSet / sorted multiset** when you need **ordered** access to the entire top-k (not just the boundary). O(log k) per op, but with sorted iteration.
+- **Reservoir sampling** for streaming "k random items from an infinite stream" — a heap would require seeing all items, reservoir doesn't.
+- **Count-min sketch / top-k approximation** for streaming top-k on massive data (10^12+ items) where exact answers aren't needed. The heap approach needs enough memory for k winners.
+- **Plain scalar tracking** for k = 1 — just a `max` variable. No heap needed.
 
 ## Recognition drill
 
