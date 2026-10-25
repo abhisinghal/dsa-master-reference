@@ -1003,12 +1003,75 @@ class JarVerifier {
 
 ## False friends — when "prefix lookup" doesn't want a trie
 
+Tries are the right answer for exactly one access pattern: *shared-prefix retrieval*. These lookalikes have different access patterns and want different structures.
+
 - **Exact-match lookup, no prefix queries** — `HashSet<String>` is faster (one hash) and uses less memory (no per-character node overhead). Only switch to trie when prefix / wildcard / streaming semantics matter.
 - **Substring or suffix search** — tries are prefix-first. Use **suffix automaton**, **suffix array**, or **Aho-Corasick** for substring queries. Reversing the inserted strings lets you do suffix queries, but only in the simplest cases.
 - **Range queries over whole words** — `TreeMap<String, V>` / `TreeSet<String>` supports `subMap(from, to)` in O(log n), cleaner than DFS over trie subtrees.
 - **Massive alphabet (Unicode)** — 26-pointer arrays explode. Use `HashMap<Character, Node>` per node (sparse) or a **ternary search tree** (3 pointers per node, 10× memory savings).
 - **Memory-critical with lots of duplicate suffixes** — **DAWG / DAFSA** merges equivalent suffixes, cutting memory 10-100× for English word lists.
 - **Just one or two lookups** — the trie build cost (O(total characters)) is wasted. Linear scan is fine.
+
+### Visual 1: HashSet wins on exact-match-only lookup
+
+The entire point of a trie is prefix sharing. If you never query prefixes, you're paying for machinery you don't use:
+
+
+
+```text
+   Words = ["apple", "application", "banana", "cat"]
+
+   Trie structure (26-children arrays per node):
+     root
+     ├── a → p → p → l → e$                             5 nodes, 5 arrays of 26 slots = 130 slots
+     │             → l → i → c → a → t → i → o → n$     7 more nodes, 7 × 26 = 182 slots
+     ├── b → a → n → a → n → a$                         6 nodes, 156 slots
+     └── c → a → t$                                     3 nodes, 78 slots
+
+     total: ~500 slots × 4 bytes each = 2 KB
+     per-lookup: walk up to 11 chars, 11 pointer dereferences
+
+   HashSet<String>:
+     stores 4 strings as string objects
+     total: ~200 bytes (hash + metadata)
+     per-lookup: one hashCode + one equals, ~15 chars touched
+
+   10x more memory for the trie, more pointer-chasing per lookup — in exchange
+   for prefix queries you aren't making.
+```
+
+
+
+The decision: do any queries actually use prefixes? "Does this word exist" is exact match (HashSet). "Does any inserted word start with ‛app'?" is a prefix query (trie wins). "Return all words with prefix ‛app'" definitely needs the trie — HashSet would need a full scan.
+
+### Visual 2: substring search isn't a trie problem
+
+A trie indexes prefixes of inserted strings. Substring search needs the dual — suffixes of a single long text:
+
+
+
+```text
+   Problem: given text "banana", search for substring "nan"
+
+   Trie of ["banana"]:
+     root → b → a → n → a → n → a$
+     To find "nan" we'd need to START the walk mid-trie. The trie's
+     structure anchors every path at the root.
+
+   Suffix automaton / suffix array of "banana":
+     stores all suffixes "banana", "anana", "nana", "ana", "na", "a"
+     indexed by the first character, searchable in O(|pattern|) or O(|pattern| log n)
+     "nan" lookup: finds the suffix "nana" starting at position 2, match!
+
+   Alternative — Aho-Corasick for multiple patterns at once:
+     builds a trie of pattern words with failure links (KMP-style)
+     scans the text once, reports every match of every pattern
+     this is "grep -F" with multiple needles.
+```
+
+
+
+The signal: are you looking for the pattern as a *prefix of inserted keys*, or as a *substring inside a single haystack*? Trie answers the first; suffix structures answer the second. A quick hack when `|pattern| × |patterns|` is small: reverse the strings and build a trie — that answers "is this a *suffix* of some inserted key", a weak form of substring search. For general substring, you need the real tool.
 
 ## Recognition drill
 

@@ -1068,12 +1068,106 @@ public static int bitCount(int i) {
 
 ## When NOT to use it
 
+Bit manipulation is a performance / semantic multiplier when the shape fits — and dead weight otherwise. Here's where it stops being free.
+
 - **n &gt; 25 or so** — 2^25 = 33M is barely tractable; 2^30 = 10^9 explodes. Bitmask DP over subsets is dead beyond that.
 - **The set has real semantic complexity** — bit manipulation shines when set membership is a clean boolean. If you need weights, counts, or ordering, use `HashMap` or `SortedSet`.
 - **Bit tricks that yield the same asymptotic complexity as a HashSet** — cleverness has readability cost. Only reach for the trick when the O(1) bitmap operation is genuinely a bottleneck win.
 - **You're solving a real cryptographic problem** — the identities here are the *building blocks*, not the algorithm. Roll your own crypto with these primitives and you'll ship a vulnerability.
 - **Cross-language / cross-platform code where signed/unsigned mismatch matters** — Java's signed shifts differ from C's, from JavaScript's, from Python's arbitrary-precision. Bit-level code doesn't port cleanly.
 - **A team member cannot read the code in 30 seconds** — comment aggressively or use a helper method. Bit tricks are a maintainability tax.
+
+### Visual 1: bitmask DP dies at n &gt; 25
+
+The scaling table for bitmask DP:
+
+
+
+```text
+   n     2ⁿ states    at n memory per state   total memory    runtime (loose)
+
+   15    32,768       4 bytes (int)           128 KB          < 1 ms
+   20    1,048,576    4 bytes                 4 MB            ~10 ms
+   22    4,194,304    4 bytes                 16 MB           ~50 ms
+   25    33,554,432   4 bytes                 128 MB          ~500 ms
+   27    134,217,728  4 bytes                 512 MB          ~2 s     ← getting dicey
+   30    1,073,741,824 4 bytes                4 GB            ~10 s    ← dead
+   40    10¹² states                          4 TB            days
+   50    10¹⁵ states                          universe-age
+```
+
+
+
+For `n > 25` on an unconstrained bitmask DP, you need a different approach: *meet-in-the-middle* (split into halves of 20 bits each, combine with a lookup — reduces 2^40 to 2 × 2^20), or recognize the problem has special structure that avoids enumerating all subsets. The warning sign in a problem: `n ≤ 20` is a dead giveaway for bitmask DP; `n ≤ 100` is NEVER bitmask DP.
+
+### Visual 2: bit tricks become unreadable past the first identity
+
+A bit trick that saves 2 ns but costs the next reader 10 minutes to understand is a bad trade:
+
+
+
+```text
+   // Isolate the lowest set bit (clear everything else)
+   x & -x
+   // readable? Only if the reader has seen the trick before.
+
+   // Count the number of 1 bits (popcount), Kernighan's method
+   int count = 0;
+   while (n != 0) { n &= n - 1; count++; }
+   // ok, "clear the lowest set bit each iteration" — defensible with a one-line comment
+
+   // Count 1 bits using parallel-bit trick (SWAR / "Hamming weight")
+   n = n - ((n >> 1) & 0x55555555);
+   n = (n & 0x33333333) + ((n >> 2) & 0x33333333);
+   n = (n + (n >> 4)) & 0x0F0F0F0F;
+   return (n * 0x01010101) >> 24;
+   // this works but almost no reader will understand it in 30 seconds.
+   // in practice: just call Integer.bitCount(n) — it compiles to one POPCNT.
+```
+
+
+
+The rule: **bit tricks that any experienced engineer recognizes** (set/clear/toggle a bit, bitmask iteration, popcount via library) are fine. **Novel multi-line bit tricks** (SWAR, bit reversal via lookup, De Bruijn sequences) are a maintenance tax. If you need them for a hot path, isolate them in a named helper with a comment linking to the source. Don't scatter them inline.
+
+### Visual 3: signed/unsigned mismatch across languages
+
+Shift semantics are not portable. The "safe" `>> 1` in Java is unsafe in C:
+
+
+
+```text
+   Problem: compute (a + b) / 2 to avoid overflow.
+
+   The classic "safer" formula:
+     mid = (lo + hi) >>> 1     // Java — unsigned right shift
+     mid = (lo + hi) >> 1      // C with int32 — signed right shift
+
+   On int32 with lo = INT_MAX, hi = INT_MAX:
+     lo + hi = overflow to negative number (undefined in C, defined in Java)
+
+     Java  >>> 1: fills high bit with 0, result is the correct midpoint for 32-bit unsigned
+     C/C++ >> 1: implementation-defined for negative; typically keeps sign, result is WRONG
+
+   JavaScript:
+     numbers are 64-bit floats; bitwise ops truncate to int32
+     a + b uses 64-bit, no overflow at 2 × INT_MAX
+     then the shift truncates — different semantics entirely
+
+   Python:
+     ints are arbitrary precision; no overflow ever
+     `>>` is signed, but numbers aren't bounded, so overflow doesn't happen
+
+   Same algorithm, four different behaviors.
+```
+
+
+
+The fix is to never rely on wrap-around behavior if the code might be ported. Instead:
+- Use `lo + (hi - lo) / 2` — compiles to the same ops but can't overflow on positive integers in any language.
+- Use explicit unsigned types if the language has them.
+- Add explicit range assertions at the function boundary.
+
+Bit-level correctness is tied to each language's integer model. Confirm the model before porting.
 
 ## Recognition drill
 

@@ -1007,11 +1007,69 @@ int in_merge_bases_many(struct commit *commit, int nr_reference, ...) {
 
 ## False friends — when "connectivity" doesn't mean DSU
 
+DSU answers one specific question: *"are these two nodes in the same component?"* Several problems look like connectivity but need more.
+
 - **Shortest-path queries** (which "connect" nodes in a graph) — DSU answers "same component?" but has no distance info. Use BFS, Dijkstra, or Floyd-Warshall.
 - **Dynamic connectivity with deletions** — DSU doesn't support edge removal. For "add and remove edges, answer connectivity queries," use **Link-Cut Trees** or **offline reverse processing**.
 - **Articulation points / bridges** — these are static structural queries about an existing graph. Use Tarjan's SCC-style DFS, not DSU.
 - **Weighted / directional connectivity** — DSU is unweighted and undirected. For "connected by a path of specific weight parity," use **weighted DSU** (variant with a `diff[]` array). For directed, use SCC decomposition.
 - **Finding all paths between two nodes** — DSU reduces to a yes/no answer; it doesn't track paths.
+
+### Visual 1: DSU can't undo a union — deletion breaks the invariant
+
+The parent-pointer forest is only ever grown; deletion requires splitting a tree:
+
+
+
+```text
+   State: Union({A,B}), Union({C,D}), Union({A,C})
+     parent[]:  A→A, B→A, C→A, D→A           all one component
+
+   Delete the edge A-C:
+     Can we "un-union"? The edge A-C contributed to the parent-chain, but
+     so did A-B and C-D. We can't tell from parent[] alone which edge
+     each pointer came from — the edge identity was discarded on union.
+
+   The forest cannot be re-split by removing one edge.
+   The invariant "nodes with the same root are connected" is now wrong,
+   but we have no way to re-root.
+
+   Correct approach for "add + delete + query":
+     - Link-Cut Trees (splay-tree forest with path operations, O(log n))
+     - Offline reverse-DSU: process queries in reverse (so deletes become
+       unions in the time-reversed order). Only works if all queries are
+       known up-front.
+```
+
+
+
+The structural reason DSU can't support deletion: it stores *reachability* (via representative), not *edges*. Once an edge has been collapsed into a shared root, DSU doesn't remember which edge did the collapsing. Link-Cut Trees retain the tree structure; DSU retains only the equivalence classes. If deletion is in the mix, DSU is the wrong tool.
+
+### Visual 2: shortest path is "how far", not "whether"
+
+Two cities in the same country doesn't tell you the distance between them:
+
+
+
+```text
+   Nodes: {A, B, C, D} connected as A ── B ── C ── D (edge weights 1,1,1)
+
+   DSU after processing all edges:
+     parent[]:  A→A, B→A, C→A, D→A
+     Query(A, D): same root → "YES, connected"
+     But: distance(A, D) = 3                     DSU has no idea
+
+   For distance queries you need an edge representation:
+     adjacency list + BFS           → O(V+E) per query
+     adjacency list + Dijkstra      → O((V+E) log V) per query, weighted
+     Floyd-Warshall precompute      → O(V³) once, O(1) per query
+
+   DSU is the right tool only when the answer is a BOOLEAN.
+```
+
+
+
+The classic trap: Kruskal's MST algorithm uses DSU as a sub-routine (check whether adding this edge would create a cycle = check whether endpoints are already connected). It's easy to over-generalize that "DSU handles graph stuff" and reach for it when the actual question is "shortest" or "longest". Distance queries always need a graph traversal.
 
 ## Recognition drill
 

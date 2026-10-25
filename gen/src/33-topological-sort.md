@@ -834,11 +834,76 @@ struct file *topological_sort(struct file *targets) {
 
 ## False friends — not every DAG problem is topological sort
 
+A "directed-graph" problem phrasing draws problems to topo sort, but what topo sort delivers is just the **order**. Many graph problems need more.
+
 - **Shortest path in a DAG** uses topo order as the ITERATION order for the DP, but the structural answer is DP, not just the order. Mentioning "topo sort" alone misses the DP layer.
 - **Strongly Connected Components** (Tarjan, Kosaraju) is for *directed graphs that may have cycles*. Topo sort refuses to run on a cyclic graph; SCC decomposes it into DAG components first.
 - **Minimum Spanning Tree** is for undirected weighted graphs; precedence doesn't apply. Use Kruskal/Prim.
 - **Transitive closure** needs reachability from every node; topo sort gives an order but no reachability info. Use Floyd-Warshall or iterated BFS.
 - **Finding the longest path in a DAG** is tractable (unlike general graphs) BUT needs DP on topological order, not just the order itself.
+
+### Visual 1: topo sort gives order, not shortest path
+
+Shortest path in a DAG needs DP that *iterates* in topo order — the order alone is useless:
+
+```text
+   DAG with weighted edges:
+
+         (2)
+     A ─────► B
+     │        │
+   (5)      (1)
+     ▼        ▼
+     C ─────► D
+         (3)
+
+   Topological order: A, B, C, D   or   A, C, B, D  (either valid)
+
+   What topo sort tells you:
+     "You can safely visit vertices in that order; by the time you touch B,
+      A is done."
+
+   What topo sort does NOT tell you:
+     "The shortest path A → D is 3 (via B)."
+
+   To get the answer:
+     dp[A] = 0
+     for v in topoOrder:
+       for each edge v → u with weight w:
+         dp[u] = min(dp[u], dp[v] + w)
+     answer: dp[D] = min(5 + 3, 2 + 1) = 3
+```
+
+Topo sort is the **scaffolding** that makes the DP O(V + E). But the DP is where the shortest-path answer actually appears. Without the DP step, topo sort gives you a list of vertices in no particular numeric relation to each other. The warning: if the problem asks for a path cost, length, or count, topo sort is Phase 1, not the whole algorithm.
+
+### Visual 2: topo sort refuses to run on a cyclic graph
+
+Kahn's algorithm fails the moment the graph has a cycle. SCC decomposition is needed first:
+
+```text
+   Graph with a cycle:
+         A ──► B
+         ▲     │
+         │     ▼
+         D ◄── C
+
+   Kahn's algorithm:
+     in-degrees: A=1, B=1, C=1, D=1   (every node has an in-degree)
+     frontier (indeg 0 nodes): empty
+     result: [] with 4 nodes undiscovered   → "cycle detected", no order
+
+   For problems that genuinely want an order over a cyclic graph:
+     Step 1: compute SCCs (Tarjan or Kosaraju, O(V+E))
+     Step 2: contract each SCC into a single super-node
+     Step 3: the super-nodes form a DAG, topo sort THAT
+
+   Example: compile 4 modules {A, B, C, D} where {A, B} co-reference and {C, D} co-reference.
+            SCCs: {A, B} and {C, D}.
+            Build order within each SCC: handled by cycle-aware linker (not topo sort).
+            Build order across SCCs: topo sort of the condensation.
+```
+
+Topo sort cannot invent an order where none exists. If your directed graph has cycles and you need some notion of order, you need to **first** collapse the cycles (SCCs) and **then** topo sort the resulting DAG. The absence of an output order from Kahn's algorithm (fewer nodes emitted than V) is also the standard cycle-detection trick.
 
 ## Recognition drill
 
