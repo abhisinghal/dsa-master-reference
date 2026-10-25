@@ -301,5 +301,96 @@
   "dp": [],
   "trie-pattern": [],
   "bit-manip": [],
-  "quickselect": []
+  "quickselect": [
+    {
+      "statement": "Find the k-th largest element in an unsorted array in expected O(n) time without doing a full sort.",
+      "pattern": "quickselect",
+      "subVariation": "kth-smallest-lomuto",
+      "distractors": [
+        "top-k-heap",
+        "divide-conquer"
+      ]
+    },
+    {
+      "statement": "Return the median of an unsorted array in O(n) expected time with O(1) extra space.",
+      "pattern": "quickselect",
+      "subVariation": "median-via-quickselect",
+      "distractors": [
+        "top-k-heap",
+        "divide-conquer"
+      ]
+    },
+    {
+      "statement": "Given n points in 2D, return the k closest to the origin in any order, in expected O(n) time.",
+      "pattern": "quickselect",
+      "subVariation": "top-k-quickselect",
+      "distractors": [
+        "top-k-heap",
+        "divide-conquer"
+      ]
+    },
+    {
+      "statement": "Rearrange an unsorted array so nums[0] < nums[1] > nums[2] < nums[3] > ... in-place in O(n) expected time (Wiggle Sort II).",
+      "pattern": "quickselect",
+      "subVariation": "median-via-quickselect",
+      "distractors": [
+        "two-pointers",
+        "divide-conquer"
+      ]
+    },
+    {
+      "statement": "Find the k-th smallest element in an unsorted array; mutation is allowed; O(n) expected is required.",
+      "pattern": "quickselect",
+      "subVariation": "kth-smallest-lomuto",
+      "distractors": [
+        "binary-search",
+        "top-k-heap"
+      ]
+    },
+    {
+      "statement": "Find the top-k most frequent elements in an array where k is much smaller than n, in expected O(n) time.",
+      "pattern": "quickselect",
+      "subVariation": "top-k-quickselect",
+      "distractors": [
+        "top-k-heap",
+        "hashing"
+      ]
+    },
+    {
+      "statement": "Given an unsorted array, return any element at rank r in expected linear time without sorting.",
+      "pattern": "quickselect",
+      "subVariation": "kth-smallest-lomuto",
+      "distractors": [
+        "top-k-heap",
+        "binary-search"
+      ]
+    },
+    {
+      "statement": "You are implementing a C stdlib replacement: write nth_element(a, p) so that a[p] holds the final sorted value at position p after one call, in expected linear time.",
+      "pattern": "quickselect",
+      "subVariation": "kth-smallest-lomuto",
+      "distractors": [
+        "divide-conquer",
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "Compare the Hoare and Lomuto partition schemes for in-place selection; implement one that is bug-safe on duplicate-heavy inputs.",
+      "pattern": "quickselect",
+      "subVariation": "hoare-vs-lomuto",
+      "distractors": [
+        "two-pointers",
+        "divide-conquer"
+      ]
+    },
+    {
+      "statement": "In an image-denoising pipeline, apply a median filter: for each 3x3 window return the median of 9 pixels.",
+      "pattern": "quickselect",
+      "subVariation": "median-via-quickselect",
+      "distractors": [
+        "sliding-window",
+        "top-k-heap"
+      ]
+    }
+  ]
 }

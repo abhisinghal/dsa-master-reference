@@ -1,9 +1,388 @@
 # Quickselect
 
+<script setup>
+const quickselectTemplate = `int findKthSmallest(int[] a, int k) {
+  int target = k - 1;                   // 0-based target index
+  int lo = 0, hi = a.length - 1;
+  Random rnd = new Random();
+  while (lo < hi) {
+    int p = partition(a, lo, hi, lo + rnd.nextInt(hi - lo + 1));
+    if (p == target) return a[p];
+    else if (p < target) lo = p + 1;
+    else hi = p - 1;
+  }
+  return a[lo];
+}
+
+int partition(int[] a, int lo, int hi, int pivotIdx) {
+  int pivot = a[pivotIdx];
+  swap(a, pivotIdx, hi);                // stash pivot at end
+  int store = lo;
+  for (int i = lo; i < hi; i++)
+    if (a[i] < pivot) swap(a, store++, i);
+  swap(a, store, hi);                   // pivot to final place
+  return store;
+}
+
+void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }`
+
+const quickselectInvariant = {
+  statement: `At the start of each outer-loop iteration, the search interval [lo, hi] contains the target rank; 0 ≤ lo ≤ target ≤ hi ≤ n-1. After a partition at index p, exactly one side still contains target, and that side becomes the new [lo, hi].`,
+  initialization: `Before the loop: lo = 0, hi = n-1. The full array is the search interval, which trivially contains any valid target.`,
+  maintenance: `Each iteration picks a random pivot in [lo, hi], partitions the subarray, and gets p = pivot's final sorted position. If p == target, return. If p < target, lo = p+1 (left side cannot contain target). If p > target, hi = p-1 (right side cannot contain target). The new [lo, hi] still contains target.`,
+  termination: `The interval shrinks by at least 1 per iteration (the pivot itself is removed from consideration). Expected shrink is ~n/2 per step for a random pivot. Loop ends when lo == hi (interval of size 1) or when p == target (early return).`
+}
+
+const quickselectComplexity = {
+  time: 'O(n) expected, O(n²) worst',
+  space: 'O(1)'
+}
+
+const quickselectSpecializations = [
+  { slug: 'kth-smallest-lomuto-partition-bare-mechanic-medium', title: 'kth-smallest-lomuto' },
+  { slug: 'median-via-quickselect-two-calls-for-even-n-medium', title: 'median-via-quickselect' },
+  { slug: 'top-k-via-quickselect-vs-heap-of-k-medium', title: 'top-k-quickselect' },
+  { slug: 'hoare-vs-lomuto-pivot-invariants-compared-medium', title: 'hoare-vs-lomuto' }
+]
+
+const amortizedWorkedExample = `n = 16, expected (random pivot splits ~half):
+
+  step 1: partition 16 elements  → 16 ops, keep ~8
+  step 2: partition  8 elements  →  8 ops, keep ~4
+  step 3: partition  4 elements  →  4 ops, keep ~2
+  step 4: partition  2 elements  →  2 ops, keep ~1
+  step 5: return
+
+  Total: 16 + 8 + 4 + 2 = 30 ≈ 2·16 = O(n).
+
+Worst case (pivot always smallest or largest):
+  step 1: 16 ops, keep 15
+  step 2: 15 ops, keep 14
+  ...
+  Total: 16+15+...+1 = n(n+1)/2 = O(n²). This is why we RANDOMIZE the pivot.`
+
+const bareMechCode = `int[] a = {7, 1, 5, 3, 9, 2};     // find the 3rd smallest (target index 2)
+int lo = 0, hi = 5;
+int pivot = a[hi];                 // Lomuto: pivot = last element = 2
+int store = lo;                    // index where next "< pivot" lands
+
+for (int i = lo; i < hi; i++) {
+  if (a[i] < pivot) {
+    swap(a, store, i);
+    store++;
+  }
+}
+swap(a, store, hi);                // pivot to its final place: store
+// a is now [1, 7, 5, 3, 9, 2] with pivot 2 at index store=1
+// pivot's final sorted rank p = 1; target = 2, so p < target → recurse right`
+
+const bareMechInvariant = {
+  statement: `After the scan, every element in [lo, store) is strictly less than pivot, and every element in [store, i) is ≥ pivot. The final swap places pivot at index store — its correct sorted rank.`,
+  initialization: `store = lo. [lo, store) and [store, lo) are both empty. Invariant vacuously holds.`,
+  maintenance: `For each i in [lo, hi): if a[i] < pivot, swap into store and increment store; else leave in place. After the step, the partition invariant still holds.`,
+  termination: `When i reaches hi, [lo, store) < pivot and [store, hi) ≥ pivot. Final swap moves pivot to store; now a[store] = pivot and is at its final sorted index.`
+}
+
+const bareMechComplexity = { time: 'O(n) per partition', space: 'O(1)' }
+
+const subv1Code = `int findKthSmallest(int[] a, int k) {
+  int target = k - 1;
+  int lo = 0, hi = a.length - 1;
+  Random rnd = new Random();
+  while (lo < hi) {
+    int p = partition(a, lo, hi, lo + rnd.nextInt(hi - lo + 1));
+    if (p == target) return a[p];
+    else if (p < target) lo = p + 1;
+    else hi = p - 1;
+  }
+  return a[lo];
+}
+
+int partition(int[] a, int lo, int hi, int pivotIdx) {
+  int pivot = a[pivotIdx];
+  swap(a, pivotIdx, hi);
+  int store = lo;
+  for (int i = lo; i < hi; i++)
+    if (a[i] < pivot) swap(a, store++, i);
+  swap(a, store, hi);
+  return store;
+}`
+
+const subv1Invariant = {
+  statement: `[lo, hi] always contains the target rank. The pivot's final sorted position p splits the array into "all < pivot | pivot | all ≥ pivot"; the half not containing target is discarded.`,
+  initialization: `lo = 0, hi = n-1, target = k-1 (for kth smallest) or n-k (for kth largest). Target is trivially inside [0, n-1].`,
+  maintenance: `Each iteration partitions [lo, hi] and gets p. If p == target → done. If p < target → lo = p+1 (left half can't contain target). If p > target → hi = p-1.`,
+  termination: `Loop ends when lo == hi (interval collapses to one element containing target) or when p == target.`
+}
+
+const subv2Code = `double findMedian(int[] a) {
+  int n = a.length;
+  if (n % 2 == 1) {
+    return quickselect(a, n / 2);         // odd: single middle element
+  }
+  // even: average of two middle ranks
+  int lo = quickselect(a, n / 2 - 1);
+  int hi = quickselect(a, n / 2);         // array may be re-partitioned; this is correct
+  return (lo + hi) / 2.0;
+}
+
+int quickselect(int[] a, int target) {
+  int lo = 0, hi = a.length - 1;
+  Random rnd = new Random();
+  while (lo < hi) {
+    int p = partition(a, lo, hi, lo + rnd.nextInt(hi - lo + 1));
+    if (p == target) return a[p];
+    else if (p < target) lo = p + 1;
+    else hi = p - 1;
+  }
+  return a[lo];
+}`
+
+const subv2Invariant = {
+  statement: `For odd n, the median is the element at rank ⌊n/2⌋. For even n, the median is the average of ranks n/2-1 and n/2. Two separate quickselect calls locate these two ranks in O(n) + O(n) = O(n) expected total.`,
+  initialization: `n is given; parity determines whether one or two quickselect calls are needed.`,
+  maintenance: `Each quickselect call runs the standard loop. The second call may re-partition the array (quickselect mutates); that's fine because we only need the value at the target index.`,
+  termination: `Both calls terminate when their respective target indices are reached. Final result is the average (or single value).`
+}
+
+const subv3Code = `int[][] kClosest(int[][] points, int k) {
+  // partition points by squared distance; after one quickselect, the first k slots
+  // hold the k closest in any order (not necessarily sorted)
+  int lo = 0, hi = points.length - 1;
+  int target = k - 1;
+  Random rnd = new Random();
+  while (lo < hi) {
+    int p = partition(points, lo, hi, lo + rnd.nextInt(hi - lo + 1));
+    if (p == target) break;
+    else if (p < target) lo = p + 1;
+    else hi = p - 1;
+  }
+  return Arrays.copyOfRange(points, 0, k);
+}
+
+int partition(int[][] a, int lo, int hi, int pivotIdx) {
+  int pivot = dist(a[pivotIdx]);
+  swap(a, pivotIdx, hi);
+  int store = lo;
+  for (int i = lo; i < hi; i++)
+    if (dist(a[i]) < pivot) swap(a, store++, i);
+  swap(a, store, hi);
+  return store;
+}
+
+int dist(int[] p) { return p[0] * p[0] + p[1] * p[1]; }`
+
+const subv3Invariant = {
+  statement: `After one quickselect to rank k-1, every element at index < k has distance ≤ a[k-1], and every element at index ≥ k has distance ≥ a[k-1]. The prefix [0, k) is the top-K (unsorted).`,
+  initialization: `Target = k - 1. The partition routine compares by distance, not by raw value.`,
+  maintenance: `Standard quickselect loop; the comparator is "squared distance to origin" instead of value.`,
+  termination: `Loop ends at p == target. Return the first k slots.`
+}
+
+const subv4HoareCode = `int hoarePartition(int[] a, int lo, int hi) {
+  int pivot = a[lo + (hi - lo) / 2];
+  int i = lo - 1, j = hi + 1;
+  while (true) {
+    do { i++; } while (a[i] < pivot);
+    do { j--; } while (a[j] > pivot);
+    if (i >= j) return j;              // Hoare returns a position where [lo, j] ≤ pivot and [j+1, hi] ≥ pivot
+    swap(a, i, j);
+  }
+}`
+
+const subv4LomutoCode = `int lomutoPartition(int[] a, int lo, int hi, int pivotIdx) {
+  int pivot = a[pivotIdx];
+  swap(a, pivotIdx, hi);
+  int store = lo;
+  for (int i = lo; i < hi; i++)
+    if (a[i] < pivot) swap(a, store++, i);
+  swap(a, store, hi);
+  return store;                        // Lomuto returns pivot's FINAL sorted index
+}`
+
+const subv4Invariant = {
+  statement: `Hoare: after return, [lo, j] has values ≤ pivot and [j+1, hi] has values ≥ pivot — the pivot is NOT guaranteed to be at index j. Lomuto: after return, a[store] = pivot and is at its final sorted rank.`,
+  initialization: `Both start by choosing a pivot. Hoare uses i=lo-1, j=hi+1 and advances with do-while. Lomuto moves the pivot to hi, uses store = lo.`,
+  maintenance: `Hoare advances i until a[i] ≥ pivot, j until a[j] ≤ pivot, then swaps — three times fewer swaps on average than Lomuto. Lomuto advances i through [lo, hi); every time a[i] < pivot it swaps into store and increments store.`,
+  termination: `Hoare: i ≥ j → return j. Lomuto: i = hi → final swap puts pivot at store, return store.`
+}
+
+const inTheWildCode = `# NumPy np.partition — same quickselect pattern, written in C.
+# From numpy/core/src/npysort/quickselect.cpp (abridged):
+
+def partition_kth(a, k):
+    """Rearrange a in-place so a[k] holds the k-th order statistic."""
+    lo, hi = 0, len(a) - 1
+    while lo < hi:
+        pivot = median_of_three(a, lo, (lo + hi) >> 1, hi)
+        p = three_way_partition(a, lo, hi, pivot)
+        if p == k:
+            return
+        elif p < k:
+            lo = p + 1
+        else:
+            hi = p - 1
+
+# np.partition(a, k) is EXACTLY this, plus:
+#   - three-way partition (handles duplicate-heavy inputs)
+#   - median-of-three pivot (avoids adversarial O(n²))
+#   - introselect fallback to heap-select when recursion depth > 2*log2(n)`
+
+const trap1Bug = `Deterministic pivots on adversarial input:
+
+  a = [1, 2, 3, 4, 5, 6, 7, 8]  (already sorted)
+  Pick a[hi] as pivot EVERY iteration.
+  Round 1: pivot = 8 → partition → p = 7. Keep [0, 6].
+  Round 2: pivot = 7 → p = 6. Keep [0, 5].
+  Round 3: pivot = 6 → p = 5. Keep [0, 4].
+  ...
+  Total: O(n²) time, not O(n). On n = 10^5 this is 10^10 ops — minutes vs microseconds.`
+
+const trap1Fix = `Pivot = \`lo + rnd.nextInt(hi - lo + 1)\`. Randomization makes the adversarial-input case probabilistically rare — expected O(n) holds. For deterministic worst-case guarantee, use median-of-medians (BFPRT 1973), but the constant is 10× worse, so random pivot wins in practice. Say "expected O(n) with randomized pivot" out loud in interviews.`
+
+const trap2Bug = `Rank-conversion bugs between "k-th largest" and "k-th smallest":
+
+  Input: a = [3, 2, 1, 5, 6, 4], k = 2
+  "2nd LARGEST" means target index n - k = 6 - 2 = 4 (ascending)
+  "2nd SMALLEST" means target index k - 1 = 1 (ascending)
+
+  Writing target = k - 1 when the problem asked for k-th largest returns 2 (the 2nd smallest), not 5.
+  The code is correct; the index conversion is wrong, and the test case passes if sorted(a) matches at that index.`
+
+const trap2Fix = `State the rank conversion before writing the loop:
+  • k-th SMALLEST → target = k - 1
+  • k-th LARGEST  → target = n - k
+Both are 0-based. For an input of length n, the extremes map to:
+  • 1st smallest = index 0 = a[0] after sort
+  • 1st largest  = index n-1 = a[n-1] after sort
+Writing it as a comment above the loop head catches this immediately.`
+
+const trap3Bug = `Partition comparator \`a[i] <= pivot\` (should be \`<\`) on duplicate-heavy inputs:
+
+  a = [5, 5, 5, 5, 5], target = 2
+  With <= pivot: every element gets swapped forward; store advances for all n.
+  Partition returns store = n, which is out of bounds / wrong rank.
+  More subtly: with <= and random pivot = a[k], the partition "accepts" the pivot itself
+  as "< pivot," which is nonsensical.`
+
+const trap3Fix = `Use strict \`a[i] < pivot\` in the scan. This correctly partitions:
+  [< pivot] [pivot and duplicates] [> pivot]
+Pivot and its duplicates end up on the right side of the "< pivot" region.
+For truly duplicate-heavy inputs, upgrade to three-way partition (<, ==, >);
+if target falls inside the equal band, return immediately in O(n).`
+
+const advanced1 = `What if the input is adversarial and quickselect degenerates to O(n²)?
+
+Use median-of-medians (BFPRT 1973) for deterministic O(n). The pivot is chosen by:
+  1. Split the array into groups of 5.
+  2. Compute the median of each group (O(1) per group).
+  3. Recursively quickselect the median of medians.
+This pivot is guaranteed to reject at least 30% of elements per step, giving T(n) = T(n/5) + T(7n/10) + O(n) → O(n).
+But: the constant factor is ~10× worse than randomized quickselect, so it's rarely used in practice. C++ std::nth_element and NumPy np.partition both use RANDOMIZED quickselect with a worst-case heap-select fallback (introselect), not median-of-medians.`
+
+const advanced2 = `What if you need the top-K and the stream is unbounded?
+
+Quickselect requires random access to the whole array — won't work on a stream. Use a min-heap of size k instead:
+  for each incoming value v:
+    if heap.size() < k: heap.offer(v);
+    else if (v > heap.peek()): heap.poll(); heap.offer(v);
+Time: O(n log k), space: O(k). Worse asymptotically than quickselect's O(n), but STREAMING-COMPATIBLE and bounded memory. The two patterns divide cleanly: quickselect for in-memory one-shot, heap for streams or repeated queries.`
+
+const advanced3 = `What if the array must remain in original order?
+
+Quickselect mutates in-place. Options:
+  1. Copy the array first (O(n) extra memory, then standard quickselect).
+  2. Build an index array [0, 1, 2, ..., n-1] and quickselect over the indices
+     (comparing a[indices[i]] instead of indices[i]). The original array is untouched.
+Option 2 is what databases do for "TOP N" queries where the underlying rows must stay in insertion order.`
+
+const advanced4 = `What if you need the top-K VALUES SORTED (not just in any order)?
+
+Quickselect alone gives you the k-th rank; the first k slots are the top-K but UNSORTED. Two choices:
+  1. Sort just those k slots: O(k log k) extra, total O(n + k log k).
+  2. Build a heap-of-K from the start: O(n log k) throughout.
+If k << n, option 1 wins; if k ~ n, they're equivalent. The classic trap: assuming
+quickselect "gives you top-K sorted" — it doesn't. Always ask the interviewer whether
+output must be sorted.`
+
+const advanced5 = `Breaking point — quickselect has no advantage when:
+  • The data is a stream: use heap-of-K.
+  • The data must stay in order: use heap or index-array trick.
+  • You need all k values sorted (not just the k-th): heap is simpler and comparable.
+  • You need DETERMINISTIC worst-case O(n): use median-of-medians (constants are bad).
+  • The input is in a BST: in-order traversal is O(h + k), typically much faster.
+Diagnostic: can you mutate the array and do one in-memory pass? If no — different pattern.`
+
+const advancedCrossProblems = [
+  {
+    title: 'Wiggle Sort II (quickselect + Dutch flag + virtual index)',
+    hint: 'Quickselect the median; then use three-way partition with virtual index mapping i -> (2i+1) % (n|1) to interleave larger/smaller halves in O(n) time, O(1) extra space.',
+    reveal: 'Three composed patterns: quickselect (median), Dutch flag (three-way partition), index arithmetic. The virtual index trick makes the output nums[0] < nums[1] > nums[2] without an auxiliary array.'
+  },
+  {
+    title: 'Kth Smallest Element in a BST (NOT quickselect)',
+    hint: 'A BST already encodes rank in its in-order traversal. Iterative in-order with early termination gives O(h + k) time, O(h) stack — completely different mechanism.',
+    reveal: 'Recognition drill: when the input is a BST, quickselect\'s partition idea doesn\'t apply. The TREE is already partitioned by sort order; walk it in-order and stop at the k-th node. If the BST stores subtree sizes at each node, you can even get O(h) worst-case.'
+  },
+  {
+    title: 'Median Filter in image processing',
+    hint: 'For each pixel, compute the median of a 3x3 neighborhood (9 pixels). Naive: sort 9 pixels → O(n·k·log k) for an n-pixel image with k-sized window. Quickselect: O(n·k) expected, 2-3× faster in practice.',
+    reveal: 'Composed with sliding window: as the 3x3 window slides, you can update the partial sort incrementally. Production median-filter implementations (OpenCV, Pillow) use a histogram-based O(n) algorithm (Huang 1979), which is tangentially related but a different pattern.'
+  }
+]
+
+const quizQuestions = [
+  {
+    q: 'Expected time complexity of Quickselect for the k-th element?',
+    choices: [
+      { text: 'O(n)', correct: true, explanation: 'Each partition eliminates a constant fraction of candidates on average, giving the geometric sum n + n/2 + n/4 + ... = 2n.' },
+      { text: 'O(n log n)', correct: false, explanation: 'That is full quicksort.' },
+      { text: 'O(log n)', correct: false },
+      { text: 'O(k)', correct: false }
+    ]
+  },
+  {
+    q: 'Worst-case complexity of Quickselect without randomization?',
+    choices: [
+      { text: 'O(n²)', correct: true, explanation: 'On adversarial inputs (e.g., sorted input with last-element pivot), each partition shrinks by 1 → quadratic.' },
+      { text: 'O(n log n)', correct: false },
+      { text: 'O(n)', correct: false, explanation: 'Only with median-of-medians pivot (BFPRT 1973).' },
+      { text: 'O(log n)', correct: false }
+    ]
+  },
+  {
+    q: 'For k-th LARGEST via quickselect, how do you compute the target index?',
+    choices: [
+      { text: 'target = n - k (in ascending-sorted order)', correct: true, explanation: 'k-th largest is the element at position n-k when sorted ascending.' },
+      { text: 'target = k', correct: false, explanation: 'That is the (k+1)-th smallest.' },
+      { text: 'target = k - 1', correct: false, explanation: 'That is k-th smallest.' },
+      { text: 'target = random', correct: false }
+    ]
+  },
+  {
+    q: 'What is the Hoare vs Lomuto key difference?',
+    choices: [
+      { text: 'Hoare uses two pointers from both ends; Lomuto uses one pointer and a store index', correct: true, explanation: 'Hoare does ~3× fewer swaps on average and handles duplicates better; Lomuto is simpler to explain and more commonly taught.' },
+      { text: 'They have different asymptotic complexity', correct: false, explanation: 'Both are O(n) per partition; the difference is in constant factor and duplicate handling.' },
+      { text: 'Hoare is deterministic O(n) worst case', correct: false },
+      { text: 'Lomuto cannot handle duplicates', correct: false, explanation: 'Lomuto CAN handle duplicates with strict `< pivot`; it is just less efficient.' }
+    ]
+  },
+  {
+    q: 'What is the "Wiggle Sort II" O(n) trick using quickselect?',
+    choices: [
+      { text: 'Quickselect the median, then three-way partition with virtual index mapping (2i+1) % (n|1)', correct: true, explanation: 'Virtual indexing interleaves the ranked halves to produce the wiggle pattern in-place.' },
+      { text: 'Just sort', correct: false, explanation: 'That is O(n log n), not O(n).' },
+      { text: 'Random shuffle until wiggle', correct: false },
+      { text: 'BFS', correct: false }
+    ]
+  }
+]
+</script>
 
 <PatternVideo pattern-name="Quickselect" duration="8–12 min" />
 
-<PatternProgress pattern-id="quickselect" problems="kth-largest" />
+<PatternProgress pattern-id="quickselect" problems="kth-largest, k-closest-points-to-origin, top-k-frequent-elements, wiggle-sort-ii, kth-smallest-in-sorted-matrix" />
 
 
 
@@ -17,28 +396,17 @@ You could argue: *"sort is O(n log n), that's fine."* And it is — for one quer
 
 The pattern is **Quickselect**: return the k-th smallest (or largest) element in **O(n) expected time** without fully sorting. Pick a pivot, partition the array around it. The pivot lands in its final sorted position `p`. If `p == k`, you're done. If `p < k`, the answer is in the right half — throw away the left half and recurse. If `p > k`, symmetric. **You never recurse into both halves.** For finding top-10-of-100,000, Quickselect averages ~200,000 ops vs. sort's `100,000 · log₂(100,000) = 1,700,000` — an **8.5× speedup** for the same answer. Scaled to Netflix: from 2·10¹² to 2·10¹¹ ops per day. Ships hit datacenter power budgets.
 
-Quickselect borrows the partition step from quicksort. Pick a pivot, move smaller values to the left and larger values to the right, then the pivot lands in its final sorted position. If that position is the target rank, you are done. If it is too small, the target is on the right; if it is too large, the target is on the left. Unlike quicksort, you never recursively sort both sides. You throw away the side that cannot contain the answer.
-
-**Grokking arc:** The motivating problem is finding one rank without needing the whole sorted order. Brute force sorts everything. **Can we do better?** Partition once, compare the pivot's final index with the target rank, and discard the side that cannot contain the answer.
-
-Sorting is a powerful habit, but sometimes it is too much. If someone asks for the 2nd largest number in `[3,2,1,5,6,4]`, a full sort gives `[1,2,3,4,5,6]` and then returns `5`. Correct, but notice how much extra information you computed: you learned the full order of every value even though only one rank mattered. Quickselect exists for the moment you say, "I only need the element that would land at one index if the array were sorted."
-
-Trace a tiny example by hand. For `[7, 1, 5, 3, 9, 2]`, the 2nd largest is index `n-k = 4` in ascending order. Suppose pivot `5` partitions to `[1,3,2,5,9,7]`, so pivot index is `3`. Target `4` is to the right, so ignore indices `0..3`. Now partition `[9,7]`; if pivot `7` lands at index `4`, return `7`. You selected the answer without sorting `[1,3,2]` at all.
-
-> [key] **Key Insight** — After partitioning around a pivot, the pivot sits at its final sorted index p. If p == k you're done. If p < k, the answer is in the right half; else the left. You never touch the side that doesn't contain rank k.
-
 ```svg
 <svg role="img" width="720" height="240" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" aria-label="one partition step decides which side can contain rank k">
   <defs>
     <marker id="qs-ar-blue" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
     <marker id="qs-ar-grn" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
     <marker id="qs-ar-red" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
-    <filter id="qs-s1" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-color="var(--dsa-neutral)" flood-opacity="0.5"/></filter>
   </defs>
   <rect x="0" y="0" width="720" height="240" fill="var(--dsa-bg)"/>
   <text x="360" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-ink)">one partition step decides which side can contain rank k</text>
   <text x="48" y="70" text-anchor="end" font-size="12" font-weight="700" fill="var(--dsa-neutral)">before</text>
-  <g filter="url(#qs-s1)">
+  <g>
     <rect x="70" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><rect x="122" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
     <rect x="174" y="48" width="46" height="38" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.7"/><rect x="226" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
     <rect x="278" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/><rect x="330" y="48" width="46" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral-line)"/>
@@ -47,14 +415,8 @@ Trace a tiny example by hand. For `[7, 1, 5, 3, 9, 2]`, the 2nd largest is index
     <text x="93" y="73">7</text><text x="145" y="73">1</text><text x="197" y="73">5</text><text x="249" y="73">3</text><text x="301" y="73">9</text><text x="353" y="73">2</text>
   </g>
   <text x="197" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">pivot = 5</text>
-  <path d="M150,96 C126,122 112,132 102,146" fill="none" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#qs-ar-grn)"/>
-  <path d="M250,96 C222,122 192,134 156,146" fill="none" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#qs-ar-grn)"/>
-  <path d="M354,96 C294,122 246,134 210,146" fill="none" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#qs-ar-grn)"/>
-  <path d="M92,96 C316,118 418,132 470,146" fill="none" stroke="var(--dsa-danger)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#qs-ar-red)"/>
-  <path d="M300,96 C388,118 476,132 522,146" fill="none" stroke="var(--dsa-danger)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#qs-ar-red)"/>
-  <line x1="218" y1="68" x2="315" y2="150" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#qs-ar-blue)"/>
   <text x="48" y="170" text-anchor="end" font-size="12" font-weight="700" fill="var(--dsa-neutral)">after</text>
-  <g filter="url(#qs-s1)">
+  <g>
     <rect x="70" y="148" width="46" height="38" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><rect x="122" y="148" width="46" height="38" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
     <rect x="174" y="148" width="46" height="38" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><rect x="226" y="148" width="46" height="38" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.7"/>
     <rect x="278" y="148" width="46" height="38" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)"/><rect x="330" y="148" width="46" height="38" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)"/>
@@ -73,13 +435,38 @@ Trace a tiny example by hand. For `[7, 1, 5, 3, 9, 2]`, the 2nd largest is index
 ```
 <div class="readfig"><b>How to read it:</b> Partition moves values smaller than the pivot to the green left side and values greater than or equal to it to the red right side. The pivot <b>5</b> lands at its final sorted rank <b>p</b>. Quickselect compares <b>p</b> with the target rank <b>k</b> and discards the side that cannot contain the answer.</div>
 
-> [key] **Key Insight — Quickselect is expected O(n) *because* it discards half the array on each step.** Total work: `n + n/2 + n/4 + ... = 2n = O(n)`. This is the same geometric-series argument as binary search, but applied to a partition step instead of a midpoint comparison. Say "expected linear" out loud in interviews — the word "expected" acknowledges the worst-case O(n²).
+> [key] **Key Insight** — Quickselect is expected O(n) *because* it discards half the array on each step. Total work: `n + n/2 + n/4 + ... = 2n = O(n)`. Say "expected linear" out loud in interviews — the word "expected" acknowledges the worst-case O(n²).
 
-> [key] **Key Insight — Hoare partitioning vs. Lomuto partitioning matters.** Lomuto is simpler (one pass, one write-pointer) but 3× slower in practice and has worst-case O(n²) even on unique-value arrays. Hoare's two-pointer swap is 3× faster and handles equal elements better. **For interviews: use Lomuto for correctness (simpler to explain); for contests: use Hoare.**
+## The bare mechanic — simplest working example
 
-> [inv] **Invariant — after each partition, the pivot's index is fixed forever.** Once `partition()` returns index `p`, `a[p]` is the correct value for rank `p` in the fully-sorted output. Quickselect never re-partitions across `p` because the search is confined to the side that could contain rank `k`.
+Before randomized pivots, before median-of-medians, before all four sub-variations, here's the Lomuto partition on a 6-element array in one pass. **Target: find the 3rd smallest in `[7, 1, 5, 3, 9, 2]`.**
 
-> [inv] **Invariant — the search interval `[lo, hi]` always contains index `k`.** Every recursive call maintains this: if `p < k`, recurse on `[p+1, hi]` (which contains k); if `p > k`, recurse on `[lo, p-1]`. Violating this invariant means you passed the wrong subrange and will return the wrong rank.
+Target index = `k - 1 = 2` (0-based). Pick pivot = `a[hi] = 2` (last element). Walk `i` from `0` to `hi-1`; whenever `a[i] < pivot`, swap into `store` and increment `store`:
+
+| step | i | a[i] | pivot | action | store | array |
+|---|---|---|---|---|---|---|
+| 0 | — | — | 2 | pivot = a[5] = 2; swap a[5]↔a[5] (no-op) | 0 | `[7,1,5,3,9,2]` |
+| 1 | 0 | 7 | 2 | 7 ≥ 2 → skip | 0 | `[7,1,5,3,9,2]` |
+| 2 | 1 | 1 | 2 | 1 < 2 → swap a[0]↔a[1], store++ | 1 | `[1,7,5,3,9,2]` |
+| 3 | 2 | 5 | 2 | 5 ≥ 2 → skip | 1 | `[1,7,5,3,9,2]` |
+| 4 | 3 | 3 | 2 | 3 ≥ 2 → skip | 1 | `[1,7,5,3,9,2]` |
+| 5 | 4 | 9 | 2 | 9 ≥ 2 → skip | 1 | `[1,7,5,3,9,2]` |
+| end | — | — | 2 | swap a[store]↔a[hi] → pivot to final place | — | `[1,2,5,3,9,7]` |
+
+Pivot `2` is now at index `store = 1`, which is its correct sorted rank. Target `k-1 = 2` is to the right of `1`, so **recurse into `[2, 5]`** — the sub-array `[5, 3, 9, 7]` — and find rank `2 - 1 - 1 = 0` of that slice (the smallest, which is `3`).
+
+Four more operations and quickselect returns `3`. **Total work:** 6 + 4 ≈ 10 ops to find the 3rd smallest — much less than fully sorting (18 ops minimum for quicksort on 6 elements).
+
+<PatternTemplateCard
+  slug="quickselect-bare-mechanic"
+  :code="bareMechCode"
+  language="java"
+  :invariant="bareMechInvariant"
+  :complexity="bareMechComplexity"
+  title="Bare mechanic — one Lomuto partition pass"
+/>
+
+> [key] **The single move.** Partition rearranges the array so a[store] = pivot sits at its final sorted rank, and everything left of store is strictly smaller. The pivot's rank is now KNOWN; recurse only into the side containing the target index. Everything in this chapter — median, top-k, Hoare partition — is this move plus a different "what to do with the two halves."
 
 ## When to use it — one-shot rank selection
 
@@ -91,37 +478,51 @@ Trace a tiny example by hand. For `[7, 1, 5, 3, 9, 2]`, the 2nd largest is index
 - constraints where O(n log n) sort is acceptable but the interviewer asks for better average time
 - array is available in memory, so random access and in-place swaps are allowed
 
-> [trap] **Trap — deterministic worst-case O(n²) pivots.** Picking the first or last element as pivot on already-sorted input → each partition shrinks by 1 → O(n²). **Rule: `pivotIdx = lo + random.nextInt(hi - lo + 1)`.** For truly deterministic linear-time worst case, use median-of-medians (Blum-Floyd-Pratt-Rivest-Tarjan 1973) — but mention only if asked.
-
-> [trap] **Trap — using recursion where iteration is safer.** Quickselect's recursion depth is expected O(log n) but worst case O(n). On adversarial input with `n = 10⁵`, that's `10⁵` stack frames = stack overflow. **Iterative Quickselect uses a while loop and eliminates the recursion; use this on very large inputs.**
-
-<QuickselectAnim />
-
-
 ### When NOT to use it
 You need k-th in a **stream** (no random access) — use a heap. You need the k boundary items in order — use a heap or partial sort. Adversarial inputs with the same pivot every time degrade to O(n²) — always pick a **random** pivot or use median-of-medians.
 
 Do not reach for Quickselect when the input must remain in original order and mutation is forbidden unless you are willing to copy the array. Do not use it for repeated queries on the same data; sorting once or building an order-statistics structure may win. And if the problem requires stable ordering, tie-aware output, or all top-k values sorted, Quickselect alone only gets you the boundary; you still need post-processing.
 
-## How to use it — template
+<QuickselectAnim />
 
-```java
-int target = rankIndex;                 // 0-based index in sorted order
-int lo = 0, hi = a.length - 1;
-while (lo < hi) {
-    int pivotIdx = choosePivot(lo, hi);
-    int p = partition(a, lo, hi, pivotIdx);
-    if (p == target) {
-        return a[p];
-    } else if (p < target) {
-        lo = p + 1;
-    } else {
-        hi = p - 1;
-    }
-}
-return a[lo];
-```
-The template is a narrowing search over ranks, not values. `partition` gives you one value in its final sorted position. Comparing that position with `target` tells you which half can still contain the answer. `choosePivot` should be randomized or at least not always the same bad endpoint. For kth largest, convert to an ascending rank with `target = n - k`; for kth smallest, use `target = k - 1`.
+## THE template
+
+Every quickselect problem is a specialization of the two-step loop: pick a pivot, partition, compare `p` to the target, discard the half that cannot contain `target`. The template below is Lomuto partition inside a while loop with randomized pivot — the standard interview form.
+
+<PatternTemplateCard
+  slug="quickselect-template"
+  :code="quickselectTemplate"
+  language="java"
+  :invariant="quickselectInvariant"
+  :complexity="quickselectComplexity"
+  :specializations="quickselectSpecializations"
+  title="THE quickselect template — randomized Lomuto"
+/>
+
+### Why it's O(n) expected — the amortized argument
+
+The outer `while` seems to loop up to `n` times, and each partition is `O(n)` — a naive reader would guess `O(n²)` worst case. The crucial observation is that each iteration **shrinks the active range by roughly half** on average, giving a geometric sum.
+
+<AmortizedPanel
+  method="aggregate"
+  bound="O(n) expected"
+  statement="Each partition scans the current range in O(range), and the range halves (in expectation) per iteration. Total work ≈ n + n/2 + n/4 + ... = 2n = O(n)."
+  :workedExample="amortizedWorkedExample"
+>
+
+Partition at step i costs O(r_i) where r_i is the current range size. With a random pivot, E[r_{i+1}] = r_i / 2 (because a uniformly random pivot splits a range of size r into expected halves of r/2 each; we keep only one).
+
+Total expected work:
+
+E[T(n)] = n + n/2 + n/4 + ... = 2n = **O(n)**
+
+Worst case (pivot always extreme): r shrinks by 1 per step → T(n) = n + (n-1) + ... + 1 = n(n+1)/2 = O(n²). Randomization makes this adversarial case probabilistically rare — the probability of hitting worst-case over 10^5 iterations is < 10^-10000.
+
+This same aggregate argument powers [§22 two-pointers](/patterns/two-pointers) (sum of advances ≤ 2n) and [§21 sliding-window](/patterns/sliding-window) (each index pushed/popped once). The pattern is "monotone counter bounds total work" — the signature of amortized O(1) per step.
+
+</AmortizedPanel>
+
+> [key] **Where the "expected" matters.** In a system where an adversary can craft inputs (web server receiving user queries), always use randomized or median-of-three pivot. In a system with trusted input (sorting a database page), deterministic first-element pivot is fine and avoids the RNG cost. Say which assumption you're making out loud.
 
 ## History — Hoare 1961, Blum-Floyd-Pratt-Rivest-Tarjan 1973
 
@@ -142,17 +543,27 @@ Hoare's quickselect had a randomized average of O(n) but worst-case O(n²) on ad
 
 Bloch's 2006 blog post on the Binary Search bug also revealed that Java's original `Arrays.sort` had subtle quickselect-related bugs — even the JDK's sort spec-authors weren't immune. That story reinforces the Chapter 27 point: partition-based algorithms *look* simple but are among the most bug-prone code in a standard library.
 
-When you tell an interviewer *"Hoare's quickselect, expected O(n) with randomized pivot, worst-case O(n²) unless you use median-of-medians for a guaranteed O(n),"* you're citing a 63-year-old lineage still running at the bottom of every ML framework and every database's top-K operator.
+## Sub-variations of the template
 
----
+Each sub-variation below swaps **what gets compared** and/or **how the partition is done** but keeps the "pivot + partition + narrow" skeleton. Reading these in order (bare mechanic → median → top-K → Hoare vs Lomuto) traces the capability growth from one rank to many ranks to pivot-scheme-level choice.
 
-## Quickselect (Kth Largest Element) <span class="diff diff-m">Medium</span>
+<PatternSubVariationNav pattern="quickselect" />
+
+### Kth smallest (Lomuto partition — bare mechanic) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)*
 
 <ProgressCheck id="quickselect-kth-largest-element" />
 
-### Problem
+The canonical quickselect problem: find the k-th order statistic. The code is simplest when "k-th smallest" is primary; "k-th largest" is just `target = n - k`.
+
+<InvariantProof :statement="subv1Invariant.statement" :initialization="subv1Invariant.initialization" :maintenance="subv1Invariant.maintenance" :termination="subv1Invariant.termination" />
+
+> [key] **Blind-solve prompt** — on `nums=[3,2,1,5,6,4], k=2` (2nd largest = 5). Convert to target = `n - k = 4`, then run the while loop. Try it, then reveal.
+
+<TemplateReveal :canonical="subv1Code" language="java" slug="quickselect-kth" />
+
+#### Problem
 Find the **kth largest** element in an unsorted array (a one-shot query) — faster than fully sorting.
 
 **Constraints:** `1 ≤ k ≤ n ≤ 10⁵`; expected O(n) average via partitioning.
@@ -165,7 +576,7 @@ Find the **kth largest** element in an unsorted array (a one-shot query) — fas
 
 <ExamplePreview compact :input="['3', '2', '3', '1', '2', '4', '5', '5', '6', '|', '4']" :output="['4']" />
 
-### Solution — brute force
+#### Solution — brute force
 The baseline is to sort the array and index into the sorted result.
 
 ```text
@@ -179,41 +590,34 @@ A heap baseline is also possible: keep a min-heap of size k and return its root 
 
 **Baseline complexity:** O(n log n) time; O(1) or O(n) extra space depending on sorting/copying.
 
-### Solution — optimized
-The optimized solution keeps the original Java intact and explains the pattern that removes the brute-force bottleneck.
+#### Solution — optimized
 
-#### Pattern
-Partition around a (randomized) pivot; recurse only into the side that contains rank k.
+The optimized solution partitions around a (randomized) pivot; recurse only into the side that contains rank k.
 
-> [inv] **Invariant** — After partition, the pivot rests at its final sorted position `p`; everything left ≤ pivot ≤ everything right. Compare `p` to the target index to pick the side.
-
-#### Java
 ```java
 int findKthLargest(int[] a, int k) {
-    int target = a.length - k;                 // kth largest = index n-k ascending
-    int lo = 0, hi = a.length - 1;
-    Random rnd = new Random();
-    while (lo < hi) {
-        int p = partition(a, lo, hi, lo + rnd.nextInt(hi - lo + 1));
-        if (p == target) break;
-        else if (p < target) lo = p + 1;
-        else hi = p - 1;
-    }
-    return a[target];
+  int target = a.length - k;                 // kth largest = index n-k ascending
+  int lo = 0, hi = a.length - 1;
+  Random rnd = new Random();
+  while (lo < hi) {
+    int p = partition(a, lo, hi, lo + rnd.nextInt(hi - lo + 1));
+    if (p == target) break;
+    else if (p < target) lo = p + 1;
+    else hi = p - 1;
+  }
+  return a[target];
 }
 int partition(int[] a, int lo, int hi, int pivotIdx) {
-    int pivot = a[pivotIdx];
-    swap(a, pivotIdx, hi);                      // stash pivot at end
-    int store = lo;
-    for (int i = lo; i < hi; i++)
-        if (a[i] < pivot) swap(a, store++, i);
-    swap(a, store, hi);                         // pivot to final place
-    return store;
+  int pivot = a[pivotIdx];
+  swap(a, pivotIdx, hi);                      // stash pivot at end
+  int store = lo;
+  for (int i = lo; i < hi; i++)
+    if (a[i] < pivot) swap(a, store++, i);
+  swap(a, store, hi);                         // pivot to final place
+  return store;
 }
 void swap(int[] a, int i, int j){ int t=a[i]; a[i]=a[j]; a[j]=t; }
 ```
-
-> [note] **Trace it** — One possible randomized run for `[3,2,1,5,6,4], k=2`; target index is `6-2=4` in ascending order.
 
 <CodeTrace
   title="Quickselect Kth Largest — nums=[3,2,1,5,6,4], k=2 (target idx=4)"
@@ -225,103 +629,247 @@ void swap(int[] a, int i, int j){ int t=a[i]; a[i]=a[j]; a[j]=t; }
     { pointers: { lo: 0, hi: 4, pivot: 3 }, vars: { array: "[3,2,1,4,5]" }, note: "pivot 5 → partitions to [3,2,1,4] | 5. idx 4 == k → found 5", added: [4] }
   ]'
 />
->
-> | Round | Active range | Chosen pivot | Array shape after partition | Pivot index | Next move |
-> |---|---|---|---|---|---|
-> | 1 | `0..5` | `4` | values `<4`, then `4`, then values `>4` | `3` | `3 < 4`, search right |
-> | 2 | `4..5` | `6` | value `5`, then `6` | `5` | `5 > 4`, search left |
-> | stop | `4..4` | — | `a[4]` is fixed enough | `4` | return `5` |
->
-> The whole left side below index 4 never needs to be sorted. It only needs to be known as "too small to contain the 2nd largest."
 
 #### Rank conversion: kth largest vs kth smallest
-Most bugs in this problem are off-by-one rank bugs. If the array were sorted ascending, the 1st smallest is index `0`, so kth smallest is `k - 1`. The 1st largest is the final index `n - 1`, so kth largest is `n - k`. For `[1,2,3,4,5,6]`, the 2nd largest is `5`, which sits at index `4`; `n-k = 6-2 = 4`. Say this conversion out loud before writing the loop.
+
+Most bugs here are off-by-one rank bugs. If the array were sorted ascending, the 1st smallest is index `0`, so kth smallest is `k - 1`. The 1st largest is the final index `n - 1`, so kth largest is `n - k`. For `[1,2,3,4,5,6]`, the 2nd largest is `5`, which sits at index `4`; `n-k = 6-2 = 4`. Say this conversion out loud before writing the loop.
 
 Duplicates do not change the formula. In `[3,2,3,1,2,4,5,5,6]`, sorted ascending is `[1,2,2,3,3,4,5,5,6]`. The 4th largest is index `9-4=5`, value `4`. You are selecting by position after sorting, not by distinct value.
 
-#### Partition mechanics in plain English
-The partition helper temporarily moves the pivot to the end. `store` marks the first index where a value `>= pivot` may belong. As you scan from `lo` to `hi-1`, every value smaller than pivot gets swapped to `store`, and `store` advances. At the end, swapping the pivot into `store` places it after all smaller values and before all larger-or-equal values. That is enough for selection; the left side does not need to be internally sorted.
+#### Mutability and output shape
 
-Using `< pivot` instead of `<= pivot` means duplicates equal to the pivot collect on the right side. That is valid for selection because the pivot still lands at one sorted-compatible position. On arrays with many equal values, three-way partitioning (`<`, `=`, `>`) can be faster, but the two-way version is the standard compact interview solution.
-
-#### Mutability and return shape
-Quickselect rearranges the array. It does not sort it, but it absolutely mutates it. That is fine for most LeetCode problems because the input array is not reused after the call. In a production API, you should either document the mutation or copy the array first. Copying preserves the caller's data but changes the space complexity to O(n). In an interview, mention this trade-off if the prompt says \"do not modify the input.\"
-
-Also distinguish between returning the **kth value** and returning the **top k values**. The provided code returns one integer. If the prompt asks for the k largest elements in any order, Quickselect can partition until index `n-k` is in place, and then the suffix from `n-k` to `n-1` contains the k largest elements, not necessarily sorted. If the prompt asks for those k elements sorted, you either sort just that suffix or use a heap / full sort depending on constraints.
-
-#### Pivot quality and randomness
-The partition logic is deterministic once a pivot index is chosen. The randomness is only there to protect you from consistently bad pivots. On already sorted input, always choosing the last element is disastrous for kth largest: the pivot lands at the end, then the next end, then the next, shrinking by one each time. Random choice makes that pattern extremely unlikely.
-
-If randomization is not allowed, median-of-three is a practical compromise: compare the first, middle, and last values and use their median as the pivot. The theoretical worst-case linear solution is median-of-medians, but it is longer and rarely expected in a standard interview unless the prompt explicitly demands deterministic O(n). Most interviewers are satisfied when you name the worst case and use randomized pivoting.
-
-#### Duplicates and three-way partitioning
-The two-way partition above works with duplicates, but it may do extra work when the array contains many values equal to the pivot. For example, if every value is `5`, a two-way partition may place the pivot at the start of the active range repeatedly. A three-way partition groups values into `< pivot`, `== pivot`, and `> pivot`. Then if the target rank falls inside the equal band, you can return immediately.
-
-You do not need to implement three-way partitioning unless the interviewer pushes on duplicate-heavy inputs. The key is to understand that duplicates do not make the answer ambiguous: kth largest is still a position in sorted order. If several equal values occupy that region, returning that value is correct.
-
-#### Testing checklist
-Use these mental tests to catch rank and partition mistakes:
-
-| Input | k | Expected | Lesson |
-|---|---:|---:|---|
-| `[3,2,1,5,6,4]` | 2 | 5 | target is `n-k`, not `k` |
-| `[1]` | 1 | 1 | loop may never run; return target value |
-| `[3,3,3,3]` | 2 | 3 | duplicates are ranks too |
-| `[2,1]` | 1 | 2 | kth largest means largest when k is 1 |
-| `[2,1]` | 2 | 1 | smallest is also kth largest when k equals n |
-
-#### How to narrate partition during a dry run
-When tracing Quickselect, do not try to fully sort the active range on paper. Say which pivot you chose, draw a vertical bar at its final index after partition, and compare that index to the target. Everything left of the bar is \"small enough,\" everything right is \"large enough,\" but their internal order is irrelevant. This keeps the trace short and reinforces the reason Quickselect is faster than quicksort.
-
-For the example `[3,2,1,5,6,4]`, if pivot `4` lands at index `3`, you can immediately say: \"The target is index 4, so every value at index 0 through 3 is too low-ranked to matter now.\" That is the core optimization. Each round should delete a range from consideration.
-
-#### Same pattern, new tweaks
-"Partition around a pivot and recurse into only one side" selects without fully sorting:
-
-| Variation | The one thing that changes | Time |
-|---|---|---|
-| [Kth Largest Element](https://leetcode.com/problems/kth-largest-element-in-an-array/) | the target index is `n-k` in ascending order | O(n) avg |
-| [K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | partition by squared distance; after selection, the first k positions hold the closest points in any order | O(n) avg |
-| [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | quickselect over distinct values using frequency as the partition key | O(n) avg |
-| [Wiggle Sort II](https://leetcode.com/problems/wiggle-sort-ii/) | quickselect the median, then place larger/smaller halves into virtual indices | O(n) avg |
-| [Median of an Unsorted Array](https://leetcode.com/problems/kth-largest-element-in-an-array/) | select index `n/2` (and maybe `n/2 - 1` for even length) instead of sorting | O(n) avg |
-
-> [trap] **Common Trap** — Bad pivots. *Example:* `nums=[1,2,3,4,5]`, k=1, picking the *last* element as pivot every time → each partition shrinks by only 1 → O(n²). Random pivot (or median-of-three) keeps average O(n).
-
-<TrapTrace title="Bad pivots" input="nums=[1,2,3,4,5]" bug="'nums=[1,2,3,4,5]', k=1, picking the *last* element as pivot every time → each partition shrinks by only 1 → O(n²). Random pivot (or median-of-three) keeps average O(n)." fix="See the guidance in the trap description and the code snippet." />
+Quickselect **mutates** the array. In an interview, mention this trade-off if the prompt says "do not modify the input" — the fix is to copy the array first (O(n) extra space). Also distinguish between returning the **kth value** and the **top k values**: the code above returns one integer. If the prompt asks for the k largest in any order, after `partition` places the k-th at index `n-k`, the suffix `[n-k, n)` contains the k largest unsorted. For "k largest sorted," sort just that suffix or use a heap.
 
 > [note] **Interview script** — First, I'd translate kth largest into an ascending target index: `n-k`, so duplicates are handled naturally by rank. The brute force is sorting in O(n log n), and a heap gives O(n log k), especially for streams. Since this is a one-shot array query, I'll use Quickselect: partition around a randomized pivot and continue only on the side containing the target index. The expected time is O(n), worst-case O(n²) with unlucky pivots, and space is O(1) in-place.
 
-> [pat] **Pattern Connection** — For a *stream* or repeated queries, a size-k heap (O(n log k)) beats one-shot Quickselect. Quickselect also drives *Wiggle Sort II* and median-of-medians selection.
+### Median via quickselect (two calls for even n) <span class="diff diff-m">Medium</span>
 
-### Time Complexity
-Time O(n) average, O(n²) worst · Space O(1).
+*[↗ LeetCode: Find Median from Data Stream (array variant)](https://leetcode.com/problems/kth-largest-element-in-an-array/)*
 
-The average is linear because a random pivot tends to discard a meaningful fraction of the remaining range. The worst case happens when each pivot is the smallest or largest remaining element, so the active range shrinks by only one each time. This implementation is iterative, so it avoids recursion stack space.
+The median of an unsorted array is the k-th rank at `k = n/2` (odd) or the average of ranks `n/2 - 1` and `n/2` (even). Each quickselect call is O(n) expected; two calls total O(n) — not O(n log n) like a sort.
 
-O(n) expected with randomized pivots; O(n²) worst case if pivots are consistently bad.
+<InvariantProof :statement="subv2Invariant.statement" :initialization="subv2Invariant.initialization" :maintenance="subv2Invariant.maintenance" :termination="subv2Invariant.termination" />
 
+> [key] **Blind-solve prompt** — on `[7, 1, 5, 3, 9, 2]` (n=6, even). Target ranks: n/2-1=2 and n/2=3. First quickselect returns the 3rd smallest = 3; second returns the 4th smallest = 5. Median = (3+5)/2 = 4. Try it, then reveal.
 
-### Space Complexity
-O(1) extra because the selection loop partitions in place.
+<TemplateReveal :canonical="subv2Code" language="java" slug="quickselect-median" />
 
-### Learning notes
-- Why `target = a.length - k`? — kth largest is the `n-k` index in ascending sorted order.
-- Why choose a random pivot? — it avoids repeatedly picking the smallest/largest element on sorted or adversarial inputs.
-- Why move the pivot to `hi`? — it frees the scan range and makes the final swap simple.
-- Why `store` advances only for `< pivot`? — it partitions smaller values to the left and leaves greater/equal values to the right.
-- Why discard one side after partition? — the pivot's final rank tells which side can still contain the target.
-- Why return `a[target]`? — once the loop narrows or hits the target, that index holds the selected rank.
+**Why two calls, not one?** For even n, you need two adjacent ranks. The second call runs after the array is already partially partitioned by the first, but since quickselect's output is just the value at target (and both target indices still fit in `[0, n-1]`), the second call is still O(n) expected. Total: O(n) + O(n) = O(n).
 
----
+**Alternative — one quickselect, then scan.** After `quickselect(a, n/2)`, the n/2-th position holds the upper median; everything in `[0, n/2)` is ≤ it. Scan `[0, n/2)` once to find the max — that's the lower median. One quickselect + O(n) scan = O(n) + O(n/2) = O(n). This saves one quickselect call in half the cases.
 
-## Check your understanding
+**Production use: median filters in image processing.** For each pixel of an image, compute the median of its 3×3 neighborhood (9 pixels). Naive sort: O(k log k) per pixel = O(n·k·log k) total. Quickselect per pixel: O(n·k) total — 2-3× faster, used in every denoising pipeline in OpenCV and Pillow.
+
+### Top-K via quickselect vs heap-of-K <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)*
+
+For "find the top-K elements in any order," you have a choice: quickselect (O(n) expected, mutates) or heap-of-K (O(n log k), streaming-compatible). The decision depends on constraints you should check first.
+
+<InvariantProof :statement="subv3Invariant.statement" :initialization="subv3Invariant.initialization" :maintenance="subv3Invariant.maintenance" :termination="subv3Invariant.termination" />
+
+> [key] **Blind-solve prompt** — on `points = [[1,3],[-2,2],[2,-2]], k = 2`. Partition by `x² + y²`; the first 2 slots should hold the closest 2 points. Try the quickselect approach, then reveal.
+
+<TemplateReveal :canonical="subv3Code" language="java" slug="quickselect-top-k" />
+
+#### Decision table — quickselect vs heap-of-K
+
+| Dimension | Quickselect | Heap-of-K |
+|---|---|---|
+| **Time (expected)** | O(n) | O(n log k) |
+| **Time (worst)** | O(n²) | O(n log k) |
+| **Space** | O(1) (in-place) | O(k) |
+| **Streaming** | NO (requires full array) | YES |
+| **Mutates input** | YES | NO |
+| **Repeated queries on same data** | re-run every time | heap can be amortized |
+| **k << n** | fast (small constant) | fast (log k is small) |
+| **k ~ n/2** | fast (O(n)) | slow (O(n log n) effectively) |
+| **k = n** | O(n) but pointless | O(n log n) full sort |
+
+**Rule of thumb:** quickselect for one-shot in-memory queries where mutation is OK; heap for streams, repeated queries, or when the input must stay in-order.
+
+### Hoare vs Lomuto pivot (invariants compared) <span class="diff diff-m">Medium</span>
+
+The two canonical partition schemes have different invariants, different swap counts, and different behavior on duplicate-heavy inputs. Interviews rarely ask about this, but production code (std::nth_element, np.partition) uses Hoare because it's measurably faster.
+
+<InvariantProof :statement="subv4Invariant.statement" :initialization="subv4Invariant.initialization" :maintenance="subv4Invariant.maintenance" :termination="subv4Invariant.termination" />
+
+**Lomuto partition** (what we've been using throughout the chapter — simplest to explain):
+
+```java
+int lomutoPartition(int[] a, int lo, int hi, int pivotIdx) {
+  int pivot = a[pivotIdx];
+  swap(a, pivotIdx, hi);
+  int store = lo;
+  for (int i = lo; i < hi; i++)
+    if (a[i] < pivot) swap(a, store++, i);
+  swap(a, store, hi);
+  return store;                        // pivot's final sorted index
+}
+```
+
+**Hoare partition:**
+
+```java
+int hoarePartition(int[] a, int lo, int hi) {
+  int pivot = a[lo + (hi - lo) / 2];
+  int i = lo - 1, j = hi + 1;
+  while (true) {
+    do { i++; } while (a[i] < pivot);
+    do { j--; } while (a[j] > pivot);
+    if (i >= j) return j;              // partition index (NOT pivot's final rank!)
+    swap(a, i, j);
+  }
+}
+```
+
+#### The decision
+
+| Dimension | Lomuto | Hoare |
+|---|---|---|
+| **Returns** | pivot's final sorted index | partition index (`[lo, j]` ≤ pivot, `[j+1, hi]` ≥ pivot) |
+| **Swaps on average** | ~2n/3 | ~n/4 (3× fewer) |
+| **Duplicate-heavy input** | O(n²) possible | handles well |
+| **Easier to explain** | yes (one write pointer) | no (two-pointer dance) |
+| **Interview default** | yes | no (unless asked) |
+| **Production default** | no | yes (std::nth_element, np.partition) |
+
+**Why Hoare is faster.** Lomuto writes every "< pivot" element to its new location, even if it was already there — ~2n/3 swaps on random input. Hoare only swaps the "wrong-side" elements it finds from both ends — ~n/4 swaps. On modern CPUs where swap cost dominates, Hoare is measurably 2-3× faster per partition.
+
+**The subtle gotcha with Hoare.** Hoare does NOT return the pivot's final sorted index. It returns a partition index `j` where `[lo, j]` ≤ pivot and `[j+1, hi]` ≥ pivot. In the quickselect loop, you have to compare `target ≤ j` (recurse left on `[lo, j]`) vs `target > j` (recurse right on `[j+1, hi]`) — slightly different from the Lomuto `target < p` vs `target > p` three-way comparison. Mix them up and you get an infinite loop or wrong answer.
+
+## Traps & gotchas
+
+Three traps every quickselect problem can hit. Each sub-variation above calls out its own specific bugs; these three are the ones that cross problem boundaries.
+
+### Trap 1 — deterministic pivot on adversarial input
+
+<TrapTrace title="Last-element pivot on sorted input degenerates to O(n²)" input="a = [1,2,3,4,5,6,7,8]" :bug="trap1Bug" :fix="trap1Fix" />
+
+### Trap 2 — k-th largest vs k-th smallest rank conversion
+
+<TrapTrace title="Target index off-by-one between smallest and largest conventions" input="a = [3,2,1,5,6,4], k = 2 (2nd largest = 5, 2nd smallest = 2)" :bug="trap2Bug" :fix="trap2Fix" />
+
+### Trap 3 — partition comparator `<=` instead of `<` on duplicate-heavy input
+
+<TrapTrace title="Including the pivot in the 'less than pivot' side breaks the partition" input="a = [5,5,5,5,5], target = 2" :bug="trap3Bug" :fix="trap3Fix" />
+
+> [trap] **The 10-second trap-check.** Before shipping any quickselect solution: (1) is the pivot RANDOMIZED or median-of-three? (2) is the target-index conversion stated for the specific "k-th X" the problem wants? (3) is the comparator STRICT (`<` not `<=`)? All three must be yes.
+
+## In the wild — quickselect in real systems
+
+Quickselect runs at the bottom of every scientific-computing stack, every "TOP N" database query, every image-processing median filter.
+
+```python
+# NumPy np.partition — same quickselect pattern, written in C.
+# From numpy/core/src/npysort/quickselect.cpp (abridged):
+
+def partition_kth(a, k):
+    """Rearrange a in-place so a[k] holds the k-th order statistic."""
+    lo, hi = 0, len(a) - 1
+    while lo < hi:
+        pivot = median_of_three(a, lo, (lo + hi) >> 1, hi)
+        p = three_way_partition(a, lo, hi, pivot)
+        if p == k:
+            return
+        elif p < k:
+            lo = p + 1
+        else:
+            hi = p - 1
+
+# np.partition(a, k) is EXACTLY this, plus:
+#   - three-way partition (handles duplicate-heavy inputs)
+#   - median-of-three pivot (avoids adversarial O(n²))
+#   - introselect fallback to heap-select when recursion depth > 2*log2(n)
+```
+
+The pattern:
+- **NumPy `np.partition`** — introselect (Musser 1997) hybrid; the engine behind `np.median`, `np.percentile`, `scipy.stats.scoreatpercentile`.
+- **C++ `std::nth_element`** — same hybrid; part of the STL since 1998.
+- **Pandas `.quantile`** — delegates to NumPy; every data-science pipeline that computes p99 latency uses this.
+- **PostgreSQL `TOP N` queries** — the query planner emits quickselect-style partial sort when `LIMIT N` is small vs. table size.
+- **OpenCV `cv2.medianBlur`** — median filter for image denoising; quickselect per 3×3 or 5×5 window.
+- **Java's `java.util.Arrays.parallelSort`** (JDK 8+) — Yaroslavskiy's dual-pivot quicksort, which shares the partition scheme.
+
+The code above is 10 lines of pseudocode. The *idea* is "partition + narrow + recurse." The complexity in production comes from pivot-selection heuristics (median-of-three, median-of-medians fallback), three-way partition for duplicate heaviness, and recursion-depth tracking for the heap-select fallback.
+
+## Recognition drill
+
+Each problem below is phrased without the pattern tag. Your task: name the sub-variation. The drill randomizes order each session and tracks your running score.
+
+<RecognitionDrill pattern="quickselect" :count="10" />
+
+> [key] **How to use.** Aim for ≥ 8/10 before considering cold-solving fluency the next bottleneck. The common confusion is quickselect vs heap-of-K vs sorting — the distractors in this drill are specifically those three. If you keep picking "heap" when the answer is "quickselect," the recognition cue to internalize is: "ONE-shot IN-memory array query with mutation allowed" → quickselect.
+
+## Advanced — follow-ups and failure modes
+
+The sub-variations above are the shapes you're expected to recognize cold. The questions below are the ones that come **after** you write a correct quickselect — "what if we change this one constraint?" — and separate pattern-fluent from pattern-mastered.
+
+### What if the input is adversarial and quickselect degenerates to O(n²)?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced1 }}
+
+</details>
+
+### What if you need the top-K and the stream is unbounded?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced2 }}
+
+</details>
+
+### What if the array must stay in original order?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced3 }}
+
+</details>
+
+### What if you need the top-K VALUES SORTED?
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced4 }}
+
+</details>
+
+### Breaking point — when quickselect has no advantage
+
+<details>
+<summary>Click to reveal</summary>
+
+{{ advanced5 }}
+
+</details>
+
+### Cross-pattern problems
+
+Three problems where quickselect composes with another pattern. Each is a diagnostic — if you can identify the composition and solve each, you've transferred the recognition skill beyond this chapter.
+
+<div v-for="(p, i) in advancedCrossProblems" :key="i" style="border: 1px solid var(--vp-c-divider); border-radius: 8px; padding: 14px 16px; margin: 12px 0; background: var(--vp-c-bg-soft);">
+  <div style="font-weight: 700; margin-bottom: 6px;">{{ p.title }}</div>
+  <div style="font-size: 0.92em; color: var(--vp-c-text-2); margin-bottom: 8px;">{{ p.hint }}</div>
+  <details>
+    <summary style="font-size: 0.85em; cursor: pointer; color: var(--vp-c-brand-1);">Reveal answer sketch</summary>
+    <div style="padding-top: 8px; font-size: 0.9em;">{{ p.reveal }}</div>
+  </details>
+</div>
+
+## Related patterns + Check your understanding
+
+<RelatedPatterns pattern-id="quickselect" />
 
 <Quiz
   pattern-id="quickselect"
-  :questions='[{"q": "Average complexity of Quickselect for k-th element?", "choices": [{"text": "O(n)", "correct": true, "explanation": "Each partition eliminates a constant fraction of remaining candidates on average."}, {"text": "O(n log n)", "correct": false, "explanation": "That is full quicksort."}, {"text": "O(log n)", "correct": false}, {"text": "O(k)", "correct": false}]}, {"q": "Worst-case complexity of Quickselect (without randomization)?", "choices": [{"text": "O(n²)", "correct": true, "explanation": "On adversarial inputs / sorted-with-first-pivot."}, {"text": "O(n log n)", "correct": false}, {"text": "O(n)", "correct": false, "explanation": "Only with median-of-medians pivot."}, {"text": "O(log n)", "correct": false}]}, {"q": "For k-th LARGEST via Quickselect, how do you compute the index?", "choices": [{"text": "Look for index n - k in ascending-sorted order", "correct": true, "explanation": "k-th largest = element at position n-k when sorted ascending."}, {"text": "Look for index k", "correct": false, "explanation": "That is k-th smallest."}, {"text": "Random", "correct": false}, {"text": "Nothing; use max-heap", "correct": false, "explanation": "Works but heavier."}]}, {"q": "What is Wiggle Sort II’s O(n) trick using Quickselect?", "choices": [{"text": "Quickselect median, then Dutch flag partition using virtual index mapping", "correct": true, "explanation": "Virtual index `(2i+1) % (n|1)` interleaves ranks correctly."}, {"text": "Just sort", "correct": false, "explanation": "That is O(n log n)."}, {"text": "Random shuffle", "correct": false}, {"text": "BFS", "correct": false}]}, {"q": "What guarantees Quickselect terminates?", "choices": [{"text": "The partition strictly reduces the search size by at least 1 each step", "correct": true, "explanation": "The pivot itself is placed correctly and excluded."}, {"text": "Random luck", "correct": false}, {"text": "Recursion depth bound", "correct": false}, {"text": "Sorted input", "correct": false}]}]'
+  :questions="quizQuestions"
 />
 
 <PrintButton />
-
-<RelatedPatterns pattern-id="quickselect" />
