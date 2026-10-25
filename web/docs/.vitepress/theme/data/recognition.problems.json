@@ -290,7 +290,98 @@
   "monotonic-stack": [],
   "bs-on-answer": [],
   "top-k-heap": [],
-  "k-way-merge": [],
+  "k-way-merge": [
+    {
+      "statement": "Given k sorted linked lists, merge them into one sorted list.",
+      "pattern": "k-way-merge",
+      "subVariation": "merge-k-sorted-lists",
+      "distractors": [
+        "sorting",
+        "merge-intervals"
+      ]
+    },
+    {
+      "statement": "Given two sorted integer arrays u and v, return the k pairs (u[i], v[j]) with the smallest sums.",
+      "pattern": "k-way-merge",
+      "subVariation": "k-pairs-smallest-sums",
+      "distractors": [
+        "heap",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Design a stream data structure that supports addNum(x) and findMedian() in O(log n) and O(1).",
+      "pattern": "k-way-merge",
+      "subVariation": "median-from-stream-kway",
+      "distractors": [
+        "sorting",
+        "balanced-bst"
+      ]
+    },
+    {
+      "statement": "Given k sorted lists, find the smallest range that contains at least one number from each list.",
+      "pattern": "k-way-merge",
+      "subVariation": "merge-k-sorted-lists",
+      "distractors": [
+        "sliding-window",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Find the kth smallest element in an n\u00d7n matrix sorted ascending in both rows and columns.",
+      "pattern": "k-way-merge",
+      "subVariation": "merge-k-sorted-lists",
+      "distractors": [
+        "binary-search-on-answer",
+        "heap"
+      ]
+    },
+    {
+      "statement": "Return the n-th ugly number \u2014 the n-th positive integer whose prime factors are only 2, 3, 5.",
+      "pattern": "k-way-merge",
+      "subVariation": "k-pairs-smallest-sums",
+      "distractors": [
+        "dp",
+        "heap"
+      ]
+    },
+    {
+      "statement": "In a stream of integers, after each insert, print the current median (or report it on demand).",
+      "pattern": "k-way-merge",
+      "subVariation": "median-from-stream-kway",
+      "distractors": [
+        "sorting",
+        "balanced-bst"
+      ]
+    },
+    {
+      "statement": "You have k log files sorted by timestamp. Produce a single globally-sorted stream of lines without loading all files in memory.",
+      "pattern": "k-way-merge",
+      "subVariation": "merge-k-sorted-lists",
+      "distractors": [
+        "sorting",
+        "merge-intervals"
+      ]
+    },
+    {
+      "statement": "Given two sorted lists of candidate costs, return the k itineraries with the lowest total cost.",
+      "pattern": "k-way-merge",
+      "subVariation": "k-pairs-smallest-sums",
+      "distractors": [
+        "sorting",
+        "sliding-window"
+      ]
+    },
+    {
+      "statement": "Running finance data: compute the median of the last k trade prices after every new tick.",
+      "pattern": "k-way-merge",
+      "subVariation": "median-from-stream-kway",
+      "distractors": [
+        "sorting",
+        "sliding-window"
+      ]
+    }
+  ],
   "merge-intervals": [
     {
       "statement": "Given a list of intervals, merge all overlapping intervals and return the disjoint result.",
