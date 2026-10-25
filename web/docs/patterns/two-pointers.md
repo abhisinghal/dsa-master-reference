@@ -784,11 +784,85 @@ Other named production uses of two pointers:
 
 ## When NOT to use it
 
+Having worked the full set of sub-variations above, here's where the two-pointer frontier fails to apply — and what each failure looks like in practice.
+
 - **Unsorted input where sorting destroys needed information** (e.g. original-index outputs). Pair with index first, or switch to hashing.
 - **"Count all pairs"** rather than "find one." Two pointers finds the frontier; counting may need combining with range-counting tricks or a different tool.
 - **Contiguous-subarray** problems with size/sum constraints — that's **Sliding Window** (chapter 21), not two pointers.
 - **Streams and singly-linked lists without random access** — only the fast/slow variant (chapter 23) applies; opposite-end pointers require O(1) index access.
 - **Lookups by value while pointing** — a HashMap is the right tool; two pointers only compares the values *under* the pointers.
+
+### Visual 1: sorting destroys original indices on Two Sum (indexed version)
+
+The classic Two Sum asks for the **indices** of the two numbers that sum to the target. A naive sort-then-two-pointer loses them:
+
+
+
+```text
+   Input:  nums = [3, 2, 4],  target = 6
+   Expected answer: indices [1, 2]  (since nums[1] + nums[2] = 2 + 4 = 6)
+
+   After sort: nums = [2, 3, 4]        indices now meaningless
+   Two pointers find 2 + 4 = 6         ✓ values correct
+   But what original indices?          ✗ we destroyed them
+
+   Fix: pair-with-index first.
+     pairs = [(3,0), (2,1), (4,2)]
+     sort by value: [(2,1), (3,0), (4,2)]
+     two pointers find (2,1) + (4,2) → report indices [1, 2]
+```
+
+
+
+Any time the problem asks for *where* the answer lives (indices, segment ids, timestamps), you can't throw away the identity by sorting. Pair with the identifier, OR skip two pointers and use a hashmap — the hashmap preserves indices by construction.
+
+### Visual 2: "count all pairs" requires more than the frontier
+
+Two pointers finds **one** pair at a time. Counting all pairs summing ≤ K needs you to count skipped positions, not just advance:
+
+
+
+```text
+   nums = [1, 2, 3, 4, 5],  target K = 6, count all (i,j) with i<j and nums[i]+nums[j] ≤ 6
+
+   l=0 (1), r=4 (5):  1+5=6 ≤ 6, valid frontier
+                      ... but ALSO (1,4), (1,3), (1,2) are valid pairs with l=0  ← can't find by moving pointers once
+                      count += (r - l) = 4,  then l++
+
+   l=1 (2), r=4 (5):  2+5=7 > 6, r--
+   l=1 (2), r=3 (4):  2+4=6 ≤ 6, valid
+                      also (1,2) is valid    ← two pairs added at once by range count
+                      count += (r - l) = 2,  then l++
+
+   l=2 (3), r=3 (4):  3+4=7 > 6, r--, loop ends.
+
+   Total pairs: 4 + 2 = 6.
+```
+
+
+
+A naive two-pointer loop would walk l and r and count each `l < r` pair as 1, giving only 2 pairs — wrong. The amortized O(n) scan works, but you have to *know* that each frontier contributes `(r − l)` pairs, not 1. Many interview candidates miss this and move to O(n²), losing the pattern's advantage.
+
+### Visual 3: singly-linked list has no O(1) left pointer
+
+Opposite-end pointers assume `arr[l]` and `arr[r]` are both O(1) reads. On a singly-linked list they aren't:
+
+
+
+```text
+   list = 1 → 2 → 3 → 4 → 5 → null
+
+   Standard two-pointer initial state on an array: l=0, r=n-1 — both O(1).
+   On a singly-linked list: l = head (O(1))
+                            r = ?  There's no "end" pointer; you must walk n-1 steps to find it.
+
+   To move "r" one step LEFT, you'd restart from head and walk n-2 steps.
+   Each shrink costs O(n) → the whole loop becomes O(n²).
+```
+
+
+
+The two-pointer idea still works for singly-linked lists *in one direction* — that's exactly the Fast/Slow pattern (chapter 23). Reach for Floyd's cycle detection, two-pass midpoint finding, or dummy-head reversal, not opposite-end two pointers.
 
 ## Recognition drill
 

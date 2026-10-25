@@ -512,12 +512,64 @@ The animation shows the half-open loop on a sorted array. Watch the `[lo, hi)` w
 
 ## When NOT to use it
 
+You've now worked through the half-open loop in all its common shapes. Here's where it silently fails — the three structural failure modes beneath the six bullets.
+
 - **Unsorted data with no monotonic predicate** — sorting to enable binary search costs O(n log n), worse than O(n) hash-map lookup. Only sort-then-search if you'll do many queries.
 - **You need every match, not the first** — plain iteration, or `lower_bound` + `upper_bound`, is simpler.
 - **The array is small (`n ≤ 32`)** — linear scan wins in practice: branch predictor loves it, cache-friendly, `log₂ 32 = 5` comparisons plus overhead loses to a straight loop.
 - **Duplicates and you want *all* occurrences** — do lower-bound + linear expansion, or two binary searches (lower + upper). Don't hack it inside one loop.
 - **Non-monotone feasibility** — e.g., "smallest `x` such that some bitonic metric is minimized." Binary search silently returns the wrong answer; verify monotonicity on paper first.
 - **Floating-point ranges without a stopping criterion** — the loop never terminates. Fix an ε tolerance or an iteration cap.
+
+### Visual 1: non-monotone feasibility on a bitonic array `[1, 3, 7, 5, 2]`, target 5
+
+A plain binary search on this array for value 5 silently commits to one half and returns "not found":
+
+```text
+   idx    0    1    2    3    4
+   val    1    3    7    5    2
+                                                        found?
+   [lo=0, hi=5)  mid=2  arr[2]=7  7 > 5  → go left     no
+   [lo=0, hi=2)  mid=1  arr[1]=3  3 < 5  → go right    no
+   [lo=2, hi=2)                   loop ends            no (returns -1)
+```
+
+The real answer sits at index 3. Binary search *assumes* that `arr[mid] > target` means "the match must be to the left" — true only if the array is monotone. On a bitonic array that assumption holds for the ascending half and fails for the descending half, so the search commits to the wrong direction and never recovers. The fix: either run two binary searches (one per monotone region, after finding the peak via another binary search) or just scan linearly for n < 100.
+
+### Visual 2: floating-point without a stopping criterion on `sqrt(2)`
+
+A naive `while (lo < hi)` on floats never terminates because real numbers aren't representable exactly:
+
+```text
+   target: sqrt(2) ≈ 1.4142135623730951
+
+   Iteration     lo                  hi                  mid
+   0             1.0000000000000000  2.0000000000000000  1.5000000000000000
+   1             1.0000000000000000  1.5000000000000000  1.2500000000000000
+   2             1.2500000000000000  1.5000000000000000  1.3750000000000000
+   …             …                   …                   …
+   52            1.4142135623730949  1.4142135623730951  1.4142135623730951
+   53            1.4142135623730949  1.4142135623730951  1.4142135623730951  ← SAME mid, hi doesn't shrink
+   54            1.4142135623730949  1.4142135623730951  1.4142135623730951
+   …
+```
+
+Beyond ~52 iterations the subdivision step drops below one ULP (unit in the last place), so `(lo+hi)/2` floors to one of the endpoints — the interval stops shrinking and the loop runs forever. The fix: pick a tolerance (`while (hi - lo > 1e-9)`) OR cap iterations at 100 (double precision has ~52 bits of mantissa; 100 is comfortably past convergence).
+
+### Visual 3: small `n` where linear scan wins
+
+For `n ≤ 32`, branch misprediction + cache lines + loop overhead make a straight scan beat `log₂ n` with constants:
+
+```text
+   Linear scan on n=16:                     Binary search on n=16:
+   16 compares                              log₂ 16 = 4 compares
+   16 sequential loads (prefetch friendly)  4 random-access loads (jump around)
+   ~1 branch per compare, mostly correct    4 branches, half mispredicted on average
+   total: 16 × 1 ns ≈ 16 ns                 total: 4 × ~6 ns ≈ 24 ns
+                                            (branch miss + cache line change per step)
+```
+
+The crossover for sorted integers in L1 cache is around n=64 on modern CPUs. Below that, `log n` is "theoretically faster" but practically slower because the hidden constant is a branch mispredict, not an array compare. The fix: use linear scan for `n < 32`, binary search for larger; the standard library's `std::lower_bound` does something similar under the hood.
 
 ## Recognition drill
 
