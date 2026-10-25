@@ -1017,7 +1017,98 @@
     }
   ],
   "topological-sort": [],
-  "union-find": [],
+  "union-find": [
+    {
+      "statement": "You are given a 2D array isConnected where isConnected[i][j]=1 if city i and city j are directly connected; return the number of provinces (connected groups).",
+      "pattern": "union-find",
+      "subVariation": "number-provinces",
+      "distractors": [
+        "dfs",
+        "bfs"
+      ]
+    },
+    {
+      "statement": "Given a list of accounts where each account is a list [name, email1, email2, ...], merge accounts that belong to the same person (share any email); return merged accounts with emails sorted lexicographically.",
+      "pattern": "union-find",
+      "subVariation": "accounts-merge",
+      "distractors": [
+        "sorting",
+        "hashing"
+      ]
+    },
+    {
+      "statement": "A tree is given with one extra edge added. Return the edge that, when removed, leaves a valid tree. If multiple answers exist, return the one that appears last in the input.",
+      "pattern": "union-find",
+      "subVariation": "redundant-connection",
+      "distractors": [
+        "topological-sort",
+        "dfs"
+      ]
+    },
+    {
+      "statement": "You are given 2D points on a plane. Return the minimum cost to connect ALL points, where the cost between two points is the Manhattan distance.",
+      "pattern": "union-find",
+      "subVariation": "kruskal-mst",
+      "distractors": [
+        "dp",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Given n nodes labeled 0..n-1 and a list of undirected edges, determine if these edges form a valid tree (connected and acyclic).",
+      "pattern": "union-find",
+      "subVariation": "graph-valid-tree",
+      "distractors": [
+        "dfs",
+        "bfs"
+      ]
+    },
+    {
+      "statement": "You are given a grid of elevations. Water rises uniformly over time. Return the minimum time at which you can swim from (0,0) to (n-1,n-1) moving only between adjacent cells both at elevation <= current time.",
+      "pattern": "union-find",
+      "subVariation": "swim-rising-water",
+      "distractors": [
+        "binary-search",
+        "dijkstra"
+      ]
+    },
+    {
+      "statement": "You are given n stones at integer coordinates; a stone can be removed if it shares a row or column with another remaining stone. Return the maximum number of stones that can be removed.",
+      "pattern": "union-find",
+      "subVariation": "basic-dsu",
+      "distractors": [
+        "dfs",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "You are given an m x n binary grid and a stream of positions where each position turns a cell from water to land. After each addition, return the number of islands.",
+      "pattern": "union-find",
+      "subVariation": "number-provinces",
+      "distractors": [
+        "bfs",
+        "dfs"
+      ]
+    },
+    {
+      "statement": "Given a list of equations like 'a==b' and 'c!=d', determine whether all equations can be simultaneously satisfied by some assignment of variable values.",
+      "pattern": "union-find",
+      "subVariation": "basic-dsu",
+      "distractors": [
+        "dfs",
+        "hashing"
+      ]
+    },
+    {
+      "statement": "You have a 2D matrix. Replace each element with its 'rank', where rank is defined so that same-row and same-column cells with the same value get the same rank, and the smallest value gets rank 1.",
+      "pattern": "union-find",
+      "subVariation": "basic-dsu",
+      "distractors": [
+        "sorting",
+        "dp"
+      ]
+    }
+  ],
   "greedy": [
     {
       "statement": "Pack the maximum number of non-overlapping meetings into one conference room.",

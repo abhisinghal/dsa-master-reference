@@ -5,7 +5,200 @@
 
 <PatternProgress pattern-id="union-find" problems="number-of-provinces, accounts-merge, redundant-connection, number-of-islands-ii, most-stones-removed-with-same-row-or-column, connecting-cities-with-minimum-cost, min-cost-to-connect-all-points, optimize-water-distribution-in-a-village, find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree" />
 
+<script setup>
+const theTemplateSpecializations = [
+  { slug: `basic-dsu-bare-mechanic-medium`, title: `Basic DSU — bare mechanic` },
+  { slug: `number-of-provinces-medium`, title: `Number of Provinces (count components)` },
+  { slug: `redundant-connection-dsu-detects-cycle-medium`, title: `Redundant Connection (DSU detects cycle)` },
+  { slug: `accounts-merge-dsu-on-string-ids-medium`, title: `Accounts Merge (DSU on string IDs)` },
+  { slug: `kruskal-s-mst-union-find-medium`, title: `Kruskal's MST + Union-Find` },
+  { slug: `graph-valid-tree-medium`, title: `Graph Valid Tree` },
+  { slug: `swim-in-rising-water-kruskal-style-hard`, title: `Swim in Rising Water (Kruskal-style)` },
+]
 
+const theTemplateCode = `// THE Union-Find template — path compression (iterative, two-pass flattening)
+// + union by rank. Both are essential to hit O(alpha(n)) amortized.
+class DSU {
+    int[] parent;
+    int[] rank;
+    int components;                                  // optional: active component count
+
+    DSU(int n) {
+        parent = new int[n];
+        rank = new int[n];
+        for (int i = 0; i &lt; n; i++) parent[i] = i;
+        components = n;
+    }
+
+    int find(int x) {
+        while (parent[x] != x) {
+            parent[x] = parent[parent[x]];           // path HALVING: one skip per hop
+            x = parent[x];
+        }
+        return x;
+    }
+
+    boolean union(int a, int b) {
+        int ra = find(a), rb = find(b);
+        if (ra == rb) return false;                  // already in same set — cycle hit
+        if (rank[ra] &lt; rank[rb]) { int t = ra; ra = rb; rb = t; }
+        parent[rb] = ra;                             // attach smaller-rank under larger
+        if (rank[ra] == rank[rb]) rank[ra]++;        // tie → winner's rank grows by 1
+        components--;
+        return true;
+    }
+
+    boolean connected(int a, int b) { return find(a) == find(b); }
+}`
+
+const redundantConnectionCode = `// Redundant Connection — scan edges in order; the FIRST edge whose
+// endpoints already share a root is the answer.
+int[] findRedundant(int[][] edges) {
+    int n = edges.length;
+    DSU dsu = new DSU(n + 1);                        // 1-indexed
+    for (int[] e : edges) {
+        if (!dsu.union(e[0], e[1])) return e;        // false = cycle = redundant
+    }
+    return new int[0];                                // unreachable per problem spec
+}`
+
+const accountsMergeCode = `// Accounts Merge — union account indices sharing any email,
+// then group emails by root. DSU on account INDICES, not emails.
+List&lt;List&lt;String&gt;&gt; accountsMerge(List&lt;List&lt;String&gt;&gt; accounts) {
+    int n = accounts.size();
+    DSU dsu = new DSU(n);
+    Map&lt;String, Integer&gt; emailToAccount = new HashMap&lt;&gt;();
+    for (int i = 0; i &lt; n; i++) {
+        for (int j = 1; j &lt; accounts.get(i).size(); j++) {
+            String email = accounts.get(i).get(j);
+            Integer prev = emailToAccount.get(email);
+            if (prev == null) emailToAccount.put(email, i);
+            else dsu.union(i, prev);                 // same email → same person
+        }
+    }
+    Map&lt;Integer, TreeSet&lt;String&gt;&gt; rootToEmails = new HashMap&lt;&gt;();
+    for (var e : emailToAccount.entrySet()) {
+        int root = dsu.find(e.getValue());
+        rootToEmails.computeIfAbsent(root, k -&gt; new TreeSet&lt;&gt;()).add(e.getKey());
+    }
+    List&lt;List&lt;String&gt;&gt; result = new ArrayList&lt;&gt;();
+    for (var e : rootToEmails.entrySet()) {
+        List&lt;String&gt; merged = new ArrayList&lt;&gt;();
+        merged.add(accounts.get(e.getKey()).get(0)); // account name
+        merged.addAll(e.getValue());                 // sorted emails
+        result.add(merged);
+    }
+    return result;
+}`
+
+const graphValidTreeCode = `// Graph Valid Tree — n nodes form a tree iff edges = n-1 AND no cycle.
+// DSU rejects any edge whose endpoints are already connected.
+boolean validTree(int n, int[][] edges) {
+    if (edges.length != n - 1) return false;         // tree has exactly n-1 edges
+    DSU dsu = new DSU(n);
+    for (int[] e : edges) {
+        if (!dsu.union(e[0], e[1])) return false;    // cycle detected
+    }
+    return true;                                      // acyclic + n-1 edges → connected tree
+}`
+
+const swimRisingWaterCode = `// Swim in Rising Water — Kruskal-style: sort cells by elevation and union
+// each new cell with its lower neighbors. The answer is the elevation at
+// which (0,0) and (n-1,n-1) first join.
+int swimInWater(int[][] grid) {
+    int n = grid.length;
+    int[][] indices = new int[n * n][3];              // (elevation, r, c)
+    for (int r = 0; r &lt; n; r++)
+        for (int c = 0; c &lt; n; c++)
+            indices[r * n + c] = new int[]{grid[r][c], r, c};
+    Arrays.sort(indices, (a, b) -&gt; a[0] - b[0]);
+    DSU dsu = new DSU(n * n);
+    int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
+    boolean[] active = new boolean[n * n];
+    for (int[] cell : indices) {
+        int t = cell[0], r = cell[1], c = cell[2];
+        active[r * n + c] = true;
+        for (int[] d : dirs) {
+            int nr = r + d[0], nc = c + d[1];
+            if (nr &gt;= 0 && nr &lt; n && nc &gt;= 0 && nc &lt; n && active[nr * n + nc]) {
+                dsu.union(r * n + c, nr * n + nc);
+            }
+        }
+        if (dsu.connected(0, n * n - 1)) return t;    // first time endpoints join
+    }
+    return -1;
+}`
+
+const dsuInvariant = {
+  statement: `After any sequence of operations: (1) parent[root] == root for exactly one node per set, (2) rank[root] is an upper bound on the subtree height, (3) nodes a and b are in the same set iff find(a) == find(b).`,
+  initialization: `Before any op: parent[i] = i and rank[i] = 0 for all i. Every node is its own singleton root. The three claims hold trivially.`,
+  maintenance: `find(x) walks parents up (updating parent[x] = parent[parent[x]] along the way — path halving). It never changes which set x belongs to, only compresses the path. union(a,b) compares ranks and attaches the smaller tree under the larger root; rank[winner] increments only on equal ranks. Both operations preserve all three invariants.`,
+  termination: `After the final operation, the forest encodes the equivalence classes defined by the union sequence; find returns the canonical representative in O(α(n)) amortized.`,
+}
+
+const dsuComplexity = { time: `O(α(n)) amortized per op; O(m α(n)) ≈ O(m) for m ops`, space: `O(n) for parent + rank arrays` }
+
+const amortizedExplanation = `We use the <strong>potential function</strong> Φ(forest) = Σ over nodes of (height − rankCeil(size(subtree))),
+measuring how "unflattened" the forest is. Any sequence of m operations starting from singletons runs in
+<strong>O(m · α(n))</strong> amortized time, where α is the inverse Ackermann function.
+<br/><br/>
+<strong>Why α(n)?</strong> Each find walks a path from a node to its root. Nodes on the path are partitioned by
+their rank values into "levels"; path compression moves each node to a strictly higher rank-level or straight to the root.
+Tarjan showed the number of level transitions is bounded by α(n) per operation amortized. For every realistic input
+(up to n ≈ 2^(2^65535) atoms), <strong>α(n) ≤ 4</strong>. So the aggregate cost of m operations is at most 4m ≈ O(m).
+<br/><br/>
+<strong>Without path compression:</strong> O(log n) per find (union-by-rank alone keeps the tree logarithmic).
+<strong>Without union-by-rank:</strong> O(log n) per find on average, with occasional O(n) spikes.
+<strong>Without either:</strong> O(n) worst-case per find — degraded to a linked list.`
+
+const mastery5 = [
+  {
+    q: `What is the amortized cost per operation of Union-Find with BOTH path compression AND union by rank?`,
+    choices: [
+      { text: `O(α(n)) — effectively constant for all realistic n`, correct: true, explanation: `α is the inverse Ackermann function; α(n) ≤ 4 for n up to ~2^65535. Proved tight by Tarjan (1975).` },
+      { text: `O(log n)`, correct: false, explanation: `That's the bound with EITHER optimization alone, not both.` },
+      { text: `O(n)`, correct: false, explanation: `Only without either optimization.` },
+      { text: `O(1) worst case`, correct: false, explanation: `Amortized, not worst-case — a single find can walk a long path.` },
+    ],
+  },
+  {
+    q: `In the DSU "union by rank" scheme, rank is best described as:`,
+    choices: [
+      { text: `An UPPER BOUND on tree height — only incremented on equal-rank unions`, correct: true, explanation: `Path compression can shrink actual height without updating rank; rank is used only for the union tie-break, not for correctness.` },
+      { text: `The exact tree height`, correct: false, explanation: `Path compression breaks this.` },
+      { text: `The subtree size`, correct: false, explanation: `That's union-BY-SIZE, a different (also valid) variant.` },
+      { text: `The depth of the current node`, correct: false },
+    ],
+  },
+  {
+    q: `For Redundant Connection (undirected), what identifies the answer edge?`,
+    choices: [
+      { text: `The first edge whose two endpoints already share a root under DSU`, correct: true, explanation: `Adding it would create a cycle. The problem guarantees exactly one such edge; it's the first one encountered.` },
+      { text: `The last edge in the input`, correct: false, explanation: `Not necessarily; depends on edge order.` },
+      { text: `The edge of highest weight`, correct: false, explanation: `No weights in this problem.` },
+      { text: `Any edge`, correct: false },
+    ],
+  },
+  {
+    q: `For Kruskal's MST, after sorting edges by weight ascending, when do you stop processing?`,
+    choices: [
+      { text: `After accepting exactly n-1 valid edges`, correct: true, explanation: `A spanning tree of n nodes has exactly n-1 edges. Stopping early saves work.` },
+      { text: `After iterating all m edges`, correct: false, explanation: `Works but wastes O(α(n)) per leftover edge.` },
+      { text: `When the next edge weight exceeds a threshold`, correct: false },
+      { text: `When the DSU has no more components`, correct: false, explanation: `Equivalent to n-1 edges accepted, but less direct.` },
+    ],
+  },
+  {
+    q: `In Most Stones Removed with Same Row or Column, if there are n stones and c connected components, how many stones can be removed?`,
+    choices: [
+      { text: `n - c — one stone per component must remain`, correct: true, explanation: `Each component has at least one stone that can't be removed (its component's "anchor"). The rest are all removable because every move preserves component-anchor existence.` },
+      { text: `c`, correct: false, explanation: `That's the number of components remaining, not removed.` },
+      { text: `n`, correct: false, explanation: `You can't remove ALL — at least one per component must stay.` },
+      { text: `n / c`, correct: false },
+    ],
+  },
+]
+</script>
 
 ## Why union-find exists — the story
 
@@ -103,6 +296,37 @@ After union-by-rank, only one of the two rank values changes (the winner's, on t
 
 </Callout>
 
+## THE template
+
+Every Union-Find problem is a specialization of **"path-compressed, rank-balanced DSU; each edge is `union`, each query is `find`."** The template below is the clean reference — the sub-variations differ in what the edges mean (shared email, shared row, shared cell neighborhood) and in what answer the final roots encode (component count, cycle detection, lex-sorted email groups, MST cost).
+
+<PatternTemplateCard
+  slug="union-find-dsu-template"
+  title="DSU with path halving + union by rank"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="dsuInvariant"
+  :complexity="dsuComplexity"
+  :specializations="theTemplateSpecializations"
+>
+  <template #amortized>
+<AmortizedPanel
+  method="potential"
+  bound="O(m α(n)) total for m operations starting from n singletons"
+  statement="With path compression + union by rank, any sequence of m operations runs in O(m α(n)) time, where α is the inverse Ackermann function (Tarjan 1975 — provably tight)."
+  :workedExample="amortizedExplanation"
+/>
+  </template>
+</PatternTemplateCard>
+
+## False friends — when "connectivity" doesn't mean DSU
+
+- **Shortest-path queries** (which "connect" nodes in a graph) — DSU answers "same component?" but has no distance info. Use BFS, Dijkstra, or Floyd-Warshall.
+- **Dynamic connectivity with deletions** — DSU doesn't support edge removal. For "add and remove edges, answer connectivity queries," use **Link-Cut Trees** or **offline reverse processing**.
+- **Articulation points / bridges** — these are static structural queries about an existing graph. Use Tarjan's SCC-style DFS, not DSU.
+- **Weighted / directional connectivity** — DSU is unweighted and undirected. For "connected by a path of specific weight parity," use **weighted DSU** (variant with a `diff[]` array). For directed, use SCC decomposition.
+- **Finding all paths between two nodes** — DSU reduces to a yes/no answer; it doesn't track paths.
+
 ## When to use it — dynamic connectivity
 
 ### Recognize by
@@ -136,11 +360,57 @@ Tarjan also proved this bound is **tight** — no comparison-based DSU can do be
 
 When you tell an interviewer *"Union-Find with path compression and union-by-rank, O(α(n)) amortized,"* you're citing one of the top-10 most-used data structures in all of computer science.
 
-## Canonical problem walkthrough — Number of Provinces
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="union-find" />
+
+The sub-variations below walk the template through seven canonical uses — bare mechanic, component counting, cycle detection, string-ID equivalence, weighted MST, tree-validity check, and the Kruskal-style grid problem. Each uses the same DSU class; what changes is what the edges mean and what the roots encode.
+
+### Basic DSU — bare mechanic <span class="diff diff-m">Medium</span>
+
+The simplest instance. You have `n` initially isolated elements and a sequence of `union(a,b)` and `connected(a,b)` queries. Answer each query. The reveal is that both operations are nearly O(1) with path compression + union by rank.
+
+<Callout kind="inv" title="Invariant">
+
+At any point, `find(x)` returns the unique root of x's current component. Two elements are in the same component iff they share a root.
+
+</Callout>
+
+<InvariantProof
+  statement="After each op, parent[] encodes a forest in which each tree is one equivalence class, and find returns the tree's root."
+  initialization="Before any op: parent[i] = i for all i; n singleton trees, trivially correct."
+  maintenance="union(a,b): if find(a) == find(b), the two were already in the same class and we return false, no state change. Otherwise we attach one root under the other, merging exactly two classes into one. find(x): traverses parent pointers to a fixed point (the root), updating parent[x] := parent[parent[x]] along the way — this halves the path length but never crosses between trees."
+  termination="At every step, the forest's connected components are the equivalence classes of the union sequence so far."
+/>
+
+<Callout kind="key" title="Blind-solve prompt">
+
+*Before revealing:* implement DSU with `union(a,b)` returning `false` if they were already connected (useful for cycle detection) and `connected(a,b)` as a convenience. Make both O(α(n)) amortized.
+
+</Callout>
+
+<TemplateReveal
+  slug="basic-dsu"
+  language="java"
+  :canonical="theTemplateCode"
+/>
+
+**Trace** `n = 5`, operations: `union(0,1), union(2,3), connected(0,3)=false, union(1,2), connected(0,3)=true`:
+
+| op | parent before | parent after | rank after | result |
+|---|---|---|---|---|
+| union(0,1) | `[0,1,2,3,4]` | `[0,0,2,3,4]` | `[1,0,0,0,0]` | true |
+| union(2,3) | `[0,0,2,3,4]` | `[0,0,2,2,4]` | `[1,0,1,0,0]` | true |
+| connected(0,3) | — | — | — | find(0)=0 ≠ find(3)=2 → **false** |
+| union(1,2) | `[0,0,2,2,4]` | `[0,0,0,2,4]` | `[1,0,1,0,0]` | true (merge roots 0 and 2; equal rank → 0 wins arbitrarily, rank[0]++) |
+| connected(0,3) | — | — | — | find(0)=0, find(3)=0 → **true** |
+
+<details>
+<summary><strong>Pedagogical: the 3-approach ladder for Number of Provinces (BFS → DSU → DFS)</strong></summary>
 
 **Problem** ([↗ LeetCode](https://leetcode.com/problems/number-of-provinces/)): There are `n` cities. Some are directly connected. An `n × n` matrix `isConnected[i][j] = 1` means city `i` and city `j` are directly connected. A **province** is a group of cities transitively connected (direct or indirect). Return the number of provinces.
 
-### Approach 1 — Brute force: BFS from every city
+#### Approach 1 — Brute force: BFS from every city
 
 For each city that hasn't been visited yet, run a BFS to mark all cities in the same province. Each such BFS starts a new province.
 
@@ -257,7 +527,7 @@ void dfs(int[][] c, boolean[] visited, int u) {
 
 **When to use which:** BFS avoids recursion depth issues on very deep chains. DFS is 1 line shorter. Union-Find is the answer when the problem may extend to *dynamic* edges.
 
-### Complexity ladder
+#### Complexity ladder
 
 | Approach | Time | Space | Best use |
 |---|---|---|---|
@@ -265,9 +535,11 @@ void dfs(int[][] c, boolean[] visited, int u) {
 | **Union-Find** | **O(n² · α(n))** | **O(n)** | **Interview default; extends cleanly to dynamic** |
 | Adjacency list + Kruskal-style edge stream | O(E · α(n)) | O(n) | Sparse graphs where edges are given as a list, not a matrix |
 
----
+</details>
 
-## Union-Find (Disjoint Set Union) <span class="diff diff-m">Medium</span>
+### Number of Provinces <span class="diff diff-m">Medium</span>
+
+Given an `n × n` symmetric friendship matrix, count the number of connected components. One `union` per edge, then count distinct roots (or decrement a `components` counter inline).
 
 *[↗ LeetCode: Number of Provinces](https://leetcode.com/problems/number-of-provinces/)*
 
@@ -473,7 +745,53 @@ DSU is the engine for *Number of Provinces*, *Accounts Merge* (union by shared e
 | [Most Stones Removed](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) | union stones sharing a row or column; removable = total − components | — |
 
 
-## Minimum Spanning Tree — Kruskal + Union-Find <span class="diff diff-m">Medium</span>
+### Redundant Connection — DSU detects cycle <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Redundant Connection](https://leetcode.com/problems/redundant-connection/)*
+
+A tree with `n` nodes has `n` edges — one too many. Return the edge that, when removed, leaves a valid tree. Scan edges in order; the **first** edge whose endpoints already share a root is the answer, because adding it would create a cycle.
+
+<Callout kind="inv" title="Invariant">
+
+Before the first cycle-closing edge, the DSU holds a growing forest; the first `union` that returns `false` identifies that edge.
+
+</Callout>
+
+<TemplateReveal
+  slug="redundant-connection"
+  language="java"
+  :canonical="redundantConnectionCode"
+/>
+
+**Trace** on `edges = [[1,2],[1,3],[2,3]]`:
+
+| edge | find(a), find(b) | union result | parent after |
+|---|---|---|---|
+| [1,2] | 1, 2 | true (merge) | `parent[2]=1` |
+| [1,3] | 1, 3 | true (merge) | `parent[3]=1` |
+| [2,3] | 1, 1 | **false** → return `[2,3]` | — |
+
+### Accounts Merge — DSU on string IDs <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Accounts Merge](https://leetcode.com/problems/accounts-merge/)*
+
+Each account has a name and a list of emails. Two accounts belong to the same person iff they share any email. Return the merged accounts (name + sorted email list per person). **The DSU is over account indices, not emails** — a `HashMap<email, firstAccountIndex>` ties emails to accounts.
+
+<Callout kind="inv" title="Invariant">
+
+At any point, two accounts `i` and `j` share a root iff they are transitively linked by a chain of shared emails.
+
+</Callout>
+
+<TemplateReveal
+  slug="accounts-merge"
+  language="java"
+  :canonical="accountsMergeCode"
+/>
+
+**Complexity:** O(N α(N) + E log E) where `N` is the number of accounts and `E` is total emails. The log factor is for sorting each component's email set (we use `TreeSet` for that).
+
+### Kruskal's MST + Union-Find <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)*
 
@@ -600,14 +918,166 @@ Adding before union-check. *Example:* edges `[(A,B,1),(B,C,2),(A,C,3)]`. After a
 | [Optimize Water Distribution in a Village](https://leetcode.com/problems/optimize-water-distribution-in-a-village/) | model each well as an edge from a virtual node 0, then run MST | — |
 | [Find Critical and Pseudo-Critical Edges](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | rerun MST forcing each edge in / leaving it out to classify it | — |
 
+### Graph Valid Tree <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/)*
+
+Given `n` nodes and a list of undirected edges, is it a valid tree? A tree needs exactly two properties: **`edges.length == n - 1`** AND **no cycle**. DSU checks both: each edge must union two different components; if `union` returns `false`, there's a cycle. If all `n-1` unions succeed, the graph is a tree.
+
+<Callout kind="key" title="Why not just check edges.length == n-1?">
+
+A graph with `n-1` edges could still be disconnected (one component has a cycle, another is isolated). Both conditions are needed.
+
+</Callout>
+
+<TemplateReveal
+  slug="graph-valid-tree"
+  language="java"
+  :canonical="graphValidTreeCode"
+/>
+
+**Three cases:**
+
+| Edges | Cycle? | Result |
+|---|---|---|
+| `n - 1`, no cycle | — | **true** (tree) |
+| `n - 1`, cycle | yes | false (disconnected + cycle) |
+| `≠ n - 1` | — | false (too many or too few) |
+
+### Swim in Rising Water (Kruskal-style) <span class="diff diff-h">Hard</span>
+
+*[↗ LeetCode: Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/)*
+
+A grid of elevations; the water rises uniformly. Find the earliest time `t` at which you can swim from `(0,0)` to `(n-1,n-1)` where you can only move between cells both at elevation `≤ t`. The DSU/Kruskal reformulation: **sort cells by elevation ascending; add each cell to the forest and union it with its already-active neighbors; return the elevation at which `(0,0)` and `(n-1,n-1)` first join.**
+
+This mirrors Kruskal's: edges are "cell-is-added-at-time-t" events; we accept them cheapest-first until a specific pair becomes connected.
+
+<Callout kind="inv" title="Invariant">
+
+At the moment we process cell `(r,c)` with elevation `t`, the DSU holds all cells with elevation `≤ t`, unioned according to adjacency.
+
+</Callout>
+
+<TemplateReveal
+  slug="swim-rising-water"
+  language="java"
+  :canonical="swimRisingWaterCode"
+/>
+
+**Complexity:** O(n² log n) — sort dominates; each union/find is amortized α(n²). Compare with Dijkstra on the same problem: O(n² log n) too, but DSU is often simpler to code.
+
+## Traps & gotchas
+
+<TrapTrace
+  title="Trap 1 — Union without rank/size"
+  bug="Sequence union(0,1), union(1,2), union(2,3), ..., union(n-2,n-1) with naive union (always attach parent[a] = b) builds a linear chain. find(0) walks n hops. The amortized complexity degrades from α(n) to O(n) per find."
+  fix="Union BY RANK: compare rank[ra] vs rank[rb], attach smaller under larger; increment rank only on ties. Keeps the tree log-depth even without path compression; with both, it's α(n)."
+/>
+
+<TrapTrace
+  title="Trap 2 — Recursive find overflowing stack on 10^5 nodes"
+  bug="Recursive find(x) { if parent[x] != x return parent[x] = find(parent[x]); return parent[x]; } blows the stack on a 10^5-deep chain. StackOverflowError before path compression even kicks in."
+  fix="Use the ITERATIVE two-pass form (shown in THE template): while(parent[x] != x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x. This is 'path halving' — nearly as good as full compression, with no recursion."
+/>
+
+<TrapTrace
+  title="Trap 3 — Mutating rank on every union"
+  bug="A buggy implementation does rank[ra] = Math.max(rank[ra], rank[rb]) + 1 on every union. This destroys the rank-as-upper-bound invariant and degrades to O(log n) per op even with path compression."
+  fix="Rank must only increment on TIES: if (rank[ra] == rank[rb]) rank[ra]++. The winner's rank stays the same when it strictly dominated; only tied unions actually increase tree height."
+/>
+
+## In the wild — Git's object-reachability check & LLVM's alias analysis
+
+**Git uses DSU internally** during `git fetch` to decide which commits a client needs to pull. The remote enumerates commit SHAs; the client maintains a DSU over its local commit graph. For each remote tip, `connected(local-tip, remote-tip)` answers whether the client already has that commit's ancestry. Faster than walking the commit DAG for every tip query.
+
+
+
+```c
+/* git/commit-reach.c — paraphrased */
+int in_merge_bases_many(struct commit *commit, int nr_reference, ...) {
+    /* Build an implicit DSU over commits reached from references.
+       For each reference, union its parent set with the reference itself.
+       After the sweep, in_merge_bases is reduced to a connectivity query
+       — classic amortized O(m α(n)) over m commits.
+       In practice, Git uses a bitmap variant for even better cache behavior,
+       but the DSU is the conceptual kernel. */
+}
+```
+
+
+
+**Four more real-world DSU sightings:**
+
+1. **LLVM's Steensgaard alias analysis** — may-alias between pointers is a union-find on type variables. Union is nearly O(1); the global pass is O(n α(n)).
+2. **Linux kernel's `cgroup` subsystem** — process group membership checks are DSU-backed; forking a process is a union of the child with the parent's cgroup.
+3. **Postgres' deadlock detector** — resource-holding tuples are unioned by shared-lock groups; a cycle (union returning false on a specific pair) triggers deadlock detection.
+4. **TensorFlow's graph-partitioning pass** — subgraph "colors" (which device the op runs on) are a DSU over op nodes; same-color ops are placed together for better locality.
+
+## Recognition drill
+
+<RecognitionDrill pattern="union-find" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if you need to UN-union (remove an edge)?</strong></summary>
+
+Classical DSU doesn't support this. Three approaches:
+1. **Offline reverse processing** — if all operations are known upfront, reverse the sequence: each "remove edge" becomes "add edge" in the reversed stream. Works when the problem allows offline analysis.
+2. **Link-Cut Trees** — O(log n) amortized per op, supports arbitrary add/remove and connectivity queries.
+3. **Euler Tour Trees** — O(log n) per op, specifically for dynamic connectivity.
+
+In practice, 95% of interview problems only need unions; mentioning the gap is enough.
+</details>
+
+<details>
+<summary><strong>What if the groups have weights / sizes we care about?</strong></summary>
+
+**DSU with aux data:** store `size[root]` or `sum[root]`. When unioning, add the loser's aux data to the winner's root. Queries like "size of my component" become `size[find(x)]` in O(α(n)).
+
+Classic examples: Weighted Union Find (track distance from node to root as `diff[]` — useful for equation-equivalence problems like LeetCode 399), Range Union Find (interval unions), DSU with Rollback (push-pop stack of state changes — for divide-and-conquer offline problems).
+</details>
+
+<details>
+<summary><strong>What if the universe is huge but sparse (10^18 node IDs)?</strong></summary>
+
+Replace `int[] parent` with `Map<Long, Long>`. Lookups cost O(1) hash instead of O(1) array access, but the α(n) analysis still holds. Memory becomes O(active nodes) instead of O(universe).
+
+Alternative: **coordinate compression** — collect all distinct IDs, remap to `[0, k)`, use array-backed DSU. Faster constants but requires offline processing.
+</details>
+
+<details>
+<summary><strong>What if the problem has multiple colors / labels per node?</strong></summary>
+
+**One DSU per color** — e.g., for bipartite checking, union same-colored neighbors into one DSU, different-colored into another; a conflict is a cycle in either. More generally, k-partite problems need k DSU instances or a DSU over (node, label) pairs.
+</details>
+
+<details>
+<summary><strong>What if the problem needs the MINIMUM edge to connect two specific nodes (not any spanning tree)?</strong></summary>
+
+The MST contains the min-weight path between every pair of nodes (bottleneck property). After building the MST via Kruskal, use LCA (lowest common ancestor) on the tree with max-weight-on-path auxiliary data. Each pair query becomes O(log n). This blends DSU with tree algorithms — a cross-pattern problem.
+</details>
+
+### Breaking point
+
+Union-Find **stops being optimal** when:
+- Edge deletions are needed (Link-Cut Trees take over).
+- Shortest paths or distances are queried (Dijkstra, BFS).
+- You need to enumerate component members (DSU stores roots, not members; keep an auxiliary list).
+- The graph is directed (DSU is for undirected equivalence; use SCC).
+- The queries happen online with weights (segment tree on Euler tour, or Link-Cut Trees).
+
+### Three cross-pattern problems
+
+- [Satisfiability of Equality Equations (990)](https://leetcode.com/problems/satisfiability-of-equality-equations/) — DSU with `==` edges first, then verify all `!=` edges don't connect same roots. Pattern crossover with hash-based equivalence.
+- [Smallest String with Swaps (1202)](https://leetcode.com/problems/smallest-string-with-swaps/) — DSU on swap-pairs, then sort each component's characters. DSU + sorting.
+- [Rank Transform of a Matrix (1632)](https://leetcode.com/problems/rank-transform-of-a-matrix/) — union same-value cells sharing a row/column, then assign ranks per DSU root. DSU + topological order.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="union-find"
-  :questions='[{"q": "What is the amortized cost of Union-Find operations with path compression + union by rank?", "choices": [{"text": "O(α(n)) — effectively constant", "correct": true, "explanation": "α is inverse Ackermann; ≤ 4 for realistic n."}, {"text": "O(log n)", "correct": false, "explanation": "Without union by rank."}, {"text": "O(n)", "correct": false, "explanation": "Without compression, worst case."}, {"text": "O(1) exactly", "correct": false, "explanation": "Amortized, not worst-case exact."}]}, {"q": "Path compression during `find(x)` — what does it do?", "choices": [{"text": "Reroots every node on the path directly to the tree’s root", "correct": true, "explanation": "Flattens the tree, making future finds O(1)."}, {"text": "Deletes the path", "correct": false}, {"text": "Sorts the tree", "correct": false}, {"text": "Nothing", "correct": false}]}, {"q": "For Redundant Connection (undirected), when do you emit the answer?", "choices": [{"text": "The first edge whose endpoints already share a root", "correct": true, "explanation": "Adding it would create a cycle."}, {"text": "The last edge", "correct": false, "explanation": "Not necessarily."}, {"text": "The edge with highest weight", "correct": false, "explanation": "Weights not relevant here."}, {"text": "Any edge", "correct": false}]}, {"q": "For Kruskal MST, when do you stop?", "choices": [{"text": "After picking n-1 valid edges", "correct": true, "explanation": "That is the count in a spanning tree of n nodes."}, {"text": "After iterating all edges", "correct": false, "explanation": "Works but wasteful."}, {"text": "When the smallest edge is > threshold", "correct": false}, {"text": "Random", "correct": false}]}, {"q": "For Most Stones Removed with Same Row or Column, what does #components represent?", "choices": [{"text": "Number of stones that must remain — removable = n - #components", "correct": true, "explanation": "One stone per connected component must stay."}, {"text": "Number of rows used", "correct": false}, {"text": "Number of removable stones directly", "correct": false, "explanation": "It is n - components, not components itself."}, {"text": "Nothing", "correct": false}]}]'
-/>
+<Quiz pattern-id="union-find" :questions="mastery5" />
 
 <PrintButton />
 

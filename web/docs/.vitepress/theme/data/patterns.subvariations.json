@@ -513,37 +513,37 @@
     "inTheWildSource": "Git object-reachability check during fetch",
     "subVariations": [
       {
-        "slug": "basic-dsu",
+        "slug": "basic-dsu-bare-mechanic-medium",
         "title": "Basic DSU (bare mechanic)",
         "difficulty": "medium"
       },
       {
-        "slug": "number-provinces",
+        "slug": "number-of-provinces-medium",
         "title": "Number of Provinces",
         "difficulty": "medium"
       },
       {
-        "slug": "redundant-connection",
+        "slug": "redundant-connection-dsu-detects-cycle-medium",
         "title": "Redundant Connection (DSU detects cycle)",
         "difficulty": "medium"
       },
       {
-        "slug": "accounts-merge",
+        "slug": "accounts-merge-dsu-on-string-ids-medium",
         "title": "Accounts Merge (DSU on string IDs)",
         "difficulty": "medium"
       },
       {
-        "slug": "kruskal-mst",
+        "slug": "kruskal-s-mst-union-find-medium",
         "title": "Kruskal's MST + Union-Find",
         "difficulty": "medium"
       },
       {
-        "slug": "graph-valid-tree",
+        "slug": "graph-valid-tree-medium",
         "title": "Graph Valid Tree",
         "difficulty": "medium"
       },
       {
-        "slug": "swim-rising-water",
+        "slug": "swim-in-rising-water-kruskal-style-hard",
         "title": "Swim in Rising Water (Kruskal-style)",
         "difficulty": "hard"
       }
