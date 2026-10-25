@@ -3,9 +3,125 @@
 
 <PatternVideo pattern-name="Merge Intervals" duration="8–12 min" />
 
-<PatternProgress pattern-id="merge-intervals" problems="merge-intervals-classic, insert-interval, meeting-rooms, interval-list-intersections, employee-free-time, remove-covered-intervals" />
+<PatternProgress pattern-id="merge-intervals" problems="merge-intervals-classic, insert-interval, non-overlapping-intervals, meeting-rooms-i, interval-list-intersections, employee-free-time, remove-covered-intervals" />
 
+<script setup>
+const bareTemplateCode = `# python
+intervals.sort(key=lambda iv: iv[0])      # sort by start
+out = [intervals[0]]
+for s, e in intervals[1:]:
+    if s <= out[-1][1]:                   # overlap → extend
+        out[-1][1] = max(out[-1][1], e)
+    else:
+        out.append([s, e])                # gap → emit, start new
+return out`
 
+const bareInvariant = {
+  statement: `All intervals in \`out\` are disjoint and finalized; \`out[-1]\` is the only interval that can still grow.`,
+  initialization: `Before entry \`out = [intervals[0]]\`. One interval, so it's trivially disjoint; being the last entry, it's the only one that can grow.`,
+  maintenance: `For each next \`[s,e]\` in start-sorted order: if \`s <= out[-1][1]\` the two overlap, so updating \`out[-1][1] = max(out[-1][1], e)\` keeps \`out[-1]\` the only mutable interval and preserves disjointness with everything to its left (whose end is strictly less than any new start by construction). Else a gap exists, so \`out[-1]\` is forever disjoint from anything to come (future starts ≥ \`s > out[-1][1]\`); appending \`[s,e]\` makes it the new mutable tail.`,
+  termination: `When the loop exits, every interval has been placed. All of \`out[:-1]\` are already finalized disjoint intervals and \`out[-1]\` is finalized too (no more inputs can touch it). So \`out\` is the merged union of all inputs.`
+}
+
+const bareComplexity = {
+  time: `O(n log n) — sort dominates; the sweep is O(n).`,
+  space: `O(n) output in the worst case (no overlaps).`
+}
+
+const templateSpecializations = [
+  { slug: `classic-merge-intervals-medium`, title: `Classic Merge Intervals` },
+  { slug: `insert-interval-medium`, title: `Insert Interval` },
+  { slug: `non-overlapping-intervals-medium`, title: `Non-overlapping Intervals` },
+  { slug: `meeting-rooms-i-easy`, title: `Meeting Rooms I` }
+]
+
+const insertIntervalCode = `# python — three phases, no sort needed
+def insert(intervals, new):
+    out, i, n = [], 0, len(intervals)
+    # phase 1: copy intervals strictly before new
+    while i < n and intervals[i][1] < new[0]:
+        out.append(intervals[i]); i += 1
+    # phase 2: merge every interval that touches new
+    while i < n and intervals[i][0] <= new[1]:
+        new = [min(new[0], intervals[i][0]), max(new[1], intervals[i][1])]
+        i += 1
+    out.append(new)
+    # phase 3: copy intervals strictly after new
+    while i < n:
+        out.append(intervals[i]); i += 1
+    return out`
+
+const insertInvariant = {
+  statement: `At every pointer position, \`out\` holds exactly the final answer for all intervals \`intervals[:i]\` with respect to the carried \`new\`.`,
+  initialization: `Before the loop, \`out = []\` and \`i = 0\`. Vacuously true — nothing has been placed yet.`,
+  maintenance: `Phase 1 copies strictly-before intervals; they can never meet \`new\` or anything to the right of it, so they stay final. Phase 2 is the merging sweep: every interval whose start is ≤ \`new[1]\` extends \`new\`'s bounds, so after phase 2 the carried \`new\` is the union of itself and all overlapping existing intervals. Phase 3 copies strictly-after intervals; they begin past the extended \`new\`'s end so cannot touch it.`,
+  termination: `All intervals have been processed. \`out\` holds pre-insert intervals, then the fully-merged \`new\`, then post-insert intervals, in sorted order.`
+}
+
+const nonOverlappingCode = `# python — greedy by end
+intervals.sort(key=lambda iv: iv[1])      # sort by END
+removed, cur_end = 0, float('-inf')
+for s, e in intervals:
+    if s >= cur_end:                      # keep this interval
+        cur_end = e
+    else:                                 # overlap → remove this one
+        removed += 1
+return removed`
+
+const nonOverlappingInvariant = {
+  statement: `After processing the first k intervals, \`cur_end\` equals the minimum possible end-value among any valid non-overlapping subset of the first k; \`removed\` is the correct count of removals.`,
+  initialization: `Before the loop, \`cur_end = -∞\` (no interval kept) and \`removed = 0\`. Minimum possible end for empty subset is \`-∞\`, by convention.`,
+  maintenance: `Consider interval \`[s, e]\` in end-sorted order. Case A — \`s >= cur_end\`: it fits after the last kept interval; keeping it gives us an interval whose end \`e\` is the smallest end achievable among any valid subset ending at or after position k (because the array is end-sorted, no earlier choice could produce a smaller end). Case B — \`s < cur_end\`: this interval overlaps the one anchoring \`cur_end\`. We can keep at most one of them, and \`cur_end\` already has the smaller end (it came earlier in the end-sorted order), so dropping \`[s,e]\` is at least as good as any swap. Increment \`removed\`.`,
+  termination: `All intervals are processed. The greedy exchange argument shows the kept set is a maximum non-overlapping subset, so \`removed = n - (max non-overlapping count)\`.`
+}
+
+const meetingRoomsCode = `# python — adjacent-check after start-sort
+def can_attend_all(meetings):
+    meetings.sort(key=lambda iv: iv[0])
+    for i in range(1, len(meetings)):
+        if meetings[i][0] < meetings[i-1][1]:
+            return False
+    return True`
+
+const meetingRoomsInvariant = {
+  statement: `If any pair of meetings overlap, there exist two adjacent (in start-sorted order) ones that overlap.`,
+  initialization: `Trivial: a single meeting has no conflicts.`,
+  maintenance: `Suppose meetings \`a, b, c\` in start-sorted order with \`a\` and \`c\` overlapping (so \`c.start < a.end\`). Then \`b.start <= c.start < a.end\`, so \`a\` and \`b\` overlap too — and they're adjacent. By induction, any pair-overlap manifests as an adjacent-pair overlap in sorted order.`,
+  termination: `After sorting, scanning adjacent pairs catches every conflict. If none fire, no pair overlaps and one person can attend them all.`
+}
+
+const trapAcode = {
+  statement: `Touching endpoints: \`[1,5]\` and \`[5,10]\` — half-open \`[s,e)\` (meetings) are not overlapping; closed \`[s,e]\` (number-line) are.`,
+  bug: `Using \`next.start <= cur.end\` on half-open interval problems (Meeting Rooms, Google Calendar busy blocks) merges meetings that end exactly when the next starts — wrong.`,
+  fix: `Clarify endpoint semantics BEFORE coding. Half-open → \`next.start < cur.end\`. Closed → \`next.start <= cur.end\`. Problem statements rarely spell it out; ask explicitly.`
+}
+
+const trapBcode = {
+  statement: `Sort key by output type: start for merge/attend-all, end for max-non-overlapping / min-arrows.`,
+  bug: `Sorting by start when the question is "minimum removals to make non-overlapping" produces a sub-optimal greedy (keeps earliest-starting instead of earliest-ending), silently wrong on \`[[1,100],[2,3],[3,4]]\` (right answer 1, start-sort gives 2).`,
+  fix: `Decide sort key from the output: start-sort when you emit the union; end-sort when you count-keep or count-remove. If you're not sure, write the exchange argument on scratch paper before coding.`
+}
+
+const trapCcode = {
+  statement: `Insert-interval boundary off-by-one: strict \`<\` vs non-strict \`<=\` on phase edges.`,
+  bug: `Writing \`while i < n and intervals[i][1] <= new[0]:\` in phase 1 (should be \`<\`) copies an interval that actually touches \`new\` on closed intervals — \`new\` never grows left; you emit \`[1,2], [2,8]\` instead of merged \`[1,8]\`.`,
+  fix: `Phase 1 skips intervals whose end is strictly less than \`new.start\`. Phase 2 merges intervals whose start is \`<= new.end\`. If the interval's end touches \`new.start\` on closed intervals, it belongs to phase 2 (it merges), not phase 1.`
+}
+
+const quizQuestions = [
+  {q: "Standard Merge Intervals: sort by what?", choices: [{text: "Start ascending", correct: true, explanation: "Then walk once and merge on overlap."}, {text: "End ascending", correct: false, explanation: "Better for activity selection / non-overlap counting."}, {text: "Length descending", correct: false}, {text: "Random", correct: false}]},
+  {q: "For Insert Interval into a pre-sorted list, what is the canonical algorithm?", choices: [{text: "Three-phase single pass: copy-before, merge-overlapping, copy-after", correct: true, explanation: "O(n) time; no re-sort needed since input is sorted."}, {text: "Insert then run full Merge Intervals", correct: false, explanation: "Works but O(n log n)."}, {text: "Sort by end and use greedy", correct: false, explanation: "That is Non-overlap Intervals."}, {text: "Binary search only", correct: false}]},
+  {q: "Non-overlapping Intervals: greedy correctness requires sorting by…?", choices: [{text: "End ascending — keep the interval that frees the timeline earliest", correct: true, explanation: "Exchange argument: swapping any kept interval for one with an earlier end can only help future choices."}, {text: "Start ascending", correct: false, explanation: "Silently wrong on cases like [[1,100],[2,3],[3,4]]."}, {text: "Length ascending", correct: false, explanation: "Length ignores where intervals sit on the line."}, {text: "Doesn't matter — all orderings give the same answer", correct: false}]},
+  {q: "For Meeting Rooms I (bool \"can attend all\"), what is the O(n log n) check?", choices: [{text: "Sort by start; verify each start ≥ previous end", correct: true, explanation: "By the adjacency lemma, any pair-overlap shows up adjacent in start-sorted order."}, {text: "Full n² pair check", correct: false, explanation: "Wasteful."}, {text: "Union-Find", correct: false}, {text: "DP", correct: false}]},
+  {q: "Interval List Intersections (two sorted disjoint lists) is best solved by:", choices: [{text: "Two-pointer merge with `[max(starts), min(ends)]` intersection formula", correct: true, explanation: "O(n+m) linear pass."}, {text: "Sort both then binary search", correct: false, explanation: "Already sorted; unnecessary sort."}, {text: "Union all then re-detect overlaps", correct: false, explanation: "Overkill."}, {text: "Recursion", correct: false}]}
+]
+
+const insertSolvePrompt = `Given a sorted, non-overlapping list of intervals and a new interval \`[s,e]\`, insert it and return the merged list — in one pass, no re-sort.`
+
+const nonOverlappingSolvePrompt = `Return the minimum number of intervals to remove so the remaining ones are non-overlapping. Example: \`[[1,2],[2,3],[3,4],[1,3]]\` → 1 (remove \`[1,3]\`).`
+
+const meetingRoomsSolvePrompt = `Given meeting intervals \`[[s,e], ...]\`, decide whether one person can attend all of them. Return a boolean.`
+</script>
 
 ## Why merge intervals exists — the story
 
@@ -17,19 +133,53 @@ But at scale it dies. Meet processes calendar-merge requests for **1 billion use
 
 The pattern is: sort once, then sweep left to right. After sort, if the next interval's start is `≤` the current merged block's end, extend the block; otherwise, close the block and open a new one. **O(n log n)** sort + **O(n)** sweep. For 200 blocks per user, that's ~1,500 ops — 25× faster and, more importantly, asymptotically better. What makes this work is an **invariant**: after sorting by start time, every interval you've already emitted is final; only the current one can still grow. Sorting turned a global relation ("does this overlap with any of the 199 others?") into a local check ("does this touch the previous?").
 
-Sort by start time: `[1,3]`, `[2,6]`, `[8,10]`, `[15,18]`. Now you only need a "current merged block." Start with `[1,3]`. The next interval starts at `2`, which is before the current block ends at `3`, so merge them into `[1,6]`. The next starts at `8`, after `6`, so the old block is finished and you start a new one. The final answer is `[[1,6],[8,10],[15,18]]`. Sorting made the question local: once starts are ordered, a future interval cannot reach backward past the current block without first touching it.
-
-That is the intuition to carry into interviews. You are not sorting because the output must be sorted; you are sorting because it creates an invariant. Every interval you have already emitted is final. The only interval that can still grow is the current one. That reduces "compare everything against everything" to one left-to-right sweep.
-
 > [key] **Key Insight** — Two intervals `[a,b]` and `[c,d]` overlap iff `a ≤ d && c ≤ b`. After sorting by start, overlap with the running interval is simply `next.start ≤ cur.end`.
 
-> [key] **Key Insight — sort direction depends on the question.** For "merge all overlaps," sort by **start**. For "minimum arrows to burst balloons" or "max non-overlapping," sort by **end**. For "erase overlaps," either works but end-sort simplifies the greedy proof. **Wrong sort key = wrong invariant = silently wrong answer.**
+> [key] **Key Insight — sort direction depends on the question.** For "merge all overlaps," sort by **start**. For "minimum arrows to burst balloons" or "max non-overlapping," sort by **end**. For "erase overlaps," end-sort simplifies the greedy proof. **Wrong sort key = wrong invariant = silently wrong answer.**
 
-> [inv] **Invariant — the running merged interval is the only one that can still grow.** After sorting by start, every merged interval you've closed and pushed to output is final; a future interval cannot reach back past it because its start ≥ the closed interval's start. This is why sweep on sorted input beats brute-force pairwise checks.
+## The bare mechanic — simplest working example
 
-> [inv] **Invariant — `cur.end` is monotonically non-decreasing across merges.** When you extend the running interval with `cur.end = max(cur.end, next.end)`, `cur.end` never shrinks. This gives a strong sanity check during debugging: if you see `cur.end` decrease at some step, the sort key was wrong or the update logic swapped a min for a max.
+Input: `[[1,3],[2,6],[8,10],[15,18]]` (already start-sorted). Walk left to right, carrying one "current" interval. Each next interval either overlaps (extend end) or doesn't (emit current, start fresh).
 
-<MergeIntervalsAnim />
+| Step | next | cur before | overlap? | cur after | out |
+|---|---|---|---|---|---|
+| 0 | — | — | — | `[1,3]` | `[]` |
+| 1 | `[2,6]` | `[1,3]` | `2 ≤ 3` yes | `[1,6]` | `[]` |
+| 2 | `[8,10]` | `[1,6]` | `8 > 6` no | `[8,10]` | `[[1,6]]` |
+| 3 | `[15,18]` | `[8,10]` | `15 > 10` no | `[15,18]` | `[[1,6],[8,10]]` |
+| end | — | — | — | — | `[[1,6],[8,10],[15,18]]` |
+
+```svg
+<svg role="img" viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Bare mechanic — four intervals becoming three merged ranges">
+  <rect x="0" y="0" width="400" height="180" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">sort by start, then one-pass merge</text>
+  <line x1="30" y1="56" x2="370" y2="56" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <g text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">
+    <text x="40" y="74">1</text><text x="80" y="74">3</text><text x="70" y="74">2</text><text x="140" y="74">6</text>
+    <text x="190" y="74">8</text><text x="230" y="74">10</text><text x="310" y="74">15</text><text x="360" y="74">18</text>
+  </g>
+  <rect x="40" y="88" width="40" height="12" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.4"/>
+  <rect x="70" y="102" width="70" height="12" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.4"/>
+  <rect x="190" y="88" width="40" height="12" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.4"/>
+  <rect x="310" y="88" width="50" height="12" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.4"/>
+  <rect x="40" y="130" width="100" height="14" rx="5" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/>
+  <rect x="190" y="130" width="40" height="14" rx="5" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/>
+  <rect x="310" y="130" width="50" height="14" rx="5" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)" stroke-width="1.6"/>
+  <g font-size="10" font-weight="700" text-anchor="middle" fill="var(--dsa-warning)">
+    <text x="90" y="141">[1,6]</text><text x="210" y="141">[8,10]</text><text x="335" y="141">[15,18]</text>
+  </g>
+  <text x="200" y="168" text-anchor="middle" font-size="11" font-style="italic" fill="var(--dsa-neutral)">overlapping cluster collapses; gaps mark new intervals</text>
+</svg>
+```
+
+<PatternTemplateCard
+  slug="merge-intervals-template"
+  language="python"
+  :code="bareTemplateCode"
+  :invariant="bareInvariant"
+  :complexity="bareComplexity"
+  problemShape="start-sorted interval list; return disjoint union"
+  defaultRevealed />
 
 ## When to use it — ordered ranges that may touch
 
@@ -46,47 +196,45 @@ You need *how many are active at time t?* rather than *which merged into which?*
 
 Do not use plain merge-intervals if order is already fixed by original sequence and you are forbidden to reorder; then you may need a stack or greedy pass over the given order. Do not use it when intervals are open/closed in a nonstandard way until you clarify whether touching endpoints count as overlap. Finally, if you only need the maximum number of simultaneous meetings, sorting starts and ends separately is often cleaner than building merged ranges.
 
-> [trap] **Trap — touching endpoints.** Is `[1, 5]` and `[5, 10]` overlapping or adjacent? **Ask the interviewer explicitly.** For meetings (half-open time), they're not overlapping — one ends exactly when the other begins. For number-line closed intervals, they are. If you don't ask, half your test cases silently fail.
-
-> [trap] **Trap — mutating the input.** LeetCode's `int[][]` input arrays are technically writable. Sorting in-place and *then* pushing outputs by *reference* means you're returning aliases to the mutated input. Some judges catch this; others don't. **Safe rule: `new int[]{cur.start, cur.end}` when appending to output.**
-
-> [trap] **Trap — insert-interval loop off-by-one.** The classical "Insert Interval" problem has three phases: pre-insert (intervals entirely before), overlap-merge (intervals that touch the new one), post-insert (intervals entirely after). Boundaries between phases are `existing.end < new.start` (pre) and `existing.start > new.end` (post). **Get either strict/non-strict wrong and you double-count or lose an interval.**
-
-## How to use it — template
-
-```java
-Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
-List<int[]> out = new ArrayList<>();
-int[] cur = intervals[0];
-for (int i = 1; i < intervals.length; i++) {
-    int[] next = intervals[i];
-    if (next[0] <= cur[1]) {
-        cur[1] = Math.max(cur[1], next[1]);
-    } else {
-        out.add(cur);
-        cur = next;
-    }
-}
-out.add(cur);
-return out.toArray(new int[0][]);
-```
-The sort is the setup. `cur` is the union of the current overlapping cluster. If the next interval starts before or exactly at `cur`'s end, it belongs to the same cluster, so only the end might extend. If the next interval starts after `cur` ends, there is a gap; `cur` can never be touched again, so emit it and begin a new cluster. That "emit only after a gap" rule is the main invariant.
-
 ## History — Bentley's *Programming Pearls*, 1986
 
 The interval-merging pattern was formalized by **Jon Bentley** in his classic 1986 book **Programming Pearls**, specifically in the essay *"Column 8: Algorithm Design Techniques."* Bentley used the interval-cover problem as a running example to teach the general principle: **when brute force is quadratic pairwise comparison, sort first and reduce it to a linear sweep.** His larger contribution was the "sort-then-sweep" idiom, which underlies not just Merge Intervals but the entire interval-scheduling family (Meeting Rooms, Non-overlapping Intervals, Insert Interval).
 
 Bentley was also a co-inventor of **kd-trees** and *Bentley-Ottmann sweep* (see the Sweep Line chapter). His *Programming Pearls* essays first appeared as columns in *Communications of the ACM*; every essay taught one specific transformation from naive to elegant algorithm. When you tell an interviewer "I'll sort by start time and sweep in O(n log n)," you're citing exactly the pattern Bentley wrote about in 1986.
 
-**Real-world adoption:** every calendar merge (Google Calendar, Outlook, Fantastical), every network billing system's "aggregate overlapping charge windows," every video-editing timeline's "collapse overlapping clips" feature — all merge-intervals. Kubernetes' `PodDisruptionBudget` uses merge-intervals to check whether maintenance windows overlap. AWS's Reserved Instance billing runs it hourly across trillions of usage records.
+## THE template
 
----
+The pattern has one canonical shape and four sub-variations. The template is the shape; the sub-variations differ in *sort key*, *what you carry*, and *what you emit*. The chip row below jumps to each sub-variation.
 
-## Merge Intervals <span class="diff diff-m">Medium</span>
+<PatternTemplateCard
+  slug="merge-intervals-canonical"
+  title="Merge-Intervals canonical sweep"
+  language="python"
+  :code="bareTemplateCode"
+  :invariant="bareInvariant"
+  :complexity="bareComplexity"
+  :specializations="templateSpecializations"
+  problemShape="interval list → sort → single left-to-right pass with one carried state" />
+
+## Interactive diagram
+
+<MergeIntervalsAnim />
+
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="merge-intervals" />
+
+### Classic Merge Intervals <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Merge Intervals](https://leetcode.com/problems/merge-intervals/)*
 
 <ProgressCheck id="merge-intervals" />
+
+<InvariantProof
+  :statement="bareInvariant.statement"
+  :initialization="bareInvariant.initialization"
+  :maintenance="bareInvariant.maintenance"
+  :termination="bareInvariant.termination" />
 
 ```svg
 <svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Merge Intervals Medium">
@@ -119,7 +267,7 @@ Bentley was also a co-inventor of **kd-trees** and *Bentley-Ottmann sweep* (see 
 
 <div class="readfig"><b>How to read it:</b> Once intervals are sorted, each new bar either overlaps the current merged bar and extends its end, or starts a fresh merged interval.</div>
 
-### Problem
+#### Problem
 Given a list of intervals, **merge all overlapping** ones and return the disjoint result.
 
 **Constraints:** `1 ≤ n ≤ 10⁴`; `start ≤ end`; values up to 10⁴.
@@ -128,7 +276,7 @@ Given a list of intervals, **merge all overlapping** ones and return the disjoin
 
 **Example 2:** `[[1,4],[4,5]]` → `[[1,5]]` because touching closed intervals merge.
 
-### Solution — brute force
+#### Solution — brute force
 A brute-force way is to repeatedly search for any two intervals that overlap, merge that pair, and restart. It feels natural because the problem says "merge all overlaps," but it does too much repeated scanning.
 
 ```text
@@ -146,30 +294,16 @@ return list
 
 In the worst case, finding overlaps costs O(n²) per round, and you may merge many times. Even with careful implementation, pairwise comparison is at least O(n²). Sorting by start gives the same result with O(n log n) sorting plus O(n) scanning.
 
-```text
-for each interval i:
-    for each interval j after i:
-        if i overlaps j:
-            replace i and j with their union
-            restart scanning until no pair overlaps
-return the remaining intervals
-```
-
-Brute force complexity: at least O(n²) comparisons, and repeated merge rounds can make it worse.
-
-### Solution — optimized
+#### Solution — optimized
 Sort by start; extend the current interval while the next overlaps.
 
-> [inv] **Invariant** — All emitted intervals are disjoint and sorted; `cur` is the running union of the overlapping cluster.
-
-#### Steps
+**Steps:**
 1. Sort the intervals by `start` — O(n log n) prerequisite for the linear sweep.
 2. Initialize `out` with the first interval.
 3. For each subsequent interval `cur`: if `cur.start <= last.end` — they overlap or touch; update `last.end = max(last.end, cur.end)`.
 4. Otherwise — push `cur` as a new interval.
 5. Return `out`. O(n log n) total.
 
-#### Java
 ```java
 int[][] merge(int[][] intervals) {
     Arrays.sort(intervals, (x, y) -> Integer.compare(x[0], y[0]));
@@ -198,115 +332,266 @@ int[][] merge(int[][] intervals) {
     { pointers: { i: 3 }, vars: { last: "[15,18]", out: "[[1,6],[8,10],[15,18]]" }, note: "15 gt 10 → new interval. done" }
   ]'
 />
-### Time Complexity
-Time O(n log n). Sorting dominates; the left-to-right merge pass is O(n).
 
-### Space Complexity
-Space O(n) for the output list in the worst case; the in-place interval mutation avoids extra interval copies.
-
-### Learning notes
-- Why sort by start? — it makes every emitted interval final once a gap appears.
-- Why keep `cur`? — it is the running union of the current overlapping cluster.
-- Why test `intervals[i][0] <= cur[1]`? — after start-sorting, only the next start can decide overlap.
-- Why `Math.max(cur[1], intervals[i][1])`? — contained intervals must not shrink the merged end.
-- Why `out.add(cur)` in the `else`? — a gap proves the current block can never grow again.
-- Why the final `out.add(cur)`? — the last cluster has no later gap to trigger emission.
-
-Additional notes:
-
-Time O(n log n) · Space O(n).
-
-Sorting dominates the runtime. The sweep itself is O(n) because each interval is considered once. The output list can hold O(n) intervals in the case where nothing overlaps. Depending on the sort implementation and whether you mutate intervals in place, there may also be sorting stack or temporary-array overhead.
-
-> [note] **The sort line, explained** — `Arrays.sort(intervals, (x, y) -> Integer.compare(x[0], y[0]))` sorts the rows by their start value. The `(x, y) -> ...` part is a **lambda** — a throwaway function that takes two intervals and returns negative / zero / positive to mean "x comes before / same / after y." We compare `x[0]` with `y[0]` (the starts) using `Integer.compare`, which is the safe way to compare ints — writing `x[0] - y[0]` can overflow and flip the sign. To sort by end instead, compare `x[1]` with `y[1]`; to add a tie-breaker, chain `Comparator.comparingInt(a -> a[0]).thenComparingInt(a -> a[1])`. (Full comparator tour in the *Java Data Structures* chapter.)
-
-> [trap] **Common Trap** — Touching vs overlapping. *Example:* `[1,2]` and `[2,3]`. If touching counts as overlap → merge (`cur.start <= last.end`) → `[1,3]`. If not → keep separate (`cur.start < last.end`). LeetCode's *Merge Intervals* treats touching as overlap; *Non-overlapping Intervals* does not.
-
-<TrapTrace title="Touching vs overlapping" input="[1,2]" bug="'[1,2]' and '[2,3]'. If touching counts as overlap → merge ('cur.start lt= last.end') → '[1,3]'. If not → keep separate ('cur.start lt last.end'). LeetCode's *Merge Intervals* treats touching as overlap; *Non-overlapping Intervals* does not." fix="See the guidance in the trap description and the code snippet." />
-
-> [note] **Interview script** — First, I'd clarify whether intervals are closed and whether touching endpoints should merge. The brute force is to compare every pair and repeatedly merge overlaps, but that is at least O(n²). I can do better by sorting by start, keeping one running interval, and only comparing each next interval to that running interval. Sorting costs O(n log n), the sweep is O(n), and the output space is O(n).
-
-#### Common Mistakes
-- **Touching vs overlapping**: `[1,2]` and `[2,3]` are treated as overlapping on LC Merge Intervals; `<=` is correct here.
-- **Sorting by end** would break the merging invariant — sort by start.
-- **Mutating input intervals** may cause bugs when the interviewer's harness reuses them — push copies.
-- **Comparator overflow**: use `Integer.compare(a[0], b[0])`, not `a[0] - b[0]`, for large starts.
-- **Forgetting the final interval**: the last cluster must be added after the loop.
-
-> [pat] **Pattern Connection** — *Insert Interval* is merge with a single new interval (three phases: before, overlapping-merge, after). *Interval List Intersections* uses two-pointer overlap testing.
+**Time:** O(n log n). Sorting dominates; the sweep is O(n).
+**Space:** O(n) for the output list in the worst case.
 
 #### Why sorting by start is the invariant-maker
-After sorting by start, suppose `cur = [1,6]` and the next interval is `[8,10]`. Every later interval starts at least `8`, so no later interval can overlap `[1,6]`. That means `[1,6]` is safe to emit permanently. Without sorting, seeing `[8,10]` tells you nothing; a later `[4,5]` could still overlap the old block. This is why sorting by end is not a harmless style change for merging. End-sorted order can place `[2,3]` before `[1,10]`, and your running-current reasoning becomes awkward because a later interval can swallow an earlier one from the left.
-
-The overlap check also becomes one-sided after sorting. General interval overlap is `a.start <= b.end && b.start <= a.end`. But when `cur.start <= next.start` is guaranteed by sorting, the first half is automatically true. You only test `next.start <= cur.end`.
+After sorting by start, suppose `cur = [1,6]` and the next interval is `[8,10]`. Every later interval starts at least `8`, so no later interval can overlap `[1,6]`. That means `[1,6]` is safe to emit permanently. Without sorting, seeing `[8,10]` tells you nothing; a later `[4,5]` could still overlap the old block. The overlap check also becomes one-sided: general overlap is `a.start <= b.end && b.start <= a.end`, but when `cur.start <= next.start` is guaranteed by sorting, the first half is automatic.
 
 #### Closed, open, and half-open intervals
 
-Before coding, clarify endpoint semantics. LeetCode's Merge Intervals uses closed intervals, so `[1,2]` and `[2,3]` overlap at point `2` and merge into `[1,3]`. Many scheduling systems use half-open intervals, where `[1,2)` ends exactly when `[2,3)` begins; those do not overlap and should remain separate. The only code change is the comparison: closed intervals use `next.start <= cur.end`, half-open intervals use `next.start < cur.end`.
-
-This is not a tiny wording detail. For meeting rooms, a meeting ending at 10 and another starting at 10 usually do not conflict. For integer range coverage, `[1,2]` and `[2,3]` usually share the integer or point `2`. State your assumption before choosing `<` or `<=`.
-
-#### Mutating versus copying intervals
-
-The compact solution stores `cur = intervals[0]` and mutates `cur[1]` as it merges. That is common in LeetCode solutions and efficient. In production, mutating input can surprise callers if they reuse the original array later. A copy-safe version would create a new `int[]` whenever it starts a current block and whenever it emits output.
-
-For interviews, it is usually fine to mutate unless the prompt says otherwise. You can add one sentence: "This mutates the interval objects; if the caller needs the input preserved, I would copy each interval before storing it in `out`." That shows engineering judgment without bloating the core algorithm.
-
-#### How interval problems split into families
-
-Merge Intervals is one member of a larger interval toolkit. If you need the **union of ranges**, sort by start and merge. If you need the **number of simultaneous active ranges**, split each interval into start/end events and sweep counts. If you need **intersections between two already-sorted lists**, use two pointers and advance whichever interval ends first. If you need to **minimize removals**, sort by end time and greedily keep intervals that finish earliest. The input shape may look identical, but the output question chooses the pattern.
-
-Use this quick decision guide:
-
-| Question asks for | Pattern to reach for | Why |
-|---|---|---|
-| merged disjoint ranges | sort by start + running union | output is the union itself |
-| can attend all meetings? | sort by start and check neighbour overlap | any conflict is local after sorting |
-| minimum rooms / max overlap | sweep line or min-heap of end times | you need active count, not union |
-| intersections of two lists | two pointers | both lists are already sorted and disjoint |
-| remove minimum overlaps | greedy by earliest end | keeping short-ending intervals leaves room |
-
-#### Testing checklist
-
-Small tests catch almost every merge bug:
-
-| Input | Expected | Lesson |
-|---|---|---|
-| `[[1,3]]` | `[[1,3]]` | single interval still gets emitted |
-| `[[1,4],[2,3]]` | `[[1,4]]` | contained interval should not shrink the end |
-| `[[1,2],[2,3]]` | `[[1,3]]` for closed intervals | choose `<=` deliberately |
-| `[[5,6],[1,2]]` | `[[1,2],[5,6]]` | sort before sweeping |
-| `[[1,4],[0,0]]` | `[[0,0],[1,4]]` | gaps create separate output blocks |
-
-#### From this problem to Insert Interval
-
-Once Merge Intervals feels natural, *Insert Interval* should feel like the same sweep with one new range carried in your hand. The input list is already sorted and non-overlapping, so you do not need to sort. First copy every interval that ends before the new interval starts. Then merge every interval that overlaps the new interval, expanding the new interval's start and end as needed. Finally copy the remaining intervals after the merged block.
-
-For example, intervals `[[1,2],[3,5],[6,7],[8,10],[12,16]]` and new interval `[4,8]` become `[[1,2],[3,10],[12,16]]`. `[1,2]` is before the new interval, so it is copied. `[3,5]`, `[6,7]`, and `[8,10]` all touch or overlap `[4,8]`, so the carried interval grows to `[3,10]`. `[12,16]` is after it, so the merge is done. That is the same \"current block grows until a gap appears\" idea, just without the initial sort.
-
-#### From this problem to Meeting Rooms II
-
-Meeting Rooms II looks like interval merging, but the answer is a count of simultaneous meetings, not the merged ranges. If you merge `[1,10]`, `[2,3]`, and `[4,5]`, you get `[1,10]`, but that does not tell you whether you needed two rooms or three. For active counts, use a min-heap of end times or a sweep line of start/end events. This distinction is a good interview signal: you are choosing the pattern based on the output, not just the input shape.
-
-#### Same pattern, new tweaks
-
-| Variation | The one thing that changes | Time |
-|---|---|---|
-| [Insert Interval](https://leetcode.com/problems/insert-interval/) | three phases — copy intervals before, merge those overlapping the new one, copy the rest | O(n) if already sorted |
-| [Interval List Intersections](https://leetcode.com/problems/interval-list-intersections/) | two sorted lists; each overlap is `[max(starts), min(ends)]`, then advance the earlier end | O(m+n) |
-| [Employee Free Time](https://leetcode.com/problems/employee-free-time/) | merge everyone's busy intervals; gaps between merged blocks are the free time | O(n log n) |
-| [Remove Covered Intervals](https://leetcode.com/problems/remove-covered-intervals/) | sort by start then end descending; count intervals not swallowed by the widest previous end | O(n log n) |
-| [Meeting Rooms](https://leetcode.com/problems/meeting-rooms/) | after sorting by start, any overlap between neighbours means one person cannot attend all meetings | O(n log n) |
+LeetCode's Merge Intervals uses closed intervals, so `[1,2]` and `[2,3]` overlap at point `2` and merge into `[1,3]`. Many scheduling systems use half-open intervals, where `[1,2)` ends exactly when `[2,3)` begins; those do not overlap. The only code change is the comparison: closed → `next.start <= cur.end`; half-open → `next.start < cur.end`. State your assumption before choosing `<` or `<=`.
 
 ---
 
-## Check your understanding
+### Insert Interval <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Insert Interval](https://leetcode.com/problems/insert-interval/)*
+
+> [key] **The twist:** input is already sorted and disjoint, so you don't need to sort. Walk through once, carrying `new` in your hand, and emit three phases: strictly-before, overlap-merge-into-new, strictly-after.
+
+<InvariantProof
+  :statement="insertInvariant.statement"
+  :initialization="insertInvariant.initialization"
+  :maintenance="insertInvariant.maintenance"
+  :termination="insertInvariant.termination" />
+
+```svg
+<svg role="img" viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Insert Interval three-phase trace">
+  <rect x="0" y="0" width="400" height="180" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">insert [4,8] into sorted list</text>
+  <line x1="20" y1="56" x2="380" y2="56" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <rect x="30" y="68" width="22" height="12" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+  <text x="41" y="78" text-anchor="middle" font-size="9" fill="var(--dsa-neutral)">[1,2]</text>
+  <rect x="65" y="68" width="48" height="12" rx="4" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)"/>
+  <text x="89" y="78" text-anchor="middle" font-size="9" fill="var(--dsa-warning)">[3,5]</text>
+  <rect x="130" y="68" width="22" height="12" rx="4" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)"/>
+  <text x="141" y="78" text-anchor="middle" font-size="9" fill="var(--dsa-warning)">[6,7]</text>
+  <rect x="170" y="68" width="42" height="12" rx="4" fill="var(--dsa-warning-soft)" stroke="var(--dsa-warning)"/>
+  <text x="191" y="78" text-anchor="middle" font-size="9" fill="var(--dsa-warning)">[8,10]</text>
+  <rect x="245" y="68" width="55" height="12" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+  <text x="272" y="78" text-anchor="middle" font-size="9" fill="var(--dsa-neutral)">[12,16]</text>
+  <rect x="95" y="96" width="90" height="12" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <text x="140" y="106" text-anchor="middle" font-size="10" fill="var(--dsa-primary)">new = [4,8]</text>
+  <rect x="30" y="130" width="22" height="14" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+  <rect x="65" y="130" width="147" height="14" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+  <rect x="245" y="130" width="55" height="14" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+  <g font-size="10" font-weight="700" text-anchor="middle" fill="var(--dsa-success)">
+    <text x="41" y="140">[1,2]</text><text x="138" y="140">[3,10]</text><text x="272" y="140">[12,16]</text>
+  </g>
+  <text x="200" y="166" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dsa-neutral)">three phases: before-copy, merge-with-new, after-copy</text>
+</svg>
+```
+
+> [key] **Blind-solve first:** {{ insertSolvePrompt }}
+
+<TemplateReveal
+  slug="insert-interval"
+  language="python"
+  :canonical="insertIntervalCode"
+  problemShape="sorted non-overlapping list + new interval → 3-phase sweep" />
+
+**Trace** on `intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]]`, `new = [4,8]`:
+- `[1,2]`: end `2 < 4` → phase 1, copy → `out = [[1,2]]`.
+- `[3,5]`: start `3 <= 8` → phase 2, `new` grows to `[3,8]`.
+- `[6,7]`: start `6 <= 8` → phase 2, `new` grows to `[3,8]` (unchanged — already covers it).
+- `[8,10]`: start `8 <= 8` → phase 2 (touching counts), `new` grows to `[3,10]`.
+- `[12,16]`: start `12 > 10` → phase 3; emit `new = [3,10]`, then copy `[12,16]`.
+- **Result:** `[[1,2],[3,10],[12,16]]`.
+
+**Why this beats "insert then run full merge":** no sort pass. `O(n)` instead of `O(n log n)` — exploits the pre-sorted invariant the caller already paid for.
+
+---
+
+### Non-overlapping Intervals <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)*
+
+> [key] **The twist:** sort by **end**, not start. The greedy "keep the earliest-ending interval first" works because an earlier end leaves more room for future choices — classic exchange argument.
+
+<InvariantProof
+  :statement="nonOverlappingInvariant.statement"
+  :initialization="nonOverlappingInvariant.initialization"
+  :maintenance="nonOverlappingInvariant.maintenance"
+  :termination="nonOverlappingInvariant.termination" />
+
+```svg
+<svg role="img" viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Non-overlapping end-sort greedy">
+  <rect x="0" y="0" width="400" height="180" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">sort by END; keep earliest finishers</text>
+  <line x1="20" y1="60" x2="380" y2="60" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <rect x="30" y="72" width="30" height="12" rx="4" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <text x="45" y="82" text-anchor="middle" font-size="9" fill="var(--dsa-success)">[1,2] ✓</text>
+  <rect x="60" y="90" width="30" height="12" rx="4" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <text x="75" y="100" text-anchor="middle" font-size="9" fill="var(--dsa-success)">[2,3] ✓</text>
+  <rect x="90" y="72" width="30" height="12" rx="4" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
+  <text x="105" y="82" text-anchor="middle" font-size="9" fill="var(--dsa-success)">[3,4] ✓</text>
+  <rect x="30" y="110" width="90" height="12" rx="4" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6"/>
+  <text x="75" y="120" text-anchor="middle" font-size="9" fill="var(--dsa-danger)">[1,3] ✗ removed</text>
+  <text x="200" y="150" text-anchor="middle" font-size="11" font-style="italic" fill="var(--dsa-neutral)">removed = 1 (minimum to make the rest non-overlapping)</text>
+</svg>
+```
+
+> [key] **Blind-solve first:** {{ nonOverlappingSolvePrompt }}
+
+<TemplateReveal
+  slug="non-overlapping-intervals"
+  language="python"
+  :canonical="nonOverlappingCode"
+  problemShape="interval list → end-sort → one-pass greedy keep/drop" />
+
+**Trace** on `intervals = [[1,2],[2,3],[3,4],[1,3]]`:
+- End-sort: `[[1,2],[2,3],[1,3],[3,4]]`. (Ties between `[2,3]` and `[1,3]` broken by second key, but either order works for the count — think about why.)
+- `[1,2]`: `1 >= -∞` → keep; `cur_end = 2`.
+- `[2,3]`: `2 >= 2` → keep (touching ok under problem's convention); `cur_end = 3`.
+- `[1,3]`: `1 < 3` → remove; `removed = 1`.
+- `[3,4]`: `3 >= 3` → keep; `cur_end = 4`.
+- **Result:** `removed = 1`.
+
+> [key] **Why start-sort fails here:** on `[[1,100],[2,3],[3,4]]`, start-sort would greedy-keep `[1,100]` first (it starts first), then be forced to remove both `[2,3]` and `[3,4]` — `removed = 2`. But the right answer is `1` (remove `[1,100]`, keep the other two). End-sort picks `[2,3]` first (end `3` < end `100`), leaves room for `[3,4]`, and drops `[1,100]`.
+
+**Related sibling: Minimum Arrows to Burst Balloons** uses the same end-sort greedy — count the kept intervals instead of the removed ones. Also related: **Weighted Interval Scheduling** needs DP (not greedy) because weights break the exchange argument.
+
+---
+
+### Meeting Rooms I <span class="diff diff-e">Easy</span>
+
+*[↗ LeetCode: Meeting Rooms](https://leetcode.com/problems/meeting-rooms/)*
+
+> [key] **The twist:** boolean answer, not merged intervals. Any pair-conflict in the input shows up as an *adjacent-pair* conflict after start-sort, so a single O(n) adjacent scan after sort gives the answer.
+
+<InvariantProof
+  :statement="meetingRoomsInvariant.statement"
+  :initialization="meetingRoomsInvariant.initialization"
+  :maintenance="meetingRoomsInvariant.maintenance"
+  :termination="meetingRoomsInvariant.termination" />
+
+```svg
+<svg role="img" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Meeting Rooms I adjacency check">
+  <rect x="0" y="0" width="400" height="160" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">adjacent overlap after start-sort → conflict</text>
+  <line x1="30" y1="56" x2="370" y2="56" stroke="var(--dsa-neutral)" stroke-width="2"/>
+  <rect x="40" y="68" width="80" height="14" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
+  <text x="80" y="78" text-anchor="middle" font-size="10" fill="var(--dsa-primary)">[0,30]</text>
+  <rect x="55" y="88" width="25" height="14" rx="5" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="1.6"/>
+  <text x="68" y="98" text-anchor="middle" font-size="9" fill="var(--dsa-danger)">[5,10]</text>
+  <rect x="140" y="88" width="50" height="14" rx="5" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+  <text x="165" y="98" text-anchor="middle" font-size="9" fill="var(--dsa-neutral)">[15,20]</text>
+  <text x="200" y="130" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-danger)">meetings[1].start = 5 lt meetings[0].end = 30 → cannot attend all</text>
+</svg>
+```
+
+> [key] **Blind-solve first:** {{ meetingRoomsSolvePrompt }}
+
+<TemplateReveal
+  slug="meeting-rooms-i"
+  language="python"
+  :canonical="meetingRoomsCode"
+  problemShape="interval list → start-sort → check all adjacent pairs" />
+
+**Trace** on `[[0,30],[5,10],[15,20]]`:
+- Start-sort: already sorted.
+- Pair `(1): meetings[1][0] = 5, meetings[0][1] = 30`. `5 < 30` → return `False`.
+
+**Why this is strictly weaker than Meeting Rooms II:** Rooms I returns a boolean; Rooms II returns the minimum room count. For the count, start+end-sort separately and sweep (chapter 32 Sweep Line) — merged ranges tell you *which blocks are busy*, but not *how many simultaneous meetings*. If you merge `[1,10]`, `[2,3]`, `[4,5]`, you get one block `[1,10]`, which doesn't reveal whether you needed two rooms or three.
+
+---
+
+## Traps & gotchas
+
+<TrapTrace
+  :title="trapAcode.statement"
+  :bug="trapAcode.bug"
+  :fix="trapAcode.fix" />
+
+<TrapTrace
+  :title="trapBcode.statement"
+  :bug="trapBcode.bug"
+  :fix="trapBcode.fix" />
+
+<TrapTrace
+  :title="trapCcode.statement"
+  :bug="trapCcode.bug"
+  :fix="trapCcode.fix" />
+
+## In the wild — Google Calendar conflict detection
+
+Google Calendar's "Find a time" feature in Meet reads busy intervals from every attendee's connected calendars (Google, Outlook, Zoom, Slack-blocked time), merges them per attendee, then intersects the free-time blocks across all attendees. The merge step is the kernel of this chapter — same `sort-by-start + sweep` sweep, same `max(cur.end, next.end)` extension — scaled to:
+
+- **~1 billion active users** (as of 2024), each with up to a few hundred busy intervals in the 7-day lookahead window.
+- **Hundreds of millions of "find a time" requests per day.** Each pulls busy data for N attendees in parallel, merges each independently, then intersects.
+- **Hard sub-second latency budget** — the suggest-time dropdown has to appear instantly after you add attendees to a meeting.
+
+Related production uses:
+- **Kubernetes `PodDisruptionBudget`** merges maintenance windows across node pools to check whether a drain is safe.
+- **AWS Reserved Instance billing** merges overlapping usage records across EC2/RDS/EKS by the hour to apply RI discounts correctly.
+- **Video-editing timelines** (DaVinci Resolve, Premiere) merge overlapping clip ranges on a track when the user drags one into another.
+- **grep's `-f FILE`** uses an interval-merge pass to collapse adjacent/overlapping file-offset ranges when printing matches with `-A/-B/-C` context flags.
+
+## Recognition drill
+
+<RecognitionDrill pattern="merge-intervals" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><b>What if intervals stream in and the list can't fit in RAM?</b></summary>
+
+Use a **TreeMap keyed by start** (Java `TreeMap<Integer, Integer>` or C++ `std::map<int,int>`). On each new `[s, e]`:
+1. Find the predecessor and successor by start; merge with the predecessor if `pred.end >= s`.
+2. Advance forward absorbing every successor whose start ≤ current end.
+3. Insert the merged entry.
+
+Each operation is `O(log n)` amortized; total `O(n log n)` across n intervals streamed. This also handles **"query active intervals at time t"** in `O(log n)` via `floorEntry(t)`.
+
+**Where it's used:** financial order books (merging limit orders at the same price level), network flow sampling (merging overlapping sampling windows).
+</details>
+
+<details>
+<summary><b>What if each interval has a weight and you want max-weight non-overlapping subset?</b></summary>
+
+Greedy fails. Example: weights `[10, 1, 1]` on intervals `[[1,10], [2,3], [4,5]]`. End-sort greedy picks the two short intervals (total weight 2); correct answer picks `[1,10]` alone (weight 10).
+
+Use **DP**: sort by end; let `dp[i] = max(dp[i-1], w[i] + dp[p(i)])` where `p(i)` is the latest interval ending before `i`'s start (found via binary search). `O(n log n)` total. This is the **Weighted Interval Scheduling** problem — Kleinberg & Tardos cover it at length. Comes up in: ad slot auctions (each ad has a bid × duration), CPU batch job scheduling, DNA sequence alignment.
+</details>
+
+<details>
+<summary><b>What if intervals are on a circle (24h schedule, wrapping)?</b></summary>
+
+A "circular interval" `[22, 2]` wraps around midnight. Standard trick: **split** each wrapping interval into `[22, 24]` and `[0, 2]`, then run the standard sweep. Beware the final merge pass must check if the first and last merged intervals wrap around (first starts at 0, last ends at 24 — merge them into one wrapping interval if needed).
+
+**Where it's used:** radio frequency allocation, 24h on-call rotations, satellite coverage windows.
+</details>
+
+<details>
+<summary><b>What if the output needs to be max-coverage with ≤ k intervals (budget constraint)?</b></summary>
+
+**NP-hard in general** (maximum coverage problem). Use the **greedy** approximation: repeatedly pick the interval that covers the most uncovered points. Guaranteed to achieve `1 - 1/e ≈ 63%` of optimal (Nemhauser et al., 1978). Comes up in sensor placement, ad-impression maximization under budget.
+</details>
+
+<details>
+<summary><b>Breaking point — when does sort-sweep stop being enough?</b></summary>
+
+- **2-D intervals** (axis-aligned rectangles): sort-sweep becomes `O(n²)` because a single x-axis sort doesn't localize y-overlap. Use **sweep line + segment tree on y** (chapter 32).
+- **n > 10⁸ with values in {0, 1, …, 10⁴}**: sort itself is `O(n log n)`; using a **bucket of flags** indexed by value gives O(n + V) and beats sort when V is small.
+- **Mutable intervals under concurrent writes**: a plain `TreeMap` serializes. Use **interval tree with per-node locks** or **optimistic concurrency with retry**.
+</details>
+
+### Cross-pattern problems
+
+| Problem | Primary pattern | What the merge pattern contributes |
+|---|---|---|
+| [Employee Free Time](https://leetcode.com/problems/employee-free-time/) | k-way merge + interval merge | merge all employees' busy blocks across their schedules, then emit gaps |
+| [Interval List Intersections](https://leetcode.com/problems/interval-list-intersections/) | two-pointers | each intersection is `[max(starts), min(ends)]`; advance the earlier-ending list |
+| [My Calendar II / III](https://leetcode.com/problems/my-calendar-ii/) | sweep line + overlap-tracker | merge intervals is the base case (My Calendar I); II/III track overlap counts |
+
+## Related patterns + Check your understanding
+
+<RelatedPatterns pattern-id="intervals" />
 
 <Quiz
   pattern-id="merge-intervals"
-  :questions='[{"q": "Standard Merge Intervals: sort by what?", "choices": [{"text": "Start ascending", "correct": true, "explanation": "Then walk once and merge on overlap."}, {"text": "End ascending", "correct": false, "explanation": "Better for activity selection / non-overlap counting."}, {"text": "Length descending", "correct": false}, {"text": "Random", "correct": false}]}, {"q": "For Insert Interval into a pre-sorted list, what is the canonical algorithm?", "choices": [{"text": "Three-phase single pass: copy-before, merge-overlapping, copy-after", "correct": true, "explanation": "O(n) time; no re-sort needed since input is sorted."}, {"text": "Insert then run full Merge Intervals", "correct": false, "explanation": "Works but O(n log n)."}, {"text": "Sort by end and use greedy", "correct": false, "explanation": "That is Non-overlap Intervals."}, {"text": "Binary search only", "correct": false}]}, {"q": "For Remove Covered Intervals, what tie-break at same-start intervals?", "choices": [{"text": "Sort by start asc, end DESC", "correct": true, "explanation": "Ensures the covering interval comes first when starts tie."}, {"text": "Sort by start asc, end asc", "correct": false, "explanation": "Would mislabel the shorter one as covering."}, {"text": "No tie-break needed", "correct": false}, {"text": "Random tie-break", "correct": false}]}, {"q": "For Meeting Rooms (bool \"can attend all\"), what is the O(n log n) check?", "choices": [{"text": "Sort by start; verify each start ≥ previous end", "correct": true, "explanation": "Adjacent-check suffices after sorting."}, {"text": "Full n² pair check", "correct": false, "explanation": "Wasteful."}, {"text": "Union-Find", "correct": false}, {"text": "DP", "correct": false}]}, {"q": "Interval List Intersections (two sorted disjoint lists) is best solved by:", "choices": [{"text": "Two-pointer merge with `[max(starts), min(ends)]` intersection formula", "correct": true, "explanation": "O(n+m) linear pass."}, {"text": "Sort both then binary search", "correct": false, "explanation": "Already sorted; unnecessary sort."}, {"text": "Union all then re-detect overlaps", "correct": false, "explanation": "Overkill."}, {"text": "Recursion", "correct": false}]}]'
-/>
+  :questions="quizQuestions" />
 
 <PrintButton />
-
-<RelatedPatterns pattern-id="intervals" />

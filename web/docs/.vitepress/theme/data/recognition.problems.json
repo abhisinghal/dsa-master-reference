@@ -291,7 +291,98 @@
   "bs-on-answer": [],
   "top-k-heap": [],
   "k-way-merge": [],
-  "merge-intervals": [],
+  "merge-intervals": [
+    {
+      "statement": "Given a list of intervals, merge all overlapping intervals and return the disjoint result.",
+      "pattern": "merge-intervals",
+      "subVariation": "classic-merge",
+      "distractors": [
+        "sweep-line",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Given a sorted, non-overlapping list of intervals and a new interval, insert it and return the merged list in one pass.",
+      "pattern": "merge-intervals",
+      "subVariation": "insert-interval",
+      "distractors": [
+        "classic-merge",
+        "binary-search"
+      ]
+    },
+    {
+      "statement": "Return the minimum number of intervals to remove so the rest are non-overlapping.",
+      "pattern": "merge-intervals",
+      "subVariation": "non-overlapping",
+      "distractors": [
+        "greedy",
+        "classic-merge"
+      ]
+    },
+    {
+      "statement": "Given an array of meeting intervals, determine whether one person can attend all of them.",
+      "pattern": "merge-intervals",
+      "subVariation": "meeting-rooms-i",
+      "distractors": [
+        "sorting",
+        "classic-merge"
+      ]
+    },
+    {
+      "statement": "Given a list of busy intervals from several calendars, return the free intervals in a given day.",
+      "pattern": "merge-intervals",
+      "subVariation": "classic-merge",
+      "distractors": [
+        "sweep-line",
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "Given two sorted lists of non-overlapping intervals, return their intersections.",
+      "pattern": "merge-intervals",
+      "subVariation": "classic-merge",
+      "distractors": [
+        "two-pointers",
+        "sweep-line"
+      ]
+    },
+    {
+      "statement": "Given a list of intervals, remove intervals that are completely covered by another and return the count that remains.",
+      "pattern": "merge-intervals",
+      "subVariation": "non-overlapping",
+      "distractors": [
+        "sorting",
+        "classic-merge"
+      ]
+    },
+    {
+      "statement": "You are given CPU jobs with [start, end] times; find the max profit non-overlapping subset you can schedule where each job has a weight (weighted interval scheduling).",
+      "pattern": "merge-intervals",
+      "subVariation": "non-overlapping",
+      "distractors": [
+        "dp",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Insert a new interval into a sorted interval list and return the number of merged intervals in O(n).",
+      "pattern": "merge-intervals",
+      "subVariation": "insert-interval",
+      "distractors": [
+        "binary-search",
+        "classic-merge"
+      ]
+    },
+    {
+      "statement": "Given scheduled meetings as [start, end], decide whether any pair conflicts; return a boolean.",
+      "pattern": "merge-intervals",
+      "subVariation": "meeting-rooms-i",
+      "distractors": [
+        "sorting",
+        "sweep-line"
+      ]
+    }
+  ],
   "sweep-line": [],
   "topological-sort": [],
   "union-find": [],
