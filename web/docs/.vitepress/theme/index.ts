@@ -16,6 +16,8 @@ import DivideConquerAnim from './DivideConquerAnim.vue'
 import QuickselectAnim from './QuickselectAnim.vue'
 import BacktrackingAnim from './BacktrackingAnim.vue'
 import DpFillAnim from './DpFillAnim.vue'
+import DpTableAnim from './DpTableAnim.vue'
+import GridPathAnim from './GridPathAnim.vue'
 import TrieWalkAnim from './TrieWalkAnim.vue'
 import BinarySearchAnim from './BinarySearchAnim.vue'
 import HeapAnim from './HeapAnim.vue'
@@ -116,6 +118,8 @@ export default {
     app.component('QuickselectAnim', QuickselectAnim)
     app.component('BacktrackingAnim', BacktrackingAnim)
     app.component('DpFillAnim', DpFillAnim)
+    app.component('DpTableAnim', DpTableAnim)
+    app.component('GridPathAnim', GridPathAnim)
     app.component('TrieWalkAnim', TrieWalkAnim)
     app.component('BinarySearchAnim', BinarySearchAnim)
     app.component('HeapAnim', HeapAnim)

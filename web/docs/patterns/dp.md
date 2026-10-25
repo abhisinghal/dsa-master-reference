@@ -186,6 +186,129 @@ const mastery5 = [
     ]
   }
 ]
+
+// Unique Paths — 3x4 grid demo for GridPathAnim
+const uniquePathsDp = [
+  [1, 1, 1, 1],
+  [1, 2, 3, 4],
+  [1, 3, 6, 10]
+]
+const uniquePathsFillOrder = {
+  '0-0': 0, '0-1': 0, '0-2': 0, '0-3': 0,
+  '1-0': 0, '2-0': 0,
+  '1-1': 1, '1-2': 2, '1-3': 3,
+  '2-1': 4, '2-2': 5, '2-3': 6
+}
+const uniquePathsSteps = [
+  {
+    cell: null,
+    deps: [],
+    formula: 'dp[0][*] = dp[*][0] = 1',
+    description: 'Base cases: only one way to reach any cell on the top row or left column — walk straight.'
+  },
+  {
+    cell: { r: 1, c: 1 },
+    deps: [{ r: 0, c: 1 }, { r: 1, c: 0 }],
+    formula: 'dp[1][1] = dp[0][1] + dp[1][0] = 1 + 1 = 2',
+    description: 'A cell inherits path counts from its top neighbor and its left neighbor. Two ways reach (1,1).'
+  },
+  {
+    cell: { r: 1, c: 2 },
+    deps: [{ r: 0, c: 2 }, { r: 1, c: 1 }],
+    formula: 'dp[1][2] = 1 + 2 = 3',
+    description: 'The recurrence is purely additive — top + left — because every path through (1,2) came through one of those two cells.'
+  },
+  {
+    cell: { r: 1, c: 3 },
+    deps: [{ r: 0, c: 3 }, { r: 1, c: 2 }],
+    formula: 'dp[1][3] = 1 + 3 = 4',
+    description: 'Row 1 finished. Notice we only ever read already-filled cells — the dependency DAG has no cycles.'
+  },
+  {
+    cell: { r: 2, c: 1 },
+    deps: [{ r: 1, c: 1 }, { r: 2, c: 0 }],
+    formula: 'dp[2][1] = 2 + 1 = 3',
+    description: 'Row 2 starts. Each cell still only needs its two neighbors — this is why a rolling 1D array collapses the space to O(n).'
+  },
+  {
+    cell: { r: 2, c: 2 },
+    deps: [{ r: 1, c: 2 }, { r: 2, c: 1 }],
+    formula: 'dp[2][2] = 3 + 3 = 6',
+    description: 'The counts grow quickly — the number of monotone lattice paths is a binomial coefficient.'
+  },
+  {
+    cell: { r: 2, c: 3 },
+    deps: [{ r: 1, c: 3 }, { r: 2, c: 2 }],
+    formula: 'dp[2][3] = 4 + 6 = 10',
+    description: 'Answer: 10 unique paths from top-left to bottom-right on a 3x4 grid. In closed form: C(5,2) = 10.'
+  }
+]
+const uniquePathsPath = [
+  { r: 0, c: 0 }, { r: 0, c: 1 }, { r: 1, c: 1 }, { r: 1, c: 2 }, { r: 2, c: 2 }, { r: 2, c: 3 }
+]
+
+// Edit Distance — "cat" → "car" demo for DpTableAnim
+const editDistanceXChars = ['', 'c', 'a', 't']
+const editDistanceYChars = ['', 'c', 'a', 'r']
+const editDistanceDp = [
+  [0, 1, 2, 3],
+  [1, 0, 1, 2],
+  [2, 1, 0, 1],
+  [3, 2, 1, 1]
+]
+const editDistanceFillOrder = {
+  '1-1': 1, '2-1': 2, '3-1': 3,
+  '1-2': 4, '2-2': 5, '3-2': 6,
+  '1-3': 7, '2-3': 8, '3-3': 9
+}
+const editDistanceMatchCells = ['1-1', '2-2']
+const editDistanceSteps = [
+  {
+    revealBase: true,
+    revealOrder: 0,
+    cell: null,
+    deps: [],
+    formula: 'dp[0][j] = j, dp[i][0] = i',
+    result: 'base cases',
+    description: 'Transforming empty to a length-k target takes k inserts; transforming length-k to empty takes k deletes. The empty row/column holds those lengths.'
+  },
+  {
+    revealBase: true,
+    revealOrder: 1,
+    cell: { i: 1, j: 1 },
+    deps: [{ i: 0, j: 0 }],
+    formula: 'c == c, so dp[1][1] = dp[0][0] = 0',
+    result: 'match',
+    description: 'On a character match the transition is free: copy the diagonal. The green cell marks a no-op in the alignment.'
+  },
+  {
+    revealBase: true,
+    revealOrder: 3,
+    cell: { i: 3, j: 1 },
+    deps: [{ i: 2, j: 0 }, { i: 2, j: 1 }, { i: 3, j: 0 }],
+    formula: 't ≠ c, so dp[3][1] = 1 + min(dp[2][0], dp[2][1], dp[3][0]) = 1 + min(2, 1, 3) = 2',
+    result: 'mismatch — pick best of three',
+    description: 'On a mismatch each cell reads three neighbors: diagonal (replace), top (insert), left (delete). The 1+min captures the single-edit cost.'
+  },
+  {
+    revealBase: true,
+    revealOrder: 5,
+    cell: { i: 2, j: 2 },
+    deps: [{ i: 1, j: 1 }],
+    formula: 'a == a, so dp[2][2] = dp[1][1] = 0',
+    result: 'second match',
+    description: 'Another match: the diagonal carries forward. Match cells along the diagonal are the "aligned" portion of the two strings.'
+  },
+  {
+    revealBase: true,
+    revealOrder: 9,
+    cell: { i: 3, j: 3 },
+    deps: [{ i: 2, j: 2 }, { i: 2, j: 3 }, { i: 3, j: 2 }],
+    formula: 't ≠ r, so dp[3][3] = 1 + min(dp[2][2], dp[2][3], dp[3][2]) = 1 + min(0, 1, 1) = 1',
+    result: 'answer: 1',
+    description: 'The dp table bottoms out at dp[3][3] = 1 — one substitution (t → r) transforms "cat" into "car".'
+  }
+]
 </script>
 
 
@@ -1282,6 +1405,22 @@ Count the paths from the top-left to the bottom-right of an `m×n` grid, moving 
 
 **Example 2:** `grid=[[1,2,3],[4,5,6]]` minimum path sum → `12` (`1→2→3→6`).
 
+<GridPathAnim
+  title="Unique Paths on a 3×4 grid"
+  :rows="3"
+  :cols="4"
+  :dp="uniquePathsDp"
+  :fillOrder="uniquePathsFillOrder"
+  :steps="uniquePathsSteps"
+  :pathTrace="uniquePathsPath"
+/>
+
+<Callout kind="key" title="The grid-DP shape.">
+
+Every cell depends only on its top and left neighbors. That gives you both the fill order (row-major works) and the space collapse (one 1D row is enough — overwrite in place from left to right). Min Path Sum is the same recurrence with `min(top, left) + grid[r][c]` instead of `top + left`.
+
+</Callout>
+
 ### Solution — brute force
 Brute force enumerates every path from the top-left to the bottom-right, branching right or down at each cell. The number of paths is exponential in path length, about O(2^(R+C)) before considering pruning, and recursion uses O(R+C) stack space. The optimized DP observes that each cell depends only on the top and left neighbors, so a rolling row computes all cells once.
 
@@ -1413,6 +1552,23 @@ Find the **minimum edits** (insert, delete, or replace one character) to turn wo
 **Example 2:** `"intention" → "execution"` edit distance → `5`.
 
 These three are the archetypes of "align/select over one or two sequences."
+
+<DpTableAnim
+  title="Edit distance: cat → car"
+  :xChars="editDistanceXChars"
+  :yChars="editDistanceYChars"
+  :dp="editDistanceDp"
+  :fillOrder="editDistanceFillOrder"
+  :matchCells="editDistanceMatchCells"
+  :steps="editDistanceSteps"
+  compareLabel="chars"
+/>
+
+<Callout kind="key" title="Same shape, different combiner.">
+
+The 2D-prefix table and the diagonal/top/left dependency are shared across LCS, Edit Distance, and most sequence-alignment DPs. What changes is the per-cell choice: *max* on match (LCS), *copy diagonal* on match else *1+min* (Edit Distance), *keep-or-extend* (LIS over `tails`).
+
+</Callout>
 
 ### Solution — brute force
 Brute force for sequence problems enumerates choices or alignments: all subsequences for LIS/LCS, or all edit-operation paths for edit distance. That becomes exponential because the same prefix pairs are reconsidered repeatedly. The optimized approaches name the right state — `dp[i][j]` for two-prefix alignment, or `tails` plus binary search for LIS — so each subproblem or length boundary is handled once.
