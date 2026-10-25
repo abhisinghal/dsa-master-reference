@@ -376,7 +376,98 @@
       ]
     }
   ],
-  "prefix-sum": [],
+  "prefix-sum": [
+    {
+      "statement": "Many range-sum queries on a static array of 10^5 numbers; up to 10^5 queries.",
+      "pattern": "prefix-sum",
+      "subVariation": "range-sum-1d",
+      "distractors": [
+        "segment-tree",
+        "fenwick"
+      ]
+    },
+    {
+      "statement": "Count contiguous subarrays whose sum equals k; array may contain negative numbers.",
+      "pattern": "prefix-sum",
+      "subVariation": "subarray-sum-equals-k",
+      "distractors": [
+        "sliding-window",
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "You get m range-add updates [l,r,v] on a length-n array, then one final read of the array.",
+      "pattern": "prefix-sum",
+      "subVariation": "diff-array-range-update",
+      "distractors": [
+        "segment-tree",
+        "fenwick"
+      ]
+    },
+    {
+      "statement": "Preprocess a 200\u00d7200 matrix so each sub-rectangle sum query answers in O(1).",
+      "pattern": "prefix-sum",
+      "subVariation": "two-d-prefix-sum",
+      "distractors": [
+        "segment-tree-2d",
+        "sparse-table"
+      ]
+    },
+    {
+      "statement": "Count contiguous subarrays whose XOR equals k, given an array of non-negative integers.",
+      "pattern": "prefix-sum",
+      "subVariation": "prefix-xor",
+      "distractors": [
+        "sliding-window",
+        "trie"
+      ]
+    },
+    {
+      "statement": "Count contiguous subarrays whose sum is divisible by k, allowing negative values.",
+      "pattern": "prefix-sum",
+      "subVariation": "prefix-mod",
+      "distractors": [
+        "sliding-window",
+        "two-pointers"
+      ]
+    },
+    {
+      "statement": "Given a 0/1 array, find the length of the longest contiguous subarray with equal 0s and 1s.",
+      "pattern": "prefix-sum",
+      "subVariation": "prefix-xor",
+      "distractors": [
+        "two-pointers",
+        "sliding-window"
+      ]
+    },
+    {
+      "statement": "n flight segments, m bookings each adding seats to a range of flights; return per-flight totals.",
+      "pattern": "prefix-sum",
+      "subVariation": "diff-array-range-update",
+      "distractors": [
+        "sweep-line",
+        "segment-tree"
+      ]
+    },
+    {
+      "statement": "A car has capacity C and takes passengers along a timeline with pick-up/drop-off intervals; can every ride be served?",
+      "pattern": "prefix-sum",
+      "subVariation": "diff-array-range-update",
+      "distractors": [
+        "sweep-line",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Count submatrices of a matrix whose sum equals k; matrix up to 100\u00d7100.",
+      "pattern": "prefix-sum",
+      "subVariation": "two-d-prefix-sum",
+      "distractors": [
+        "kadane",
+        "dp"
+      ]
+    }
+  ],
   "hashing": [
     {
       "statement": "Given an array and target, return indices of two numbers summing to target.",

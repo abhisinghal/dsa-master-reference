@@ -5,6 +5,158 @@
 
 <PatternProgress pattern-id="prefix-sum" problems="prefix-sum-subarray-sum-equals-k, subarray-sums-divisible-by-k, contiguous-array, continuous-subarray-sum, corporate-flight-bookings, car-pooling, range-addition, matrix-block-sum, count-submatrices-with-target-sum, maximal-rectangle" />
 
+<script setup>
+const bareMechanicCode = `int[] a = {3, 1, 4, 1, 5};
+long[] pre = new long[a.length + 1];       // length n+1; pre[0]=0 by default
+for (int i = 0; i &lt; a.length; i++)
+    pre[i + 1] = pre[i] + a[i];            // running total
+
+// Range sum of a[l..r] inclusive, in O(1):
+long sum = pre[r + 1] - pre[l];`
+
+const theTemplateCode = `class PrefixSum {
+    long[] pre;                            // length n+1; pre[0]=0
+
+    PrefixSum(int[] a) {
+        pre = new long[a.length + 1];
+        for (int i = 0; i &lt; a.length; i++)
+            pre[i + 1] = pre[i] + a[i];    // one accumulate per element
+    }
+
+    long sum(int l, int r) {               // inclusive range [l, r]
+        return pre[r + 1] - pre[l];        // one subtraction per query
+    }
+}`
+
+const theTemplateInvariant = {
+  statement: `pre[i] equals a[0] + a[1] + ... + a[i-1]. Length is n+1. pre[0]=0 is the sum of the empty prefix. Any contiguous range sum is one subtraction of two prefixes.`,
+  initialization: `pre[0] = 0 — the empty prefix sums to zero, no elements consumed.`,
+  maintenance: `After processing index i, pre[i+1] = pre[i] + a[i]. By induction pre[i+1] equals a[0..i].`,
+  termination: `After the build loop, pre[n] holds Σa and sum(l,r) = pre[r+1] - pre[l] is well-defined for every 0 ≤ l ≤ r < n.`
+}
+
+const theTemplateComplexity = {
+  time: `O(n) build · O(1) per range-sum query`,
+  space: `O(n) for the prefix array`
+}
+
+const theTemplateSpecializations = [
+  { slug: `range-sum-1d-easy`, title: `Range Sum 1D (easy)` },
+  { slug: `subarray-sum-equals-k-medium`, title: `Subarray Sum Equals K (medium)` },
+  { slug: `difference-array-medium`, title: `Difference Array (medium)` },
+  { slug: `_2d-prefix-sum-medium`, title: `2D Prefix Sum (medium)` },
+  { slug: `prefix-xor-medium`, title: `Prefix XOR (medium)` },
+  { slug: `prefix-mod-medium`, title: `Prefix Mod (medium)` },
+]
+
+const theTemplateProblemShape = `Many queries over a static array where each query reduces to a difference of two running aggregates (sum, XOR, mod-residue count, 2D rectangle inclusion-exclusion).`
+
+const prefixXorCode = `int subarrayXorEqualsK(int[] a, int k) {
+    Map&lt;Integer, Integer&gt; count = new HashMap&lt;&gt;();
+    count.put(0, 1);                       // empty prefix has XOR 0
+    int running = 0, answer = 0;
+    for (int x : a) {
+        running ^= x;                      // XOR, not plus
+        // A prior prefix p satisfies running ^ p = k iff p = running ^ k.
+        answer += count.getOrDefault(running ^ k, 0);
+        count.merge(running, 1, Integer::sum);
+    }
+    return answer;
+}`
+
+const prefixModCode = `int subarraysDivByK(int[] a, int k) {
+    int[] countByResidue = new int[k];
+    countByResidue[0] = 1;                 // empty prefix has residue 0
+    int running = 0, answer = 0;
+    for (int x : a) {
+        running = ((running + x) % k + k) % k;   // handle negatives
+        answer += countByResidue[running];       // every earlier same-residue → divisible subarray
+        countByResidue[running]++;
+    }
+    return answer;
+}`
+
+const prefixXorQuote = `Count the contiguous subarrays whose XOR equals k.`
+const prefixModQuote = `Count the contiguous subarrays whose sum is divisible by k.`
+
+const advancedWhatIfs = [
+  {
+    title: `What if the array has point updates between queries?`,
+    body: `Prefix sum becomes O(n) per update — unacceptable at Q = 10^5. Switch to a Fenwick tree (BIT) for O(log n) update + O(log n) prefix. The invariant mutates from "snapshot" to "incrementally maintained running total."`
+  },
+  {
+    title: `What if the queries are on a 1D sliding window of fixed size k?`,
+    body: `You don't need a full prefix array. A single running sum with a window of length k (add a[r], subtract a[r-k]) runs in O(1) extra space. Prefix sum works too but allocates O(n).`
+  },
+  {
+    title: `What if values are reals and precision matters?`,
+    body: `Naive accumulation accumulates error. Use Kahan summation (compensated accumulation) or pairwise summation (what NumPy's reduceat uses). The algorithmic skeleton is the same; the inner update changes from one add to four.`
+  },
+  {
+    title: `What if the matrix is sparse but queries are dense?`,
+    body: `A dense 2D prefix table costs O(RC) build and O(RC) space even when most cells are 0. If the matrix has K ≪ RC non-zero cells, a Fenwick tree on coordinates or a CDQ divide-and-conquer scan over events gives O((K + Q) log K).`
+  },
+  {
+    title: `What if the array is distributed across GPU threads?`,
+    body: `This is where Blelloch's parallel prefix (section "History" below) wins — the sequential O(n) loop becomes an O(log n)-depth tree scan. Thrust's inclusive_scan and TensorFlow's XLA scan both implement this.`
+  }
+]
+
+const crossPatternProblems = [
+  { href: `https://leetcode.com/problems/sliding-window-maximum/`, title: `Sliding Window Maximum — monotonic deque, not prefix sum (operation isn't invertible)` },
+  { href: `https://leetcode.com/problems/range-sum-query-mutable/`, title: `Range Sum Query — Mutable (307) — bridges prefix sum → Fenwick tree` },
+  { href: `https://leetcode.com/problems/number-of-ways-to-split-array-into-good-subarrays/`, title: `Number of Good Subarrays — combine prefix count of 1s with combinatorics` }
+]
+
+const mastery5 = [
+  {
+    q: `An array supports 10^5 range-sum queries and 10^5 point updates interleaved. Which structure wins?`,
+    choices: [
+      { text: `Prefix sum (rebuild on each update)`, correct: false, explanation: `Rebuild is O(n) → 10^10 ops total.` },
+      { text: `Fenwick tree`, correct: true, explanation: `O(log n) per update AND per prefix query → 10^5 · 17 ≈ 2·10^6 ops total.` },
+      { text: `Hash map`, correct: false, explanation: `Doesn't support range sum directly.` },
+      { text: `Difference array`, correct: false, explanation: `Only works when all updates precede all queries.` }
+    ]
+  },
+  {
+    q: `For "count subarrays whose sum is divisible by k", why can we bucket prefix sums by (pre mod k)?`,
+    choices: [
+      { text: `Two prefixes in the same residue bucket differ by a multiple of k`, correct: true, explanation: `(pre_r - pre_l) ≡ 0 (mod k) iff pre_r ≡ pre_l (mod k).` },
+      { text: `The modulo distributes over addition in the standard way`, correct: false, explanation: `True but not the direct justification.` },
+      { text: `Hash maps are O(1) lookup`, correct: false },
+      { text: `Negative numbers wrap around correctly`, correct: false, explanation: `Only if you canonicalize with ((x % k) + k) % k.` }
+    ]
+  },
+  {
+    q: `Why does prefix XOR with a hash map count "subarrays with XOR = k" in O(n), the same way prefix sum counts "subarrays with sum = k"?`,
+    choices: [
+      { text: `XOR is its own inverse — pre_r ^ pre_l = k ⟺ pre_l = pre_r ^ k`, correct: true, explanation: `This is the exact algebraic property that lets the hash-map trick transfer.` },
+      { text: `XOR is commutative`, correct: false, explanation: `True but not sufficient.` },
+      { text: `XOR distributes over the hash function`, correct: false },
+      { text: `By coincidence; the two problems are unrelated`, correct: false }
+    ]
+  },
+  {
+    q: `A difference array solves 10^5 range updates on a length-10^6 array in O(n + Q). What's the single prefix pass at the end doing?`,
+    choices: [
+      { text: `Converting endpoint deltas into per-index net totals`, correct: true, explanation: `diff is the difference-sequence representation; one prefix pass inverts it.` },
+      { text: `Sorting the updates by starting index`, correct: false },
+      { text: `Deduplicating overlapping ranges`, correct: false },
+      { text: `Converting from 0-indexed to 1-indexed`, correct: false }
+    ]
+  },
+  {
+    q: `You discover prefix sums are overflowing int on an array where every a[i] ≤ 10^9 and n = 10^5. Minimum fix?`,
+    choices: [
+      { text: `Use long[] for the prefix array`, correct: true, explanation: `Max prefix ≈ 10^14 which fits in long (max ~9·10^18) but not int (max ~2·10^9).` },
+      { text: `Take modulo 10^9+7 of every prefix`, correct: false, explanation: `Changes the problem — now differences don't equal subarray sums.` },
+      { text: `Switch to a Fenwick tree`, correct: false, explanation: `Doesn't fix overflow; just moves it.` },
+      { text: `Add a saturation check on every write`, correct: false, explanation: `Over-engineering; use the right type.` }
+    ]
+  }
+]
+</script>
+
 
 
 ## Why prefix sum exists — the story
@@ -62,114 +214,66 @@ Reach for prefix sum (or its variants) when:
 - **Multi-dimensional ranges beyond 2D** — 3D prefix sum works but memory is O(nmp) and inclusion-exclusion has 8 terms. Consider whether the problem really needs that dimensionality.
 - **The subarray-sum target is 0 and the array is all zeros** — degenerate case; the count blows up quadratically. Handle explicitly.
 
-## The templates
+## The bare mechanic — Range Sum 1D
 
-### Template 1: 1D prefix sum for range queries
-
-
-
-```java
-class RangeSumQuery {
-    int[] pre;                              // length n+1; pre[0]=0
-
-    RangeSumQuery(int[] a) {
-        pre = new int[a.length + 1];
-        for (int i = 0; i < a.length; i++) {
-            pre[i + 1] = pre[i] + a[i];     // running total
-        }
-    }
-
-    int sum(int l, int r) {                 // inclusive [l, r]
-        return pre[r + 1] - pre[l];         // O(1) per query
-    }
-}
-```
-
-
-
-**Invariant:** `pre[i]` equals `a[0] + a[1] + ... + a[i-1]`. Length is `n+1`. `pre[0] = 0` is the sum of the empty prefix.
-**Complexity:** O(n) build, O(1) per query, O(n) space.
-
-### Template 2: Subarray Sum Equals K (the hash-map trick)
+Before any variation, see the mechanic naked. One array, one running total, one subtraction per query:
 
 
 
 ```java
-int subarraySumEqualsK(int[] a, int k) {
-    Map<Integer, Integer> countByPrefix = new HashMap<>();
-    countByPrefix.put(0, 1);                // empty prefix has sum 0, seen once
-    int running = 0, answer = 0;
-    for (int x : a) {
-        running += x;
-        // Any earlier position with prefix (running - k) gives a subarray summing to k.
-        answer += countByPrefix.getOrDefault(running - k, 0);
-        countByPrefix.merge(running, 1, Integer::sum);
-    }
-    return answer;
-}
+int[] a = {3, 1, 4, 1, 5};
+long[] pre = new long[a.length + 1];       // pre[0]=0 (sentinel)
+for (int i = 0; i < a.length; i++)
+    pre[i + 1] = pre[i] + a[i];            // 0, 3, 4, 8, 9, 14
+
+long sum = pre[r + 1] - pre[l];            // range [l, r] inclusive — O(1)
 ```
 
 
 
-**Invariant:** at every iteration, `countByPrefix` holds the number of times each prefix sum has appeared *up to and including* the current position.
-**Complexity:** O(n) time, O(n) space. **Handles negative numbers** — the killer feature vs. sliding window.
-
-**The `put(0, 1)` line matters.** It represents the "empty prefix": if the running total ever equals `k` itself, that's a valid subarray starting at index 0. Forgetting this line makes the code silently return `answer - 1` for those cases.
-
-### Template 3: Difference array for range updates
 
 
-
-```java
-int[] applyRangeUpdates(int n, int[][] updates) {   // updates[i] = [l, r, delta]
-    int[] diff = new int[n + 1];
-    for (int[] u : updates) {
-        diff[u[0]]     += u[2];             // start of range
-        diff[u[1] + 1] -= u[2];             // one past end
-    }
-    int[] result = new int[n];
-    result[0] = diff[0];
-    for (int i = 1; i < n; i++) {
-        result[i] = result[i - 1] + diff[i];   // prefix sum reveals final values
-    }
-    return result;
-}
+```text
+a      =   3   1   4   1   5
+pre    = 0   3   4   8   9  14      pre[i] = sum of a[0..i-1]
+sum(1..3) = pre[4] - pre[1] = 9 - 3 = 6   // just three cells away
 ```
 
 
 
-**Invariant:** at the end, `result[i]` equals the sum of `delta` values from all updates whose range contains `i`.
-**Complexity:** O(n + Q). Compare to naive: O(nQ).
+**Why the extra `pre[0] = 0`?** Without it, `sum(0..r)` needs a special case for the left edge. With it, every range becomes one uniform subtraction. **Every off-by-one in prefix sum traces back to omitting this sentinel.**
 
-### Template 4: 2D prefix sum (summed-area table)
+<Callout kind="key" title="The one move">
 
+compute a running total once, then every range sum is one subtraction. The variations swap "sum" for XOR, mod-residue counting, 2D inclusion-exclusion, or endpoint deltas — but the mechanic is always "snapshot the running aggregate, difference two snapshots."
 
+</Callout>
 
-```java
-class RangeSum2D {
-    int[][] pre;
+## THE template — build once, query in O(1)
 
-    RangeSum2D(int[][] m) {
-        int r = m.length, c = m[0].length;
-        pre = new int[r + 1][c + 1];
-        for (int i = 0; i < r; i++)
-            for (int j = 0; j < c; j++)
-                pre[i+1][j+1] = m[i][j] + pre[i][j+1] + pre[i+1][j] - pre[i][j];
-    }
+<PatternTemplateCard
+  slug="prefix-sum"
+  title="Prefix Sum"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="theTemplateInvariant"
+  :complexity="theTemplateComplexity"
+  :specializations="theTemplateSpecializations"
+  :problemShape="theTemplateProblemShape"
+/>
 
-    int rectSum(int r1, int c1, int r2, int c2) {   // inclusive rectangle
-        return pre[r2+1][c2+1] - pre[r1][c2+1] - pre[r2+1][c1] + pre[r1][c1];
-    }
-}
-```
+<InvariantProof
+  :statement="theTemplateInvariant.statement"
+  :initialization="theTemplateInvariant.initialization"
+  :maintenance="theTemplateInvariant.maintenance"
+  :termination="theTemplateInvariant.termination"
+/>
 
+### What the chips above open
 
+The six specialization chips on the card link to the H3 sub-variations below. Each one keeps the same skeleton — a running aggregate maintained in O(1) per step, a difference of two aggregates at query time — and swaps a single operation. Hover each chip to see the one thing that changes.
 
-**Invariant:** `pre[i][j]` = sum of the sub-rectangle from `(0,0)` to `(i-1, j-1)`.
-**Complexity:** O(rc) build, O(1) per query.
-**Trap:** the inclusion-exclusion in `rectSum` has four terms — miss a sign and you get random wrong answers.
-
-### Complexity summary
+### Complexity ladder (comparison vs. the alternatives)
 
 | Approach | Build | Query | Update | Space |
 |---|---|---|---|---|
@@ -182,37 +286,25 @@ class RangeSum2D {
 
 Rule of thumb: **prefix sum when array is static; Fenwick/segment tree when updates are frequent.**
 
-## Traps & gotchas — the 5 that fail candidates on interview day
+## When the mechanic breaks — three failure modes
 
-<Callout kind="trap" title="Trap 1 — Off-by-one on `pre[]` length.">
+<TrapTrace
+  title="Off-by-one on pre[] length"
+  bug="You size `pre = new long[n]` and query `pre[r+1] - pre[l]`. Now `r = n-1` reads out of bounds. Also, `sum(0..r) = pre[r+1] - pre[0]` has no `pre[0]` sentinel, so you special-case the left edge and the special case is wrong half the time."
+  fix="Size `pre = new long[n+1]` with `pre[0] = 0` as the sentinel. Every range query becomes `pre[r+1] - pre[l]` uniformly. The sentinel costs 8 bytes and eliminates the entire class of off-by-one at the left boundary."
+/>
 
-The most common bug in this pattern. `pre[]` must have length `n+1`, with `pre[0] = 0`. If you allocate `pre[n]`, you have no `pre[0]` sentinel and must special-case queries starting at index 0. **Rule: always size `pre[]` to `n+1`.**
+<TrapTrace
+  title="Forgetting the empty-prefix seed in the hash-map variant"
+  bug="Subarray Sum Equals K with `nums=[3,4], k=3`: you expect `1` (the subarray `[3]`) but return `0`. The subarray starts at index 0, so there's no earlier prefix to pair with — and your map never seeded `{0: 1}` to represent the empty prefix."
+  fix="Always `count.put(0, 1)` before the loop. The empty prefix sums to zero, has been 'seen once' trivially. The same seed is required for Prefix XOR (`count.put(0, 1)`) and Prefix Mod (`countByResidue[0] = 1`)."
+/>
 
-</Callout>
-
-<Callout kind="trap" title="Trap 2 — Forgetting `countByPrefix.put(0, 1)` in the hash-map variant.">
-
-This entry represents the empty prefix. Without it, subarrays that start at index 0 are undercounted. On input `[3, 4]` with `k = 3`, you should return `1` but return `0`. **Rule: seed the hash with `{0: 1}` before the loop.**
-
-</Callout>
-
-<Callout kind="trap" title="Trap 3 — Integer overflow.">
-
-`pre[i]` for `n = 10⁵` values of `10⁹` reaches `10¹⁴` — well outside `int`. Use `long[]`. This is the same bug class as Bloch's overflow in binary search: silent, sometimes returns negative garbage. **Rule: if `Σa[i]` might exceed `2·10⁹`, prefix sums must be `long`.**
-
-</Callout>
-
-<Callout kind="trap" title="Trap 4 — Difference array's `r+1` bound is out of range.">
-
-For `diff[r+1]` where `r == n-1`, `r+1 == n` — you must allocate `diff` of size `n+1`, not `n`. Off-by-one array-out-of-bounds is a runtime crash the interviewer sees clearly.
-
-</Callout>
-
-<Callout kind="trap" title="Trap 5 — Trying to reuse a prefix sum after mutating the input.">
-
-Prefix sums are a **snapshot**. If you modify `a[]` after building `pre[]`, every subsequent query returns stale data. In a follow-up "now support point updates" question, migrate to a Fenwick tree instead of hoping to patch `pre[]` in place.
-
-</Callout>
+<TrapTrace
+  title="Integer overflow in prefix sums"
+  bug="`n = 10^5` elements, each up to `10^9`, so Σa reaches `10^14` — well outside `int` (max ~2·10^9). `pre[i]` silently wraps to negative garbage, and every subsequent range query returns a wrong answer with no runtime signal. Same bug class as Bloch's binary-search overflow."
+  fix="Declare `pre` as `long[]`. Max cumulative prefix for the worst case is ~9·10^18 which fits comfortably. If you're also doing XOR, int is fine — XOR doesn't grow. If values are reals, see Kahan/pairwise summation in Advanced below."
+/>
 
 ## History — Blelloch's parallel prefix, 1990
 
@@ -222,111 +314,43 @@ Every time you `git diff` and see a fast enumeration of changed lines, or your M
 
 The difference-array trick appears informally in Knuth's *Art of Computer Programming* Vol 1 (1968), but the modern interview form — turning `Q` range updates into a single O(n) pass — was popularized on TopCoder and Codeforces in the mid-2000s.
 
-## Canonical problem walkthrough — Subarray Sum Equals K
+## Sub-variations of the template
 
-**Problem** ([↗ LeetCode](https://leetcode.com/problems/subarray-sum-equals-k/)): Given an integer array `nums` and integer `k`, return the number of contiguous subarrays whose sum equals `k`. Values can be negative.
+<PatternSubVariationNav pattern="prefix-sum" />
 
-### Approach 1 — Brute force
+### Range Sum 1D <span class="diff diff-e">Easy</span>
 
-Two nested loops. For each start `i`, extend to each `j ≥ i` and check if the sum equals `k`.
+*[↗ LeetCode: Range Sum Query — Immutable](https://leetcode.com/problems/range-sum-query-immutable/)*
+
+The bare mechanic as a sub-variation. Build once, serve many queries in O(1).
 
 
 
 ```java
-int subarraySumBrute(int[] nums, int k) {
-    int count = 0;
-    for (int i = 0; i < nums.length; i++) {
-        int sum = 0;
-        for (int j = i; j < nums.length; j++) {
-            sum += nums[j];
-            if (sum == k) count++;
-        }
+class NumArray {
+    private final long[] pre;
+    public NumArray(int[] nums) {
+        pre = new long[nums.length + 1];
+        for (int i = 0; i < nums.length; i++)
+            pre[i + 1] = pre[i] + nums[i];
     }
-    return count;
-}
-```
-
-
-
-**Complexity:** O(n²) time, O(1) space. For `n = 2·10⁴`, that's `4·10⁸` operations — tight but might squeak by LeetCode's 2-second limit. Interviewer smiles thinly.
-
-### Approach 2 — Prefix sums with linear scan for pair search
-
-Build `pre[]`, then for each `r`, scan all `l ≤ r` looking for `pre[l] == pre[r+1] - k`.
-
-
-
-```java
-int subarraySumTwoLoop(int[] nums, int k) {
-    int n = nums.length;
-    long[] pre = new long[n + 1];
-    for (int i = 0; i < n; i++) pre[i + 1] = pre[i] + nums[i];
-    int count = 0;
-    for (int r = 0; r < n; r++)
-        for (int l = 0; l <= r; l++)
-            if (pre[r + 1] - pre[l] == k) count++;
-    return count;
-}
-```
-
-
-
-**Complexity:** still O(n²), but the inner check is O(1) instead of accumulating a fresh sum. Slightly faster constant factor. Not the point — this is a stepping stone showing you've *identified* prefix sum but haven't yet hashed.
-
-### Approach 3 — Prefix sums with hash map (the interview answer)
-
-The key insight: for each new position `r`, we want to count how many earlier prefixes `pre[l]` satisfy `pre[l] == pre[r+1] - k`. That's a **lookup**, not a scan — so use a HashMap.
-
-
-
-```java
-int subarraySum(int[] nums, int k) {
-    Map<Long, Integer> seen = new HashMap<>();
-    seen.put(0L, 1);                        // empty prefix — one occurrence of "sum 0 so far"
-    long running = 0;
-    int count = 0;
-    for (int x : nums) {
-        running += x;
-        count += seen.getOrDefault(running - k, 0);      // how many earlier prefixes complete a k-subarray?
-        seen.merge(running, 1, Integer::sum);            // record the current prefix
+    public int sumRange(int l, int r) {
+        return (int)(pre[r + 1] - pre[l]);
     }
-    return count;
 }
 ```
 
 
 
-**Complexity:** O(n) time (one pass, O(1) hash ops), O(n) space (worst-case, every prefix distinct).
+<Callout kind="key" title="Interview answer">
 
-**Interview commentary:**
-- *"Brute force is O(n²). I can do better."*
-- *"For each index r, a subarray ending at r has sum k iff `pre[r+1] - pre[l] = k` for some earlier `l`. That means `pre[l] = pre[r+1] - k`."*
-- *"So keep a HashMap of prefix sums seen so far. At each r, look up how many earlier positions had the required prefix value."*
-- *"O(n) time and space. The `put(0, 1)` handles the case where a subarray from index 0 sums to k."*
+*"I build a running-total array `pre` of length `n+1` with `pre[0] = 0` as a sentinel. Each query is one subtraction. O(n) build, O(1) per query."*
 
-### Complexity ladder
+</Callout>
 
-| Approach | Time | Space | When |
-|---|---|---|---|
-| Brute force | O(n²) | O(1) | Reference / very small n |
-| Prefix + scan | O(n²) | O(n) | Stepping stone during whiteboard |
-| **Prefix + HashMap** | **O(n)** | **O(n)** | **Interview default** |
+**When this is NOT enough** — if the problem adds *point updates* between queries, prefix sum degrades to O(n) per update. Reach for a Fenwick tree. If the problem adds *range updates* then one final query, use the Difference Array sub-variation below.
 
----
-
-
-
-### Recognize by
-- many range-sum queries over a static array — precompute pre[], each query is O(1)
-- "count subarrays with sum k" (with hash map, works for negative values too)
-- "range-update, point-query" — the difference-array mirror
-
-### When NOT to use it
-You need to *update* array values *and* query ranges in the same run — a plain prefix sum is O(1) query but O(n) update. For both operations in O(log n), reach for [Fenwick / segment tree](/data-structures/segment-fenwick).
-
----
-
-## Subarray Sum Equals K <span class="diff diff-m">Medium</span>
+### Subarray Sum Equals K <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)*
 
@@ -501,7 +525,7 @@ The shared idea is **charge a subarray-with-a-target-property to its prefix**: a
 | [Continuous Subarray Sum (multiple of k)](https://leetcode.com/problems/continuous-subarray-sum/) | same `mod k` bucketing, but store the earliest index to enforce a length ≥ 2 | — |
 | [Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/) | count prefixes equal to `pre − goal` | — |
 
-## Difference Array (Range Update) <span class="diff diff-m">Medium</span>
+### Difference Array <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Corporate Flight Bookings](https://leetcode.com/problems/corporate-flight-bookings/)*
 
@@ -636,7 +660,7 @@ Off-by-one at `r+1`; size the array `n+1` so the closing decrement never overflo
 | [Range Addition](https://leetcode.com/problems/range-addition/) | the canonical form — apply many `[l, r] += v` in O(1) each, reconstruct once | O(1) |
 | [2D — Range Addition II / stamping a grid](https://leetcode.com/problems/range-addition-ii/) | a 2D difference array marks the four corners of each rectangle | — |
 
-## 2D Prefix Sum (Range Sum Query 2D) <span class="diff diff-m">Medium</span>
+### 2D Prefix Sum <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Range Sum Query 2D](https://leetcode.com/problems/range-sum-query-2d-immutable/)*
 
 ### Problem
@@ -761,14 +785,241 @@ The +/−/− /+ inclusion–exclusion pattern reappears in *Maximal Rectangle* 
 | [Count Submatrices With Target Sum](https://leetcode.com/problems/count-submatrices-with-target-sum/) | fix a pair of rows, collapse columns to 1D prefix sums, then reuse the "subarray sum = k" hash-map count | — |
 | [Maximal Square / Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/) | combine per-row prefix counts with a histogram/DP to bound the largest all-ones region | — |
 
+### Prefix XOR <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Count Triplets That Can Form Two Arrays of Equal XOR](https://leetcode.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/)*
+
+#### Problem
+Count contiguous subarrays whose XOR equals `k`. Values are non-negative, up to ~`10^9`; `n ≤ 10^5`.
+
+**Why not a sliding window?** XOR is **not monotone** as the window grows — adding an element can either raise or lower the running XOR depending on bit patterns. The sliding-window shrink step is undefined.
+
+#### Solution — brute force
+
+
+
+```java
+int subarrayXorBrute(int[] a, int k) {
+    int ans = 0;
+    for (int l = 0; l < a.length; l++) {
+        int x = 0;
+        for (int r = l; r < a.length; r++) {
+            x ^= a[r];
+            if (x == k) ans++;
+        }
+    }
+    return ans;
+}
+```
+
+
+
+O(n²) time, O(1) space.
+
+#### Solution — optimized
+
+The exact same trick as "subarray sum = k", with the sole substitution `+` → `^`. The algebraic property that makes it work: **XOR is its own inverse** — `pre_r ^ pre_l = k` iff `pre_l = pre_r ^ k`. So lookup `(running ^ k)` in a hash map at each step.
+
+<Callout kind="key">
+
+Count the contiguous subarrays whose XOR equals k.
+
+</Callout>
+
+<TemplateReveal
+  slug="prefix-xor"
+  language="java"
+  :canonical="prefixXorCode"
+/>
+
+<Callout kind="inv" title="Invariant">
+
+`count[v]` holds the number of indices `i` for which `a[0] ^ a[1] ^ … ^ a[i-1] = v`. At each new index, we read how many earlier prefixes satisfy `pre_l = running ^ k`.
+
+</Callout>
+
+**Complexity:** O(n) time, O(n) space.
+
+**Classic application — Contiguous Array (equal 0s and 1s):** map `0 → -1, 1 → +1` (so the running sum tracks "excess of 1s over 0s"). The longest subarray with equal 0s and 1s is the longest span where the same running value appears twice — a hash map of first-seen indices does it in O(n).
+
+### Prefix Mod <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)*
+
+#### Problem
+Count contiguous subarrays whose sum is divisible by `k`. Values can be negative; `n ≤ 3·10^4`, `|a[i]| ≤ 10^4`, `2 ≤ k ≤ 10^4`.
+
+#### The move — bucket prefixes by residue
+
+A subarray `(l, r]` has `(pre_r - pre_l) ≡ 0 (mod k)` **iff** `pre_r ≡ pre_l (mod k)`. So keep a histogram of running residues: every pair of prefixes in the same bucket is a divisible subarray.
+
+For `k = 5` and residues `[0, 2, 1, 2, 0, 2]`, bucket 0 has two indices (gives `C(2,2) + 1 = 1` subarray starting at empty prefix × 2 others), bucket 2 has three (`C(3,2) = 3`), bucket 1 has one. Total divisible subarrays = `C(2,2)·… + …`.
+
+<Callout kind="key">
+
+Count the contiguous subarrays whose sum is divisible by k.
+
+</Callout>
+
+<TemplateReveal
+  slug="prefix-mod"
+  language="java"
+  :canonical="prefixModCode"
+/>
+
+<Callout kind="inv" title="Invariant">
+
+`countByResidue[r]` holds the number of processed prefixes with `pre ≡ r (mod k)`. The answer increments by `countByResidue[running]` at each step, then we record the current prefix.
+
+</Callout>
+
+**Negative-aware canonicalization.** `((x % k) + k) % k` turns Java's symmetric mod (`-1 % 5 = -1`) into the mathematical residue (`4`). Without this line, every negative value corrupts the residue bucketing and the count comes out wrong by a factor of ~2.
+
+**Complexity:** O(n + k) time, O(k) space — the residue table has exactly `k` cells. If `k ≤ n`, this is strictly better than the hash-map variant (array indexing beats hashing in constants).
+
+**Variation — [Continuous Subarray Sum (523)](https://leetcode.com/problems/continuous-subarray-sum/):** instead of the count, you want *whether any such subarray of length ≥ 2 exists*. Store the **first** index each residue was seen at (not the count) and check `r - firstIndex[running] ≥ 2`.
+
+## In the wild — NumPy cumsum & TF XLA scan
+
+**NumPy's `np.cumsum`** is a one-line user API over a C-level in-place loop:
+
+
+
+```c
+/* numpy/core/src/multiarray/calculation.c — slight simplification */
+PyObject* PyArray_CumSum(PyArrayObject *self, int axis, int rtype, PyArrayObject *out) {
+    PyArrayObject *ret = /* alloc or alias out */;
+    /* reduceat implements the running fold via BLAS/looping; for float64 it dispatches
+       to a pairwise summation ladder to keep rounding error at O(log n) instead of O(n). */
+    return PyArray_GenericAccumulateFunction(self, n_ops.add, axis, rtype, ret);
+}
+```
+
+
+
+The pairwise-summation detour is why `np.cumsum([1e20, 1, -1e20])` returns a different last value than a naive left-fold on `float64` — numerical stability matters once prefixes run over million-element inputs.
+
+**TensorFlow's `tf.cumsum` compiled through XLA** emits an `HloInstruction::Scan` node that, on GPU, becomes a **Blelloch exclusive scan** (section "History" above):
+
+```c++
+// tensorflow/compiler/xla/service/gpu/scan_thunk.cc — paraphrased
+// Launch (n / block_size) blocks of block_size threads.
+// Phase 1 (up-sweep):  each block computes its local scan in shared memory in O(log block_size) depth.
+// Phase 2 (down-sweep): a second kernel propagates block prefixes to get the global scan.
+// Total depth: O(log n). Total work: O(n). Memory bandwidth bound in practice.
+
+
+```
+
+The exact code was the subject of Harris, Sengupta & Owens' GPU Gems 3 chapter — the first widely-cited GPU implementation of Blelloch's algorithm.
+
+**Real production uses of prefix sum / difference array:**
+1. **FFmpeg's `AVFrame` SAD computation** uses summed-area tables (2D prefix sum) to score motion-estimation candidates in constant time per block.
+2. **PostgreSQL's `width_bucket` on sorted histogram boundaries** is a prefix-sum lookup over bucket counts.
+3. **Linux kernel's `__percpu` counter batching** uses the difference-array trick: each CPU accumulates deltas locally; a periodic prefix-reduce updates the global counter without cross-CPU locks on every write.
+4. **Pandas' `rolling().sum()` fast path** on numeric columns picks between a running-sum loop and a prefix-sum table based on `window / len` ratio; XLA's codegen for `jnp.cumsum` is the same algorithm applied one dimension at a time.
+
+## Recognition drill
+
+<RecognitionDrill pattern="prefix-sum" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if the array has point updates between queries?</strong></summary>
+
+Prefix sum becomes O(n) per update — unacceptable at `Q = 10^5`. Switch to a **Fenwick tree (BIT)** for `O(log n)` update + `O(log n)` prefix. The invariant mutates from "snapshot" to "incrementally maintained running total":
+
+```java
+void update(int i, long delta) {           // 1-indexed
+    for (; i <= n; i += i & -i) bit[i] += delta;
+}
+long prefix(int i) {
+    long s = 0;
+    for (; i > 0; i -= i & -i) s += bit[i];
+    return s;
+}
+```
+
+
+
+Range sum: `prefix(r) - prefix(l-1)`. Same mental model, log-factor cost.
+</details>
+
+<details>
+<summary><strong>What if queries are on a 1D sliding window of fixed size k?</strong></summary>
+
+You don't need a full prefix array — a single running sum with `add(a[r]) + subtract(a[r-k])` gives O(1) extra space:
+
+
+
+```java
+long sum = 0;
+for (int i = 0; i < a.length; i++) {
+    sum += a[i];
+    if (i >= k) sum -= a[i - k];
+    if (i >= k - 1) emitWindowSum(i, sum);
+}
+```
+
+
+
+Prefix sum works too but allocates O(n) when O(1) was free.
+</details>
+
+<details>
+<summary><strong>What if values are reals and precision matters?</strong></summary>
+
+Naive accumulation accumulates error at O(n) in the worst case. Fixes:
+
+- **Kahan summation** — compensated accumulation; one extra `float` tracks the lost low-order bits. Reduces error to O(1).
+- **Pairwise summation** — recursive halving (what NumPy's `reduceat` uses). O(log n) error with the same asymptotics as the naive loop.
+
+The algorithmic skeleton stays the same; the inner update changes from one add to four. For financial accounting problems, use fixed-point integers instead — different world, same lesson.
+</details>
+
+<details>
+<summary><strong>What if the matrix is sparse but queries are dense?</strong></summary>
+
+A dense 2D prefix table costs O(RC) build and O(RC) space even when most cells are 0. If the matrix has `K ≪ RC` non-zero cells and you need `Q` rectangle queries:
+
+- `K · Q` ≤ RC → naive scan wins.
+- `K + Q log K ≪ RC` → Fenwick tree on coordinates, or offline CDQ divide-and-conquer over events.
+
+The win: avoid materializing the full prefix table. Also the pattern used by competitive-programming problems like SPOJ MATSUM in sparse mode.
+</details>
+
+<details>
+<summary><strong>What if the array is distributed across GPU threads?</strong></summary>
+
+The sequential O(n) build loop is now the bottleneck — 10^8 elements on one GPU core is slow. Blelloch's **parallel prefix (scan)** gives O(log n) depth with O(n) total work:
+
+1. **Up-sweep** — build a reduction tree where each node holds the sum of its subtree.
+2. **Down-sweep** — propagate exclusive prefixes top-down.
+
+Thrust's `inclusive_scan` and TensorFlow's XLA scan both implement this. The same primitive underlies parallel sort, parallel compaction, and histogram-building on GPUs.
+</details>
+
+### Breaking point
+
+Prefix sum **stops being optimal** when:
+- Updates interleave with queries → Fenwick tree (O(log n) both).
+- The aggregation operation is not invertible (max, min) → segment tree or sparse table.
+- You need the *k*-th smallest in a range, not a sum → wavelet tree or merge-sort tree.
+- Dimensions &gt; 2 and queries are rectangles → inclusion-exclusion has `2^d` terms; usually re-formulate.
+- Updates are range-add AND queries are range-sum interleaved → BIT with difference-array trick (two Fenwicks).
+
+### Three cross-pattern problems
+
+- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) — a trap problem: looks like it wants prefix sum, actually wants a **monotonic deque** (max isn't invertible).
+- [Range Sum Query — Mutable (307)](https://leetcode.com/problems/range-sum-query-mutable/) — the natural bridge from prefix sum to **Fenwick tree**.
+- [Count Vowel Strings in Ranges](https://leetcode.com/problems/count-vowel-strings-in-ranges/) — prefix-count over a bitmap; stripped-down demonstration of the pattern on a boolean sequence.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="prefix-sum"
-  :questions='[{"q": "What does `count[preSum - k]` count in Subarray Sum Equals K?", "choices": [{"text": "Number of subarrays ending at current index with sum k", "correct": true, "explanation": "Every earlier prefix with value `preSum - k` gives a valid subarray."}, {"text": "Total number of elements less than k", "correct": false}, {"text": "Number of prefixes divisible by k", "correct": false}, {"text": "Number of distinct values in nums", "correct": false}]}, {"q": "When using prefix mod k, why initialize `count[0] = 1`?", "choices": [{"text": "To count subarrays starting from index 0", "correct": true, "explanation": "The \"prefix sum before index 0\" is 0; without this, subarrays sum-to-k starting at 0 are missed."}, {"text": "To handle negative numbers", "correct": false}, {"text": "It is required by Java", "correct": false}, {"text": "To avoid null exceptions", "correct": false}]}, {"q": "For range-add + point-query, what is the O(1)-per-add data structure?", "choices": [{"text": "Segment tree", "correct": false, "explanation": "Works but O(log n) per op — overkill if only one final scan."}, {"text": "Difference array (then prefix sum at the end)", "correct": true, "explanation": "O(1) per add; one O(n) prefix sweep to recover values."}, {"text": "Hash map", "correct": false}, {"text": "BIT / Fenwick tree", "correct": false, "explanation": "Works but heavier than needed."}]}, {"q": "In Contiguous Array (equal 0s and 1s), what mapping enables prefix sum?", "choices": [{"text": "Map 0 → -1 and 1 → +1; equal counts iff prefix returns to a prior value", "correct": true, "explanation": "Same prefix twice → the delta is 0 → equal 0s and 1s."}, {"text": "Sort the array", "correct": false}, {"text": "Use bitwise XOR", "correct": false}, {"text": "Impossible in O(n)", "correct": false}]}, {"q": "Time to answer any 2D rectangle-sum query after O(mn) preprocessing?", "choices": [{"text": "O(1)", "correct": true, "explanation": "Inclusion-exclusion on the 2D prefix table."}, {"text": "O(log(mn))", "correct": false}, {"text": "O(m + n)", "correct": false}, {"text": "O(mn)", "correct": false}]}]'
-/>
+<Quiz pattern-id="prefix-sum" :questions="mastery5" />
 
 <PrintButton />
 

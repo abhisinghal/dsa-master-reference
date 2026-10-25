@@ -146,34 +146,34 @@
     "inTheWildSource": "NumPy np.cumsum / TensorFlow tf.cumsum XLA kernel",
     "subVariations": [
       {
-        "slug": "range-sum-1d",
-        "title": "Range Sum (1D) \u2014 bare mechanic",
-        "difficulty": "easy"
+        "difficulty": "easy",
+        "slug": "range-sum-1d-easy",
+        "title": "Range Sum 1D \u2014 bare mechanic"
       },
       {
-        "slug": "subarray-sum-equals-k",
-        "title": "Subarray Sum Equals K (prefix + hashmap)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "subarray-sum-equals-k-medium",
+        "title": "Subarray Sum Equals K (prefix + hashmap)"
       },
       {
-        "slug": "diff-array-range-update",
-        "title": "Difference Array (range updates)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "difference-array-medium",
+        "title": "Difference Array (range updates)"
       },
       {
-        "slug": "two-d-prefix-sum",
-        "title": "2D Prefix Sum (Range Sum Query 2D)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "_2d-prefix-sum-medium",
+        "title": "2D Prefix Sum (Range Sum Query 2D)"
       },
       {
-        "slug": "prefix-xor",
-        "title": "Prefix XOR (parity queries)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "prefix-xor-medium",
+        "title": "Prefix XOR (parity queries)"
       },
       {
-        "slug": "prefix-mod",
-        "title": "Prefix Mod (subarrays divisible by K)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "prefix-mod-medium",
+        "title": "Prefix Mod (subarrays divisible by K)"
       }
     ]
   },
