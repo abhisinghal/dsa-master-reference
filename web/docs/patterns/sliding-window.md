@@ -632,52 +632,7 @@ The outer `for` is clearly O(n), but the inner `while` makes a naive reader worr
 
 This same argument powers [§22 two-pointers](/patterns/two-pointers) (sum of `l`-advances + `r`-advances ≤ 2n) and underlies the "pay once per index" intuition in [§29 monotonic-stack](/patterns/monotonic-stack) and [§31 union-find](/patterns/union-find). If you see a loop whose inner body looks like it could run n times, check whether a **monotone counter** bounds the total — that is sliding-window's complexity signature.
 
-## When *not* to use it — the monotonicity test
-
-Sliding window works only under one specific structural property, and interview problems love to violate it by exactly one word.
-
-<Callout kind="inv" title="The monotonicity requirement">
-
-*once the right pointer is fixed, extending the window further can never turn an invalid window valid again.* Equivalently: the "invalid → valid" boundary moves only in one direction as you scan.
-
-</Callout>
-
-Two 10-second tests before you write code:
-
-1. **The extension test.** If `[left, right]` is invalid, can extending `right` fix it? If **yes**, sliding window is wrong for this problem.
-2. **The shrink test.** If `[left, right]` is valid, does removing `a[left]` still leave a well-defined "validity" you can check in O(1)? If **no** (e.g. you'd have to recompute a max/min over the whole window from scratch), you probably need a monotonic deque or a segment tree, not a plain window.
-
-## False friends — problems that *look* like sliding window but aren't
-
-Every one of these has a "contiguous subarray with a rule" phrasing that pattern-matches to sliding window in the first read. Every one has a subtle property that breaks the monotonicity requirement — and each has a specific alternative to reach for instead.
-
-| Problem | Why sliding window **fails** | What to use instead |
-|---|---|---|
-| [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) with negatives | Adding a negative can lower the running sum below K after it was above → *invalid can become valid again by growing*. Extension test fails. | **Prefix sums + `HashMap<sum, count>`** — count how many prefix sums equal `runningSum − K`. |
-| [Shortest Subarray with Sum ≥ K](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) with negatives | Same reason — negatives break the shortest-variable shrink rule. | **Prefix sums + monotonic deque** — enqueue prefix sums, maintain a deque of indices with increasing prefix values. |
-| [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/) (Kadane) | The "rule" here is "which subarray has max sum?" — there's no growing/shrinking validity, only a *choice*: keep extending or restart. | **1-D DP (Kadane)** — `cur = max(a[i], cur + a[i])`. |
-| [Longest Substring with **exactly** K distinct](https://leetcode.com/problems/subarrays-with-k-different-integers/) | Exactly-K validity isn't monotone: a window with 3 distinct isn't "valid" for K=2 nor for K=4. | **atMost(K) − atMost(K−1)** — two sliding-window passes composed. |
-| [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/) | Adding a char at the right can turn a valid palindrome into an invalid one — but also into a *larger* valid one. Non-monotone. | **Expand around each center**, O(n²), or Manacher's O(n). |
-| [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | Water at each index depends on the max on **both** sides — not on a window that slides in one direction. | **Two pointers with left/right running max**, or a monotonic stack. |
-| [Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/) **with zeros or negatives** | The product argument (`product /= a[left]` restores validity) assumes strictly-positive integers. Zeros make the product 0 permanently; negatives flip the inequality direction. | **Prefix sums / logarithms**, or split the array at each zero and process pieces. |
-
-<Callout kind="trap" title="The classic silent bug">
-
-a plain sliding window on any of these problems runs, terminates, and returns *a* number. It just isn't the right one. Always run the extension test on a small negative-value / zero / non-monotone example before trusting the answer.
-
-</Callout>
-
-## Limitations — what sliding window can never do
-
-Even when the problem is monotone, sliding window has hard limits worth naming out loud:
-
-- **Contiguous only.** Any question about *subsequences* (order-preserving but not adjacent) is off-limits — that's DP or a different technique entirely.
-- **One dimension.** 2-D "sliding windows" (submatrix problems) work but need a 2-D prefix sum or per-row/column reduction first — the raw slide idea doesn't extend directly.
-- **O(1) update per side.** If including `a[right]` (or excluding `a[left]`) can't be done in O(1) or amortized O(1), the whole approach loses. That's why sliding-window **max/min** needs a deque — a naive `max()` per window would be O(k) each step.
-- **Ordered progression only.** The window walks left-to-right. Problems that ask about the *k-th smallest* over sliding windows, or arbitrary re-orderings, need a multiset (`TreeMap`) alongside — not a plain window.
-- **Doesn't handle "with modifications."** *"Any subarray after up to K swaps"* or *"any subarray of length ≥ L"* usually breaks the monotone extension test. Reach for DP.
-
-Now let's walk through the canonical shapes, from the simplest fixed-size warm-up up through the composed sliding-window + monotonic-deque problem.
+Now let's walk through the canonical shapes, from the simplest fixed-size warm-up up through the composed sliding-window + monotonic-deque problem. We'll revisit *when the window doesn't apply* once you've seen the shapes it does cover.
 
 
 <SlidingWindowAnim />
@@ -2070,6 +2025,116 @@ The pattern:
 - **CDN edge WAF rules** — the exact scenario the "Why" story opens with.
 
 The code above is 15 lines. The *idea* is one add + one subtract per slide. That's the whole pattern — the complexity in production comes from concurrency (atomics, lock-free rings), not from the algorithm.
+
+## When *not* to use it — the monotonicity test
+
+You've now seen seven shapes the window handles. Here's where it silently fails — and the single structural test that catches each case.
+
+<Callout kind="inv" title="The monotonicity requirement">
+
+*once the right pointer is fixed, extending the window further can never turn an invalid window valid again.* Equivalently: the "invalid → valid" boundary moves only in one direction as you scan.
+
+</Callout>
+
+Two 10-second tests before you write code:
+
+1. **The extension test.** If `[left, right]` is invalid, can extending `right` fix it? If **yes**, sliding window is wrong for this problem.
+2. **The shrink test.** If `[left, right]` is valid, does removing `a[left]` still leave a well-defined "validity" you can check in O(1)? If **no** (e.g. you'd have to recompute a max/min over the whole window from scratch), you probably need a monotonic deque or a segment tree, not a plain window.
+
+### Visual 1: how the extension test fails on `[3, -2, 1]` with target "sum ≥ 2"
+
+Try to find the shortest subarray with sum ≥ 2 using a plain `(expand → valid → shrink)` window:
+
+
+
+```text
+   idx    0    1    2
+   val    3   -2    1
+                                                sum   state         shrink?
+   [L=0,R=0]   ━━━                               3    valid         yes → L++
+   [L=1,R=0]                                     —    (R < L; reset R = L)
+   [L=1,R=1]        ━━━                         -2    invalid       extend R
+   [L=1,R=2]        ━━━━━━━                     -1    STILL invalid, so extend
+   [L=1,R=∞]              ⟶ no more input       -1    invalid → report "no answer"
+
+   Correct answer: window [L=0, R=0] of length 1 (we found it).
+   Plain SW answer : "no answer found after L moved forward."   ✗ silently wrong
+```
+
+
+
+The failure: once `L` advanced past the valid window at index 0, the invariant "if `[L,R]` is invalid, extending `R` can save us" is false — we've committed to shrinking from a prefix that *was* valid, and no amount of extending from the new `L` recovers it. Negatives let an invalid window become valid again further right, so the "shrink after valid" branch burns past the real answer.
+
+### Visual 2: how the shrink test fails on sliding-window max over `[3, 1, 2, 5, 4]`, k = 3
+
+Watch what removing `a[L]` costs when "validity" involves a global reduction (max) over the window:
+
+
+
+```text
+   window         max   on-remove `a[L]`:
+   [3, 1, 2]       3    L leaves; new window is [1, 2, ?]. The departing element
+                        WAS the max. To find the next max we must re-scan the
+                        remaining 2 elements. O(k) per slide → O(n·k) total.
+   [1, 2, 5]       5    L leaves; a[L]=1 was not the max, so max is unchanged.
+                        But we only know that AFTER an O(k) check (we didn't
+                        track which element is current max).
+   [2, 5, 4]       5    L leaves; a[L]=2 was not the max. Same O(k) check.
+```
+
+
+
+The shrink test says: "If you can't maintain validity in O(1) when `a[L]` leaves, this isn't a plain window." Here the answer is a monotonic deque — [§26 monotonic-stack](/patterns/monotonic-stack) — which pays O(1) *amortized* per slide by keeping only "potentially-max" candidates. Without it, you've secretly built an O(n·k) algorithm wearing a sliding-window costume.
+
+### Visual 3: non-monotone validity on *exactly-K distinct*
+
+The validity rule `#distinct == K` isn't a one-way street — it's a bullseye. Trace with K = 2:
+
+
+
+```text
+   window              distinct   valid?   trajectory
+   [a]                    1       no       below target → extend
+   [a, a]                 1       no       below target → extend
+   [a, a, b]              2       YES      at target
+   [a, a, b, c]           3       no       OVERSHOT → shrink
+   [a, b, c]              3       no       still overshot → shrink
+   [b, c]                 2       YES      at target again
+```
+
+
+
+Both the "below" and "above" states are invalid, and the window can enter *either* side from valid. There's no single monotone boundary — the invariant collapses. The documented workaround: compute `atMost(K) − atMost(K−1)` with two separate monotone windows (each `atMost` *is* monotone), and subtract.
+
+## False friends — problems that *look* like sliding window but aren't
+
+Every one of these has a "contiguous subarray with a rule" phrasing that pattern-matches to sliding window in the first read. Every one has a subtle property that breaks the monotonicity requirement — and each has a specific alternative to reach for instead.
+
+| Problem | Why sliding window **fails** | What to use instead |
+|---|---|---|
+| [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/) with negatives | Adding a negative can lower the running sum below K after it was above → *invalid can become valid again by growing*. Extension test fails. | **Prefix sums + `HashMap<sum, count>`** — count how many prefix sums equal `runningSum − K`. |
+| [Shortest Subarray with Sum ≥ K](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) with negatives | Same reason — negatives break the shortest-variable shrink rule. | **Prefix sums + monotonic deque** — enqueue prefix sums, maintain a deque of indices with increasing prefix values. |
+| [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/) (Kadane) | The "rule" here is "which subarray has max sum?" — there's no growing/shrinking validity, only a *choice*: keep extending or restart. | **1-D DP (Kadane)** — `cur = max(a[i], cur + a[i])`. |
+| [Longest Substring with **exactly** K distinct](https://leetcode.com/problems/subarrays-with-k-different-integers/) | Exactly-K validity isn't monotone: a window with 3 distinct isn't "valid" for K=2 nor for K=4. | **atMost(K) − atMost(K−1)** — two sliding-window passes composed. |
+| [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/) | Adding a char at the right can turn a valid palindrome into an invalid one — but also into a *larger* valid one. Non-monotone. | **Expand around each center**, O(n²), or Manacher's O(n). |
+| [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | Water at each index depends on the max on **both** sides — not on a window that slides in one direction. | **Two pointers with left/right running max**, or a monotonic stack. |
+| [Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/) **with zeros or negatives** | The product argument (`product /= a[left]` restores validity) assumes strictly-positive integers. Zeros make the product 0 permanently; negatives flip the inequality direction. | **Prefix sums / logarithms**, or split the array at each zero and process pieces. |
+
+<Callout kind="trap" title="The classic silent bug">
+
+a plain sliding window on any of these problems runs, terminates, and returns *a* number. It just isn't the right one. Always run the extension test on a small negative-value / zero / non-monotone example before trusting the answer.
+
+</Callout>
+
+## Limitations — what sliding window can never do
+
+Even when the problem is monotone, sliding window has hard limits worth naming out loud:
+
+- **Contiguous only.** Any question about *subsequences* (order-preserving but not adjacent) is off-limits — that's DP or a different technique entirely.
+- **One dimension.** 2-D "sliding windows" (submatrix problems) work but need a 2-D prefix sum or per-row/column reduction first — the raw slide idea doesn't extend directly.
+- **O(1) update per side.** If including `a[right]` (or excluding `a[left]`) can't be done in O(1) or amortized O(1), the whole approach loses. That's why sliding-window **max/min** needs a deque — a naive `max()` per window would be O(k) each step.
+- **Ordered progression only.** The window walks left-to-right. Problems that ask about the *k-th smallest* over sliding windows, or arbitrary re-orderings, need a multiset (`TreeMap`) alongside — not a plain window.
+- **Doesn't handle "with modifications."** *"Any subarray after up to K swaps"* or *"any subarray of length ≥ L"* usually breaks the monotone extension test. Reach for DP.
 
 ## Recognition drill
 
