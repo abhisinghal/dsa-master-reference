@@ -745,42 +745,42 @@
     "inTheWildSource": "java.util.jar.JarFile manifest trie",
     "subVariations": [
       {
-        "slug": "implement-trie",
+        "slug": "implement-trie-bare-mechanic-medium",
         "title": "Implement Trie (bare mechanic)",
         "difficulty": "medium"
       },
       {
-        "slug": "word-search-ii",
+        "slug": "word-search-ii-trie-backtracking-hard",
         "title": "Word Search II (trie + backtracking)",
         "difficulty": "hard"
       },
       {
-        "slug": "replace-words",
+        "slug": "replace-words-shortest-prefix-replacement-medium",
         "title": "Replace Words (shortest-prefix replacement)",
         "difficulty": "medium"
       },
       {
-        "slug": "map-sum-pairs",
+        "slug": "map-sum-pairs-prefix-sum-over-values-medium",
         "title": "Map Sum Pairs (prefix-sum over values)",
         "difficulty": "medium"
       },
       {
-        "slug": "search-suggestions",
+        "slug": "search-suggestions-system-autocomplete-top-3-medium",
         "title": "Search Suggestions System (autocomplete top-3)",
         "difficulty": "medium"
       },
       {
-        "slug": "word-break-ii",
+        "slug": "word-break-ii-trie-dp-hard",
         "title": "Word Break II (trie + DP)",
         "difficulty": "hard"
       },
       {
-        "slug": "max-xor-binary-trie",
+        "slug": "maximum-xor-of-two-numbers-binary-trie-medium",
         "title": "Maximum XOR of Two Numbers (binary trie)",
         "difficulty": "medium"
       },
       {
-        "slug": "concatenated-words",
+        "slug": "concatenated-words-dfs-over-trie-hard",
         "title": "Concatenated Words (DFS over trie)",
         "difficulty": "hard"
       }

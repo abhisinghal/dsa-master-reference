@@ -1677,7 +1677,98 @@
       ]
     }
   ],
-  "trie-pattern": [],
+  "trie-pattern": [
+    {
+      "statement": "Design a class that supports insert(word), search(word), and startsWith(prefix) operations on a set of strings.",
+      "pattern": "trie-pattern",
+      "subVariation": "implement-trie",
+      "distractors": [
+        "hashing",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Given an m x n board of characters and a list of strings words, return all words from the list that can be constructed from sequentially adjacent cells of the board.",
+      "pattern": "trie-pattern",
+      "subVariation": "word-search-ii",
+      "distractors": [
+        "dfs",
+        "backtracking"
+      ]
+    },
+    {
+      "statement": "You are given a dictionary of root words and a sentence. Replace every word in the sentence by the shortest root that is a prefix of it. If no root is a prefix, keep the word unchanged.",
+      "pattern": "trie-pattern",
+      "subVariation": "replace-words",
+      "distractors": [
+        "hashing",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Design a MapSum class that supports insert(key, val) and sum(prefix): return the sum of all stored values whose key starts with prefix.",
+      "pattern": "trie-pattern",
+      "subVariation": "map-sum-pairs",
+      "distractors": [
+        "hashing",
+        "prefix-sum"
+      ]
+    },
+    {
+      "statement": "Given a list of products and a search word, after each character typed, return up to 3 lexicographically smallest products with that prefix.",
+      "pattern": "trie-pattern",
+      "subVariation": "search-suggestions",
+      "distractors": [
+        "sorting",
+        "binary-search"
+      ]
+    },
+    {
+      "statement": "Given a string s and a dictionary of words, return all possible sentences that can be formed by segmenting s into dictionary words separated by spaces.",
+      "pattern": "trie-pattern",
+      "subVariation": "word-break-ii",
+      "distractors": [
+        "dp",
+        "backtracking"
+      ]
+    },
+    {
+      "statement": "Given an array of distinct integers, find the maximum XOR of any two numbers in the array.",
+      "pattern": "trie-pattern",
+      "subVariation": "max-xor-binary-trie",
+      "distractors": [
+        "bit-manip",
+        "sorting"
+      ]
+    },
+    {
+      "statement": "Given a list of words, return all words that can be formed by concatenating two or more SHORTER words from the same list.",
+      "pattern": "trie-pattern",
+      "subVariation": "concatenated-words",
+      "distractors": [
+        "dp",
+        "dfs"
+      ]
+    },
+    {
+      "statement": "Design a data structure that supports addWord(word) and search(pattern), where pattern may contain dots '.' that match any letter.",
+      "pattern": "trie-pattern",
+      "subVariation": "implement-trie",
+      "distractors": [
+        "hashing",
+        "regex"
+      ]
+    },
+    {
+      "statement": "Implement a stream of characters supporting query(c): append c to the stream, and return true iff some dictionary word is a suffix of the current stream.",
+      "pattern": "trie-pattern",
+      "subVariation": "word-search-ii",
+      "distractors": [
+        "kmp",
+        "hashing"
+      ]
+    }
+  ],
   "bit-manip": [
     {
       "statement": "Extract the lowest set bit of an integer in O(1).",

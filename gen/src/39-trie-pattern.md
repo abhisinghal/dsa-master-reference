@@ -5,7 +5,288 @@
 
 <PatternProgress pattern-id="trie" problems="word-search-ii, design-add-and-search-words-data-structure, replace-words, concatenated-words, stream-of-characters, maximum-xor-with-an-element-from-array, count-pairs-with-xor-in-a-range, maximum-genetic-difference-query" />
 
+<script setup>
+const theTemplateSpecializations = [
+  { slug: `implement-trie-bare-mechanic-medium`, title: `Implement Trie (bare mechanic)` },
+  { slug: `word-search-ii-trie-backtracking-hard`, title: `Word Search II (trie + backtracking)` },
+  { slug: `replace-words-shortest-prefix-replacement-medium`, title: `Replace Words (shortest-prefix)` },
+  { slug: `map-sum-pairs-prefix-sum-over-values-medium`, title: `Map Sum Pairs (prefix-sum over values)` },
+  { slug: `search-suggestions-system-autocomplete-top-3-medium`, title: `Search Suggestions (autocomplete top-3)` },
+  { slug: `word-break-ii-trie-dp-hard`, title: `Word Break II (trie + DP)` },
+  { slug: `maximum-xor-of-two-numbers-binary-trie-medium`, title: `Maximum XOR (binary trie)` },
+  { slug: `concatenated-words-dfs-over-trie-hard`, title: `Concatenated Words (DFS over trie)` },
+]
 
+const theTemplateCode = `// THE Trie template — 26-way letter trie with explicit end-of-word flag.
+// Operations: insert, search (whole word), startsWith (prefix only).
+class Trie {
+    Trie[] next = new Trie[26];                   // one slot per lowercase letter
+    boolean end = false;                           // true at the last node of an inserted word
+
+    void insert(String word) {
+        Trie node = this;
+        for (char c : word.toCharArray()) {
+            int i = c - 'a';
+            if (node.next[i] == null) node.next[i] = new Trie();
+            node = node.next[i];
+        }
+        node.end = true;                           // CRITICAL: without this, "app" false-matches "apple"
+    }
+
+    boolean search(String word) {
+        Trie node = walk(word);
+        return node != null && node.end;           // whole word match requires end flag
+    }
+
+    boolean startsWith(String prefix) {
+        return walk(prefix) != null;               // prefix match: any walkable path
+    }
+
+    private Trie walk(String s) {
+        Trie node = this;
+        for (char c : s.toCharArray()) {
+            int i = c - 'a';
+            if (node.next[i] == null) return null;
+            node = node.next[i];
+        }
+        return node;
+    }
+}`
+
+const binaryTrieCode = `// Binary trie — 32-bit path per int, used for max-XOR queries.
+// Walk MSB-first; at each bit prefer the OPPOSITE bit to maximize the XOR.
+class BinaryTrie {
+    BinaryTrie[] next = new BinaryTrie[2];
+
+    void insert(int x) {
+        BinaryTrie node = this;
+        for (int b = 31; b >= 0; b--) {
+            int bit = (x >>> b) & 1;
+            if (node.next[bit] == null) node.next[bit] = new BinaryTrie();
+            node = node.next[bit];
+        }
+    }
+
+    int maxXor(int q) {
+        BinaryTrie node = this;
+        int result = 0;
+        for (int b = 31; b >= 0; b--) {
+            int bit = (q >>> b) & 1;
+            int want = bit ^ 1;                     // XOR wants the opposite bit
+            if (node.next[want] != null) {
+                result |= (1 << b);
+                node = node.next[want];
+            } else {
+                node = node.next[bit];              // fallback — forced to take same bit
+            }
+        }
+        return result;
+    }
+}`
+
+const replaceWordsCode = `// Replace Words — insert all roots, then for each word walk until the first terminal.
+String replaceWords(List<String> dictionary, String sentence) {
+    Trie root = new Trie();
+    for (String r : dictionary) root.insert(r);
+    String[] words = sentence.split(" ");
+    for (int i = 0; i < words.length; i++) {
+        Trie node = root;
+        StringBuilder shortest = new StringBuilder();
+        for (char c : words[i].toCharArray()) {
+            int idx = c - 'a';
+            if (node.next[idx] == null) break;
+            shortest.append(c);
+            node = node.next[idx];
+            if (node.end) break;                   // first terminal = shortest root
+        }
+        if (node.end) words[i] = shortest.toString();
+    }
+    return String.join(" ", words);
+}`
+
+const mapSumCode = `// Map Sum Pairs — propagate value-deltas along every prefix node on insert.
+// prefix.sum() = sum of all values whose key starts with prefix. O(L) per op.
+class MapSum {
+    static class Node { Node[] next = new Node[26]; int sum = 0; }
+    private final Node root = new Node();
+    private final Map<String, Integer> map = new HashMap<>();
+
+    public void insert(String key, int val) {
+        int delta = val - map.getOrDefault(key, 0);
+        map.put(key, val);
+        Node node = root;
+        for (char c : key.toCharArray()) {
+            int i = c - 'a';
+            if (node.next[i] == null) node.next[i] = new Node();
+            node = node.next[i];
+            node.sum += delta;                     // every prefix node accumulates
+        }
+    }
+
+    public int sum(String prefix) {
+        Node node = root;
+        for (char c : prefix.toCharArray()) {
+            int i = c - 'a';
+            if (node.next[i] == null) return 0;
+            node = node.next[i];
+        }
+        return node.sum;
+    }
+}`
+
+const searchSuggestionsCode = `// Search Suggestions — at each prefix node, store up to 3 lex-smallest completions.
+// Sort products once, then insert; after each character, read the 3 cached suggestions.
+List<List<String>> suggestedProducts(String[] products, String searchWord) {
+    Arrays.sort(products);
+    Trie root = new Trie();
+    for (String p : products) root.insert(p);
+    List<List<String>> ans = new ArrayList<>();
+    Trie node = root;
+    boolean dead = false;
+    for (char c : searchWord.toCharArray()) {
+        if (!dead && node.next[c - 'a'] != null) {
+            node = node.next[c - 'a'];
+            ans.add(node.top3);                    // cached top-3 at this prefix
+        } else {
+            dead = true;
+            ans.add(Collections.emptyList());
+        }
+    }
+    return ans;
+}
+
+class Trie {
+    Trie[] next = new Trie[26];
+    List<String> top3 = new ArrayList<>();         // sorted; at most 3 words
+
+    void insert(String word) {
+        Trie node = this;
+        for (char c : word.toCharArray()) {
+            int i = c - 'a';
+            if (node.next[i] == null) node.next[i] = new Trie();
+            node = node.next[i];
+            if (node.top3.size() < 3) node.top3.add(word);
+        }
+    }
+}`
+
+const wordBreakIICode = `// Word Break II — trie prunes dictionary lookups during DFS over sentence splits.
+List<String> wordBreak(String s, List<String> wordDict) {
+    Trie root = new Trie();
+    for (String w : wordDict) root.insert(w);
+    List<String> ans = new ArrayList<>();
+    dfs(s, 0, root, new ArrayList<>(), ans);
+    return ans;
+}
+
+void dfs(String s, int i, Trie root, List<String> path, List<String> ans) {
+    if (i == s.length()) { ans.add(String.join(" ", path)); return; }
+    Trie node = root;
+    StringBuilder sb = new StringBuilder();
+    for (int j = i; j < s.length(); j++) {
+        int idx = s.charAt(j) - 'a';
+        if (node.next[idx] == null) return;        // prune: no word starts with this prefix
+        node = node.next[idx];
+        sb.append(s.charAt(j));
+        if (node.end) {
+            path.add(sb.toString());
+            dfs(s, j + 1, root, path, ans);
+            path.remove(path.size() - 1);
+        }
+    }
+}`
+
+const concatenatedWordsCode = `// Concatenated Words — a word is "concatenated" iff it can be split into >=2
+// shorter dictionary words. DFS over the trie with memoization on split points.
+List<String> findAllConcatenatedWordsInADict(String[] words) {
+    Arrays.sort(words, Comparator.comparingInt(String::length));
+    Trie root = new Trie();
+    List<String> ans = new ArrayList<>();
+    for (String w : words) {
+        if (!w.isEmpty() && canBuild(w, 0, root, 0)) ans.add(w);
+        root.insert(w);                            // insert AFTER checking (ordered by length)
+    }
+    return ans;
+}
+
+boolean canBuild(String w, int i, Trie root, int parts) {
+    if (i == w.length()) return parts >= 1;        // >=1 completed part + the final part = >=2 pieces
+    Trie node = root;
+    for (int j = i; j < w.length(); j++) {
+        int idx = w.charAt(j) - 'a';
+        if (node.next[idx] == null) return false;
+        node = node.next[idx];
+        if (node.end && canBuild(w, j + 1, root, parts + 1)) return true;
+    }
+    return false;
+}`
+
+const trap1Bug = `Insert ["apple"] then search("app"). Walking "app" doesn't hit null, so a buggy search returns true. But "app" was never inserted — it's just a prefix of "apple". The dictionary is corrupted silently.`
+const trap1Fix = `Every node needs an explicit boolean "end" field; insert() sets it true on the last node; search() returns walked-to-non-null && end. startsWith() keeps the no-end-check behavior. The flag's existence is the whole mechanism for distinguishing prefix from whole-word match.`
+
+const trap2Bug = `Board where "cat" can be spelled starting from two different cells. Without dedup, the output contains ["cat", "cat"] — the grader rejects it. Also happens when the same path is explored in both directions during a bidirectional sweep.`
+const trap2Fix = `After collecting a word, mutate the trie: set the terminal node's end = false (effectively "uninstalling" it from future finds). Alternative: collect into a Set<String> and dedupe. The trie-mutation approach is faster because future paths that would have reached this terminal get pruned.`
+
+const trap3Bug = `A buggy insert iterates b from 0 to 31. The trie now paths LSB-first. maxXor() still prefers opposite bits, but each "opposite" is at a tiny place value. On nums=[3, 10, 5] a query of 25 may return 7 instead of 28.`
+const trap3Fix = `Always iterate MSB-first: for (int b = 31; b >= 0; b--). Bit 31 contributes 2^31 to the XOR — more than all lower bits combined. The greedy opposite-bit choice at the MSB dominates every subsequent decision.`
+
+const trieInvariant = {
+  statement: `At every point: (1) every inserted word corresponds to a path from root ending at a node with end == true, (2) a lookup walking the path returns the correct answer iff the end flag is checked, (3) the branching factor at every node is at most |alphabet|.`,
+  initialization: `Before any insertion: root is an empty node with all next[i] == null and end == false. The invariant holds vacuously (no inserted words).`,
+  maintenance: `insert(word): walks the path, creating missing child nodes along the way; sets end = true on the last node. Previously-inserted words are undisturbed because the shared-prefix walk reuses existing branches. search(word): walks the same path and verifies end == true at the terminal — distinguishing full-word match from mere-prefix match. startsWith(prefix): just verifies the walk doesn't hit null.`,
+  termination: `For any sequence of inserts and queries: insert(w) ensures w is henceforth findable; search(w) returns true iff w has been inserted; startsWith(p) returns true iff some inserted word starts with p.`,
+}
+
+const trieComplexity = { time: `O(L) per op where L is the word/prefix length — independent of #stored words`, space: `O(sum of unique prefix characters) — shared prefixes cost once; worst case O(alphabet × total chars)` }
+
+const mastery5 = [
+  {
+    q: `Why does a trie need an explicit "end-of-word" flag on nodes?`,
+    choices: [
+      { text: `To distinguish full-word matches from mere-prefix matches — otherwise 'app' falsely matches when only 'apple' was inserted`, correct: true, explanation: `Without the flag, search() has no way to know whether the walk ended at a real word or just a prefix of one. insert() sets end=true; search() verifies it.` },
+      { text: `To free memory on delete`, correct: false, explanation: `That's a separate optimization and doesn't require the flag's existence.` },
+      { text: `For sorted iteration`, correct: false, explanation: `Lex order comes from branch iteration, not the end flag.` },
+      { text: `To speed up startsWith`, correct: false, explanation: `startsWith doesn't check end — it only verifies walkability.` },
+    ],
+  },
+  {
+    q: `For Maximum XOR with a binary trie, why walk bits MSB-first and prefer the OPPOSITE bit at each step?`,
+    choices: [
+      { text: `Each higher-order bit contributes more to the XOR value than all lower-order bits combined, so grabbing opposite-bit at the MSB maximizes the result greedily`, correct: true, explanation: `Bit 31 is worth 2^31 ≥ 2^30 + 2^29 + ... + 2^0 + 1. Setting bit 31 to 1 (opposite choice if possible) outweighs any future bit choices.` },
+      { text: `MSB-first makes the trie smaller`, correct: false, explanation: `Trie size depends only on inserted values' bit patterns.` },
+      { text: `To support signed integers`, correct: false, explanation: `Using unsigned right shift >>> handles signedness independently.` },
+      { text: `Random choice`, correct: false },
+    ],
+  },
+  {
+    q: `For Word Search II (trie + DFS board), what's the TRIE-side optimization that makes the algorithm fast?`,
+    choices: [
+      { text: `A missing trie child at the current letter kills the entire DFS branch — no further board exploration needed`, correct: true, explanation: `This is the core of the trie-prunes-DFS idea. If 'oax' has no trie continuation, every path extending 'oax' can be abandoned, saving exponential work.` },
+      { text: `The trie sorts the dictionary`, correct: false },
+      { text: `The trie dedupes words`, correct: false, explanation: `Dedup is a benefit but not THE speedup — pruning is.` },
+      { text: `The trie supports O(1) random access`, correct: false },
+    ],
+  },
+  {
+    q: `In Search Suggestions System, where are the top-3 lex-smallest completions stored for O(1) retrieval?`,
+    choices: [
+      { text: `In a top3 list CACHED on each trie node, populated at insert time after sorting the input`, correct: true, explanation: `Sort products once; walk each product through the trie; at every node visited, append the word if top3.size() < 3. At query time, read the cached list per prefix letter.` },
+      { text: `In a single global sorted array`, correct: false },
+      { text: `In a hash map keyed by prefix`, correct: false, explanation: `Possible but wastes space — the trie already encodes prefixes.` },
+      { text: `Computed via DFS at query time`, correct: false, explanation: `Correct but slow — defeats the preprocess advantage.` },
+    ],
+  },
+  {
+    q: `For Concatenated Words, why sort the input by length before processing?`,
+    choices: [
+      { text: `A concatenated word is built from SHORTER dictionary words — processing short-first ensures smaller pieces are already in the trie when we check a longer word`, correct: true, explanation: `By length-ascending order, when we check canBuild(w), every piece shorter than |w| has already been inserted. The check becomes "can this longer word be split into pieces already present?"` },
+      { text: `For deterministic output`, correct: false, explanation: `Final answer can still be sorted later; this isn't why.` },
+      { text: `To avoid duplicates`, correct: false },
+      { text: `For better cache performance`, correct: false },
+    ],
+  },
+]
+</script>
 
 **Grokking arc:** The motivating problem is repeated prefix checking against many words or many bit strings. Brute force scans every candidate. **Can we do better?** Share prefixes in a trie so each next character or bit decides whether a whole branch remains possible.
 
@@ -37,41 +318,6 @@ The *pattern* chapter is about those applications. For the mechanics of a trie n
 - Your alphabet is huge and sparse without many shared prefixes; a hash set of full strings may be simpler.
 - You need sorted order of complete words more than prefix pruning; a sorted array plus binary search can be enough.
 
-## How to use it — binary-trie template for max-XOR
-
-Use a binary trie when each element is a fixed-width bit string. Java `int` problems usually walk bits `31` down to `0`; if values are guaranteed non-negative under `2^31`, you can still keep 31 or 32 levels and the code stays simple.
-
-```java
-class BitNode { BitNode[] child = new BitNode[2]; }
-
-void insert(BitNode root, int x) {
-    BitNode cur = root;
-    for (int b = 31; b >= 0; b--) {
-        int bit = (x >>> b) & 1;
-        if (cur.child[bit] == null) cur.child[bit] = new BitNode();
-        cur = cur.child[bit];
-    }
-}
-
-int bestXorAgainst(BitNode root, int x) {
-    BitNode cur = root;
-    int ans = 0;
-    for (int b = 31; b >= 0; b--) {
-        int bit = (x >>> b) & 1;
-        int want = bit ^ 1;
-        if (cur.child[want] != null) {
-            ans |= 1 << b;
-            cur = cur.child[want];
-        } else {
-            cur = cur.child[bit];
-        }
-    }
-    return ans;
-}
-```
-
-> [inv] **Greedy bit invariant** — once you decide a higher XOR bit can be `1`, no later lower bit can compensate for losing it. That is why the MSB-first opposite-bit walk is safe.
-
 ## When to use it — trie pattern flavors
 
 | Flavor | Recognizer phrasing | What the trie contributes |
@@ -84,133 +330,56 @@ int bestXorAgainst(BitNode root, int x) {
 
 The important interview move is to name the alphabet. Letter tries branch over characters. Binary tries branch over `0/1` bits. Reversed tries branch over the query from the end. Once you say that out loud, the code becomes a normal walk with a different interpretation of "next edge."
 
-## When NOT to use it
+## THE template
 
-- **You have very few short strings** — a plain `HashSet<String>` is faster and simpler. Tries pay for themselves at ~1000+ words or when you need prefix / wildcard / streaming semantics.
-- **You need only whole-word membership, no prefix operations** — hash sets win on memory (no per-character overhead) and CPU (one hash vs. one walk).
-- **Memory is critically tight** — a trie node in Java holds 26 pointers just for lowercase letters (~200 bytes per node). A million-word dictionary can eat 1 GB. Alternatives: **Ternary Search Trees** (3 pointers per node), **DAWG / DAFSA** (merge equivalent suffixes), **compressed trie** (Patricia / Radix tree — collapse single-child chains).
-- **The alphabet is huge** — Unicode with 1M+ code points makes 26-pointer arrays absurd. Use `HashMap<Character, Node>` per node, or switch to a suffix automaton.
-- **Queries are exact-match only** — the exact-match `HashMap` beats trie walks on both memory and lookup time.
-- **You need range queries or ordering** — tries iterate in lexicographic order but don't support "words in range [aardvark, badger]" efficiently. `TreeMap` is O(log n) and cleaner.
+Every Trie-pattern problem is a specialization of **"walk a path through the trie, one character (or bit) at a time; branch when the problem demands wildcards or multiple roots."** Four parameters distinguish the sub-variations: the alphabet (26 letters vs. 2 bits vs. Unicode), what each node caches (end flag, sum, top-k list), whether queries branch (wildcards) or walk greedily (max-XOR), and whether the trie partners with another algorithm (backtracking, DP).
 
-## The templates
+<PatternTemplateCard
+  slug="trie-letter-template"
+  title="26-way letter trie — THE template"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="trieInvariant"
+  :complexity="trieComplexity"
+  :specializations="theTemplateSpecializations"
+/>
 
-### Template 1: Basic 26-way letter trie
+**Binary trie variant** (32-bit path per int for max-XOR queries):
 
-```java
-class Trie {
-    Trie[] next = new Trie[26];             // one pointer per lowercase letter
-    boolean end = false;                     // marks end-of-word
+<TemplateReveal
+  slug="binary-trie"
+  language="java"
+  :canonical="binaryTrieCode"
+/>
 
-    void insert(String word) {
-        Trie node = this;
-        for (char c : word.toCharArray()) {
-            int i = c - 'a';
-            if (node.next[i] == null) node.next[i] = new Trie();
-            node = node.next[i];
-        }
-        node.end = true;
-    }
+## False friends — when "prefix lookup" doesn't want a trie
 
-    boolean search(String word) {
-        Trie node = walk(word);
-        return node != null && node.end;
-    }
+- **Exact-match lookup, no prefix queries** — `HashSet<String>` is faster (one hash) and uses less memory (no per-character node overhead). Only switch to trie when prefix / wildcard / streaming semantics matter.
+- **Substring or suffix search** — tries are prefix-first. Use **suffix automaton**, **suffix array**, or **Aho-Corasick** for substring queries. Reversing the inserted strings lets you do suffix queries, but only in the simplest cases.
+- **Range queries over whole words** — `TreeMap<String, V>` / `TreeSet<String>` supports `subMap(from, to)` in O(log n), cleaner than DFS over trie subtrees.
+- **Massive alphabet (Unicode)** — 26-pointer arrays explode. Use `HashMap<Character, Node>` per node (sparse) or a **ternary search tree** (3 pointers per node, 10× memory savings).
+- **Memory-critical with lots of duplicate suffixes** — **DAWG / DAFSA** merges equivalent suffixes, cutting memory 10-100× for English word lists.
+- **Just one or two lookups** — the trie build cost (O(total characters)) is wasted. Linear scan is fine.
 
-    boolean startsWith(String prefix) {
-        return walk(prefix) != null;
-    }
+## Traps & gotchas
 
-    private Trie walk(String s) {
-        Trie node = this;
-        for (char c : s.toCharArray()) {
-            int i = c - 'a';
-            if (node.next[i] == null) return null;
-            node = node.next[i];
-        }
-        return node;
-    }
-}
-```
+<TrapTrace
+  title="Trap 1 — Forgetting the end-of-word flag"
+  :bug="trap1Bug"
+  :fix="trap1Fix"
+/>
 
-**Complexity:** O(L) insert / search / startsWith, where L is word length. Space: O(alphabet × total characters) worst case.
+<TrapTrace
+  title="Trap 2 — Word Search II emitting the same word twice"
+  :bug="trap2Bug"
+  :fix="trap2Fix"
+/>
 
-### Template 2: Binary trie (32-bit) for max-XOR
-
-```java
-class BinaryTrie {
-    BinaryTrie[] next = new BinaryTrie[2];
-
-    void insert(int x) {
-        BinaryTrie node = this;
-        for (int b = 31; b >= 0; b--) {
-            int bit = (x >> b) & 1;
-            if (node.next[bit] == null) node.next[bit] = new BinaryTrie();
-            node = node.next[bit];
-        }
-    }
-
-    int maxXor(int q) {                     // best XOR partner for q
-        BinaryTrie node = this;
-        int result = 0;
-        for (int b = 31; b >= 0; b--) {
-            int bit = (q >> b) & 1;
-            int want = 1 - bit;              // XOR wants the opposite bit
-            if (node.next[want] != null) {
-                result |= (1 << b);
-                node = node.next[want];
-            } else {
-                node = node.next[bit];
-            }
-        }
-        return result;
-    }
-}
-```
-
-**Complexity:** O(32) per operation. Independent of stored count.
-**Key move:** at every bit, prefer the opposite bit — greedy from MSB.
-
-### Template 3: Wildcard search (`.` matches any)
-
-```java
-boolean searchWildcard(Trie node, String word, int i) {
-    if (i == word.length()) return node.end;
-    char c = word.charAt(i);
-    if (c == '.') {
-        for (Trie child : node.next)
-            if (child != null && searchWildcard(child, word, i + 1)) return true;
-        return false;
-    } else {
-        Trie child = node.next[c - 'a'];
-        return child != null && searchWildcard(child, word, i + 1);
-    }
-}
-```
-
-**Complexity:** O(26^k) worst case where k = number of wildcards. In practice, most `.` positions branch to very few children.
-
-### Complexity summary
-
-| Operation | Time | Space | Notes |
-|---|---|---|---|
-| Insert word of length L | O(L) | O(alphabet × L) worst | Amortize across shared prefixes |
-| Search / startsWith | O(L) | O(1) auxiliary | Constant-space walk |
-| Delete | O(L) | O(1) | Optionally prune unused branches |
-| All words with prefix P | O(L + total chars in matches) | O(1) | DFS from prefix's end node |
-| Max XOR | O(32) | O(1) | Independent of stored count |
-
-## Traps & gotchas — the 5 that fail candidates on interview day
-
-> [trap] **Trap 1 — Forgetting the `end` flag.** Without it, `search("app")` returns true even if only `"apple"` was inserted. Every terminal node needs an explicit "word ends here" boolean. **Rule: `insert` sets `end = true` on the last node; `search` verifies `end == true` at the walk's end.**
-
-> [trap] **Trap 2 — Not marking words as visited during Word Search II.** When you find "cat" on the board, if you don't remove it from the trie (set `end = false`) or from your result set, you'll emit it multiple times if it can be spelled multiple ways. **Rule: after collecting a word, either remove its terminal or add to a `Set<String>` to dedupe.**
-
-> [trap] **Trap 3 — Recursion re-entering visited board cells in Word Search II.** Classic backtracking bug. Mark the cell before recursing; unmark after. Trie navigation and board navigation are independent — track both. **Rule: `board[r][c] = '#'; dfs(...); board[r][c] = original;`.**
-
-> [trap] **Trap 4 — Memory blowup with 26-way arrays.** A trie for 100K English words allocates ~50M pointer slots at 8 bytes each = 400 MB. If the interviewer says "memory-constrained," switch to `HashMap<Character, Node>` (only allocate pointers actually used) or a compressed trie. **Rule: mention this trade-off explicitly when discussing memory.**
-
-> [trap] **Trap 5 — Binary trie bit order.** For max-XOR, always insert MSB-first. Bit `31` gives the largest place value, so choosing the "opposite bit" at the MSB matters most. **Rule: iterate `for (int b = 31; b >= 0; b--)` — top down.**
+<TrapTrace
+  title="Trap 3 — Binary-trie bit order reversed (LSB-first)"
+  :bug="trap3Bug"
+  :fix="trap3Fix"
+/>
 
 ## History — de la Briandais 1959, Fredkin 1960, Google's first index
 
@@ -225,7 +394,110 @@ Google's **first web search index (1996-1998)** was a trie of URL prefixes — t
 
 When you mention *"we could compress single-child chains with a Patricia trie"* in an interview, you're citing a data structure Cisco routers use to move billions of packets per second.
 
-## Canonical problem walkthrough — Word Search II
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="trie-pattern" />
+
+The sub-variations walk the template through eight canonical uses — bare mechanic, trie-pruned backtracking on a grid, shortest-prefix root replacement, prefix-sum over values, cached top-k autocomplete, trie + DP sentence split, binary-trie max-XOR, and trie + length-ordered DFS for concatenated words. Each uses the same walk-the-path kernel; what changes is what the node caches and how the walk partners with another algorithm.
+
+### Implement Trie (bare mechanic) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Implement Trie](https://leetcode.com/problems/implement-trie-prefix-tree/)*
+
+The simplest instance. Build a trie supporting `insert(word)`, `search(word)`, `startsWith(prefix)`. The whole mechanism is a 26-way array of children per node plus an explicit `end` flag to distinguish word-match from prefix-match.
+
+> [inv] **Invariant** — At every point: inserted words correspond to root-to-end-marked paths; `search` finds a word iff the walk reaches a node with `end == true`; `startsWith` succeeds iff the walk is non-null.
+
+> [key] **Blind-solve prompt** — *Before revealing:* without peeking, write the three operations. Why does `search` need to check `end == true` but `startsWith` doesn't?
+
+<TemplateReveal
+  slug="implement-trie"
+  language="java"
+  :canonical="theTemplateCode"
+/>
+
+**Trace** on `insert("apple")`, `insert("app")`, `search("app")`, `startsWith("app")`, `search("appl")`:
+
+| op | trie state | result |
+|---|---|---|
+| insert("apple") | root→a→p→p→l→e(end) | — |
+| insert("app") | root→a→p→p(end)→l→e(end) | — |
+| search("app") | walk reaches p-with-end=true | **true** |
+| startsWith("app") | walk reaches p (non-null) | **true** |
+| search("appl") | walk reaches l (end=false) | **false** |
+
+### Replace Words (shortest-prefix replacement) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Replace Words](https://leetcode.com/problems/replace-words/)*
+
+Given a list of "root" words and a sentence, replace every word in the sentence by the SHORTEST root that is a prefix of it (if any). The trie insight: walking a word down the trie, the **first** terminal we hit is the shortest root — stop immediately.
+
+> [inv] **Invariant** — When walking word `w` from root, the first node with `end == true` is the shortest-prefix root of `w` (if any such root exists); any longer root would require continuing past this terminal.
+
+<TemplateReveal
+  slug="replace-words"
+  language="java"
+  :canonical="replaceWordsCode"
+/>
+
+### Map Sum Pairs (prefix-sum over values) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/)*
+
+Design `MapSum` with `insert(key, val)` and `sum(prefix)` returning the sum of values of all stored keys that start with `prefix`. The trick: **propagate value-deltas along every prefix node on insert**. Each node caches the sum of all values whose key passes through it; `sum(prefix)` is a plain O(L) walk.
+
+> [key] **Why delta?** If `insert("apple", 3)` runs then later `insert("apple", 5)`, we want sum("app") to be 5 (overwrite), not 8 (accumulate). Tracking `delta = new_val - old_val` and adding delta at each prefix node handles both insert and update uniformly.
+
+<TemplateReveal
+  slug="map-sum-pairs"
+  language="java"
+  :canonical="mapSumCode"
+/>
+
+### Search Suggestions System (autocomplete top-3) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/)*
+
+Given a product list and a search word, after each typed character return up to 3 lex-smallest completions. Preprocess: **sort products once**, then insert each into the trie; each node caches the first 3 words that pass through it (which are the 3 lex-smallest, by sort order). Query is O(L) — just read the cached list per prefix character.
+
+> [inv] **Invariant** — Because insertion order is sorted, the first 3 words that visit any node are the 3 lex-smallest completions of that prefix. `top3` becomes authoritative at insert time.
+
+<TemplateReveal
+  slug="search-suggestions"
+  language="java"
+  :canonical="searchSuggestionsCode"
+/>
+
+### Word Break II (trie + DP) <span class="diff diff-h">Hard</span>
+
+*[↗ LeetCode: Word Break II](https://leetcode.com/problems/word-break-ii/)*
+
+Return all ways to segment `s` into space-separated dictionary words. DFS over split points, backed by a trie: a missing child kills the entire branch of the DFS. Add memoization on `(i, parts)` for an extra constant-factor speedup if needed.
+
+<TemplateReveal
+  slug="word-break-ii"
+  language="java"
+  :canonical="wordBreakIICode"
+/>
+
+### Concatenated Words (DFS over trie) <span class="diff diff-h">Hard</span>
+
+*[↗ LeetCode: Concatenated Words](https://leetcode.com/problems/concatenated-words/)*
+
+Return all words that can be built by concatenating ≥ 2 shorter words from the same list. Sort by length first; **check-then-insert**, so when we check `w`, only strictly shorter words are in the trie. The DFS tries every split point; a word is "concatenated" iff recursion succeeds with ≥ 2 parts.
+
+> [key] **Why length-sorted?** A concatenated word's pieces are all strictly shorter than the whole. By length-ascending order, every piece needed for `canBuild(w)` is already in the trie.
+
+<TemplateReveal
+  slug="concatenated-words"
+  language="java"
+  :canonical="concatenatedWordsCode"
+/>
+
+<details>
+<summary><strong>Pedagogical: the 3-approach ladder for Word Search II (hash set → naive DFS → trie-pruned DFS)</strong></summary>
+
+#### Canonical problem walkthrough — Word Search II
 
 **Problem** ([↗ LeetCode](https://leetcode.com/problems/word-search-ii/)): Given an `m × n` board of characters and a list of `words`, return **all words** in the list that can be constructed from letters of sequentially adjacent cells. A cell may not be used more than once in a single word.
 
@@ -314,7 +586,7 @@ Optimize by removing trie nodes after all words in that subtree are found. Ensur
 
 Marginal improvement — mentioned as a follow-up in interviews, rarely coded.
 
-### Complexity ladder
+#### Complexity ladder
 
 | Approach | Time | Space | When |
 |---|---|---|---|
@@ -322,9 +594,9 @@ Marginal improvement — mentioned as a follow-up in interviews, rarely coded.
 | **Trie + single DFS** | **O(m · n · 4^L)** | **O(dictionary chars)** | **Interview default** |
 | Trie with pruning | Slightly better in practice | O(dictionary chars) | Contest / large k |
 
----
+</details>
 
-## Word Search II (Trie + Backtracking) <span class="diff diff-h">Hard</span>
+### Word Search II (Trie + Backtracking) <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Word Search II](https://leetcode.com/problems/word-search-ii/)*
 
@@ -481,7 +753,7 @@ O(totalChars) for the trie plus O(L) recursion stack; result output extra.
 - Why `nxt.word = null` after adding? — it deduplicates a word found through multiple paths.
 - Why mark `b[r][c] = '#'` and restore? — one path cannot reuse a cell, but sibling paths need the original board.
 
-## Maximum XOR of Two Numbers (Binary Trie) <span class="diff diff-m">Medium</span>
+### Maximum XOR of Two Numbers (Binary Trie) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)*
 
@@ -609,14 +881,95 @@ O(n·32) trie nodes in the worst case.
 - Why insert all numbers first? — each query can choose among every potential partner in the array.
 - Why pairing with itself is harmless here? — self-XOR is 0, which cannot beat a positive maximum pair.
 
+## In the wild — `java.util.jar.JarFile` manifest trie & Cisco IP routing
+
+**`java.util.jar.JarFile`** uses a trie internally to accelerate manifest lookups when verifying signed JARs. Entries are indexed by their path (`META-INF/MANIFEST.MF`, `META-INF/VERSIONS/9/foo.class`), stored in a shared-prefix trie keyed on path segments. Looking up any entry is O(path length) regardless of jar size.
+
+```java
+/* java.base/share/classes/java/util/jar/JarFile.java — paraphrased */
+class JarVerifier {
+    /* The trie maps path-prefixes to code-signer sets, enabling
+       O(L) lookup during verifyMultiRelease(). Without the trie,
+       each lookup would scan all entries O(n). For a jar with
+       10k entries, that's a 100x speedup on verification. */
+}
+```
+
+**Four more real-world trie sightings:**
+
+1. **Cisco IP routing tables** are **Patricia tries** (compressed trie / radix tree) over IP address bit prefixes. Each router has one trie per routing table; the ASIC walks the trie in one clock cycle per bit.
+2. **Ethereum's state tree** is a **Merkle Patricia trie** — each node also stores a cryptographic hash of its subtree, enabling O(log n) proof-of-inclusion for any account state.
+3. **Bash/Zsh tab-completion** uses an in-memory trie of filesystem paths and command names, walked once per keystroke to generate suggestions.
+4. **Aho-Corasick string matching** (used by `grep -F` and most antivirus pattern matchers) builds a trie of patterns, augmented with "failure links" that generalize KMP to multiple patterns simultaneously.
+
+## Recognition drill
+
+<RecognitionDrill pattern="trie-pattern" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if the alphabet is huge (Unicode, 1M+ code points)?</strong></summary>
+
+A 1M-pointer array per node is absurd — most slots are empty. Three alternatives:
+1. **`HashMap<Character, Node>` per node** — only allocates pointers that are actually used. Memory becomes O(sum of distinct chars encountered); CPU is O(L) with a hash per step instead of array index.
+2. **Ternary Search Tree** (TST, Bentley-Sedgewick 1997) — 3 pointers per node (`lo`, `mid`, `hi`) representing a BST of children. 10× memory savings; comparable O(L log σ) query time.
+3. **Compressed trie / Patricia / Radix tree** — collapse single-child chains into edges labeled with substrings. 2-10× node savings on sparse dictionaries.
+</details>
+
+<details>
+<summary><strong>What if you need to DELETE words?</strong></summary>
+
+Walk the path; set `end = false` on the terminal. If you want to actually reclaim memory, walk back up the path removing child pointers that no longer lead to any `end == true` node. O(L) time; usually not worth coding unless memory is tight.
+
+For a dynamic dictionary with heavy deletes, a **DAWG** doesn't support deletion natively (merged suffixes become shared, so deleting one word may affect others). Rebuild the DAWG periodically, or stick with a plain trie.
+</details>
+
+<details>
+<summary><strong>What if queries interleave: "insert, search, insert, search..." on a massive stream?</strong></summary>
+
+Plain trie supports this directly — each op is O(L). Memory grows O(total distinct chars). For bounded memory on an infinite stream, use **LRU cache + trie** or **Bloom filter + trie fallback**: the Bloom filter answers negative queries in O(1); the trie resolves positives.
+
+A **persistent trie** (functional data structure) answers "what was in the trie at time t?" by keeping version pointers. Each insert creates O(L) new nodes but shares the rest.
+</details>
+
+<details>
+<summary><strong>What if the "word" is actually a sequence of integers, not characters?</strong></summary>
+
+The trie structure is unchanged — just the alphabet differs. For a sequence of 32-bit ints, each node has `HashMap<Integer, Node>`. Common application: **n-gram language models** store sequences of word IDs; frequency and probability live at the terminals.
+
+A **suffix array / suffix automaton** is often a better fit for integer-sequence substring queries — they handle any alphabet in O(n log n) build and O(m) query.
+</details>
+
+<details>
+<summary><strong>What if you need to answer "longest common prefix of all stored words"?</strong></summary>
+
+Walk from root; follow the single child while this node is not a terminal and has exactly one child. The deepest such node's path is the longest common prefix. O(L) where L is the LCP length.
+
+For the related "longest common substring over all stored words," use a **generalized suffix tree / automaton** — a classical O(sum of lengths) algorithm.
+</details>
+
+### Breaking point
+
+Trie **stops being optimal** when:
+- The dictionary has only a few short words (hash set is simpler, faster).
+- You need exact-match lookup only (hash wins on memory and CPU).
+- You need substring/suffix search (use suffix array/automaton).
+- Memory is critically tight and alphabet is large (TST, DAWG, Patricia).
+- Queries require range or sorted iteration (`TreeMap` is cleaner).
+- The input is a one-shot lookup — build cost dominates query cost.
+
+### Three cross-pattern problems
+
+- [Stream of Characters (1032)](https://leetcode.com/problems/stream-of-characters/) — trie over REVERSED words + walk the stream backward. Trie meets streaming.
+- [Design Add and Search Words Data Structure (211)](https://leetcode.com/problems/design-add-and-search-words-data-structure/) — trie with wildcard `.` matching via branched DFS. Trie meets backtracking.
+- [Palindrome Pairs (336)](https://leetcode.com/problems/palindrome-pairs/) — trie of reversed words + palindrome-check at each walk step. Trie meets string manipulation.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="trie"
-  :questions='[{"q": "What is the space complexity of a trie storing N words of avg length L over alphabet σ?", "choices": [{"text": "O(N · L · σ) worst case", "correct": true, "explanation": "Each node has ≤ σ child pointers; N·L nodes total."}, {"text": "O(N)", "correct": false}, {"text": "O(L)", "correct": false}, {"text": "O(σ)", "correct": false}]}, {"q": "Search in a trie for a word of length L costs:", "choices": [{"text": "O(L)", "correct": true, "explanation": "One step per character, regardless of N."}, {"text": "O(N)", "correct": false}, {"text": "O(N · L)", "correct": false}, {"text": "O(σ · L)", "correct": false, "explanation": "Only if scanning all children each step."}]}, {"q": "For Word Search II, why is Trie + DFS faster than DFS-per-word?", "choices": [{"text": "Shared prefix traversal — each grid cell visits the trie at most O(σ) times", "correct": true, "explanation": "Grid DFS + trie fusion avoids repeated prefix work."}, {"text": "Sorting", "correct": false}, {"text": "Randomization", "correct": false}, {"text": "Not faster", "correct": false}]}, {"q": "For Stream of Characters (last-suffix match), what modification to the standard trie?", "choices": [{"text": "Insert each dictionary word REVERSED", "correct": true, "explanation": "Then walk backward through the stream — matches end at the newest char."}, {"text": "Store hash of suffixes", "correct": false}, {"text": "Use two tries", "correct": false}, {"text": "Never possible in O(L)", "correct": false}]}, {"q": "For Maximum XOR Between Numbers, what tree do you build?", "choices": [{"text": "Binary trie of the numbers (bit-by-bit)", "correct": true, "explanation": "Walk from MSB, greedily choosing the opposite bit."}, {"text": "BST", "correct": false}, {"text": "Character trie", "correct": false}, {"text": "Heap", "correct": false}]}]'
-/>
+<Quiz pattern-id="trie" :questions="mastery5" />
 
 <PrintButton />
 
