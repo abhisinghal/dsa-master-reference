@@ -5,6 +5,168 @@
 
 <PatternProgress pattern-id="backtracking" problems="n-queens, permutations, permutations-ii, subsets-ii, combination-sum-ii, combination-sum-iii, combination-sum-iv, letter-combinations-of-a-phone-number, palindrome-partitioning, n-queens-ii, sudoku-solver, valid-sudoku, beautiful-arrangement, unique-paths-iii, robot-room-cleaner, next-permutation, letter-case-permutation" />
 
+<script setup>
+const theTemplateCode = `// The backtracking skeleton: choose → recurse → un-choose.
+void solve(State path, Options remaining) {
+    if (isSolution(path)) {
+        record(path);                        // snapshot — never store the mutable live object
+        return;
+    }
+    for (Choice c : remaining) {
+        if (!respectsConstraint(c, path)) continue;   // PRUNE — kills whole subtree
+        choose(c, path);                     // mutate shared state
+        solve(path, remaining.without(c));
+        unchoose(c, path);                   // restore BEFORE next sibling
+    }
+}
+
+// The engineering is in the PRUNE and the UNCHOOSE.
+// Prune early = exponential → polynomial on real inputs.
+// Forget to unchoose = silent corruption at the next sibling.`
+
+const theTemplateInvariant = {
+  statement: `At every recursion entry, path represents a prefix of a candidate solution that satisfies all constraints so far. When path reaches "solution shape" (full length / full board / target hit), we record a snapshot. Mutate-and-undo lets a SINGLE shared path walk the entire tree in O(1) per level instead of O(n) copies.`,
+  initialization: `path is empty (no choices committed). remaining is the full option set. isSolution(empty) is true only for trivial problems; usually false.`,
+  maintenance: `For each choice c that passes the constraint check: choose(c) mutates path to a valid longer prefix. The recursive call extends to depth+1 under this invariant. unchoose(c) restores path to exactly its pre-choose state before the next sibling.`,
+  termination: `The option set strictly shrinks (for subsets/permutations) or the depth is bounded (for N-Queens, Sudoku). Each path either reaches a solution (recorded) or hits a constraint (pruned). Total leaves ≤ product of branching factors; depth bounds the stack.`
+}
+
+const theTemplateComplexity = {
+  time: `O(branching^depth · work per leaf) — pruning drops the constant drastically but not the asymptotic`,
+  space: `O(depth) recursion stack + O(solutions × solution-size) output`
+}
+
+const theTemplateSpecializations = [
+  { slug: `subsets-medium`,                  title: `Subsets (medium)` },
+  { slug: `combinations-medium`,             title: `Combinations (medium)` },
+  { slug: `permutations-used-medium`,        title: `Permutations (used[]) (medium)` },
+  { slug: `permutations-swap-medium`,        title: `Permutations (swap) (medium)` },
+  { slug: `combination-sum-medium`,          title: `Combination Sum (medium)` },
+  { slug: `n-queens-hard`,                   title: `N-Queens (hard)` },
+  { slug: `word-search-medium`,              title: `Word Search (medium)` },
+  { slug: `letter-combinations-medium`,      title: `Letter Combinations (medium)` },
+]
+
+const theTemplateProblemShape = `Enumerate / find / count all valid X in an exponential search space, where a partial choice can be proven invalid before completing — so pruning avoids whole subtrees. Depth is small (≤ 20 practical); mutation on a shared path lets each level cost O(1).`
+
+const subsetsCode = `// Subsets — the bare mechanic. Each element has 2 choices (skip / take).
+List<List<Integer>> subsets(int[] a) {
+    List<List<Integer>> res = new ArrayList<>();
+    dfs(a, 0, new ArrayList<>(), res);
+    return res;
+}
+
+void dfs(int[] a, int i, List<Integer> path, List<List<Integer>> res) {
+    if (i == a.length) {
+        res.add(new ArrayList<>(path));      // SNAPSHOT, not a reference
+        return;
+    }
+    // choice 1: skip a[i]
+    dfs(a, i + 1, path, res);
+    // choice 2: take a[i]
+    path.add(a[i]);
+    dfs(a, i + 1, path, res);
+    path.remove(path.size() - 1);            // UN-CHOOSE
+}`
+
+const permutationsSwapCode = `// Permutations via in-place swap — no used[] array needed.
+// Idea: positions 0..i-1 are "fixed to some value"; try each remaining value at position i.
+List<List<Integer>> permute(int[] a) {
+    List<List<Integer>> res = new ArrayList<>();
+    dfs(a, 0, res);
+    return res;
+}
+
+void dfs(int[] a, int i, List<List<Integer>> res) {
+    if (i == a.length) {
+        List<Integer> p = new ArrayList<>();
+        for (int x : a) p.add(x);
+        res.add(p);
+        return;
+    }
+    for (int j = i; j < a.length; j++) {
+        swap(a, i, j);                       // choose: a[j] goes to position i
+        dfs(a, i + 1, res);
+        swap(a, i, j);                       // un-choose: restore order
+    }
+}
+
+void swap(int[] a, int x, int y) { int t = a[x]; a[x] = a[y]; a[y] = t; }`
+
+const letterCombinationsCode = `// Phone-pad letter combinations — classic k-nested-loop problem unrolled by backtracking.
+static final String[] PAD = {
+    "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+};
+
+List<String> letterCombinations(String digits) {
+    List<String> res = new ArrayList<>();
+    if (digits.isEmpty()) return res;
+    dfs(digits, 0, new StringBuilder(), res);
+    return res;
+}
+
+void dfs(String digits, int i, StringBuilder path, List<String> res) {
+    if (i == digits.length()) {
+        res.add(path.toString());
+        return;
+    }
+    String letters = PAD[digits.charAt(i) - '0'];
+    for (char c : letters.toCharArray()) {
+        path.append(c);                      // choose
+        dfs(digits, i + 1, path, res);
+        path.deleteCharAt(path.length() - 1);// un-choose
+    }
+}`
+
+const mastery5 = [
+  {
+    q: `In the choose-recurse-unchoose template, why must you ALWAYS un-choose, even when the recursive call returns immediately?`,
+    choices: [
+      { text: `The next sibling in the for loop must see the exact pre-choose state`, correct: true, explanation: `A single shared path walks the whole tree. Forgetting to un-choose corrupts every subsequent sibling in the current level AND every sibling at higher levels during their later-sibling scans.` },
+      { text: `Only when you plan to try another sibling`, correct: false, explanation: `Even single-sibling levels get bitten — the parent's siblings still need the restored state.` },
+      { text: `Java's GC requires it`, correct: false, explanation: `GC doesn't care; mutation of state is the problem.` },
+      { text: `Only when the path is a List<T>`, correct: false }
+    ]
+  },
+  {
+    q: `For Subsets with input [1,2,3], the choose-or-skip template emits results in what order?`,
+    choices: [
+      { text: `[], [3], [2], [2,3], [1], [1,3], [1,2], [1,2,3] (skip visited first at each level)`, correct: true, explanation: `The "skip" branch is explored before "take" in the code, so the leftmost leaf is the all-skip empty set.` },
+      { text: `[1], [1,2], [1,2,3], [1,3], [2], [2,3], [3], []`, correct: false, explanation: `That's the index-based combination template, not the choose-or-skip.` },
+      { text: `[], [1], [2], [3], [1,2], [1,3], [2,3], [1,2,3]`, correct: false, explanation: `That's grouped by size (BFS layer order).` },
+      { text: `Random`, correct: false }
+    ]
+  },
+  {
+    q: `For Permutations II with input [1,1,2], what's the standard duplicate-handling trick?`,
+    choices: [
+      { text: `Sort the input, then in the loop skip if (i > start && a[i] == a[i-1] && !used[i-1])`, correct: true, explanation: `The !used[i-1] guard allows the equal pair to form a permutation when both are being placed, but blocks the second starting a new branch with the same character the first did.` },
+      { text: `Use a HashSet<List<Integer>> to deduplicate at the end`, correct: false, explanation: `Correct but wastes work generating duplicates in the first place.` },
+      { text: `Return any permutation that passes an is_canonical check`, correct: false },
+      { text: `No fix — duplicates are allowed`, correct: false }
+    ]
+  },
+  {
+    q: `For Sudoku solver, which constraint order gives the fastest pruning?`,
+    choices: [
+      { text: `Row, column, box — the cheapest check that fails most often first`, correct: true, explanation: `Row check fails ~90% of the time on random partial solutions. Box check fails less often; running it last avoids wasted work.` },
+      { text: `Box, column, row — larger constraints first`, correct: false, explanation: `Box is the LEAST discriminating; running it first makes you discover failure late.` },
+      { text: `Order doesn't matter — all three are O(1)`, correct: false, explanation: `Asymptotic is the same; constant factor from order matters a lot on exponential searches.` },
+      { text: `Alphabetically`, correct: false }
+    ]
+  },
+  {
+    q: `Why is Dancing Links (Knuth, 2000) the state-of-the-art for exact-cover problems like Sudoku?`,
+    choices: [
+      { text: `It represents the constraint matrix as a doubly-linked list of rows and columns, so un-choose is truly O(1)`, correct: true, explanation: `Removing a row/column from the DL structure takes two pointer updates; restoring it uses the same two pointers in reverse (lazy restore).` },
+      { text: `It uses SAT solvers`, correct: false, explanation: `DLX is a direct backtracking algorithm, not a SAT reduction.` },
+      { text: `It parallelizes to all CPU cores`, correct: false, explanation: `The algorithm is single-threaded; parallel versions exist but aren't the state of the art.` },
+      { text: `It solves in polynomial time`, correct: false, explanation: `Exact cover is NP-complete; DLX is just a very fast exponential.` }
+    ]
+  }
+]
+</script>
+
 
 
 ## Why backtracking exists — the story
@@ -71,99 +233,59 @@ The specific interviewer red flags:
 - *"return the count modulo 10⁹ + 7"* — almost always DP.
 - *"find the shortest / minimum X"* — often BFS on state space, not backtracking.
 
-## Templates
+## THE template — choose, recurse, un-choose
 
-### Template 1: Subsets (choose-or-skip)
+<PatternTemplateCard
+  slug="backtracking"
+  title="Backtracking"
+  language="java"
+  :code="theTemplateCode"
+  :invariant="theTemplateInvariant"
+  :complexity="theTemplateComplexity"
+  :specializations="theTemplateSpecializations"
+  :problemShape="theTemplateProblemShape"
+/>
 
-```java
-List<List<Integer>> subsets(int[] a) {
-    List<List<Integer>> res = new ArrayList<>();
-    List<Integer> path = new ArrayList<>();
-    dfs(a, 0, path, res);
-    return res;
-}
+<InvariantProof
+  :statement="theTemplateInvariant.statement"
+  :initialization="theTemplateInvariant.initialization"
+  :maintenance="theTemplateInvariant.maintenance"
+  :termination="theTemplateInvariant.termination"
+/>
 
-void dfs(int[] a, int i, List<Integer> path, List<List<Integer>> res) {
-    if (i == a.length) { res.add(new ArrayList<>(path)); return; }
-    // choice 1: skip a[i]
-    dfs(a, i + 1, path, res);
-    // choice 2: include a[i]
-    path.add(a[i]);
-    dfs(a, i + 1, path, res);
-    path.remove(path.size() - 1);       // un-choose
-}
-```
+### Pruning is where the asymptotics live
 
-**Time:** O(n · 2^n) — 2^n subsets, each of average size n/2 to copy.
-**Space:** O(n) recursion depth + O(n · 2^n) output.
+Backtracking without pruning IS brute force — same `O(branching^depth)`. The pruning check is the entire algorithmic contribution. Put the **cheapest check that fails most often first**: for Sudoku, row before column before 3×3 box. For N-Queens, bitmask union before explicit coordinate scans. For Word Search, grid-bounds before letter match before visited-cell check.
 
-### Template 2: Permutations (used-set)
-
-```java
-List<List<Integer>> permutations(int[] a) {
-    List<List<Integer>> res = new ArrayList<>();
-    List<Integer> path = new ArrayList<>();
-    boolean[] used = new boolean[a.length];
-    dfs(a, used, path, res);
-    return res;
-}
-
-void dfs(int[] a, boolean[] used, List<Integer> path, List<List<Integer>> res) {
-    if (path.size() == a.length) { res.add(new ArrayList<>(path)); return; }
-    for (int i = 0; i < a.length; i++) {
-        if (used[i]) continue;
-        used[i] = true; path.add(a[i]);
-        dfs(a, used, path, res);
-        used[i] = false; path.remove(path.size() - 1);
-    }
-}
-```
-
-**Time:** O(n · n!) — n! permutations, O(n) to record each.
-**Space:** O(n) recursion + O(n · n!) output.
-
-### Template 3: Constraint-satisfaction (N-Queens)
-
-```java
-int solveNQueens(int n) {
-    return dfs(n, 0, 0, 0, 0);          // row=0; columns/diag/anti-diag as bitmasks
-}
-
-int dfs(int n, int row, int cols, int diag, int anti) {
-    if (row == n) return 1;
-    int free = ((1 << n) - 1) & ~(cols | diag | anti);   // available columns as bitmask
-    int count = 0;
-    while (free != 0) {
-        int pick = free & -free;         // lowest set bit
-        count += dfs(n, row + 1, cols | pick, (diag | pick) << 1, (anti | pick) >> 1);
-        free ^= pick;                    // clear that bit; try next
-    }
-    return count;
-}
-```
-
-**Time:** O(n!) with heavy pruning — 8-queens explores ~2K nodes.
-**Space:** O(n) — bitmasks avoid explicit column/diagonal arrays.
-
-### Complexity summary
+### Complexity reference
 
 | Template | Time | Space | Best use |
 |---|---|---|---|
-| Subsets | O(n · 2ⁿ) | O(n) recursion | All subsets of small sets |
-| Permutations | O(n · n!) | O(n) recursion | All arrangements |
-| Constraint search | pruned exponential | O(n) | Sudoku, N-Queens, board problems |
+| **Subsets** (choose-or-skip) | O(n · 2ⁿ) | O(n) recursion | All subsets of small sets |
+| **Permutations** (used[]) | O(n · n!) | O(n) recursion | All arrangements |
+| **Combinations** (start-index) | O(k · C(n,k)) | O(k) recursion | Pick k from n |
+| **Constraint search** (bitmask) | pruned exponential | O(depth) | Sudoku, N-Queens |
+| **Grid DFS** (visited bitmap) | O(mn · 4^L) | O(L) stack | Word Search |
 
-## Traps & gotchas — the 5 that fail candidates on interview day
+## When the mechanic breaks — three failure modes
 
-> [trap] **Trap 1 — Forgetting to un-choose.** The most common bug. After `dfs(...)` returns, if you don't remove the last-added element from `path`, subsequent branches see stale state. Symptom: outputs contain duplicates or invalid combinations. **Rule: for every mutation before the recursive call, write the exact inverse right after it.**
+<TrapTrace
+  title="Forgetting to un-choose (silent state corruption)"
+  bug="You call dfs(path.add(x), ...) and let the recursive call modify path, but forget path.remove(size-1) after. The next sibling sees a path that still contains x — now its 'is-this-a-valid-prefix' check passes with corrupted data. Symptom: duplicates in output, or incorrectly-shaped solutions. No crash — just wrong answers."
+  fix="For every mutation before the recursive call, write its exact inverse right after. Rule of thumb: path.add(x) → dfs(...) → path.remove(size-1); used[i] = true → dfs(...) → used[i] = false; board[r][c] = 'Q' → dfs(...) → board[r][c] = '.'. If the mutation is on a shared state, the inverse MUST run or the next sibling will see garbage."
+/>
 
-> [trap] **Trap 2 — Copying `path` instead of taking a snapshot at the leaf.** `res.add(path)` adds a *reference* to the mutable list — every subsequent mutation corrupts previously-added results. **Rule: `res.add(new ArrayList<>(path))` when recording a solution.**
+<TrapTrace
+  title="Storing a reference to the mutable path instead of a snapshot"
+  bug="You write res.add(path) when path is a valid solution. path is a mutable List; res now holds a reference to it. Subsequent mutations (even in later siblings) corrupt the stored solution. Classic symptom: res.toString() shows every entry equal to the LAST path visited by the recursion."
+  fix="Always snapshot at the leaf: res.add(new ArrayList<>(path)). For char[] or int[] boards, snapshot with Arrays.copyOf(). For StringBuilder paths, path.toString() returns a String (immutable), so that's safe. Cost is O(solution-size) per leaf — unavoidable; the output IS O(solutions × solution-size)."
+/>
 
-> [trap] **Trap 3 — Duplicate handling in Combination Sum II / Permutations II.** With input `[1,1,2]`, naive backtracking emits `[1,2]` twice — once per `1`. Fix: sort the input, then in the loop, `if (i > start && a[i] == a[i-1]) continue;` — the "duplicate skip" trick. This is a canonical staff-level test.
-
-> [trap] **Trap 4 — Prune order matters.** In Sudoku, checking constraints in the order (row, column, box) is 3× faster than (box, row, column) because the row check fires most often. **Rule: put the cheapest, most-likely-to-fail check first.**
-
-> [trap] **Trap 5 — Stack overflow on deep recursion.** Java's default stack is 512 KB — about 15,000 recursion frames. For n > 10,000, `-Xss4m` or convert to explicit stack. **Rule: mention this if the interviewer asks about very large inputs. It signals you understand the JVM, not just algorithms.**
+<TrapTrace
+  title="Duplicate output on inputs like [1,1,2] without the duplicate-skip trick"
+  bug="With Permutations II input [1,1,2], the naive loop emits [1,1,2] twice (once per starting '1'), [1,2,1] twice, [2,1,1] twice. Six outputs where only three are distinct. The exact same bug surfaces in Subsets II, Combination Sum II, and any 'enumerate without duplicates' problem."
+  fix="Sort the input first. Then in the sibling loop, skip duplicates: if (i > start && a[i] == a[i-1]) continue; (for Subsets II / Combination Sum II start-index templates). For Permutations II with used[]: if (i > 0 && a[i] == a[i-1] && !used[i-1]) continue; — the !used[i-1] guard allows an equal pair to BOTH be placed, but blocks the second starting a new branch with the same character."
+/>
 
 ## History — Golomb-Baumert, 1965
 
@@ -173,7 +295,40 @@ Donald Knuth extended the technique in **Dancing Links (2000)**, an elegant doub
 
 **Prolog** (1972) is essentially a language whose entire execution model is backtracking. Every SQL query planner uses backtracking at the query-tree exploration stage. Modern SAT solvers use **DPLL** (Davis-Putnam-Logemann-Loveland, 1962) — which is backtracking with clever pruning heuristics.
 
-## Canonical problem walkthrough — N-Queens
+## Sub-variations of the template
+
+<PatternSubVariationNav pattern="backtracking" />
+
+### Subsets <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)*
+
+The bare mechanic. Each element has two choices (skip / take) — the recursion tree is a complete binary tree of depth n with 2^n leaves, each a distinct subset.
+
+> [key] Enumerate all 2^n subsets of a set of distinct integers.
+
+<TemplateReveal
+  slug="subsets"
+  language="java"
+  :canonical="subsetsCode"
+/>
+
+**Why choose-or-skip beats the start-index template for Subsets?** Both give O(n · 2^n). The choose-or-skip tree has a fixed shape (full binary tree); the start-index tree has shrinking branching factor. Readability tie; pick the one your interviewer prefers.
+
+**Complexity:** O(n · 2^n) time (2^n subsets × n to copy each), O(n) recursion depth + O(n · 2^n) output.
+
+**Classic variations:**
+- [Subsets II](https://leetcode.com/problems/subsets-ii/) — input has duplicates; apply the duplicate-skip trick (sort, then `if (i > start && a[i] == a[i-1]) continue;`).
+- [Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) — same choose-or-skip shape, but the "choice" is a prefix palindrome.
+
+### N-Queens canonical walkthrough
+
+The Canonical problem walkthrough stays below (N-Queens Hard) — jump via the chip row above.
+
+<!-- (canonical N-Queens prose follows the H3 structure below as the N-Queens Hard sub-variation. The 3-approach ladder (brute → row-by-row → bitmask) has been consolidated into that H3.) -->
+
+<details>
+<summary><strong>Historical: the 3-approach ladder for N-Queens (brute → row → bitmask)</strong></summary>
 
 **Problem** ([↗ LeetCode](https://leetcode.com/problems/n-queens/)): Place `n` queens on an `n × n` chessboard such that no two queens attack each other (no shared row, column, or diagonal). Return all distinct board configurations.
 
@@ -248,6 +403,8 @@ void dfs(int n, int row, int cols, int diag, int anti) {
 | Brute force | O(C(n², n)) | O(n) | Never in practice |
 | **Row-by-row backtracking** | **pruned exponential** | **O(n)** | **Interview default** |
 | Bitmask backtracking | pruned exponential (5-10× faster) | O(n) | Contest / follow-up |
+
+</details>
 
 ---
 
@@ -347,7 +504,7 @@ You want *one* answer, not all — a pruned DFS or DP is faster than enumerating
 
 ---
 
-## Subsets &amp; Combinations (the start-index template) <span class="diff diff-m">Medium</span>
+### Combinations <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Subsets](https://leetcode.com/problems/subsets/)*
 
@@ -506,7 +663,7 @@ O(n) recursion/path space excluding output; O(n·2ⁿ) including the returned su
 - Why `path.remove(path.size() - 1)`? — it undoes the last choice so the next sibling starts from the previous state.
 - Why record at every node? — every partial path is already a valid subset, not only the leaves.
 
-## Permutations (the used[] template) <span class="diff diff-m">Medium</span>
+### Permutations (used[]) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Permutations](https://leetcode.com/problems/permutations/)*
 
@@ -615,7 +772,34 @@ O(n) recursion/path/used-array space excluding output; O(n·n!) including output
 - Why remove then set `used[i] = false`? — both shared structures must be restored for the next candidate.
 - Why copy `path` only when full length? — only complete orderings are valid permutations.
 
-## Combination Sum (reuse &amp; pruning) <span class="diff diff-m">Medium</span>
+### Permutations (swap) <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Permutations (companion template)](https://leetcode.com/problems/permutations/)*
+
+The same problem, different template. Instead of a `used[]` flag array, swap positions in place: at depth `i`, every array element from `i..n-1` is a candidate for position `i`.
+
+> [key] Enumerate all n! permutations by in-place position swaps.
+
+<TemplateReveal
+  slug="permutations-swap"
+  language="java"
+  :canonical="permutationsSwapCode"
+/>
+
+> [inv] **Invariant** — Before each `dfs(i, ...)` call, positions `0..i-1` have been assigned values; positions `i..n-1` form a (reordered) multiset of unused values. The swap mutation keeps this invariant because any permutation of `i..n-1` is still a reordering of the unused values.
+
+**swap vs. used[] — pick which?**
+
+| Dimension | `used[]` template | swap template |
+|---|---|---|
+| Memory | O(n) extra for the used array | O(1) extra; mutates input |
+| Duplicate skip | easy — `if (i > 0 && a[i] == a[i-1] && !used[i-1]) continue` | tricky — swap breaks the sorted order, standard duplicate-skip fails. Needs a hashset at each level. |
+| Mutating input | input preserved | input permuted (restored by un-swap) |
+| Preferred for | **Permutations II** (handles duplicates cleanly) | **Permutations I** (minimal memory) |
+
+**Complexity:** Same as used[] — O(n · n!) time, O(n) recursion.
+
+### Combination Sum <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Combination Sum](https://leetcode.com/problems/combination-sum/)*
 
@@ -730,7 +914,7 @@ O(target/minCandidate) recursion/path space excluding output.
 - Why still use `start`? — it keeps combinations nondecreasing so `[2,3,2]` is not duplicated separately from `[2,2,3]`.
 - Why copy `path` at `remain == 0`? — the current list is exactly one valid combination and must be frozen before backtracking.
 
-## N-Queens (constraint occupancy) <span class="diff diff-h">Hard</span>
+### N-Queens <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: N-Queens](https://leetcode.com/problems/n-queens/)*
 
@@ -890,7 +1074,7 @@ O(n) for columns and O(2n) for each diagonal array, plus O(n) recursion stack.
 - Why check `col[c] || diag[d] || anti[a]` before placing? — a queen attacks along exactly those three occupancy dimensions.
 - Why clear all three booleans after recursion? — leaving any one set falsely blocks sibling placements.
 
-## Word Search (grid backtracking) <span class="diff diff-m">Medium</span>
+### Word Search <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Word Search](https://leetcode.com/problems/word-search/)*
 
@@ -1009,14 +1193,147 @@ O(L) recursion stack; O(1) extra visited storage because the board is marked in 
 - Why use `#`? — it marks the cell as visited without allocating a separate `visited` matrix.
 - Why restore `b[r][c] = tmp`? — other starting cells and sibling branches must see the untouched board.
 
+### Letter Combinations <span class="diff diff-m">Medium</span>
+
+*[↗ LeetCode: Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)*
+
+#### Problem
+Given a string of digits 2–9, return all letter combinations the digits could spell on a phone keypad (`2→"abc"`, `3→"def"`, ..., `9→"wxyz"`).
+
+**Example:** digits `"23"` → `["ad","ae","af","bd","be","bf","cd","ce","cf"]`.
+
+#### Why this is backtracking (not just nested loops)
+
+For `k` digits with max 4 letters per digit, there are up to `4^k` combinations. For `k = 4`, that's `256` — fine with 4 nested loops. For `k = 10`, that's `10^6` — nested loops become unmanageable to code generically. Backtracking generalizes nested loops to runtime-determined depth.
+
+> [key] Enumerate all letter strings a digit sequence could spell on a phone keypad.
+
+<TemplateReveal
+  slug="letter-combinations"
+  language="java"
+  :canonical="letterCombinationsCode"
+/>
+
+> [inv] **Invariant** — At recursion depth `i`, path holds exactly one letter choice per digit in `digits[0..i-1]`. The length-`i` prefix is one combination's prefix; the full length-`digits.length()` strings are the leaves.
+
+**Why StringBuilder, not String?** `path + c` would allocate a new String each level — O(k) per level × 4 per depth = O(k · 4^k) allocations. `StringBuilder.append` is amortized O(1); only the final `path.toString()` at each leaf allocates — total allocations drop to O(4^k).
+
+**Complexity:** O(k · 4^k) time, O(k) recursion depth + O(4^k · k) output.
+
+**Classic companion:** [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) — same shape; "choice" is `(` or `)` with pruning (open ≤ n, close ≤ open).
+
+## In the wild — PostgreSQL join-order search
+
+PostgreSQL's query planner uses **bounded backtracking** to pick the join order for queries with many tables. For `n ≤ 12` tables, it does an exhaustive dynamic-programming search; for larger `n`, it switches to the **GEQO** (Genetic Query Optimizer) heuristic — but the exhaustive mode is pure backtracking with pruning on current best cost:
+
+```c
+/* src/backend/optimizer/path/joinrels.c (highly paraphrased) */
+RelOptInfo *make_rels_by_joins(PlannerInfo *root, int level, List **joinrels) {
+    /* "level" is depth: how many tables have been joined so far.
+       The search tree branches on which next relation to join. */
+    foreach (lc, joinrels[level - 1]) {
+        RelOptInfo *old_rel = (RelOptInfo *) lfirst(lc);
+
+        foreach (othercell, joinrels[1]) {
+            RelOptInfo *new_rel = (RelOptInfo *) lfirst(othercell);
+            if (!bms_overlap(old_rel->relids, new_rel->relids)) {
+                /* PRUNE: if estimated cost of this join path exceeds the
+                   current best plan cost, skip the whole subtree. */
+                RelOptInfo *joined = make_join_rel(root, old_rel, new_rel);
+                if (joined && joined->cheapest_total_path->total_cost > root->best_cost)
+                    continue;    /* back out — explore sibling instead */
+
+                /* RECURSE deeper: joining one more table at level+1. */
+                add_to_level(joinrels[level], joined);
+            }
+        }
+    }
+}
+```
+
+**Why this is "bounded backtracking":** the choose-recurse-unchoose pattern is here (join `old_rel` with `new_rel`, recurse to level+1, implicitly "unchoose" by trying another `new_rel` in the loop). The `best_cost` bound is the pruning oracle — any subtree whose current partial-join cost already exceeds the best complete plan is dead. For `n = 12` tables, this prunes ~99% of the `12! = 479M` naive orderings down to a few hundred thousand actually explored.
+
+**Other production backtracking:**
+1. **Prolog execution (SWI-Prolog, SICStus)** — every rule unification is a choice point; failed unification triggers un-choose and the next clause is tried. The entire language IS backtracking.
+2. **DPLL / CDCL SAT solvers (MiniSat, Glucose)** — modern SAT uses backtracking with learned-clause pruning. Powers formal verification tools and symbolic execution engines.
+3. **GHC's type-class resolution** — Haskell's type inference backtracks over instance-head unification candidates when multiple instances match.
+4. **Z3 theorem prover** — backtracking on model assignments with theory propagation; underpins Microsoft's static analyzers and Facebook's Infer.
+
+## Recognition drill
+
+<RecognitionDrill pattern="backtracking" :count="10" />
+
+## Advanced — follow-ups and failure modes
+
+<details>
+<summary><strong>What if the recursion depth exceeds the JVM stack?</strong></summary>
+
+Java's default `-Xss` is ~512 KB → ~15,000 frames. For `n > 10,000` depth:
+- Launch with `-Xss4m` (4 MB stack).
+- Or convert to an explicit `ArrayDeque<State>` iterative loop.
+
+For competitive programming, mention this when the interviewer asks about scale — it signals you understand the JVM, not just algorithms.
+</details>
+
+<details>
+<summary><strong>What if the branching factor is huge but most branches prune instantly?</strong></summary>
+
+Dancing Links (Knuth, 2000) is the state-of-the-art: represent the constraint matrix as a doubly-linked list; "choose" removes a row/column with two pointer updates, "un-choose" restores with the same two pointers in reverse. O(1) per choose/unchoose; **lazy restore** means no actual data movement.
+
+Used by: Donald Knuth's Pentomino solver, world-record Sudoku solvers, operations-research exact-cover tools.
+</details>
+
+<details>
+<summary><strong>What if you need the k-th solution, not all solutions?</strong></summary>
+
+**Nth-permutation closed form**: factorial-base decomposition — for n elements, the k-th permutation (0-indexed) is determined by `(k / (n-1)!, (k mod (n-1)!) / (n-2)!, ...)`. O(n²) with no recursion.
+
+**Nth-combination**: binomial-coefficient decomposition — walk the Pascal's triangle to find the i-th element included.
+
+Backtracking enumerates all `n!` or `C(n,k)` in O(n · n!) / O(k · C(n,k)); the closed form is O(n²).
+</details>
+
+<details>
+<summary><strong>What if the problem wants an optimal subset, not all valid ones?</strong></summary>
+
+**Branch-and-bound** — backtracking with a strong lower bound on partial solutions:
+1. Compute best-case cost of completing the current partial solution.
+2. If that best case is still worse than the current best complete solution, prune the whole subtree.
+
+Example: Traveling Salesman via branch-and-bound. For `n ≤ 20`, Held-Karp DP is better; for `n ≤ 50`, well-tuned branch-and-bound often wins. Beyond that, heuristics (LKH, OR-Tools' CP-SAT) take over.
+</details>
+
+<details>
+<summary><strong>What if different branches have very different costs — early rich pruning?</strong></summary>
+
+**Ordering heuristics** matter more than algorithm choice:
+- **MRV (Minimum Remaining Values)** — Sudoku: solve the empty cell with the FEWEST legal digits first.
+- **LCV (Least Constraining Value)** — among choices for a cell, try the value that eliminates the fewest options from neighbors.
+- **Dynamic variable ordering** — recompute MRV at each level, not just at the start.
+
+Peter Norvig's famous "Solve Every Sudoku Puzzle" (2007) is a 36-line Python program using MRV. It solves the hardest known Sudokus in under 10 ms.
+</details>
+
+### Breaking point
+
+Backtracking **stops being optimal** when:
+- The state space has heavy overlapping subproblems → switch to DP + memoization.
+- `n > 25` and pruning removes only a constant fraction → exponential is exponential.
+- The output size itself is exponential and you need to produce all of it → you're bottlenecked by output I/O; algorithmic improvements don't help.
+- The constraint graph has structure (planar, chordal, small treewidth) → specialized polynomial algorithms exist.
+- You need the count of solutions modulo a prime → DP, not enumeration.
+
+### Three cross-pattern problems
+
+- [Coin Change (322)](https://leetcode.com/problems/coin-change/) — looks enumerable; actually DP (overlapping subproblems kill backtracking).
+- [Beautiful Arrangement (526)](https://leetcode.com/problems/beautiful-arrangement/) — a canonical bitmask + backtracking hybrid.
+- [Robot Room Cleaner (489)](https://leetcode.com/problems/robot-room-cleaner/) — backtracking on an unknown grid with 4-directional commands; the "un-choose" is a physical move.
+
 ---
 
 ## Check your understanding
 
-<Quiz
-  pattern-id="backtracking"
-  :questions='[{"q": "What is the key invariant of backtracking?", "choices": [{"text": "On return, state is restored to before the call", "correct": true, "explanation": "Choose → recurse → un-choose is the discipline."}, {"text": "Global state only", "correct": false}, {"text": "No recursion allowed", "correct": false}, {"text": "Purely functional (no mutation)", "correct": false, "explanation": "Mutation is fine as long as undone."}]}, {"q": "For Permutations II (with duplicates), how do you dedup?", "choices": [{"text": "Sort; skip `nums[i]` if equal to previous AND previous not used", "correct": true, "explanation": "Enforces canonical duplicate order."}, {"text": "Use a HashSet of results", "correct": false, "explanation": "Works but wasteful."}, {"text": "Never emit", "correct": false}, {"text": "Sort output at end", "correct": false, "explanation": "Doesn’t prevent generation."}]}, {"q": "For N-Queens II (count), what state accelerates the check?", "choices": [{"text": "Three bitmasks: cols, diag1, diag2", "correct": true, "explanation": "`avail = ~(cols | d1 | d2)`; each pick uses `avail & -avail`."}, {"text": "A 2D boolean board", "correct": false, "explanation": "Works but slower per step."}, {"text": "A HashSet of coordinates", "correct": false}, {"text": "DP", "correct": false}]}, {"q": "For Sudoku Solver, what is the \"MRV\" heuristic?", "choices": [{"text": "Pick the empty cell with the fewest legal digits next", "correct": true, "explanation": "Minimum Remaining Values — prunes hardest branches first."}, {"text": "Random ordering", "correct": false}, {"text": "Top-left first", "correct": false, "explanation": "Works but slow on hard puzzles."}, {"text": "Left-to-right", "correct": false}]}, {"q": "What is a common cause of TLE in backtracking?", "choices": [{"text": "Missing pruning (input not sorted, no early-return check)", "correct": true, "explanation": "Aggressive pruning is essential."}, {"text": "Wrong programming language", "correct": false}, {"text": "Too many comments", "correct": false}, {"text": "Using recursion", "correct": false}]}]'
-/>
+<Quiz pattern-id="backtracking" :questions="mastery5" />
 
 <PrintButton />
 

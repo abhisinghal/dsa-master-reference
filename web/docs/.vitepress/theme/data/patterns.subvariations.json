@@ -598,44 +598,44 @@
     "inTheWildSource": "PostgreSQL query planner join-order search (bounded backtracking)",
     "subVariations": [
       {
-        "slug": "subsets",
-        "title": "Subsets (pick/skip decision tree \u2014 bare mechanic)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "subsets-medium",
+        "title": "Subsets (pick/skip decision tree \u2014 bare mechanic)"
       },
       {
-        "slug": "combinations",
-        "title": "Combinations",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "combinations-medium",
+        "title": "Combinations"
       },
       {
-        "slug": "permutations-swap",
-        "title": "Permutations (swap template)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "permutations-used-medium",
+        "title": "Permutations (used[] template)"
       },
       {
-        "slug": "permutations-used",
-        "title": "Permutations (used[] template)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "permutations-swap-medium",
+        "title": "Permutations (swap template)"
       },
       {
-        "slug": "combination-sum",
-        "title": "Combination Sum (reuse + pruning)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "combination-sum-medium",
+        "title": "Combination Sum (reuse + pruning)"
       },
       {
-        "slug": "n-queens",
-        "title": "N-Queens (constraint occupancy)",
-        "difficulty": "hard"
+        "difficulty": "hard",
+        "slug": "n-queens-hard",
+        "title": "N-Queens (constraint occupancy)"
       },
       {
-        "slug": "word-search",
-        "title": "Word Search (grid backtracking)",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "word-search-medium",
+        "title": "Word Search (grid backtracking)"
       },
       {
-        "slug": "letter-combinations-phone",
-        "title": "Letter Combinations of a Phone Number",
-        "difficulty": "medium"
+        "difficulty": "medium",
+        "slug": "letter-combinations-medium",
+        "title": "Letter Combinations of a Phone Number"
       }
     ]
   },

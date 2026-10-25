@@ -1024,7 +1024,98 @@
       ]
     }
   ],
-  "backtracking": [],
+  "backtracking": [
+    {
+      "statement": "Enumerate all 2^n subsets of a set of distinct integers.",
+      "pattern": "backtracking",
+      "subVariation": "subsets",
+      "distractors": [
+        "bitmask",
+        "dp"
+      ]
+    },
+    {
+      "statement": "Enumerate all C(n,k) combinations of size k from n distinct integers.",
+      "pattern": "backtracking",
+      "subVariation": "combinations",
+      "distractors": [
+        "bitmask",
+        "dp"
+      ]
+    },
+    {
+      "statement": "Enumerate all n! permutations of n distinct integers, mutating a used[] flag array.",
+      "pattern": "backtracking",
+      "subVariation": "permutations-used",
+      "distractors": [
+        "heap-permutation",
+        "iterative"
+      ]
+    },
+    {
+      "statement": "Enumerate all n! permutations by swapping positions in-place.",
+      "pattern": "backtracking",
+      "subVariation": "permutations-swap",
+      "distractors": [
+        "used-array",
+        "iterative"
+      ]
+    },
+    {
+      "statement": "Find all unique ways to sum to a target using candidates (unlimited reuse).",
+      "pattern": "backtracking",
+      "subVariation": "combination-sum",
+      "distractors": [
+        "dp",
+        "greedy"
+      ]
+    },
+    {
+      "statement": "Place N queens on an N\u00d7N board with no two attacking.",
+      "pattern": "backtracking",
+      "subVariation": "n-queens",
+      "distractors": [
+        "dp",
+        "sat-solver"
+      ]
+    },
+    {
+      "statement": "Decide whether a word appears as a path in a letter grid (no cell reuse).",
+      "pattern": "backtracking",
+      "subVariation": "word-search",
+      "distractors": [
+        "bfs",
+        "trie-dfs"
+      ]
+    },
+    {
+      "statement": "Return all possible letter strings that a phone-digit sequence could spell.",
+      "pattern": "backtracking",
+      "subVariation": "letter-combinations-phone",
+      "distractors": [
+        "cartesian",
+        "bfs"
+      ]
+    },
+    {
+      "statement": "Partition a string so every substring is a palindrome; return all partitions.",
+      "pattern": "backtracking",
+      "subVariation": "subsets",
+      "distractors": [
+        "dp",
+        "trie"
+      ]
+    },
+    {
+      "statement": "Solve a 9\u00d79 Sudoku board by filling blank cells with 1-9 respecting row/column/box constraints.",
+      "pattern": "backtracking",
+      "subVariation": "n-queens",
+      "distractors": [
+        "dancing-links",
+        "sat"
+      ]
+    }
+  ],
   "divide-conquer": [
     {
       "statement": "Sort an array of n integers in O(n log n) worst case, stable, using O(n) extra space.",
