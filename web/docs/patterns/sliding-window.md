@@ -728,9 +728,10 @@ Start with the direct baseline: enumerate every candidate and compute the answer
 ```java
 double findMaxAverageBrute(int[] nums, int k) {
     long best = Long.MIN_VALUE;
-    for (int start = 0; start + k <= nums.length; start++) {
+    for (int left = 0; left + k <= nums.length; left++) {
+        int right = left + k - 1;
         long sum = 0;
-        for (int i = start; i < start + k; i++) sum += nums[i];
+        for (int t = left; t <= right; t++) sum += nums[t];   // t: inner summation only
         best = Math.max(best, sum);
     }
     return best / (double) k;
@@ -784,10 +785,11 @@ Kuch developers "build first window, then slide" prefer karte hain; slide loop m
 
 ```java
 long sum = 0;
-for (int i = 0; i < k; i++) sum += a[i];
+for (int t = 0; t < k; t++) sum += a[t];       // build first window
 long best = sum;
-for (int i = k; i < a.length; i++) {
-    sum += a[i] - a[i - k];
+for (int right = k; right < a.length; right++) {
+    int left = right - k + 1;                   // slide: left always trails right by k-1
+    sum += a[right] - a[left - 1];              // add newcomer, drop just-left-of-window
     best = Math.max(best, sum);
 }
 ```
@@ -804,12 +806,17 @@ The optimized scan is O(n) because every index is added to `val` once as `right`
 ### Space Complexity
 The optimized method is O(1) space because it keeps only `left`, `val`, and `best`; the input array is not copied and no per-window storage is created.
 
-### Learning notes
-- Why `long val`? — a k-window sum can get large, and using `long` is defensive for bigger constraints.
-- Why `Long.MIN_VALUE` for `best`? — all numbers can be negative, so seeding with `0` would incorrectly prefer an empty window.
-- Why `right >= k - 1`? — with 0-indexing, the first complete k-sized window ends at index `k-1`.
-- Why update `best` before subtracting `nums[left]`? — the current full window must be scored before preparing the next window.
-- Why divide by `(double) k`? — it forces floating-point division instead of truncating.
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Fixed-size is the easiest flavor** — `left` always trails `right` by `k - 1`; you never think about shrink conditions, only "did the window fill".
+- **Accumulator width matters** — a k-window sum of `int` values up to `10⁴` with `k = 10⁵` can hit `10⁹`; use `long` defensively even when `int` would fit.
+- **Seed `best` with `Long.MIN_VALUE`, not 0** — values can be negative, so `0` would incorrectly beat a legitimately-negative best window.
+- **Score before you slide** — update `best` while the window is still the current one, THEN subtract `nums[left]` and advance.
+- **Force floating-point division** — `best / (double) k`, not `best / k`, else integer truncation silently returns the wrong average.
+- **Why `right >= k - 1`?** — with 0-indexing, the first complete k-element window ends at index `k - 1`; this is the earliest `right` where the window is full.
+
+</details>
 
 <Callout kind="inv" title="Invariant">
 
@@ -897,11 +904,11 @@ Start with the direct baseline: enumerate every candidate and compute the answer
 ```java
 int minSubArrayLenBrute(int target, int[] a) {
     int best = Integer.MAX_VALUE;
-    for (int start = 0; start < a.length; start++) {
+    for (int left = 0; left < a.length; left++) {
         long sum = 0;
-        for (int end = start; end < a.length; end++) {
-            sum += a[end];
-            if (sum >= target) { best = Math.min(best, end - start + 1); break; }
+        for (int right = left; right < a.length; right++) {
+            sum += a[right];
+            if (sum >= target) { best = Math.min(best, right - left + 1); break; }
         }
     }
     return best == Integer.MAX_VALUE ? 0 : best;
@@ -946,12 +953,17 @@ The optimized loop is O(n) because `right` visits each element once and `left` a
 ### Space Complexity
 Space is O(1) because the algorithm stores a running sum, two pointers, and the best length; it does not allocate arrays or maps.
 
-### Learning notes
-- Why `long windowSum`? — repeated positive values can push the sum beyond comfortable int assumptions.
-- Why shrink inside `while (windowSum >= target)`? — for shortest windows, every valid window should be minimized immediately.
-- Why record before subtracting `a[left]`? — the current window is valid right now; after subtracting it may become invalid.
-- Why `right - left + 1`? — both endpoints are included.
-- Why return `0` when best stays `Integer.MAX_VALUE`? — that sentinel means no valid window was found.
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Shortest-window = shrink greedily.** The moment `windowSum >= target`, shrink `left` as long as the window is still valid; every intermediate state yields a candidate best. (Contrast with longest-window problems, where you only shrink when the window becomes INVALID.)
+- **Record BEFORE you subtract.** The current window is valid right now; once you shed `a[left]`, it may not be. So `best = min(best, right - left + 1)` happens first, then `windowSum -= a[left++]`.
+- **The termination invariant is `windowSum`, not `left < right`.** All values are `≥ 1` and `target ≥ 1`, so once `left` would equal `right + 1` the window-sum is `0 < target` and the while exits automatically — see the "Can `left` run past `right`?" details below.
+- **"No window found" ≠ "window of length ∞".** When `best` stays `Integer.MAX_VALUE`, return `0`; a caller reading the sentinel would otherwise think a giant window succeeded.
+- **The whole algorithm hinges on monotonicity.** With negative numbers the window-sum stops being monotone in extent and this template silently returns a wrong answer — see the "What if the array has negative numbers?" details below.
+- **Window length formula** — `right - left + 1` because both endpoints are inclusive.
+
+</details>
 
 <Callout kind="key" title="Key Insight">
 
@@ -1010,6 +1022,118 @@ Forgetting the "no window found" case. *Example:* `nums=[1,1,1]`, `target=100`. 
 The "shrink-to-minimize" twin of Minimum Window Substring (which minimizes over a character-coverage condition instead of a sum). Recognizing *longest vs shortest* decides whether you shrink lazily (only when invalid) or greedily (whenever valid).
 
 </Callout>
+
+<details class="aside">
+<summary><strong>Can <code>left</code> run past <code>right</code>? — why no explicit <code>left &lt; right</code> guard is needed</strong></summary>
+
+A reader looking at the inner loop
+
+
+
+```java
+while (windowSum >= target) {
+    best = Math.min(best, right - left + 1);
+    windowSum -= a[left++];
+}
+```
+
+
+
+has the right instinct: there is no bound check on `left`. Can `left` run off the end of the array?
+
+**Short answer:** no — not under the LeetCode 209 constraints (`a[i] >= 1`, `target >= 1`). `windowSum` IS the termination invariant; adding `left < right` would be redundant AND wrong (it would skip the valid one-element answer `right == left`).
+
+**The invariant** — on entry to the while body, `windowSum = a[left] + a[left+1] + … + a[right]`. Each iteration strictly decreases `windowSum` by `a[left] >= 1`. If `left` were ever to equal `right + 1`, the window is empty and `windowSum = 0`. Since `target >= 1`, the condition `0 >= target` is false → the loop exits before `left` ever reaches `right + 1`. So `left <= right + 1` at all times, and `a[left++]` can never access `a[a.length]`.
+
+**Trace** on `a = [2,3,1,2,4,3]`, `target = 7`:
+
+| right | windowSum before while | shrinks | left after | best |
+|------:|------------------------:|---------|-----------:|-----:|
+|   0   |  2  | — | 0 | ∞ |
+|   1   |  5  | — | 0 | ∞ |
+|   2   |  6  | — | 0 | ∞ |
+|   3   |  8  | 8→6, 6→5 | 2 | 3 |
+|   4   |  9  | 9→5 | 3 | 3 |
+|   5   |  8  | 8→7, 7→4 | 5 | **2** |
+
+`left` moves 0→0→0→0→2→3→5 — always stays `≤ right`.
+
+**Where the invariant breaks (and the fix)**
+
+- **If `target <= 0`:** an empty window has `windowSum = 0 >= target`, so the while never exits and the next iteration throws `ArrayIndexOutOfBoundsException` as soon as `left == a.length`. Guard at the function boundary (`if (target <= 0) return 0;`) or add `left <= right` to the while condition.
+- **If `a[i]` can be `0` or negative:** `windowSum` is no longer monotone under shrink — the whole algorithm is wrong, not just the termination. See the next collapsible for the correct replacement.
+- **Overflow:** this is why `windowSum` is `long`. With `n = 10⁵` and `a[i]` up to `10⁴`, the sum can reach `10⁹`; still inside `int`, but `long` is free defensive protection.
+
+**Template takeaway.** In the L/R sliding-window template, the shrink-while's predicate should ALWAYS be the window invariant itself (sum, count, distinct chars, …), not a positional guard. The invariant implies the positional bound AS LONG AS the problem is monotone. When monotonicity fails, you need a different pattern, not a `left < right` patch.
+
+</details>
+
+<details class="aside">
+<summary><strong>Advanced — what if the array has negative numbers?</strong></summary>
+
+**TL;DR.** The sliding window stops working. The constraint `a[i] >= 1` is doing load-bearing work, and the fix is a different algorithm (prefix sums + monotonic deque, LeetCode 862).
+
+**Why the window breaks.** Sliding window needs the window-sum function to be MONOTONE in the window extent:
+
+- adding to `right` can only grow the sum,
+- removing from `left` can only shrink the sum.
+
+Both are what let the shrink-while be greedy — once `windowSum >= target`, shrinking is safe because the sum will only drop. A negative element violates BOTH directions: growing can decrease the sum, shrinking can increase it. The template silently returns a wrong answer.
+
+**Trace of the failure** on `a = [2, -1, 2, 3]`, `target = 3`:
+
+
+
+```
+right=0: windowSum = 2   → not valid, skip while
+right=1: windowSum = 1   → not valid
+right=2: windowSum = 3   → valid! shrink: subtract a[0]=2, windowSum=1, left=1 — exits while
+                           best = (right - left + 1) at entry = 3 (window [2,-1,2])
+right=3: windowSum = 4   → valid! shrink: subtract a[1]=-1, windowSum=5 (grew!), left=2
+                           still valid, subtract a[2]=2, windowSum=3, left=3, still valid,
+                           subtract a[3]=3, windowSum=0, left=4, exit
+                           best = 2 (from [2,3])
+```
+
+
+
+The template returns `2`, which happens to be the right answer here — but notice the shrink step at `right=3` had `windowSum` GROW when we removed `-1`. In a different input (e.g. `a = [10, -5, -5, 5]`, `target = 5`) the template misses valid windows entirely because the growth-under-shrink lets it exit the while early.
+
+**The correct algorithm — monotonic deque on prefix sums** (LeetCode 862 "Shortest Subarray with Sum at Least K"):
+
+
+
+```java
+int shortestSubarray(int[] a, int K) {
+    int n = a.length;
+    long[] P = new long[n + 1];
+    for (int i = 0; i < n; i++) P[i + 1] = P[i] + a[i];   // prefix sums
+
+    Deque<Integer> dq = new ArrayDeque<>();               // indices into P, increasing by P[idx]
+    int best = Integer.MAX_VALUE;
+    for (int right = 0; right <= n; right++) {
+        // Shrink from the front: any window ending at (right-1) with sum ≥ K is a candidate.
+        while (!dq.isEmpty() && P[right] - P[dq.peekFirst()] >= K) {
+            best = Math.min(best, right - dq.pollFirst());
+        }
+        // Keep the deque's P-values strictly increasing: a larger P on the left can never
+        // beat a smaller, more-recent P as a starting index.
+        while (!dq.isEmpty() && P[dq.peekLast()] >= P[right]) dq.pollLast();
+        dq.offerLast(right);
+    }
+    return best == Integer.MAX_VALUE ? -1 : best;
+}
+```
+
+
+
+**Why the deque works where the window doesn't.** We are picking two prefix-sum INDICES, not expanding/shrinking a window. For any two indices `l < r`, the subarray sum is `P[r] - P[l]`, and we want `P[r] - P[l] >= K` with the smallest `r - l`. The deque keeps candidate `l` values whose `P[l]` is the smallest useful prefix sum seen so far; a larger older `P[l]` is dominated (any `r` that satisfies `P[r] - olderP >= K` with `olderP` larger ALSO satisfies it with a smaller more-recent `P`, giving a shorter window).
+
+**Complexity.** O(n) time (each index enters and leaves the deque at most once), O(n) extra space for `P` and the deque.
+
+**Rule of thumb.** The moment the problem allows zeros or negatives in an "at least K" sum, retire the sliding window and reach for prefix-sum + monotonic-deque. The window's monotonicity is the whole reason it is linear — losing it is losing the pattern.
+
+</details>
 
 ### Same pattern, new tweaks
 
@@ -1110,13 +1234,13 @@ Start with the direct baseline: enumerate every candidate and compute the answer
 ```java
 int lengthOfLongestSubstringBrute(String s) {
     int best = 0;
-    for (int start = 0; start < s.length(); start++) {
+    for (int left = 0; left < s.length(); left++) {
         boolean[] seen = new boolean[128];
-        for (int end = start; end < s.length(); end++) {
-            char c = s.charAt(end);
+        for (int right = left; right < s.length(); right++) {
+            char c = s.charAt(right);
             if (seen[c]) break;
             seen[c] = true;
-            best = Math.max(best, end - start + 1);
+            best = Math.max(best, right - left + 1);
         }
     }
     return best;
@@ -1168,12 +1292,17 @@ The scan is O(n) because `right` moves from left to right once, and `left` only 
 ### Space Complexity
 The code uses O(1) space under the ASCII constraint because `last` has fixed size 128. If the character set were unbounded Unicode, the same idea with a map would be O(alphabet seen).
 
-### Learning notes
-- Why initialize `last` with `-1`? — index 0 is valid, so `0` cannot mean unseen.
-- Why `if (last[c] >= left)`? — only duplicates still inside the window should move `left`.
-- Why set `left = last[c] + 1`? — the new window starts just after the previous copy.
-- Why update `last[c] = right` after the check? — future duplicates need the newest occurrence.
-- Why `int[128]`? — ASCII is assumed; Unicode needs a map.
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Clamp `left`, never retreat.** The duplicate's last position might be BEFORE the current window — jumping `left = last[c] + 1` unconditionally could move it backward and admit old duplicates. Guard with `if (last[c] >= left)`.
+- **Longest-window = lazy shrink.** Unlike shortest-window problems, you only move `left` when the invariant breaks (duplicate inside window); otherwise just keep growing `right`. The window shape is monotone in that sense.
+- **"Unseen" needs a sentinel outside the index space.** Initialize `last[]` with `-1`, not `0`, because `0` is a valid index of a seen character.
+- **Order matters:** check `last[c] >= left` FIRST, then update `last[c] = right`. Updating first would always make the duplicate look "in-window" and over-jump.
+- **Window length formula** — `right - left + 1`, same as every other sliding-window problem.
+- **Alphabet choice.** `int[128]` is O(1) under ASCII; swap to a `HashMap<Character, Integer>` for Unicode and the time stays O(n).
+
+</details>
 
 <Callout kind="inv" title="Invariant">
 
@@ -1353,12 +1482,17 @@ The optimized method is O(|S| + |T|): building `need` scans `T` once, and each c
 ### Space Complexity
 Space is O(1) for the fixed ASCII array `need[128]`; it does not grow with the length of `S` or `T`. With a general character map, it would be O(distinct chars in T).
 
-### Learning notes
-- Why return early when `s.length() < t.length()`? — a shorter source can never cover all target chars.
-- Why decrement with `need[s.charAt(right)]-- > 0`? — the old positive value means this char was still missing.
-- Why can `need[c]` go negative? — negative counts represent surplus chars.
-- Why `while (required == 0)`? — shortest-window problems shrink greedily once valid.
-- Why `need[s.charAt(left)]++ == 0`? — removing an exactly-satisfied char creates a deficit.
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **`need[c]` is a signed deficit, not a count.** Positive = still short, zero = exactly satisfied, negative = surplus. This single sign lets `required++`/`required--` fire ONLY at the "crossing zero" moment — the key to O(|S| + |T|).
+- **Compare the OLD value, not the new one.** `need[c]-- > 0` and `need[c]++ == 0` both read the value BEFORE the mutation; swapping to a post-check misses the crossing-zero event.
+- **`required` tracks total unmet char-slots, not distinct chars.** It starts at `t.length()`, decrements per covered slot, hits `0` exactly when the window covers `t`.
+- **Shortest = greedy shrink.** The moment `required == 0`, enter the shrink `while` and record. Same shape as "smallest subarray with sum ≥ target", with the sum replaced by a multiset-coverage counter.
+- **Early return `""` when `|S| < |T|`.** No window can cover more chars than it contains; this also protects the loop from degenerate inputs.
+- **Record BEFORE you shrink.** The current `[left, right]` is valid now; the next `left++` may invalidate it, so update `bestLen` and `bestL` first.
+
+</details>
 
 <Callout kind="inv" title="Invariant">
 
@@ -1545,12 +1679,17 @@ The fast optimized version is O(n) because each character is added once and remo
 ### Space Complexity
 All variants use O(26) = O(1) space for uppercase letter counts; no data structure grows with the string length.
 
-### Learning notes
-- Why `int[] cnt = new int[26]`? — input is uppercase A–Z, so indexing is fixed-size.
-- Why `++cnt[...]` inside `Math.max`? — add the incoming char first, then compare its new frequency.
-- Why is stale `maxFreq` allowed? — it may overestimate validity, but never makes the recorded best smaller.
-- Why shrink when `windowLen - maxFreq > k`? — that difference is the number of chars needing replacement.
-- Why decrement `cnt` on the way out? — `cnt[]` must mirror the current window.
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The validity test is `windowLen - maxFreq <= k`.** That subtraction counts the chars NOT equal to the current majority — exactly the chars you must replace to make the window uniform.
+- **Lazy `maxFreq` is deliberate, not a bug.** Even if it stays stale (larger than the true max in the current window) after a shrink, the recorded `best` never shrinks — it only grows when a longer uniform-enough window appears, and that growth requires a `maxFreq` value that IS fresh. See the deep-dive below for the proof.
+- **"At most k violations" is a general shape.** This is the same recipe as *Max Consecutive Ones III* (`k` zeros you may flip); swap the "majority char count" for "ones count" and the template matches.
+- **Add BEFORE comparing** — `maxFreq = max(maxFreq, ++cnt[s[right]])` increments first, then compares, so the newly-added char can itself be the new majority.
+- **Decrement `cnt` on the way out** — `cnt[]` must mirror `[left, right]` exactly, even though `maxFreq` is allowed to drift.
+- **Fixed-size alphabet = O(1) space** — `int[26]` for uppercase A–Z; generalize to `HashMap` only if the alphabet is unbounded.
+
+</details>
 
 <Callout kind="key" title="Key Insight">
 
@@ -1675,10 +1814,10 @@ Start with the direct baseline: enumerate every candidate and compute the answer
 ```java
 int numSubarrayProductLessThanKBrute(int[] a, int k) {
     int count = 0;
-    for (int start = 0; start < a.length; start++) {
+    for (int left = 0; left < a.length; left++) {
         long product = 1;
-        for (int end = start; end < a.length; end++) {
-            product *= a[end];
+        for (int right = left; right < a.length; right++) {
+            product *= a[right];
             if (product < k) count++;
         }
     }
@@ -1731,12 +1870,17 @@ The optimized loop is O(n) amortized: each element multiplies into `product` onc
 ### Space Complexity
 Space is O(1) because the method keeps only `left`, `count`, and `product`; it does not store the subarrays it counts.
 
-### Learning notes
-- Why `if (k <= 1) return 0`? — with positive integers, every product is at least 1.
-- Why `long product`? — temporary products can grow large before shrinking.
-- Why `while (product >= k)`? — equality is invalid because the condition is strictly less than k.
-- Why divide by `a[left++]`? — positive integers make division safely undo the outgoing element.
-- Why add `right - left + 1`? — all starts from `left` through `right` form valid subarrays ending at `right`.
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Counting = `right - left + 1` per step.** Every valid starting index in `[left, right]` paired with `right` is a new valid subarray; sum this at every step and you get the total count. This is the archetypal counting-flavor sliding-window trick.
+- **The at-most-K identity:** `exactly(K) = atMost(K) - atMost(K-1)`. This generalizes to problems like *Subarrays with K Different Integers* and *Count Number of Nice Subarrays*: write TWO calls to this template and subtract.
+- **Guard `k <= 1` upfront** — positive integers have product `≥ 1`, so the "strictly less than 1" case has 0 subarrays and the loop would underflow otherwise.
+- **Division is only safe because values are positive.** With zeros, `product` can stick at `0` and never "divide back up"; with negatives, inequality flips when you remove them. Use a different approach (prefix log, or 2-pointer with explicit sum) for those.
+- **`long product` is defensive.** Temporary products can exceed `int` even before the shrink step restores them, so promote once at declaration.
+- **Shrink to STRICT validity.** `while (product >= k)` — equality is NOT valid (the problem says "less than K"), so include it in the shrink condition.
+
+</details>
 
 <Callout kind="key" title="Key Insight — counting-subarrays trick">
 
@@ -1831,10 +1975,11 @@ Start with the direct baseline: enumerate every candidate and compute the answer
 ```java
 int[] maxSlidingWindowBrute(int[] a, int k) {
     int[] res = new int[a.length - k + 1];
-    for (int start = 0; start + k <= a.length; start++) {
+    for (int left = 0; left + k <= a.length; left++) {
+        int right = left + k - 1;
         int mx = Integer.MIN_VALUE;
-        for (int i = start; i < start + k; i++) mx = Math.max(mx, a[i]);
-        res[start] = mx;
+        for (int t = left; t <= right; t++) mx = Math.max(mx, a[t]);   // t: inner scan
+        res[left] = mx;
     }
     return res;
 }
@@ -1852,10 +1997,10 @@ Fixed-size window maximum via a deque of **indices** in decreasing value order.
 
 **Steps.**
 1. Deque holds **indices**, front-to-back non-increasing in value.
-2. For each `i`: while the back's value `<= nums[i]`, pop it — it can't be the max of any future window.
-3. Push `i`.
-4. If the front's index has fallen out of the window (`<= i - k`), pop it.
-5. When `i >= k - 1`, record `nums[dq.peekFirst()]` as the current window max.
+2. For each `right`: while the back's value `<= nums[right]`, pop it — it can't be the max of any future window.
+3. Push `right`.
+4. If the front's index has fallen out of the window (`< left`, where `left = right - k + 1`), pop it.
+5. When `right >= k - 1`, record `nums[dq.peekFirst()]` as the current window max.
 6. O(n) amortized — each index enters and leaves the deque at most once.
 
 **Java.**
@@ -1863,13 +2008,14 @@ Fixed-size window maximum via a deque of **indices** in decreasing value order.
 
 ```java
 int[] maxSlidingWindow(int[] a, int k) {
-    Deque<Integer> dq = new ArrayDeque<>();     // indices, values decreasing
+    Deque<Integer> dq = new ArrayDeque<>();           // indices, values decreasing
     int[] res = new int[a.length - k + 1];
-    for (int i = 0; i < a.length; i++) {
-        if (!dq.isEmpty() && dq.peekFirst() <= i - k) dq.pollFirst();   // expire
-        while (!dq.isEmpty() && a[dq.peekLast()] <= a[i]) dq.pollLast(); // pop smaller
-        dq.offerLast(i);
-        if (i >= k - 1) res[i - k + 1] = a[dq.peekFirst()];
+    for (int right = 0; right < a.length; right++) {
+        int left = right - k + 1;                     // conceptual left edge of window
+        if (!dq.isEmpty() && dq.peekFirst() < left) dq.pollFirst();      // expire out of [left, right]
+        while (!dq.isEmpty() && a[dq.peekLast()] <= a[right]) dq.pollLast();  // pop smaller
+        dq.offerLast(right);
+        if (right >= k - 1) res[left] = a[dq.peekFirst()];
     }
     return res;
 }
@@ -1885,12 +2031,17 @@ The optimized method is O(n) amortized because each index is offered to the dequ
 ### Space Complexity
 Space is O(k) because the deque stores indices from the current window only; the result array is the required output.
 
-### Learning notes
-- Why store indices instead of values? — indices let us expire elements that slide out.
-- Why expire with `dq.peekFirst() <= i - k`? — any such index is outside `[i-k+1, i]`.
-- Why pop while `a[dq.peekLast()] <= a[i]`? — the new value dominates weaker older candidates.
-- Why record only when `i >= k - 1`? — before that, the first full window has not formed.
-- Why `res[i - k + 1]`? — that is the start index of the current window.
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Store indices, never values.** You cannot expire a value — two different window positions might carry the same value. An index lets you check `idx < left` and pop stale candidates in O(1).
+- **The deque is monotone decreasing by VALUE, left-to-right by INDEX.** This dual invariant means the front is always the current max AND the oldest live index; pop from the back when a bigger value arrives, pop from the front when the oldest index expires.
+- **Pattern composition.** Sliding Window + Monotonic Deque — this is the first chapter example where TWO patterns compose; the window gives you fixed-size iteration, the deque gives you O(1) max maintenance. The same composition powers *Jump Game VI*, *Constrained Subsequence Sum*, and bounded DP speedups from O(nk) to O(n).
+- **"Pop while `≤`", not "`<`".** When a new value equals the back's value, popping the older one is still safe (the newer one expires later, so it's a strictly better candidate). Using `<` would keep stale duplicates.
+- **Record only when the window is full.** `right >= k - 1` guards the first `k - 1` iterations where the window hasn't formed yet.
+- **Amortized O(n), not O(nk).** Each index is pushed once, popped from the back at most once, and expired from the front at most once — total `3n` deque operations.
+
+</details>
 
 <Callout kind="pat" title="Pattern composition — Sliding Window + Monotonic Deque.">
 
@@ -1912,20 +2063,20 @@ The deque holds indices of the current window whose values are candidates for th
 
 <Callout kind="trap" title="Common Trap">
 
-Storing values, not indices. *Example:* `nums=[3,1,3]`, `k=2`. At `i=2`, the front `3` could be the old one that just exited the window — you can't tell without its index. Store indices; expire the front when `dq.peekFirst() <= i-k`.
+Storing values, not indices. *Example:* `nums=[3,1,3]`, `k=2`. At `right=2`, the front `3` could be the old one that just exited the window — you can't tell without its index. Store indices; expire the front when `dq.peekFirst() < left` (where `left = right - k + 1`).
 
 </Callout>
 
 <CodeTrace
   title="Trap — store values not indices: nums=[3,1,3], k=2"
   :values="[3,1,3]"
-  :windowKeys="['i']"
+  :windowKeys="['right']"
   :cellWidth="46"
   :steps='[
-    { pointers: { i: 0 }, vars: { dq: "[3]" }, note: "push 3 (as value)" },
-    { pointers: { i: 1 }, vars: { dq: "[3,1]" }, note: "1 lt 3 → push (keep monotone)" },
-    { pointers: { i: 2 }, vars: { dq: "[3,3]", output: "max=3?" }, note: "BUG: at i=2, front is 3 — is it the new 3 (still in window) or the old 3 (idx 0, expired)? unknown!", removed: [0] },
-    { pointers: { i: 2 }, vars: { dq: "[2] (idx)", output: "max=3" }, note: "FIX: store indices. front idx 0 ≤ i-k=0 → pop stale. push idx 2. output correct 3", added: [2] }
+    { pointers: { right: 0 }, vars: { dq: "[3]" }, note: "push 3 (as value)" },
+    { pointers: { right: 1 }, vars: { dq: "[3,1]" }, note: "1 lt 3 → push (keep monotone)" },
+    { pointers: { right: 2 }, vars: { dq: "[3,3]", output: "max=3?" }, note: "BUG: at right=2, front is 3 — is it the new 3 (still in window) or the old 3 (idx 0, expired)? unknown!", removed: [0] },
+    { pointers: { right: 2 }, vars: { dq: "[2] (idx)", output: "max=3" }, note: "FIX: store indices. front idx 0 lt left=1 → pop stale. push idx 2. output correct 3", added: [2] }
   ]'
 />
 
