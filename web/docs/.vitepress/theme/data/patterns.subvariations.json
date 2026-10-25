@@ -15,37 +15,37 @@
     "inTheWildSource": "java.util.concurrent.atomic.LongAdder rate-limit windows (JDK)",
     "subVariations": [
       {
-        "slug": "fixed-warmup",
+        "slug": "maximum-average-subarray-i-fixed-size-warm-up-easy",
         "title": "Maximum Average Subarray I \u2014 fixed-window warm-up",
         "difficulty": "easy"
       },
       {
-        "slug": "smallest-sum-at-least",
+        "slug": "smallest-subarray-with-sum-target-medium",
         "title": "Smallest Subarray With Sum \u2265 Target",
         "difficulty": "medium"
       },
       {
-        "slug": "longest-substr-no-repeat",
+        "slug": "longest-substring-without-repeating-characters-medium",
         "title": "Longest Substring Without Repeating Characters",
         "difficulty": "medium"
       },
       {
-        "slug": "min-window-substring",
+        "slug": "minimum-window-substring-hard",
         "title": "Minimum Window Substring",
         "difficulty": "hard"
       },
       {
-        "slug": "longest-repeating-replacement",
+        "slug": "longest-repeating-character-replacement-medium",
         "title": "Longest Repeating Character Replacement",
         "difficulty": "medium"
       },
       {
-        "slug": "subarray-product-less-k",
+        "slug": "subarray-product-less-than-k-counting-at-most-k-trick-medium",
         "title": "Subarray Product Less Than K (counting trick)",
         "difficulty": "medium"
       },
       {
-        "slug": "sliding-window-maximum",
+        "slug": "sliding-window-maximum-monotonic-deque-hard",
         "title": "Sliding Window Maximum (monotonic deque)",
         "difficulty": "hard"
       }
