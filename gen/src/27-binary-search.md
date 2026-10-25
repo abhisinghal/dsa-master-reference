@@ -1,11 +1,212 @@
-# Binary Search &amp; Search-on-Answer
+# Binary Search
 
+<script setup>
+const canonicalCode = `// Find the smallest index i in [0, n) such that P(a[i]) is true.
+// For plain lookup, P(x) = (x >= target).
+int lowerBound(int[] a, int target) {
+    int lo = 0, hi = a.length;          // half-open [lo, hi)
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;   // overflow-safe
+        if (a[mid] < target) lo = mid + 1;  // P(a[mid]) false: answer is strictly right
+        else                 hi = mid;      // P(a[mid]) true : mid may be the answer; keep it
+    }
+    return lo;                           // lo == hi == first i with P(a[i]) true, or a.length
+}`
+
+const canonicalInvariant = {
+  statement: 'The first index i with P(a[i]) true (if any) lies in the half-open range [lo, hi).',
+  initialization: 'At entry lo=0, hi=a.length, so [lo, hi) covers the whole array. Any index with P true is inside — including the sentinel a.length when no such index exists.',
+  maintenance: 'Each iteration either sets lo := mid+1 (ruling out indices up to mid because P(a[mid]) is false) or hi := mid (ruling out indices beyond mid while keeping mid, because P(a[mid]) is true). Either branch strictly shrinks hi - lo and preserves the invariant.',
+  termination: 'When lo == hi the interval is empty. lo is now the first index with P true, or a.length if no such index exists. The loop always terminates because hi - lo strictly decreases on every iteration.'
+}
+
+const canonicalSpecs = [
+  { slug: 'lower-upper-bound', title: 'Lower / upper bound' },
+  { slug: 'rotated', title: 'Rotated sorted array' },
+  { slug: 'peak-bitonic', title: 'Peak in bitonic array' },
+  { slug: '2d-matrix', title: 'Search 2D matrix' },
+  { slug: 'first-last-position', title: 'First and last position' }
+]
+
+const canonicalComplexity = { time: 'O(log n)', space: 'O(1)' }
+
+const lowerUpperCode = `int lowerBound(int[] a, int target) {
+    int lo = 0, hi = a.length;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] < target) lo = mid + 1;   // strict < for lower bound
+        else                 hi = mid;
+    }
+    return lo;
+}
+
+int upperBound(int[] a, int target) {
+    int lo = 0, hi = a.length;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] <= target) lo = mid + 1;  // <= for upper bound
+        else                   hi = mid;
+    }
+    return lo;
+}
+
+int indexOf(int[] a, int target) {
+    int i = lowerBound(a, target);
+    return (i < a.length && a[i] == target) ? i : -1;
+}`
+
+const rotatedCode = `int searchRotated(int[] a, int target) {
+    int lo = 0, hi = a.length - 1;              // closed interval here — we return on exact match
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] == target) return mid;
+
+        if (a[lo] <= a[mid]) {                  // left half [lo..mid] is sorted
+            if (a[lo] <= target && target < a[mid]) hi = mid - 1;
+            else                                     lo = mid + 1;
+        } else {                                 // right half [mid..hi] is sorted
+            if (a[mid] < target && target <= a[hi]) lo = mid + 1;
+            else                                     hi = mid - 1;
+        }
+    }
+    return -1;
+}`
+
+const peakCode = `int findPeak(int[] a) {
+    int lo = 0, hi = a.length - 1;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] < a[mid + 1]) lo = mid + 1;  // rising → peak is to the right
+        else                     hi = mid;      // falling or at peak → peak is at mid or left
+    }
+    return lo;                                   // lo == hi is a peak
+}`
+
+const matrixCode = `boolean searchMatrix(int[][] mat, int target) {
+    int m = mat.length, n = mat[0].length;
+    int lo = 0, hi = m * n;              // half-open on the flattened index
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        int v = mat[mid / n][mid % n];   // the flat-to-2D projection
+        if (v < target) lo = mid + 1;
+        else            hi = mid;
+    }
+    return lo < m * n && mat[lo / n][lo % n] == target;
+}`
+
+const firstLastCode = `int[] searchRange(int[] a, int target) {
+    int first = lowerBound(a, target);
+    if (first == a.length || a[first] != target) return new int[]{-1, -1};
+    int last = lowerBound(a, target + 1) - 1;
+    return new int[]{first, last};
+}
+
+int lowerBound(int[] a, int t) {
+    int lo = 0, hi = a.length;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] < t) lo = mid + 1;
+        else            hi = mid;
+    }
+    return lo;
+}`
+
+const bareMechFrames = [
+  { lo: 0, hi: 5, mid: 2, verdict: 'go-right', caption: 'Step 1 — lo=0, hi=6 (past end). mid=2, a[2]=5 < 7. lo := 3.' },
+  { lo: 3, hi: 5, mid: 4, verdict: 'go-left',  caption: 'Step 2 — lo=3, hi=6. mid=4, a[4]=9 ≥ 7. hi := 4.' },
+  { lo: 3, hi: 3, mid: 3, verdict: 'found',    caption: 'Step 3 — lo=3, hi=4. mid=3, a[3]=7 ≥ 7. hi := 3. Loop ends: lo==hi==3. a[3]==7. Return 3.' }
+]
+
+const lowerBoundFrames = [
+  { lo: 0, hi: 4, mid: 2, verdict: 'go-left',  caption: 'Step 1 — lo=0, hi=5. mid=2, a[2]=2 is NOT < 2. hi := 2.' },
+  { lo: 0, hi: 2, mid: 1, verdict: 'go-left',  caption: 'Step 2 — lo=0, hi=2. mid=1, a[1]=2 is NOT < 2. hi := 1.' },
+  { lo: 0, hi: 1, mid: 0, verdict: 'go-right', caption: 'Step 3 — lo=0, hi=1. mid=0, a[0]=1 IS < 2. lo := 1.' },
+  { lo: 1, hi: 1, mid: 1, verdict: 'found',    caption: 'Step 4 — lo==hi==1. First index with a[i] >= 2 is index 1. Return 1.' }
+]
+
+const rotatedFrames = [
+  { lo: 0, hi: 6, mid: 3, verdict: 'go-right', caption: 'Step 1 — a[mid=3]=7. Left half [4,5,6,7] is sorted (a[lo]=4 ≤ a[mid]=7). target=0 is not in [4, 7). Go right: lo := 4.' },
+  { lo: 4, hi: 6, mid: 5, verdict: 'go-left',  caption: 'Step 2 — a[mid=5]=1. Left [a[4]=0 .. a[5]=1] is sorted (0 ≤ 1). target=0 IS in [0, 1). Go left: hi := 4.' },
+  { lo: 4, hi: 4, mid: 4, verdict: 'found',    caption: 'Step 3 — mid=4, a[4]=0 == target. Return 4.' }
+]
+
+const peakFrames = [
+  { lo: 0, hi: 3, mid: 1, verdict: 'go-right', caption: 'Step 1 — a[1]=2 < a[2]=3 (rising). lo := 2.' },
+  { lo: 2, hi: 3, mid: 2, verdict: 'go-left',  caption: 'Step 2 — a[2]=3 > a[3]=1 (falling). hi := 2.' },
+  { lo: 2, hi: 2, mid: 2, verdict: 'found',    caption: 'Step 3 — lo == hi == 2. a[2]=3 is a peak. Return 2.' }
+]
+
+const firstLastFrames = [
+  { lo: 0, hi: 5, mid: 2, verdict: 'go-right', caption: 'Pass 1 (lower bound of 8). mid=2, a[2]=7 < 8. lo := 3.' },
+  { lo: 3, hi: 5, mid: 4, verdict: 'go-left',  caption: 'mid=4, a[4]=8 NOT < 8. hi := 4.' },
+  { lo: 3, hi: 3, mid: 3, verdict: 'found',    caption: 'lo == hi == 3. first = 3. Second pass finds lower bound of 9 at index 5; last = 4. Return [3, 4].' }
+]
+
+const trap1Bug = 'int mid = (lo + hi) / 2; computes 3.5·10⁹ which exceeds Integer.MAX_VALUE (2.1·10⁹), wraps to a negative number, and a[mid] throws ArrayIndexOutOfBoundsException. Every JDK Arrays.binarySearch had this bug for 9 years until Josh Bloch\'s 2006 fix. In an interview, writing (lo + hi) / 2 is a visible tell that you\'ve only ever used binary search on toy inputs.'
+const trap1Fix = 'int mid = lo + (hi - lo) / 2;  — compute the half-distance first, then add to lo. Mathematically identical for positive lo, hi; immune to the overflow. Say the words "Bloch overflow fix" as you write it.'
+
+const trap2Bug = 'You start writing the half-open template with while (lo < hi), then on the shrink branch write hi = mid - 1 (closed convention). Now when target lives at index mid, you have just thrown it away — the loop may still terminate but return the wrong index. Or symmetrically: closed-interval loop condition lo <= hi with hi = mid (half-open update). When lo == hi == mid you never shrink the interval; infinite loop.'
+const trap2Fix = 'Pick ONE convention and let the loop condition dictate the update. Half-open: while (lo < hi) with hi = mid and lo = mid + 1. Closed: while (lo <= hi) with hi = mid - 1 and lo = mid + 1. The one-sentence rule: "if the mid IS a candidate answer, keep it; use hi = mid in the half-open template." Write it on scratch paper before you touch the loop.'
+
+const trap3Bug = 'You start with the vanilla binary search and bolt on three if-conditions for rotation handling. The branches multiply (which half is sorted? is the target in it? what if mid IS the pivot?) and the invariant becomes undefined. Code compiles, passes 3 test cases, fails on [3, 1] or [1] or any single-pivot edge.'
+const trap3Fix = 'Two options, both cleaner than one messy loop: (a) first find the pivot with a bitonic-style binary search, then plain-binary-search the correct half; two 10-line functions beat one 25-line tangle. (b) if you insist on one pass, write a[lo] <= a[mid] test FIRST, inside the loop, then handle "which half contains target" inside the sorted-half branch. Either way, state the invariant above the loop in English before writing the first if.'
+
+const quizQuestions = [
+  {
+    q: 'For the half-open template with the invariant "every index less than lo satisfies P false; every index at or past hi satisfies P true," what update is correct when P(a[mid]) is TRUE?',
+    choices: ['lo = mid + 1', 'hi = mid', 'hi = mid - 1', 'lo = mid'],
+    correct: 1,
+    why: 'When P is true at mid, the first true-index could BE mid or lie to its left — so we keep mid in the interval by setting hi = mid. Using hi = mid - 1 would discard mid even though it may be the answer.'
+  },
+  {
+    q: 'Which problem does NOT reduce to this binary-search template?',
+    choices: [
+      'Find the smallest ship capacity to deliver within D days',
+      'Find the index of a target in a sorted array',
+      'Find the longest substring with at most K distinct characters',
+      'Find a peak in a bitonic array'
+    ],
+    correct: 2,
+    why: 'Longest-substring-with-K-distinct is sliding window — the window grows and shrinks per character and there is no monotone predicate on an index or an answer value. The other three admit a monotone boundary and reduce to lowerBound.'
+  },
+  {
+    q: 'Why is int mid = (lo + hi) / 2 a bug?',
+    choices: [
+      'It rounds down for negative values',
+      'For large lo and hi it overflows a 32-bit signed int and wraps negative',
+      'It can produce the wrong parity when the array length is odd',
+      'It makes the loop asymmetric and biases toward the left half'
+    ],
+    correct: 1,
+    why: 'When lo + hi exceeds Integer.MAX_VALUE (about 2.1 × 10^9), the sum wraps negative and mid becomes a negative array index. The fix lo + (hi - lo) / 2 computes the gap first — immune to overflow for any positive lo, hi.'
+  },
+  {
+    q: 'In the rotated-sorted-array search, you first check if a[lo] is at-most a[mid]. If TRUE, which half is sorted?',
+    choices: ['Left half [lo..mid]', 'Right half [mid..hi]', 'Both halves', 'Neither half'],
+    correct: 0,
+    why: 'If a[lo] <= a[mid], the pivot (where the rotation happened) is NOT in the left half, so the left is monotonically non-decreasing. Then a standard range check on [a[lo], a[mid]] tells us if the target lives in that sorted half.'
+  },
+  {
+    q: 'You wrote a half-open binary search and the loop never terminates. What is the most likely cause?',
+    choices: [
+      'The input array is not actually sorted',
+      'You wrote hi = mid - 1 instead of hi = mid in the shrink branch',
+      'You wrote lo = mid instead of lo = mid + 1 when the predicate is false',
+      'The target is smaller than every array element'
+    ],
+    correct: 2,
+    why: 'With while (lo < hi) and lo = mid, the case lo == mid == hi - 1 never shrinks the interval — lo stays, hi stays, mid stays — infinite loop. The correct half-open rule is lo = mid + 1 on the false branch, hi = mid on the true branch.'
+  }
+]
+</script>
 
 <PatternVideo pattern-name="Binary Search" duration="8–12 min" />
 
 <PatternProgress pattern-id="binary-search" problems="binary-search-rotated-sorted, binary-search, find-minimum-in-rotated-sorted-array, find-peak-element, search-in-rotated-sorted-array-ii" />
 
+<PatternSubVariationNav pattern="binary-search" />
 
+<DueForReview />
 
 ## Why binary search exists — the story
 
@@ -17,454 +218,353 @@ But at 50 million rows, linear scan takes about **half a second** — and 20 ale
 
 Binary search is the fix. Look at the *middle* row. If its `order_id` matches, you're done. If it's too big, the target must be in the left half — throw the right half away. Too small? Symmetric. Each step **halves** the search space, so 50 million rows collapse to `log₂(5·10⁷) ≈ 25` steps. **Half a second → 25 nanoseconds.** A 20-million-times speedup for four lines of code.
 
-## The core idea — halving is not enough; you need an *invariant*
+## The bare mechanic — simplest working example
 
-<BinarySearchAnim />
+Before any clever template, see the shape work on a trivial input. Six sorted integers, look up a value, return its index.
 
-Every real binary-search bug — and there are many — comes from one root cause: **the writer had a fuzzy idea of what the loop invariant was**. Before you write `int mid = (lo + hi) / 2`, you must be able to state precisely:
+```java
+int firstBinarySearch(int[] a, int target) {
+    int lo = 0, hi = a.length;        // half-open [lo, hi): hi is PAST the last valid index
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2; // avoid overflow (see Trap 1 below)
+        if (a[mid] < target) lo = mid + 1;   // target is strictly to the right
+        else                 hi = mid;        // mid itself might be the answer; keep it
+    }
+    // lo == hi == first index i with a[i] >= target
+    return (lo < a.length && a[lo] == target) ? lo : -1;
+}
+```
 
-> "At every iteration, the answer (if it exists) lies inside the interval `[lo, hi]` (or `[lo, hi)` — pick one **and stick with it**)."
+Trace it on `a = [1, 3, 5, 7, 9, 11]`, target `7`:
 
-Half the interview candidates I've watched code binary search on a whiteboard don't pass this test. They know the shape of the loop, they can write `lo + (hi - lo) / 2`, but when I ask *"what does `hi` mean after the loop exits?"* they freeze. If you cannot answer that in one sentence, your loop will infinite-loop or return an off-by-one answer.
+<BinarySearchStepStrip
+  title="firstBinarySearch([1, 3, 5, 7, 9, 11], target = 7)"
+  :input="[1, 3, 5, 7, 9, 11]"
+  :target="7"
+  :frames="bareMechFrames"
+/>
 
-There are three template families, each with a different invariant. Pick one, memorize it cold, and use it everywhere. Switching templates mid-problem is where careers go to die.
+That is the ground floor. **Every binary search in this chapter — rotated, bitonic, 2D, answer-space — is a specialization of this exact loop.** The template never changes. What changes is the *predicate* ("is `a[mid]` strictly less than the target?") and sometimes the search space ("is this answer feasible?"). Memorize this and the specializations become one-line diffs.
+
+> [key] **Why `[lo, hi)` not `[lo, hi]`?** The half-open convention has one invariant and two update rules; the closed-interval convention has two invariants (one for `lo`, one for `hi`) and four update rules — twice the surface area for bugs. The JDK, C++ STL, Python's `bisect`, and Rust's `slice::partition_point` all converged on half-open for the same reason. If you only remember one template, let it be this one.
 
 ## When to use it — recognition signals
 
-Binary search is applicable when your input has any of these shapes:
+Binary search applies when your input has any of these shapes:
 
 - **Sorted or monotonic data** — the classic. Sorted array, sorted list of files, sorted rows in a DB index.
-- **Monotonic predicate on an unsorted-looking domain** — this is the "search on answer" pattern. If you can define a boolean function `feasible(x)` that is `false` for `x < answer` and `true` for `x ≥ answer` (or vice-versa), binary-search the domain of `x`. Classic examples: "smallest capacity that ships packages in `D` days", "minimum time Koko needs to eat all bananas", "smallest maximum sub-array sum with `k` splits."
-- **Rotated sorted array** — at least one half around `mid` is sorted; check which and recurse.
-- **Boundary problems** — "find the first index where `a[i] ≥ target`" or "the last index where `a[i] ≤ target`". These are *lower_bound* / *upper_bound* variants and appear in every leveling-guide problem.
-- **A function has a valley or peak** — ternary or binary search on derivative-sign.
+- **Monotonic predicate on an unsorted-looking domain** — the "search on answer" pattern. If you can define `feasible(x)` that is `false` for `x < answer` and `true` for `x ≥ answer`, binary-search `x`. (That full topic has its own chapter: [BS on answer](/bs-on-answer).)
+- **Rotated sorted array** — at least one half around `mid` is still sorted; detect which and shrink into it.
+- **Boundary problems** — "first index with `a[i] ≥ target`" or "last index with `a[i] ≤ target`." These are *lower_bound* / *upper_bound* variants.
+- **A function has a valley or peak** — bitonic arrays, unimodal functions. Compare `a[mid]` to `a[mid+1]` and shrink into the rising/falling side.
 - **Constants that make O(log n) matter** — DB indexes, geometric algorithms with tight n·log n bounds, streaming median with sorted multiset.
 
-If the interviewer says the words *"sorted"*, *"monotonic"*, *"minimum X such that ..."*, or *"maximum X such that ..."*, binary search should be your first hypothesis.
+If the problem statement contains *"sorted"*, *"monotonic"*, *"minimum X such that ..."*, or *"maximum X such that ..."*, binary search is your first hypothesis.
 
 ## When NOT to use it
 
-- **Unsorted data with no monotonic predicate** — sorting to enable binary search costs O(n log n), which is worse than a straight O(n) hash-map lookup. Only sort-then-binary-search if you'll do many queries against the same data.
-- **You need every match, not the first** — plain iteration is easier and often just as fast (or a range query with `lower_bound` + `upper_bound`).
-- **The array is small (`n ≤ 32`)** — linear scan is faster in practice: no branch misprediction, cache-friendly, and the `log₂ 32 = 5` comparisons plus overhead lose to a straight loop.
-- **The data has duplicates and the interviewer wants *all* occurrences** — do a lower-bound binary search followed by linear expansion, or use two binary searches (lower + upper). Don't try to hack it inside one loop.
-- **The interval's "feasibility" is not monotonic** — e.g., "smallest `x` such that some non-monotone metric is minimized." Binary search silently returns the wrong answer here. Verify monotonicity on paper first.
-- **Floating-point ranges without a stopping criterion** — you must fix either an epsilon tolerance or an iteration cap, otherwise the loop never terminates.
+- **Unsorted data with no monotonic predicate** — sorting to enable binary search costs O(n log n), worse than O(n) hash-map lookup. Only sort-then-search if you'll do many queries.
+- **You need every match, not the first** — plain iteration, or `lower_bound` + `upper_bound`, is simpler.
+- **The array is small (`n ≤ 32`)** — linear scan wins in practice: branch predictor loves it, cache-friendly, `log₂ 32 = 5` comparisons plus overhead loses to a straight loop.
+- **Duplicates and you want *all* occurrences** — do lower-bound + linear expansion, or two binary searches (lower + upper). Don't hack it inside one loop.
+- **Non-monotone feasibility** — e.g., "smallest `x` such that some bitonic metric is minimized." Binary search silently returns the wrong answer; verify monotonicity on paper first.
+- **Floating-point ranges without a stopping criterion** — the loop never terminates. Fix an ε tolerance or an iteration cap.
 
-> [inv] **Invariant — the target (if it exists) always lies in `[lo, hi]` (or `[lo, hi)` — pick one).** This is the single most important sentence in binary search. Before writing the loop, state it out loud. On every branch of the update logic, verify: did I preserve the invariant, or did I possibly discard the target?
+## THE template
 
-> [inv] **Invariant — `hi - lo` strictly decreases every iteration.** For closed-interval `[lo, hi]` with `lo <= hi`, either `lo` increases (via `mid + 1`) or `hi` decreases (via `mid - 1`) on every iteration. The interval shrinks until empty. If your loop can iterate without shrinking `hi - lo`, you have an infinite loop.
+One canonical loop. Every sub-variation below is a specialization of this exact shape.
 
-> [inv] **Invariant — for lower-bound `[lo, hi)`, after the loop `lo == hi == first index where P is true`.** Every index `< lo` fails predicate `P`; every index `≥ hi` satisfies `P`. When `lo == hi`, the boundary is found. If no index satisfies `P`, `lo == a.length` (an off-the-end sentinel).
+<PatternTemplateCard
+  slug="binary-search-canonical"
+  title="Half-open [lo, hi) binary search"
+  language="java"
+  problem-shape="Find the smallest index i such that P(i) is true. If P never holds, lo == a.length."
+  :code="canonicalCode"
+  :invariant="canonicalInvariant"
+  :complexity="canonicalComplexity"
+  :specializations="canonicalSpecs"
+/>
 
-## The three templates — memorize *one* form of each
+> [key] **What the predicate P is doing.** `P` partitions the index space into a `false` prefix and a `true` suffix. The loop finds the boundary. For plain lookup, `P(x) = (x >= target)`; the first index where P flips is where `target` would appear (lower bound). Every §Sub-variations H3 below differs ONLY in what `P` is.
 
-### Template 1: closed interval `[lo, hi]`
+## Sub-variations of the template
 
-The most common. The interval always contains valid indices. Loop while `lo ≤ hi`.
+Five flavors, each a one-line diff from THE template above. Each sub-variation also carries a `<MarkSolved>` button so returning here from the [spaced-review schedule](/review) is one click.
+
+### Lower / upper bound {#lower-upper-bound}
+
+**Problem.** Given a sorted array (possibly with duplicates) and a target, return the first index where `a[i] ≥ target` (lower bound) or the first where `a[i] > target` (upper bound). Example: `a = [1, 2, 2, 2, 5]`, target `2`. Lower-bound returns 1 (first `≥ 2`). Upper-bound returns 4 (first `> 2`). Range `[1, 4)` is "all 2s."
+
+**Template diff.** Only the predicate inside the `if` changes:
+
+- Lower bound: `if (a[mid] < target)` ← strict less-than
+- Upper bound: `if (a[mid] <= target)` ← less-than-or-equal
+- Equality search: run lower bound, then check `a[lo] == target` at the end.
+
+<TemplateReveal
+  slug="binary-search/lower-upper-bound"
+  language="java"
+  problem-shape="First index with a[i] >= target (lower) or a[i] > target (upper)."
+  :canonical="lowerUpperCode"
+/>
+
+<InvariantProof
+  statement="All indices before lo have a[i] < target; all indices from hi onward have a[i] >= target. On exit lo == hi is the lower-bound boundary."
+  initialization="At entry [lo, hi) = [0, n). The empty prefix [0, 0) vacuously satisfies 'all < target'; the suffix [n, n) vacuously satisfies 'all >= target'."
+  maintenance="Each iteration either extends the 'all < target' prefix one past mid (when a[mid] < target), or extends the '>= target' suffix down to mid. The split moves but never crosses itself."
+  termination="lo == hi means the two sides meet. The index lo is the first with a[i] >= target, or n if every element is less. Add one equality check at the end to upgrade this to exact-match search."
+/>
+
+<BinarySearchStepStrip
+  title="lowerBound([1, 2, 2, 2, 5], target = 2) — returns 1"
+  :input="[1, 2, 2, 2, 5]"
+  :target="2"
+  :frames="lowerBoundFrames"
+/>
+
+**Complexity.** O(log n) time, O(1) space.
+
+**When to pick this variant.** Any "where would `x` fit in a sorted array" question. Range-count queries (`upper(hi) − lower(lo)`), insertion points, deduplication cursors, `java.util.TreeMap.floorKey/ceilingKey` under the hood.
+
+<MarkSolved problem-slug="binary-search:lower-upper-bound" />
+
+### Rotated sorted array {#rotated}
+
+**Problem.** A sorted array of distinct integers was rotated at an unknown pivot — e.g., `[4, 5, 6, 7, 0, 1, 2]` originated from `[0..7]` rotated. Given a target, return its index or -1. Must be O(log n). [↗ LeetCode 33](https://leetcode.com/problems/search-in-rotated-sorted-array/).
+
+**Template diff.** Keep the canonical loop. The predicate becomes "is the target in the sorted half that contains `mid`?" — one `if` chooses which half is sorted, a nested `if` chooses which side of `mid` to shrink into.
+
+<TemplateReveal
+  slug="binary-search/rotated"
+  language="java"
+  problem-shape="Find target in a rotated sorted array of distinct values. O(log n)."
+  :canonical="rotatedCode"
+/>
+
+<InvariantProof
+  statement="At every iteration, if target is in a, it lies in [lo, hi]. At least one of [lo..mid] and [mid..hi] is sorted (because the input is sorted everywhere except at one pivot)."
+  initialization="At entry [lo, hi] = [0, n-1] covers the whole array. Whichever half of [0..mid] / [mid..n-1] does not contain the pivot is sorted — at least one always does."
+  maintenance="The 'which half is sorted' check compares a[lo] to a[mid]. If a[lo] <= a[mid], the left half is sorted; otherwise the right. Inside the sorted half, standard range check (lo-value, hi-value) tells us if target is there; we shrink into it. The invariant 'target in [lo, hi]' is preserved on both branches."
+  termination="hi - lo strictly decreases each iteration (either lo := mid+1 or hi := mid-1). When lo > hi the interval is empty and we return -1."
+/>
+
+<BinarySearchStepStrip
+  title="searchRotated([4, 5, 6, 7, 0, 1, 2], target = 0) — returns 4"
+  :input="[4, 5, 6, 7, 0, 1, 2]"
+  :target="0"
+  :frames="rotatedFrames"
+/>
+
+**Complexity.** O(log n) time, O(1) space.
+
+**When to pick this variant.** Any variant of rotated / shifted sorted arrays. Also the mental template for "the array is sorted along ONE axis but you don't know which half" — comes up with ring buffers and log replay windows.
+
+<MarkSolved problem-slug="binary-search:rotated" />
+
+### Peak in bitonic array {#peak-bitonic}
+
+**Problem.** Given an array where `a[i] != a[i+1]` for all i, find any peak (an index `i` with `a[i] > a[i-1]` and `a[i] > a[i+1]`; boundaries treated as -∞). Multiple peaks may exist; return any index in O(log n). [↗ LeetCode 162 Find Peak Element](https://leetcode.com/problems/find-peak-element/).
+
+**Template diff.** Compare `a[mid]` to `a[mid+1]`. If rising, a peak lies in `[mid+1, hi]` (the sequence must come down eventually, since the right-end is -∞). If falling, a peak lies in `[lo, mid]`. The predicate is "is the sequence still rising at mid?"
+
+<TemplateReveal
+  slug="binary-search/peak-bitonic"
+  language="java"
+  problem-shape="Find any peak in an array of distinct consecutive values. O(log n)."
+  :canonical="peakCode"
+/>
+
+<InvariantProof
+  statement="A peak exists in the closed range [lo, hi] at every iteration."
+  initialization="At entry [lo, hi] = [0, n-1]. The two boundary sentinels are -∞, so the max of the array (a peak) lies somewhere inside. The invariant holds trivially."
+  maintenance="If a[mid] < a[mid+1] the function is rising at mid. Since the right boundary is -∞, the sequence must come back down past mid+1, so a peak lies in (mid, hi]. Set lo := mid+1. Otherwise a[mid] >= a[mid+1]: either mid is a peak or the function is falling, so a peak lies in [lo, mid]. Set hi := mid."
+  termination="lo < hi guarantees mid+1 ≤ hi, so a[mid+1] is in bounds. Each branch shrinks hi - lo by at least 1. When lo == hi the invariant forces that single index to be a peak."
+/>
+
+<BinarySearchStepStrip
+  title="findPeak([1, 2, 3, 1]) — returns 2"
+  :input="[1, 2, 3, 1]"
+  :target="'peak'"
+  :frames="peakFrames"
+/>
+
+**Complexity.** O(log n) time, O(1) space.
+
+**When to pick this variant.** Bitonic arrays, finding minimum in rotated sorted (dual — look for the inflection point). Also any unimodal function (max of a concave sequence, min of a convex sequence) when you can evaluate `f(mid)` and `f(mid+1)`.
+
+<MarkSolved problem-slug="binary-search:peak-bitonic" />
+
+### Search 2D matrix {#2d-matrix}
+
+**Problem.** An `m × n` matrix is sorted row-major: every row is sorted left-to-right, AND the first element of each row is greater than the last of the previous row. Search for a target in O(log(mn)). [↗ LeetCode 74](https://leetcode.com/problems/search-a-2d-matrix/).
+
+**Template diff.** Treat the matrix as a flat sorted array of length `m·n`. The flat index `k` maps to `(k / n, k % n)`. Everything else is the canonical loop.
+
+<TemplateReveal
+  slug="binary-search/2d-matrix"
+  language="java"
+  problem-shape="Search target in a row-major-sorted m×n matrix. O(log(mn))."
+  :canonical="matrixCode"
+/>
+
+<InvariantProof
+  statement="If target is in the matrix, its flat index lies in [lo, hi). Row-major sortedness guarantees the flat sequence is sorted."
+  initialization="[lo, hi) = [0, m*n). Covers every (row, col) cell exactly once."
+  maintenance="v := mat[mid/n][mid%n] reads the k-th cell in row-major order. Because the row's end is strictly less than the next row's start, the flattened sequence is sorted; the standard lower-bound shrink works unchanged."
+  termination="hi - lo strictly decreases. On exit lo is the lower bound in the flat sequence; one equality check finishes."
+/>
+
+**Complexity.** O(log(m·n)) time, O(1) space. Note this is identical to O(log m + log n) for standard sizes, but one unified loop is cleaner than nested searches.
+
+**When to pick this variant.** Fully-sorted matrices. For the *staircase*-sorted case (rows and columns sorted independently, like LeetCode 240), binary search doesn't give log — use the top-right walk in O(m + n) instead.
+
+<MarkSolved problem-slug="binary-search:2d-matrix" />
+
+### First and last position {#first-last-position}
+
+**Problem.** Sorted array with duplicates, find the leftmost and rightmost indices of a target. Return `[-1, -1]` if absent. [↗ LeetCode 34](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/).
+
+**Template diff.** Two calls: `lowerBound(target)` for the leftmost index, `lowerBound(target + 1) - 1` for the rightmost. (That second form, "lower bound of `target+1` then minus one," is the trick that keeps the code symmetric.)
+
+<TemplateReveal
+  slug="binary-search/first-last-position"
+  language="java"
+  problem-shape="Return [first, last] indices of target in a sorted array with duplicates."
+  :canonical="firstLastCode"
+/>
+
+<InvariantProof
+  statement="searchRange returns [first, last] such that a[first..last] contains exactly the occurrences of target."
+  initialization="lowerBound(target) finds the first index with a[i] >= target; if that element is not target, no occurrence exists."
+  maintenance="lowerBound(target + 1) finds the first index with a[i] >= target + 1. Everything before it with value target is a target cell. Subtract 1 to get the last target index."
+  termination="Both lowerBound calls terminate in O(log n). Final arithmetic is O(1)."
+/>
+
+<BinarySearchStepStrip
+  title="searchRange([5, 7, 7, 8, 8, 10], target = 8) — returns [3, 4]"
+  :input="[5, 7, 7, 8, 8, 10]"
+  :target="8"
+  :frames="firstLastFrames"
+/>
+
+**Complexity.** 2 × O(log n) = O(log n) time, O(1) space.
+
+**When to pick this variant.** Any "count how many" or "range of equal values" problem. Count-of-X with `upper(X) − lower(X)`. Deduplication cursors. Streaming histogram bucket boundaries.
+
+<MarkSolved problem-slug="binary-search:first-last-position" />
+
+## Traps & gotchas
+
+Three traps show up in interviews often enough to deserve walked-through bug/fix pairs. Two more live as callouts.
+
+<TrapTrace
+  title="Trap 1 — mid overflow with (lo + hi) / 2"
+  input="lo = 1_500_000_000, hi = 2_000_000_000"
+  :bug="trap1Bug"
+  :fix="trap1Fix"
+/>
+
+<TrapTrace
+  title="Trap 2 — mixing comparison operators between templates"
+  input="half-open condition with closed-convention update (or vice versa)"
+  :bug="trap2Bug"
+  :fix="trap2Fix"
+/>
+
+<TrapTrace
+  title="Trap 3 — rotated-array template contamination"
+  input="searchRotated with the plain binary-search template as a starting point"
+  :bug="trap3Bug"
+  :fix="trap3Fix"
+/>
+
+> [trap] **Trap 4 — Off-by-one on the return.** After the loop exits, is `lo` the answer, `lo - 1`, or `-1`? The invariant tells you. **Interview move:** write a comment above the `return` stating what `lo` means in your invariant language. If you cannot name it, your loop is wrong.
+
+> [trap] **Trap 5 — Floating-point without an iteration cap.** `while (hi - lo > 1e-9)` can loop forever on inputs where floating-point precision stops halving. Bound by `for (int iter = 0; iter < 100; iter++)` as well; 100 iterations halves the interval by `2^100 ≈ 10^30` — orders of magnitude more precision than any real problem needs.
+
+## History
+
+Binary search was first formally described by **John Mauchly in 1946**, one of the earliest algorithms to receive formal analysis. Yet in 2006, Josh Bloch published *"Nearly All Binary Searches and Mergesorts are Broken"* on the Google Research blog, revealing that essentially every JDK implementation (Java 1.0 through Java 5) contained the `mid = (lo + hi) / 2` overflow bug — for arrays larger than about a billion elements, the answer was wrong. Bloch had co-authored *Effective Java*; he found the bug while reading the code of his own book's `Arrays.binarySearch`. His takeaway: *"even careful programmers make horrible mistakes."* Mention this in an interview and the seasoned interviewer smiles — you've just signaled that you know binary search is deceptively simple and dangerously bug-prone.
+
+Nimrod Megiddo formalized the full technique family — including search-on-answer — in 1979 as **parametric search**. His paper on optimization by binary-searching the answer space became the template for a generation of geometric algorithms (nearest-neighbor, minimum-enclosing-circle).
+
+### In the wild
+
+OpenJDK 21's `java.util.Arrays.binarySearch(int[], int)` is a near-canonical half-open loop with the Bloch overflow fix:
 
 ```java
-int binarySearchClosed(int[] a, int target) {
-    int lo = 0, hi = a.length - 1;             // closed interval [lo, hi]
-    while (lo <= hi) {                          // <= because [lo, hi] includes hi
-        int mid = lo + (hi - lo) / 2;           // safe against int overflow
-        if      (a[mid] == target) return mid;
-        else if (a[mid] < target)  lo = mid + 1;   // discard [lo..mid], now [mid+1, hi]
-        else                       hi = mid - 1;   // discard [mid..hi], now [lo, mid-1]
+// java.base/java/util/Arrays.java (openjdk-21, lightly condensed)
+public static int binarySearch(int[] a, int key) {
+    int low = 0;
+    int high = a.length - 1;             // closed convention here
+    while (low <= high) {
+        int mid = (low + high) >>> 1;    // >>> instead of / 2 — unsigned shift,
+                                         // also overflow-safe for positive low+high
+        int midVal = a[mid];
+        if      (midVal < key) low  = mid + 1;
+        else if (midVal > key) high = mid - 1;
+        else                   return mid;         // key found
     }
-    return -1;                                  // interval empty; target not present
+    return -(low + 1);                   // key not found; -(insertion point) - 1
 }
 ```
 
-**Invariant:** if `target` exists in `a`, its index lies in `[lo, hi]`. When `lo > hi`, the interval is empty → not found.
-**When to reach for it:** you need to *find an exact match* on a sorted array. Simple, symmetric, no boundary trickery.
+Two choices worth noting. The JDK uses the **closed-interval** convention (we chose half-open above) — both are fine, same complexity. And it returns `-(insertionPoint + 1)` on a miss instead of `-1`, so a caller gets the insertion point *and* the found/not-found signal in one return value. The `>>> 1` is the Bloch fix in its most compact form — unsigned right shift divides by 2 without the sign-bit overflow.
 
-### Template 2: half-open interval `[lo, hi)` — lower bound
+Source: [openjdk/jdk `src/java.base/share/classes/java/util/Arrays.java`](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/Arrays.java). Every half-decent language stdlib has an equivalent — Python `bisect`, C++ `std::lower_bound`, Rust `slice::binary_search`, Go `sort.Search` — all converge on the same template with cosmetic differences.
 
-Returns the smallest index `i` such that `a[i] ≥ target`. Returns `a.length` if no such index exists. This is Java's `Collections.binarySearch` semantic and C++ `std::lower_bound`.
-
-```java
-int lowerBound(int[] a, int target) {
-    int lo = 0, hi = a.length;                  // half-open [lo, hi); hi = n is *past* last index
-    while (lo < hi) {                            // < because [lo, hi) excludes hi
-        int mid = lo + (hi - lo) / 2;
-        if (a[mid] < target) lo = mid + 1;      // [mid..hi) still valid, mid itself is < target
-        else                 hi = mid;          // a[mid] ≥ target — mid might be the answer; keep it
-    }
-    return lo;                                   // lo == hi == first index with a[i] ≥ target
-}
-```
-
-**Invariant:** every index `< lo` has `a[i] < target`; every index `≥ hi` has `a[i] ≥ target`. On exit, `lo == hi` is the boundary.
-**When to reach for it:** *boundary problems*. "Find the first / last occurrence", "count values ≥ X", "insertion point." This is the most reusable template — nearly every "at what index does X first become true?" problem reduces to it.
-
-### Template 3: search on answer (feasibility)
-
-The pattern that makes staff engineers. You are not searching an array — you're binary-searching the *answer*.
-
-```java
-int searchOnAnswer(int lo, int hi) {          // lo = min plausible answer; hi = max
-    while (lo < hi) {                          // half-open convention
-        int mid = lo + (hi - lo) / 2;
-        if (feasible(mid)) hi = mid;           // mid works — but maybe smaller works too
-        else               lo = mid + 1;       // mid doesn't work — answer is strictly larger
-    }
-    return lo;                                 // smallest feasible value
-}
-// feasible(x) must be monotonic: false for x < answer, true for x ≥ answer.
-```
-
-**Invariant:** every `x < lo` is infeasible; every `x ≥ hi` is feasible. On exit `lo` is the boundary — the *smallest* feasible answer.
-**When to reach for it:** the problem statement is a minimization or maximization with a "verify a candidate answer in linear time" structure. Koko Eating Bananas, Capacity to Ship Packages, Split Array Largest Sum — the entire Wave 2 chapter on this pattern.
-
-### Complexity summary
-
-| Template | Time | Space | Best use |
-|---|---|---|---|
-| Closed `[lo, hi]` | O(log n) | O(1) | Exact match on sorted array |
-| Lower bound `[lo, hi)` | O(log n) | O(1) | Boundary / first-occurrence / count |
-| Search on answer | O(log(hi − lo) × Θ(feasibility)) | O(1) | Feasibility-based optimization |
-
-## Traps & gotchas — the 5 that fail candidates on interview day
-
-> [trap] **Trap 1 — `int mid = (lo + hi) / 2` overflows.** For `lo = hi = 2·10⁹`, `lo + hi = 4·10⁹` — larger than `Integer.MAX_VALUE`, wraps negative, and `mid` becomes negative. Your program then reads `a[-1]`, throws, or worse, silently returns the wrong answer. **Every implementation of `binarySearch` in the JDK had this bug for 9 years** until Josh Bloch fixed it in 2006 (Google's blog post: *"Nearly All Binary Searches and Mergesorts are Broken"*). Fix: `int mid = lo + (hi - lo) / 2;` — never subtract instead of adding. Say the words *"Bloch overflow fix"* aloud in your interview.
-
-> [trap] **Trap 2 — Mixing `<` and `<=` between templates.** If you use `lo ≤ hi` (closed template) but write `hi = mid` (half-open update), you infinite-loop when `lo == hi == mid`. If you use `lo < hi` but write `hi = mid - 1`, you may skip the answer when it lies at `mid`. The fix is a rule: **pick one interval convention, and every branch of your update logic must respect it.** Do not switch conventions inside a single function.
-
-> [trap] **Trap 3 — `feasible(mid)` returns the wrong direction of monotonicity.** In search-on-answer, you must be 100% sure whether "feasible" grows as `x` grows or shrinks. Get this backwards and you binary-search into the wrong half. **Sanity check on paper:** try `feasible(lo)` and `feasible(hi)`; verify one is true and the other false. If both agree, you have a boundary problem — not a feasibility problem.
-
-> [trap] **Trap 4 — Off-by-one on the return value.** After the loop exits with `lo == hi`, is that the answer, or the answer + 1, or `-1` if not found? This depends on your template. **Interview move:** after coding the loop, write a comment above the `return` line stating what `lo` (or `hi`) *means* in your invariant language. That comment forces you to notice off-by-one errors *before* running tests.
-
-> [trap] **Trap 5 — Rotated array template contamination.** When solving "search in a rotated sorted array", candidates copy the plain binary-search template and add branches for rotation. This gets messy fast (5–6 branches) and produces subtle bugs. **Cleaner:** first binary-search the *pivot* (the smallest element's index) with a boundary-style template, then binary-search the correct rotated half using the plain template. Two clean searches beat one messy one.
-
-## History — 30 years of broken implementations
-
-Binary search was first described by **John Mauchly in 1946**, one of the earliest algorithms ever formally analyzed. Yet in 2006, Josh Bloch published *"Nearly All Binary Searches and Mergesorts are Broken"* on the Google Research blog, revealing that essentially every JDK implementation (Java 1.0 through Java 5) contained the `mid = (lo + hi) / 2` overflow bug — for arrays larger than about a billion elements, the answer was wrong. Bloch had co-authored *Java: The Java Programming Language* and *Effective Java*; he found the bug while reading the code of his own book's `Arrays.binarySearch`.
-
-Bloch's exact quote: *"the general point that I want to make is much larger. It is that even careful programmers make horrible mistakes."* Mention this in an interview and the seasoned interviewer will smile — because you just signaled that you understand binary search is deceptively simple *and* dangerously bug-prone.
-
-The full technique family — including search-on-answer — was formalized by **Nimrod Megiddo** in 1979 as *"parametric search"*. His paper on optimization by binary-searching the answer space became the template for a generation of geometric algorithms (nearest-neighbor, minimum-enclosing-circle).
-
-## Canonical problem walkthrough — Search in Rotated Sorted Array
-
-**Problem** ([↗ LeetCode](https://leetcode.com/problems/search-in-rotated-sorted-array/)): You have a sorted array of distinct integers that has been rotated at an unknown pivot — e.g., `[4,5,6,7,0,1,2]` was originally `[0,1,2,4,5,6,7]` rotated. Given a target, return its index or -1. Must run in O(log n).
-
-### Approach 1 — Brute force (the reference)
-
-Linear scan. O(n). This is what your junior teammate writes.
-
-```java
-int searchLinear(int[] a, int target) {
-    for (int i = 0; i < a.length; i++) if (a[i] == target) return i;
-    return -1;
-}
-```
-
-Correct but doesn't meet the O(log n) constraint. State it, then move on.
-
-### Approach 2 — Find pivot, then two searches (the modular one)
-
-**Step 1:** binary-search the pivot index (position of the smallest element). The rotated array has *two* monotonic halves; the pivot is where they meet.
-
-**Step 2:** binary-search the correct half.
-
-```java
-int searchByPivot(int[] a, int target) {
-    int n = a.length;
-    int pivot = findPivot(a);                   // index of smallest
-    // Two sorted halves: [0, pivot) and [pivot, n). Search the right one.
-    if (pivot == 0 || target < a[0]) {
-        return binarySearch(a, target, pivot, n - 1);
-    } else {
-        return binarySearch(a, target, 0, pivot - 1);
-    }
-}
-
-int findPivot(int[] a) {
-    int lo = 0, hi = a.length - 1;
-    while (lo < hi) {
-        int mid = lo + (hi - lo) / 2;
-        if (a[mid] > a[hi]) lo = mid + 1;       // pivot in right half
-        else                hi = mid;           // pivot at mid or left
-    }
-    return lo;
-}
-```
-
-**Complexity:** O(log n) time, O(1) space. Two clean binary searches.
-**Trade-off:** twice the code, but each half is a template you can recite from memory. Much easier to debug live in an interview.
-
-### Approach 3 — Single-pass modified binary search (the compact one)
-
-At each step, at least one half of `[lo, mid]` and `[mid, hi]` is sorted. Determine which, check if target lies in the sorted half, and shrink accordingly.
-
-```java
-int searchOnePass(int[] a, int target) {
-    int lo = 0, hi = a.length - 1;
-    while (lo <= hi) {
-        int mid = lo + (hi - lo) / 2;
-        if (a[mid] == target) return mid;
-        // Which half is sorted?
-        if (a[lo] <= a[mid]) {                          // left half [lo..mid] is sorted
-            if (target >= a[lo] && target < a[mid]) hi = mid - 1;
-            else                                     lo = mid + 1;
-        } else {                                        // right half [mid..hi] is sorted
-            if (target > a[mid] && target <= a[hi])  lo = mid + 1;
-            else                                     hi = mid - 1;
-        }
-    }
-    return -1;
-}
-```
-
-**Complexity:** O(log n) time, O(1) space. Half the LOC, but you must trace through the branch logic to convince yourself of correctness.
-**Interview delivery:** implement Approach 2 first (safer). Say *"I could compact this into a single-pass loop by determining which half is sorted at each step; happy to do that if we have time."* Only write Approach 3 if the interviewer explicitly asks.
-
-### Complexity ladder
-
-| Approach | Time | Space | Best use |
-|---|---|---|---|
-| Linear scan | O(n) | O(1) | State only; violates the problem constraint |
-| Find pivot + two searches | O(log n) | O(1) | Clean, modular, debuggable — interview default |
-| Single-pass modified BS | O(log n) | O(1) | Compact but requires care; contest / follow-up |
-
-
+## Interactive diagram
 
 <BinarySearchAnim />
 
-```svg
-<svg role="img" width="720" height="176" viewBox="0 0 720 176" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif" aria-label="Diagram illustrating: Complexity ladder">
-  <rect x="0" y="0" width="720" height="176" fill="var(--dsa-bg)"/>
-  <text x="20" y="26" font-size="13" font-weight="700" fill="var(--dsa-primary)">search for a value — each guess throws away half</text>
+The animation shows the half-open loop on a sorted array. Watch the `[lo, hi)` window shrink; note that at every step the candidate answer (if any) lies inside the yellow range. Try: a value in the array (watch it converge in `log₂ n` steps), a value smaller than all elements (lo stays at 0, hi walks down to 0), a value larger than all (lo walks up to n). The three cases cover the full behavior.
 
-  <!-- step 1: whole range, mid in middle -->
-  <text x="20" y="58" font-size="11" fill="var(--dsa-neutral)">step 1</text>
-  <rect x="70"  y="44" width="580" height="24" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/>
-  <rect x="350" y="42" width="30" height="28" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
-  <text x="365" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">mid</text>
-  <rect x="70" y="44" width="280" height="24" rx="5" fill="var(--dsa-danger-soft)" fill-opacity="0.55" stroke="none"/>
-  <text x="210" y="61" text-anchor="middle" font-size="11" fill="var(--dsa-danger)">discard (target is bigger)</text>
+## Recognition drill
 
-  <!-- step 2: right half, new mid -->
-  <text x="20" y="98" font-size="11" fill="var(--dsa-neutral)">step 2</text>
-  <rect x="384" y="84" width="266" height="24" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)"/>
-  <rect x="503" y="82" width="30" height="28" rx="5" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
-  <text x="518" y="101" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">mid</text>
-  <rect x="533" y="84" width="117" height="24" rx="5" fill="var(--dsa-danger-soft)" fill-opacity="0.55" stroke="none"/>
-  <text x="591" y="101" text-anchor="middle" font-size="11" fill="var(--dsa-danger)">discard</text>
+Reading the chapter trains comprehension. Drilling recognition trains the thing an interviewer actually tests: given a cold problem with no pattern tag, can you spot that it reduces to a half-open loop?
 
-  <!-- step 3: small range -->
-  <text x="20" y="138" font-size="11" fill="var(--dsa-neutral)">step 3</text>
-  <rect x="384" y="124" width="119" height="24" rx="5" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
-  <text x="443" y="141" text-anchor="middle" font-size="11" fill="var(--dsa-success)">found — range is tiny</text>
+<RecognitionDrill pattern="binary-search" :count="10" />
 
-  <text x="20" y="170" font-size="11" fill="var(--dsa-neutral)" font-style="italic">3 steps have already shrunk the space to ~1/8 — that halving is why it's O(log n).</text>
-</svg>
-```
-<div class="readfig"><b>How to read it:</b> Each blue bar is "what's still in play." You check the <b>mid</b> element; comparing it to the target tells you which half can't contain the answer (shaded red), so you drop it and repeat on the survivor. Three steps in, the search space is already down to about an eighth. Because every step halves it, you reach a single element in <code>log₂ n</code> steps.</div>
+Then come back to [the mixed drill](/mixed-drill) once you've worked a few other chapters — mixed is where interleaved recognition becomes a reflex instead of a chapter-local skill.
 
-Here's the subtlety that unlocks the *hard* problems: the data doesn't have to be sorted **by value** — it only has to be **monotone by feasibility**. That is, there's some yes/no test that is false, false, …, false, then true, true, … and never flips back. Then you're just hunting for that single false→true boundary. That reframing is what turns "guess the answer and check it" problems (like *Koko Eating Bananas*) into binary search.
+## Advanced — follow-ups and failure modes
 
-> [key] **Key Insight** — Stop thinking "find x in sorted array." Think: *there is a boundary where a boolean predicate `P` switches false→true; find it.* Every variant is "find the first index where `P` holds."
+Five interview "what if…" follow-ups and a breaking point. If you can answer these cold, you have mastered binary search as a tool, not just as a template.
 
-```mermaid
-flowchart TD
-  A(["lo = minAnswer · hi = maxAnswer"]) --> B{"lo &lt; hi ?"}
-  B -- yes --> C["mid = lo + (hi - lo) / 2"]
-  C --> D{"feasible(mid)?"}
-  D -- yes --> E["hi = mid<br/>(try to do better)"]
-  D -- no --> F["lo = mid + 1<br/>(need a bigger answer)"]
-  E --> B
-  F --> B
-  B -- no --> G(["lo = least feasible answer"])
-```
-<div class="figcap">Binary search on the answer — feasibility is monotone, so the false→true boundary is the optimum.</div>
-<div class="readfig"><b>How to read it:</b> We're not searching the array — we're searching over *possible answers*. Guess a middle value and ask a yes/no question: "does this value work?" (e.g. "can Koko finish in time at this speed?"). Because the answer flips from "no" to "yes" exactly once as the value grows, every "yes" lets us try something smaller and every "no" forces something bigger — halving the range each time until we land on the smallest value that works.</div>
+### What if the sorted array has duplicates and we must find the FIRST occurrence?
 
-### Recognize by
-- "first / last index of x in a sorted array"
-- "search rotated sorted array", "find peak", "minimum in rotated"
-- "first true / last false" — any binary boundary in monotone data
+Use `lowerBound(target)`, then verify `a[lo] == target`. Do NOT try to make the vanilla equality-check loop return the first; it'll return any occurrence. The lower-bound predicate `a[mid] < target` (strict less-than) is the key — on an equality match it still shrinks hi down to mid, never resting on a later occurrence.
 
-### When NOT to use it
-The data isn't sorted / monotone — you can't halve safely. Sort first (O(n log n)) or scan linearly. Also skip when random-access lookup is expensive (linked lists) — walking to `mid` is O(n) there, killing the log advantage.
+### What if the predicate is "is this `k` feasible?" and feasibility is monotone?
 
----
+That's the entire [binary search on the answer](/bs-on-answer) chapter. The template above is unchanged; only the search space changes from array indices to the answer range `[lo, hi]`, and `a[mid] < target` becomes `!feasible(mid)`. Classic examples: minimum eating speed (Koko), minimum capacity to ship, split array largest sum. If you've mastered this chapter, you've already mastered 80% of that one.
 
-## Search in Rotated Sorted Array <span class="diff diff-m">Medium</span>
+### What if the array is on disk and random access costs 10ms?
 
-*[↗ LeetCode: Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)*
+Pure binary search still works (25 disk reads for `n = 10^7`, well under a second), but you can do better by exploiting the fact that distant reads are no more expensive than near reads: **interpolation search** probes at a position *proportional to the target's value* in `[a[lo], a[hi]]`, not at the midpoint. On uniformly-distributed data it drops to `log(log n)` reads — ~4-5 instead of 25. On adversarial data (geometric distribution), it degrades to O(n), so pair it with a plain-binary-search fallback after a few bad iterations.
 
-<ProgressCheck id="search-in-rotated-sorted-array" />
+### What if the sorted sequence is coming in through a stream and you can only random-access the last N elements?
 
-```svg
-<svg role="img" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Diagram illustrating: Search in Rotated Sorted Array Medium">
-  <defs>
-    <marker id="ar-rot-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/>
-    </marker>
-  </defs>
-  <rect x="0" y="0" width="400" height="250" rx="12" fill="var(--dsa-bg)"/>
-  <text x="200" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">rotated array: one half is still sorted</text>
+Binary search is impossible on a stream — you can't rewind. Switch to a `TreeMap` (RB-tree) that supports `ceilingKey` / `floorKey` in O(log n) with incremental insertion. Or if the stream is huge and the query is "top-K", switch to a bounded heap. Pattern recognition: streaming + sorted + boundary query → BBST or bounded heap, not binary search.
 
-  <rect x="28" y="69" width="204" height="62" rx="10" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2.4" opacity="0.62"/>
-  <rect x="232" y="69" width="156" height="62" rx="10" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2.4" opacity="0.62"/>
-  <text x="130" y="61" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">sorted 4..7</text>
-  <text x="310" y="61" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-success)">target range</text>
+### What if the array is nearly-sorted (bounded disorder of ±k)?
 
-  <g text-anchor="middle">
-    <rect x="34" y="78" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.6"/>
-    <rect x="82" y="78" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.6"/>
-    <rect x="130" y="78" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary-line)" stroke-width="1.6"/>
-    <rect x="178" y="78" width="44" height="44" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="1.6"/>
-    <rect x="238" y="78" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="1.6"/>
-    <rect x="286" y="78" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-line)" stroke-width="1.6"/>
-    <rect x="334" y="78" width="44" height="44" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success-line)" stroke-width="1.6"/>
-    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
-      <text x="56" y="106">4</text><text x="104" y="106">5</text><text x="152" y="106">6</text><text x="200" y="106">7</text>
-      <text x="260" y="106">0</text><text x="308" y="106">1</text><text x="356" y="106">2</text>
-    </g>
-    <g font-size="11" fill="var(--dsa-neutral)">
-      <text x="56" y="142">0</text><text x="104" y="142">1</text><text x="152" y="142">2</text><text x="200" y="142">3</text>
-      <text x="260" y="142">4</text><text x="308" y="142">5</text><text x="356" y="142">6</text>
-    </g>
-  </g>
-  <line x1="200" y1="166" x2="200" y2="124" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-rot-primary)"/>
-  <text x="200" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">mid = 3, value 7</text>
-  <text x="200" y="216" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--dsa-neutral)">identify sorted half → binary-search there or the other</text>
-</svg>
-```
+Plain binary search is wrong — the target you expect at index `i` might be at `i ± k`. Two fixes: (a) check `[i-k, i+k]` linearly after the binary search lands, giving O(log n + k) — fine if `k` is small; (b) if `k` is comparable to `n`, give up on sort-order assumptions and use hashing.
 
-<div class="readfig"><b>How to read it:</b> The left half is sorted, but the target value 0 cannot lie between 4 and 7, so binary search discards that half and continues on the green side.</div>
+### Breaking point: when the "feasibility" predicate is NOT monotone
 
-### Problem
-A sorted array was **rotated** at an unknown pivot. Find the index of `target` (or -1) in **O(log n)**.
+Binary search silently returns the wrong answer on a non-monotone predicate — the loop still terminates, but the invariant doesn't hold, so the final `lo` has no meaning. **Verification before you code:** compute `feasible(lo)` and `feasible(hi)` and sanity-check: one must be true and one false. If both agree, you have a boundary problem (not a feasibility problem). If feasibility flips back and forth, binary search doesn't apply at all; switch to a linear scan or (if the function is unimodal) ternary search.
 
-**Constraints:** `1 ≤ n ≤ 5000`; all values distinct; must be O(log n).
+### Cross-pattern problems
 
-**Example 1:** `[4,5,6,7,0,1,2], target = 0` → `4`.
+- **Median of Two Sorted Arrays** ([↗ LeetCode 4](https://leetcode.com/problems/median-of-two-sorted-arrays/)). O(log(min(m, n))) via binary search on the partition index — one of the hardest classical results you'll see in interviews. The predicate: "do these two partitions produce left-max ≤ right-min?" This is binary search where the "array" being searched is the partition cursor, not element values. Pattern mix: binary search + two-pointer thinking.
+- **Capacity to Ship Packages Within D Days** ([↗ LeetCode 1011](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/)). Binary search over the answer space `[max(weight), sum(weights)]` with feasibility = "can we ship in ≤ D days at this capacity?" Full write-up in [BS on answer](/bs-on-answer). Recognition drill: when the problem says "minimum X such that Y holds" and Y is checkable in O(n), the predicate is monotone and this template applies.
+- **Count of Range Sum** ([↗ LeetCode 327](https://leetcode.com/problems/count-of-range-sum/)). O(n log n) via merge sort + binary search inside the merge step: for each prefix sum, binary-search the window of valid partners. Pattern mix: binary search + divide-and-conquer. The binary search here is `lowerBound` / `upperBound` on a sorted buffer during the merge.
 
-<ExamplePreview compact :input="['4', '5', '6', '7', '0', '1', '2', '|', '0']" :output="['4']" />
-
-**Example 2:** `[4,5,6,7,0,1,2], target = 3` → `-1`.
-
-<ExamplePreview compact :input="['4', '5', '6', '7', '0', '1', '2', '|', '3']" :output="['-1']" />
-
-### Solution — brute force
-Brute force scans the array from left to right and returns the index whose value equals `target`. It is O(n) time and O(1) space, which is acceptable for tiny arrays but misses the required logarithmic guarantee. The optimized version keeps binary search alive by noticing that at least one half around `mid` is sorted, then discarding the half where the target cannot live.
-
-```java
-int searchBrute(int[] a, int target) {
-    for (int i = 0; i < a.length; i++) {
-        if (a[i] == target) return i;
-    }
-    return -1;
-}
-```
-
-O(n) time, O(1) space — too slow when the prompt explicitly requires logarithmic search.
-
-### Solution — optimized
-One half of a rotated array is always sorted; decide which, then whether the target lies in it.
-
-> [key] **Key Insight** — Compare `a[mid]` to `a[lo]`. If `a[lo] ≤ a[mid]`, the left half is sorted; check if target is inside `[a[lo], a[mid])`. Otherwise the right half is sorted. Discard the half that provably cannot contain the target.
-
-The optimized version is still binary search, but each iteration first identifies the sorted half. Once you know which half is ordered, one range check tells you whether the target can be there; if not, safely discard that half.
-
-#### Steps
-1. Binary-search with a twist: at every `mid`, decide **which half is sorted**, then check if `target` falls in it.
-2. `mid = lo + (hi - lo) / 2`. If `a[mid] == target`, return `mid`.
-3. If `a[lo] <= a[mid]` — left half `[lo..mid]` is sorted. If `a[lo] <= target < a[mid]` → `hi = mid - 1`; else `lo = mid + 1`.
-4. Otherwise the right half `[mid..hi]` is sorted. If `a[mid] < target <= a[hi]` → `lo = mid + 1`; else `hi = mid - 1`.
-5. Loop while `lo <= hi`; return `-1` if not found.
-
-The optimized Java implementation:
-```java
-int search(int[] a, int target) {
-    int lo = 0, hi = a.length - 1;
-    while (lo <= hi) {
-        int mid = lo + (hi - lo) / 2;
-        if (a[mid] == target) return mid;
-        if (a[lo] <= a[mid]) {                       // left sorted
-            if (a[lo] <= target && target < a[mid]) hi = mid - 1;
-            else lo = mid + 1;
-        } else {                                     // right sorted
-            if (a[mid] < target && target <= a[hi]) lo = mid + 1;
-            else hi = mid - 1;
-        }
-    }
-    return -1;
-}
-```
-
-> [note] **Trace it** — `[4,5,6,7,0,1,2], target=0`. `mid=7`; the left half `[4..7]` is sorted but `0` isn't inside it, so search right → find `0` at index 4.
-
-<CodeTrace
-  title="Search in Rotated Sorted Array — nums=[4,5,6,7,0,1,2], target=0"
-  :values="[4,5,6,7,0,1,2]"
-  :windowKeys="['lo', 'hi']"
-  :cellWidth="38"
-  :steps='[
-    { pointers: { lo: 0, mid: 3, hi: 6 }, vars: { target: 0 }, note: "mid=7. left half [4..7] sorted, target not in it → lo=mid+1" },
-    { pointers: { lo: 4, mid: 5, hi: 6 }, vars: { target: 0 }, note: "mid=1. right half [1..2] sorted, target not in it → hi=mid-1" },
-    { pointers: { lo: 4, mid: 4, hi: 4 }, vars: { target: 0 }, note: "mid=0 == target → return 4", added: [4] }
-  ]'
-/>
-
-### Time Complexity
-O(log n), because every iteration discards one half of the current range after proving the target cannot be there.
-
-### Space Complexity
-O(1), because the algorithm keeps only `lo`, `hi`, and `mid` plus a few comparisons.
-
-> [note] **Interview script** — "I first confirm values are distinct and the array is a sorted array rotated once. I start with brute force by scanning every index, which is O(n) time and O(1) space. I optimize by binary-searching the sorted half at each step, discarding half the array for O(log n) time and O(1) space."
-
-
-> [trap] **Common Trap** — Wrong inclusivity on the "sorted-half" test. *Example:* `nums=[3,1]`, `target=1`, `lo=0, hi=1, mid=0`. With strict `a[lo] < a[mid]`, a single-element left half `[3]` isn't marked sorted and the algorithm misroutes. Use `a[lo] <= a[mid]`.
-
-<CodeTrace
-  title="Trap — Rotated BS inclusivity: nums=[3,1], target=1"
-  :values="[3,1]"
-  :windowKeys="['lo','hi']"
-  :cellWidth="52"
-  :steps='[
-    { pointers: { lo: 0, hi: 1, mid: 0 }, vars: { "a[lo]": 3, "a[mid]": 3 }, note: "single-element left half. a[lo]==a[mid]" },
-    { pointers: { lo: 0, hi: 1 }, vars: { "test a[lo] lt a[mid]": "3lt3 → FALSE" }, note: "BUG: strict → left half marked unsorted → search wrong side" },
-    { pointers: { lo: 1, hi: 1 }, vars: { "test a[lo] lt= a[mid]": "3lt=3 → TRUE" }, note: "FIX: use lt= → left half correctly sorted → find 1", added: [1] }
-  ]'
-/>
-
-### Learning notes
-- **Strict vs inclusive** on the sorted-half test — use `a[lo] <= a[mid]` so a length-1 left half is treated as sorted.
-- **Comparing target inclusively on the wrong endpoint** — the target-in-range checks must match the sorted-half boundary.
-- **Overflow on `(lo+hi)/2`** for large indices — use `lo + (hi-lo)/2`.
-- **Assumes no duplicates**; with duplicates (LC 81), shrink both ends when `a[lo]==a[mid]==a[hi]`.
-- Why `while (lo <= hi)`? — this is a closed interval search, so `lo == hi` is still one valid candidate to check.
-- Why return immediately on `a[mid] == target`? — unlike lower-bound search, this problem asks for any exact index.
-- Why check the sorted half first? — rotation breaks global ordering, but at least one side around `mid` remains locally sorted.
-
-> [pat] **Pattern Connection** — *Find Minimum in Rotated Sorted Array* is the same "which half is sorted" logic reduced to locating the inflection point.
-
-### Same pattern, new tweaks
-
-The engine is "one half is always sorted — decide which, then which half to keep":
-
-| Variation | The one thing that changes | Time |
-|---|---|---|
-| [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | no target; steer toward the unsorted half, which is where the rotation point (the minimum) hides | — |
-| [Search in Rotated Array II (with duplicates)](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | when `a[lo] == a[mid] == a[hi]` you can't tell which half is sorted, so shrink both ends by one (worst case degrades to O(n)) | O(n) |
-| [Find Peak Element](https://leetcode.com/problems/find-peak-element/) | no sorted array at all — just move toward the larger neighbour; you're guaranteed to climb to a peak | — |
-| [Order-Agnostic Binary Search](https://leetcode.com/problems/binary-search/) | first peek at the ends to detect ascending vs descending, then flip the comparison accordingly | — |
-
----
-
-## Check your understanding
-
-<Quiz
-  pattern-id="binary-search"
-  :questions='[{"q": "What is the danger of using `mid = (lo + hi) / 2`?", "choices": [{"text": "Integer overflow when lo + hi > Integer.MAX_VALUE", "correct": true, "explanation": "Use `mid = lo + (hi - lo) / 2` to avoid this."}, {"text": "Off-by-one error", "correct": false}, {"text": "Nothing; it’s always safe", "correct": false}, {"text": "It divides by zero", "correct": false}]}, {"q": "In Rotated Sorted Array search, how do you decide which half is sorted?", "choices": [{"text": "Compare `nums[mid]` with `nums[lo]` (or nums[hi])", "correct": true, "explanation": "If `nums[mid] > nums[lo]`, the left half is sorted; else the right half is."}, {"text": "Always search the left half first", "correct": false}, {"text": "Random guess", "correct": false}, {"text": "Sort the array first", "correct": false, "explanation": "Defeats the log n requirement."}]}, {"q": "For Find Peak Element, which comparison guides the BS?", "choices": [{"text": "`nums[mid] < nums[mid+1]` → climb right; else → left", "correct": true, "explanation": "A climbing side must eventually peak (nums[n] = -∞)."}, {"text": "`nums[mid] < nums[0]`", "correct": false}, {"text": "`nums[mid] > target`", "correct": false}, {"text": "Nothing; use linear scan", "correct": false}]}, {"q": "Half-open BS returns `lo` after the loop. What does `lo` represent?", "choices": [{"text": "The lower_bound: smallest index i with nums[i] ≥ target", "correct": true, "explanation": "Extensible to first-true / first-occurrence variants."}, {"text": "Always the answer", "correct": false, "explanation": "Not for closed-interval BS."}, {"text": "The middle of the array", "correct": false}, {"text": "Nothing; the loop iterates forever", "correct": false}]}, {"q": "When can binary search NOT be applied?", "choices": [{"text": "When there is no monotonic property", "correct": true, "explanation": "BS requires that you can eliminate half the search space each step, which needs monotonicity."}, {"text": "When n is large", "correct": false, "explanation": "BS is BEST for large n."}, {"text": "When elements are integers", "correct": false}, {"text": "When there are duplicates", "correct": false, "explanation": "Duplicates change some variants but not the general applicability."}]}]'
-/>
-
-<PrintButton />
+## Related patterns + Check your understanding
 
 <RelatedPatterns pattern-id="binary-search" />
+
+<Quiz pattern-id="binary-search" :questions="quizQuestions" />
+
+<PrintButton />
