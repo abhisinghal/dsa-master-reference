@@ -240,26 +240,6 @@ Every Top-K-heap problem is a specialization of **"maintain a size-k heap of the
   :specializations="theTemplateSpecializations"
 />
 
-## Traps & gotchas
-
-<TrapTrace
-  title="Trap 1 — Wrong heap polarity"
-  bug="For 'k LARGEST', instinct says 'max-heap'. nums=[3,1,5,2,4], k=2 with a MAX-heap of all 5: builds then pops 2 times to extract {5,4} — that's O(n log n) work. Also, with the opposite polarity used as a size-k heap, the algorithm silently returns the WRONG values (keeps the smallest instead of the largest)."
-  fix="Rule: 'the root is the next thing I would throw away.' k largest → smallest kept is next to go → MIN-heap. k smallest → MAX-heap. Say the polarity aloud before writing the comparator. Size-k heap stays O(n log k)."
-/>
-
-<TrapTrace
-  title="Trap 2 — Subtraction comparator overflow on int keys"
-  bug="PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a); — looks correct for max-heap. But when a = Integer.MIN_VALUE and b = 1, b - a overflows to Integer.MIN_VALUE + 1 (negative), inverting the comparison. On adversarial inputs the heap order is corrupted and the top-k result is wrong."
-  fix="Always use Integer.compare(b, a) for max-heap or Integer.compare(a, b) for min-heap. The compare method handles the full int range correctly. Same rule for Long.compare, Double.compare."
-/>
-
-<TrapTrace
-  title="Trap 3 — Streaming add() after batch-filling misses the heap-size invariant"
-  bug="class KthLargest { PriorityQueue<Integer> pq = new PriorityQueue<>(); public KthLargest(int k, int[] nums) { for (int x : nums) pq.offer(x); } public int add(int v) { pq.offer(v); return pq.peek(); } } — if the initial array has 10 items and k=3, the heap holds 10 (not 3), and the root is the OVERALL min, not the 3rd largest. Returns the wrong answer."
-  fix="Trim to k during BOTH the constructor and add(): after every offer, if (pq.size() > k) pq.poll(). The invariant 'size == min(k, items_seen)' must hold at all times, not just steady-state."
-/>
-
 ## History — Williams's heap, 1964
 
 The binary heap was invented by **J.W.J. Williams** in 1964 as the core data structure of **heapsort**. Williams's paper introduced both the heap-invariant maintenance operations (sift-up, sift-down) and the array-based tree representation using index arithmetic — parent at `(i-1)/2`, children at `2i+1` and `2i+2`. That representation lets a heap live entirely in a contiguous `int[]` with zero pointer overhead, which is why every language's standard library ships a heap-backed `PriorityQueue`.
@@ -776,6 +756,26 @@ Run these small cases mentally before trusting the code:
 | [Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) | treat each row as a sorted stream and use a min-heap for k-way merge | O(k log n) |
 | [Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | keep a size-k **min**-heap alive across `add` calls; root is always the running kth largest | O(log k) per add |
 | [Reorganize String](https://leetcode.com/problems/reorganize-string/) | use a max-heap because you repeatedly need the currently most frequent remaining character, not a bounded top-k set | O(n log alphabet) |
+
+## Traps & gotchas
+
+<TrapTrace
+  title="Trap 1 — Wrong heap polarity"
+  bug="For 'k LARGEST', instinct says 'max-heap'. nums=[3,1,5,2,4], k=2 with a MAX-heap of all 5: builds then pops 2 times to extract {5,4} — that's O(n log n) work. Also, with the opposite polarity used as a size-k heap, the algorithm silently returns the WRONG values (keeps the smallest instead of the largest)."
+  fix="Rule: 'the root is the next thing I would throw away.' k largest → smallest kept is next to go → MIN-heap. k smallest → MAX-heap. Say the polarity aloud before writing the comparator. Size-k heap stays O(n log k)."
+/>
+
+<TrapTrace
+  title="Trap 2 — Subtraction comparator overflow on int keys"
+  bug="PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a); — looks correct for max-heap. But when a = Integer.MIN_VALUE and b = 1, b - a overflows to Integer.MIN_VALUE + 1 (negative), inverting the comparison. On adversarial inputs the heap order is corrupted and the top-k result is wrong."
+  fix="Always use Integer.compare(b, a) for max-heap or Integer.compare(a, b) for min-heap. The compare method handles the full int range correctly. Same rule for Long.compare, Double.compare."
+/>
+
+<TrapTrace
+  title="Trap 3 — Streaming add() after batch-filling misses the heap-size invariant"
+  bug="class KthLargest { PriorityQueue<Integer> pq = new PriorityQueue<>(); public KthLargest(int k, int[] nums) { for (int x : nums) pq.offer(x); } public int add(int v) { pq.offer(v); return pq.peek(); } } — if the initial array has 10 items and k=3, the heap holds 10 (not 3), and the root is the OVERALL min, not the 3rd largest. Returns the wrong answer."
+  fix="Trim to k during BOTH the constructor and add(): after every offer, if (pq.size() > k) pq.poll(). The invariant 'size == min(k, items_seen)' must hold at all times, not just steady-state."
+/>
 
 ## In the wild — Elasticsearch top-N aggregation & Java's `PriorityQueue`
 

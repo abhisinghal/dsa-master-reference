@@ -352,26 +352,6 @@ Every Trie-pattern problem is a specialization of **"walk a path through the tri
   :canonical="binaryTrieCode"
 />
 
-## Traps & gotchas
-
-<TrapTrace
-  title="Trap 1 — Forgetting the end-of-word flag"
-  :bug="trap1Bug"
-  :fix="trap1Fix"
-/>
-
-<TrapTrace
-  title="Trap 2 — Word Search II emitting the same word twice"
-  :bug="trap2Bug"
-  :fix="trap2Fix"
-/>
-
-<TrapTrace
-  title="Trap 3 — Binary-trie bit order reversed (LSB-first)"
-  :bug="trap3Bug"
-  :fix="trap3Fix"
-/>
-
 ## History — de la Briandais 1959, Fredkin 1960, Google's first index
 
 The trie data structure was invented by **René de la Briandais** in 1959 as a compact way to store dictionaries in punch-card memory. **Edward Fredkin** independently rediscovered and named it in 1960: *"trie"* from "re**trie**val" (Fredkin insisted it should be pronounced "tree," but nobody listened; the standard pronunciation is "try").
@@ -951,6 +931,26 @@ O(n·32) trie nodes in the worst case.
 - Why pairing with itself is harmless here? — self-XOR is 0, which cannot beat a positive maximum pair.
 
 </details>
+
+## Traps & gotchas
+
+<TrapTrace
+  title="Trap 1 — Forgetting the end-of-word flag"
+  :bug="trap1Bug"
+  :fix="trap1Fix"
+/>
+
+<TrapTrace
+  title="Trap 2 — Word Search II emitting the same word twice"
+  :bug="trap2Bug"
+  :fix="trap2Fix"
+/>
+
+<TrapTrace
+  title="Trap 3 — Binary-trie bit order reversed (LSB-first)"
+  :bug="trap3Bug"
+  :fix="trap3Fix"
+/>
 
 ## In the wild — `java.util.jar.JarFile` manifest trie & Cisco IP routing
 

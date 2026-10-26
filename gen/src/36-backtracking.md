@@ -1383,7 +1383,7 @@ Returning the *count* of solutions mod 10⁹+7, you must never explicitly enumer
 
 The "modulo prime" phrasing is the dead giveaway: the number of solutions is astronomically large, so the problem *can't* want you to enumerate them. It wants the count. Counting is almost always DP — you combine subproblem counts additively (or multiplicatively, with modular arithmetic) rather than enumerating individual solutions. Reach for backtracking only when the problem genuinely wants *the solutions themselves*.
 
-## When NOT to use it (extended)
+### When NOT to use it — extended interviewer red flags
 
 The specific interviewer red flags:
 
