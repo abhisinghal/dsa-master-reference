@@ -101,19 +101,19 @@ const threeSumInvariant = {
 }
 
 const containerCode = `int maxArea(int[] h) {
-    int l = 0, r = h.length - 1, best = 0;
-    while (l &lt; r) {
-        best = Math.max(best, Math.min(h[l], h[r]) * (r - l));
-        if (h[l] &lt; h[r]) l++; else r--;              // discard the shorter wall
+    int left = 0, right = h.length - 1, best = 0;
+    while (left &lt; right) {
+        best = Math.max(best, Math.min(h[left], h[right]) * (right - left));
+        if (h[left] &lt; h[right]) left++; else right--;    // discard the shorter wall
     }
     return best;
 }`
 
 const containerInvariant = {
-  statement: `The optimal pair \`(i*, j*)\` with \`i* &lt; j*\` either has both indices in \`[l, r]\`, OR has already been considered (its area is \`&lt;= best\`).`,
-  initialization: `Before the loop, \`l = 0\`, \`r = n - 1\`. Every pair is in \`[l, r]\`; \`best = 0\` so nothing has been "already considered" yet.`,
-  maintenance: `Suppose \`h[l] &lt; h[r]\`. The current area is \`h[l] * (r - l)\`. For any pair \`(l, k)\` with \`k &lt; r\`: width \`k - l &lt; r - l\` and height \`&lt;= h[l]\` (the limiting wall is still \`h[l]\`), so area \`&lt;= best\`. Those pairs are safely considered. Discarding \`l\` (incrementing) means every uncomputed pair has both indices in \`[l+1, r]\`, so the invariant holds. Symmetric when \`h[r] &lt;= h[l]\`.`,
-  termination: `\`r - l\` strictly decreases. When \`l &gt;= r\`, all optimal pairs have been considered, and \`best\` is the answer.`
+  statement: `The optimal pair \`(i*, j*)\` with \`i* &lt; j*\` either has both indices in \`[left, right]\`, OR has already been considered (its area is \`&lt;= best\`).`,
+  initialization: `Before the loop, \`left = 0\`, \`right = n - 1\`. Every pair is in \`[left, right]\`; \`best = 0\` so nothing has been "already considered" yet.`,
+  maintenance: `Suppose \`h[left] &lt; h[right]\`. The current area is \`h[left] * (right - left)\`. For any pair \`(left, k)\` with \`k &lt; right\`: width \`k - left &lt; right - left\` and height \`&lt;= h[left]\` (the limiting wall is still \`h[left]\`), so area \`&lt;= best\`. Those pairs are safely considered. Discarding \`left\` (incrementing) means every uncomputed pair has both indices in \`[left+1, right]\`, so the invariant holds. Symmetric when \`h[right] &lt;= h[left]\`.`,
+  termination: `\`right - left\` strictly decreases. When \`left &gt;= right\`, all optimal pairs have been considered, and \`best\` is the answer.`
 }
 
 const squaringCode = `int[] sortedSquares(int[] a) {
@@ -152,26 +152,26 @@ const dutchInvariant = {
 }
 
 const trapCode = `int trap(int[] h) {
-    int l = 0, r = h.length - 1, lMax = 0, rMax = 0, water = 0;
-    while (l &lt; r) {
-        if (h[l] &lt; h[r]) {
-            lMax = Math.max(lMax, h[l]);
-            water += lMax - h[l];       // 0 if h[l] is the new max
-            l++;
+    int left = 0, right = h.length - 1, lMax = 0, rMax = 0, water = 0;
+    while (left &lt; right) {
+        if (h[left] &lt; h[right]) {
+            lMax = Math.max(lMax, h[left]);
+            water += lMax - h[left];           // 0 if h[left] is the new max
+            left++;
         } else {
-            rMax = Math.max(rMax, h[r]);
-            water += rMax - h[r];
-            r--;
+            rMax = Math.max(rMax, h[right]);
+            water += rMax - h[right];
+            right--;
         }
     }
     return water;
 }`
 
 const trapInvariant = {
-  statement: `At every iteration: (a) \`lMax = max(h[0..l])\`, (b) \`rMax = max(h[r..n-1])\`, (c) the water above every bar in \`[0, l) ∪ (r, n-1]\` has been added to \`water\`.`,
-  initialization: `Before the loop, \`l = 0\`, \`r = n - 1\`, \`lMax = rMax = water = 0\`. Both sides are empty "already-processed" ranges; both running maxes are correct for empty prefixes.`,
-  maintenance: `When \`h[l] &lt; h[r]\`: \`rMax &gt;= h[r] &gt; h[l]\`, so \`h[l]\` is bounded on the right by some wall \`&gt;= h[r] &gt; h[l]\`. Water above \`l\` equals \`lMax - h[l]\` (because the eventual \`min(lMax', rMax')\` of final processing will be at least \`lMax\`, since lMax only grows and the right wall exists). After update, bar \`l\` is accounted for; advance. Symmetric for the right side.`,
-  termination: `When \`l &gt;= r\`, every bar has been processed exactly once. \`water\` is the total trapped water.`
+  statement: `At every iteration: (a) \`lMax = max(h[0..left])\`, (b) \`rMax = max(h[right..n-1])\`, (c) the water above every bar in \`[0, left) ∪ (right, n-1]\` has been added to \`water\`.`,
+  initialization: `Before the loop, \`left = 0\`, \`right = n - 1\`, \`lMax = rMax = water = 0\`. Both sides are empty "already-processed" ranges; both running maxes are correct for empty prefixes.`,
+  maintenance: `When \`h[left] &lt; h[right]\`: \`rMax &gt;= h[right] &gt; h[left]\`, so \`h[left]\` is bounded on the right by some wall \`&gt;= h[right] &gt; h[left]\`. Water above \`left\` equals \`lMax - h[left]\` (because the eventual \`min(lMax', rMax')\` of final processing will be at least \`lMax\`, since lMax only grows and the right wall exists). After update, bar \`left\` is accounted for; advance. Symmetric for the right side.`,
+  termination: `When \`left &gt;= right\`, every bar has been processed exactly once. \`water\` is the total trapped water.`
 }
 
 const trapAcode = {
@@ -722,18 +722,18 @@ instead of discarding the pointer that overshoots a target, discard the **shorte
 <CodeTrace
   title="Container With Most Water — heights=[1,8,6,2,5,4,8,3,7]"
   :values="[1,8,6,2,5,4,8,3,7]"
-  :windowKeys="['lo', 'hi']"
+  :windowKeys="['left', 'right']"
   :cellWidth="34"
   :steps='[
-    { pointers: { lo: 0, hi: 8 }, vars: { area: 8, best: 8 }, note: "min(1,7)*8=8. lo shorter → lo++" },
-    { pointers: { lo: 1, hi: 8 }, vars: { area: 49, best: 49 }, note: "min(8,7)*7=49. best updates. hi shorter → hi--" },
-    { pointers: { lo: 1, hi: 7 }, vars: { area: 18, best: 49 }, note: "min(8,3)*6=18. hi shorter → hi--" },
-    { pointers: { lo: 1, hi: 6 }, vars: { area: 40, best: 49 }, note: "min(8,8)*5=40. tie → shrink either" },
-    { pointers: { lo: 1, hi: 5 }, vars: { area: 16, best: 49 }, note: "min(8,4)*4=16. hi shorter → hi--" }
+    { pointers: { left: 0, right: 8 }, vars: { area: 8, best: 8 }, note: "min(1,7)*8=8. left shorter → left++" },
+    { pointers: { left: 1, right: 8 }, vars: { area: 49, best: 49 }, note: "min(8,7)*7=49. best updates. right shorter → right--" },
+    { pointers: { left: 1, right: 7 }, vars: { area: 18, best: 49 }, note: "min(8,3)*6=18. right shorter → right--" },
+    { pointers: { left: 1, right: 6 }, vars: { area: 40, best: 49 }, note: "min(8,8)*5=40. tie → shrink either" },
+    { pointers: { left: 1, right: 5 }, vars: { area: 16, best: 49 }, note: "min(8,4)*4=16. right shorter → right--" }
   ]'
 />
 
-**Why moving the taller wall never helps:** suppose `h[l] < h[r]`. For any `k > l`, the pair `(l, k)` has width `k - l < r - l` AND height `min(h[l], h[k]) <= h[l]`. Area `<= h[l] * (r - l) = currentArea`. So all pairs with `l` fixed are now accounted for; safe to advance `l`.
+**Why moving the taller wall never helps:** suppose `h[left] < h[right]`. For any `k > left`, the pair `(left, k)` has width `k - left < right - left` AND height `min(h[left], h[k]) <= h[left]`. Area `<= h[left] * (right - left) = currentArea`. So all pairs with `left` fixed are now accounted for; safe to advance `left`.
 
 <details class="learnings">
 <summary><strong>Learnings — points to remember</strong></summary>
@@ -743,7 +743,7 @@ instead of discarding the pointer that overshoots a target, discard the **shorte
 - **The exchange argument is subtle:** moving the taller wall inward is PROVABLY DOMINATED (width shrinks, cap stays the same) — so skipping those pairs costs nothing. This proof is the whole correctness story.
 - **O(n) time, O(1) space** — one pass, two pointers, running `best`. The brute-force O(n²) all-pairs is a reasonable interview warm-up but never the final answer.
 - **Different from Trapping Rain Water** — Container asks for the LARGEST single container; Trapping Rain Water asks for the TOTAL water across all troughs. Same opposite-end sweep template, different accumulation and advancement rules.
-- **Tie-break (`h[l] == h[r]`) can advance EITHER pointer** — correctness holds; shift either. Code aesthetics usually pick `l++` for consistency.
+- **Tie-break (`h[left] == h[right]`) can advance EITHER pointer** — correctness holds; shift either. Code aesthetics usually pick `left++` for consistency.
 
 </details>
 
@@ -841,14 +841,14 @@ after squaring, the array is no longer sorted — but the largest square still l
 <CodeTrace
   title="Squares of Sorted Array — nums=[-4,-1,0,3,10]"
   :values="[-4,-1,0,3,10]"
-  :windowKeys="['lo','hi']"
+  :windowKeys="['left','right']"
   :cellWidth="42"
   :steps='[
-    { pointers: { lo: 0, hi: 4, pos: 4 }, vars: { pick: "10^2=100", output: "[_,_,_,_,100]" }, note: "|10| beats |-4|, place 100 at pos=4", added: [4] },
-    { pointers: { lo: 0, hi: 3, pos: 3 }, vars: { pick: "-4^2=16", output: "[_,_,_,16,100]" }, note: "|-4| beats |3|, place 16", added: [0] },
-    { pointers: { lo: 1, hi: 3, pos: 2 }, vars: { pick: "3^2=9", output: "[_,_,9,16,100]" }, note: "|3| beats |-1|, place 9", added: [3] },
-    { pointers: { lo: 1, hi: 2, pos: 1 }, vars: { pick: "-1^2=1", output: "[_,1,9,16,100]" }, note: "|-1| beats |0|, place 1", added: [1] },
-    { pointers: { lo: 2, hi: 2, pos: 0 }, vars: { pick: "0^2=0", output: "[0,1,9,16,100]" }, note: "final: place 0" }
+    { pointers: { left: 0, right: 4, pos: 4 }, vars: { pick: "10^2=100", output: "[_,_,_,_,100]" }, note: "|10| beats |-4|, place 100 at pos=4", added: [4] },
+    { pointers: { left: 0, right: 3, pos: 3 }, vars: { pick: "-4^2=16", output: "[_,_,_,16,100]" }, note: "|-4| beats |3|, place 16", added: [0] },
+    { pointers: { left: 1, right: 3, pos: 2 }, vars: { pick: "3^2=9", output: "[_,_,9,16,100]" }, note: "|3| beats |-1|, place 9", added: [3] },
+    { pointers: { left: 1, right: 2, pos: 1 }, vars: { pick: "-1^2=1", output: "[_,1,9,16,100]" }, note: "|-1| beats |0|, place 1", added: [1] },
+    { pointers: { left: 2, right: 2, pos: 0 }, vars: { pick: "0^2=0", output: "[0,1,9,16,100]" }, note: "final: place 0" }
   ]'
 />
 
@@ -1037,7 +1037,8 @@ three pointers partition into three regions in one pass. The subtle bit is **not
     { pointers: { low: 0, mid: 0, high: 4 }, vars: { a: "[0,0,2,1,1,2]" }, note: "mid=0 → swap low,mid; low++, mid++" },
     { pointers: { low: 1, mid: 1, high: 4 }, vars: { a: "[0,0,2,1,1,2]" }, note: "mid=0 → swap low,mid; low++, mid++" },
     { pointers: { low: 2, mid: 2, high: 4 }, vars: { a: "[0,0,2,1,1,2]" }, note: "mid=2 → swap mid,high; high--" },
-    { pointers: { low: 2, mid: 2, high: 3 }, vars: { a: "[0,0,1,1,2,2]" }, note: "mid=1 → mid++ (no swap)" },
+    { pointers: { low: 2, mid: 2, high: 3 }, vars: { a: "[0,0,1,1,2,2]" }, note: "a[mid]=1 → mid++ (middle region)" },
+    { pointers: { low: 2, mid: 3, high: 3 }, vars: { a: "[0,0,1,1,2,2]" }, note: "a[mid]=1 → mid++ (middle region)" },
     { pointers: { low: 2, mid: 4, high: 3 }, vars: { a: "[0,0,1,1,2,2]" }, note: "mid past high → done" }
   ]'
 />
@@ -1152,14 +1153,14 @@ at each step, the shorter side is "safe" to resolve because the taller side guar
 <CodeTrace
   title="Trapping Rain Water — heights=[0,1,0,2,1,0,1,3,2,1,2,1]"
   :values="[0,1,0,2,1,0,1,3,2,1,2,1]"
-  :windowKeys="['lo','hi']"
+  :windowKeys="['left','right']"
   :cellWidth="26"
   :steps='[
-    { pointers: { lo: 0, hi: 11, leftMax: 0, rightMax: 0 }, vars: { water: 0 }, note: "init. h[0]=0 < h[11]=1 → shorter side (left) is safe; lMax→0, no water, l++" },
-    { pointers: { lo: 2, hi: 10, leftMax: 1, rightMax: 1 }, vars: { water: 0 }, note: "iters 2–3: boundary bars match running maxes, no water yet" },
-    { pointers: { lo: 3, hi: 10, leftMax: 1, rightMax: 1 }, vars: { water: 1 }, note: "idx 2 (h=0) < lMax=1 → trap +1", added: [2] },
-    { pointers: { lo: 3, hi: 8, leftMax: 1, rightMax: 2 }, vars: { water: 2 }, note: "h[3]≥h[r]; r sweeps 10→8; idx 9 (h=1) < rMax=2 → trap +1", added: [9] },
-    { pointers: { lo: 7, hi: 7, leftMax: 2, rightMax: 2 }, vars: { water: 6 }, note: "l sweeps 3→7; idx 4,5,6 trapped by lMax=2 → +1,+2,+1. Loop ends. Total = 6.", added: [4,5,6] }
+    { pointers: { left: 0, right: 11, leftMax: 0, rightMax: 0 }, vars: { water: 0 }, note: "init. h[0]=0 < h[11]=1 → shorter side (left) is safe; lMax→0, no water, left++" },
+    { pointers: { left: 2, right: 10, leftMax: 1, rightMax: 1 }, vars: { water: 0 }, note: "iters 2–3: boundary bars match running maxes, no water yet" },
+    { pointers: { left: 3, right: 10, leftMax: 1, rightMax: 1 }, vars: { water: 1 }, note: "idx 2 (h=0) < lMax=1 → trap +1", added: [2] },
+    { pointers: { left: 3, right: 8, leftMax: 1, rightMax: 2 }, vars: { water: 2 }, note: "h[3]≥h[right]; right sweeps 10→8; idx 9 (h=1) < rMax=2 → trap +1", added: [9] },
+    { pointers: { left: 7, right: 7, leftMax: 2, rightMax: 2 }, vars: { water: 6 }, note: "left sweeps 3→7; idx 4,5,6 trapped by lMax=2 → +1,+2,+1. Loop ends. Total = 6.", added: [4,5,6] }
   ]'
 />
 
@@ -1175,7 +1176,7 @@ at each step, the shorter side is "safe" to resolve because the taller side guar
 
 - **The SHORTER side is "safe" to resolve** at every step — because a taller wall exists on the other side, water above the current short bar is bounded by `(leftMax or rightMax) - h[cur]`.
 - **Carry `lMax` and `rMax` as running maxima.** Update BEFORE comparing to h[cur] on each step; the water contribution is `sideMax - h[cur]`, which is zero when the current bar equals or exceeds its side-max.
-- **Advance the shorter side.** Opposite-end sweep, but advancement is driven by `h[l] < h[r]`, not by sum/target. This is the direct generalization of the Container-With-Most-Water advancement rule.
+- **Advance the shorter side.** Opposite-end sweep, but advancement is driven by `h[left] < h[right]`, not by sum/target. This is the direct generalization of the Container-With-Most-Water advancement rule.
 - **O(n) time, O(1) space** — the two-pointer version beats the precomputed `leftMax[]`/`rightMax[]` arrays (O(n) space) and the monotonic-stack version (O(n) space + different mental model).
 - **Three valid approaches, know all three:** two-pointer (O(1) space, interview favorite), precomputed max-arrays (easier to prove, teaching tool), monotonic decreasing stack (resolves troughs between popped bars — same stack family as Largest Rectangle in Histogram).
 - **Trapping Rain Water II (2D)** is a different pattern: min-heap on the current grid boundary; pop the lowest wall and raise water inside — the direct 2D generalization no longer fits the two-pointer frame.
@@ -1261,44 +1262,129 @@ Two pointers finds **one** pair at a time. Counting all pairs summing ≤ K need
 ```text
    nums = [1, 2, 3, 4, 5],  target K = 6, count all (i,j) with i<j and nums[i]+nums[j] ≤ 6
 
-   l=0 (1), r=4 (5):  1+5=6 ≤ 6, valid frontier
-                      ... but ALSO (1,4), (1,3), (1,2) are valid pairs with l=0  ← can't find by moving pointers once
-                      count += (r - l) = 4,  then l++
+   left=0 (1), right=4 (5):  1+5=6 ≤ 6, valid frontier
+                             ... but ALSO (left=0,3), (left=0,2), (left=0,1) are valid pairs
+                             count += (right - left) = 4,  then left++
 
-   l=1 (2), r=4 (5):  2+5=7 > 6, r--
-   l=1 (2), r=3 (4):  2+4=6 ≤ 6, valid
-                      also (1,2) is valid    ← two pairs added at once by range count
-                      count += (r - l) = 2,  then l++
+   left=1 (2), right=4 (5):  2+5=7 > 6, right--
+   left=1 (2), right=3 (4):  2+4=6 ≤ 6, valid
+                             also (left=1, right-1=2) is valid
+                             count += (right - left) = 2,  then left++
 
-   l=2 (3), r=3 (4):  3+4=7 > 6, r--, loop ends.
+   left=2 (3), right=3 (4):  3+4=7 > 6, right--, loop ends.
 
    Total pairs: 4 + 2 = 6.
 ```
 
 
 
-A naive two-pointer loop would walk l and r and count each `l < r` pair as 1, giving only 2 pairs — wrong. The amortized O(n) scan works, but you have to *know* that each frontier contributes `(r − l)` pairs, not 1. Many interview candidates miss this and move to O(n²), losing the pattern's advantage.
+A naive two-pointer loop would walk `left` and `right` and count each `left < right` pair as 1, giving only 2 pairs — wrong. The amortized O(n) scan works, but you have to *know* that each frontier contributes `(right − left)` pairs, not 1. Many interview candidates miss this and move to O(n²), losing the pattern's advantage.
 
 ### Visual 3: singly-linked list has no O(1) left pointer
 
-Opposite-end pointers assume `arr[l]` and `arr[r]` are both O(1) reads. On a singly-linked list they aren't:
+Opposite-end pointers assume `arr[left]` and `arr[right]` are both O(1) reads. On a singly-linked list they aren't:
 
 
 
 ```text
    list = 1 → 2 → 3 → 4 → 5 → null
 
-   Standard two-pointer initial state on an array: l=0, r=n-1 — both O(1).
-   On a singly-linked list: l = head (O(1))
-                            r = ?  There's no "end" pointer; you must walk n-1 steps to find it.
+   Standard two-pointer initial state on an array: left=0, right=n-1 — both O(1).
+   On a singly-linked list: left = head (O(1))
+                            right = ?  There's no "end" pointer; you must walk n-1 steps to find it.
 
-   To move "r" one step LEFT, you'd restart from head and walk n-2 steps.
+   To move `right` one step LEFT, you'd restart from head and walk n-2 steps.
    Each shrink costs O(n) → the whole loop becomes O(n²).
 ```
 
 
 
 The two-pointer idea still works for singly-linked lists *in one direction* — that's exactly the Fast/Slow pattern (chapter 23). Reach for Floyd's cycle detection, two-pass midpoint finding, or dummy-head reversal, not opposite-end two pointers.
+
+## False friends
+
+Four patterns look like two pointers at first glance but want a different tool. Name the actual signal in the problem before writing the loop.
+
+| Looks like 2P because… | Actually… | Signal to switch |
+|---|---|---|
+| **Sliding Window** — both pointers scan same direction, `left` chases `right` | both pointers lie **inside** a contiguous subarray/substring and you ask about its sum / length / count — not a placement question | problem phrasing talks about a **contiguous window** ("longest substring with…", "max of every window of size k", "shortest subarray with sum ≥ T") → chapter 21 |
+| **Fast/Slow pointers** — two pointers at different speeds | the data is a **singly-linked list**, so you can't go backward; the trick is Floyd cycle / midpoint-in-one-pass / reversal — not pair-finding | input is a `ListNode`; you need cycle detection, middle, or k-th-from-end → chapter 23 |
+| **Binary Search** — `left` and `right` bracket a sorted array | you need **one** position (not a pair) and a **monotone predicate** holds across the search space; each step halves the range | find one index / value / boundary where `f` flips; `mid = left + (right-left)/2`; O(log n), not O(n) → chapter 24 |
+| **Monotonic Stack** — scanning once with two indices | the answer at each `i` depends on the **nearest smaller/greater** value, not on a pair property | "next greater element", "span", "largest rectangle", "trapping rain water (variant)" → chapter 26 |
+
+
+
+
+
+<div class="svg-figure">
+<svg preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Two pointers vs its false friends — pick the right tool">
+  <rect x="0" y="0" width="720" height="200" rx="12" fill="var(--dsa-bg)"/>
+  <text x="360" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">Two pointers vs its look-alikes</text>
+  <!-- Two Pointers -->
+  <g transform="translate(20,40)">
+    <text x="80" y="12" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">Two Pointers</text>
+    <rect x="10"  y="26" width="24" height="24" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="34"  y="26" width="24" height="24" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="58"  y="26" width="24" height="24" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="82"  y="26" width="24" height="24" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="106" y="26" width="24" height="24" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <text x="22"  y="68" text-anchor="middle" font-size="9" font-weight="700" fill="var(--dsa-primary)">L→</text>
+    <text x="118" y="68" text-anchor="middle" font-size="9" font-weight="700" fill="var(--dsa-primary)">←R</text>
+    <text x="70" y="92" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">PAIR with a property</text>
+    <text x="70" y="106" text-anchor="middle" font-size="9" fill="var(--dsa-neutral)">O(n) · each step eliminates a batch</text>
+  </g>
+  <!-- Sliding Window -->
+  <g transform="translate(180,40)">
+    <text x="80" y="12" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">Sliding Window</text>
+    <rect x="10" y="22" width="130" height="32" rx="7" fill="none" stroke="var(--dsa-success)" stroke-width="2" stroke-dasharray="4 3"/>
+    <rect x="10"  y="26" width="24" height="24" rx="4" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+    <rect x="34"  y="26" width="24" height="24" rx="4" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+    <rect x="58"  y="26" width="24" height="24" rx="4" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+    <rect x="82"  y="26" width="24" height="24" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="106" y="26" width="24" height="24" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <text x="22" y="68" text-anchor="middle" font-size="9" font-weight="700" fill="var(--dsa-success)">L</text>
+    <text x="70" y="68" text-anchor="middle" font-size="9" font-weight="700" fill="var(--dsa-success)">R→</text>
+    <text x="70" y="92" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">CONTIGUOUS window</text>
+    <text x="70" y="106" text-anchor="middle" font-size="9" fill="var(--dsa-neutral)">sum/len/count on [L..R]</text>
+  </g>
+  <!-- Fast/Slow -->
+  <g transform="translate(340,40)">
+    <text x="80" y="12" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-danger)">Fast / Slow</text>
+    <circle cx="18"  cy="38" r="10" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)"/>
+    <circle cx="48"  cy="38" r="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <circle cx="78"  cy="38" r="10" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <circle cx="108" cy="38" r="10" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)"/>
+    <line x1="28" y1="38" x2="38" y2="38" stroke="var(--dsa-neutral)"/>
+    <line x1="58" y1="38" x2="68" y2="38" stroke="var(--dsa-neutral)"/>
+    <line x1="88" y1="38" x2="98" y2="38" stroke="var(--dsa-neutral)"/>
+    <text x="18"  y="68" text-anchor="middle" font-size="9" font-weight="700" fill="var(--dsa-danger)">slow</text>
+    <text x="108" y="68" text-anchor="middle" font-size="9" font-weight="700" fill="var(--dsa-danger)">fast</text>
+    <text x="70" y="92" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">LINKED LIST — no index</text>
+    <text x="70" y="106" text-anchor="middle" font-size="9" fill="var(--dsa-neutral)">Floyd cycle · midpoint</text>
+  </g>
+  <!-- Binary Search -->
+  <g transform="translate(500,40)">
+    <text x="80" y="12" text-anchor="middle" font-size="11" font-weight="700" fill="#9e38d2">Binary Search</text>
+    <rect x="10"  y="26" width="24" height="24" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="34"  y="26" width="24" height="24" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="58"  y="26" width="24" height="24" rx="4" fill="#eadcff" stroke="#9e38d2" stroke-width="2"/>
+    <rect x="82"  y="26" width="24" height="24" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="106" y="26" width="24" height="24" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <text x="70" y="68" text-anchor="middle" font-size="9" font-weight="700" fill="#9e38d2">mid (jumps)</text>
+    <text x="70" y="92" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">ONE value / boundary</text>
+    <text x="70" y="106" text-anchor="middle" font-size="9" fill="var(--dsa-neutral)">O(log n) · halves per step</text>
+  </g>
+</svg>
+</div>
+
+
+
+
+<Callout kind="key" title="The 30-second recognition test.">
+
+Does the problem want (a) a **pair** or **batch of pairs**, (b) a property of a **contiguous window**, (c) something **inside a linked list**, (d) **one position** in a monotone space, or (e) the **nearest-smaller / nearest-greater** of each element? That maps 1:1 to the five patterns above — pick the tool before writing the loop.
+
+</Callout>
 
 ## Recognition drill
 
