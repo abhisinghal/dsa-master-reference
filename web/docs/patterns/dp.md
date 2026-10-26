@@ -857,6 +857,21 @@ Every other DP in this chapter adds complexity to one of these five decisions. G
 | **Rolling pair** | **O(n)** | **O(1)** |
 | Matrix exponentiation | O(log n) | O(1) | — for competitive-programming scale (fib n = 10^18) |
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The ur-recurrence**: `f(n) = f(n-1) + f(n-2)`, `f(0) = 0`, `f(1) = 1`. Every DP optimization lesson (memoization, tabulation, O(1) rolling vars, matrix exponentiation) can be learned on this one problem.
+- **Why pure recursion blows up**: `f(5)` branches to `f(4) + f(3)`, `f(4)` to `f(3) + f(2)`, so `f(3)` is computed twice. Total nodes ≈ φ^n ≈ 1.618^n. Memoization collapses to n unique calls.
+- **Three implementation forms, same answer**:
+  - Top-down + memo: `O(n)` time, `O(n)` memo + recursion stack. Clearest for interviews.
+  - Bottom-up tabulation: `O(n)` time, `O(n)` table. Avoids stack.
+  - Rolling vars: `O(n)` time, `O(1)` space. Keep only `prev, curr`.
+- **Matrix exponentiation gives O(log n)**: `[[1,1],[1,0]]^n` has `f(n)` in the top-right. Needed when `n > 10^9`.
+- **Closed form (Binet's)**: `f(n) = (φ^n - ψ^n) / √5` — exact in theory, floating-point error ruins it for n &gt; ~70.
+- **Siblings: Climbing Stairs (literally renamed Fibonacci), Tribonacci, Nth Tribonacci Number, N-th Fibonacci modulo p (Pisano period).**
+
+</details>
+
 ### Canonical Coin Change — the 3-approach ladder
 
 (Historical reference — the Coin Change sub-variation H3 below is the active walkthrough.)
@@ -2590,6 +2605,18 @@ At each `dfs(node)` call, the returned `Pair(robbed, skipped)` represents the op
 - [Longest Univalue Path](https://leetcode.com/problems/longest-univalue-path/) — return `longest_from_here_matching_parent`; track global answer.
 
 **Related — Digit DP (brief pointer):** count numbers ≤ N with a property by DPing over digit positions with a `tight` flag (prefix equals N's prefix) and carried state. State: `(pos, tight, ...)`. See LeetCode Discuss for the pattern — it's specialized enough to live outside this chapter.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The hallmark of tree DP: return a tuple per subtree, not a single number.** House Robber III returns `(robbed, skipped)` — the parent needs BOTH child values to combine, not just the max.
+- **Post-order is the natural fill order** — a node's answer needs both children's answers before it can compute its own. The recursion stack IS the DP table.
+- **Why no explicit memo table?** Each subtree is visited exactly once in a tree traversal (unlike an array-DP, where subproblems might be reached via multiple paths). O(n) nodes = O(n) subproblems = O(n) time.
+- **The combine step defines the problem**: `robbed = node.val + L.skipped + R.skipped`, `skipped = max(L.robbed, L.skipped) + max(R.robbed, R.skipped)`. Enumerate the two parent decisions, pick the right child field for each.
+- **O(n) time, O(h) space** — height h ≤ n for any tree, h = log n for balanced. For 10^5 nodes in a stick tree, consider iterative post-order to avoid stack overflow.
+- **Siblings: Binary Tree Cameras ({need_camera, has_camera, covered} tuple), Diameter of Binary Tree (depth + global max), Longest Univalue Path, Binary Tree Maximum Path Sum.**
+
+</details>
 
 ### Bitmask DP — TSP / assignment <span class="diff diff-m">Medium</span>
 *[↗ LeetCode: Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)*

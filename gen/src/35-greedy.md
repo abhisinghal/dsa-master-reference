@@ -259,6 +259,18 @@ Activity Selection (also called **Interval Scheduling Maximization**) was the fi
 
 **Classic companion problem:** [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) — same mechanic, different objective (`removals = n − maxKept`).
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Sort by END time, not start.** Earliest-finishing-first is the greedy pick that admits an exchange proof; sort-by-start fails on `[(0,10),(1,2),(3,4)]`.
+- **The exchange argument is the ur-template for this chapter.** Any later greedy you meet (Jump Game II, Task Scheduler, Huffman) borrows the shape: assume OPT differs at step k, swap greedy's pick in, show it stays ≥ OPT.
+- **`lastEnd` is the single state variable** — the sweep is O(n) after the sort. Keep an activity iff `start ≥ lastEnd`.
+- **Boundary convention matters**: `start ≥ lastEnd` treats `[1,3]` and `[3,5]` as non-overlapping (common in CS). `start > lastEnd` would reject them. Pick based on the problem statement.
+- **"Removals" variant** (LC-435 Non-overlapping Intervals) is the same algorithm with `answer = n − maxKept`. Same code; different return.
+- **Siblings: Minimum Number of Arrows to Burst Balloons (same sort-by-end, keep count), Maximum Length of Pair Chain.**
+
+</details>
+
 ### Jump Game II <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Jump Game II](https://leetcode.com/problems/jump-game-ii/)*
@@ -770,6 +782,19 @@ The counterintuitive insight: at any point, the two characters currently of leas
 **Complexity:** O(n log n) — each merge is one heap push and two pops.
 
 **In the wild — DEFLATE's canonical Huffman.** gzip, PNG, and ZIP use a *canonical* Huffman code (same code lengths as the greedy tree, but code bits are assigned in a deterministic order) so the decoder only needs the code lengths — not the tree. The algorithmic core is still greedy; the serialization is the extra engineering.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The greedy move: repeatedly merge the two SMALLEST-frequency subtrees.** Pop twice, push a new internal node with their combined frequency. The total compression cost is the sum of these combined frequencies.
+- **Why min-heap is the natural data structure**: you need "give me the two smallest" repeatedly. Each merge is 2 pops + 1 push → O(log n). Total O(n log n).
+- **The proof archetype**: (1) lowest-freq leaves are at max depth in some optimal tree, (2) they can be siblings, (3) merging them is safe, (4) induct on the (n−1)-leaf subproblem. This is the Huffman exchange argument.
+- **Prefix-free property is automatic** — no character's code is a prefix of another because leaves don't lie on paths to other leaves in a binary tree.
+- **Tie-breaking is implementation-defined** but doesn't affect optimality: different tie-break rules produce different trees with the same minimum weighted path length Σ freq × depth.
+- **Canonical Huffman** (used by DEFLATE/gzip/PNG) stores only the code LENGTHS, not the tree — the decoder reconstructs codes deterministically from lengths. Same algorithm, better serialization.
+- **Siblings: Minimum Cost to Connect Sticks (LC-1167, identical pattern), Merge Stones (DP variant when merges must respect order).**
+
+</details>
 
 ## In the wild — Linux CFS task scheduler
 

@@ -351,6 +351,21 @@ Hence `x` and `-x` agree only on the lowest set bit; `x & -x` keeps it.
 - **`Integer.lowestOneBit(x)`** in Java 1.5+ compiles to exactly this.
 - **Popcount via Kernighan loop** — `while (x != 0) { x ^= x & -x; count++; }` iterates once per set bit.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The identity: `x & -x` isolates the lowest set bit of `x`** (returns `0` for `x == 0`). Works because `-x` in two's complement = `~x + 1`, which flips every bit at or above the lowest set bit back to `x`'s value; only at the lowest set bit do `x` and `-x` both have `1`.
+- **The companion: `x & (x - 1)` CLEARS the lowest set bit** (returns `x` with its lowest `1` turned to `0`). This is Brian Kernighan's popcount step: loop until `x == 0`, counting iterations.
+- **Isolate vs. clear — pick by task**:
+  - Need the *bit itself* (as a power of two): `x & -x`.
+  - Need the *index*: `Integer.numberOfTrailingZeros(x)` after isolate.
+  - Need to *strip and continue*: `x & (x - 1)`.
+- **The Fenwick-tree move**: `i += i & -i` to walk UP the BIT (parent that covers `i`'s partial sum); `i -= i & -i` to walk DOWN. This indexing scheme IS the lowest-bit identity.
+- **Overflow edge case**: for `x = Integer.MIN_VALUE`, `-x` overflows to `MIN_VALUE` itself, but `x & -x` still returns `MIN_VALUE` — the correct answer (the sign bit is the only set bit).
+- **Siblings: Power of Two (`x & (x-1) == 0`), Number of 1 Bits (Kernighan loop), Counting Bits (`dp[i] = dp[i >> 1] + (i & 1)`).**
+
+</details>
+
 ---
 
 <details>
@@ -444,6 +459,19 @@ The ur-XOR-cancellation. Every element appears twice except one; find the loner 
 **Companion problems:**
 - [Missing Number](https://leetcode.com/problems/missing-number/) — XOR all values 0..n AND all input values; the missing one is the XOR survivor.
 - [Find the Difference](https://leetcode.com/problems/find-the-difference/) — same mechanic with chars.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **XOR's three load-bearing properties**: `a ^ a = 0` (self-cancel), `a ^ 0 = a` (identity), commutative + associative (order and grouping don't matter). The whole technique is these three.
+- **Why order doesn't matter**: pairs cancel regardless of position. `nums = [4,1,2,1,2]` XORed in order = `4 ^ 1 ^ 2 ^ 1 ^ 2 = 4` (the two `1`s and two `2`s cancel in some order).
+- **Beats HashSet**: HashSet is O(n) time but O(n) space. XOR is O(n) time, O(1) space — meets the LeetCode constraint.
+- **Generalizes to "every element appears k times except one that appears once"** by counting bits mod k at each position (Single Number II = mod 3, pure bit-counting trick).
+- **Works on any XOR-compatible type**: for chars (`Find the Difference`), use `s^t` after XORing both strings together. The extra char survives.
+- **Missing Number**: XOR `0..n` AND the input together; everything appears twice except the missing one. Also solvable by sum trick (`n(n+1)/2 - sum(nums)`) but XOR avoids overflow.
+- **Siblings: Single Number II (3× + 1 loner), Single Number III (two loners), Missing Number, Find the Difference, XOR Queries of Subarray (prefix XOR).**
+
+</details>
 
 ### Core identities reference
 
@@ -653,6 +681,19 @@ XOR-ing everything gives `a ^ b` (duplicates cancel; the two loners are the only
 
 **Companion:** [Missing Numbers I/II](https://leetcode.com/problems/missing-number/) — same mechanic, but XOR against 0..n to find the missing one.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two-phase algorithm**: (1) XOR everything → `a ^ b` (duplicates cancel). (2) Pick a differing bit to partition the input; XOR each partition → each loner is alone with its partition's duplicates.
+- **Why pick the LOWEST differing bit?** Any set bit of `a ^ b` works (that bit differs between `a` and `b`). Lowest is `(a^b) & -(a^b)` — cheapest to compute and partitions cleanly.
+- **The partition is virtual** — don't allocate two lists. In the second pass, `if (num & bit) xorA ^= num; else xorB ^= num;`. Two XOR accumulators, no extra space.
+- **Why does a loner end up alone in its group?** Duplicates have identical bits so they go to the same group and cancel. `a` and `b` differ on the chosen bit so they go to different groups; each is alone with its duplicates.
+- **O(n) time, O(1) space** — strictly better than sort-and-scan O(n log n) or HashSet O(n) space.
+- **Edge case: `a ^ b == 0`** — means `a == b`, which contradicts the problem's "two distinct loners" guarantee. Not possible under the stated constraints.
+- **Siblings: Single Number I (one loner), Single Number II (3× + 1), Missing Two Numbers in Range (XOR against expected sum/XOR).**
+
+</details>
+
 ### Counting Bits <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Counting Bits](https://leetcode.com/problems/counting-bits/)*
@@ -775,6 +816,19 @@ Reverse the 32 bits of an unsigned integer. The butterfly-swap approach does it 
 
 **Trap: use `>>>` not `>>`** — `>>` propagates the sign bit; on a negative input (bit 31 set) the first stage would corrupt bits by filling in 1s instead of 0s.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Butterfly swap is O(1) ops** — 5 stages of mask-shift-OR, each swapping halves at a doubling granularity. Fundamentally faster than a 32-iteration loop.
+- **The five masks** (for 32-bit): `0xFFFF0000/0x0000FFFF` (16-bit halves), `0xFF00FF00/0x00FF00FF` (8-bit), `0xF0F0F0F0/0x0F0F0F0F` (4-bit), `0xCCCCCCCC/0x33333333` (2-bit), `0xAAAAAAAA/0x55555555` (1-bit). Each is the top-half mask of its stage.
+- **Each stage**: `n = ((n & TOP_MASK) >>> SHIFT) | ((n & BOTTOM_MASK) << SHIFT)`. Shifts the top half right by SHIFT and the bottom half left by SHIFT, then ORs them back.
+- **Use `>>>` (unsigned right shift) not `>>`** — `>>` propagates the sign bit, which flips zeros to ones in the top half. For `int` (32 signed), the top bit matters.
+- **Why not a simple 32-iteration loop?** `for (i in 0..31) result = (result << 1) | ((n >> i) & 1)` — same answer, 32 ops instead of 5. Butterfly is strictly better.
+- **The 1-iteration loop version is often sufficient** — unless this is on the hot path, prefer the clear loop. The butterfly is interview candy.
+- **Siblings: Bit-reversed indexing in FFT (same butterfly), Hamming Weight (popcount with the same mask-based reduction).**
+
+</details>
+
 ### Power of Two <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Power of Two](https://leetcode.com/problems/power-of-two/)*
@@ -791,6 +845,18 @@ A positive integer is a power of two iff it has **exactly one set bit**. `x & (x
 
 **Variations** — "is `x` a power of four?" → `x > 0 && (x & (x-1)) == 0 && (x & 0x55555555) != 0`. The second AND requires the single set bit to be at an even position.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The one-liner: `x > 0 && (x & (x - 1)) == 0`.** The `& (x-1)` clears the lowest set bit; if the result is 0, `x` had exactly one set bit.
+- **The `x > 0` guard is non-negotiable** — `0 & (0-1) = 0 & -1 = 0`, so without the guard, `0` incorrectly reports as a power of two. Negative numbers in two's complement have the sign bit set plus various others, so most fail the AND; but `Integer.MIN_VALUE = 0x80000000` has exactly one bit set and would pass without the guard.
+- **Why `(x & (x-1))` clears the lowest set bit**: subtracting 1 flips the lowest set bit to 0 and sets all bits below it to 1. ANDing with the original zeros out everything from the lowest set bit downward.
+- **Power of 4 variant**: additionally require the single set bit to be at an EVEN position (bits 0, 2, 4, ...): `(x & 0x55555555) != 0`. Powers of 4 are a subset of powers of 2 with this parity constraint.
+- **Alternative: `Integer.bitCount(x) == 1 && x > 0`** — clearer intent, nearly identical cost (CPUs usually have hardware popcount).
+- **Siblings: Number of 1 Bits (popcount), Power of Three (no neat bit trick — use `x > 0 && 1162261467 % x == 0`), Power of Four, Counting Bits.**
+
+</details>
+
 ### Swap Without Temp <span class="diff diff-e">Easy</span>
 
 The XOR-swap brainteaser. Three XORs swap two integers with no temp — but destroys the value when both indices are the same.
@@ -804,6 +870,18 @@ The XOR-swap brainteaser. Three XORs swap two integers with no temp — but dest
 />
 
 **Production verdict:** don't use this in real code. Modern CPUs do swap in one `XCHG` instruction; a temp-based swap compiles to the same thing with better clarity. XOR-swap is an interview brainteaser about understanding XOR self-cancellation plus edge cases — not an optimization.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Three XORs**: `a = a ^ b; b = a ^ b; a = a ^ b;`. After step 1, `a` holds `a^b`. After step 2, `b = (a^b)^b = a`. After step 3, `a = (a^b)^a = b`. Values swapped, no temp.
+- **The self-swap TRAP**: if `a` and `b` reference the same memory location (e.g., `swap(arr[i], arr[i])`), the first XOR writes `0` to both; the rest never recover. Always guard: `if (&a == &b) return;` or `if (i != j) ...` in the caller.
+- **Production verdict: don't use this.** Modern CPUs do swap in one `XCHG` instruction; a temp-based swap compiles to the same machine code with far better readability. XOR-swap is an interview brainteaser about XOR self-cancellation, not an optimization.
+- **Works for any XOR-compatible type** (ints, bytes, bitmasks). Doesn't work for floats, strings, objects — only values that respect XOR algebra.
+- **The alias check is cheap but easy to forget** — it's the "edge case gotcha" interviewers probe for after you show the three-XOR trick.
+- **Siblings: Add Two Numbers Without Using `+` (XOR for bits-no-carry, AND+shift for carry — same algebra), Single Number (XOR cancellation at scale).**
+
+</details>
 
 ### Subset generation via masks <span class="diff diff-m">Medium</span>
 

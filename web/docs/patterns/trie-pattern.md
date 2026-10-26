@@ -429,6 +429,18 @@ At every point: inserted words correspond to root-to-end-marked paths; `search` 
 | startsWith("app") | walk reaches p (non-null) | **true** |
 | search("appl") | walk reaches l (end=false) | **false** |
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The core structure**: each node holds `children[26]` (or `HashMap<Character, Node>` for non-ASCII) + `end: boolean`. Three operations are all O(L) walks where L = word length.
+- **Why `end` is non-negotiable**: `search("app")` must return `false` when only `"apple"` was inserted. Without the `end` flag, `search` can't distinguish word-match from prefix-match. `startsWith` doesn't need it (any non-null walk succeeds).
+- **Array vs. HashMap children**: `Node[26]` for lowercase English (fast, 26×8B = 208B per node idle). `HashMap<Character, Node>` for unicode or when branching is sparse (slower, more memory per child but no idle slots).
+- **Alternative encoding — the compressed trie (radix tree)**: each edge stores a *substring*, not one char. Memory-optimal for sparse tries. More complex insert/search; prefer the plain trie unless memory bites.
+- **Space**: O(ALPHABET · total_chars_in_dict) worst case. For N words of average length L on a 26-letter alphabet: ~26 · N · L bytes.
+- **Siblings: Design Add and Search Words Data Structure (`.` wildcard = DFS over all children), Longest Common Prefix (trie or sort-and-compare).**
+
+</details>
+
 ### Replace Words (shortest-prefix replacement) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Replace Words](https://leetcode.com/problems/replace-words/)*
@@ -446,6 +458,18 @@ When walking word `w` from root, the first node with `end == true` is the shorte
   language="java"
   :canonical="replaceWordsCode"
 />
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The trie insight: shortest-prefix root is the FIRST terminal on the walk.** Walk the word; stop as soon as `node.end == true`; return the walked prefix. No need to continue past it.
+- **If no terminal is hit** (walk ends because the next child is null, or the word ends with no `end` seen) → the word has no root replacement; keep it unchanged.
+- **Why not a HashSet of roots?** Then you'd test every prefix of each word → O(L²) per word. The trie walks each word once in O(L).
+- **Preprocess once**: insert all roots into the trie before scanning the sentence. Build cost is O(sum of root lengths); per-word query is O(word length).
+- **Edge case**: if the input sentence has words separated by multiple spaces or has leading/trailing whitespace, split on whitespace cautiously — the LeetCode variant assumes single-space-separated.
+- **Siblings: Longest Common Prefix (trie or sort-and-compare), Longest Word in Dictionary (trie + BFS by length).**
+
+</details>
 
 ### Map Sum Pairs (prefix-sum over values) <span class="diff diff-m">Medium</span>
 
@@ -465,6 +489,18 @@ If `insert("apple", 3)` runs then later `insert("apple", 5)`, we want sum("app")
   :canonical="mapSumCode"
 />
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Each node caches the running sum of values of ALL keys that pass through it.** `sum(prefix)` is then an O(L) walk — one node lookup per prefix char.
+- **The DELTA pattern for updates**: on `insert(key, val)`, compute `delta = val - oldValueIfAny`, then walk the key adding `delta` at every node. Handles both "new key" (delta = val - 0 = val) and "overwrite" (delta = new - old) uniformly.
+- **Keep an auxiliary `HashMap<String, Integer>` of key→value** to look up `oldValueIfAny` in O(1). Without it, you'd need to walk the trie to find the old value — still O(L) but less direct.
+- **Why NOT walk + sum children at query time?** That would be O(prefix_subtree_size) per `sum` — potentially O(N·L). The cached per-node sum turns every `sum` into O(L).
+- **Doesn't support DELETE efficiently in this form** — you'd need to track per-node contributor counts to prune. For insert-only workloads, this is optimal.
+- **Siblings: Range Sum on Prefix (same idea, different query shape), Design File System (trie keyed by path components, store value at terminal only).**
+
+</details>
+
 ### Search Suggestions System (autocomplete top-3) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/)*
@@ -483,6 +519,18 @@ Because insertion order is sorted, the first 3 words that visit any node are the
   :canonical="searchSuggestionsCode"
 />
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Sort products LEX ONCE before trie insertion.** Then the first 3 words that visit any node are guaranteed to be the 3 lex-smallest completions of its prefix (because insertion is in lex order).
+- **Cache top-3 per node at insert time** — a `List<String>` of max size 3. If a 4th word visits, drop it. Query becomes O(L): walk L prefix chars, read the cached top-3 at each stop.
+- **Alternative without trie: sort + binary search**. For each prefix, binary-search the sorted array for the first match, take up to 3 contiguous entries. O(L log N) per character typed, no preprocessing of a trie. Simpler but each query is slightly slower.
+- **If the prefix walk falls off the trie** (null child), all remaining characters have no suggestions — return empty lists for those positions.
+- **Memory**: O(sum of lengths + 3·N) for the trie + top-3 cache. For 10⁴ products of length 15, ~150K chars + 30K cached pointers.
+- **Siblings: Design In-Memory File System (prefix tree keyed by path), Autocomplete System (persist frequency, use min-heap over top-k instead of lex-sorted list).**
+
+</details>
+
 ### Word Break II (trie + DP) <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Word Break II](https://leetcode.com/problems/word-break-ii/)*
@@ -494,6 +542,18 @@ Return all ways to segment `s` into space-separated dictionary words. DFS over s
   language="java"
   :canonical="wordBreakIICode"
 />
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The move: DFS over split points, backed by a trie.** At each split position `i`, walk the trie from the root; whenever `node.end == true`, treat `s[0..i]` as a word and recurse on `s[i+1..]`. The trie prunes any branch whose extension isn't in the dictionary.
+- **Memoize by starting index `i`**: `memo[i] = all possible segmentations of s[i..]`. Multiple parent splits can reach the same suffix; without memo this is exponential.
+- **Output size is exponential in worst case** — `s = "aaaa...a"`, dict = `{"a", "aa", ...}` yields 2^n segmentations. Memoization doesn't help *time* in the worst case because we have to emit every answer; it helps *computation reuse*.
+- **If only counting (Word Break I)** or only testing feasibility, scalar DP suffices: `dp[i] = ∃ word in dict ending at i AND dp[i - |word|]`. O(n²) time, O(n) space. Trie compresses the dictionary scan to O(longest word).
+- **Why trie over HashSet?** HashSet forces re-hashing every candidate substring (O(L) per candidate). Trie walks character-by-character, so you test all prefixes in O(L) total.
+- **Siblings: Word Break (feasibility only), Palindrome Partitioning II (same shape, palindrome constraint via Manacher or expand-around-center).**
+
+</details>
 
 ### Concatenated Words (DFS over trie) <span class="diff diff-h">Hard</span>
 
@@ -512,6 +572,18 @@ A concatenated word's pieces are all strictly shorter than the whole. By length-
   language="java"
   :canonical="concatenatedWordsCode"
 />
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Sort words by length ASCENDING before processing.** Then when checking whether word `w` is concatenated, every shorter word (and only shorter words) is already in the trie — exactly the pieces that could compose `w`.
+- **Check-then-insert**: for each `w` in length order, try `canBuild(w, 0, 0_parts)`. If buildable with ≥ 2 parts, add `w` to results. Then insert `w` into the trie (so longer words can use `w` as a piece).
+- **The DFS**: walk the trie from the root; at each `node.end`, recurse on the suffix with `parts + 1`. Need `parts ≥ 2` at the end (one word trivially matches itself).
+- **If the input is unsorted and you can't pre-sort**: the alternative is to insert every word into the trie upfront, then for each word mark its terminal and check-with-exclusion. Clumsier.
+- **Why not DP on words?** `dp[i] = can s[i..] be built` works, but you still need the trie-walk inside the DP to find next-split positions efficiently. The trie is doing the hard work either way.
+- **Siblings: Longest Word in Dictionary (BFS over trie by length, check parents are all in dict), Word Break II (segment one string vs. test every word for self-concatenation).**
+
+</details>
 
 <details>
 <summary><strong>Pedagogical: the 3-approach ladder for Word Search II (hash set → naive DFS → trie-pruned DFS)</strong></summary>

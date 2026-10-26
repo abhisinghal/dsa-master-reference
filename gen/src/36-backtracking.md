@@ -480,6 +480,17 @@ flowchart TD
 
 <BacktrackingAnim />
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The start-index template**: `dfs(start)` with a loop `for i from start to n-1` → recurse with `i+1`. This is the mechanism that guarantees combinations (not permutations): once you move past index `i`, you never come back.
+- **Record on entry, not on leaf**: for subsets, `result.add(new ArrayList(path))` is called at every recursion entry — every prefix of the DFS tree is a subset. For problems where only full-length paths count (permutations), record at `path.size() == n`.
+- **Pass-by-reference discipline**: always `new ArrayList<>(path)` when recording. Appending the live `path` to `result` and then mutating it will corrupt the stored subset.
+- **The three enumeration shapes**: subsets (every DFS node is a hit, start-index template), combinations (fixed-size subsets, same template with early return at `path.size() == k`), permutations (used[] or swap).
+- **2^n time, n space**: every subset has a unique path from root; depth is n; total nodes is 2^n. Each node does O(n) copy work → O(n·2^n).
+- **Siblings: Combinations (fixed k, same template), Combination Sum (reuse via `i` not `i+1`), Partition Equal Subset Sum (subsets + boolean DP).**
+
+</details>
 
 ### When NOT to use it
 You want *one* answer, not all — a pruned DFS or DP is faster than enumerating every branch. Also skip when the state space is polynomial (n·k tuples) and DP fits — an exponential search is unnecessary.
@@ -788,6 +799,18 @@ The same problem, different template. Instead of a `used[]` flag array, swap pos
 | Preferred for | **Permutations II** (handles duplicates cleanly) | **Permutations I** (minimal memory) |
 
 **Complexity:** Same as used[] — O(n · n!) time, O(n) recursion.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The swap trick**: at depth `i`, swap `a[i]` with each `a[j]` for `j = i..n-1`, recurse to depth `i+1`, swap back. The subarray `a[i..n-1]` always holds the unused values (in some order).
+- **O(1) auxiliary space** vs. O(n) for `used[]` — but input is mutated during the search (restored by the un-swap on backtrack).
+- **Duplicate handling is tricky**: swap breaks sorted order, so the standard "skip equal adjacent unused" trick fails. Need a `HashSet<Integer>` per recursion level: skip values already placed at this position.
+- **Record at the leaf**, not every node: full permutations are leaves (depth == n), so `if (i == n) result.add(...)` only. The DFS tree has exactly n! leaves.
+- **Prefer `used[]` for Permutations II** (duplicates), prefer swap for Permutations I (minimal memory). Both are O(n·n!) time.
+- **Siblings: Next Permutation (iterative, no backtracking — just a well-known 3-step swap), Permutation Sequence (direct k-th permutation via factorial division — no enumeration).**
+
+</details>
 
 ### Combination Sum <span class="diff diff-m">Medium</span>
 
@@ -1223,6 +1246,18 @@ For `k` digits with max 4 letters per digit, there are up to `4^k` combinations.
 **Complexity:** O(k · 4^k) time, O(k) recursion depth + O(4^k · k) output.
 
 **Classic companion:** [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) — same shape; "choice" is `(` or `)` with pruning (open ≤ n, close ≤ open).
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The branching factor is runtime-determined** — 3 or 4 per digit depending on `2–9`. Nested loops can't express this; backtracking generalizes nested loops to arbitrary depth.
+- **StringBuilder, not String concatenation**: `path + c` allocates a new String each step (O(k·4^k) allocations). `sb.append(c)` / `sb.deleteCharAt(sb.length()-1)` is O(1) amortized; only the leaf `sb.toString()` allocates.
+- **Precompute the digit→letters map once** — a `String[]` of length 10 (indices 2..9 populated) keeps the inner loop a direct array lookup, not a switch or HashMap.
+- **Edge case: empty input** → return `[]`, not `[""]`. LeetCode's test treats "no digits" as "no combinations"; be explicit about this base case.
+- **Shape generalizes to**: cartesian product of per-position choice sets. Generate Parentheses is the same shape with pruning; Restore IP Addresses is the same shape with per-segment validation.
+- **Complexity**: O(k · 4^k) time (k = digit count, 4 = max letters per digit). Output alone is Θ(k · 4^k) so you can't do better.
+
+</details>
 
 ## In the wild — PostgreSQL join-order search
 
