@@ -342,6 +342,18 @@ class NumArray {
 
 **When this is NOT enough** — if the problem adds *point updates* between queries, prefix sum degrades to O(n) per update. Reach for a Fenwick tree. If the problem adds *range updates* then one final query, use the Difference Array sub-variation below.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **`pre` has length `n + 1`, not `n`.** `pre[0] = 0` is the sentinel for "empty prefix"; this makes `sumRange(0, j) = pre[j+1] - pre[0]` work without a special-case.
+- **Range sum = `pre[right + 1] - pre[left]`.** Off-by-one at either endpoint is the single most common bug — write it on the whiteboard with the interval convention next to it.
+- **O(n) build, O(1) per query.** The whole point: amortize the O(n) scan across many queries. If you'll only do ONE query, don't build the prefix array.
+- **Degrades on POINT UPDATES.** A single update costs O(n) to rebuild `pre` from that index — switch to Fenwick tree for log-per-update, log-per-query.
+- **Degrades on RANGE UPDATES.** Each update costs O(range). Switch to Difference Array (sub-variation below) when updates are ranges and queries are one-off.
+- **The engine for 2D, XOR, and modular variants.** The next three sub-variations all build on this same `pre[i+1] = pre[i] + x` recurrence with a different combine operator.
+
+</details>
+
 ### Subarray Sum Equals K <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)*
@@ -846,6 +858,18 @@ Count the contiguous subarrays whose XOR equals k.
 
 **Classic application — Contiguous Array (equal 0s and 1s):** map `0 → -1, 1 → +1` (so the running sum tracks "excess of 1s over 0s"). The longest subarray with equal 0s and 1s is the longest span where the same running value appears twice — a hash map of first-seen indices does it in O(n).
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Substitution `+` → `^` keeps the whole template.** XOR is associative and self-inverse: `pre_r ^ pre_l = k` iff `pre_l = pre_r ^ k`. So the same prefix-sum + hashmap trick applies, with lookup on `running ^ k`.
+- **DO NOT use sliding window.** XOR is NOT monotone as the window grows — adding an element can raise OR lower the running XOR depending on bit patterns. The shrink step is undefined, so the template is wrong.
+- **Seed `count.put(0, 1)` for the empty prefix.** Without it, subarrays starting at index 0 are dropped — same off-by-one as subarray-sum-equals-k.
+- **O(n) time, O(n) space.** Hash map because XOR values are up to 32-bit integers, so array indexing isn't practical.
+- **Classic application — Contiguous Array (equal 0s and 1s):** map `0 → -1, 1 → +1`, then the longest subarray with equal counts is the longest span where the SAME running value repeats; a first-seen-index hashmap does it in O(n).
+- **The general lesson:** any INVERTIBLE associative operator (sum, XOR, modular sum, product over a field) supports the prefix-and-hashmap trick. Max/min do NOT — they're not invertible.
+
+</details>
+
 ### Prefix Mod <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)*
@@ -882,6 +906,18 @@ Count the contiguous subarrays whose sum is divisible by k.
 **Complexity:** O(n + k) time, O(k) space — the residue table has exactly `k` cells. If `k ≤ n`, this is strictly better than the hash-map variant (array indexing beats hashing in constants).
 
 **Variation — [Continuous Subarray Sum (523)](https://leetcode.com/problems/continuous-subarray-sum/):** instead of the count, you want *whether any such subarray of length ≥ 2 exists*. Store the **first** index each residue was seen at (not the count) and check `r - firstIndex[running] ≥ 2`.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Bucket by RESIDUE, not by sum.** `(pre_r - pre_l) ≡ 0 (mod k)` iff `pre_r ≡ pre_l (mod k)`; so a histogram of residues gives you divisibility pairs directly.
+- **Canonicalize negative mods:** `((x % k) + k) % k`. Java/C++ `%` returns the sign of the dividend; without this line, `-1 % 5 = -1` (not `4`) and residue buckets split a single mathematical class into two, destroying the count.
+- **Seed `count[0] = 1` for the empty prefix.** Covers subarrays starting at index 0 that themselves sum to a multiple of k.
+- **O(n + k) time, O(k) space.** The residue table has exactly k cells → array indexing beats hashing. If `k > n`, fall back to hashmap for space.
+- **Variation (Continuous Subarray Sum, LC-523):** store the FIRST INDEX per residue (not the count) and check `r - firstIndex[running] >= 2` for an "any such subarray exists" boolean answer.
+- **The 2-sum identity for modular arithmetic:** `pre_r ≡ pre_l (mod k)` is the modular equivalent of `pre_r - pre_l = 0`; the hashmap sidekick is the same recipe as subarray-sum-equals-k, with mod-k replacing exact equality.
+
+</details>
 
 ## In the wild — NumPy cumsum & TF XLA scan
 

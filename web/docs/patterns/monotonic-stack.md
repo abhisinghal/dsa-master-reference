@@ -282,6 +282,18 @@ The stack holds indices in strictly decreasing order of `nums[]`; every index st
 
 Final: `[3, 2, 3, -1, -1]` ✓
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Stack holds INDICES, not values.** You need the index to write `res[idx]` on pop; values alone can't tell you where to store the answer.
+- **Pop while `stack top's value < nums[i]`.** Every popped element has found its next-greater (= `nums[i]`); push `i` after.
+- **Monotone DECREASING stack by value** (bottom to top) — stricter popping gives the "nearest" semantics; non-strict (`<=`) would give "nearest strictly greater" instead.
+- **Unresolved elements stay in the stack at the end.** Initialize `res[]` to `-1` (or `n`) so leftovers have the right "no next greater" sentinel.
+- **O(n) amortized.** Each index is pushed once, popped once; `n` pushes + `n` pops = `O(n)` even though the inner while can look like O(n) per step.
+- **The template extends to NGE-LEFT, Daily Temperatures, Stock Span, Largest Rectangle, Trapping Rain Water, Remove K Digits, 132 Pattern** — every chapter sub-variation is this template with ONE change: comparator direction, scan direction, or what you record on pop.
+
+</details>
+
 ### Next Greater (left) — mirror sweep <span class="diff diff-e">Easy</span>
 
 Same template, iterated **right-to-left**. The pop condition remains "stack top's value &lt; nums[i]" — the only change is the loop direction. Every answer is now the first index to the *left* with a larger value.
@@ -471,6 +483,17 @@ each pop's "next greater" is the current bar
 
 <MonoStackAnim />
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Mirror the sweep: iterate right-to-left.** The pop condition stays "stack top's value &lt; nums[i]"; only the loop direction changes. Each popped index gets `res[top] = i` as its first-greater-to-the-left.
+- **Alternative: left-to-right with a non-strict push.** You can also keep a monotone decreasing stack walking left-to-right; before pushing `i`, pop while `stack top's value <= nums[i]`, then PGE-left is the current stack top (or -1 if empty). Both encodings work; pick whichever maps better to the problem's data access pattern.
+- **"Previous Smaller Element" is the flipped comparator** — swap `<` for `>` in the pop condition. Same template, mirror sweep.
+- **Combine NGE-left + NGE-right to answer "nearest greater in both directions"** (needed for Largest Rectangle in Histogram, Trapping Rain Water with precomputed walls).
+- **O(n) amortized time, O(n) stack space.** Same complexity as the right-sweep.
+- **Siblings share the template: Stock Span is streaming NGE-left; Daily Temperatures is NGE-right with index-difference output; Online Stock Span absorbs popped spans for amortized O(1)/call.**
+
+</details>
 
 ### When NOT to use it
 You need *farthest* rather than *nearest* — or the comparison isn't a simple ordering. If the "answer per element" depends on *aggregating* over a range instead of picking one boundary, reach for a segment tree or sparse table, not a monotonic stack.
@@ -861,6 +884,18 @@ The stack holds `(price, span)` pairs in strictly decreasing price order; a popp
 
 Each span absorption is **amortized**: a pair's span can only be absorbed once in its lifetime, so total absorptions over any sequence of N calls is ≤ N. **Amortized O(1) per call.**
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Streaming version of NGE-left.** Each `next(price)` returns how many previous days (including today) had price ≤ today's. The challenge: do it in amortized O(1) per call, not O(n) recompute.
+- **Stack holds `(price, span)` pairs, not just prices.** When a bigger price arrives, pop smaller prices AND ABSORB their spans into the current span.
+- **Amortized O(1) per call.** Each pair's span can be absorbed at most ONCE in its lifetime, so total absorption work across N calls is ≤ N — the inner while is amortized constant.
+- **The absorption is the whole trick** — if you recomputed spans from the raw price history, you'd be O(n) per call. Carrying the span inside the stack entry collapses it.
+- **Compare to the batch NGE-left:** same monotone-decreasing invariant, but online instead of offline, and emitting one answer per call instead of filling a `res[]` array.
+- **Pop condition is `price <= top.price`.** Equal prices still absorb (today's run of ≤ includes equal days), so use `<=`, not `<`.
+
+</details>
+
 ### Remove K Digits (lexicographic greedy) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Remove K Digits](https://leetcode.com/problems/remove-k-digits/)*
@@ -899,6 +934,18 @@ The stack is monotonically non-decreasing; it holds the smallest-prefix-of-resul
 
 k=0 after i=5, so we stop popping. Reading bottom-to-top: `"1219"`. ✓
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Monotone NON-DECREASING stack enforces lexicographic smallness.** When a smaller digit arrives, pop larger digits from the right (budget permitting) — removing them makes the remaining prefix lex-smaller.
+- **The budget `k` bounds total pops.** Each pop decrements k; stop popping when k reaches 0 even if more larger digits sit on top.
+- **Leftover budget after scan: pop from the END.** If `k > 0` after the full scan (sequence was already monotone non-decreasing), remove the k RIGHTMOST digits — those are the largest in the remaining monotone-ascending result.
+- **Trim leading zeros, return "0" if empty.** Edge cases: `"10200", k=1` → stack `[1, 0, 0]` → strip leading `[0, 2, 0, 0]` → "200".
+- **O(n) amortized time, O(n) stack space.** Each digit pushed once, popped at most once.
+- **Sibling: Create Maximum Number (LC-321) uses the SAME template** — pick M digits from one string, N - M from another, so the final M + N digits form the LEX-MAX possible. Each pick is this template with max/min flipped.
+
+</details>
+
 ### 132 Pattern (three-element variant) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: 132 Pattern](https://leetcode.com/problems/132-pattern/)*
@@ -928,6 +975,18 @@ While scanning right-to-left, the stack holds decreasing values (candidate "3"s)
 | 1 | 1 | stack=[4] | a[i]=1 &lt; two=2 → **return true** | — | — |
 
 ✓ The 132 pattern is `(1, 4, 2)` at indices `(1, 2, 3)`.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Scan RIGHT-TO-LEFT and track two things:** a stack of candidate "3" values AND `two` — the max value ever popped off the stack (the best "2" candidate so far).
+- **A pop event means `(current_3, popped_2)` is a valid (3, 2) pair.** Keep updating `two` to the max popped; it stays "the loosest constraint on 1 we've seen".
+- **On the left we just need any `a[i] < two`.** The moment we find one, the 132 pattern exists; return `true`.
+- **Monotone DECREASING stack (bottom to top).** Pop while top value &lt; current → each pop reveals a (3, 2) pair.
+- **O(n) time, O(n) space.** Right-to-left scan with amortized O(1) per step; `two` is a single scalar.
+- **Why not a sort-based O(n log n) attempt?** You'd need to enumerate pairs (3, 2) and for each check if a smaller 1 exists on the left — O(n²) in the worst case. The right-to-left monotonic stack collapses this to linear.
+
+</details>
 
 ## Traps & gotchas
 

@@ -308,6 +308,18 @@ The simplest instance of the template. Given `nums[]` and `k`, return the `k` sm
 
 Final: `{3,2,1}` ✓ — the 3 smallest.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Use the OPPOSITE heap kind to what you're selecting.** For top-K SMALLEST, keep a MAX-heap (root is the largest kept — evict it when a smaller comes). For top-K LARGEST, keep a MIN-heap. Counter-intuitive but essential: the root is the "worst survivor", the one you want to boot first.
+- **Heap size never exceeds K.** Push, then if `size > k` pop — one-liner that caps the heap and makes every op O(log k).
+- **O(n log k) time, O(k) space.** Beats O(n log n) full-sort when k is small; equal when k ≈ n.
+- **Does NOT output in sorted order.** The heap gives you the SET of top-k; if the problem wants them sorted, sort the final k elements → O(k log k) tail cost.
+- **Streaming-friendly.** Elements come one at a time; same O(log k) per add. Full-sort doesn't fit this access pattern.
+- **Alternative: Quickselect (O(n) average)** when the input is batch and you can mutate. Pick heap for streams or when O(n²) worst-case is unacceptable.
+
+</details>
+
 ### Top K Frequent Elements <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)*
@@ -323,6 +335,18 @@ Return the `k` most frequent values. First count frequencies, then keep a size-`
 />
 
 **Alternative — bucket sort for O(n)**: since frequencies are integers in `[1, n]`, create buckets where `bucket[f]` = list of values with frequency `f`. Walk `f` from `n` down to `1`, collecting until you've gathered `k` values. Beats the heap when frequencies span a bounded range.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two phases: COUNT, then SELECT TOP-K BY FREQUENCY.** The heap is keyed on frequency, not on the value itself.
+- **Min-heap of size k keyed on frequency.** Root = least-frequent kept; a candidate with higher frequency arrives → evict the root. Same template as top-K-smallest with "frequency" replacing "value".
+- **Bucket sort beats heap when frequencies span [1, n].** `bucket[f]` = list of values with that frequency; walk f from n down to 1 collecting k values. O(n) time, no heap overhead.
+- **Quickselect also works** — partition by frequency, recurse into the top-k boundary half. O(n) average, same trade-offs as the other top-k problems.
+- **Output ORDER is NOT guaranteed** by the heap approach; LeetCode marks this problem as order-agnostic. If you need sorted output, sort the final k.
+- **Streaming top-k frequent** (which this is NOT) is a much harder problem — Space-Saving / Count-Min Sketch, not a plain heap.
+
+</details>
 
 ### K Closest Points to Origin <span class="diff diff-m">Medium</span>
 
@@ -420,6 +444,18 @@ void swap(int[][] a, int i, int j) { int[] t = a[i]; a[i] = a[j]; a[j] = t; }
 
 </details>
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **MAX-heap keyed on SQUARED distance.** Root = farthest kept; closer point arrives → evict. Squaring avoids `sqrt` entirely because sqrt is monotone and preserves ordering.
+- **Never call `Math.sqrt` for comparisons.** It costs cycles AND loses precision for close ties — compare integer squares when coordinates are integers.
+- **Three approaches, pick based on `k` vs `n`:** sort (O(n log n), equally good when k ≈ n), max-heap (O(n log k), interview default when k ≪ n), quickselect (O(n) average, contest / "make it linear" follow-up).
+- **Output order unspecified.** The heap yields the SET; sort if needed.
+- **For 2D ties on the same distance ring:** the problem does not specify tie-breakers; any order among equidistant points is accepted.
+- **If distances are FLOATS** (continuous coordinates, LC-973 variants with float input): bucket sort fails because distances are not discrete; heap is the right default.
+
+</details>
+
 ### Kth Largest in Array <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)* / *[↗ Kth Largest in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/)*
@@ -444,6 +480,18 @@ Return the `k`-th largest value. The size-`k` **min-heap** approach stays alive 
 | add(10) | `{5, 8, 10}` | 5 |
 | add(9) | `{8, 9, 10}` | 8 |
 | add(4) | `{8, 9, 10}` (4 pushed, polled) | 8 |
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Min-heap of size k, root = k-th largest.** The heap holds the k LARGEST values seen so far; the smallest of those (the root) is exactly the k-th largest overall.
+- **Streaming-friendly: `add` is O(log k), `peek` is O(1).** Perfect for the "Kth Largest in a Stream" variant where add + query are interleaved.
+- **For the ONE-SHOT array version, Quickselect is faster on average** (O(n) vs O(n log k)) — but heap is simpler and streams-ready.
+- **The heap pattern beats "sort + pick index n-k"** when the input is huge OR when you need streaming / don't want to materialize a full sort.
+- **Init: push the first k, then for each remaining element: offer + conditional poll** — one tight loop; no need for a two-phase build.
+- **Related sibling: Kth Smallest in a BST** uses a different structure (in-order traversal with early exit), not a heap — don't blur the two.
+
+</details>
 
 ### Find Median from Data Stream (two-heap) <span class="diff diff-h">Hard</span>
 
@@ -471,6 +519,18 @@ Design a data structure that supports `addNum(x)` and `findMedian()` on a growin
 | add(3) | `{1, 2}` | `{3}` | — |
 | findMedian() | — | — | 2 |
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two heaps split at the median boundary.** `low` is a MAX-heap (smaller half, top = largest-of-smaller = median candidate). `high` is a MIN-heap (larger half, top = smallest-of-larger = other median candidate).
+- **Size invariant: `size(low) == size(high) || size(low) == size(high) + 1`.** Always keep `low` at least as big as `high`; this makes the median rule uniform (`low.top()` on odd count, average on even).
+- **Add in the "offer-move-rebalance" dance.** Offer to one heap, move its top to the other, then rebalance by moving back if the size invariant is violated. Simpler than "offer-based-on-comparison" and provably correct on edge cases (empty heaps, equal values).
+- **O(log n) add, O(1) findMedian.** This is why the problem is a heap classic rather than a sort-each-query O(n log n).
+- **Max-heap in Java needs `new PriorityQueue<>(Collections.reverseOrder())`.** Java defaults to min-heap; getting the reverse wrong is the single most common bug on this problem.
+- **A SLIDING-window median variant** needs a different DS (order-statistics tree, SortedList, or two heaps with lazy deletion) because heap doesn't support arbitrary removal in O(log n).
+
+</details>
+
 ### Task Scheduler (max-heap greedy) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Task Scheduler](https://leetcode.com/problems/task-scheduler/)*
@@ -484,6 +544,18 @@ Given task counts and a cooldown `n` (same task can't repeat within `n` ticks), 
   language="java"
   :canonical="taskSchedulerCode"
 />
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Greedy: at each tick, run the MOST-frequent runnable task.** Draining the big piles first prevents them from piling up at the end — the tail would otherwise create forced idle gaps larger than the cooldown `n`.
+- **Max-heap of REMAINING COUNTS + cooldown queue** of pairs `(count, readyTime)`. Pop from heap, decrement, enqueue with ready-at `tick + n + 1`; before each pop, re-admit all queue entries whose ready-time has passed.
+- **Formal lower bound: `(max_count - 1) × (n + 1) + ties_at_max`.** This closed form is often faster than the simulation if you only need the TIME (not the schedule). Prove it by placing the most-frequent task first at positions `0, n+1, 2(n+1), ...`.
+- **Idle slots are NOT free time.** They count toward the total ticks; the greedy minimizes them.
+- **O((n + k) log k) time** where k = distinct task types. Space O(k) for the heap + queue.
+- **The lower-bound formula + Math.max(total_tasks, formula)** is the single-line solution for "just the time". The heap simulation is for when the actual SCHEDULE matters.
+
+</details>
 
 ### Kth Largest / Top K Frequent — walkthrough deep dive <span class="diff diff-m">Medium</span>
 

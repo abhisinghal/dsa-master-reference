@@ -267,6 +267,18 @@ Monotone predicate: larger capacity → fewer-or-equal days. Greedy feasibility 
 - [Aggressive Cows / Magnetic Force Between Two Balls](https://leetcode.com/problems/magnetic-force-between-two-balls/) — maximize the *minimum* gap between placed objects. Flip the search: `feasible(d) = can place ≥ k balls with every pair ≥ d apart`. Binary-search the largest `d`.
 - [Boats to Save People](https://leetcode.com/problems/boats-to-save-people/) — technically a two-pointer problem; added here because the problem statement sounds identical.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Search the ANSWER SPACE, not the input array.** The capacity `C` is bounded by `[max(weights), sum(weights)]`; binary-search over this integer range for the smallest C that still fits in D days.
+- **`lo = max(weights)` is NON-NEGOTIABLE** — a single package must fit in one day's load; `cap < max(weight)` makes the feasibility predicate undefined. Starting `lo` at 1 would waste iterations testing nonsense capacities.
+- **`hi = sum(weights)`** — one giant day carrying everything is always feasible, so that's the upper bound.
+- **Feasibility is MONOTONE in `C`:** if `C` works, any `C' > C` also works. This monotonicity is what unlocks binary search; verify it on paper before coding.
+- **Feasibility check is O(n) — one scan filling day buckets greedily.** Total time O(n log(sum − max)).
+- **Variants all swap the feasibility function:** Aggressive Cows (max of min gap — flip to search LARGEST feasible), Painters/Workers (same template with "paint load ≤ cap"), Minimum Number of Days to Make Bouquets (feasibility = enough adjacent-ready flowers).
+
+</details>
+
 ### Koko Eating Bananas <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)*
@@ -457,6 +469,18 @@ The feasibility `Σ⌈nums[i]/d⌉ ≤ threshold` is monotone in `d`: larger `d`
 **Variations** (same monotone sum, different operation):
 - [Nth Magical Number](https://leetcode.com/problems/nth-magical-number/) — binary-search the value whose count of multiples hits N.
 - [Minimum Time to Complete Trips](https://leetcode.com/problems/minimum-time-to-complete-trips/) — binary-search the time; feasibility is `Σ ⌊t / time[i]⌋ ≥ totalTrips`.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **`lo = 1`, not `max(nums)`.** Here any positive divisor is well-defined — a small `d` just makes the sum bigger, not undefined. Compare with Ship Capacity where small caps ARE undefined and `lo = max`.
+- **`hi = max(nums)`.** At `d = max`, every ceiling term is 1 and the sum = `n`, which is ≤ threshold by the problem's constraint. Larger `d` gives the same answer, so no need to extend.
+- **Ceiling division: `(x + d - 1) / d`.** Integer-ceiling trick without floating point. Alternative: `(x - 1) / d + 1` for strictly positive x.
+- **Feasibility is MONOTONE: bigger `d` → smaller sum → more likely to fit.** Search for the SMALLEST feasible d; shrink hi on feasible, raise lo on infeasible.
+- **O(n log(max)) time, O(1) space.** For LC-1283 constraints that's microseconds.
+- **Siblings swap the OPERATION:** Nth Magical Number (count multiples), Minimum Time to Complete Trips (sum of floors), Hours to Finish Books. Same template, same monotone-in-answer structure.
+
+</details>
 
 ### Split Array Largest Sum <span class="diff diff-h">Hard</span>
 
