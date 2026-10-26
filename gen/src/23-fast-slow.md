@@ -470,6 +470,18 @@ The simplest fast/slow problem — detect a cycle, return `true` or `false`. No 
 
 **Why this is the gateway.** Everything else in the chapter adds structure on top of this four-line pattern. Phase 2 of Cycle II adds entry location; middle-of-list drops the collision check; happy-number swaps `.next` for `f(x)`; find-duplicate reframes an array as a functional graph.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two speeds in the same traversal.** Slow steps 1, fast steps 2. If a cycle exists, the gap between them modulo cycle length collapses to 0 in finite steps → they collide. If no cycle, fast walks off the end first.
+- **Termination guard: `fast != null && fast.next != null`** — fast steps 2, so BOTH `fast` AND `fast.next` must exist before `fast = fast.next.next`. Skipping either half NPEs on even-length no-cycle lists.
+- **O(n) time, O(1) space** — the whole reason this beats the HashSet-of-seen-nodes brute force. "Can you do it without extra memory?" is a classic follow-up on the HashSet answer.
+- **Fast CAN wrap past slow many times** before they collide — correctness doesn't need them to meet on the first lap, only to eventually meet. The proof: `(fast_pos - slow_pos) mod cycle_length` strictly decreases each step inside the cycle.
+- **This is the gateway for the whole chapter.** Every later problem is a variation: Cycle II adds phase 2; middle-of-list drops the collision check; happy-number swaps `.next` for `f(x)`; find-duplicate reframes an array as a functional graph.
+- **No cycle? fast reaches null first** — return `false`. The template is: run until `fast == null || fast.next == null || slow == fast`, then test which exit condition hit.
+
+</details>
+
 ### Linked List Cycle II — where the cycle starts <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/)*
@@ -567,6 +579,18 @@ A simpler mental model: once the two runners collide, one runner is exactly "hea
 
 > [note] **Interview script** — First, I'd verify this is a singly linked list and I need the entry node, not just true/false. The brute force is a `HashSet<ListNode>`: return the first repeated node in O(n) time and O(n) space. To optimize space, I'll use Floyd's two pointers: slow moves one step, fast moves two, and a meeting proves a cycle. Then I reset one pointer to head and move both one step at a time; their next meeting is the entry, so the final complexity is O(n) time and O(1) space.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two phases, same four-line template.** Phase 1 (collision): slow steps 1, fast steps 2 until collide. Phase 2 (entry): reset one pointer to head, both step 1, next meeting IS the entry.
+- **The algebra: `A = mC - B`** where A = head-to-entry, B = entry-to-meeting, C = cycle length. Rearranging: from the meeting point, walking A steps lands at the entry because `C - B` steps complete the lap and the rest are full laps.
+- **You do NOT need to know A, B, or C to run the algorithm.** Only to prove it. The code just walks both pointers until equality — no measurement, no arithmetic.
+- **The simpler mental model:** once the runners collide, ONE runner is "head-to-entry distance" away from the entry if it keeps running. Put the other at head and let both walk at the same speed; they meet at the entry.
+- **O(n) time, O(1) space** — again beats the HashSet brute force. The "O(1) space" demand is what makes Floyd famous; without it, HashSet is simpler to write and reason about.
+- **Siblings share the two-phase shape:** Find the Duplicate Number uses THIS code verbatim with the array reframed as a functional graph (`nums[i]` is the "next" pointer).
+
+</details>
+
 ### Middle of a Linked List <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/)*
@@ -580,6 +604,18 @@ Phase 1 only — the collision check is dropped. When `fast` falls off the list,
 <TemplateReveal :canonical="middleNodeCode" language="java" slug="fast-slow-middle" />
 
 **The even/odd choice.** `while (fast != null && fast.next != null)` lands on the SECOND middle for even length. To land on the FIRST middle, use `while (fast.next != null && fast.next.next != null)`. The problem statement decides which — stating the choice out loud in an interview signals depth.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Phase 1 ONLY — drop the collision check.** When `fast` falls off the end, `slow` has traversed exactly half the list. No cycle math, no reset.
+- **Even-length tie-break is a CHOICE, not a bug.** `while (fast != null && fast.next != null)` lands on the SECOND middle for even length; `while (fast.next != null && fast.next.next != null)` lands on the FIRST middle. The problem statement decides which — state the choice out loud in an interview.
+- **O(n) time, O(1) space, single pass.** Beats the two-pass "measure length, divide by 2, walk to middle" by one scan — same complexity but one fewer traversal, which matters on linked lists where cache behavior is bad.
+- **Why not store nodes in an array?** O(n) extra space, defeats the point. The two-speed trick is the whole lesson.
+- **Composes naturally with other list operations.** "Reorder list" = find middle, reverse second half, interleave. "Palindrome linked list" = find middle, reverse second half, compare.
+- **For doubly-linked lists** you don't need this trick — jump directly by index. The two-speed middle finder is a singly-linked-list specialty.
+
+</details>
 
 ### Nth Node From End <span class="diff diff-m">Medium</span>
 
@@ -595,6 +631,18 @@ A fixed-gap variant: open a gap of `n` nodes between fast and slow, then walk bo
 
 **Why the dummy head?** When `n` equals the list length, you need to remove the actual head — but you can't move slow back to "before head" without a dummy. Prepending a dummy node gives slow a safe starting point: after opening the gap, `slow.next` is always the removal target, including the n-equals-length case.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Fixed-gap variant: open a gap of `n` nodes between fast and slow BEFORE walking in lockstep.** Fast advances n steps alone; then both advance together until fast lands on the last node. Slow now points to the node BEFORE the one to remove.
+- **Dummy head is non-negotiable for "remove nth from end".** When n = length, the actual head must be removed; without a dummy, you can't set `slow.next` to its successor because slow would be "before head" — a position that doesn't exist. Prepending a dummy makes `slow` always a real node.
+- **Single-pass O(n), O(1) space.** Beats the two-pass "measure length, then walk `length - n`" by one scan — one of the standard interview "optimize" moves.
+- **Return `dummy.next`, not `head`.** If you removed the original head, `head` is now orphaned/stale. The dummy's `.next` is always the correct new head.
+- **Gap-size semantics: fast moves `n` steps, then both walk together.** When fast reaches the LAST node (not past it), slow points to `nth from end - 1`, which is the predecessor needed for removal.
+- **Siblings in the fixed-gap family:** reorder-list, swap-pairs, every "modify N-away relationships" problem on a linked list — all use the same open-gap-then-lockstep template.
+
+</details>
+
 ### Happy Number (sequence as linked list) <span class="diff diff-e">Easy</span>
 
 *[↗ LeetCode: Happy Number](https://leetcode.com/problems/happy-number/)*
@@ -609,6 +657,18 @@ The successor function isn't `.next` — it's `f(x) = sum of squared digits`. Th
 
 **Why fast/slow and not a HashSet?** A HashSet of seen values works in O(log n · k) time (k = cycle length) and O(k) space. Floyd here is also O(log n · k) time but O(1) space — the natural answer when the problem writer asks "without extra memory, decide if the sequence loops."
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The "next pointer" doesn't have to be `.next`.** Any deterministic successor function `f: X → X` makes a sequence a functional-graph walk — and by pigeonhole, every such walk eventually cycles. Floyd works unchanged.
+- **`f(x) = sum of squared digits` is the successor here.** The sequence `x, f(x), f(f(x)), ...` either hits `1` (happy, cycle on `1`) or enters the 8-cycle `{4, 16, 37, 58, 89, 145, 42, 20}` (unhappy).
+- **Terminating condition is "slow == 1", not "no cycle".** Every input WILL cycle; the question is which cycle. If the slow runner lands on 1, happy; if slow == fast but neither is 1, unhappy.
+- **O(log n · k) time, O(1) space.** Numbers shrink fast under digit-squaring (log n digits × squared ≤ 81 × log n contribution), so k is small; the overall time is effectively O(log n).
+- **A HashSet of seen values works too** — same time, O(k) space. Pick Floyd when the interviewer asks for O(1) space; pick HashSet when readability wins.
+- **This is the "sequence is a linked list" mental shift.** Once you see it here, Find-the-Duplicate-Number (next) uses the exact same reframe on an array.
+
+</details>
+
 ### Find the Duplicate Number <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)*
@@ -622,6 +682,18 @@ The best "array is secretly a linked list" problem on LeetCode. With n+1 integer
 <TemplateReveal :canonical="findDuplicateCode" language="java" slug="fast-slow-find-duplicate" />
 
 **The constraint carries all the weight.** The problem guarantees `nums.length = n + 1` with values in `[1, n]`. This is NOT a general cycle-detection problem — it's a constraint-engineered one. Without the constraint, the duplicate could be elsewhere; with it, pigeonhole + the "value-is-pointer" reframe lets Floyd solve what sorting would, in O(n) time without modifying the array.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Array-as-linked-list reframe.** `nums[i]` IS the "next pointer" from index `i`. With n+1 values in [1, n], index 0 can start a traversal; by pigeonhole two indices MUST point to the same value → cycle. The cycle's entry node IS the duplicate value.
+- **Phase 1 + Phase 2 of Cycle II run UNCHANGED.** The algorithm is identical; only the successor-function definition changes (`slow = nums[slow]` instead of `slow = slow.next`).
+- **The constraint carries ALL the weight.** `nums.length = n + 1`, values in `[1, n]`, EXACTLY one duplicate (possibly repeated). Change any of these and the "cycle in a functional graph" framing breaks and Floyd no longer applies.
+- **O(n) time, O(1) extra space, DOES NOT MODIFY the input.** This is the whole reason Floyd beats "sort and scan for pairs" (O(n log n) + mutates) and "boolean seen[]" (O(n) extra space).
+- **Alternative: binary search on the answer** (O(n log n) time, O(1) space, no mutate) — count values `≤ mid`; if count > mid, duplicate is in `[1, mid]`. Also valid; use it in languages where linked-list reframing feels forced.
+- **DO NOT sort the array (even in-place)** — the problem explicitly forbids modification. Sorting also costs O(n log n), losing to Floyd on both axes.
+
+</details>
 
 ## Traps & gotchas
 

@@ -347,6 +347,18 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
 
 **Related sibling: Valid Palindrome.** Same opposite-end sweep, different comparison: `a[left] == a[right]` (character equality), early-exit false on mismatch, loop until `left >= right`. One O(n) pass. **Valid Palindrome II** (allow ≤ 1 deletion): on first mismatch, try skipping left OR skipping right and recurse (each at most O(n)) — total still O(n).
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Sorted-input + target → opposite-end two-pointer** is THE canonical shape; one pass, O(n) time, O(1) space, no hash map needed.
+- **Direction rule: `sum < target` → `left++`, `sum > target` → `right--`.** Each move strictly discards one candidate — this is why the sweep is O(n), not O(n²).
+- **Returns INDICES, not values** on LeetCode Two Sum II because the problem specifies 1-based output; be careful about the off-by-one if you have been testing with 0-based indices locally.
+- **Does NOT generalize to unsorted** without O(n log n) sort first — if the problem forbids sorting (original-index requirement), reach for a hash map instead (LC-1 Two Sum).
+- **Siblings use the same two-pointer skeleton with a different comparator:** Valid Palindrome (equality + skip non-alphanumeric), Reverse String (swap at ends), Valid Palindrome II (one-deletion fork at first mismatch).
+- **Early termination is free:** if `a[left] + a[right]` crosses target and both pointers have moved all they can, return — don't finish the loop needlessly.
+
+</details>
+
 ---
 
 ### 3Sum <span class="diff diff-m">Medium</span>
@@ -420,6 +432,18 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
 
 **Related siblings:** [3Sum Closest](https://leetcode.com/problems/3sum-closest/) tracks the sum closest to target; [3Sum Smaller](https://leetcode.com/problems/3sum-smaller/) counts triplets with sum `< target` (when `a[lo]+a[hi] < target`, all `hi - lo` pairs qualify at once — batch counting); [4Sum](https://leetcode.com/problems/4sum/) adds one more outer loop → O(n³).
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Sort → fix outer → two-pointer inner** is the reduction. Fixing `a[i]`, you need `a[lo] + a[hi] = -a[i]`, which is Two Sum on `a[i+1..n-1]`. Outer O(n) × inner O(n) = O(n²).
+- **Dedup at THREE places**, not one. Skip `i` if `a[i] == a[i-1]`; after a hit, skip `lo` while `a[lo] == a[lo-1]` and `hi` while `a[hi] == a[hi+1]`. Missing any of the three admits duplicate triplets.
+- **Sort cost is dominated** — O(n log n) sort < O(n²) sweep; the sort buys you dedup + two-pointer directionality in one move.
+- **Early exit after `a[i] > 0`** — once the fixed value is positive, any lo + hi it reads will be larger too (sorted), so no triplet can sum to zero. Shaves most of the back half on scattered-positive inputs.
+- **`3Sum Smaller` has a batch-counting trick** — when `a[lo] + a[hi] < target`, ALL pairs `(lo, lo+1), (lo, lo+2), ..., (lo, hi)` qualify → add `hi - lo` to the counter in one step. Converts a seemingly O(n²) counter into one O(n) sweep per fixed `i`.
+- **4Sum generalizes to kSum:** recursive outer loops reduce the k-SUM problem to 2SUM at the base case; `k`-SUM is O(n^(k-1)).
+
+</details>
+
 ---
 
 ### Container With Most Water <span class="diff diff-m">Medium</span>
@@ -491,6 +515,18 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
 
 **Why moving the taller wall never helps:** suppose `h[l] < h[r]`. For any `k > l`, the pair `(l, k)` has width `k - l < r - l` AND height `min(h[l], h[k]) <= h[l]`. Area `<= h[l] * (r - l) = currentArea`. So all pairs with `l` fixed are now accounted for; safe to advance `l`.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Discard the SHORTER wall, not the overshoot direction.** This is the key departure from the Pair-Sum template — the area is capped by the shorter wall, so moving the taller one only loses width without gaining height.
+- **Start widest and shrink.** Width = `right - left` is maximal at the start; every move strictly decreases width, so each step MUST compensate with more height to improve area.
+- **The exchange argument is subtle:** moving the taller wall inward is PROVABLY DOMINATED (width shrinks, cap stays the same) — so skipping those pairs costs nothing. This proof is the whole correctness story.
+- **O(n) time, O(1) space** — one pass, two pointers, running `best`. The brute-force O(n²) all-pairs is a reasonable interview warm-up but never the final answer.
+- **Different from Trapping Rain Water** — Container asks for the LARGEST single container; Trapping Rain Water asks for the TOTAL water across all troughs. Same opposite-end sweep template, different accumulation and advancement rules.
+- **Tie-break (`h[l] == h[r]`) can advance EITHER pointer** — correctness holds; shift either. Code aesthetics usually pick `l++` for consistency.
+
+</details>
+
 ---
 
 ### Squaring a Sorted Array <span class="diff diff-e">Easy</span>
@@ -528,6 +564,18 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
 />
 
 **Related siblings:** [Merge Sorted Array (in place, from the back)](https://leetcode.com/problems/merge-sorted-array/) — same back-fill pattern; by filling from the largest end you never overwrite unmerged values. [Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/) — sort both, advance the smaller side.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The largest square sits at ONE of the ends** after squaring a sorted-by-value array — because the sort was by original value, extremes in `|value|` end up at the extremes of the array (left for large-negative, right for large-positive).
+- **Fill the output BACK TO FRONT** with a converging two-pointer sweep — this avoids an O(n log n) sort post-square and keeps the pass linear.
+- **O(n) time, O(n) space** (new output array). An in-place version is possible but requires moving values around — the back-fill into a fresh array is cleaner for interviews.
+- **Compare `|a[lo]|` vs `|a[hi]|`** NOT the raw values — the point of the pattern is squaring, so magnitudes matter.
+- **Sibling: Merge Sorted Array (in-place from back).** Same back-fill rule, same reason — writing from the LARGEST end never overwrites unmerged values that still live on the LEFT.
+- **Sibling: Intersection of Two Arrays II** — sort both, advance the smaller side on inequality, record on equality. Different sweep rule but same two-pointer family.
+
+</details>
 
 ---
 
@@ -577,6 +625,18 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
 
 **Related siblings:** [Remove Element](https://leetcode.com/problems/remove-element/) (remove a specific target value, no sort required); [Move Zeroes](https://leetcode.com/problems/move-zeroes/) (two-category partition, non-zeros to front); [Sort Array By Parity](https://leetcode.com/problems/sort-array-by-parity/) (evens-first); [Remove Duplicates II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) (allow up to 2 of each).
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Same-end, different-speed is a different two-pointer family** from opposite-end. `write` is slow (next slot to place a unique value); `read` is fast (scanning input); the gap between them absorbs the discarded elements.
+- **The invariant: `a[0..write-1]` is the valid prefix, `a[write..read-1]` is garbage** — never read from the garbage region, and the caller only sees up to the returned `write` length.
+- **The template generalizes beyond dedup:** Remove Element (specific target), Move Zeroes (two-category partition), Sort Array By Parity (evens-first) — the comparator in the "keep this?" test is the only thing that changes.
+- **Return `write`, not `write - 1`.** `write` is the LENGTH of the valid prefix (next-slot semantics), not the last valid index. Off-by-one here is the #1 bug on this problem.
+- **In-place, O(1) extra space, O(n) time** — exactly what the problem asks for. A copy-to-new-array solution misses the point of the "in place" constraint.
+- **Remove Duplicates II (allow up to 2):** change the keep test from "different from `a[write-1]`" to "different from `a[write-2]`". Same template, one-char diff.
+
+</details>
+
 ---
 
 ### Sort Colors (Dutch National Flag) <span class="diff diff-m">Medium</span>
@@ -617,6 +677,18 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
 />
 
 **Also same engine (3-way quicksort partition):** [Kth Largest Element](https://leetcode.com/problems/kth-largest-element-in-an-array/) when the array has many duplicates — a Dutch Flag partition around the pivot runs faster than Lomuto because equal-to-pivot values go to the middle region and are not re-partitioned. Related: [Wiggle Sort II](https://leetcode.com/problems/wiggle-sort-ii/) uses Dutch Flag to partition around the median before interleaving.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Three pointers partition into three regions in ONE pass** — `low` is the next slot for 0s, `high` is the next slot for 2s, `mid` is the scanner. The invariant: `[0, low)` is 0s, `[low, mid)` is 1s, `[mid, high]` is unknown, `(high, n)` is 2s.
+- **Do NOT advance `mid` after swapping with `high`.** The incoming value is from the UNKNOWN region and must be re-examined. Advancing mid skips a value that might be 0 or 1.
+- **Advance BOTH `low` and `mid` after swapping with `low`.** The incoming value from `[low, mid)` is a 1 (invariant), so it belongs where it is and `mid` can safely move past it.
+- **One-pass, O(n) time, O(1) space** — the whole point of this algorithm over a two-pass counting sort (which also works but double-reads the array).
+- **The engine for 3-way quicksort partition.** When the input has heavy duplicates, Dutch Flag partition around a pivot runs faster than Lomuto because equal-to-pivot values go to the middle region and are NOT re-partitioned in recursive calls.
+- **Wiggle Sort II composes with this** — partition around the median first, then interleave; the Dutch Flag partition handles the duplicates-at-median case correctly.
+
+</details>
 
 ---
 
@@ -661,6 +733,18 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
 - **Two-pointer version (shown above)** — O(n) time, O(1) space. The go-to for interviews when "optimize space" is asked as a follow-up.
 
 **Trapping Rain Water II (2D):** the "walls" are the entire grid boundary. Use a min-heap over the current boundary, pop the lowest wall, raise water inside its row/col accordingly, and insert neighbors.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The SHORTER side is "safe" to resolve** at every step — because a taller wall exists on the other side, water above the current short bar is bounded by `(leftMax or rightMax) - h[cur]`.
+- **Carry `lMax` and `rMax` as running maxima.** Update BEFORE comparing to h[cur] on each step; the water contribution is `sideMax - h[cur]`, which is zero when the current bar equals or exceeds its side-max.
+- **Advance the shorter side.** Opposite-end sweep, but advancement is driven by `h[l] < h[r]`, not by sum/target. This is the direct generalization of the Container-With-Most-Water advancement rule.
+- **O(n) time, O(1) space** — the two-pointer version beats the precomputed `leftMax[]`/`rightMax[]` arrays (O(n) space) and the monotonic-stack version (O(n) space + different mental model).
+- **Three valid approaches, know all three:** two-pointer (O(1) space, interview favorite), precomputed max-arrays (easier to prove, teaching tool), monotonic decreasing stack (resolves troughs between popped bars — same stack family as Largest Rectangle in Histogram).
+- **Trapping Rain Water II (2D)** is a different pattern: min-heap on the current grid boundary; pop the lowest wall and raise water inside — the direct 2D generalization no longer fits the two-pointer frame.
+
+</details>
 
 ---
 
