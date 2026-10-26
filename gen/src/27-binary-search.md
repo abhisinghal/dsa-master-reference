@@ -317,6 +317,18 @@ Five flavors, each a one-line diff from THE template above. Each sub-variation a
 
 **When to pick this variant.** Any "where would `x` fit in a sorted array" question. Range-count queries (`upper(hi) − lower(lo)`), insertion points, deduplication cursors, `java.util.TreeMap.floorKey/ceilingKey` under the hood.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Only the predicate changes.** Lower bound uses `a[mid] < target` (strict); upper bound uses `a[mid] <= target`. Equality search is lower bound + one check at the end.
+- **Half-open interval `[lo, hi)` is the stable convention.** `hi = n` at start (NOT `n-1`); on `a[mid] < target`, `lo = mid + 1`; else `hi = mid`. On exit, `lo == hi` is the lower-bound index (which can be `n`, meaning "no element >= target").
+- **Return value `n` is NOT an error** — it means "all elements < target" (or `<=` for upper bound). Check against `n` BEFORE indexing `a[lo]`.
+- **The engine for range counts.** "How many values in `[a, b]`?" = `upper(b) - lower(a)`. Deduplication cursors, histogram bucket boundaries, insertion points — all one call to lower/upper bound.
+- **This is what `TreeMap.floorKey/ceilingKey` and C++'s `std::lower_bound/upper_bound` do under the hood** — your language's library already has it; writing it yourself is only for interview demonstration.
+- **O(log n) time, O(1) space** — the baseline. Any variant that beats this is a specialized data structure (van Emde Boas, Fusion Tree), not binary search.
+
+</details>
+
 <MarkSolved problem-slug="binary-search:lower-upper-bound" />
 
 ### Rotated sorted array {#rotated}
@@ -349,6 +361,18 @@ Five flavors, each a one-line diff from THE template above. Each sub-variation a
 **Complexity.** O(log n) time, O(1) space.
 
 **When to pick this variant.** Any variant of rotated / shifted sorted arrays. Also the mental template for "the array is sorted along ONE axis but you don't know which half" — comes up with ring buffers and log replay windows.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **At least ONE half is sorted at every step.** Compare `a[lo]` to `a[mid]` to decide which. The sorted half admits a straightforward range check for the target.
+- **Compare `a[lo] <= a[mid]`, not `a[mid] <= a[hi]`.** Both work in principle; `a[lo]` vs `a[mid]` is cleaner because it directly answers "is the LEFT half the sorted one?"
+- **Once you know which half is sorted, bound-check target INSIDE it.** If `a[lo] <= target < a[mid]`, target is in the sorted left half → `hi = mid - 1`; else `lo = mid + 1`. Mirror the logic when the right half is the sorted one.
+- **Duplicates break O(log n).** LC-33 says distinct; LC-81 (same problem with duplicates allowed) degrades to O(n) worst case because `a[lo] == a[mid]` leaves "which half is sorted" ambiguous.
+- **O(log n) time, O(1) space.** The whole point is to maintain the log-n time despite the rotation.
+- **Related sibling: find minimum in rotated sorted array** = find the inflection point; use the peak/valley template, not this one.
+
+</details>
 
 <MarkSolved problem-slug="binary-search:rotated" />
 
@@ -383,6 +407,18 @@ Five flavors, each a one-line diff from THE template above. Each sub-variation a
 
 **When to pick this variant.** Bitonic arrays, finding minimum in rotated sorted (dual — look for the inflection point). Also any unimodal function (max of a concave sequence, min of a convex sequence) when you can evaluate `f(mid)` and `f(mid+1)`.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Compare `a[mid]` to `a[mid+1]`, not to a target.** If rising at mid (`a[mid] < a[mid+1]`), a peak lies in `(mid, hi]`; if falling, a peak lies in `[lo, mid]`. The predicate is "is the sequence still rising at mid?"
+- **Boundary sentinels are -∞** (treated as values beyond the array), which is why a peak is GUARANTEED to exist for a strictly monotone-neither array.
+- **Half-open shrink: `hi = mid` (not `mid - 1`) when falling.** `mid` ITSELF might be the peak, so you cannot exclude it; the "left half INCLUDING mid" semantics is what `hi = mid` encodes.
+- **Any peak counts.** The problem is "return ANY peak", not "the GLOBAL max". Multiple peaks can exist; returning any one is correct.
+- **Generalizes to any UNIMODAL function.** When you can evaluate `f(mid)` and `f(mid+1)`, this template finds the max of a concave sequence (or the min of a convex one). Ternary search is the other classic for unimodal, but binary search works here too.
+- **The dual: minimum in rotated sorted array.** Find the inflection point by comparing `a[mid]` to `a[hi]` (right half); if `a[mid] > a[hi]`, min is in `(mid, hi]`; else in `[lo, mid]`.
+
+</details>
+
 <MarkSolved problem-slug="binary-search:peak-bitonic" />
 
 ### Search 2D matrix {#2d-matrix}
@@ -408,6 +444,18 @@ Five flavors, each a one-line diff from THE template above. Each sub-variation a
 **Complexity.** O(log(m·n)) time, O(1) space. Note this is identical to O(log m + log n) for standard sizes, but one unified loop is cleaner than nested searches.
 
 **When to pick this variant.** Fully-sorted matrices. For the *staircase*-sorted case (rows and columns sorted independently, like LeetCode 240), binary search doesn't give log — use the top-right walk in O(m + n) instead.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Flat-index trick: treat the matrix as length `m·n` sorted array.** Index `k` maps to `(k / n, k % n)` — one unified binary search instead of nested row-then-column searches.
+- **Row-major-sorted ONLY.** The problem GUARANTEES that `row[i].last < row[i+1].first` — this is what makes the flattened sequence sorted. Without that guarantee, the flat-index trick fails.
+- **O(log(m·n)) = O(log m + log n).** Identical complexity to the nested-search approach, but one loop is cleaner than two and avoids the "which binary search variant for the row-pick" question.
+- **DO NOT confuse with Search 2D Matrix II (LC-240).** That problem has rows AND columns sorted independently (staircase); flat-index does NOT work. Use the top-right walk in O(m + n) — start at the top-right, if cell > target go left, if cell < target go down.
+- **Boundary note: use `cell = matrix[mid / n][mid % n]`, not `[mid % n][mid / n]`.** `/n` extracts the row (slow-changing index); `%n` extracts the column. Swapping these indexes a transposed matrix.
+- **O(1) extra space** — the only "data structure" is three indices (`lo`, `hi`, `mid`).
+
+</details>
 
 <MarkSolved problem-slug="binary-search:2d-matrix" />
 
@@ -441,6 +489,18 @@ Five flavors, each a one-line diff from THE template above. Each sub-variation a
 **Complexity.** 2 × O(log n) = O(log n) time, O(1) space.
 
 **When to pick this variant.** Any "count how many" or "range of equal values" problem. Count-of-X with `upper(X) − lower(X)`. Deduplication cursors. Streaming histogram bucket boundaries.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two calls to `lowerBound`: `(target)` and `(target + 1)`.** The first gives the leftmost occurrence; the second minus one gives the rightmost. One function body, two parameters — symmetric and short.
+- **Check `a[first] == target` AFTER the first lower-bound call.** If false (or `first == n`), the target is absent → return `[-1, -1]`. Otherwise `[first, last]` where `last = lowerBound(target + 1) - 1`.
+- **`target + 1` works for integers; use `nextafter(target)` or `+ epsilon` for floats.** The arithmetic trick breaks for floating-point values at the subnormal / epsilon boundary.
+- **O(log n) time, O(1) space.** 2× O(log n) = O(log n); you don't double the complexity by calling lower-bound twice.
+- **Range count: `upper(X) - lower(X) = count of X`.** Same two-call pattern, different return. This generalizes to range counts between ANY two values: `upper(hi) - lower(lo)`.
+- **In Python, `bisect.bisect_left/right` are exactly these two primitives** — no need to re-implement in interview Python; call them.
+
+</details>
 
 <MarkSolved problem-slug="binary-search:first-last-position" />
 

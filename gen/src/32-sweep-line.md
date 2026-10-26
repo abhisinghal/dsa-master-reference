@@ -273,6 +273,18 @@ This bare version is useful as a warm-up and shows up directly in: *"what's the 
 
 **Related sibling: total covered length.** Replace `best = max(best, active)` with a running `covered += (t - prev_t) if active > 0`. Measures the length of the number line that at least one interval covers.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two events per interval: `(start, +1)` and `(end, -1)`.** Sort all events by time, sweep, maintain a running `active` counter. Peak `active` is the max simultaneous overlap.
+- **Tie-break: process `-1` BEFORE `+1` at the same timestamp.** An interval ending at `t` frees its slot before one starting at `t` takes it; otherwise you overcount simultaneous overlap at touching boundaries.
+- **O(n log n) time** (sort), **O(n) extra space** (event list). The sweep itself is one pass over the sorted events.
+- **This is the ENGINE for the whole sweep-line chapter** — Meeting Rooms II, Car Pooling, Skyline, Employee Free Time all adapt the ±1 event sweep with problem-specific aggregation.
+- **DO NOT merge intervals and count** — merged intervals tell you WHICH time windows are busy, not HOW MANY intervals are simultaneously active. The chapter's whole point is this distinction.
+- **Related sibling: total covered length** reuses the same sweep but swaps `max(active)` for `covered += (t - prev_t) if active > 0`.
+
+</details>
+
 ---
 
 ### Meeting Rooms II <span class="diff diff-m">Medium</span>
@@ -345,6 +357,18 @@ This bare version is useful as a warm-up and shows up directly in: *"what's the 
 
 **Why either solution works:** the heap keeps only *active* meetings. When the next starts, if the earliest end has already passed, that room is free — pop it and reuse. The heap size at the end equals the peak concurrency. The event sweep achieves the same by sorting and scanning; both are O(n log n). The heap version is more memory-efficient when most intervals don't overlap (heap stays small).
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two valid approaches: event sweep OR min-heap of end times.** Both O(n log n); pick what the interviewer's follow-up suggests.
+- **Event sweep: `(start, +1)`, `(end, -1)`, sort, peak counter.** Identical to Max Simultaneous Overlap — this problem IS just that one with a different name.
+- **Min-heap approach: sort by start, heap of end times.** For each meeting, if `heap.top() <= start`, pop (reuse the room); push the new end. Final `heap.size()` is the answer.
+- **Heap version is more memory-efficient when meetings don't overlap much** — heap stays small; sweep must sort all 2n events.
+- **Tie-break (end == start) ambiguity: both approaches handle it identically** if you process `-1` before `+1` in the sweep OR use `<=` in the heap pop test. Choose one convention and stick with it.
+- **Compared to Meeting Rooms I:** Rooms I returns a boolean ("can I attend all?"); Rooms II returns the room count. Totally different problems despite the shared name family.
+
+</details>
+
 ---
 
 ### Car Pooling <span class="diff diff-m">Medium</span>
@@ -391,6 +415,18 @@ This bare version is useful as a warm-up and shows up directly in: *"what's the 
 
 **When to prefer this over the generic event sweep:** when the problem gives you a bounded integer coordinate domain. Train scheduling where stops are 0..100, hour-of-day analytics on a 24-cell array, grid cells 0..1000 — all benefit from the diff-array specialization. For unbounded or sparse coordinates (Unix timestamps, geographic longitude), fall back to the sorted event list.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Diff array = sweep specialization for bounded integer coordinates.** `diff[from] += p`, `diff[to] -= p`, then prefix-sum through `diff` and check against capacity. One pass per phase.
+- **Bounded coordinate domain is the enabling constraint.** The LC-1094 problem bounds stops at 0..1000, so a 1001-cell array is cheap. Without the bound, fall back to the generic sorted-event sweep (O(n log n)).
+- **Max simultaneous value is `max(prefix sums)`.** Compare against capacity to answer the yes/no; return the max directly to answer "peak load" variants.
+- **O(coordinate_range + n) time, O(coordinate_range) space.** When range << n, this beats O(n log n) sort-based sweep; when range >> n, the sort-based sweep wins.
+- **Diff array handles PAIRS of events jointly.** `+p` at `from`, `-p` at `to` are one logical event — order of recording doesn't matter because they live at different array cells.
+- **Related siblings using diff arrays:** Range Addition (apply updates then reconstruct), Corporate Flight Bookings (cumulative seat counts), Grid Illumination (diff array over row/col/diagonal).
+
+</details>
+
 ---
 
 ### The Skyline Problem <span class="diff diff-h">Hard</span>
@@ -430,6 +466,18 @@ This bare version is useful as a warm-up and shows up directly in: *"what's the 
 
 **Why lazy deletion:** removing an arbitrary heap element is `O(n)`. Instead, on the end event, do nothing; on each iteration pop entries from the top whose right-edge has passed. Each building is pushed once and popped once — amortized `O(log n)` per event.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Sweep events are now `(x, height, type)`, not just +1/−1.** At each x-coordinate, the current MAX active height matters (not just an active count).
+- **Max-heap of (height, right-edge) tracks the current roofline.** On a start event, push `(h, r)`; on each iteration, lazily pop entries whose right-edge has already passed.
+- **Record a keypoint only when the max height CHANGES.** The output is a list of (x, new_height) transitions; collapse consecutive same-height events to avoid duplicate keypoints.
+- **Lazy deletion is the whole trick for O(n log n).** Removing an arbitrary heap element costs O(n); instead, let stale entries accumulate at the top and pop them when they'd be read as the max. Each building pushed and popped once → amortized O(log n) per event.
+- **End events emit no explicit output.** The height-drop keypoint appears when the heap top's right-edge expires naturally on the NEXT start event; this is why lazy deletion matches the problem shape.
+- **Alternative data structure: TreeMap of active heights.** Supports O(log n) exact removal; no "lazy" needed. Slightly cleaner but equivalent complexity; heap is faster in constant factors.
+
+</details>
+
 ---
 
 ### Employee Free Time <span class="diff diff-h">Hard</span>
@@ -458,6 +506,18 @@ This bare version is useful as a warm-up and shows up directly in: *"what's the 
 - **Result:** `[[3,4]]`.
 
 **Alternative: k-way merge with a heap of pointers.** `O(n log k)` instead of `O(n log n)`; faster when `k` (number of employees) is much smaller than total intervals. The sweep is simpler to write; the k-way merge is strictly better when `k ≪ n`.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Flatten everyone's intervals, sweep as ±1 events, record gaps where `active == 0`.** The max-overlap sweep's inverse: emit output when the counter DROPS to zero and starts again at the next event.
+- **Gap boundaries are (previous_end, next_start) when `active` hits 0.** Keep the "last end seen" value during the sweep; on the next start event with `active` currently 0, output `(last_end, start)`.
+- **Skip the first and last gaps** — before the earliest start and after the latest end are not valid "free times" because the problem only considers the aggregate working window.
+- **O(n log n) time** (sort events), **O(n) space** (event list + output). N = total intervals across all employees.
+- **Alternative: k-way merge with heap of iterators.** O(n log k) where k = employees — strictly better when `k << n` (many intervals per employee).
+- **Sibling: Interval List Intersections** — the SWEEP form of the two-pointer problem; given two sorted interval lists, output their intersections.
+
+</details>
 
 ---
 

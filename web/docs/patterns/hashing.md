@@ -306,6 +306,18 @@ The bare mechanic as its own problem. Walk the array once; at each index, query 
 
 Related siblings: **3Sum / 4Sum** (fix outer indices, two-pointer the inner pair — see Two Pointers chapter); **Two Sum III: Data Structure Design** (counter-based for streaming add + find).
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **One-pass "check then store"** is the recipe: for each `nums[i]`, ask the map for `target - nums[i]` BEFORE adding `nums[i]`. Order matters — storing first would admit `[3, 3], target = 6` as a false "same index twice" match.
+- **Return INDICES, not values.** The problem specifies ordered index pairs; store `(value → index)` and retrieve the stored index when the complement hits.
+- **O(n) time, O(n) space.** The space trade is why this beats sort-then-two-pointer when the original indices matter (sorting destroys them).
+- **No sort = no two-pointer** on this problem. The sister problem (Two Sum II — sorted input) switches to two-pointer with O(1) space; different problem, different template.
+- **The engine for 3Sum / 4Sum** — fix the outer indices, reduce to Two Sum on the remaining range. In practice sort + two-pointer wins for k-Sum because of dedup; hashing is still correct, just more awkward.
+- **Streaming variant (Two Sum III)** uses a frequency counter instead of index map — handles add + find separately with better amortized cost under many queries.
+
+</details>
+
 ---
 
 ### Two Sum II (sorted array → bridges to two-pointer) <span class="diff diff-m">Medium</span>
@@ -339,6 +351,18 @@ when the input is sorted, the hashmap approach is strictly worse than two-pointe
 **Trace** on `numbers = [2, 7, 11, 15]`, target 9: lo=0, hi=3 (sum 17 &gt; 9) → hi--; lo=0, hi=2 (sum 13 &gt; 9) → hi--; lo=0, hi=1 (sum 9 = 9) → return `[1, 2]` (1-indexed).
 
 **Why this problem lives in the hashing chapter at all:** interviewers often ask "what if the array is sorted?" as a follow-up to Two Sum. Say out loud: "the hashmap still works but is wasteful — sortedness unlocks two-pointer for O(1) space." Interviewers love the pattern-bridge recognition.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Sorted input unlocks two-pointer; drop the hashmap.** Opposite-end sweep gets O(n) time, O(1) space — the hashmap still works but costs O(n) space you don't need.
+- **The pattern bridge is the point of this problem.** Say it out loud in an interview: "the hashmap works, but sortedness lets me use two-pointer for O(1) space."
+- **Return 1-INDEXED indices.** LC Two Sum II specifies 1-based output; off-by-one here is the easiest way to lose the problem.
+- **Direction rule: `sum < target` → `left++`, `sum > target` → `right--`.** Each move strictly discards a candidate — the proof that one pass is sufficient.
+- **DO NOT re-sort if the input is already sorted.** Sorting is O(n log n) and the problem gave you the gift of sortedness; using it costs you a complexity tier for no benefit.
+- **Original-index requirement forbids sorting from scratch.** If the problem demands original indices AND the input is not sorted, you must use hashing (Two Sum I); two-pointer would lose the mapping.
+
+</details>
 
 ---
 
@@ -422,6 +446,18 @@ every anagram equivalence class has a canonical form. Hash each word to its cano
 
 **Related siblings:** *Isomorphic Strings* (first-occurrence position pattern as key); *Group Shifted Strings* (gap sequence mod 26); *Find Duplicate File* (file content as key).
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Group-by canonical form.** For each string, compute an equivalence-class key — sorted letters, or a 26-length count tuple — and bucket by that key. All anagrams of each other land in the same bucket.
+- **Count-tuple key beats sort for long strings.** Sorting is O(k log k) per string; counting is O(k). For strings up to length 100, the difference is noise; for very long strings or bioinformatics-scale inputs, the counter wins.
+- **Serialize the count tuple for hashmap keys.** In Java, `Arrays.hashCode(int[])` + `Arrays.equals` on wrapped-int arrays — or convert to a `String.valueOf(new String(char[26]))` with char-encoded counts. The tuple being hashable is the whole point.
+- **O(N × k) time (counting) or O(N × k log k) time (sorting)** where N = strings, k = max length. Space is O(N × k) for the output groups.
+- **Return the groups in any order unless the problem specifies.** Hashmap iteration order is not guaranteed; LeetCode marks the problem as order-independent.
+- **The template generalizes.** Isomorphic Strings = first-occurrence position tuple as key; Group Shifted Strings = gap-sequence-mod-26 as key; Find Duplicate File = file-content as key. Same recipe: identify the equivalence class and hash it.
+
+</details>
+
 ---
 
 ### Longest Consecutive Sequence <span class="diff diff-m">Medium</span>
@@ -468,6 +504,18 @@ hashset gives O(1) membership. But the real trick is **only starting a run at it
     { pointers: { x: 2 }, vars: { "1 in set": "yes", start: "no" }, note: "skip. final = 4" }
   ]'
 />
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Only start counting from a RUN'S HEAD.** `x` is a run-head iff `x - 1` is NOT in the set — otherwise some earlier element already triggered the count and this x is in the middle of a run.
+- **Set, not list — O(1) membership.** The whole algorithm pivots on fast "is x in the set?" checks; a list would make it O(n²) and defeat the purpose.
+- **O(n) time amortized.** The outer loop is O(n), and the inner while-walk visits each element in at most ONE run — total inner work across all iterations is O(n).
+- **Sort would be O(n log n) — accept the hashing trade-off.** The point of this problem is to show that an unsorted array can be processed in O(n) with O(n) space; sort is the simpler but strictly-dominated alternative.
+- **Deduplicate first via Set.** Repeats would cause the inner while to loop over the same values; building a HashSet from the input is the natural O(n) dedup step.
+- **Union-Find also works** (merge adjacent values, track component size) at same O(n) complexity. Pick hashing for shorter code; pick Union-Find if the problem has more structure (adding one at a time with online queries).
+
+</details>
 
 ---
 
@@ -533,6 +581,18 @@ values can be **negative**, so sliding window FAILS (the running sum isn't monot
 
 **Related siblings:** *Continuous Subarray Sum* (prefix sums modulo k); *Subarray Sums Divisible by K* (modular residue classes as keys); *Contiguous Array* with equal 0s and 1s (map +1/-1 then count where `prefix = 0` repeats).
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Prefix-sum + hashmap turns O(n²) into O(n).** `count[prefix - k]` tells you how many prior prefixes make a subarray summing to k ending at the current index. Running total of those counts is the answer.
+- **Seed `count.put(0, 1)` for the empty prefix.** Without it, subarrays that start at index 0 are dropped — the fencepost that gets missed on first-pass solutions.
+- **Store PREFIX FREQUENCIES, not indices.** Multiple prior prefixes can share the same sum value and each contributes its own valid subarray; a single-index map would under-count.
+- **Add to count AFTER querying.** The current prefix should only be visible to FUTURE endings; querying first ensures you aren't matching a subarray against itself.
+- **DO NOT use sliding window here.** Negatives in the array break monotonicity under shrink, so the window template is wrong (even though "find subarrays summing to K" sounds like a window problem). This is why the chapter puts it under hashing, not sliding window.
+- **The template generalizes to Continuous Subarray Sum (prefix mod k), Subarray Sums Divisible by K (residue classes), Contiguous Array (map +1/-1 and look for prefix == 0 repeats).**
+
+</details>
+
 ---
 
 ### Top K Frequent Elements <span class="diff diff-m">Medium</span>
@@ -572,6 +632,18 @@ frequencies are bounded by `n`, so bucket-sort by frequency gives O(n) — stric
 **Comparison with the heap-based solution:** Heap gives O(n log k) time, O(k) space — strictly better when k ≪ n. Bucket sort gives O(n) time, O(n) space. If k is close to n, bucket sort wins. Interviewers often ask for "better than O(n log n)" — both qualify.
 
 **Related siblings:** *Sort Characters by Frequency* (same bucket trick, output characters by descending frequency); *K Closest Points to Origin* (heap of k, bucket sort doesn't apply because distances are continuous).
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Bucket sort by frequency gives O(n), beating heap's O(n log k).** Frequencies are bounded by `n`, so an array of n+1 buckets stores all possible counts; walk from the back for descending order and take k.
+- **Count first, then bucket, then collect.** Three O(n) passes compose to one O(n) algorithm — don't fuse them to avoid rewriting the counter.
+- **Heap of size k is the "obvious" alternative.** O(n log k) — add every element, pop when size exceeds k. Pick heap when you need streaming / arrival-order processing; pick bucket sort for offline batch.
+- **QuickSelect is the third option.** O(n) average, O(n²) worst — partition on frequency, recurse into the half containing the top-k boundary. Shines when k is small and you can mutate; harder to reason about than bucket sort.
+- **Return in any order unless the problem specifies.** LeetCode's problem is order-agnostic; many implementations output descending-frequency by convention.
+- **Bucket sort does NOT work when the key space is continuous** (K-Closest-Points, where distances are floats) — fall back to heap or QuickSelect there.
+
+</details>
 
 ---
 
