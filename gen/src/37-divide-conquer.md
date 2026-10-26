@@ -301,6 +301,18 @@ The **bare mechanic**: sort an array by splitting, recursing, and merging two so
 
 **Why one scratch buffer, not many:** allocating a fresh `scratch` at each recursive level balloons to `O(n log n)` total allocation — same work as the comparisons, but with GC pressure. One pre-allocated buffer at the top makes allocation O(n) once.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Guaranteed O(n log n), stable, predictable** — the only general-purpose comparison sort that stays n log n in the WORST case; quicksort is O(n²) worst-case on adversarial input.
+- **O(n) extra space is the price for stability and predictability.** In-place merge sort exists but is tricky and rarely worth it for the memory it saves.
+- **The two-finger merge IS the crux.** Both halves are sorted, so walk `i` through left and `j` through right, picking the smaller — O(n) per merge, O(log n) merge levels → O(n log n) total.
+- **Prefer merge sort over quicksort when** data is on disk (external sort), inputs are linked lists (no random access needed), or stability matters (secondary sort keys must be preserved).
+- **One pre-allocated scratch buffer, not one per level.** Fresh allocations at every recursion level cost O(n log n) total allocation + GC pressure; a single top-level buffer makes it O(n) once.
+- **The pattern template for Count-of-Smaller, Count Range Sum, Reverse Pairs** — any "count inversions" problem IS merge sort with a counting hook in the merge step.
+
+</details>
+
 ---
 
 ### Pow(x, n) <span class="diff diff-m">Medium</span>
@@ -354,6 +366,18 @@ The **bare mechanic**: sort an array by splitting, recursing, and merging two so
 
 **Where this shows up:** modular exponentiation for RSA key generation (`a^d mod n` with `d` on the order of 2048 bits — binary exp is the only way), matrix exponentiation for linear recurrences (Fibonacci in O(log n)), polynomial evaluation at a point via Horner-like doubling.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Exponentiation by squaring**: `pow(x, n) = pow(x·x, n/2)` for even n, `x · pow(x·x, (n-1)/2)` for odd — halves n at every level, O(log n) multiplications instead of O(n).
+- **Handle `n < 0` by computing `pow(1/x, -n)`.** Beware `n = INT_MIN`: `-n` overflows `int`; widen to `long` or special-case before recursion.
+- **Iterative beats recursive on stack use.** Both are O(log n) time; iterative walks the bits of `n` and is O(1) space; recursive is O(log n) stack. Interview grading rarely cares, but tight-stack production code might.
+- **The pattern generalizes beyond multiplication** — any associative operation (matrix multiply, modular multiply, function composition) uses the same O(log n) trick. This is why "matrix power" and "Fibonacci in O(log n)" exist.
+- **Modular variant drops into cryptography unchanged.** `a^d mod m` with `d` on the order of 2048 bits is the arithmetic core of RSA key generation and ECDHE — binary exponentiation is the ONLY way to make that tractable.
+- **Floating-point `pow` can lose precision for very large `n`.** Within the LC-50 constraints the double stays exact enough; your own extra decimals may still mismatch the judge's rounded answer.
+
+</details>
+
 ---
 
 ### Count of Smaller Numbers After Self <span class="diff diff-h">Hard</span>
@@ -394,6 +418,18 @@ The **bare mechanic**: sort an array by splitting, recursing, and merging two so
 **Related sibling: Reverse Pairs** — pairs with `a[i] > 2·a[j]` for `i < j`. Before the standard merge, do a separate two-pointer pass counting valid pairs; because both halves are sorted, the right pointer never moves backward → O(n) per level. Use `long` since `2 * a[j]` can overflow `int`.
 
 **Alternative solution: Fenwick tree.** Iterate right-to-left; for each `nums[i]`, Fenwick-query "how many smaller than nums[i] seen so far?" then Fenwick-insert nums[i]. Also O(n log n). More "data-structure flavored" than "D&C flavored" — pick merge sort for interviews that specifically ask about D&C.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Merge sort with a counting hook.** During the merge step, every time a RIGHT-half element is placed before a LEFT-half element, that's an inversion against the left element — accumulate it into `result[original_index_of_left]`.
+- **Index tracking is the subtlety.** The output must line up with ORIGINAL positions, not sorted positions. Carry an `indices[]` array alongside values through the recursion and update `result[indices[i]]`.
+- **O(n log n) time, O(n) space** — exactly merge sort's cost, plus a tiny constant per element for the counter.
+- **Fenwick tree is an equally valid O(n log n) alternative.** Coordinate-compress values, scan right-to-left, `BIT.query(v - 1)` then `BIT.update(v)`. Pick merge-sort when the interviewer asks about D&C; pick Fenwick when the values are dense ints and the DS angle fits better.
+- **Tie-break with `left <= right`, not `left < right`.** On equal values, the right-half element should NOT advance before the left-half element — strict `<` would over-count inversions on duplicates.
+- **Siblings reuse the same template:** Count Inversions (total only — add `mid - i` on right-wins), Reverse Pairs (`a[i] > 2·a[j]` — separate two-pointer pass before the merge), Count Range Sum (merge on prefix sums).
+
+</details>
 
 ---
 
@@ -442,6 +478,18 @@ The **bare mechanic**: sort an array by splitting, recursing, and merging two so
 - **Robust tournament election**: proofs of correctness in Byzantine fault-tolerance papers invoke this lemma.
 
 **When to prefer Boyer-Moore (O(n), O(1) space):** always, in production. The D&C variant is a teaching tool and a stepping stone to the generalizations above.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The lemma: a strict majority in the whole array must be a strict majority in at least ONE half.** By pigeonhole: if `m` appears `≤ n/4` in both halves, total `≤ n/2` — contradiction. This is why D&C works at all here.
+- **Compare two candidates by counting both in the current window.** When the left and right halves disagree, scan `[lo, hi)` counting each candidate's occurrences and pick the winner — O(n) per level, O(log n) levels → O(n log n) total.
+- **Boyer-Moore Majority Vote is O(n), O(1) space.** Candidate ← first element, counter counts matches, decrements on mismatches, resets with new candidate on zero. For LC-169 (strict majority guaranteed), the final candidate IS the answer.
+- **Boyer-Moore does NOT verify.** If majority is not guaranteed, run a verification pass (count the candidate's occurrences, check `> n/2`). LC-229 (`> n/3` majority) extends to TWO candidates + verification.
+- **The lemma generalizes.** `> n/3` majority admits at most 2 candidates (same proof pattern); distributed count at MapReduce scale uses it to collapse shard-local candidates to a global one.
+- **Three valid approaches, know all three:** Boyer-Moore (O(n) time, O(1) space — production), HashMap counting (O(n) time, O(n) space — easiest to explain), sort then take middle (O(n log n) time, O(1) space in-place or O(log n) stack — one-liner).
+
+</details>
 
 ---
 

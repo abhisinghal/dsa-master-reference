@@ -343,6 +343,17 @@ After sorting by start, suppose `cur = [1,6]` and the next interval is `[8,10]`.
 
 LeetCode's Merge Intervals uses closed intervals, so `[1,2]` and `[2,3]` overlap at point `2` and merge into `[1,3]`. Many scheduling systems use half-open intervals, where `[1,2)` ends exactly when `[2,3)` begins; those do not overlap. The only code change is the comparison: closed → `next.start <= cur.end`; half-open → `next.start < cur.end`. State your assumption before choosing `<` or `<=`.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Sort by START is the only correct pre-step.** Once sorted, every overlap is LOCAL (adjacent in sorted order) and a one-pass fold suffices. Sorting by end gives wrong answers on inputs like `[1,10],[2,3],[4,5]`.
+- **Overlap test depends on interval convention.** Closed intervals (LeetCode default) → `next.start <= cur.end` ("touching" counts). Half-open intervals → `next.start < cur.end`. Decide BEFORE writing the comparison.
+- **Extend the end to `max(cur.end, next.end)`, not `next.end`.** The second interval might be fully contained inside the first (e.g. `[1,10]` + `[2,3]`), in which case the end does not change — a plain assignment would shrink it incorrectly.
+- **O(n log n) time dominated by the sort; the fold itself is O(n).** Space is O(1) extra if you can modify the input, else O(n) for the output list.
+- **This fold is the ENGINE for the whole chapter** — insert, non-overlap, meeting rooms, employee-free-time all compose with or reduce to this same one-pass merge after sort-by-start.
+
+</details>
+
 ---
 
 ### Insert Interval <span class="diff diff-m">Medium</span>
@@ -402,6 +413,17 @@ LeetCode's Merge Intervals uses closed intervals, so `[1,2]` and `[2,3]` overlap
 
 **Why this beats "insert then run full merge":** no sort pass. `O(n)` instead of `O(n log n)` — exploits the pre-sorted invariant the caller already paid for.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Three-phase scan maps to loop structure.** (1) copy intervals strictly BEFORE the new one, (2) merge all intervals that overlap the new one into ONE, (3) copy intervals strictly AFTER. Clean phase boundaries beat a tangled conditional.
+- **Overlap tests are STRICT inequalities.** `intervals[i].start > newInterval.end` means "we are past overlap"; `intervals[i].end < newInterval.start` means "not yet overlapping". The complement — neither condition true — is overlap.
+- **Shrink the newInterval in place during phase 2** — on each overlap, update `newInterval = [min(start, i.start), max(end, i.end)]`; append it once at the phase-2 → phase-3 boundary.
+- **O(n) time — DO NOT re-sort.** The input is pre-sorted; a sort-then-merge solution is `O(n log n)` and signals you missed the gift the problem gave you. This is the ONLY problem in the chapter where the input is pre-sorted.
+- **Space is O(n) for the output list.** The algorithm itself keeps only `i` and the growing `newInterval` — the extra space is unavoidable since you must emit a new list to be safe for the caller.
+
+</details>
+
 ---
 
 ### Non-overlapping Intervals <span class="diff diff-m">Medium</span>
@@ -453,6 +475,18 @@ LeetCode's Merge Intervals uses closed intervals, so `[1,2]` and `[2,3]` overlap
 
 **Related sibling: Minimum Arrows to Burst Balloons** uses the same end-sort greedy — count the kept intervals instead of the removed ones. Also related: **Weighted Interval Scheduling** needs DP (not greedy) because weights break the exchange argument.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Greedy by END, not by START.** The exchange argument: whichever interval finishes first leaves the most room for the rest, so it is always safe to keep. Sort-by-start would greedy-pick a long-reaching interval and FORCE removals that end-sort avoids.
+- **The invariant: `prevEnd` is the end of the LAST KEPT interval.** Next interval is kept iff `interval.start >= prevEnd`; otherwise it is counted as a removal and `prevEnd` stays put.
+- **Removals = total − kept.** Different variants ask for the removal count, the kept set, or the kept count; convert between them with this one line.
+- **Concrete counter-example for sort-by-start:** on `[1,100],[2,3],[3,4]`, start-sort keeps `[1,100]` and removes both others (2 removals); end-sort keeps `[2,3]` and `[3,4]`, dropping `[1,100]` (1 removal — the correct answer).
+- **This IS Activity Selection, the classic greedy exchange-argument problem.** When the "sort by end" instinct kicks in, recognize the family.
+- **Minimum Arrows to Burst Balloons** is literally the same code — the count of KEPT intervals instead of removed ones.
+
+</details>
+
 ---
 
 ### Meeting Rooms I <span class="diff diff-e">Easy</span>
@@ -495,6 +529,18 @@ LeetCode's Merge Intervals uses closed intervals, so `[1,2]` and `[2,3]` overlap
 - Pair `(1): meetings[1][0] = 5, meetings[0][1] = 30`. `5 < 30` → return `False`.
 
 **Why this is strictly weaker than Meeting Rooms II:** Rooms I returns a boolean; Rooms II returns the minimum room count. For the count, start+end-sort separately and sweep (chapter 32 Sweep Line) — merged ranges tell you *which blocks are busy*, but not *how many simultaneous meetings*. If you merge `[1,10]`, `[2,3]`, `[4,5]`, you get one block `[1,10]`, which doesn't reveal whether you needed two rooms or three.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The simplest interval problem.** Sort by start, check `intervals[i].start < intervals[i-1].end` for any adjacent overlap; return false on the first hit.
+- **Any pair-overlap shows up as an ADJACENT-pair overlap after start-sort.** This is why one O(n) adjacent scan is sufficient after the O(n log n) sort — you don't need an all-pairs check.
+- **Short-circuit on first conflict.** As soon as one overlap is found, the answer is false; no point in continuing to scan.
+- **Edge-touch (`[1,2]` and `[2,3]`) is NOT overlap for scheduling** — a meeting ending at 2:00 doesn't block one starting at 2:00. Use strict `<`, not `<=`. Different problems (interval-merge, calendar-overlap) have different conventions; always re-read the statement.
+- **O(n log n) time (sort), O(1) scan.** Space is O(1) if you can mutate input, O(n) for a sorted copy otherwise.
+- **Meeting Rooms II is a DIFFERENT problem** — needs a min-heap of end times OR Sweep Line. The boolean form (Rooms I) and the count form (Rooms II) look similar but solve differently; don't blur them in interviews.
+
+</details>
 
 ---
 

@@ -405,6 +405,18 @@ Also same engine: **Kth Smallest in a Sorted Matrix** — treat each row as a st
 
 A divide-and-conquer merge strategy also works: merge lists in pairs, then merge the merged lists, like a tournament bracket — also O(N log k). The heap version is easier when inputs are streams or iterators (no intermediate materialization). The pairwise version uses O(1) extra space on linked lists and leans on `mergeTwo` as a helper. Both are k-way merge, just organizing the frontier differently.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **A min-heap of HEAD nodes** turns a hard-looking k-way merge into "pop smallest, push its `next`" — O(N log k) because the heap never exceeds k entries.
+- **Compare on node value, not reference equality** — pass a `Comparator.comparingInt(n -> n.val)` or implement `Comparable<ListNode>`; the default heap would compare nodes by identity and crash on `ClassCastException`.
+- **Dummy head simplifies the output build.** `ListNode dummy = new ListNode(0); ListNode tail = dummy;` lets `tail.next = polled; tail = tail.next;` work without a null-check on the first append.
+- **Linked lists give O(1) extra space BEYOND the heap** — reuse nodes in place; no array copying, just pointer rethreading.
+- **Pairwise merge (tournament bracket) is an equally valid O(N log k) alternative** — prefer the heap when inputs are iterators/streams you cannot rewind; prefer pairwise when you want O(1) space outside the recursion.
+- **This same engine powers Smallest Range Covering K Lists and Kth Smallest in a Sorted Matrix** — the pop-smallest-push-next frontier generalizes well.
+
+</details>
+
 ---
 
 ### Find K Pairs with Smallest Sums <span class="diff diff-m">Medium</span>
@@ -473,6 +485,18 @@ the k "sources" are an *implicit grid* `nums1 × nums2`. Each cell `(i, j)` has 
 
 **Also same engine:** *Ugly Number II* is a k-way merge over three implicit streams (×2, ×3, ×5). The classic 3-pointer solution is strictly better than a heap because it does pure O(n) with no duplicates — a sign that for *very* structured implicit streams, direct pointer management beats heap overhead.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Never enumerate the full m×n grid** — only k pairs matter. Seed the heap with the first row (or column) and expand lazily; the heap stays O(k) and total work is O(k log k).
+- **One-direction advancement is critical for correctness AND de-duplication.** From `(i, j)` push only `(i+1, j)` (and seed the first column), or use a `seen` set — advancing in BOTH `i` and `j` from every pop would revisit the same cell through two paths and over-count.
+- **Store `(i, j)` in the heap, not just the sum** — you need the indices to compute the next pair and to re-fetch values.
+- **Seed with `min(k, n2)` entries** so you never push beyond what k could use even when `n2 < k`.
+- **Early stop at k results** — the heap can still have k entries when you return; that's fine, you only enumerate what the caller asked for.
+- **The frontier generalizes to Smallest-Range, Kth-Smallest-in-Sorted-Matrix, and Ugly-Number-II** — any "k best over an implicit grid of sorted streams" problem.
+
+</details>
+
 ---
 
 ### Find Median from Data Stream <span class="diff diff-h">Hard</span>
@@ -532,6 +556,18 @@ two heaps balancing against each other act as "two sorted sources" we're virtual
 - `add(3)`: push to lo `[-3, -1]`. Move lo-max to hi: hi `[2, 3]`, lo `[-1]`. |hi| &gt; |lo| → move hi-min to lo: lo `[-2, -1]`, hi `[3]`. Median = 2.
 
 **Why "k-way merge"?** Because `addNum` is doing a tiny merge-step between two sorted sources (lo and hi) every insert — it routes the new value through the heap boundary. The structural idea — two heaps with controlled sizes anchored at a boundary — generalizes to **sliding-window median** (chapter 25) and **median-of-k-streams** in distributed OLAP engines.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two heaps split the sorted stream at the median boundary.** `lo` is a MAX-heap holding the smaller half; `hi` is a MIN-heap holding the larger half. The two tops are the two middle values — median is one of them (odd n) or their average (even n).
+- **Size invariant: `lo.size() in {hi.size(), hi.size() + 1}`.** Enforce this after every `add` and the median is always at the tops without any scan.
+- **Add in two steps: push then rebalance** — push to one heap, then move its top to the other heap if sizes/values are out of order. Running add through BOTH heaps guarantees the correct split even on duplicates.
+- **`add` is O(log n); `findMedian` is O(1)** — this is why the problem is a heap classic, not a sort-each-query O(n log n) solution.
+- **Max-heap in Java needs `new PriorityQueue<>(Collections.reverseOrder())`** — Java's default is min-heap, and getting the reverse wrong is the single most common bug on this problem.
+- **Works online (no need to see all data up front)** — a sliding-median variant must swap heaps for order-statistics trees because heap doesn't support arbitrary removal in O(log n).
+
+</details>
 
 ---
 
