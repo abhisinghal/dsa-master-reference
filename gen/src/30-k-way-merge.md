@@ -606,6 +606,36 @@ For merging exactly two sorted lists, a heap is machinery you don't need:
 
 The heap is 5-10× slower per op because of allocation, pointer chasing, and comparator calls. For k = 2 the plain two-pointer merge is simpler to write and faster to run. The crossover is roughly k ≥ 4; below that, two-pointer or recursive merge wins. Reach for the heap only when k is unknown or large.
 
+### Visual 3: random access by rank — the heap gives order, not index
+
+A k-way merge heap emits items in sorted order one at a time. "Give me the 1000th smallest without emitting 999 first" is a different query that the heap can't answer:
+
+```text
+   Streams: A = [1, 4, 7, 10, 13, ...]      (ascending)
+            B = [2, 5, 8, 11, 14, ...]
+            C = [3, 6, 9, 12, 15, ...]
+
+   Merge heap state: holds the current front of each stream.
+   Query: "what's the 1000th smallest overall?"
+
+   Heap approach:
+     pop → emit → advance → pop → emit → advance → ...
+     1000 pops to reach the answer. Each pop: O(log k).
+     Total: O(1000 · log k) just to answer ONE rank query.
+
+   If you then ask "500th smallest?":
+     Can't rewind. Have to restart the merge from the top.
+     Each rank query: O(rank · log k) from scratch.
+     For r queries: O(r · n · log k) worst case.
+
+   Right structure: ORDER STATISTIC TREE (indexed set).
+     Insert all items upfront: O(n log n).
+     k-th smallest: O(log n) direct lookup, no popping.
+     Supports both order AND rank queries.
+```
+
+The k-way-merge heap is a **streaming** structure — it hands out the next item in order. For random-access rank queries, pre-sort into an array (O(n log n) once, O(1) per rank query) or use an indexed set / order-statistic tree. Reach for the heap when you consume items in order; reach for the indexed structure when you jump to arbitrary ranks.
+
 ## Recognition drill
 
 <RecognitionDrill pattern="k-way-merge" :count="10" />

@@ -595,6 +595,40 @@ D&C's O(n log n) depends on the split being balanced. If the pivot is near the e
 
 The master theorem's `T(n) = aT(n/b) + f(n)` assumes `b > 1`. An unbalanced split has effective `b = 1 + ε/n`, which collapses `log_b n` to O(n). The fixes: randomize the pivot (median-of-three sampling), or switch to a different algorithm (merge sort has guaranteed O(n log n) because the split is positional, not value-dependent).
 
+### Visual 3: a linear scan beats O(n log n) D&C — Kadane vs. divide-and-conquer
+
+The D&C solution to Maximum Subarray is textbook-pretty but strictly inferior to Kadane's O(n) linear scan. The gap grows with n:
+
+```text
+   nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+
+   D&C approach (O(n log n)):
+     split: [-2, 1, -3, 4] | [-1, 2, 1, -5, 4]
+     recurse left:  max subarray = 4  (just [4])
+     recurse right: max subarray = 4  (just [4]) or (2+1=3) → 4
+     combine (cross-boundary max subarray):
+       best-ending-at-boundary from LEFT:  4
+       best-starting-at-boundary from RIGHT: 2  (-1 + 2 + 1 = 2)
+       cross: 4 + 2 = 6                        ← global max
+     answer = max(4, 4, 6) = 6
+
+     Total ops: T(n) = 2T(n/2) + O(n) → O(n log n)
+     For n = 10⁶: ~2 × 10⁷ ops
+
+   Kadane's approach (O(n)):
+     curr = 0; best = -∞
+     for x in nums:
+       curr = max(x, curr + x)       // extend or restart
+       best = max(best, curr)
+     return best
+
+     Trace: curr = -2, 1, -2, 4, 3, 5, 6, 1, 5     best = 6
+     Total ops: n
+     For n = 10⁶: 10⁶ ops — 20× faster
+```
+
+**The smell test**: if a linear scan solves the problem with a running variable (the invariant "answer-so-far"), you don't need D&C. The split-and-combine machinery earns its keep only when either (a) parallelism matters, (b) the problem genuinely has no single-pass invariant (merge sort, Karatsuba, closest pair in 2D), or (c) D&C exposes a sub-structure that would be opaque in a scan. Maximum Subarray fails all three: Kadane's `curr = max(x, curr + x)` IS the complete invariant.
+
 ## Recognition drill
 
 <RecognitionDrill pattern="divide-conquer" :count="10" />

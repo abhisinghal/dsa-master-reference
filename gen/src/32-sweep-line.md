@@ -622,6 +622,38 @@ Sweep needs ALL events known up front so they can be sorted. If events arrive on
 
 Sweep is an offline algorithm. The structural trade: offline sort gives O(n log n) once; online TreeMap/segment-tree gives O(log n) per op but with a heavier structure. Reach for the online structure the moment "query after each insertion" appears in the problem.
 
+### Visual 3: sparse huge coordinates — never allocate an array over the range
+
+When coordinates can be up to 10⁹ but there are only ~10⁵ intervals, allocating an array indexed by coordinate silently kills the solution:
+
+```text
+   intervals = [(1, 1_000_000_000), (500_000_000, 999_999_999), (10, 100)]
+   n = 3 intervals; coordinate range = 10⁹
+
+   BAD — allocate by coordinate:
+     int[] delta = new int[1_000_000_001];        // 4 GB array — OOM crash
+     for (int[] iv : intervals) {
+       delta[iv[0]]++;
+       delta[iv[1] + 1]--;
+     }
+     int peak = 0, cur = 0;
+     for (int i = 0; i < delta.length; i++) { cur += delta[i]; peak = max(peak, cur); }
+     // Time O(coord_range) = O(10⁹) — tens of seconds, assuming it even allocates
+
+   GOOD — event list sorted by coordinate (coordinate compression is implicit):
+     List<int[]> events = new ArrayList<>();      // 2n = 6 entries
+     for (int[] iv : intervals) {
+       events.add(new int[]{iv[0], +1});
+       events.add(new int[]{iv[1] + 1, -1});
+     }
+     events.sort((a, b) -> a[0] - b[0]);          // O(n log n)
+     int peak = 0, cur = 0;
+     for (int[] e : events) { cur += e[1]; peak = max(peak, cur); }
+     // Time O(n log n), space O(n). Handles 10⁹ coordinates with ease.
+```
+
+The sweep processes **events**, not coordinates. The event count is `2·intervals` regardless of coordinate magnitude. Walking a huge sparse coordinate range cell-by-cell is a pure waste; sorting the (at most) 2n events and walking them is strictly better. Memory and time both drop from O(coord_range) to O(n).
+
 ## Recognition drill
 
 <RecognitionDrill pattern="sweep-line" :count="10" />

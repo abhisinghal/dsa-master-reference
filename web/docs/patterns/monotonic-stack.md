@@ -1109,6 +1109,37 @@ A stack maintains one-dimensional order. Asking for "nearest taller AND heavier"
 
 The right structure is **2D dominance** territory: coordinate-compress one axis, sort by the other, and use a Fenwick tree over the compressed axis. Each query is O(log n) instead of O(1). Or if the problem has a special structure (axis-aligned nested, or one of the axes is already sorted), you may still get a 1D sweep — but it's not a plain monotonic stack.
 
+### Visual 3: mid-array updates — the stack is a one-pass commitment
+
+A monotonic stack is a left-to-right single pass that *commits* answers as it goes. If an array element changes mid-processing, the already-committed answers that depended on it are wrong, and the stack has no way to roll them back:
+
+
+
+```text
+   arr = [3, 1, 4, 1, 5]
+   target: Next Greater Element to the right, with mid-run update
+           at step i=3, arr[1] changes from 1 → 9
+
+   Monotonic-stack scan:
+     i=0 (3): stack=[]       push 0        (indices)
+     i=1 (1): stack=[0]      push 1       1 < 3, stack keeps shrinking order
+     i=2 (4): stack=[0,1]    4 > arr[1]=1 → pop 1, NGE[1] = 4   ← COMMITTED
+                             4 > arr[0]=3 → pop 0, NGE[0] = 4   ← COMMITTED
+                             push 2
+     i=3 (?): UPDATE arr[1] = 9. But NGE[1] was already set to 4.
+              The true answer is now "nothing to the right is > 9", i.e. -1.
+              But we've already committed 4 and moved past it.
+
+   Fix: the stack can't roll back. You need a structure that supports
+        point updates + range-max queries: a segment tree over the array,
+        O(log n) per op. For 10⁵ ops with mid-array updates, segment tree is O(n log n);
+        a stack would have to re-scan from scratch after every update, O(n²).
+```
+
+
+
+The monotonic stack's O(n) amortization assumes a **static** array. The moment the input mutates, you need a dynamic structure. Segment trees cost O(log n) per op but survive updates; the stack can't. Reach for the stack only when the array is immutable throughout the sweep.
+
 ## False friends — not every stack-based sweep is monotonic
 
 - **Parentheses matching** uses a plain stack — no monotonic ordering. The invariant is "stack contents are the unmatched openers in LIFO order," not any value comparison. Don't call it monotonic.
