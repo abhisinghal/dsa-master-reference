@@ -6,18 +6,17 @@
 <PatternProgress pattern-id="two-pointers" problems="container-with-most-water, 3sum-closest, 3sum-smaller, 4sum, valid-palindrome-ii, boats-to-save-people, merge-sorted-array, move-zeroes, sort-array-by-parity, squares-of-a-sorted-array, trapping-rain-water-ii, largest-rectangle-in-histogram, intersection-of-two-arrays-ii, wiggle-sort-ii, remove-duplicates-from-sorted-array" />
 
 <script setup>
-const bareTemplateCode = `# python — opposite-end sweep on a sorted array
-def two_sum_sorted(a, target):
-    left, right = 0, len(a) - 1
-    while left < right:
-        s = a[left] + a[right]
-        if s == target:
-            return [left, right]
-        if s < target:                       # a[left] too small to pair → discard it
-            left += 1
-        else:                                # a[right] too big → discard it
-            right -= 1
-    return [-1, -1]`
+const bareTemplateCode = `// java — opposite-end sweep on a sorted array
+int[] twoSumSorted(int[] a, int target) {
+    int left = 0, right = a.length - 1;
+    while (left < right) {
+        int sum = a[left] + a[right];
+        if (sum == target) return new int[]{left, right};
+        if (sum < target) left++;            // a[left] too small to pair → discard it
+        else              right--;           // a[right] too big → discard it
+    }
+    return new int[]{-1, -1};
+}`
 
 const bareInvariant = {
   statement: `At every iteration, if a valid pair exists in \`a\`, both indices lie within \`[left, right]\`.`,
@@ -52,16 +51,19 @@ const templateSpecializations = [
 
 const pairSumInvariant = bareInvariant
 
-const removeDuplicatesCode = `# python — same-end (fast/slow write-vs-read) pointer pair
-def removeDuplicates(a):
-    if not a: return 0
-    write = 1                                 # slow: next slot to write a unique value
-    for read in range(1, len(a)):             # fast: scans input left to right
-        if a[read] != a[read - 1]:            # found a new value
-            a[write] = a[read]
-            write += 1
-        # else: duplicate — skip, write stays put, slot will be overwritten later
-    return write                              # length of deduped prefix`
+const removeDuplicatesCode = `// java — same-end (fast/slow write-vs-read) pointer pair
+int removeDuplicates(int[] a) {
+    if (a.length == 0) return 0;
+    int write = 1;                            // slow: next slot to write a unique value
+    for (int read = 1; read < a.length; read++) {   // fast: scans input left to right
+        if (a[read] != a[read - 1]) {         // found a new value
+            a[write] = a[read];
+            write++;
+        }
+        // else: duplicate — skip, write stays put, slot will be overwritten later
+    }
+    return write;                             // length of deduped prefix
+}`
 
 const removeDuplicatesInvariant = {
   statement: `At every iteration, \`a[0:write]\` is a sorted deduped prefix of the input seen so far (\`a[0:read]\`).`,
@@ -236,14 +238,16 @@ Target `10` instead:
 | 0 | 0 (val 1) | 5 (val 11) | 12 | too big → right-- |
 | 1 | 0 (val 1) | 4 (val 9) | 10 | hit → return [0, 4] |
 
-Target `20`:
+Target `25` (no pair exists — max is `9 + 11 = 20`):
 
 | step | left | right | a[l]+a[r] | action |
 |---|---|---|---|---|
 | 0 | 0 (val 1) | 5 (val 11) | 12 | too small → left++ |
 | 1 | 1 (val 3) | 5 (val 11) | 14 | too small → left++ |
-| ... | ... | ... | ... | ... |
-| final | 5 | 5 | — | left == right → return [-1, -1] |
+| 2 | 2 (val 5) | 5 (val 11) | 16 | too small → left++ |
+| 3 | 3 (val 7) | 5 (val 11) | 18 | too small → left++ |
+| 4 | 4 (val 9) | 5 (val 11) | 20 | too small → left++ |
+| 5 | 5 | 5 | — | left == right → return [-1, -1] |
 
 ```svg
 <svg role="img" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Bare mechanic two-pointer sweep">
@@ -265,7 +269,7 @@ Target `20`:
 
 <PatternTemplateCard
   slug="two-pointers-bare"
-  language="python"
+  language="java"
   :code="bareTemplateCode"
   :invariant="bareInvariant"
   :complexity="bareComplexity"
@@ -296,12 +300,145 @@ Why does an obscure teaching example matter? Because when you tell an interviewe
 
 ## THE template
 
-Four shapes share one skeleton: opposite-end sweep (pair sum, container, trapping water), same-end write-vs-read (dedup, move zeros), three-pointer partition (Dutch flag), and back-fill (squaring, merge-sorted-array). The specialization chip row jumps to each sub-variation.
+Two pointers has **four** canonical shapes. Each sub-variation below is a specialization of exactly one of them — name the shape in the first 30 seconds of the problem and you're already most of the way to the implementation.
+
+```svg
+<svg role="img" viewBox="0 0 720 160" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Four shapes: opposite-end, same-end, three-pointer partition, back-fill">
+  <defs>
+    <marker id="ar-sh-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <marker id="ar-sh-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <marker id="ar-sh-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="720" height="160" rx="12" fill="var(--dsa-bg)"/>
+
+  <!-- Shape 1: opposite-end -->
+  <text x="90" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">1. Opposite-end</text>
+  <g text-anchor="middle" font-size="11" fill="var(--dsa-ink)">
+    <rect x="30"  y="42" width="24" height="26" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="54"  y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="78"  y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="102" y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="126" y="42" width="24" height="26" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+  </g>
+  <line x1="42" y1="92" x2="42" y2="72" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-sh-primary)"/>
+  <text x="42" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">left</text>
+  <line x1="138" y1="92" x2="138" y2="72" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-sh-primary)"/>
+  <text x="138" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">right</text>
+  <text x="90" y="130" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">converge inward</text>
+  <text x="90" y="146" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">Pair-Sum · Container · Trap</text>
+
+  <!-- Shape 2: same-end -->
+  <text x="270" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">2. Same-end two-speed</text>
+  <g text-anchor="middle" font-size="11" fill="var(--dsa-ink)">
+    <rect x="210" y="42" width="24" height="26" rx="4" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+    <rect x="234" y="42" width="24" height="26" rx="4" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+    <rect x="258" y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="282" y="42" width="24" height="26" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="306" y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+  </g>
+  <line x1="270" y1="92" x2="270" y2="72" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-sh-success)"/>
+  <text x="270" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-success)">write</text>
+  <line x1="294" y1="92" x2="294" y2="72" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-sh-primary)"/>
+  <text x="294" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">read</text>
+  <text x="270" y="130" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">slow places, fast scans</text>
+  <text x="270" y="146" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">Dedup · Move Zeros · Parity</text>
+
+  <!-- Shape 3: three-pointer -->
+  <text x="450" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-danger)">3. Three-pointer partition</text>
+  <g text-anchor="middle" font-size="11" fill="var(--dsa-ink)">
+    <rect x="390" y="42" width="24" height="26" rx="4" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/>
+    <rect x="414" y="42" width="24" height="26" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="438" y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)" stroke-dasharray="3 2"/>
+    <rect x="462" y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)" stroke-dasharray="3 2"/>
+    <rect x="486" y="42" width="24" height="26" rx="4" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)"/>
+  </g>
+  <line x1="414" y1="92" x2="414" y2="72" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-sh-success)"/>
+  <text x="414" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-success)">lo</text>
+  <line x1="450" y1="92" x2="450" y2="72" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-sh-primary)"/>
+  <text x="450" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">mid</text>
+  <line x1="486" y1="92" x2="486" y2="72" stroke="var(--dsa-danger)" stroke-width="2" marker-end="url(#ar-sh-danger)"/>
+  <text x="486" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-danger)">hi</text>
+  <text x="450" y="130" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">three regions in one pass</text>
+  <text x="450" y="146" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">Dutch Flag · 3-way quicksort</text>
+
+  <!-- Shape 4: back-fill -->
+  <text x="630" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">4. Back-fill from the end</text>
+  <g text-anchor="middle" font-size="11" fill="var(--dsa-ink)">
+    <rect x="570" y="42" width="24" height="26" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+    <rect x="594" y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="618" y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="642" y="42" width="24" height="26" rx="4" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="666" y="42" width="24" height="26" rx="4" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)"/>
+  </g>
+  <line x1="582" y1="92" x2="582" y2="72" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-sh-primary)"/>
+  <text x="582" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">left</text>
+  <line x1="678" y1="92" x2="678" y2="72" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-sh-primary)"/>
+  <text x="678" y="105" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">right</text>
+  <line x1="690" y1="60" x2="705" y2="60" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-sh-success)"/>
+  <text x="630" y="130" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">converge, write pos n-1 → 0</text>
+  <text x="630" y="146" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">Squaring · Merge Sorted</text>
+</svg>
+```
+
+**(1) Opposite-end sweep** — pointers start at both ends, converge inward. The pointer gap `right − left` is a decreasing potential, so total iterations ≤ n.
+
+```java
+int left = 0, right = a.length - 1;
+while (left < right) {
+    // examine the pair (a[left], a[right])
+    if (/* a[left] is provably dominated */) left++;
+    else                                     right--;
+}
+```
+
+Specializations: **Pair Sum · Container With Most Water · Trapping Rain Water · Valid Palindrome · 3Sum** (uses this inside a fixed-pivot outer loop).
+
+**(2) Same-end two-speed** — `write` moves slowly (next placement slot), `read` scans the input. The gap between them absorbs the discarded elements.
+
+```java
+int write = 0;
+for (int read = 0; read < a.length; read++) {
+    if (/* keep a[read] */) {
+        a[write] = a[read];
+        write++;
+    }
+}
+return write;  // length of the valid prefix
+```
+
+Specializations: **Remove Duplicates · Remove Element · Move Zeros · Sort Array by Parity**.
+
+**(3) Three-pointer partition** — three regions in a single pass; the Dutch National Flag.
+
+```java
+int lo = 0, mid = 0, hi = a.length - 1;
+while (mid <= hi) {
+    if      (/* value belongs in low region */)  swap(a, lo++, mid++);
+    else if (/* value belongs in high region */) swap(a, mid, hi--);  // do NOT advance mid
+    else                                         mid++;               // middle region
+}
+```
+
+Specializations: **Sort Colors (Dutch Flag) · 3-way quicksort partition · Wiggle Sort II**.
+
+**(4) Back-fill from the end** — converge inward but write the result descending so you never overwrite unread input.
+
+```java
+int left = 0, right = a.length - 1;
+for (int pos = res.length - 1; pos >= 0; pos--) {
+    if (/* a[right] dominates */) res[pos] = a[right--];
+    else                           res[pos] = a[left++];
+}
+```
+
+Specializations: **Squaring a Sorted Array · Merge Sorted Array (in-place) · Intersection of Two Arrays II**.
+
+Shape (1) is the canonical skeleton. The chip row on the card below jumps straight to each specialization:
 
 <PatternTemplateCard
   slug="two-pointers-canonical"
-  title="Two-pointers canonical sweep"
-  language="python"
+  title="Two-pointers canonical sweep (shape 1 of 4)"
+  language="java"
   :code="bareTemplateCode"
   :invariant="bareInvariant"
   :complexity="bareComplexity"
@@ -317,6 +454,21 @@ Four shapes share one skeleton: opposite-end sweep (pair sum, container, trappin
 
   </template>
 </PatternTemplateCard>
+
+```mermaid
+flowchart TD
+  A([Init: left = 0, right = n-1]) --> B{left &lt; right ?}
+  B -- no --> Z([Done])
+  B -- yes --> C["Examine pair a[left], a[right]"]
+  C --> D{Which side is<br/>provably dominated?}
+  D -- a[left] --> E["left++ · one batch of pairs eliminated"]
+  D -- a[right] --> F["right-- · one batch of pairs eliminated"]
+  D -- hit --> G[record / return]
+  E --> B
+  F --> B
+```
+
+<div class="readfig"><b>How to read it:</b> At each step you look at the pair under the two pointers. One side is <i>provably dominated</i> by the problem's monotonicity (sorted order, shorter wall, running max), so you discard it by advancing that pointer. Each discard eliminates <i>a whole batch</i> of pairs, not just one — this is why the sweep is O(n), not O(n²).</div>
 
 ## Sub-variations of the template
 
@@ -336,7 +488,7 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
 
 <TemplateReveal
   slug="pair-sum-sorted"
-  language="python"
+  language="java"
   :canonical="bareTemplateCode"
   problemShape="sorted array + target → opposite-end sweep" />
 
@@ -549,6 +701,60 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
   :canonical="squaringCode"
   problemShape="opposite-end sweep → fill output from back to front with the larger square" />
 
+```svg
+<svg role="img" viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Squaring Sorted Array — largest |value| at an end; fill res back to front">
+  <defs>
+    <marker id="ar-sq-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <marker id="ar-sq-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="420" height="240" rx="12" fill="var(--dsa-bg)"/>
+  <text x="210" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">Largest |value| sits at an END → fill res[pos] back-to-front</text>
+  <!-- Input row -->
+  <text x="40" y="78" font-size="11" font-weight="700" fill="var(--dsa-neutral)">input</text>
+  <g text-anchor="middle">
+    <rect x="80"  y="55" width="55" height="38" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2"/>
+    <rect x="135" y="55" width="55" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="190" y="55" width="55" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="245" y="55" width="55" height="38" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/>
+    <rect x="300" y="55" width="55" height="38" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2"/>
+    <g font-size="15" font-weight="700" fill="var(--dsa-ink)">
+      <text x="107" y="80">-4</text>
+      <text x="162" y="80">-1</text>
+      <text x="217" y="80">0</text>
+      <text x="272" y="80">3</text>
+      <text x="327" y="80">10</text>
+    </g>
+  </g>
+  <!-- Pointer labels on input -->
+  <text x="107" y="107" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">left</text>
+  <text x="107" y="120" text-anchor="middle" font-size="10" fill="var(--dsa-primary)">|−4|²=16</text>
+  <text x="327" y="107" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-success)">right</text>
+  <text x="327" y="120" text-anchor="middle" font-size="10" fill="var(--dsa-success)">|10|²=100</text>
+  <!-- Arrow from right down to res[4] -->
+  <line x1="327" y1="138" x2="327" y2="172" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-sq-success)"/>
+  <text x="213" y="150" text-anchor="middle" font-size="11" font-style="italic" fill="var(--dsa-neutral)">100 &gt; 16 → place 100 at pos=4, right--</text>
+  <!-- Output row -->
+  <text x="40" y="200" font-size="11" font-weight="700" fill="var(--dsa-neutral)">res</text>
+  <g text-anchor="middle">
+    <rect x="80"  y="178" width="55" height="38" rx="7" fill="var(--dsa-bg)" stroke="var(--dsa-neutral)" stroke-dasharray="3 3"/>
+    <rect x="135" y="178" width="55" height="38" rx="7" fill="var(--dsa-bg)" stroke="var(--dsa-neutral)" stroke-dasharray="3 3"/>
+    <rect x="190" y="178" width="55" height="38" rx="7" fill="var(--dsa-bg)" stroke="var(--dsa-neutral)" stroke-dasharray="3 3"/>
+    <rect x="245" y="178" width="55" height="38" rx="7" fill="var(--dsa-bg)" stroke="var(--dsa-neutral)" stroke-dasharray="3 3"/>
+    <rect x="300" y="178" width="55" height="38" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2"/>
+    <g font-size="15" font-weight="700" fill="var(--dsa-ink)">
+      <text x="327" y="202">100</text>
+    </g>
+    <g font-size="11" fill="var(--dsa-neutral)" text-anchor="middle">
+      <text x="107" y="230">pos=0</text>
+      <text x="162" y="230">pos=1</text>
+      <text x="217" y="230">pos=2</text>
+      <text x="272" y="230">pos=3</text>
+      <text x="327" y="230">pos=4 ←</text>
+    </g>
+  </g>
+</svg>
+```
+
 <CodeTrace
   title="Squares of Sorted Array — nums=[-4,-1,0,3,10]"
   :values="[-4,-1,0,3,10]"
@@ -592,19 +798,22 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
   :termination="removeDuplicatesInvariant.termination" />
 
 ```svg
-<svg role="img" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Remove Duplicates — slow write, fast read">
-  <rect x="0" y="0" width="400" height="160" rx="12" fill="var(--dsa-bg)"/>
-  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">input [1,1,2,3,3] → write slow, read fast</text>
+<svg role="img" viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Remove Duplicates — slow write, fast read">
+  <rect x="0" y="0" width="400" height="180" rx="12" fill="var(--dsa-bg)"/>
+  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">After the sweep (input was [1,1,2,3,3]) — slow write, fast read</text>
   <g text-anchor="middle" font-size="13" font-weight="700" fill="var(--dsa-ink)">
     <rect x="60" y="56" width="50" height="30" rx="6" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="85" y="76">1</text>
     <rect x="115" y="56" width="50" height="30" rx="6" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="140" y="76">2</text>
     <rect x="170" y="56" width="50" height="30" rx="6" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)"/><text x="195" y="76">3</text>
-    <rect x="225" y="56" width="50" height="30" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/><text x="250" y="76">3</text>
-    <rect x="280" y="56" width="50" height="30" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)"/><text x="305" y="76">3</text>
+    <rect x="225" y="56" width="50" height="30" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)" stroke-dasharray="4 3"/><text x="250" y="76">3</text>
+    <rect x="280" y="56" width="50" height="30" rx="6" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)" stroke-dasharray="4 3"/><text x="305" y="76">3</text>
   </g>
-  <text x="85" y="112" font-size="10" text-anchor="middle" fill="var(--dsa-success)">write=3 ↑</text>
-  <text x="305" y="112" font-size="10" text-anchor="middle" fill="var(--dsa-neutral)">read=5 ↑</text>
-  <text x="200" y="140" text-anchor="middle" font-size="11" font-style="italic" fill="var(--dsa-neutral)">deduped prefix a[0:3] = [1,2,3]; return write=3</text>
+  <text x="140" y="48" font-size="10" text-anchor="middle" font-weight="700" fill="var(--dsa-success)">valid prefix a[0..write-1]</text>
+  <text x="280" y="48" font-size="10" text-anchor="middle" font-weight="700" fill="var(--dsa-neutral)">garbage (ignored by caller)</text>
+  <text x="225" y="110" font-size="10" text-anchor="middle" fill="var(--dsa-success)">↑ write = 3 (next-slot semantics)</text>
+  <text x="330" y="110" font-size="10" text-anchor="middle" fill="var(--dsa-neutral)">↑ read reached end</text>
+  <text x="200" y="140" text-anchor="middle" font-size="11" font-style="italic" fill="var(--dsa-neutral)">return write=3; the caller only sees a[0:3] = [1,2,3]</text>
+  <text x="200" y="160" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">(cells 3,4 retain the duplicates in place — unreachable by the API)</text>
 </svg>
 ```
 
@@ -612,7 +821,7 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
 
 <TemplateReveal
   slug="remove-duplicates"
-  language="python"
+  language="java"
   :canonical="removeDuplicatesCode"
   problemShape="same-end slow write + fast read; gap absorbs duplicates" />
 
@@ -660,6 +869,50 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
   language="java"
   :canonical="dutchCode"
   problemShape="three pointers lo/mid/hi; one-pass partition into three regions" />
+
+```svg
+<svg role="img" viewBox="0 0 420 230" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Dutch Flag — four regions: 0s, 1s, unknown, 2s">
+  <defs>
+    <marker id="ar-df-success" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-success)"/></marker>
+    <marker id="ar-df-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+    <marker id="ar-df-danger" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-danger)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="420" height="230" rx="12" fill="var(--dsa-bg)"/>
+  <text x="210" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">Four regions, always: [ 0s | 1s | ? | 2s ]</text>
+  <!-- Region header labels above cells -->
+  <text x="90"  y="50" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-success)">0s (sorted)</text>
+  <text x="190" y="50" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">1s</text>
+  <text x="270" y="50" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-neutral)">? unknown</text>
+  <text x="355" y="50" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-danger)">2s (sorted)</text>
+  <!-- 6 cells, 55 wide, starting at x=60 -->
+  <g text-anchor="middle">
+    <rect x="60"  y="68" width="55" height="48" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2"/>
+    <rect x="115" y="68" width="55" height="48" rx="7" fill="var(--dsa-success-soft)" stroke="var(--dsa-success)" stroke-width="2"/>
+    <rect x="170" y="68" width="55" height="48" rx="7" fill="var(--dsa-primary-soft)" stroke="var(--dsa-primary)" stroke-width="2"/>
+    <rect x="225" y="68" width="55" height="48" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)" stroke-width="2" stroke-dasharray="4 3"/>
+    <rect x="280" y="68" width="55" height="48" rx="7" fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)" stroke-width="2" stroke-dasharray="4 3"/>
+    <rect x="335" y="68" width="55" height="48" rx="7" fill="var(--dsa-danger-soft)" stroke="var(--dsa-danger)" stroke-width="2"/>
+    <g font-size="17" font-weight="700" fill="var(--dsa-ink)">
+      <text x="87"  y="98">0</text>
+      <text x="142" y="98">0</text>
+      <text x="197" y="98">1</text>
+      <text x="252" y="98">?</text>
+      <text x="307" y="98">?</text>
+      <text x="362" y="98">2</text>
+    </g>
+  </g>
+  <!-- Pointer arrows below cells -->
+  <line x1="170" y1="150" x2="170" y2="120" stroke="var(--dsa-success)" stroke-width="2" marker-end="url(#ar-df-success)"/>
+  <text x="170" y="166" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-success)">lo</text>
+  <line x1="225" y1="150" x2="225" y2="120" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-df-primary)"/>
+  <text x="225" y="166" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">mid</text>
+  <line x1="335" y1="150" x2="335" y2="120" stroke="var(--dsa-danger)" stroke-width="2" marker-end="url(#ar-df-danger)"/>
+  <text x="335" y="166" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-danger)">hi</text>
+  <!-- Caption with transitions -->
+  <text x="210" y="190" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">a[mid]=0 → swap(lo,mid), lo++, mid++ · a[mid]=1 → mid++</text>
+  <text x="210" y="206" text-anchor="middle" font-size="10" fill="var(--dsa-neutral)">a[mid]=2 → swap(mid,hi), hi-- (do NOT advance mid — new value is from the unknown region)</text>
+</svg>
+```
 
 <CodeTrace
   title="Sort Colors (Dutch National Flag) — array evolves in place"
@@ -714,16 +967,71 @@ The **bare mechanic** written as its own problem: `Two Sum II - Input Array Is S
   :canonical="trapCode"
   problemShape="opposite-end sweep carrying lMax/rMax; advance the shorter side" />
 
+```svg
+<svg role="img" viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" font-family="var(--dsa-font)" aria-label="Trapping Rain Water — water above each bar bounded by min(lMax, rMax)">
+  <defs>
+    <marker id="ar-trw-primary" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--dsa-primary)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="420" height="260" rx="12" fill="var(--dsa-bg)"/>
+  <text x="210" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dsa-primary)">Water above idx i = min(lMax, rMax) − h[i]</text>
+  <!-- Ground baseline y=190; 12 cols of 24 wide starting at x=48 -->
+  <line x1="48" y1="190" x2="336" y2="190" stroke="var(--dsa-neutral-line)" stroke-width="1.6"/>
+  <!-- Water cells (shaded, dashed) -->
+  <g fill="var(--dsa-primary-soft)" fill-opacity="0.55" stroke="var(--dsa-primary)" stroke-dasharray="3 3">
+    <rect x="96"  y="165" width="24" height="25"/>  <!-- idx 2, water 1 -->
+    <rect x="144" y="140" width="24" height="25"/>  <!-- idx 4, water 1 -->
+    <rect x="168" y="140" width="24" height="50"/>  <!-- idx 5, water 2 -->
+    <rect x="192" y="140" width="24" height="25"/>  <!-- idx 6, water 1 -->
+    <rect x="264" y="165" width="24" height="25"/>  <!-- idx 9, water 1 -->
+  </g>
+  <!-- Bars -->
+  <g fill="var(--dsa-neutral-soft)" stroke="var(--dsa-neutral)" stroke-width="1.3">
+    <rect x="72"  y="165" width="24" height="25"/>  <!-- idx 1 h=1 -->
+    <rect x="120" y="140" width="24" height="50"/>  <!-- idx 3 h=2 -->
+    <rect x="144" y="165" width="24" height="25"/>  <!-- idx 4 h=1 -->
+    <rect x="192" y="165" width="24" height="25"/>  <!-- idx 6 h=1 -->
+    <rect x="216" y="115" width="24" height="75"/>  <!-- idx 7 h=3 -->
+    <rect x="240" y="140" width="24" height="50"/>  <!-- idx 8 h=2 -->
+    <rect x="264" y="165" width="24" height="25"/>  <!-- idx 9 h=1 -->
+    <rect x="288" y="140" width="24" height="50"/>  <!-- idx 10 h=2 -->
+    <rect x="312" y="165" width="24" height="25"/>  <!-- idx 11 h=1 -->
+  </g>
+  <!-- Height labels under bars -->
+  <g font-size="10" fill="var(--dsa-neutral)" text-anchor="middle">
+    <text x="60"  y="205">0</text>
+    <text x="84"  y="205">1</text>
+    <text x="108" y="205">0</text>
+    <text x="132" y="205">2</text>
+    <text x="156" y="205">1</text>
+    <text x="180" y="205">0</text>
+    <text x="204" y="205">1</text>
+    <text x="228" y="205">3</text>
+    <text x="252" y="205">2</text>
+    <text x="276" y="205">1</text>
+    <text x="300" y="205">2</text>
+    <text x="324" y="205">1</text>
+  </g>
+  <!-- Pointer markers -->
+  <line x1="60" y1="238" x2="60" y2="192" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-trw-primary)"/>
+  <text x="60" y="251" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">left</text>
+  <line x1="324" y1="238" x2="324" y2="192" stroke="var(--dsa-primary)" stroke-width="2" marker-end="url(#ar-trw-primary)"/>
+  <text x="324" y="251" text-anchor="middle" font-size="10" font-weight="700" fill="var(--dsa-primary)">right</text>
+  <text x="192" y="245" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dsa-primary)">6 units trapped total</text>
+  <text x="192" y="229" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dsa-neutral)">advance whichever side is shorter — its running max is the safe cap</text>
+</svg>
+```
+
 <CodeTrace
   title="Trapping Rain Water — heights=[0,1,0,2,1,0,1,3,2,1,2,1]"
   :values="[0,1,0,2,1,0,1,3,2,1,2,1]"
   :windowKeys="['lo','hi']"
   :cellWidth="26"
   :steps='[
-    { pointers: { lo: 0, hi: 11, leftMax: 0, rightMax: 1 }, vars: { total: 0 }, note: "shorter side leads: lo (h=0)" },
-    { pointers: { lo: 2, hi: 11, leftMax: 1, rightMax: 1 }, vars: { total: 1 }, note: "trap 1 unit above idx 2 (leftMax−h)", added: [2] },
-    { pointers: { lo: 5, hi: 11, leftMax: 2, rightMax: 1 }, vars: { total: 4 }, note: "right side leads. traps at 8,9,10 = +3", added: [8,9,10] },
-    { pointers: { lo: 5, hi: 7, leftMax: 2, rightMax: 3 }, vars: { total: 6 }, note: "traps at 5,6 = +2. final = 6", added: [5,6] }
+    { pointers: { lo: 0, hi: 11, leftMax: 0, rightMax: 0 }, vars: { water: 0 }, note: "init. h[0]=0 < h[11]=1 → shorter side (left) is safe; lMax→0, no water, l++" },
+    { pointers: { lo: 2, hi: 10, leftMax: 1, rightMax: 1 }, vars: { water: 0 }, note: "iters 2–3: boundary bars match running maxes, no water yet" },
+    { pointers: { lo: 3, hi: 10, leftMax: 1, rightMax: 1 }, vars: { water: 1 }, note: "idx 2 (h=0) < lMax=1 → trap +1", added: [2] },
+    { pointers: { lo: 3, hi: 8, leftMax: 1, rightMax: 2 }, vars: { water: 2 }, note: "h[3]≥h[r]; r sweeps 10→8; idx 9 (h=1) < rMax=2 → trap +1", added: [9] },
+    { pointers: { lo: 7, hi: 7, leftMax: 2, rightMax: 2 }, vars: { water: 6 }, note: "l sweeps 3→7; idx 4,5,6 trapped by lMax=2 → +1,+2,+1. Loop ends. Total = 6.", added: [4,5,6] }
   ]'
 />
 
