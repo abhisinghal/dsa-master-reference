@@ -721,13 +721,17 @@ Time O(V + E). Building adjacency touches each prerequisite once, and Kahn proce
 ### Space Complexity
 Space O(V + E) for the adjacency list, in-degree array, queue, and output order.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why add edge `p[1] → p[0]`? — finishing the prerequisite unlocks the dependent course.
 - Why maintain `indeg[]`? — it is the remaining prerequisite count for each node.
 - Why enqueue only `indeg == 0`? — those courses are safe to take immediately.
 - Why `--indeg[v] == 0`? — a neighbour becomes available exactly when its last prerequisite is removed.
 - Why compare `k == numCourses`? — emitting fewer nodes means a cycle blocked the queue.
 - Why Kahn over DFS here? — the BFS queue makes cycle detection and “available now” reasoning visible.
+
+</details>
 
 Additional notes:
 

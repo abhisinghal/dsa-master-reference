@@ -462,12 +462,16 @@ The scan is O(n) because each array value updates one running prefix and perform
 ### Space Complexity
 Space is O(n) in the worst case because every prefix sum can be distinct and stored in the map.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `Map<Long,Integer>`? — prefix sums can exceed int range.
 - Why `count.put(0L, 1)`? — it represents the empty prefix before index 0.
 - Why add `count.getOrDefault(pre - k, 0)`? — those prior prefixes make subarrays summing to k.
 - Why merge `pre` after counting? — the current prefix should be available only to future endings.
 - Why frequencies, not one index? — multiple prior prefixes can create multiple valid subarrays.
+
+</details>
 
 <Callout kind="inv" title="Invariant">
 
@@ -586,12 +590,16 @@ Processing m bookings is O(m) because each update writes two diff cells; reconst
 ### Space Complexity
 Space is O(n) for the difference array and output array. The extra `+1` slot is a boundary sentinel for closing ranges at the end.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `long[] diff`? — many bookings can accumulate beyond int during reconstruction.
 - Why `b[0] - 1`? — bookings are 1-indexed, Java arrays are 0-indexed.
 - Why `diff[b[1]] -= b[2]`? — `b[1]` is the first index after the inclusive range.
 - Why length `n + 1`? — ranges ending at flight n need a safe closing decrement.
 - Why one prefix pass? — the running sum materializes all active increments.
+
+</details>
 
 <Callout kind="key" title="Key Insight">
 
@@ -720,12 +728,16 @@ Building `P` is O(RC) because each matrix cell contributes to one prefix-table c
 ### Space Complexity
 Space is O(RC) for the padded prefix table `P`; the extra top row and left column simplify boundary math.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `long[][] P`? — rectangle sums can be larger than one cell value.
 - Why size `R + 1` by `C + 1`? — padding makes boundary queries safe.
 - Why write `P[i+1][j+1]`? — prefix indices mean sum before this row/col boundary.
 - Why subtract `P[i][j]` while building? — the top-left rectangle was added twice.
 - Why the query has `- - +` terms? — subtract top/left strips, then add back their overlap.
+
+</details>
 
 <Callout kind="key" title="Key Insight">
 

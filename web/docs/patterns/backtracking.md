@@ -716,12 +716,16 @@ O(n·2ⁿ): there are 2ⁿ subsets and copying each subset can cost O(n).
 ### Space Complexity
 O(n) recursion/path space excluding output; O(n·2ⁿ) including the returned subsets.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `res.add(new ArrayList<>(path))`? — it snapshots the current subset; storing `path` itself would mutate every recorded answer later.
 - Why pass `start`? — it enforces left-to-right choices so `[1,2]` appears once and `[2,1]` is never generated as a duplicate.
 - Why recurse with `i + 1`? — subsets do not reuse the same element after choosing it.
 - Why `path.remove(path.size() - 1)`? — it undoes the last choice so the next sibling starts from the previous state.
 - Why record at every node? — every partial path is already a valid subset, not only the leaves.
+
+</details>
 
 ### Permutations (used[]) <span class="diff diff-m">Medium</span>
 
@@ -857,12 +861,16 @@ O(n·n!): n! permutations, O(n) to copy each completed ordering.
 ### Space Complexity
 O(n) recursion/path/used-array space excluding output; O(n·n!) including output.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why no `start` index? — order matters, so every unused element can be chosen at every position.
 - Why `if (used[i]) continue`? — it prevents the same array element from appearing twice in one permutation.
 - Why set `used[i] = true` before recursion? — the deeper level must see that this value is already in the path.
 - Why remove then set `used[i] = false`? — both shared structures must be restored for the next candidate.
 - Why copy `path` only when full length? — only complete orderings are valid permutations.
+
+</details>
 
 ### Permutations (swap) <span class="diff diff-m">Medium</span>
 
@@ -1031,12 +1039,16 @@ Exponential in the number of feasible candidate choices; sorting/pruning reduces
 ### Space Complexity
 O(target/minCandidate) recursion/path space excluding output.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `Arrays.sort(cand)`? — sorted order makes the later `break` prune valid; once one value is too large, all later values are too large.
 - Why `if (c[i] > remain) break`? — it stops an entire suffix of impossible choices instead of just skipping one.
 - Why recurse with `i`? — the same candidate may be reused unlimited times.
 - Why still use `start`? — it keeps combinations nondecreasing so `[2,3,2]` is not duplicated separately from `[2,2,3]`.
 - Why copy `path` at `remain == 0`? — the current list is exactly one valid combination and must be frozen before backtracking.
+
+</details>
 
 ### N-Queens <span class="diff diff-h">Hard</span>
 
@@ -1227,12 +1239,16 @@ O(n!) with heavy pruning from one queen per row and O(1) occupancy checks.
 ### Space Complexity
 O(n) for columns and O(2n) for each diagonal array, plus O(n) recursion stack.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why recurse by row `r`? — one queen per row is mandatory, so the search only chooses a column for each row.
 - Why `d = r - c + n`? — all cells on one diagonal share `row-col`; the `+ n` offset avoids negative indexes.
 - Why `a = r + c`? — the other diagonal is identified by the constant sum of row and column.
 - Why check `col[c] || diag[d] || anti[a]` before placing? — a queen attacks along exactly those three occupancy dimensions.
 - Why clear all three booleans after recursion? — leaving any one set falsely blocks sibling placements.
+
+</details>
 
 ### Word Search <span class="diff diff-m">Medium</span>
 
@@ -1374,12 +1390,16 @@ O(R·C·4^L): each starting cell can branch up to four ways for L characters, wi
 ### Space Complexity
 O(L) recursion stack; O(1) extra visited storage because the board is marked in place.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why check `k == w.length()` first? — matching all characters means success before looking for another cell.
 - Why reject bounds and char mismatch together? — no deeper path can repair an invalid cell or wrong character.
 - Why store `tmp` before writing `#`? — the original letter is needed to restore the board after the recursive branch.
 - Why use `#`? — it marks the cell as visited without allocating a separate `visited` matrix.
 - Why restore `b[r][c] = tmp`? — other starting cells and sibling branches must see the untouched board.
+
+</details>
 
 ### Letter Combinations <span class="diff diff-m">Medium</span>
 

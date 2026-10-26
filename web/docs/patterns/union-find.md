@@ -691,13 +691,17 @@ Time O(n² · α(n)) for scanning the matrix and unioning friendships; each DSU 
 ### Space Complexity
 Space O(n) for the parent and rank arrays.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why initialize `parent[i] = i`? — every city starts as its own representative.
 - Why path compression in `find`? — it flattens future root lookups.
 - Why union by rank? — attaching shorter trees under taller ones keeps finds shallow.
 - Why return `false` when roots match? — the two nodes were already in the same component.
 - Why count roots/components after unions? — provinces are connected components, not direct friendships.
 - Why DSU over traversal? — it shines when connectivity merges or repeated same-set checks arrive online.
+
+</details>
 
 Additional notes:
 
@@ -866,13 +870,17 @@ Time O(E log E). Sorting edges dominates; DSU checks are near O(1) amortized.
 ### Space Complexity
 Space O(V) for DSU state, assuming the edge list is already materialized.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why sort edges by weight? — Kruskal must consider the cheapest safe edge first.
 - Why call `dsu.union` before adding cost? — a false return means the edge would create a cycle.
 - Why stop at `n - 1` edges? — any connected tree on n vertices has exactly n−1 edges.
 - Why return `-1` if not enough edges were used? — the graph was disconnected.
 - Why Union-Find here? — it answers “already connected?” fast while the forest grows.
 - Why the cut property matters? — the cheapest edge crossing any component cut is safe to add.
+
+</details>
 
 Additional notes:
 

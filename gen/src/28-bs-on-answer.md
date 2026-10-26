@@ -401,13 +401,17 @@ O(1), because the search stores only bounds and the running `hours` counter.
 
 > [pat] **Pattern Connection** — Identical structure to *Capacity to Ship Packages in D Days* (feasibility on capacity) and *Minimize Max Distance to Gas Station*.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `lo = 1`? — speed zero is invalid, and the slowest possible positive speed is 1 banana/hour.
 - Why `hi = max(pile)`? — at that speed, every pile finishes in one hour, so it is always feasible.
 - Why `(p + k - 1) / k`? — integer ceil division counts a partially eaten pile as a full hour.
 - Why `long hours`? — total hours can exceed `int` while summing many large piles.
 - Why `hi = k` on feasible? — `k` might be the minimum working speed, so keep it in the search range.
 - Why `lo = k + 1` on infeasible? — if speed `k` is too slow, every smaller speed is also too slow.
+
+</details>
 
 ### Same pattern, new tweaks
 
@@ -555,13 +559,17 @@ O(1), because the optimized algorithm uses only bounds and the current segment s
 
 > [pat] **Pattern Connection** — "Minimize the maximum" (or "maximize the minimum") ⇒ almost always binary search on the answer with a greedy feasibility check. This is a top-5 staff-interview signal.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `lo = max(element)`? — no segment cap can be smaller than the largest single number.
 - Why `hi = sum(all)`? — one segment containing the whole array is always feasible.
 - Why use `long` for `lo`, `hi`, and `cap`? — sums can exceed 32-bit `int`.
 - Why start `parts = 1`? — before any cut, the first segment already exists.
 - Why cut when `cur + x > cap`? — that is the first moment the current segment would violate the guessed cap.
 - Why `partsNeeded <= m` works? — if you can do it in fewer than `m` parts, you can split some non-empty segment further because values are non-negative.
+
+</details>
 
 ### Same pattern, new tweaks
 
@@ -677,7 +685,9 @@ O(1), because the algorithm stores boundary indices and values without building 
 
 <TrapTrace title="Off-by-one when the total length is odd" input="A=[1]" bug="'A=[1]', 'B=[2,3]'. Left partition should hold '(m+n+1)/2 = 2' elements — the median is the 'max' of that left side. Using '(m+n)/2' puts the median on the wrong side." fix="See the guidance in the trap description and the code snippet." />
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - **Not shortening the shorter array first** — the binary search range should be the smaller of `m`, `n`.
 - **Off-by-one in the left-half size** — use `(m + n + 1) / 2` so the median lives on the left when odd.
 - **Missing the `±∞` sentinels** for empty halves — use `Integer.MIN/MAX_VALUE`.
@@ -685,6 +695,8 @@ O(1), because the algorithm stores boundary indices and values without building 
 - Why `j = half - i`? — once A contributes `i` elements to the left, B must contribute the rest.
 - Why two inequalities `aL <= bR && bL <= aR`? — together they prove every left-side value is ≤ every right-side value.
 - Why `hi = i - 1` when `aL > bR`? — A contributed too many large elements to the left partition.
+
+</details>
 
 > [pat] **Pattern Connection** — Partition binary search — the most sophisticated member of the family; demonstrates that binary search operates on *structural boundaries*, not just values.
 

@@ -693,12 +693,16 @@ O(n): one XOR pass over the array.
 ### Space Complexity
 O(1): one accumulator.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why initialize `x = 0`? — zero is XOR's identity, so it does not change the first value.
 - Why `x ^= v`? — equal numbers cancel because `v ^ v == 0`.
 - Why does order not matter? — XOR is commutative and associative, so pairs cancel regardless of position.
 - Why does the loner survive? — it is the only value with odd count in the base problem.
 - Why isolate one bit for Single Number III? — the two loners differ on that bit, so it separates them into different XOR groups.
+
+</details>
 
 ### Single Number III <span class="diff diff-e">Easy</span>
 
@@ -849,12 +853,16 @@ O(n): each number from 1 through n is computed once.
 ### Space Complexity
 O(n): the returned `dp` array is the output.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why start the loop at `i = 1`? — `dp[0]` is already 0 by default.
 - Why `i >> 1`? — shifting right removes the lowest bit and gives a smaller solved number.
 - Why add `(i & 1)`? — the dropped lowest bit contributes one exactly when it is set.
 - Why is this DP? — every `dp[i]` reuses the answer for `i/2` instead of recounting bits.
 - Why not call `Integer.bitCount` repeatedly in the teaching version? — the recurrence exposes the reusable subproblem and avoids per-number bit loops.
+
+</details>
 
 ### Reverse Bits <span class="diff diff-e">Easy</span>
 
@@ -1030,12 +1038,16 @@ O(n·2ⁿ): 2ⁿ masks and up to n bit tests per mask.
 ### Space Complexity
 O(n·2ⁿ) for output; O(n) temporary subset per mask.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `(1 << n)` masks? — n bits encode every include/exclude choice, so there are 2ⁿ subsets.
 - Why bit `i` means element `i`? — it gives O(1) membership testing for that element.
 - Why `(mask & (1 << i)) != 0`? — the expression tests whether the subset includes index `i`.
 - Why create a new `sub` for each mask? — each output subset needs its own list object.
 - Why cap this around `n ≤ 20`? — 2ⁿ output size explodes beyond interview-feasible limits.
+
+</details>
 
 ## In the wild — JDK `Integer.bitCount` with `popcnt` intrinsic
 

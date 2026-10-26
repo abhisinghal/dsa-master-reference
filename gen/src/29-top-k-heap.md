@@ -630,7 +630,9 @@ More precisely, counting costs O(n), and heap operations cost O(m log k), where 
 
 > [pat] **Pattern Connection** — *K Closest Points to Origin* is identical with a max-heap of size k keyed on distance; bucket sort by frequency gives O(n) when the key range is bounded.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why count first? — frequency is the ranking key, so the heap cannot compare numbers until counts exist.
 - Why store just the key in the heap? — the `freq` map already holds the count; duplicating pairs is unnecessary here.
 - Why a **min-heap** for "most frequent"? — the least frequent survivor is the next one to evict.
@@ -638,6 +640,8 @@ More precisely, counting costs O(n), and heap operations cost O(m log k), where 
 - Why fill `res` from right to left? — repeated `poll()` returns lower-frequency survivors first.
 - Why not sort all keys? — sorting orders every loser too; the heap only maintains the top-k boundary.
 - Why mention `Integer.compare`? — subtraction comparators can overflow when values or counts are extreme.
+
+</details>
 
 #### Choosing between heap, sort, bucket, and quickselect
 A useful interview move is to name the trade-off instead of pretending the heap is always best. Full sorting is shortest to code and good when `n` is small or when the final order matters. A size-k heap is best when k is small, the stream may not fit in memory, or you need to update answers incrementally. Bucket sort is excellent for frequencies because frequency is an integer from 1 to n; create buckets where bucket `f` stores all values with frequency `f`, then read from high frequency down until k values are collected. Quickselect is attractive for one-shot selection when you can mutate the array of candidates and do not need streaming behavior.

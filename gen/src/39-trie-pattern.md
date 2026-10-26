@@ -737,12 +737,16 @@ Worst-case O(R·C·4^L), but trie prefix pruning avoids repeating work for share
 ### Space Complexity
 O(totalChars) for the trie plus O(L) recursion stack; result output extra.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `buildTrie(words)` first? — it shares all dictionary prefixes before the board DFS begins.
 - Why carry `Node node` in DFS? — the grid path and trie path must advance together.
 - Why `nxt == null` returns immediately? — no dictionary word has this prefix, so every continuation is impossible.
 - Why `nxt.word = null` after adding? — it deduplicates a word found through multiple paths.
 - Why mark `b[r][c] = '#'` and restore? — one path cannot reuse a cell, but sibling paths need the original board.
+
+</details>
 
 ### Maximum XOR of Two Numbers (Binary Trie) <span class="diff diff-m">Medium</span>
 
@@ -865,12 +869,16 @@ O(n·32), which is O(n) for fixed-width Java integers.
 ### Space Complexity
 O(n·32) trie nodes in the worst case.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why walk bits from 31 down to 0? — higher XOR bits dominate every combination of lower bits.
 - Why `want = bit ^ 1`? — XOR gets a 1 exactly when the two bits differ.
 - Why set `cur |= (1 << b)` only when `want` exists? — that bit can be made 1 only if an opposite branch is available.
 - Why insert all numbers first? — each query can choose among every potential partner in the array.
 - Why pairing with itself is harmless here? — self-XOR is 0, which cannot beat a positive maximum pair.
+
+</details>
 
 ## In the wild — `java.util.jar.JarFile` manifest trie & Cisco IP routing
 

@@ -405,13 +405,17 @@ Time O(n). Each index before the last is scanned once while updating the farthes
 ### Space Complexity
 Space O(1). The greedy scan keeps only `jumps`, `curEnd`, and `farthest`.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why loop only to `a.length - 1`? — you do not need to jump after reaching the last index.
 - Why update `farthest` every index? — it records the best next frontier from the current BFS layer.
 - Why increment only at `i == curEnd`? — that is where the current jump range is exhausted.
 - Why set `curEnd = farthest`? — the next jump can cover exactly the farthest range discovered so far.
 - Why not choose a concrete next index? — only the frontier matters for the minimum jump count.
 - Why greedy works? — farther reach dominates shorter choices within the same layer.
+
+</details>
 
 <Callout kind="note" title="Interview script">
 
@@ -593,13 +597,17 @@ Time O(n). One pass computes total surplus and eliminates invalid start ranges.
 ### Space Complexity
 Space O(1). Only `total`, `tank`, and `start` are stored.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why keep `total`? — it proves whether any solution exists globally.
 - Why keep `tank` separately? — it measures surplus from the current candidate start only.
 - Why reset when `tank < 0`? — every station in that failed segment is impossible.
 - Why set `start = i + 1`? — the next station is the first candidate not disproved by the deficit.
 - Why reset `tank = 0`? — the new candidate starts with an empty local balance.
 - Why return `start` only if `total >= 0`? — local recovery cannot fix global shortage.
+
+</details>
 
 <Callout kind="note" title="Interview script">
 
@@ -724,13 +732,17 @@ Time O(T + A), where T is the task count and A is the alphabet size. Counting do
 ### Space Complexity
 Space O(A) for the frequency table.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why count frequencies? — only the most frequent labels determine unavoidable idle frames.
 - Why use `maxFreq - 1` blocks? — the last copy of the most frequent task does not need a following cooldown frame.
 - Why multiply by `n + 1`? — each internal block holds one anchor task plus n cooldown positions.
 - Why add `maxCount`? — all labels tied for maximum frequency occupy the final block.
 - Why `Math.max(tasks.length, frame)`? — other tasks can fill idles, but the answer can never be shorter than the task count.
 - Why earliest-finish for activity selection? — finishing sooner leaves the most room for future compatible intervals.
+
+</details>
 
 ### When greedy fails → DP
 <p class="secgoal"><b>What & why:</b> the tell-tale signs that a locally optimal choice is <i>not</i> globally safe. Goal — decide fast between a greedy one-pass and a DP, and back the call with a counterexample or an exchange argument.</p>
@@ -827,13 +839,17 @@ Time O(n log n). Sorting by end dominates; the greedy keep/remove pass is O(n).
 ### Space Complexity
 Space O(1) extra besides the input array, ignoring sorting implementation overhead.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why sort by end? — earliest finish leaves maximum room for later intervals.
 - Why initialize `end` very small? — the first interval should always be eligible to keep.
 - Why `iv[0] >= end`? — touching endpoints are non-overlapping for this problem.
 - Why update `end = iv[1]` only when kept? — removed intervals should not constrain future choices.
 - Why count `removed++` on overlap? — sorting by end means the current interval is no better than the one already kept.
 - Why this greedy is safe? — an exchange argument swaps any later-ending kept interval for the earlier-ending one.
+
+</details>
 
 <Callout kind="note" title="Interview script">
 

@@ -1202,12 +1202,16 @@ O(n): one pass over houses, constant work per house.
 ### Space Complexity
 O(1): only `prev2`, `prev1`, and `cur` are kept.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `prev2 = 0, prev1 = 0`? — before any house, the best loot from the previous two positions is zero.
 - Why `Math.max(prev1, prev2 + x)`? — the only legal choices are skip this house or rob it with the best answer two houses back.
 - Why update `prev2 = prev1` before `prev1 = cur`? — the rolling variables shift one position after each house.
 - Why no full `dp[]` array? — the recurrence needs only the two previous states.
 - Why `return prev1`? — after the last update, it represents the best loot through all houses.
+
+</details>
 
 ### Maximum Subarray (Kadane) <span class="diff diff-m">Medium</span>
 
@@ -1413,12 +1417,16 @@ O(n): each element updates the best-ending-here state once.
 ### Space Complexity
 O(1): only `cur` and `best` are stored.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why seed from `a[0]`? — the answer must be non-empty, so all-negative arrays cannot default to zero.
 - Why `cur = Math.max(a[i], cur + a[i])`? — either extend the previous subarray or restart at the current value.
 - Why can a negative prefix be dropped? — adding it to any future suffix only lowers that suffix sum.
 - Why update `best` after `cur`? — the best subarray may end at the current index.
 - Why no window shrink loop? — validity is not monotone; this is a DP choice to extend or restart.
+
+</details>
 
 ### 0/1 Knapsack & Subset-Sum <span class="diff diff-m">Medium</span>
 
@@ -1574,12 +1582,16 @@ O(n·target): every item scans possible sums up to half the total.
 ### Space Complexity
 O(target): one boolean row of reachable sums.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why return false when `(sum & 1) == 1`? — an odd total cannot split into two equal integer sums.
 - Why `target = sum / 2`? — finding one subset of half the total proves the remaining numbers form the other half.
 - Why `dp[0] = true`? — the empty subset always reaches sum zero and seeds all later transitions.
 - Why iterate `w` downward? — each number may be used at most once; downward order prevents reusing it in the same item pass.
 - Why `dp[w] |= dp[w - x]`? — sum `w` is reachable if it was already reachable or if `w-x` was reachable before this item.
+
+</details>
 
 ### Coin Change <span class="diff diff-m">Medium</span>
 
@@ -1789,12 +1801,16 @@ O(amount · numberOfCoins): every amount tries every coin.
 ### Space Complexity
 O(amount): one array stores the best answer for each amount.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `Arrays.fill(dp, amount + 1)`? — `amount+1` is a safe infinity bigger than any real coin count.
 - Why `dp[0] = 0`? — zero coins are needed to make amount zero, and it seeds all reachable amounts.
 - Why loop amounts upward? — `dp[a - c]` must already represent the best smaller amount.
 - Why guard `if (c <= a)`? — negative indexes are invalid and a too-large coin cannot help this amount.
 - Why return `-1` when `dp[amount] > amount`? — the sentinel survived, so no combination reached the amount.
+
+</details>
 
 ### Grid DP — Unique Paths & Min Path Sum <span class="diff diff-m">Medium</span>
 
@@ -1937,12 +1953,16 @@ O(R·C): each cell is computed once.
 ### Space Complexity
 O(C): the rolling row stores one value per column.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why initialize `dp[0] = grid[0][0]`? — the start cell is the only cost/path seed.
 - Why prefill the first row? — those cells can only be reached from the left.
 - Why update `dp[0] += grid[r][0]` for each row? — the first column can only be reached from above.
 - Why is `dp[c]` the above value? — before overwriting it, it still holds the previous row's answer for this column.
 - Why is `dp[c-1]` the left value? — left-to-right iteration has already updated it for the current row.
+
+</details>
 
 ### Subsequence DP — LIS, LCS, Edit Distance <span class="diff diff-h">Hard</span>
 
@@ -2118,12 +2138,16 @@ LIS optimized: O(n log n). LCS/Edit Distance: O(mn).
 ### Space Complexity
 LIS optimized: O(n) for `tails`. LCS/Edit: O(mn), reducible to O(min(m,n)) with rolling rows.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `tails[k]` stores the smallest tail? — a smaller tail leaves more room to extend future increasing subsequences.
 - Why binary-search lower_bound? — for strict LIS, the first tail `>= x` is the length slot `x` can improve.
 - Why replace instead of append when `lo < tails.size()`? — the LIS length is unchanged, but future extension becomes easier.
 - Why `dp[i][0] = i` in edit distance? — converting a prefix to empty requires deleting every character.
 - Why use diagonal on matching characters? — equal last characters need no edit, so the answer is the smaller prefix pair.
+
+</details>
 
 ### Interval DP — Matrix Chain / Burst Balloons <span class="diff diff-h">Hard</span>
 
@@ -2279,12 +2303,16 @@ O(n³): O(n²) intervals and O(n) choices of last balloon per interval.
 ### Space Complexity
 O(n²): the table stores every interval answer.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why add boundary `1`s? — balloons outside the array behave as fixed neighbours of value 1.
 - Why choose `k` as the last balloon? — then its neighbours are stable interval boundaries `i-1` and `j+1`.
 - Why iterate `len` from small to large? — both subintervals around `k` must be solved before the parent interval.
 - Why use `dp[i][k-1] + ... + dp[k+1][j]`? — the last burst splits the interval into independent left and right subproblems.
 - Why `Math.max`? — this variant maximizes coins; matrix-chain variants often use `Math.min`.
+
+</details>
 
 ### State-Machine DP — Stock trading with cooldown <span class="diff diff-m">Medium</span>
 
@@ -2449,12 +2477,16 @@ O(n): each day updates a constant number of states.
 ### Space Complexity
 O(1): only `hold`, `sold`, `rest`, and `prevSold` are kept.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why initialize `hold = Integer.MIN_VALUE`? — before buying, holding stock is impossible and should never win accidentally.
 - Why save `prevSold`? — today's `rest` can come from yesterday's sold state, not the just-updated one.
 - Why `sold = hold + p`? — selling today is only legal if you were holding before today.
 - Why `hold = Math.max(hold, rest - p)`? — you either keep holding or buy only from a free/rest state.
 - Why return `Math.max(sold, rest)`? — ending while holding stock leaves unrealized profit, so only not-holding states count.
+
+</details>
 
 ### Tree DP — House Robber III <span class="diff diff-m">Medium</span>
 
@@ -2748,12 +2780,16 @@ O(2ⁿ·n²): each mask/end-node state tries each next node.
 ### Space Complexity
 O(2ⁿ·n): one value for every visited-set mask and ending node.
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why `FULL = (1 << n) - 1`? — it is the mask with every node marked visited.
 - Why fill with `Integer.MAX_VALUE / 2`? — it is a safe infinity that avoids overflow when adding a cost.
 - Why `dp[1][0] = 0`? — the sample route starts at node 0 with only node 0 visited.
 - Why test `(mask & (1 << u)) == 0`? — you can only be at `u` if `u` is already in the visited set.
 - Why set `mask | (1 << v)`? — adding node `v` creates the next visited-set state.
+
+</details>
 
 ### DP recognition summary — pick the right archetype in 30 seconds
 

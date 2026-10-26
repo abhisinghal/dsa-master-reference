@@ -654,12 +654,16 @@ The template (`while top violates: pop and resolve; push i`) is identical for *N
 
 </Callout>
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why push **indices** instead of values? — the answer is a distance `i - j`, so you need the old index `j`.
 - Why a **decreasing** stack? — any warmer current day can resolve all colder unresolved days above it.
 - Why `while` and not `if`? — one hot day may answer many previous colder days.
 - Why default `res` values can stay `0`? — Java initializes int arrays to zero, matching "no warmer day".
 - Why push after popping? — the current day is unresolved until some future warmer day appears.
+
+</details>
 
 ### Same pattern, new tweaks
 
@@ -803,13 +807,17 @@ Forgetting the sentinel `0`. *Example:* `heights=[2,1,5,6,2,3]` — the tallest 
 
 </Callout>
 
-### Learning notes
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
 - Why an **increasing** stack? — a shorter incoming bar is the signal that taller bars can no longer extend right.
 - Why store indices? — width needs positions: `i - left - 1`, not just heights.
 - Why `cur = (i == n) ? 0 : h[i]`? — the virtual zero flushes every remaining bar at the end.
 - Why `left = st.isEmpty() ? -1 : st.peek()`? — empty stack means the popped bar can extend to index `0`.
 - Why width `i - left - 1`? — both boundaries are exclusive: shorter bar at `left`, shorter bar at `i`.
 - Why compare `cur < h[st.peek()]`? — equal heights can stay stacked without losing the maximal area.
+
+</details>
 
 ### Same pattern, new tweaks
 
