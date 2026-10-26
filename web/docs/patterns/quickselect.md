@@ -678,6 +678,19 @@ First, I'd translate kth largest into an ascending target index: `n-k`, so dupli
 
 </Callout>
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The one commitment**: after partition returns pivot index `p`, recurse into ONLY the side containing the target index. That's why quickselect is O(n) expected — the work halves each level (vs. quicksort's full-tree O(n log n)).
+- **Target index conversion**: for "k-th largest in ascending-sorted order," target = `n - k`. For "k-th smallest," target = `k - 1`. Pick ONE convention and stick with it; mixing is the #1 bug.
+- **Pivot MUST be randomized** (or median-of-three) — a last-element pivot on sorted input is O(n²). `Random.nextInt(hi - lo + 1) + lo` before swapping to the end is one line that gives O(n) expected regardless of input.
+- **Comparator MUST be strict `<` not `<=`** in Lomuto. On `[5,5,5,5,5]` with `<=`, every element goes to the "less than" side and pivot ends at index 0 regardless — recursion never makes progress on duplicates.
+- **O(n) expected, O(n²) worst case, O(1) space in-place** (ignoring recursion stack). Beats sort (O(n log n)) and heap-of-k (O(n log k)) when `k` is close to `n/2` and the array fits in memory.
+- **Mutates input.** If the problem says "do not modify the input," copy first (O(n) extra space) and quickselect on the copy.
+- **Siblings: Kth Largest Element in a Stream (heap, not quickselect — streams aren't quickselect-compatible), Wiggle Sort II (quickselect to find the median, then 3-way partition).**
+
+</details>
+
 ### Median via quickselect (two calls for even n) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Find Median from Data Stream (array variant)](https://leetcode.com/problems/kth-largest-element-in-an-array/)*
@@ -699,6 +712,19 @@ on `[7, 1, 5, 3, 9, 2]` (n=6, even). Target ranks: n/2-1=2 and n/2=3. First quic
 **Alternative — one quickselect, then scan.** After `quickselect(a, n/2)`, the n/2-th position holds the upper median; everything in `[0, n/2)` is ≤ it. Scan `[0, n/2)` once to find the max — that's the lower median. One quickselect + O(n) scan = O(n) + O(n/2) = O(n). This saves one quickselect call in half the cases.
 
 **Production use: median filters in image processing.** For each pixel of an image, compute the median of its 3×3 neighborhood (9 pixels). Naive sort: O(k log k) per pixel = O(n·k·log k) total. Quickselect per pixel: O(n·k) total — 2-3× faster, used in every denoising pipeline in OpenCV and Pillow.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Odd `n`**: median = `quickselect(a, n/2)`. **Even `n`**: median = `(quickselect(a, n/2 - 1) + quickselect(a, n/2)) / 2.0`. Two calls for even case; still O(n) + O(n) = O(n) total.
+- **Optimization: one call + scan**. After `quickselect(a, n/2)` on even n, everything in `[0, n/2)` is ≤ the upper median. Max of that prefix is the lower median — O(n/2) scan instead of a second quickselect call.
+- **Watch the integer-overflow trap for even case**: `(a + b) / 2` can overflow if `a + b > Integer.MAX_VALUE`. Use `(a + b) / 2.0` to force double arithmetic, or `a / 2.0 + b / 2.0`.
+- **The second quickselect runs on the ALREADY-PARTIALLY-PARTITIONED array** (from the first call). Still O(n) expected because quickselect's analysis doesn't assume starting-from-random order — it averages over pivot choices, not input permutations.
+- **Streaming median is a different problem** — use two heaps (max-heap for lower half, min-heap for upper half), balance after each insert, median = top of max-heap or average of tops. Quickselect doesn't support streams.
+- **Production use**: median filters in image processing (3×3 kernels, 9-element median per pixel, used in every denoising pipeline).
+- **Siblings: Find Median from Data Stream (two heaps), Sliding Window Median (two heaps with lazy deletion or a multiset), Majority Element (Boyer-Moore voting, not median).**
+
+</details>
 
 ### Top-K via quickselect vs heap-of-K <span class="diff diff-m">Medium</span>
 
@@ -731,6 +757,19 @@ on `points = [[1,3],[-2,2],[2,-2]], k = 2`. Partition by `x² + y²`; the first 
 | **k = n** | O(n) but pointless | O(n log n) full sort |
 
 **Rule of thumb:** quickselect for one-shot in-memory queries where mutation is OK; heap for streams, repeated queries, or when the input must stay in-order.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Quickselect for top-K**: after `partition(a, 0, n-1, target = n-k)`, the suffix `a[n-k, n)` contains the k largest in any order. Just return that slice (or those indices).
+- **"Any order" is the critical qualifier.** If the problem wants the k largest **sorted**, you add O(k log k) sort after the quickselect — total O(n + k log k). Still beats heap-of-K's O(n log k) when k ≪ n.
+- **Decision rule**: use quickselect for one-shot in-memory queries where mutation is OK; use heap-of-K for streams, repeated queries, or when the input must stay in order.
+- **Streaming kills quickselect.** It needs random access to the full array; a true stream can't be partitioned. Heap-of-K is the only streaming option — it keeps a running min-heap of size k, popping when size exceeds k.
+- **k close to n/2 is where quickselect dominates**: O(n) vs. heap's O(n log k) with k ≈ n/2 → O(n log n). Factor-of-log-n speedup matters at scale.
+- **For `K Closest Points`**: partition by squared distance (never sqrt — monotonic for non-negative values, saves O(n) sqrt calls). Target = `k - 1` (closest k are the smallest k, so indices `[0, k)` after quickselect).
+- **Siblings: K Closest Points to Origin (quickselect by distance²), Top K Frequent Elements (hash counts, then heap or quickselect), Kth Largest Element in a Stream (heap only — stream).**
+
+</details>
 
 ### Hoare vs Lomuto pivot (invariants compared) <span class="diff diff-m">Medium</span>
 
@@ -789,6 +828,19 @@ int hoarePartition(int[] a, int lo, int hi) {
 **Why Hoare is faster.** Lomuto writes every "&lt; pivot" element to its new location, even if it was already there — ~2n/3 swaps on random input. Hoare only swaps the "wrong-side" elements it finds from both ends — ~n/4 swaps. On modern CPUs where swap cost dominates, Hoare is measurably 2-3× faster per partition.
 
 **The subtle gotcha with Hoare.** Hoare does NOT return the pivot's final sorted index. It returns a partition index `j` where `[lo, j]` ≤ pivot and `[j+1, hi]` ≥ pivot. In the quickselect loop, you have to compare `target ≤ j` (recurse left on `[lo, j]`) vs `target > j` (recurse right on `[j+1, hi]`) — slightly different from the Lomuto `target < p` vs `target > p` three-way comparison. Mix them up and you get an infinite loop or wrong answer.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Lomuto returns the PIVOT'S FINAL SORTED INDEX**; Hoare returns a PARTITION INDEX (not necessarily the pivot's position). This changes how the recursion branches: Lomuto compares `target < p` / `target > p` (two cases); Hoare uses `target ≤ j` / `target > j`.
+- **Lomuto does ~2n/3 swaps on random input**; Hoare does ~n/4. Hoare is measurably 2-3× faster per partition on modern CPUs where swap cost dominates. Production (std::nth_element, numpy.partition) uses Hoare.
+- **Hoare handles duplicate-heavy input gracefully** because it stops at equal-to-pivot elements; both sides take their share. Lomuto with `<` can push all duplicates to one side → O(n²) blowup.
+- **The Hoare two-pointer dance**: `do { i++; } while (a[i] < pivot); do { j--; } while (a[j] > pivot);` — walks from both ends until a wrong-side pair is found, swaps, repeats. The `do-while` (not `while`) ensures progress even on the pivot value itself.
+- **Pivot CANNOT be the first or last element in Hoare without extra care** — picking `a[lo + (hi - lo) / 2]` (middle) is the standard safe choice. First-element pivot can cause infinite recursion when the pivot is also the min of the range.
+- **Interview default: Lomuto** (clearer invariant, one write pointer, easy to explain). **Production default: Hoare.** Know both.
+- **Siblings: 3-way (Dutch National Flag) partition for duplicate-heavy inputs (returns two indices, groups into &lt;, =, &gt; buckets), BFPRT median-of-medians for guaranteed O(n) worst case.**
+
+</details>
 
 ## Traps & gotchas
 
