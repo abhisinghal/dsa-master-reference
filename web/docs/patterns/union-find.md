@@ -529,6 +529,18 @@ void dfs(int[][] c, boolean[] visited, int u) {
 
 </details>
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Two primitives: `find(x)` and `union(a, b)`.** Find returns the root of x's tree; union merges two trees. Everything in the chapter is these two + a counter / predicate.
+- **Path compression on find: `parent[x] = find(parent[x])`.** On the recursive return, hoist x directly under the root; next find on x is O(1).
+- **Union by rank/size** attaches the shorter tree under the taller root. Combined with path compression, the amortized cost per op is `α(n)` — effectively constant (`α(10^80) ≈ 4`).
+- **Component count = count of distinct roots** = count of indices where `parent[i] == i`. Alternatively, keep a `components` counter that starts at `n` and decrements on each successful union.
+- **O(n + m · α(n)) time, O(n) space** where m = number of operations. Beats BFS/DFS re-scans when the graph grows DYNAMICALLY — union-find's superpower.
+- **Does NOT support DELETE / UNDO** cheaply. Add-only; for undo, use union-by-rank WITHOUT path compression + a rollback stack, trading `α(n)` for `log(n)` per op.
+
+</details>
+
 ### Number of Provinces <span class="diff diff-m">Medium</span>
 
 Given an `n × n` symmetric friendship matrix, count the number of connected components. One `union` per edge, then count distinct roots (or decrement a `components` counter inline).
@@ -767,6 +779,18 @@ Before the first cycle-closing edge, the DSU holds a growing forest; the first `
 | [1,3] | 1, 3 | true (merge) | `parent[3]=1` |
 | [2,3] | 1, 1 | **false** → return `[2,3]` | — |
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The DEFINING use case for DSU: find the edge that CREATES a cycle in an incremental edge stream.** On each edge `(u, v)`, call `find(u)` and `find(v)` BEFORE unioning — if they're already equal, this edge is redundant.
+- **Return the FIRST edge whose endpoints are already connected.** LC-684 input is a tree + one extra edge, so there's exactly one redundant edge; return the first one found while scanning in order.
+- **O(E · α(n)) time** with path compression + union by rank. For E = 1000 this is microseconds.
+- **Variant: Redundant Connection II (directed)** needs case analysis for the extra parent + the cycle it participates in; plain DSU alone doesn't disambiguate which of two candidate edges to remove.
+- **Think of it as "online incremental cycle detection"** — DSU is uniquely suited because every new edge is answered in near-constant time without re-traversing the graph.
+- **Siblings: Earliest Moment Everyone Becomes Friends (timestamp-sorted unions), Satisfiability of Equality Equations (process `==` first, then verify `!=`).**
+
+</details>
+
 ### Accounts Merge — DSU on string IDs <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Accounts Merge](https://leetcode.com/problems/accounts-merge/)*
@@ -786,6 +810,18 @@ At any point, two accounts `i` and `j` share a root iff they are transitively li
 />
 
 **Complexity:** O(N α(N) + E log E) where `N` is the number of accounts and `E` is total emails. The log factor is for sorting each component's email set (we use `TreeSet` for that).
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Key trick: DSU over account INDICES, not over emails.** Build `HashMap<email, firstAccountIndex>` on the first pass; on the second pass, union the current account with whatever index each of its emails already points to.
+- **Why not DSU over emails?** You'd still need to attach a name to each component, and sorting emails per component is unavoidable — indexing by account is simpler and avoids re-hashing emails.
+- **Grouping step after unions**: iterate every email, find its account's root, and append it to a per-root `TreeSet<String>`. The TreeSet gives you sorted emails for free.
+- **The output order per account** is: `[name, sortedEmail1, sortedEmail2, ...]` — the name goes FIRST and is not sorted with the emails.
+- **Complexity**: O(N·α(N) + E log E). The sort dominates for large accounts.
+- **Siblings: Similar String Groups (union words within edit-distance 2), Smallest String With Swaps (union swappable index pairs, then sort each group).**
+
+</details>
 
 ### Kruskal's MST + Union-Find <span class="diff diff-m">Medium</span>
 
@@ -944,6 +980,18 @@ A graph with `n-1` edges could still be disconnected (one component has a cycle,
 | `n - 1`, cycle | yes | false (disconnected + cycle) |
 | `≠ n - 1` | — | false (too many or too few) |
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **A tree needs BOTH conditions**: `edges.length == n - 1` AND no cycle. Either alone is insufficient — a disconnected graph with one cycle and one isolated node has `n - 1` edges but isn't a tree.
+- **DSU detects cycles elegantly**: if `union(u, v)` returns `false`, `u` and `v` were already connected → cycle. Any `false` return in the scan rejects the input.
+- **Equivalent formulations**: BFS/DFS from node 0 and check (a) all `n` nodes visited, (b) no back-edge seen. DSU is often shorter to code and avoids visited-set bookkeeping.
+- **If `edges.length != n - 1`** you can short-circuit to `false` without touching DSU — but the DSU check still covers this correctness-wise (it just does extra work).
+- **The undirected variant** uses this DSU recipe directly; **directed** needs Tarjan's or Kosaraju's SCC — DSU doesn't handle directionality.
+- **Siblings: Number of Connected Components in Undirected Graph (count distinct roots), Satisfiability of Equality Equations (process `==` first).**
+
+</details>
+
 ### Swim in Rising Water (Kruskal-style) <span class="diff diff-h">Hard</span>
 
 *[↗ LeetCode: Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/)*
@@ -965,6 +1013,18 @@ At the moment we process cell `(r,c)` with elevation `t`, the DSU holds all cell
 />
 
 **Complexity:** O(n² log n) — sort dominates; each union/find is amortized α(n²). Compare with Dijkstra on the same problem: O(n² log n) too, but DSU is often simpler to code.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The clever reframing**: cells are nodes; "cell becomes passable at time `elevation`" is the edge-add event. Sort cells by elevation and process cheapest-first — this IS Kruskal.
+- **Stop condition**: return the current cell's elevation as soon as `find(start) == find(end)`. That elevation is the answer because any later cell is strictly more expensive and would only inflate `t`.
+- **Alternative — binary search on t + BFS**: O(n² · log(max elev)). DSU-Kruskal is cleaner because it doesn't re-explore the grid.
+- **Alternative — Dijkstra with min-heap over cells, "cost" = max elevation on the path**: O(n² log n²), same asymptotics; DSU is simpler.
+- **When this pattern applies in general**: any shortest-path-style problem where the cost is the **max edge weight** on the path (bottleneck shortest path), not the sum. DSU-Kruskal is the natural fit; Dijkstra needs a max-aggregation tweak.
+- **Siblings: Path With Minimum Effort (same bottleneck shortest path on a grid), Minimum Cost to Make at Least One Valid Path (0-1 BFS alternative).**
+
+</details>
 
 ## Traps & gotchas
 

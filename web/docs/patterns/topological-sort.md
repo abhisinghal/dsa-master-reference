@@ -411,6 +411,18 @@ boolean canFinish(int n, int[][] prereqs) {
 
 
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **"Can we finish?" = "Is this graph a DAG?"** The question is cycle detection, not scheduling. Kahn's algorithm answers it as a side effect: if you process all N nodes, no cycle; if you don't, cycle exists.
+- **Edge direction matters: `prereq → course`.** When prereq is done, enable course — so `indeg[course]` counts how many prereqs remain. Reversing the convention silently inverts "ready" vs "blocked".
+- **Seed the queue with ALL `indeg == 0` nodes.** There may be multiple roots; a single-root seeding would stall on multi-source DAGs.
+- **O(V + E) time and space.** Each node is processed once; each edge decrements an indegree once. The adjacency list is the one unavoidable O(E) structure.
+- **DFS-with-colors is an equally valid approach.** 3-color (WHITE/GRAY/BLACK) detects back edges = cycle. Pick Kahn when you want streaming/parallel-ready; pick DFS when the recursion is already in your mental model.
+- **The engine for Alien Dictionary, Course Schedule II (order), Minimum Height Trees, Parallel Courses** — same template, different post-processing of the order Kahn emits.
+
+</details>
+
 ### Course Schedule II (one topo order) <span class="diff diff-m">Medium</span>
 
 Return a valid topological order (the actual sequence of courses to take), or `[]` if impossible. This is the canonical form of the template — the pedagogical walkthrough below treats it in full.
@@ -553,6 +565,18 @@ boolean dfs(List<List<Integer>> out, int[] color, Deque<Integer> stack, int u) {
 | Brute permutations | O(n! · m) | O(n) | Reference / n ≤ 8 |
 | **Kahn's BFS** | **O(V + E)** | **O(V + E)** | **Interview default** |
 | DFS post-order (3-color) | O(V + E) | O(V + E) | If you also need cycle-edge details |
+
+</details>
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The ORDER Kahn emits IS the topo sort.** Collect each `u` as you poll from the queue; the final list is a valid ordering. No separate reconstruction step.
+- **If the final list's length &lt; V, a CYCLE exists** — return `[]`. The length check doubles as cycle detection.
+- **DFS post-order emits REVERSED topo order.** Push to a stack during post-order; pop to retrieve the correct order. 3-color (WHITE/GRAY/BLACK) catches cycles via GRAY→GRAY back-edge detection.
+- **Multiple valid orders exist in general.** The problem accepts ANY valid ordering unless constraints specify (lexicographic, by priority, etc.) — see the LC-269 Alien Dictionary variant for a priority-ordered variant.
+- **O(V + E) time and space — the Kahn baseline.** Priority-queue variants cost O(E log V) if you need a smallest-lexicographic valid order.
+- **Beat the brute O(n! · m) permutation checker by TWO complexity classes** — this is why topological sort is the "obvious" answer when prerequisites are involved.
 
 </details>
 
@@ -821,6 +845,18 @@ The precedence graph edges are *exactly* the ordering constraints justified by a
 
 Alphabet: {w, r, t, f, e}. Indegrees: w=0, r=1, t=1, f=1, e=1. Kahn starts with `w`, then `e`, then `r`, then `t`, then `f`. Result: `"wertf"`.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The graph is IMPLICIT in the word pairs.** For each adjacent pair of words, scan for the FIRST differing character; that pair gives one edge. Everything after the difference is uninformative.
+- **Invalid-input signal:** if word `a` is a prefix of word `b` but `b` appears before `a` (e.g. `"abc"` listed before `"ab"`), no valid alphabet exists — return `""`. This check must come BEFORE edge extraction.
+- **Alphabet = union of distinct chars across all words.** Compute this BEFORE building the graph; isolated letters (no constraint on them) still need an entry in the indegree table.
+- **Any valid topo order works unless the problem specifies lexicographic.** LC-269 accepts any order; LC-953 ("Verify Alphabet Order") is a different problem that validates against a given alphabet.
+- **O(C + E) time** where C = total chars across all words, E = extracted edges (bounded by alphabet size squared).
+- **Common failure: forgetting to add nodes for letters that NEVER appear in any constraint.** They have indegree 0 and must still appear in the final order.
+
+</details>
+
 ### Minimum Height Trees (iterative leaf-trim) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/)*
@@ -847,6 +883,18 @@ At the start of each layer, the remaining subtree is the subgraph induced by nod
 
 **Complexity:** O(V + E) — each node enters `leaves` exactly once, each edge is removed exactly once.
 
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **The roots are the tree's CENTER(s).** A tree has at most 2 centers — one if the diameter has odd length, two if even. Any other root would give a taller tree (farther to the extreme leaf).
+- **Peel LEAVES (degree-1 nodes) layer-by-layer until 1 or 2 remain.** This is Kahn's template on an undirected graph with the degree-1 frontier replacing the indegree-0 frontier.
+- **Degree, not indegree.** Undirected tree → use `degree[]`, not `indeg[]`. Peeling a leaf decrements the degree of its single neighbor.
+- **Stop when `n <= 2`.** The remaining nodes are the center(s); return them as the min-height-tree root(s).
+- **O(V + E) time** — each node enters the leaf frontier exactly once, each edge is processed on peel.
+- **Siblings in the leaf-trim family:** Minimum Height Trees (centers), finding the tree's DIAMETER (two BFS from any node then from the farthest reached), rotting-oranges-type layer BFS.
+
+</details>
+
 ### Parallel Courses (level-wise BFS gives min semesters) <span class="diff diff-m">Medium</span>
 
 *[↗ LeetCode: Parallel Courses](https://leetcode.com/problems/parallel-courses/)*
@@ -866,6 +914,18 @@ At the start of semester `s`, the queue holds exactly the courses whose prerequi
 />
 
 **Why `size = q.size()` is critical:** draining the queue in a plain loop would still work for the order, but you'd lose the wave boundary. Snapshotting `size` at the start of each wave ensures newly-enqueued nodes join the *next* wave, not the current one.
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Count WAVES, not nodes.** Each wave = one semester = all currently-indegree-0 courses running in parallel. Answer = number of waves.
+- **`size = q.size()` at the start of each wave is the key.** Snapshot the current queue size, drain exactly those nodes this wave, so newly-enabled courses go to the NEXT wave.
+- **Return -1 (or detect cycle) when processed count &lt; V.** Same cycle test as Kahn — the length check catches it.
+- **O(V + E) time, same as plain Kahn.** The wave structure doesn't add complexity; it just groups the same work differently.
+- **Variant with per-course durations (LC-2050 Parallel Courses III)** needs a DAG longest-path / critical-path DP; the simple wave count only works when every course is 1 semester.
+- **Sibling: Minimum Semesters for Courses with Groups** — layer-BFS over groups, same template with a different "frontier ready" predicate.
+
+</details>
 
 ### Sequence Reconstruction (unique topo order check) <span class="diff diff-m">Medium</span>
 
@@ -892,6 +952,18 @@ If at any step the queue has ≥ 2 nodes, their indegrees are both 0 — meaning
 | Every number 1..n appears in some seq | Target has an element not in the DAG |
 | `q.size() == 1` every step | Multiple valid orders exist |
 | Popped node matches `org[k++]` | Target doesn't match the (unique) order |
+
+<details class="learnings">
+<summary><strong>Learnings — points to remember</strong></summary>
+
+- **Uniqueness test: `q.size() == 1` at EVERY step.** If ≥ 2 nodes have indegree 0 simultaneously, either could legally come next — proof of multiple valid orders.
+- **Three independent failure modes to check:** (1) every number in `org` must appear in some `seq`; (2) uniqueness invariant `q.size() == 1`; (3) popped node matches `org[k++]`. Any failure → return false.
+- **Build the DAG from CONSECUTIVE pairs within each seq.** `seq = [a, b, c]` gives edges `a → b`, `b → c` — NOT `a → c` (that would be transitive and would introduce extra constraints).
+- **O(V + E) time** — standard Kahn with the uniqueness test added inline.
+- **Uniqueness is NOT the same as cycle-freeness.** A DAG with multiple topo orders is still a valid DAG; the uniqueness test is a tighter constraint specific to this problem.
+- **Related sibling: Reconstruct Itinerary** reconstructs a unique Eulerian path on a multigraph — different problem but similar "unique traversal must be derivable" spirit.
+
+</details>
 
 ## Traps & gotchas
 
